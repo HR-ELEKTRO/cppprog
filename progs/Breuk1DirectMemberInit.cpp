@@ -1,0 +1,84 @@
+// Sinds C++11 mogen datamembers direct geïnitialiseerd worden.
+// Als ze ook met een initialization list worden geïnitialiseerd dan 
+// wordt de directe initialisatie genegeerd.
+// Dit wordt ondersteund in Visual Studio C++ sinds versie 2013
+// Dit wordt ondersteund in GCC sinds versie 4.7
+
+#include <iostream>
+#include <cassert>
+using namespace std;
+
+class Breuk {
+public:
+    Breuk();
+    Breuk(int t);
+    Breuk(int t, int n);
+    int teller() const;
+    int noemer() const;
+//  ...
+//  Er zijn nog veel uitbreidingen mogelijk.
+//  ...
+private:
+    int boven = 0; // directe initialisatie
+    int onder = 1; // directe initialisatie
+    void normaliseer();
+};
+
+int ggd(int n, int m) {
+    if (n == 0) return m;
+    if (m == 0) return n;
+    if (n < 0) n = -n;
+    if (m < 0) m = -m;
+    while (m != n)
+        if (n > m) n -= m;
+        else m -= n;
+    return n;
+}
+
+Breuk::Breuk() { // geen initialization list 
+}
+
+Breuk::Breuk(int t): boven(t) { // de datamember onder wordt niet in de initialization list geïnitialiseerd
+}
+
+Breuk::Breuk(int t, int n): boven(t), onder(n) {
+    normaliseer();
+}
+
+int Breuk::teller() const {
+    return boven;
+}
+
+int Breuk::noemer() const {
+    return onder;
+}
+
+void Breuk::normaliseer() {
+    assert(onder != 0);
+    if (onder < 0) {
+        onder = -onder;
+        boven = -boven;
+    }
+    int d(ggd(boven, onder));
+    boven /= d;
+    onder /= d;
+}
+
+int main() {
+    Breuk b1;
+    cout << "b1 = " << b1.teller() << '/' << b1.noemer() << endl;
+    Breuk b2(4);
+    cout << "b2(4) = " << b2.teller() << '/' << b2.noemer() << endl;
+    Breuk b3(23, -5);
+    cout << "b3(23, -5) = " << b3.teller() << '/' << b3.noemer() << endl;
+    cin.get();
+    return 0;
+}
+
+/*
+Uitvoer:
+
+b1 = 0/1
+b2(4) = 4/1
+b3(23, -5) = -23/5
+*/

@@ -1,0 +1,159 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Hond {
+public:
+    Hond(const string& n);
+    virtual ~Hond();
+    void setNaam(const string& n);
+    virtual void blaf() const =0;
+private:
+    string naam;
+};
+
+class Tekkel: public Hond {
+public:
+    Tekkel(const string& n);
+    virtual ~Tekkel();
+    virtual void blaf() const override;
+};
+
+class WhiskeyVat {
+public:
+    WhiskeyVat(int b);
+    ~WhiskeyVat();
+    bool geefBorrel();
+private:
+    int aantalBorrels;
+};
+
+WhiskeyVat::WhiskeyVat(int b): aantalBorrels(b) {
+    cout << "Vat met " << aantalBorrels << " borrels aangemaakt." << endl;
+}
+
+WhiskeyVat::~WhiskeyVat() {
+    cout << "Vat met " << aantalBorrels << " borrels opgeruimd." << endl;
+}
+
+bool WhiskeyVat::geefBorrel() {
+    if (aantalBorrels > 0) {
+        --aantalBorrels;
+        cout << "Ik kom je helpen, drink deze borrel maar op!" << endl;
+        return true;
+    }
+    cout << "Ik kan je niet helpen, mijn whiskey is op." << endl;
+    return false;
+}
+
+class SintBernard: public Hond {
+public:
+    SintBernard(const string& n, int b);
+    virtual ~SintBernard();
+    virtual void blaf() const override;
+    void help();
+private:
+    WhiskeyVat vat;
+};
+
+class Roedel {
+public:
+    void voegToe(Hond& h);
+    void blafAllemaal() const;
+private:
+    vector<Hond*> honden;
+};
+
+Hond::Hond(const string& n): naam(n) {
+    cout << "Hoera, " << naam << " is geboren!" << endl;
+}
+
+Hond::~Hond() {
+    cout << "Helaas, " << naam << " is gestorven." << endl;
+    cin.get();
+}
+
+void Hond::setNaam(const string& n) {
+    naam = n;
+}
+
+Tekkel::Tekkel(const string& n): Hond(n) {
+    cout << "Er is een Tekkel geboren!" << endl;
+}
+
+Tekkel::~Tekkel() {
+    cout << "Er is een Tekkel gestorven." << endl;
+}
+
+void Tekkel::blaf() const {
+    cout << "Kef kef" << endl;
+}
+
+SintBernard::SintBernard(const string& n, int b): Hond(n), vat(b) {
+    cout << "Er is een SintBernard geboren!" << endl;
+}
+
+SintBernard::~SintBernard() {
+    cout << "Er is een SintBernard gestorven." << endl;
+}
+
+void SintBernard::blaf() const {
+    cout << "WOEF, WOEF" << endl;
+}
+
+void SintBernard::help() {
+    vat.geefBorrel();
+    blaf();
+}
+
+void Roedel::voegToe(Hond& h) {
+    honden.push_back(&h);
+}
+
+void Roedel::blafAllemaal() const {
+    for (auto hp : honden) {
+        hp->blaf();
+    }
+}
+
+int main() {
+    SintBernard h1("Boris", 10);
+    Tekkel h2("Fikkie");
+    Tekkel h3("Harry");
+
+    Roedel r;
+    r.voegToe(h1);
+    r.voegToe(h2);
+    r.voegToe(h3);
+
+    r.blafAllemaal();
+
+    cin.get();
+    return 0;
+}
+
+/*
+Uitvoer:
+Hoera, Boris is geboren!
+Vat met 10 borrels aangemaakt.
+Er is een SintBernard geboren!
+Hoera, Fikkie is geboren!
+Er is een Tekkel geboren!
+Hoera, Harry is geboren!
+Er is een Tekkel geboren!
+WOEF, WOEF
+Kef kef
+Kef kef
+<enter>
+Er is een Tekkel gestorven.
+Helaas, Harry is gestorven.
+<enter>
+Er is een Tekkel gestorven.
+Helaas, Fikkie is gestorven.
+<enter>
+Er is een SintBernard gestorven.
+Vat met 10 borrels opgeruimd.
+Helaas, Boris is gestorven.
+<enter>
+*/

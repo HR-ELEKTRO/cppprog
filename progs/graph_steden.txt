@@ -1,0 +1,15 @@
+Amsterdam Berlijn 690
+Amsterdam Brussel 205
+Berlijn Praag 380
+Brussel Parijs 290
+Brussel Frankfurt 405
+Parijs Genève 550
+Frankfurt Genève 585
+Frankfurt Praag 530
+Praag München 360
+Genève Grenoble 310
+Genève Milaan 410
+Grenoble Milaan 390
+München Milaan 550
+München Florence 650
+Milaan Florence 250

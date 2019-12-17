@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+long long fac(long long n) {
+    long long res = 1;
+    for (long long i = 2; i <= n; ++i)
+        res *= i;
+    return res;
+}
+
+int main() {
+    cout << "Geef aantal hokjes: " << endl;
+    long long n;
+    cin >> n;
+    if (n > 20) {
+        cout << "Sorry het aantal stellingen past niet in een long long" << endl;
+    }
+    else {
+        cout << "Aantal stellingen:" << endl;
+        long long res = 0;
+        for (long long i = 0; i <= n; ++i) {
+            long long t = fac(n) / fac(n - i);
+            cout << t << " + " << endl;
+            res += t;
+        }
+        cout<< "= " << res << endl;
+    }
+    cin.get();
+    cin.get();
+}

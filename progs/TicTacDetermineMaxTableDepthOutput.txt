@@ -1,0 +1,95 @@
+Debug
+
+MAX_DEPTH: 2
+Map size is: 0
+Moves considered: 16811
+Avarage execution time (10 runs): 0.0706661
+MAX_DEPTH: 3
+Map size is: 30
+Moves considered: 16811
+Avarage execution time (10 runs): 0.0709619
+MAX_DEPTH: 4
+Map size is: 118
+Moves considered: 14047
+Avarage execution time (10 runs): 0.0632046
+MAX_DEPTH: 5
+Map size is: 369
+Moves considered: 11523
+Avarage execution time (10 runs): 0.0675519
+MAX_DEPTH: 6
+Map size is: 841
+Moves considered: 7954
+Avarage execution time (10 runs): 0.0937331
+MAX_DEPTH: 7
+Map size is: 1513
+Moves considered: 5622
+Avarage execution time (10 runs): 0.139846
+MAX_DEPTH: 8
+Map size is: 2135
+Moves considered: 4487
+Avarage execution time (10 runs): 0.215412
+MAX_DEPTH: 9
+Map size is: 2407
+Moves considered: 4272
+Avarage execution time (10 runs): 0.259741
+Optimal value for MAX_DEPTH = 4
+
+Release
+MAX_DEPTH: 2
+Map size is: 0
+Moves considered: 16811
+Avarage execution time (10 runs): 0.00147545
+MAX_DEPTH: 3
+Map size is: 30
+Moves considered: 16811
+Avarage execution time (10 runs): 0.001519
+MAX_DEPTH: 4
+Map size is: 118
+Moves considered: 14047
+Avarage execution time (10 runs): 0.00160233
+MAX_DEPTH: 5
+Map size is: 369
+Moves considered: 11523
+Avarage execution time (10 runs): 0.00374191
+MAX_DEPTH: 6
+Map size is: 841
+Moves considered: 7954
+Avarage execution time (10 runs): 0.0143848
+MAX_DEPTH: 7
+Map size is: 1513
+Moves considered: 5622
+Avarage execution time (10 runs): 0.0419999
+MAX_DEPTH: 8
+Map size is: 2135
+Moves considered: 4487
+Avarage execution time (10 runs): 0.0502824
+MAX_DEPTH: 9
+Map size is: 2407
+Moves considered: 4272
+Avarage execution time (10 runs): 0.057208
+Optimal value for MAX_DEPTH = 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

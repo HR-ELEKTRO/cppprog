@@ -1,0 +1,140 @@
+#include <complex>
+#include <cmath>
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+// define PI (which is not included in std C++)
+const double PI = atan(1.0) * 4;
+
+/*
+Uitgangspunten:
+-   een Component
+    -   is een abstracte base class
+    -   heeft een impedantie Z die afhankelijk is van de frequentie f
+    -   kan geprint worden
+-   een R (weerstand)
+    -   is een soort Component
+    -   heeft een weerstandswaarde (r) uitgedrukt in Ohm
+    -   Z(f) = r + j * 0
+-   een L (spoel)
+    -   is een soort Component
+    -   heeft een zelfinductie (l) uitgedrukt in Henry
+    -   Z(f) = 0 + j * 2 * pi * f * l
+-   een C (condensator)
+    -   is een soort Component
+    -   heeft een capaciteit (c) uitgedrukt in Farad
+    -   Z(f) = 0 - j / (2 * pi * f * c)
+*/
+
+class Component {
+public:
+    virtual ~Component() = default;
+    virtual complex<double> Z(double f) const = 0; // bereken de impedantie Z (een complex getal) bij de frequentie f
+    virtual void print(ostream& o) const = 0; // print
+};
+
+ostream& operator<<(ostream& o, const Component& c) {
+    c.print(o);
+    return o;
+}
+
+class R: public Component { // R = Weerstand
+public:
+    R(double r): r(r) {
+    }
+    virtual complex<double> Z(double) const {
+        return r;
+    }
+    virtual void print(ostream& o) const {
+        o << "R(" << r << ")";
+    }
+private:
+    double r;
+};
+
+class L: public Component { // L = Spoel
+public:
+    L(double l): l(l) {
+    }
+    virtual complex<double> Z(double f) const {
+        return complex<double>(0, 2 * PI * f * l);
+    }
+    virtual void print(ostream& o) const {
+        o << "L(" << l << ")";
+    }
+private:
+    double l;
+};
+
+class C: public Component { // C = Condensator
+public:
+    C(double c): c(c) {
+    }
+    virtual complex<double> Z(double f) const {
+        return complex<double>(0, -1 / (2 * PI * f * c));
+    }
+    virtual void print(ostream& o) const {
+        o << "C(" << c << ")";
+    }
+private:
+    double c;
+};
+
+void printImpedanceTable(const Component& c) {
+    cout << "Impedantie tabel voor: " << c << endl << endl;
+    cout << setw(10) << "freq" << setw(20) << "Z" << endl;
+    for (double freq(10); freq < 10E6; freq *= 10)
+        cout << setw(10) << freq << setw(20) << c.Z(freq) << endl;
+    cout << endl;
+}
+
+int main() {
+    R r(1E2);
+    printImpedanceTable(r);
+    cin.get();
+    C c(1E-5);
+    printImpedanceTable(c);
+    cin.get();
+    L l(1E-3);
+    printImpedanceTable(l);
+//  ...
+    cin.get();
+    return 0;
+}
+
+/*
+Uitvoer:
+
+Impedantie tabel voor: R(100)
+
+      freq                   Z
+        10             (100,0)
+       100             (100,0)
+      1000             (100,0)
+     10000             (100,0)
+    100000             (100,0)
+    1e+006             (100,0)
+
+
+Impedantie tabel voor: C(1e-005)
+
+      freq                   Z
+        10        (0,-1591.55)
+       100        (0,-159.155)
+      1000        (0,-15.9155)
+     10000        (0,-1.59155)
+    100000       (0,-0.159155)
+    1e+006      (0,-0.0159155)
+
+
+Impedantie tabel voor: L(0.001)
+
+      freq                   Z
+        10       (0,0.0628319)
+       100        (0,0.628319)
+      1000         (0,6.28319)
+     10000         (0,62.8319)
+    100000         (0,628.319)
+    1e+006         (0,6283.19)
+*/
