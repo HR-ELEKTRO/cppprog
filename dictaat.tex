@@ -36,9 +36,10 @@
 
 \input{style_nl_NL.tex}
 
-\newif\ifonlylast
-%\onlylasttrue 
-\onlylastfalse
+% only show part not marked with showall
+\newif\ifshowall 
+\showalltrue 
+%\showallfalse
 
 \newcommand{\mail}{\href{mailto:J.Z.M.Broeders@hhs.nl}{J.Z.M.Broeders@hhs.nl}}
 \newcommand{\opleiding}{Elektrotechniek}
@@ -172,8 +173,7 @@
 %<pdfchapref
 
 \begin{document}
-\ifonlylast
-\else 
+\ifshowall
 \frontmatter
 \titelpagina{cpp}
 
@@ -823,8 +823,6 @@ Dozijn d{move(a)};
 \end{itemize}
 
 \fi
-\ifonlylast
-\begin{cpplstShortInline}
 
 \chapter[Van C naar C++]{Van C naar \Cpp{}}
 De ontwerper van \Cpp{} Bjarne Stroustrup geeft op de vraag: Wat is \Cpp{}? het volgende antwoord\cite{Stroustrup2000}:
@@ -1259,8 +1257,7 @@ In dit programma wordt \Cpp{} dus op een C manier gebruikt.
 Dit is voor kleine programma's geen probleem.
 Als een programma echter groter is of als het uitbreidbaar of onderhoudbaar moet zijn, kun je beter gebruik maken van de objectgeoriënteerde technieken die \Cpp{} biedt.
 
-\end{cpplstShortInline}
-\else
+\ifshowall
 
 \chapter{Objects and classes}
 \label{H2}
