@@ -7,7 +7,7 @@ using namespace std;
 class Fruit {
 public:
     virtual void print(ostream& o) {
-        o << soort() << endl;
+        o << soort() << '\n';
     }
 private:
     virtual string soort() const {
@@ -40,13 +40,9 @@ int main() {
     Peer p;
     p.print(cout);
 //  ...
-    cin.get();
-    return 0;
 }
 
-/* 
-Uitvoer:
-
+/* Uitvoer:
 Fruit
 Appel
 Peer

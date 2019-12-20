@@ -29,16 +29,14 @@ int ggd(int n, int m) {
 }
 
 // Constructor roept andere constructor van dezelfde class aan.
-// C++11
-// Beschikbaar vanaf Visual Studio 2012 en GCC 4.7
 
-Breuk::Breuk(): Breuk(0, 1) {
+Breuk::Breuk(): Breuk{0, 1} {
 }
 
-Breuk::Breuk(int t): Breuk(t, 1) {
+Breuk::Breuk(int t): Breuk{t, 1} {
 }
 
-Breuk::Breuk(int t, int n): boven(t), onder(n) {
+Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
@@ -57,7 +55,8 @@ void Breuk::plus(Breuk b) {
 }
 
 void Breuk::abs() {
-    if (boven < 0) boven = -boven;
+    if (boven < 0) 
+        boven = -boven;
 }
 
 void Breuk::normaliseer() {
@@ -66,31 +65,45 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d(ggd(boven, onder));
+    int d = ggd(boven, onder);
     boven /= d;
     onder /= d;
 }
 
 int main() {
-    Breuk b1(4);
-    cout << "b1(4) = " << b1.teller() << '/' << b1.noemer() << endl;
-    Breuk b2(23, -5);
-    cout << "b2(23, -5) = " << b2.teller() << '/' << b2.noemer() << endl;
-    Breuk b3(b2);
-    cout << "b3(b2) = " << b3.teller() << '/' << b3.noemer() << endl;
+    Breuk b1{4};
+    cout << "b1{4} = " << b1.teller() << '/' << b1.noemer() << '\n';
+    Breuk b2{23, -5};
+    cout << "b2{23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
+    Breuk b3{b2};
+    cout << "b3{b2} = " << b3.teller() << '/' << b3.noemer() << '\n';
     b3.abs();
-    cout << "b3.abs() = " << b3.teller() << '/' << b3.noemer() << endl;
+    cout << "b3.abs() = " << b3.teller() << '/' << b3.noemer() << '\n';
     b3 = b2;
-    cout << "b3 = b2 = " << b3.teller() << '/' << b3.noemer() << endl;
+    cout << "b3 = b2 = " << b3.teller() << '/' << b3.noemer() << '\n';
     b3.plus(5);
-    cout << "b3.plus(5) = " << b3.teller() << '/' << b3.noemer() << endl;
+    cout << "b3.plus(5) = " << b3.teller() << '/' << b3.noemer() << '\n';
 
-    const Breuk halve(1, 2);
-    cout << "halve = " << halve.teller() << '/' << halve.noemer() << endl;
+    const Breuk halve{1, 2};
+    cout << "halve = " << halve.teller() << '/' << halve.noemer() << '\n';
+
+//  halve = b3;
+//  Error: passing ‘const Breuk’ as ‘this’ argument discards qualifiers
+
+//  halve.plus(b3);
+//  Error: passing ‘const Breuk’ as ‘this’ argument discards qualifiers
 
     b3 = halve;
-    cout << "b3 = halve = " << b3.teller() << '/' << b3.noemer() << endl;
-
-    cin.get();
-    return 0;
+    cout << "b3 = halve = " << b3.teller() << '/' << b3.noemer() << '\n';
 }
+
+/* Output:
+b1{4} = 4/1
+b2{23, -5} = -23/5
+b3{b2} = -23/5
+b3.abs() = 23/5
+b3 = b2 = -23/5
+b3.plus(5) = 2/5
+halve = 1/2
+b3 = halve = 1/2
+*/

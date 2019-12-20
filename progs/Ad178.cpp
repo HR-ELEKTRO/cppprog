@@ -11,15 +11,14 @@ AD178::AD178() {
 void AD178::selectChannel(int channel) {
     rememberChannel(channel);
     // ... de specifieke voor de AD178 benodigde code
-    cout << "Kanaal " << channel << " van AD178 is geselecteerd." << endl;
+    cout << "Kanaal " << channel << " van AD178 is geselecteerd.\n";
 }
 void AD178::setAmplifier(double factor) {
     rememberAmplifier(factor);
     // ... de specifieke voor de AD178 benodigde code
-    cout << "Versterkingsfactor van AD178 is " << factor << "." << endl;
+    cout << "Versterkingsfactor van AD178 is " << factor << ".\n";
 }
 int AD178::sample() const {
     // ... de specifieke voor de AD178 benodigde code
     return 0x7FFF; // +5 * f V
 }
-

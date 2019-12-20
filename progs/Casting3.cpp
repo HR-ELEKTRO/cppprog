@@ -8,17 +8,12 @@ void stiekem(const string& a) {
 
 int main() {
     string s("Dag");
-    cout << "s = " << s << endl;
+    cout << "s = " << s << '\n';
     stiekem(s);
-    cout << "s = " << s << endl;
-//  ...
-    cin.get();
-    return 0;
+    cout << "s = " << s << '\n';
 }
 
-/*
-Output:
-
+/* Output:
 s = Dag
 s = Hallo
 */

@@ -43,6 +43,5 @@ int main() {
     c = som(a, b);
     printf("c = %d/%d\n", c.boven, c.onder);
 
-    getchar();
     return 0;
 }

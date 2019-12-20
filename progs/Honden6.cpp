@@ -28,21 +28,21 @@ private:
     int aantalBorrels;
 };
 
-WhiskeyVat::WhiskeyVat(int b): aantalBorrels(b) {
-    cout << "Vat met " << aantalBorrels << " borrels aangemaakt." << endl;
+WhiskeyVat::WhiskeyVat(int b): aantalBorrels{b} {
+    cout << "Vat met " << aantalBorrels << " borrels aangemaakt.\n";
 }
 
 WhiskeyVat::~WhiskeyVat() {
-    cout << "Vat met " << aantalBorrels << " borrels opgeruimd." << endl;
+    cout << "Vat met " << aantalBorrels << " borrels opgeruimd.\n";
 }
 
 bool WhiskeyVat::geefBorrel() {
     if (aantalBorrels > 0) {
         --aantalBorrels;
-        cout << "Ik kom je helpen, drink deze borrel maar op!" << endl;
+        cout << "Ik kom je helpen, drink deze borrel maar op!\n";
         return true;
     }
-    cout << "Ik kan je niet helpen, mijn whiskey is op." << endl;
+    cout << "Ik kan je niet helpen, mijn whiskey is op.\n";
     return false;
 }
 
@@ -56,41 +56,40 @@ private:
     WhiskeyVat vat;
 };
 
-Hond::Hond(const string& n): naam(n) {
-    cout << "Hoera, " << naam << " is geboren!" << endl;
+Hond::Hond(const string& n): naam{n} {
+    cout << "Hoera, " << naam << " is geboren!\n";
 }
 
 Hond::~Hond() {
-    cout << "Helaas, " << naam << " is gestorven." << endl;
-    cin.get();
+    cout << "Helaas, " << naam << " is gestorven.\n";
 }
 
 void Hond::setNaam(const string& n) {
     naam = n;
 }
 
-Tekkel::Tekkel(const string& n): Hond(n) {
-    cout << "Er is een Tekkel geboren!" << endl;
+Tekkel::Tekkel(const string& n): Hond{n} {
+    cout << "Er is een Tekkel geboren!\n";
 }
 
 Tekkel::~Tekkel() {
-    cout << "Er is een Tekkel gestorven." << endl;
+    cout << "Er is een Tekkel gestorven.\n";
 }
 
 void Tekkel::blaf() const {
-    cout << "Kef kef" << endl;
+    cout << "Kef kef\n";
 }
 
-SintBernard::SintBernard(const string& n, int b): Hond(n), vat(b) {
-    cout << "Er is een SintBernard geboren!" << endl;
+SintBernard::SintBernard(const string& n, int b): Hond{n}, vat{b} {
+    cout << "Er is een SintBernard geboren!\n";
 }
 
 SintBernard::~SintBernard() {
-    cout << "Er is een SintBernard gestorven." << endl;
+    cout << "Er is een SintBernard gestorven.\n";
 }
 
 void SintBernard::blaf() const {
-    cout << "WOEF, WOEF" << endl;
+    cout << "WOEF, WOEF\n";
 }
 
 void SintBernard::help() {
@@ -99,27 +98,18 @@ void SintBernard::help() {
 }
 
 int main() {
-    SintBernard h1("Boris", 10);
+    SintBernard h1{"Boris", 10};
     h1.blaf();
     h1.help();
-//    Hond h2(h1);
-//    Error Microsoft Visual C++:
-//        'Hond' : cannot instantiate abstract class
-//          due to following members:
-//        'void Hond::blaf(void) const' : is abstract
-//    Error GCC gcc:
-//        cannot declare variable `h2' to be of type `Hond'
-//        because the following virtual functions are abstract:
-//        virtual void Hond::blaf() const
-
-    Hond& h3(h1);
+//  Hond h2{h1};
+//  Error: cannot declare variable ‘h2’ to be of abstract type ‘Hond’
+//  Note: because the following virtual functions are pure within ‘Hond’:
+//  Note: ‘virtual void Hond::blaf() const’
+    Hond& h3{h1};
     h3.blaf();
-    cin.get();
-    return 0;
 }
 
-/*
-Uitvoer:
+/* Uitvoer:
 Hoera, Boris is geboren!
 Vat met 10 borrels aangemaakt.
 Er is een SintBernard geboren!
@@ -127,9 +117,7 @@ WOEF, WOEF
 Ik kom je helpen, drink deze borrel maar op!
 WOEF, WOEF
 WOEF, WOEF
-<enter>
 Er is een SintBernard gestorven.
 Vat met 9 borrels opgeruimd.
 Helaas, Boris is gestorven.
-<enter>
 */

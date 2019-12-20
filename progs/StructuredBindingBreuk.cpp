@@ -35,6 +35,6 @@ Breuk maakBreuk(int t, int n) {
 }
 
 int main() {
-    auto [teller, noemer] = maakBreuk(2, -4);
+    auto [teller, noemer]{maakBreuk(2, -4)};
     cout << "teller = " << teller << " noemer = " << noemer << '\n';
 }

@@ -35,7 +35,5 @@ int main() {
     Dozijn kwadraten;
     for (int j = 0; j < 12; ++j)
         kwadraten.zetIn(j, j * j);
-    cout << "kwadraten = " << kwadraten << endl;
-    cin.get();
-    return 0;
+    cout << "kwadraten = " << kwadraten << '\n';
 }

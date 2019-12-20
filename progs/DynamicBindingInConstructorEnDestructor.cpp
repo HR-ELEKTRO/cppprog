@@ -7,13 +7,13 @@ using namespace std;
 class Fruit {
 public:
     Fruit() {
-        cout << "Er is een " << soort() << " aangemaakt." << endl;
+        cout << "Er is een " << soort() << " aangemaakt.\n";
     }
     virtual ~Fruit() {
-        cout << "Er is een " << soort() << " verwijderd." << endl;
+        cout << "Er is een " << soort() << " verwijderd.\n";
     }
     virtual void print(ostream& o) {
-        o << soort() << endl;
+        o << soort() << '\n';
     }
 private:
     virtual string soort() const {
@@ -46,13 +46,9 @@ int main() {
         Peer p;
         p.print(cout);
     } // hier worden f, a en p verwijderd
-    cin.get();
-    return 0;
 }
 
-/* 
-Uitvoer:
-
+/* Uitvoer:
 Er is een Fruit aangemaakt.
 Fruit
 Er is een Fruit aangemaakt.

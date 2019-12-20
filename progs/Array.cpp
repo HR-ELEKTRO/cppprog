@@ -19,20 +19,20 @@ public:
 private:
     int size;
     int* data;
-// niet in de les behandeld:
-friend ostream& operator << (ostream& o, const Array& a);
+
+friend ostream& operator<<(ostream& o, const Array& a);
 };
 
-Array::Array(int s): size(s), data(new int[s]) {
+Array::Array(int s): size{s}, data{new int[s]} {
 }
 
-Array::Array(const Array& r): size(r.size), data(new int[r.size]) {
+Array::Array(const Array& r): size{r.size}, data{new int[r.size]} {
     for (int i = 0; i < size; ++i)
         data[i] = r.data[i];
 }
 
 Array& Array::operator=(const Array& r) {
-    Array t(r);
+    Array t{r};
     std::swap(data, t.data);
     std::swap(size, t.size);
     return *this;
@@ -58,7 +58,7 @@ int Array::length() const {
 
 bool Array::operator==(const Array& r) const {
     if (size != r.size)
-    return false;
+        return false;
     for (int i = 0; i < size; ++i)
         if (data[i] != r.data[i])
             return false;
@@ -69,7 +69,7 @@ bool Array::operator!=(const Array& r) const {
     return !(*this == r);
 }
 
-ostream& operator << (ostream& o, const Array& a) {
+ostream& operator<<(ostream& o, const Array& a) {
     for (int i = 0; i < a.size; ++i) {
         o << a.data[i];
         if (i != a.size - 1)
@@ -83,12 +83,12 @@ int main() {
     int i; 
     cin >> i;
     if (i > 0) {
-        Array a(i);
+        Array a{i};
         cout << "a = " << a << endl;
         for (int j = 0; j < a.length(); ++j)
             a[j] = j * j; // vul a met kwadraten
         cout << "a = " << a << endl;
-        Array b(a);
+        Array b{a};
         cout << "b = " << b << endl;
         cout << "a[12] = " << a[12] << endl;
         cout << "b[12] = " << b[12] << endl;
@@ -114,7 +114,4 @@ int main() {
     }
     else
         cout << "Doe niet zo negatief!" << endl;
-    cin.get();
-    cin.get();
-    return 0;
 }

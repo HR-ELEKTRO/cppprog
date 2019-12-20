@@ -26,28 +26,24 @@ class Tekkel: public Hond {
 //  blaf moet als virtual memberfunctie geimplementeerd worden!
 
 void blaf(const Hond* hp) {
-    if (dynamic_cast<const SintBernard*>(hp)!=0)
-        cout << "Woef!" << endl;
-    else if (dynamic_cast<const Tekkel*>(hp)!=0)
-        cout << "Kef kef!" << endl;
+    if (dynamic_cast<const SintBernard*>(hp) != nullptr)
+        cout << "Woef!\n";
+    else if (dynamic_cast<const Tekkel*>(hp) != nullptr)
+        cout << "Kef kef!\n";
     else
-        cout << "Blaf." << endl;
+        cout << "Blaf.\n";
 }
 
 int main() {
-    Hond* borisPtr = new SintBernard;
+    Hond* borisPtr{new SintBernard};
     blaf(borisPtr);
     delete borisPtr;
     borisPtr = new Tekkel;
     blaf(borisPtr);
     delete borisPtr;
-    cin.get();
-    return 0;
 }
 
-/*
-Output:
-
+/* Output:
 Woef!
 Kef kef!
 */

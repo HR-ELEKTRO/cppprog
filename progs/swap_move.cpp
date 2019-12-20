@@ -17,41 +17,41 @@ public:
     const int& operator[](int index) const;
 private:
     int* data;
-friend ostream& operator << (ostream& o, const Dozijn& a);
+friend ostream& operator<<(ostream& o, const Dozijn& a);
 };
 
 Dozijn::Dozijn(): data{new int[12]} {
-	cout << "Constructor aangeroepen\n";
+    cout << "Constructor aangeroepen\n";
 }
 
 Dozijn::Dozijn(const Dozijn& r): data{new int[12]} {
-	cout << "Copy constructor aangeroepen\n";
-	for (int i {0}; i < 12; ++i) {
+    cout << "Copy constructor aangeroepen\n";
+    for (int i = 0; i < 12; ++i) {
         data[i] = r.data[i];
-	}
+    }
 }
 
 Dozijn::Dozijn(Dozijn&& r): data(r.data) {
-	cout << "Move constructor aangeroepen\n";
-	r.data = nullptr;
+    cout << "Move constructor aangeroepen\n";
+    r.data = nullptr;
 }
 
 Dozijn& Dozijn::operator=(const Dozijn& r) {
-	cout << "Copy assignment operator aangeroepen\n";
-	for (int i {0}; i < 12; ++i) {
+    cout << "Copy assignment operator aangeroepen\n";
+    for (int i = 0; i < 12; ++i) {
         data[i] = r.data[i];
-	}
+    }
     return *this;
 }
 
 Dozijn& Dozijn::operator=(Dozijn&& r) {
-	cout << "Move assignment operator aangeroepen\n";
-	swap(data, r.data);
-	return *this;
+    cout << "Move assignment operator aangeroepen\n";
+    swap(data, r.data);
+    return *this;
 }
 
 Dozijn::~Dozijn() {
-	cout << "Destructor aangeroepen\n";
+    cout << "Destructor aangeroepen\n";
     delete[] data;
 }
 
@@ -65,8 +65,8 @@ const int& Dozijn::operator[](int index) const {
     return data[index];
 }
 
-ostream& operator << (ostream& o, const Dozijn& a) {
-    for (int i {0}; i < 12; ++i) {
+ostream& operator<<(ostream& o, const Dozijn& a) {
+    for (int i = 0; i < 12; ++i) {
         o << a.data[i];
         if (i != 11)
             o << ',';
@@ -75,38 +75,38 @@ ostream& operator << (ostream& o, const Dozijn& a) {
 }
 
 void swap(Dozijn& d1, Dozijn& d2) {
-	Dozijn hulp{d1};
-	d1 = d2;
-	d2 = hulp;
+    Dozijn hulp{d1};
+    d1 = d2;
+    d2 = hulp;
 }
 
 void swap_move(Dozijn& d1, Dozijn& d2) {
-	Dozijn hulp{move(d1)};
-	d1 = move(d2);
-	d2 = move(hulp);
+    Dozijn hulp{move(d1)};
+    d1 = move(d2);
+    d2 = move(hulp);
 }
 
 int main() {
-	Dozijn a, b;
-	for (int j{0}; j < 12; ++j) {
-		a[j] = j + j; // vul a met dubbelen
-		b[j] = j * j; // vul b met kwadraten
-	}
-	cout << "a = " << a << '\n';
-	cout << "b = " << b << '\n';
+    Dozijn a, b;
+    for (int j = 0; j < 12; ++j) {
+        a[j] = j + j; // vul a met dubbelen
+        b[j] = j * j; // vul b met kwadraten
+    }
+    cout << "a = " << a << '\n';
+    cout << "b = " << b << '\n';
 
-	swap(a, b);
+    swap(a, b);
 
-	cout << "a = " << a << '\n';
-	cout << "b = " << b << '\n';
+    cout << "a = " << a << '\n';
+    cout << "b = " << b << '\n';
 
-	swap_move(a, b);
+    swap_move(a, b);
 
-	cout << "a = " << a << '\n';
-	cout << "b = " << b << '\n';
+    cout << "a = " << a << '\n';
+    cout << "b = " << b << '\n';
 
-	std::swap(a, b);
+    std::swap(a, b);
 
-	cout << "a = " << a << '\n';
-	cout << "b = " << b << '\n';
+    cout << "a = " << a << '\n';
+    cout << "b = " << b << '\n';
 }

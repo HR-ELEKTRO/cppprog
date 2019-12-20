@@ -19,19 +19,15 @@ public:
     virtual void blaft() const; // OOPS foutje
 //  Beter alternatief:
 //  virtual void blaft() const override ; // foutje wordt nu door de compiler gemeld:
-//  Microsoft Visual C++ error: 
-//  'Tekkel::blaft' : method with override specifier 'override' did not override any base class methods    
-//  GNU gcc error:  
-//  'virtual void Tekkel::blaft() const' marked override, but does not override
+//  Error: 'virtual void Tekkel::blaft() const' marked override, but does not override
 };
 
-Hond::Hond(const string& n): naam(n) {
-    cout << "Hoera, " << naam << " is geboren!" << endl;
+Hond::Hond(const string& n): naam{n} {
+    cout << "Hoera, " << naam << " is geboren!\n";
 }
 
 Hond::~Hond() {
-    cout << "Helaas, " << naam << " is gestorven." << endl;
-    cin.get();
+    cout << "Helaas, " << naam << " is gestorven.\n";
 }
 
 void Hond::setNaam(const string& n) {
@@ -39,33 +35,30 @@ void Hond::setNaam(const string& n) {
 }
 
 void Hond::blaf() const {
-    cout << "Blaf blaf" << endl;
+    cout << "Blaf blaf\n";
 }
 
-Tekkel::Tekkel(const string& n): Hond(n) {
-    cout << "Er is een Tekkel geboren!" << endl;
+Tekkel::Tekkel(const string& n): Hond{n} {
+    cout << "Er is een Tekkel geboren!\n";
 }
 
 Tekkel::~Tekkel() {
-    cout << "Er is een Tekkel gestorven." << endl;
+    cout << "Er is een Tekkel gestorven.\n";
 }
 
 void Tekkel::blaft() const {
-    cout << "Kef kef" << endl;
+    cout << "Kef kef\n";
 }
 
 int main() {
-    Tekkel h1("Biefie");
+    Tekkel h1{"Biefie"};
     h1.blaf();
-    cin.get();
-    return 0;
 }
 
-/* Uitvoer:
+/* Uitvoer: 
 Hoera, Biefie is geboren!
 Er is een Tekkel geboren!
 Blaf blaf
-<Enter>
 Er is een Tekkel gestorven.
 Helaas, Biefie is gestorven.
 */

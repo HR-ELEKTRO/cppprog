@@ -17,41 +17,41 @@ public:
     const int& operator[](int index) const;
 private:
     int* data;
-friend ostream& operator << (ostream& o, const Dozijn& a);
+friend ostream& operator<<(ostream& o, const Dozijn& a);
 };
 
 Dozijn::Dozijn(): data{new int[12]} {
-	cout << "Constructor aangeroepen\n";
+    cout << "Constructor aangeroepen\n";
 }
 
 Dozijn::Dozijn(const Dozijn& r): data{new int[12]} {
-	cout << "Copy constructor aangeroepen\n";
-	for (int i {0}; i < 12; ++i) {
+    cout << "Copy constructor aangeroepen\n";
+    for (int i = 0; i < 12; ++i) {
         data[i] = r.data[i];
-	}
+    }
 }
 
 Dozijn::Dozijn(Dozijn&& r): data(r.data) {
-	cout << "Move constructor aangeroepen\n";
-	r.data = nullptr;
+    cout << "Move constructor aangeroepen\n";
+    r.data = nullptr;
 }
 
 Dozijn& Dozijn::operator=(const Dozijn& r) {
-	cout << "Copy assignment operator aangeroepen\n";
-	for (int i {0}; i < 12; ++i) {
+    cout << "Copy assignment operator aangeroepen\n";
+    for (int i = 0; i < 12; ++i) {
         data[i] = r.data[i];
-	}
+    }
     return *this;
 }
 
 Dozijn& Dozijn::operator=(Dozijn&& r) {
-	cout << "Move assignment operator aangeroepen\n";
-	swap(data, r.data);
-	return *this;
+    cout << "Move assignment operator aangeroepen\n";
+    swap(data, r.data);
+    return *this;
 }
 
 Dozijn::~Dozijn() {
-	cout << "Destructor aangeroepen\n";
+    cout << "Destructor aangeroepen\n";
     delete[] data;
 }
 
@@ -65,8 +65,8 @@ const int& Dozijn::operator[](int index) const {
     return data[index];
 }
 
-ostream& operator << (ostream& o, const Dozijn& a) {
-    for (int i {0}; i < 12; ++i) {
+ostream& operator<<(ostream& o, const Dozijn& a) {
+    for (int i = 0; i < 12; ++i) {
         o << a.data[i];
         if (i != 11)
             o << ',';
@@ -75,30 +75,30 @@ ostream& operator << (ostream& o, const Dozijn& a) {
 }
 
 Dozijn operator+(const Dozijn& left, const Dozijn& right) {
-	Dozijn result;
-	for (int i{0}; i != 12; ++i) {
-		result[i] = left[i] + right[i];
-	}
-	return result;
+    Dozijn result;
+    for (int i = 0; i != 12; ++i) {
+        result[i] = left[i] + right[i];
+    }
+    return result;
 }
 
 int main() {
-	Dozijn a;
-	for (int j{0}; j < 12; ++j)
-		a[j] = j * j; // vul a met kwadraten
-	cout << "a = " << a << '\n';
-	Dozijn b{a};
-	cout << "b = " << b << '\n';
+    Dozijn a;
+    for (int j = 0; j < 12; ++j)
+        a[j] = j * j; // vul a met kwadraten
+    cout << "a = " << a << '\n';
+    Dozijn b{a};
+    cout << "b = " << b << '\n';
 
-	Dozijn c{a + b};
-	cout << "c = " << c << '\n';
+    Dozijn c{a + b};
+    cout << "c = " << c << '\n';
 
-	a = b + c;
-	cout << "a = " << a << '\n';
+    a = b + c;
+    cout << "a = " << a << '\n';
 
-	b = move(c); // alleen als je zeker weet c niet meer nodig te hebben
-	cout << "b = " << b << '\n';
+    b = move(c); // alleen als je zeker weet c niet meer nodig te hebben
+    cout << "b = " << b << '\n';
 
-	Dozijn d{move(a)}; // alleen als je zeker weet a niet meer nodig te hebben
-	cout << "d = " << d << '\n';
+    Dozijn d{move(a)}; // alleen als je zeker weet a niet meer nodig te hebben
+    cout << "d = " << d << '\n';
 }

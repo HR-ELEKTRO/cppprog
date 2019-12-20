@@ -23,7 +23,7 @@ void Breuk::leesin() {
 }
 
 void Breuk::drukaf() const {
-    cout << boven << "/" << onder << endl;
+    cout << boven << "/" << onder;
 }
 
 void Breuk::plus(const Breuk& b) {
@@ -46,7 +46,7 @@ void Breuk::normaliseer() {
         onder =- onder;
         boven =- boven;
     }
-    int d(ggd(boven < 0 ? -boven : boven, onder));
+    int d = ggd(boven < 0 ? -boven : boven, onder);
     boven /= d;
     onder /= d;
 }
@@ -55,10 +55,11 @@ int main() {
     Breuk a, b; // definieer de objecten a en b van de class Breuk
     a.leesin(); // lees a in
     b.leesin(); // lees b in
+    a.drukaf();
+    cout << " + ";
+    b.drukaf();
+    cout << " = ";
     a.plus(b);  // tel b bij a op
     a.drukaf(); // druk a af
-
-    cin.get();
-    cin.get();
-    return 0;
+    cout << '\n';
 }

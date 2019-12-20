@@ -33,8 +33,8 @@ public:
         fp.push_back(&p);
     }
     void printInhoud() const {
-        cout << "De fruitmand bevat:" << endl;
-        for (Fruit* e: fp)
+        cout << "De fruitmand bevat:\n";
+        for (const Fruit* e: fp)
             cout << e->soort() << endl;
     }
 private:
@@ -50,13 +50,9 @@ int main() {
     m.voegToe(a2);
     m.printInhoud();
 //  ...
-    cin.get();
-    return 0;
 }
 
-/*
-Uitvoer:
-
+/* Uitvoer:
 De fruitmand bevat:
 Appel
 Peer

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <typeinfo>
 using namespace std;
 
 class Hond {
@@ -29,22 +30,22 @@ private:
     int whisky;
 };
 
-void geefHulp(Hond* hp) {
-    hp->blaf();
-//  cout << hp->geefDrank() << " liter.\n";
-//  Error: 'class Hond' has no member named 'geefDrank'
-//  We kunnen een cast gebruiken maar dat geeft foutieve uitvoer als hp niet naar een SintBernard wijst.
-    cout << static_cast<SintBernard*>(hp)->geefDrank() << " liter.\n";
+void geefHulp(Hond& hr) {
+    hr.blaf();
+    try {
+        SintBernard& sbr{dynamic_cast<SintBernard&>(hr)};
+        cout << sbr.geefDrank() << " liter.\n";
+    } catch (bad_cast) {
+    // Warning: catching polymorphic type ‘class std::bad_cast’ by value
+        /* doe niets */
+    }
 }
 
 int main() {
-    Hond* borisPtr{new SintBernard};
-    geefHulp(borisPtr);
-    delete borisPtr;
-    
-    Hond* fikkiePtr{new Hond};
-    geefHulp(fikkiePtr);
-    delete fikkiePtr;
+    SintBernard boris;
+    geefHulp(boris);
+    Hond fikkie;
+    geefHulp(fikkie);
 }
 
 /* Output:
@@ -52,6 +53,4 @@ Woef!
 Geeft drank.
 10 liter.
 Blaf.
-Geeft drank.
--2144382840 liter.
 */

@@ -42,10 +42,8 @@ Zie ExplicitOverride.cpp hoe je kunt voorkomen dat functies "per ongeluk" overlo
 
 int main() {
     Derived d;
-    Base* pb = &d;
+    Base* pb{&d};
     pb->f(3);
     pb->g(3);
     // ...
-    cin.get();
-    return 0;
 }

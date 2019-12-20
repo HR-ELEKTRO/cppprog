@@ -21,16 +21,16 @@ double abs(double f) {
 //<abs_overloaded
 
 //>def_par
-void print(int i, int talstelsel=10);
+void print(int i, int talstelsel = 10);
 //<def_par
 
 void print(int i, int talstelsel) {
 }
 
 //>struct_Tijdsduur
-struct Tijdsduur { /* Een Tijdsduur bestaat uit: */
-    int uur;       /*     een aantal uren en     */
-    int min;       /*     een aantal minuten.    */
+struct Tijdsduur { // Een Tijdsduur bestaat uit:
+    int uur;       //     een aantal uren en
+    int min;       //     een aantal minuten.
 };
 //<struct_Tijdsduur
 
@@ -65,13 +65,13 @@ int ggd(int n, int m) {
     return n;
 }
 
-Breuk::Breuk(): boven(0), onder(1) {
+Breuk::Breuk(): boven{0}, onder{1} {
 }
 
-Breuk::Breuk(int t): boven(t), onder(1) {
+Breuk::Breuk(int t): boven{t}, onder{1} {
 }
 
-Breuk::Breuk(int t, int n): boven(t), onder(n) {
+Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
@@ -146,7 +146,7 @@ int main() {
     cout << b1 << "+"          // afdrukken met <<
          << b2 << "="
          << (b1 + b2) << endl; // optellen met +
-    Breuk b3(18, -9);          // definiëren en initialiseren
+    Breuk b3{18, -9};          // definiëren en initialiseren
     if (b1 != b3) {            // vergelijken met !=
         b3++;                  // verhogen met ++
     }
@@ -172,7 +172,8 @@ void dummy() {
 {
 //>som_in_C
     int array[] = {12, 2, 17, 32, 1, 18};
-    int i, som = 0, aantal = sizeof array / sizeof array[0];
+    size_t i, aantal = sizeof array / sizeof array[0];
+    int som = 0;
     for (i = 0; i < aantal; i++) {
         som += array[i];
     }
@@ -180,7 +181,7 @@ void dummy() {
 }
 {
 //>som_in_Cpp_zonder_auto
-    int array[] = {12, 2, 17, 32, 1, 18};
+    int array[] {12, 2, 17, 32, 1, 18};
     int som = 0;
     for (int element: array) {
         som += element;
@@ -191,7 +192,7 @@ void dummy() {
 //>use_abs_overloaded
     double in;
     std::cin >> in; // lees in
-    std::cout << abs(in) << std::endl; // druk de absolute waarde van in af
+    std::cout << abs(in) << '\n'; // druk de absolute waarde van in af
 //<use_abs_overloaded
 }
 {
@@ -221,18 +222,17 @@ typedef struct Tijdsduur TTijdsduur;
 //<use_struct_Cpp
 }
 {
-    int a, b=1;
+    int a, b = 1;
     a = ++++b;
-    std::cout << "a = " << std::endl;
-//  a = b++++;
-//  Error (Microsoft): '++' needs l-value
-//  Error (GCC): lvalue required as increment operand  
+    std::cout << "a = " << '\n';
+    // a = b++++;
+    // Error: lvalue required as increment operand
 }    
 {
 //>new
-    double* dp(new double); // reserveer een double
+    double* dp{new double}; // reserveer een double
     int i; cin >> i;
-    double* drij(new double[i]); // reserveer een array met i doubles
+    double* drij{new double[i]}; // reserveer een array met i doubles
     // ...
     delete dp; // geef de door dp aangewezen geheugenruimte vrij
     delete[] drij; // idem voor de door drij aangewezen array

@@ -47,13 +47,13 @@ int ggd(int n, int m) {
 
 // ADT-definitie:
 
-Breuk::Breuk(): boven(0), onder(1) {
+Breuk::Breuk(): boven{0}, onder{1} {
 }
 
-Breuk::Breuk(int t): boven(t), onder(1) {
+Breuk::Breuk(int t): boven{t}, onder{1} {
 }
 
-Breuk::Breuk(int t, int n): boven(t), onder(n) {
+Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
@@ -87,14 +87,14 @@ void Breuk::normaliseer() {
 }
 
 const Breuk operator+(const Breuk& left, const Breuk& right) {
-    Breuk copyLeft(left);
+    Breuk copyLeft{left};
     copyLeft += right;
     return copyLeft;
 }
 
 /* verkorte notatie:
 const Breuk operator+(const Breuk& left, const Breuk& right) {
-    return Breuk(left) += right;
+    return Breuk{left} += right;
 }
 */
 
@@ -114,11 +114,11 @@ istream& operator>>(istream& left, Breuk& right) {
         if (left.peek() == '/') {
             left.get();
             int noemer;
-            if (left >> noemer) right = Breuk(teller, noemer);
-            else right = Breuk(teller);
+            if (left >> noemer) right = Breuk{teller, noemer};
+            else right = Breuk{teller};
         }
-        else right = Breuk(teller);
-    else right = Breuk();
+        else right = Breuk{teller};
+    else right = Breuk{};
     return left;
 }
 
@@ -133,28 +133,34 @@ bool operator!=(const Breuk& left, const Breuk& right) {
 // Hoofdprogramma:
 
 int main() {
-    Breuk b1, b2;                   // definiëren van variabelen
-    cout << "Geef Breuk: ";
-    cin >> b1;                      // inlezen met >>
-    cout << "Geef nog een Breuk: ";
-    cin >> b2;                      // inlezen met >>
-    cout << b1 << "+" << b2 << "="  // afdrukken met <<
-    cout << (b1 + b2) << endl;      // optellen met +
-    Breuk b3(18, -9);               // definiëren en initialiseren
-    if (b1 != b3) {                 // vergelijken met !=
-        b3++;                       // verhogen met ++
+    Breuk b1, b2;              // definiëren van variabelen
+    cout << "Geef Breuk (a/b): ";
+    cin >> b1;                 // inlezen met >>
+    cout << "Geef nog een Breuk (c/d): ";
+    cin >> b2;                 // inlezen met >>
+    cout << b1 << " + " 
+         << b2 << " = "        // afdrukken met <<
+         << (b1 + b2) << '\n'; // optellen met +
+    Breuk b3{18, -12};          // definiëren en initialiseren
+    if (b1 != b3) {            // vergelijken met !=
+        b3++;                  // verhogen met ++
     }
-    cout << b3 << endl;             // afdrukken met <<
-    b3 += 5;                        // verhogen met +=
-    cout << b3 << endl;             // afdrukken met <<
-    if (-2 == b3) {                 // vergelijken met een int met ==
-        cout << "OK." << endl;
+    cout << b3 << '\n';        // afdrukken met <<
+    b3 += {-5, 2};              // verhogen met +=
+    cout << b3 << '\n';        // afdrukken met <<
+    if (-3 == b3) {            // vergelijken met een int met ==
+        cout << "OK.\n";
     } 
     else {
-        cout << "Error." << endl;
+        cout << "Error.\n";
     }
-
-    cin.get();                      // wacht met sluiten console-
-    cin.get();                      // window 
-    return 0;
 }
+
+// Output:
+Geef Breuk (a/b): -1/-2
+Geef nog een Breuk (c/d): 3/4
+1/2 + 3/4 = 5/4
+-1/2
+-3/1
+OK.
+*/

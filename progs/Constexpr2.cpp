@@ -3,8 +3,8 @@
 using namespace std;
 
 int main() {
-    int i = 3;
-    constexpr int j = 24;
+    int i{3};
+    constexpr int j{24};
 
     cout << "Geef i: ";
     cin >> i;
@@ -14,10 +14,10 @@ int main() {
     // Error: uninitialized const 'k'
 
     // Een constexpr moet je initialiseren met een compile time constante
-    constexpr int m = i;
+    constexpr int m{i};
     // Error: the value of 'i' is not usable in a constant expression
 
-    constexpr int n = j;
+    constexpr int n{j};
 
     // Een constexpr mag je niet veranderen:
     j = 7;

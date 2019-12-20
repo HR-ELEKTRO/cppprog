@@ -4,7 +4,7 @@
 #include <cassert>
 using namespace std;
 
-// Classdeclaratie.
+// Classdeclaratie:
 
 class Breuk {
 public:
@@ -36,7 +36,7 @@ int ggd(int n, int m) {
 
 // Classdefinitie:
 
-Breuk::Breuk(int t, int n): boven(t), onder(n) {
+Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
@@ -60,7 +60,7 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d(ggd(boven, onder));
+    int d = ggd(boven, onder);
     boven /= d;
     onder /= d;
     // controle of nog steeds aan de invariant van de class wordt voldaan:
@@ -70,26 +70,22 @@ void Breuk::normaliseer() {
 // Hoofdprogramma:
 
 int main() {
-    Breuk b1(14, 4);
-    cout << "b1(14, 4) = " << b1.teller() << '/' << b1.noemer() << endl;
-    Breuk b2(23, -5);
-    cout << "b2(23, -5) = " << b2.teller() << '/' << b2.noemer() << endl;
+    Breuk b1{14, 4};
+    cout << "b1{14, 4} = " << b1.teller() << '/' << b1.noemer() << '\n';
+    Breuk b2{23, -5};
+    cout << "b2{23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
     b1 += b2;
-    cout << "b1 += b2 = " << b1.teller() << '/' << b1.noemer() << endl;
+    cout << "b1 += b2 = " << b1.teller() << '/' << b1.noemer() << '\n';
 
 //  "Rijgen" van de operator += is nu niet mogelijk
 //  b1 += b1 += b2;
-//  Error (Microsoft): binary '+=' : no operator found which takes a right-hand operand of type 'void' (or there is no acceptable conversion)
-//  Error (GCC):       no match for 'operator+=' in 'b1 += b1.Breuk::operator+=(b2)'
+//  Error: no match for ‘operator+=’ (operand types are ‘Breuk’ and ‘void’)
 //  Zie breuk3.cpp voor de oplossing van dit probleem
-
-    cin.get();
-    return 0;
 }
 
 /* Output:
-b1(14, 4) = 7/2
-b2(23, -5) = -23/5
+b1{14, 4} = 7/2
+b2{23, -5} = -23/5
 b1 += b2 = -11/10
 */
 

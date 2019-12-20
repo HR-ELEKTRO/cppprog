@@ -19,13 +19,12 @@ public:
     void blaf() const;
 };
 
-Hond::Hond(const string& n): naam(n) {
-    cout << "Hoera, " << naam << " is geboren!" << endl;
+Hond::Hond(const string& n): naam{n} {
+    cout << "Hoera, " << naam << " is geboren!\n";
 }
 
 Hond::~Hond() {
-    cout << "Helaas, " << naam << " is gestorven." << endl;
-    cin.get();
+    cout << "Helaas, " << naam << " is gestorven.\n";
 }
 
 void Hond::setNaam(const string& n) {
@@ -33,35 +32,32 @@ void Hond::setNaam(const string& n) {
 }
 
 void Hond::blaf() const {
-    cout << "Blaf blaf" << endl;
+    cout << "Blaf blaf\n";
 }
 
-Tekkel::Tekkel(const string& n): Hond(n) {
-    cout << "Er is een Tekkel geboren!" << endl;
+Tekkel::Tekkel(const string& n): Hond{n} {
+    cout << "Er is een Tekkel geboren!\n";
 }
 
 Tekkel::~Tekkel() {
-    cout << "Er is een Tekkel gestorven." << endl;
+    cout << "Er is een Tekkel gestorven.\n";
 }
 
 void Tekkel::blaf() const {
-    cout << "Kef kef" << endl;
+    cout << "Kef kef\n";
 }
 
 int main() {
-    Hond h1("Fikkie");
+    Hond h1{"Fikkie"};
     h1.blaf();
-    Tekkel h2("Biefie");
+    Tekkel h2{"Biefie"};
     h2.blaf();
-    Hond* hp(new Tekkel("Harry"));
+    Hond* hp{new Tekkel("Harry")};
     hp->blaf();
     delete hp;
-    cin.get();
-    return 0;
 }
 
-/*
-Uitvoer:
+/* Uitvoer:
 Hoera, Fikkie is geboren!
 Blaf blaf
 Hoera, Biefie is geboren!
@@ -71,11 +67,7 @@ Hoera, Harry is geboren!
 Er is een Tekkel geboren!
 Blaf blaf
 Helaas, Harry is gestorven.
-<enter>
-<enter>
 Er is een Tekkel gestorven.
 Helaas, Biefie is gestorven.
-<enter>
 Helaas, Fikkie is gestorven.
-<enter>
 */

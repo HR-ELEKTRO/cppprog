@@ -12,13 +12,12 @@ private:
     string naam;
 };
 
-Hond::Hond(const string& n): naam(n) {
-    cout << "Hoera, " << naam << " is geboren!" << endl;
+Hond::Hond(const string& n): naam{n} {
+    cout << "Hoera, " << naam << " is geboren!\n";
 }
 
 Hond::~Hond() {
-    cout << "Helaas, " << naam << " is gestorven." << endl;
-    cin.get();
+    cout << "Helaas, " << naam << " is gestorven.\n";
 }
 
 void Hond::setNaam(const string& n) {
@@ -26,31 +25,26 @@ void Hond::setNaam(const string& n) {
 }
 
 void Hond::blaf() const {
-    cout << "Blaf blaf" << endl;
+    cout << naam << " zegt: Blaf blaf\n";
 }
 
 int main() {
-    Hond h1("Fikkie");
+    Hond h1{"Fikkie"};
     h1.blaf();
     h1.setNaam("Kees");
-    const Hond h2("Leika");
+    h1.blaf();
+    const Hond h2{"Leika"};
     h2.blaf();
 //  h2.setNaam("Lex");
-//  [C++ Error (Microsoft)] 'Hond::setNaam' : cannot convert 'this' pointer from 'const Hond' to 'Hond &'
-//  [C++ Error (GCC)]       no matching function for call to `Hond::setNaam(const char[4]) const'
-    cin.get();
-    return 0;
+//  Error: passing ‘const Hond’ as ‘this’ argument discards qualifiers
 }
 
-/*
-Uitvoer:
+/* Uitvoer:
 Hoera, Fikkie is geboren!
-Blaf blaf
+Fikkie zegt: Blaf blaf
+Kees zegt: Blaf blaf
 Hoera, Leika is geboren!
-Blaf blaf
-<enter>
+Leika zegt: Blaf blaf
 Helaas, Leika is gestorven.
-<enter>
 Helaas, Kees is gestorven.
-<enter>
 */

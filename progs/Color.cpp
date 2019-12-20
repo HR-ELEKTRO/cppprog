@@ -1,9 +1,9 @@
 // Dit programma laat zien hoe je constanten kunt definiëren
 // die door alle objecten van een class gedeeld worden.
 // Dit kan op 3 manieren:
-// - als static constexpr datamembers (sinds C++11) ==> zie Manier1 (werkt nog niet in Visual Studio 2013)
-// - als static const datamembers                   ==> zie Manier2
-// - als een anoniem enumeratietype                 ==> zie Manier3
+// - als static constexpr datamembers ==> zie Manier1
+// - als static const datamembers     ==> zie Manier2
+// - als een anoniem enumeratietype   ==> zie Manier3
 
 #include <iostream>
 #include <iomanip>
@@ -35,10 +35,10 @@ ostream& operator<<(ostream& o, Color c) {
     return o << setw(6) << setfill('0') << hex << c.getValue();
 }
 
-Color::Color(): value(BLACK) {
+Color::Color(): value{BLACK} {
 }
 
-Color::Color(int v): value(v) {
+Color::Color(int v): value{v} {
 }
 
 int Color::getValue() const {
@@ -76,10 +76,10 @@ ostream& operator<<(ostream& o, Color c) {
     return o << setw(6) << setfill('0') << hex << c.getValue();
 }
 
-Color::Color(): value(BLACK) {
+Color::Color(): value{BLACK} {
 }
 
-Color::Color(int v): value(v) {
+Color::Color(int v): value{v} {
 }
 
 int Color::getValue() const {
@@ -115,10 +115,10 @@ ostream& operator<<(ostream& o, Color c) {
     return o << setw(6) << setfill('0') << hex << c.getValue();
 }
 
-Color::Color(): value(BLACK) {
+Color::Color(): value{BLACK} {
 }
 
-Color::Color(int v): value(v) {
+Color::Color(int v): value{v} {
 }
 
 int Color::getValue() const {
@@ -131,27 +131,25 @@ void Color::setValue(int v) {
 
 }
 int main() {
-{
-    using namespace Manier1;
-    Color c(Color::YELLOW);
-    cout << "c = " << c << endl;
-    c.setValue(Color::BLUE);
-    cout << "c = " << c << endl;
-}
-{
-    using namespace Manier2;
-    Color c(Color::YELLOW);
-    cout << "c = " << c << endl;
-    c.setValue(Color::BLUE);
-    cout << "c = " << c << endl;
-}
-{
-    using namespace Manier3;
-    Color c(Color::YELLOW);
-    cout << "c = " << c << endl;
-    c.setValue(Color::BLUE);
-    cout << "c = " << c << endl;
-}
-    cin.get();
-    return 0;
+    {
+        using namespace Manier1;
+        Color c{Color::YELLOW};
+        cout << "c = " << c << '\n';
+        c.setValue(Color::BLUE);
+        cout << "c = " << c << '\n';
+    }
+    {
+        using namespace Manier2;
+        Color c{Color::YELLOW};
+        cout << "c = " << c << '\n';
+        c.setValue(Color::BLUE);
+        cout << "c = " << c << '\n';
+    }
+    {
+        using namespace Manier3;
+        Color c{Color::YELLOW};
+        cout << "c = " << c << '\n';
+        c.setValue(Color::BLUE);
+        cout << "c = " << c << '\n';
+    }
 }

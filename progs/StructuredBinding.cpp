@@ -3,27 +3,27 @@
 using namespace std;
 
 struct Adres {
-	string straatnaam;
-	int huisnummer;
-	string plaatsnaam;
+    string straatnaam;
+    int huisnummer;
+    string plaatsnaam;
 };
 
 Adres adreslocatieHR(string locatie) {
-	if (locatie == "AP")
-		return {"G.J. de Jonghweg", 4, "Rotterdam"};
-	else if (locatie == "MP")
-		/* ... */;
-	return {"", 0, ""};
+    if (locatie == "AP")
+        return {"G.J. de Jonghweg", 4, "Rotterdam"};
+    else if (locatie == "MP")
+        /* ... */;
+    return {"", 0, ""};
 }
 
 int main() {
     // Zonder stuctured binding:
-	Adres ap = adreslocatieHR("AP");
-	cout << "Het adres van de locatie AP van de HR is: "
-		 << ap.straatnaam << ' ' << ap.huisnummer << ", " << ap.plaatsnaam << '\n';
+    Adres ap{adreslocatieHR("AP")};
+    cout << "Het adres van de locatie AP van de HR is: "
+         << ap.straatnaam << ' ' << ap.huisnummer << ", " << ap.plaatsnaam << '\n';
     
     // Met stuctured binding:
-	auto [straat, nr, plaats] = adreslocatieHR("AP");
-	cout << "Het adres van de locatie AP van de HR is: "
-		 << straat << ' ' << nr << ", " << plaats << '\n';
+    auto [straat, nr, plaats]{adreslocatieHR("AP")};
+    cout << "Het adres van de locatie AP van de HR is: "
+         << straat << ' ' << nr << ", " << plaats << '\n';
 }

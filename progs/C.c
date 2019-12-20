@@ -18,12 +18,12 @@ void drukaf(Tijdsduur td) {
 }
 
 // Deze functie drukt een rij met een aantal Tijdsduren af
-void drukafRij(Tijdsduur rij[], size_t aantal) {
+void drukaf_rij(Tijdsduur rij[], size_t aantal) {
     for (size_t teller = 0; teller < aantal; teller++)
         drukaf(rij[teller]);
 }
 
-// Deze functie berekent de totaal Tijdsduurr uit een rij met een aantal Tijdsduren
+// Deze functie berekent de totaal Tijdsduur van een rij met een aantal Tijdsduren
 Tijdsduur som(Tijdsduur rij[], size_t aantal) {
     Tijdsduur s = {0, 0};
     for (size_t teller = 0; teller < aantal; teller++) {
@@ -46,8 +46,8 @@ int main(void) {
         aantal_gelezen_variabelen = scanf("%d%d", &tijdsduur[aantal].uur, &tijdsduur[aantal].minuten);
     }
     while (aantal_gelezen_variabelen == 2 && ++aantal < MAX_TIJDSDUREN);
-    printf("\n\n");
-    drukafRij(tijdsduur, aantal);
+    printf("\n");
+    drukaf_rij(tijdsduur, aantal);
     printf("De totaal tijdsduur is:\n");
     drukaf(som(tijdsduur, aantal));
     return 0;

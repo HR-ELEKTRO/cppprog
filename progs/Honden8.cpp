@@ -29,21 +29,21 @@ private:
     int aantalBorrels;
 };
 
-WhiskeyVat::WhiskeyVat(int b): aantalBorrels(b) {
-    cout << "Vat met " << aantalBorrels << " borrels aangemaakt." << endl;
+WhiskeyVat::WhiskeyVat(int b): aantalBorrels{b} {
+    cout << "Vat met " << aantalBorrels << " borrels aangemaakt.\n";
 }
 
 WhiskeyVat::~WhiskeyVat() {
-    cout << "Vat met " << aantalBorrels << " borrels opgeruimd." << endl;
+    cout << "Vat met " << aantalBorrels << " borrels opgeruimd.\n";
 }
 
 bool WhiskeyVat::geefBorrel() {
     if (aantalBorrels > 0) {
         --aantalBorrels;
-        cout << "Ik kom je helpen, drink deze borrel maar op!" << endl;
+        cout << "Ik kom je helpen, drink deze borrel maar op!\n";
         return true;
     }
-    cout << "Ik kan je niet helpen, mijn whiskey is op." << endl;
+    cout << "Ik kan je niet helpen, mijn whiskey is op.\n";
     return false;
 }
 
@@ -60,53 +60,53 @@ private:
     WhiskeyVat* vatPtr;
 };
 
-Hond::Hond(const string& n): naam(n) {
-    cout << "Hoera, " << naam << " is geboren!" << endl;
+Hond::Hond(const string& n): naam{n} {
+    cout << "Hoera, " << naam << " is geboren!\n";
 }
 
 Hond::~Hond() {
-    cout << "Helaas, " << naam << " is gestorven." << endl;
-    cin.get();
+    cout << "Helaas, " << naam << " is gestorven.\n";
 }
 
 void Hond::setNaam(const string& n) {
     naam = n;
 }
 
-Tekkel::Tekkel(const string& n): Hond(n) {
-    cout << "Er is een Tekkel geboren!" << endl;
+Tekkel::Tekkel(const string& n): Hond{n} {
+    cout << "Er is een Tekkel geboren!\n";
 }
 
 Tekkel::~Tekkel() {
-    cout << "Er is een Tekkel gestorven." << endl;
+    cout << "Er is een Tekkel gestorven.\n";
 }
 
 void Tekkel::blaf() const {
-    cout << "Kef kef" << endl;
+    cout << "Kef kef\n";
 }
 
-SintBernard::SintBernard(const string& n): Hond(n), vatPtr(0) {
-    cout << "Er is een SintBernard geboren!" << endl;
+SintBernard::SintBernard(const string& n): Hond{n}, vatPtr{nullptr} {
+    cout << "Er is een SintBernard geboren!\n";
 }
 
-SintBernard::SintBernard(const string& n, int b): Hond(n), vatPtr(new WhiskeyVat(b)) {
-    cout << "Er is een SintBernard geboren!" << endl;
+SintBernard::SintBernard(const string& n, int b): Hond{n}, vatPtr{new WhiskeyVat(b)} {
+    cout << "Er is een SintBernard geboren!\n";
 }
 
-SintBernard::SintBernard(const SintBernard& s): Hond(s), vatPtr(0) {
-    if (s.vatPtr != 0) {
+SintBernard::SintBernard(const SintBernard& s): Hond{s}, vatPtr{nullptr} {
+    if (s.vatPtr != nullptr) {
         vatPtr = new WhiskeyVat(*(s.vatPtr));
     }
-    cout << "Er is een SintBernard gekopieerd!" << endl;
+    cout << "Er is een SintBernard gekopieerd!\n";
 }
 
 SintBernard::~SintBernard() {
-    cout << "Er is een SintBernard bijna dood." << endl;
+    cout << "Er is een SintBernard bijna dood.\n";
     if (vatPtr != 0) {
-        while (vatPtr->geefBorrel()) /* drink alle borrels op */;
+        while (vatPtr->geefBorrel()) 
+            /* drink alle borrels op */;
     }
     delete vatPtr;
-    cout << "Er is een SintBernard gestorven." << endl;
+    cout << "Er is een SintBernard gestorven.\n";
 }
 
 SintBernard& SintBernard::operator=(const SintBernard& r) {
@@ -117,7 +117,7 @@ SintBernard& SintBernard::operator=(const SintBernard& r) {
 }
 
 void SintBernard::blaf() const {
-    cout << "WOEF, WOEF" << endl;
+    cout << "WOEF, WOEF\n";
 }
 
 void SintBernard::help() {
@@ -128,12 +128,12 @@ void SintBernard::help() {
 }
 
 int main() {
-    SintBernard h1("Boris", 10);
+    SintBernard h1{"Boris", 10};
     h1.help();
-    SintBernard h2("BlauweKnoop");
+    SintBernard h2{"BlauweKnoop"};
     h2.help();
 //  Maak een kopietje van h1
-    SintBernard h3(h1);
+    SintBernard h3{h1};
     for (int i = 0; i < 5; ++i) {
         h3.help() /* help 5 keer */;
     }
@@ -142,12 +142,15 @@ int main() {
     h3 = h2;
     h3.blaf();
     h3.help();
-    cin.get();
-    return 0;
 }
 
-/*
-Uitvoer:
+/* Uitvoer:
+Hoera, Boris is geboren!
+Vat met 10 borrels aangemaakt.
+Er is een SintBernard geboren!
+Ik kom je helpen, drink deze borrel maar op!
+WOEF, WOEF
+Hoera, BlauweKnoop is geboren!
 Er is een SintBernard geboren!
 WOEF, WOEF
 Er is een SintBernard gekopieerd!
@@ -169,20 +172,18 @@ Ik kom je helpen, drink deze borrel maar op!
 Ik kom je helpen, drink deze borrel maar op!
 Ik kom je helpen, drink deze borrel maar op!
 Ik kom je helpen, drink deze borrel maar op!
+Ik kan je niet helpen, mijn whiskey is op.
 Vat met 0 borrels opgeruimd.
 Er is een SintBernard gestorven.
 Helaas, BlauweKnoop is gestorven.
-<enter>
 WOEF, WOEF
-<enter>
-Er is een SintBernard bijna dood.
-Er is een SintBernard gestorven.
-Helaas, Boris is gestorven.
-<enter>
+WOEF, WOEF
 Er is een SintBernard bijna dood.
 Er is een SintBernard gestorven.
 Helaas, BlauweKnoop is gestorven.
-<enter>
+Er is een SintBernard bijna dood.
+Er is een SintBernard gestorven.
+Helaas, BlauweKnoop is gestorven.
 Er is een SintBernard bijna dood.
 Ik kom je helpen, drink deze borrel maar op!
 Ik kom je helpen, drink deze borrel maar op!
@@ -192,12 +193,13 @@ Ik kom je helpen, drink deze borrel maar op!
 Ik kom je helpen, drink deze borrel maar op!
 Ik kom je helpen, drink deze borrel maar op!
 Ik kom je helpen, drink deze borrel maar op!
+Ik kan je niet helpen, mijn whiskey is op.
 Vat met 0 borrels opgeruimd.
 Er is een SintBernard gestorven.
 Helaas, Boris is gestorven.
-<enter>
+*/
 
-Uitvoer ZONDER zelf gedefinieerde copy constructor en assignment operator:
+/* Uitvoer ZONDER zelf gedefinieerde copy constructor en assignment operator:
 Hoera, Boris is geboren!
 Vat met 10 borrels aangemaakt.
 Er is een SintBernard geboren!
@@ -219,21 +221,8 @@ WOEF, WOEF
 Ik kom je helpen, drink deze borrel maar op!
 WOEF, WOEF
 WOEF, WOEF
-<enter>
-Er is een SintBernard bijna dood.
-Er is een SintBernard gestorven.
+WOEF, WOEF
 Helaas, BlauweKnoop is gestorven.
-<enter>
-Er is een SintBernard bijna dood.
-Er is een SintBernard gestorven.
 Helaas, BlauweKnoop is gestorven.
-<enter>
-Er is een SintBernard bijna dood.
-Ik kom je helpen, drink deze borrel maar op!
-Ik kom je helpen, drink deze borrel maar op!
-Ik kom je helpen, drink deze borrel maar op!
-Vat met 0 borrels opgeruimd.
-Er is een SintBernard gestorven.
 Helaas, Boris is gestorven.
-<enter>
 */

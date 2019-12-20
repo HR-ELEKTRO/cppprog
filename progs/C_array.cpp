@@ -1,4 +1,5 @@
 #include <iostream>
+#include <array>
 #include <iomanip>
 using namespace std;
 
@@ -16,18 +17,18 @@ void drukaf(Tijdsduur td) {
     cout << setw(2) << td.minuten << " minuten" << '\n';
 }
 
-// Deze functie drukt een rij met een aantal Tijdsduren af
-void drukaf(Tijdsduur rij[], size_t aantal) {
-    for (size_t teller = 0; teller < aantal; ++teller)
-        drukaf(rij[teller]);
+// Deze functie drukt een rij met Tijdsduren af
+void drukaf(array<Tijdsduur, 5> rij) {
+    for (auto t: rij)
+        drukaf(t);
 }
 
-// Deze functie berekent de totaal Tijdsduur van een rij met een aantal Tijdsduren
-Tijdsduur som(Tijdsduur rij[], size_t aantal) {
+// Deze functie berekent de totaal Tijdsduur van een rij met Tijdsduren
+auto som(array<Tijdsduur, 5> rij) {
     Tijdsduur s{0, 0};
-    for (size_t teller = 0; teller < aantal; ++teller) {
-        s.uur += rij[teller].uur;
-        s.minuten += rij[teller].minuten;
+    for (auto t: rij) {
+        s.uur += t.uur;
+        s.minuten += t.minuten;
     }
     s.uur += s.minuten / 60;
     s.minuten %= 60;
@@ -35,16 +36,15 @@ Tijdsduur som(Tijdsduur rij[], size_t aantal) {
 }
 
 int main() {
-    constexpr size_t MAX = 5;
-    Tijdsduur tijdsduur[MAX];
-    size_t aantal = 0;
+    array<Tijdsduur, 5> tijdsduur;
+    array<Tijdsduur, 5>::size_type aantal = 0;
     do {
         cout << "Type uren en minuten in: ";
         cin >> tijdsduur[aantal].uur >> tijdsduur[aantal].minuten;
     }
-    while (cin && ++aantal < MAX);
+    while (cin && ++aantal < tijdsduur.size());
     cout << '\n';
-    drukaf(tijdsduur, aantal);
+    drukaf(tijdsduur);
     cout << "De totaal tijdsduur is:\n";
-    drukaf(som(tijdsduur, aantal));
+    drukaf(som(tijdsduur));
 }

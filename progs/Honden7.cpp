@@ -29,21 +29,21 @@ private:
     int aantalBorrels;
 };
 
-WhiskeyVat::WhiskeyVat(int b): aantalBorrels(b) {
-    cout << "Vat met " << aantalBorrels << " borrels aangemaakt." << endl;
+WhiskeyVat::WhiskeyVat(int b): aantalBorrels{b} {
+    cout << "Vat met " << aantalBorrels << " borrels aangemaakt.\n";
 }
 
 WhiskeyVat::~WhiskeyVat() {
-    cout << "Vat met " << aantalBorrels << " borrels opgeruimd." << endl;
+    cout << "Vat met " << aantalBorrels << " borrels opgeruimd.\n";
 }
 
 bool WhiskeyVat::geefBorrel() {
     if (aantalBorrels > 0) {
         --aantalBorrels;
-        cout << "Ik kom je helpen, drink deze borrel maar op!" << endl;
+        cout << "Ik kom je helpen, drink deze borrel maar op!\n";
         return true;
     }
-    cout << "Ik kan je niet helpen, mijn whiskey is op." << endl;
+    cout << "Ik kan je niet helpen, mijn whiskey is op.\n";
     return false;
 }
 
@@ -66,40 +66,39 @@ private:
 };
 
 Hond::Hond(const string& n): naam(n) {
-    cout << "Hoera, " << naam << " is geboren!" << endl;
+    cout << "Hoera, " << naam << " is geboren!\n";
 }
 
 Hond::~Hond() {
-    cout << "Helaas, " << naam << " is gestorven." << endl;
-    cin.get();
+    cout << "Helaas, " << naam << " is gestorven.\n";
 }
 
 void Hond::setNaam(const string& n) {
     naam = n;
 }
 
-Tekkel::Tekkel(const string& n): Hond(n) {
-    cout << "Er is een Tekkel geboren!" << endl;
+Tekkel::Tekkel(const string& n): Hond{n} {
+    cout << "Er is een Tekkel geboren!\n";
 }
 
 Tekkel::~Tekkel() {
-    cout << "Er is een Tekkel gestorven." << endl;
+    cout << "Er is een Tekkel gestorven.\n";
 }
 
 void Tekkel::blaf() const {
-    cout << "Kef kef" << endl;
+    cout << "Kef kef\n";
 }
 
-SintBernard::SintBernard(const string& n, int b): Hond(n), vat(b) {
-    cout << "Er is een SintBernard geboren!" << endl;
+SintBernard::SintBernard(const string& n, int b): Hond{n}, vat{b} {
+    cout << "Er is een SintBernard geboren!\n";
 }
 
 SintBernard::~SintBernard() {
-    cout << "Er is een SintBernard gestorven." << endl;
+    cout << "Er is een SintBernard gestorven.\n";
 }
 
 void SintBernard::blaf() const {
-    cout << "WOEF, WOEF" << endl;
+    cout << "WOEF, WOEF\n";
 }
 
 void SintBernard::help() {
@@ -112,15 +111,15 @@ void Roedel::voegToe(Hond& h) {
 }
 
 void Roedel::blafAllemaal() const {
-    for (auto hp : honden) {
+    for (auto hp: honden) {
         hp->blaf();
     }
 }
 
 int main() {
-    SintBernard h1("Boris", 10);
-    Tekkel h2("Fikkie");
-    Tekkel h3("Harry");
+    SintBernard h1{"Boris", 10};
+    Tekkel h2{"Fikkie"};
+    Tekkel h3{"Harry"};
 
     Roedel r;
     r.voegToe(h1);
@@ -128,13 +127,9 @@ int main() {
     r.voegToe(h3);
 
     r.blafAllemaal();
-
-    cin.get();
-    return 0;
 }
 
-/*
-Uitvoer:
+/* Uitvoer:
 Hoera, Boris is geboren!
 Vat met 10 borrels aangemaakt.
 Er is een SintBernard geboren!
@@ -145,15 +140,11 @@ Er is een Tekkel geboren!
 WOEF, WOEF
 Kef kef
 Kef kef
-<enter>
 Er is een Tekkel gestorven.
 Helaas, Harry is gestorven.
-<enter>
 Er is een Tekkel gestorven.
 Helaas, Fikkie is gestorven.
-<enter>
 Er is een SintBernard gestorven.
 Vat met 10 borrels opgeruimd.
 Helaas, Boris is gestorven.
-<enter>
 */

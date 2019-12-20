@@ -36,7 +36,7 @@ int main() {
     Dozijn<int> kwadraten;
     for (int j = 0; j < 12; ++j)
         kwadraten.zetIn(j, j * j);
-    cout << "kwadraten = " << kwadraten << endl;
+    cout << "kwadraten = " << kwadraten << '\n';
     Dozijn<string> provincies;
     provincies.zetIn(0, "Drenthe");
     provincies.zetIn(1, "Flevoland");
@@ -50,7 +50,5 @@ int main() {
     provincies.zetIn(9, "Utrecht");
     provincies.zetIn(10, "Zeeland");
     provincies.zetIn(11, "Zuid-Holland");
-    cout << "provincies = " << provincies << endl;   
-    cin.get();
-    return 0;
+    cout << "provincies = " << provincies << '\n';   
 }

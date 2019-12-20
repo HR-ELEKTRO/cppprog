@@ -7,23 +7,23 @@ public:
     virtual ~Hond() {
     }
     virtual void blaf() const {
-        cout << "Blaf." << endl;
+        cout << "Blaf.\n";
     }
 //  ...
 };
 
 class SintBernard: public Hond {
 public:
-    SintBernard(int w = 10): whisky(w) {
+    SintBernard(int w = 10): whisky{w} {
     }
     virtual void blaf() const {
-        cout << "Woef!" << endl;
+        cout << "Woef!\n";
     }
     int geefDrank() {
-        cout << "Geeft drank." << endl;
-        int i(whisky);
+        cout << "Geeft drank.\n";
+        int w = whisky;
         whisky = 0;
-        return i;
+        return w;
     };
 //  ...
 private:
@@ -33,9 +33,9 @@ private:
 void geefHulp(Hond& hr) {
     hr.blaf();
     try {
-        SintBernard& sbr(dynamic_cast<SintBernard&>(hr));
-        cout << sbr.geefDrank() << " liter." << endl;
-    } catch (bad_cast) {
+        SintBernard& sbr{dynamic_cast<SintBernard&>(hr)};
+        cout << sbr.geefDrank() << " liter.\n";
+    } catch (const bad_cast&) {
         /* doe niets */
     }
 }
@@ -45,13 +45,9 @@ int main() {
     geefHulp(boris);
     Hond fikkie;
     geefHulp(fikkie);
-    cin.get();
-    return 0;
 }
 
-/*
-Output:
-
+/* Output:
 Woef!
 Geeft drank.
 10 liter.
