@@ -51,7 +51,7 @@ ostream& operator<<(ostream& o, const Component& c) {
 
 class R: public Component { // R = Weerstand
 public:
-    R(double r): r(r) {
+    R(double r): r{r} {
     }
     virtual complex<double> Z(double) const {
         return r;
@@ -65,7 +65,7 @@ private:
 
 class L: public Component { // L = Spoel
 public:
-    L(double l): l(l) {
+    L(double l): l{l} {
     }
     virtual complex<double> Z(double f) const {
         return complex<double>(0, 2 * PI * f * l);
@@ -79,7 +79,7 @@ private:
 
 class C: public Component { // C = Condensator
 public:
-    C(double c): c(c) {
+    C(double c): c{c} {
     }
     virtual complex<double> Z(double f) const {
         if (c == 0.0)
@@ -97,7 +97,7 @@ private:
 
 class S: public Component { // S = Serie schakeling van twee componenten
 public:
-    S(const Component& c1, const Component& c2): c1(c1), c2(c2) {
+    S(const Component& c1, const Component& c2): c1{c1}, c2{c2} {
     }
     virtual complex<double> Z(double f) const {
         return c1.Z(f) + c2.Z(f);
@@ -112,7 +112,7 @@ private:
 
 class P: public Component { // P = Parallel schakeling van twee componenten
 public:
-    P(const Component& c1, const Component& c2): c1(c1), c2(c2) {
+    P(const Component& c1, const Component& c2): c1{c1}, c2{c2} {
     }
     virtual complex<double> Z(double f) const {
         if (c1.Z(f) + c2.Z(f) == complex<double>(0, 0))
@@ -128,42 +128,39 @@ private:
 };
 
 void printImpedanceTable(const Component& c) {
-    cout << "Impedantie tabel voor: " << c << endl << endl;
-    cout << setw(10) << "freq" << setw(20) << "Z" << endl;
+    cout << "Impedantie tabel voor: " << c << "\n\n";
+    cout << setw(10) << "freq" << setw(20) << "Z\n";
     for (double freq(10); freq < 10E6; freq *= 10)
-        cout << setw(10) << freq << setw(20) << c.Z(freq) << endl;
-    cout << endl;
+        cout << setw(10) << freq << setw(20) << c.Z(freq) << '\n';
+    cout << '\n';
 }
 
 int main() {
     try {
-        R r1(1E2);
-        C c1(0); // om te testen!
-        L l1(3E-2);
-        S s1(r1, c1);
-        S s2(r1, l1);
-        P p(s1, s2);
+        R r1{1E2};
+        C c1{0}; // om te testen!
+        L l1{3E-2};
+        S s1{r1, c1};
+        S s2{r1, l1};
+        P p{s1, s2};
         printImpedanceTable(p);
     } catch (domain_error& e) {
         cout << "Exception: " << e.what() << endl;
     }
     cout << endl;
     try {
-        R r1(10);
-        R r2(0);
-        P p1(r1, r1);
-        P p2(r2, r2); // om te testen!
+        R r1{10};
+        R r2{0};
+        P p1{r1, r1};
+        P p2{r2, r2}; // om te testen!
         printImpedanceTable(p1);
         printImpedanceTable(p2);
     } catch (domain_error& e) {
         cout << "Exception: " << e.what() << endl;
     }
-    cin.get();
-    return 0;
 }
 
-/*
-Uitvoer:
+/* Uitvoer:
 
 Impedantie tabel voor: ((R(100)+C(0))//(R(100)+L(0.03)))
 

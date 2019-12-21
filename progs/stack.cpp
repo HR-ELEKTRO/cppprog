@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    Stack<char>* s = 0;
+    Stack<char>* s{nullptr};
 
     cout << "Welke stack wil je gebruiken (l = list, a = array): ";
     char c;
@@ -20,9 +20,9 @@ int main() {
             cin >> i;
             s = new StackWithArray<char>(i);
         }
-    } while (s == 0);
+    } while (s == nullptr);
 
-    cout << "Type een tekst en sluit af met ." << endl;
+    cout << "Type een tekst en sluit af met .\n";
     cin.get(c);
     while (c != '.') {
         s->push(c);
@@ -33,8 +33,4 @@ int main() {
         s->pop();
     }
     delete s;
-
-    cin.get();
-    cin.get();
-    return 0;
 }

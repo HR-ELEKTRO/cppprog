@@ -20,13 +20,13 @@ private:
 };
 
 int main() {
-    list<int> l = {-3, -4, 3, 4};
+    list<int> l{-3, -4, 3, 4};
 //  Zoeken met behulp van een functie als zoekvoorwaarde.
 //  Nadeel: voor elke zoekvoorwaarde moet een aparte 
 //  functie worden geschreven.
-    auto r = find_if(l.cbegin(), l.cend(), isPos);
+    auto r{find_if(l.cbegin(), l.cend(), isPos)};
     if (r != l.cend()) {
-        cout << "Het eerste positieve element is: " << *r << endl;
+        cout << "Het eerste positieve element is: " << *r << '\n';
     }
 //  Zoeken met behulp van een functie-object als zoekvoorwaarde.
 //  Voordeel: flexibeler dan een functie.
@@ -34,7 +34,7 @@ int main() {
 //  apart functie-object worden geschreven.
     r = find_if(l.cbegin(), l.cend(), IsGreaterEqual<int>(0));
     if (r != l.cend()) {
-        cout << "Het eerste positieve element is: " << *r << endl;
+        cout << "Het eerste positieve element is: " << *r << '\n';
     }
 //  Zoeken met behulp van een lambda functie als zoekvoorwaarde.
 //  Voordeel: handig als zoekvoorwaarde uniek is.
@@ -43,8 +43,6 @@ int main() {
         return i >= 0;
     });
     if (r != l.end()) {
-        cout << "Het eerste positieve element is: " << *r << endl;
+        cout << "Het eerste positieve element is: " << *r << '\n';
     }
-    cin.get();
-    return 0;
 }

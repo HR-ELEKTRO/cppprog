@@ -17,7 +17,4 @@ int main() {
     doIt(card1);
     NI323 card2;
     doIt(card2);
-
-    cin.get();
-    return 0;
 }

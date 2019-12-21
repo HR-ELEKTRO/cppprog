@@ -50,13 +50,13 @@ private:
     const Vertex* findVertex(const string& vertexName) const;
     void reset();
     map<string, Vertex*> vertices;
-    static const int INF = INT_MAX;
+    static constexpr int INF{INT_MAX};
 };
 
-Graph::Vertex::Edge::Edge(Vertex* v, int costs): destination(v), costs(costs) {
+Graph::Vertex::Edge::Edge(Vertex* v, int costs): destination{v}, costs{costs} {
 }
 
-Graph::Vertex::Vertex(const string& name): name(name) {
+Graph::Vertex::Vertex(const string& name): name{name} {
     reset();
 }
 
@@ -94,7 +94,7 @@ void Graph::reset() {
 }
 
 Graph::Vertex* Graph::getVertex(const string& vertexName) {
-    Vertex* v = vertices[vertexName];
+    Vertex* v{vertices[vertexName]};
     if (v == 0) {
         v = new Vertex(vertexName);
         vertices[vertexName] = v;
@@ -103,47 +103,47 @@ Graph::Vertex* Graph::getVertex(const string& vertexName) {
 }
 
 Graph::Vertex* Graph::findVertex(const string& vertexName) {
-    auto itr = vertices.find(vertexName);
+    auto itr{vertices.find(vertexName)};
     if (itr == vertices.end())
         throw runtime_error(vertexName + " is not a vertex in this graph");
     return itr->second;
 }
 
 const Graph::Vertex* Graph::findVertex(const string& vertexName) const {
-    auto itr = vertices.find(vertexName);
+    auto itr{vertices.find(vertexName)};
     if (itr == vertices.end())
         throw runtime_error(vertexName + " is not a vertex in this graph");
     return itr->second;
 }
 
 void Graph::addEdge(const string& sourceName, const string& destName, int cost) {
-    Vertex* v = getVertex(sourceName);
-    Vertex* w = getVertex(destName);
+    Vertex* v{getVertex(sourceName)};
+    Vertex* w{getVertex(destName)};
     v->addEdge(w, cost);
 }
 
 void Graph::printPath(const string& destinationName) const {
-    const Vertex* destination = findVertex(destinationName);
+    const Vertex* destination{findVertex(destinationName)};
     if (destination->costs == INF)
         cout << destinationName << " is unreachable";
     else {
         cout << "(Costs are: " << destination->costs << ") ";
         destination->printPath();
     }
-    cout << endl;
+    cout << '\n';
 }
 
 void Graph::unweighted(const string& startName) {
     reset();
-    Vertex* start = findVertex(startName);
+    Vertex* start{findVertex(startName)};
     start->costs = 0;
     queue<Vertex*> q;
     q.push(start);
     while (!q.empty()) {
-        Vertex* v = q.front();
+        Vertex* v{q.front()};
         q.pop();
         for (auto& e : v->adjacent) {
-            Vertex* w = e.destination;
+            Vertex* w{e.destination};
             if (w->costs == INF) {
                 w->costs = v->costs + 1;
                 w->previous = v;
@@ -155,21 +155,22 @@ void Graph::unweighted(const string& startName) {
 
 void Graph::dijkstra(const string& startName) {
     reset();
-    Vertex* start = findVertex(startName);
+    Vertex* start{findVertex(startName)};
     start->costs = 0;
-    auto ptrVectorGreater = [](Vertex* p, Vertex* q) { 
-        return p->costs > q->costs; 
+    auto ptrVectorGreater{[](Vertex* p, Vertex* q) { 
+            return p->costs > q->costs; 
+        }
     };
     priority_queue<Vertex*, vector<Vertex*>, decltype(ptrVectorGreater)> pq(ptrVectorGreater);
     pq.push(start);
     while (!pq.empty()) {
-        Vertex* v = pq.top();
+        Vertex* v{pq.top()};
         pq.pop();
         if (!v->isProcessed) {
             v->isProcessed = true;
             for (auto& e: v->adjacent) {
-                Vertex* w = e.destination;
-                int cvw = e.costs;
+                Vertex* w{e.destination};
+                int cvw{e.costs};
                 if (cvw < 0) {
                     throw runtime_error("Graph has negative edges");
                 }
@@ -185,22 +186,22 @@ void Graph::dijkstra(const string& startName) {
 
 void Graph::negative(const string& startName) {
     reset();
-    Vertex* start = findVertex(startName);
+    Vertex* start{findVertex(startName)};
     start->costs = 0;
     queue<Vertex*> q;
     q.push(start);
     start->isOnQueue = true;
     start->timesQueued += 1;
     while (!q.empty()) {
-        Vertex* v = q.front();
+        Vertex* v{q.front()};
         q.pop();
         v->isOnQueue = false;
         if (v->timesQueued > vertices.size()) {
             throw runtime_error("Negative cycle detected");
         }
         for (auto& e: v->adjacent) {
-            Vertex* w = e.destination;
-            int cvw = e.costs;
+            Vertex* w{e.destination};
+            int cvw{e.costs};
             if (w->costs > v->costs + cvw) {
                 w->costs = v->costs + cvw;
                 w->previous = v;
@@ -216,7 +217,7 @@ void Graph::negative(const string& startName) {
 
 void Graph::acyclic(const string& startName) {
     reset();
-    Vertex* start = findVertex(startName);
+    Vertex* start{findVertex(startName)};
     start->costs = 0;
     queue<Vertex*> q;
     // calculate all indegrees
@@ -235,11 +236,11 @@ void Graph::acyclic(const string& startName) {
     // for all vertices in queue
     decltype (vertices.size()) iterations;
     for (iterations = 0; !q.empty(); ++iterations) {
-        Vertex* v = q.front();
+        Vertex* v{q.front()};
         q.pop();
         for (auto& e: v->adjacent)  {
-            Vertex* w = e.destination;
-            int cvw = e.costs;
+            Vertex* w{e.destination};
+            int cvw{e.costs};
             w->indegree -= 1;
             if (w->indegree == 0) {
                 q.push(w);
@@ -256,17 +257,17 @@ void Graph::acyclic(const string& startName) {
 }
 
 int main() {
-    const int pasen = 0;
-    const int pinksteren = 1;
+    constexpr int pasen{0};
+    constexpr int pinksteren{1};
     try {
         while (pasen != pinksteren) {
             string fileName;
             do {
-                cout << "p = positive (http://bd.eduweb.hhs.nl/algods/graph_positive.png)," << endl;
-                cout << "n = negative (http://bd.eduweb.hhs.nl/algods/graph_negative.png)," << endl;
-                cout << "a = acyclic  (http://bd.eduweb.hhs.nl/algods/graph_acyclic.png)," << endl;
-                cout << "s = steden (acyclic) (http://bd.eduweb.hhs.nl/algods/graph_steden.png) or" << endl;
-                cout << "q = quit." << endl;
+                cout << "p = positive (https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_positive.png),\n";
+                cout << "n = negative (https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_negative.png),\n";
+                cout << "a = acyclic  (https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_acyclic.png),\n";
+                cout << "s = steden (acyclic) (https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_steden.png) or\n";
+                cout << "q = quit.\n";
                 cout << "Choose graph: ";
                 char c;
                 cin >> c; cin.get();
@@ -281,7 +282,7 @@ int main() {
                     case 'S': fileName = "graph_steden.txt"; break;
                     case 'q':
                     case 'Q': return 0;
-                    default: cout << "Wrong input, try again." << endl;
+                    default: cout << "Wrong input, try again." << '\n';
                 }
             } while (fileName.empty());
             char c;
@@ -290,10 +291,10 @@ int main() {
                 cin >> c; cin.get();
             } while (c != 'y' && c != 'n');
             if (c == 'y') {
-                string baseName(fileName.substr(0, fileName.find(".txt")));
-                system(("start http://bd.eduweb.hhs.nl/algods/" + baseName + ".png").c_str());
+                string baseName{fileName.substr(0, fileName.find(".txt"))};
+                system(("start https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/" + baseName + ".png").c_str());
             }
-            ifstream inFile(fileName);
+            ifstream inFile{fileName};
             if (!inFile) {
                 throw runtime_error("Cannot open " + fileName);
             }
@@ -303,16 +304,16 @@ int main() {
             while (getline(inFile, oneLine)) {
                 string source, dest;
                 int cost;
-                istringstream st(oneLine);
+                istringstream st{oneLine};
                 if (st >> source >> dest >> cost) {
                     g.addEdge(source, dest, cost);
                     cout << ".";
                 }
                 else {
-                    cerr << "Bad line: " << oneLine << endl;
+                    cerr << "Bad line: " << oneLine << '\n';
                 }
             }
-            cout << endl << "Enter start node: ";
+            cout << "\nEnter start node: ";
             string startName;
             cin >> startName; cin.get();
             cout << "Enter destination node: ";
@@ -338,15 +339,12 @@ int main() {
                 g.printPath(destName);
             }
             catch (const runtime_error& e) {
-                cerr << e.what() << endl;
+                cerr << e.what() << '\n';
             }
         }
     }
     catch (const runtime_error& e) {
-        cerr << e.what() << endl;
-        cin.get(); 
-        cin.get();
+        cerr << e.what() << '\n';
         return 1;
     }
-    return 0;
 }

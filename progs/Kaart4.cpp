@@ -20,7 +20,4 @@ int main() {
     doIt(card2);
     BB647 card3;   // new!
     doIt(card3);   // new!
-
-    cin.get();
-    return 0;
 }

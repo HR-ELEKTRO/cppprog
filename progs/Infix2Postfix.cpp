@@ -14,7 +14,7 @@ bool hasLowerPrio(char op1, char op2) {
 int main() {
     StackWithList<char> s;
     char c;
-    cout << "Type een infix expressie (met + en * operator) en sluit af met =" << endl;
+    cout << "Type een infix expressie (met + en * operator) en sluit af met =\n";
     cin >> c;
     while (c != '=') {
         if (isdigit(c)) {
@@ -41,7 +41,7 @@ int main() {
             s.pop();
         }
         else {
-            cout << "Syntax error" << endl;
+            cout << "Syntax error\n";
         }
         cin >> c;
     }
@@ -49,7 +49,4 @@ int main() {
         cout << s.top() << " ";
         s.pop();
     }
-    cin.get();
-    cin.get();
-    return 0;
 }

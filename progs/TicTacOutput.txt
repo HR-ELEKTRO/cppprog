@@ -1,34 +1,31 @@
 TicTacSlow.cpp
-Calculation time: 2.20261 sec
+Calculation time: 242287 us
 Moves considered: 549946
 
-Calculation time: 0.034667 sec
+Calculation time: 5964 us
 Moves considered: 8232
 
 TicTacAB.cpp
-Calculation time: 0.0713004 sec
+Calculation time: 10656 us
 Moves considered: 16811
 
-Calculation time: 0.00224449 sec
+Calculation time: 502 us
 Moves considered: 450
 
 TicTacMap.cpp
-Calculation time: 0.183925 sec
+Calculation time: 25247 us
 Map size is: 2480
 Moves considered: 4272
 
-Calculation time: 0.0000276482 sec
+Calculation time: 7 us
 Map size is: 2480
 Moves considered: 1
 
-TicTacMapRestrictedDepth.cpp 3 <= depth <= 9
-Calculation time: 0.178653 sec
-Map size is: 2407
-Moves considered: 4272
+TicTacMapRestrictedDepth.cpp 3 <= depth <= 5
+Calculation time: 8740 us
+Map size is: 369
+Moves considered: 11523
 
-Calculation time: 0.000286466 sec
-Map size is: 2407
+Calculation time: 34 us
+Map size is: 369
 Moves considered: 15
-
-
-

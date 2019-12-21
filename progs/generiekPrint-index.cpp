@@ -9,11 +9,11 @@ using namespace std;
 // kan NIET gebruikt worden voor andere containers (list, forward_list, enz)
 
 template<typename C> void print(const C& c) {
-    cout << "De inhoud van de container is:" << endl;
-    for (decltype(c.size()) i = 0; i != c.size(); ++i) {
+    cout << "De inhoud van de container is:\n";
+    for (decltype(c.size()) i{0}; i != c.size(); ++i) {
         cout << c[i] << " ";
     }
-    cout << endl;
+    cout << '\n';
 }
 
 int main() {
@@ -25,8 +25,6 @@ int main() {
     }
     print(v);
     print(d);
-    string s("Hallo");
+    string s{"Hallo"};
     print(s);
-    cin.get();
-    return 0;
 }

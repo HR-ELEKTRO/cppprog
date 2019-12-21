@@ -20,11 +20,11 @@ void initCard(ADCCard& card, CardType type) {
     switch (card.type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "AD178 is geinitialiseeerd." << endl;
+            cout << "AD178 is geinitialiseeerd.\n";
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "NI323 is geinitialiseeerd." << endl;
+            cout << "NI323 is geinitialiseeerd.\n";
             break;
     }
 }
@@ -35,11 +35,11 @@ void selectChannel(ADCCard& card, int channel) {
     switch (card.type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "Kanaal " << channel << " van AD178 is geselecteerd." << endl;
+            cout << "Kanaal " << channel << " van AD178 is geselecteerd.\n";
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "Kanaal " << channel << " van NI323 is geselecteerd." << endl;
+            cout << "Kanaal " << channel << " van NI323 is geselecteerd.\n";
             break;
     }
 }
@@ -54,11 +54,11 @@ void setAmplifier(ADCCard& card, double factor) {
     switch (card.type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "Versterkingsfactor van AD178 is " << factor << "." << endl;
+            cout << "Versterkingsfactor van AD178 is " << factor << ".\n";
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "Versterkingsfactor van NI323 is " << factor << "." << endl;
+            cout << "Versterkingsfactor van NI323 is " << factor << ".\n";
             break;
         }
 }
@@ -92,14 +92,11 @@ int main() {
     initCard(c1, AD178);
     setAmplifier(c1, 10);
     selectChannel(c1, 3);
-    cout << "Kanaal " << getChannel(c1) << " van kaart c1 = " << readCard(c1) << " V." << endl;
+    cout << "Kanaal " << getChannel(c1) << " van kaart c1 = " << readCard(c1) << " V.\n";
     
     ADCCard c2;
     initCard(c2, NI323);
     setAmplifier(c2, 5);
     selectChannel(c2, 4);
-    cout << "Kanaal " << getChannel(c2) << " van kaart c2 = " << readCard(c2) << " V." << endl;
-
-    cin.get();
-    return 0;
+    cout << "Kanaal " << getChannel(c2) << " van kaart c2 = " << readCard(c2) << " V.\n";
 }

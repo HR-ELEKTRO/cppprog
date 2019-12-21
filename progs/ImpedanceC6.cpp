@@ -35,25 +35,21 @@ complex<double> impedanceC(double c, double f) {
         throw CapacityError();
     if (f == 0.0)
         throw FrequencyError();
-    return complex<double>(0, -1 / (2 * PI * f * c));
+    return complex<double>{0, -1 / (2 * PI * f * c)};
 }
 
 int main() {
     try {
-        cout << impedanceC(1e-6, 1e3) << endl;
-        cout << impedanceC(1e-6, 0) << endl;
-        cout << "Dit was het!" << endl;
-    } catch (ImpedanceError& e) {
-        cout << e.getErrorMessage() << endl;
+        cout << impedanceC(1e-6, 1e3) << '\n';
+        cout << impedanceC(1e-6, 0) << '\n';
+        cout << "Dit was het!\n";
+    } catch (const ImpedanceError& e) {
+        cout << e.getErrorMessage() << '\n';
     }
-    cout << "The END." << endl;
-    cin.get();
-    return 0;
+    cout << "The END.\n";
 }
 
-/*
-Uitvoer:
-
+/* Uitvoer:
 (0,-159.155)
 Frequentie == 0
 The END.

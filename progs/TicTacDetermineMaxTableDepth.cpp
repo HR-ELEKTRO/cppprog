@@ -3,19 +3,15 @@
 #include <numeric>
 #include <map>
 #include <string>
-#include <vector>
+#include <array>
 using namespace std;
 #include "Matrix.h"
 
 // print number of moves considered, time used and map size
 #define ANALYSE
 #ifdef ANALYSE
-#ifdef WIN32
-#include <windows.h>
-#else
-#include <ctime>
+#include <chrono>
 #endif    
-#endif
 
 // This program determines the optimal value for MAX_TABLE_DEPTH
 
@@ -28,23 +24,26 @@ class TicTacToe {
 public:
     enum Side { EMPTY, HUMAN, COMPUTER };
     enum Value { HUMAN_WINS = -1, DRAW, COMPUTER_WINS, UNDECIDED };
+    using Board = matrix<Side, 3, 3>;
+    using Row = Board::size_type;
+    using Column = Board::size_type;
     TicTacToe()
 #ifdef ANALYSE
-        : movesConsidered(0)
+        : movesConsidered{0}
 #endif
     {
         fill(board.begin(), board.end(), EMPTY);
     }
-    Value chooseComputerMove(int& bestRow, int& bestColumn, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS, int depth = 1);
-    Value chooseHumanMove(int& bestRow, int& bestColumn, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS, int depth = 1);
-    Side side(int row, int column) const;
+    Value chooseComputerMove(Row& bestRow, Column& bestColumn, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS, int depth = 1);
+    Value chooseHumanMove(Row& bestRow, Column& bestColumn, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS, int depth = 1);
+    Side side(Row row, Column column) const;
     bool isUndecided() const;
-    bool playMove(Side s, int row, int column);
+    bool playMove(Side s, Row row, Column column);
     bool boardIsFull() const;
     bool isAWin(Side s) const;
 #ifdef ANALYSE
     int getAndResetMovesConsidered() {
-        int i = movesConsidered;
+        int i{movesConsidered};
         movesConsidered = 0;
         return i;
     }
@@ -53,7 +52,6 @@ public:
     }
 #endif
 private:
-    typedef matrix<Side, 3, 3> Board;
     Board board;
     Value value() const;
     class BoardWrapper {
@@ -79,35 +77,11 @@ private:
 #endif
 };
 
-#ifdef ANALYSE
-class StopWatch {
-public:
-    StopWatch();
-    void start();
-    void stop();
-    double time() const;
-private:
-    bool running;
-    void printError() const;
-#ifdef WIN32
-    double f;
-    long long start_time;
-    long long total_time;
-    long long getExecutionTime() const;
-#else
-    clock_t start_time;
-    clock_t total_time;
-    clock_t getExecutionTime() const;
-#endif
-};
-ostream& operator<<(ostream& o, const StopWatch& sw);
-#endif
-
 TicTacToe::Value TicTacToe::value() const {
     return isAWin(COMPUTER) ? COMPUTER_WINS : isAWin(HUMAN) ? HUMAN_WINS : boardIsFull() ? DRAW : UNDECIDED;
 }
 
-TicTacToe::Value TicTacToe::chooseComputerMove(int& bestRow, int& bestColumn, Value alpha, Value beta, int depth) {
+TicTacToe::Value TicTacToe::chooseComputerMove(Row& bestRow, Column& bestColumn, Value alpha, Value beta, int depth) {
 #ifdef ANALYSE
     ++movesConsidered;
 #endif
@@ -119,14 +93,15 @@ TicTacToe::Value TicTacToe::chooseComputerMove(int& bestRow, int& bestColumn, Va
             return itr->second.value;
         }
     }
-    Value bestValue = value();
+    Value bestValue{value()};
     if (bestValue == UNDECIDED) {
-        for (int row = 0; alpha < beta && row < 3; ++row) {
-            for (int column = 0; alpha < beta && column < 3; ++column) {
+        for (Row row{0}; alpha < beta && row < 3; ++row) {
+            for (Column column{0}; alpha < beta && column < 3; ++column) {
                 if (board(row, column) == EMPTY) {
                     board(row, column) = COMPUTER;
-                    int dummyRow, dummyColumn;
-                    Value value = chooseHumanMove(dummyRow, dummyColumn, alpha, beta, depth + 1);
+                    Row dummyRow;
+                    Column dummyColumn;
+                    Value value{chooseHumanMove(dummyRow, dummyColumn, alpha, beta, depth + 1)};
                     board(row, column) = EMPTY;
                     if (value > alpha) {
                         alpha = value;
@@ -144,7 +119,7 @@ TicTacToe::Value TicTacToe::chooseComputerMove(int& bestRow, int& bestColumn, Va
     return bestValue;
 }
 
-TicTacToe::Value TicTacToe::chooseHumanMove(int& bestRow, int& bestColumn, Value alpha, Value beta, int depth) {
+TicTacToe::Value TicTacToe::chooseHumanMove(Row& bestRow, Column& bestColumn, Value alpha, Value beta, int depth) {
 #ifdef ANALYSE
     ++movesConsidered;
 #endif
@@ -156,14 +131,15 @@ TicTacToe::Value TicTacToe::chooseHumanMove(int& bestRow, int& bestColumn, Value
             return itr->second.value;
         }
     }
-    Value bestValue = value();
+    Value bestValue{value()};
     if (bestValue == UNDECIDED) {
-        for (int row = 0; alpha < beta && row < 3; ++row) {
-            for (int column = 0; alpha < beta && column < 3; ++column) {
+        for (Row row{0}; beta > alpha && row < 3; ++row) {
+            for (Column column{0}; beta > alpha && column < 3; ++column) {
                 if (board(row, column) == EMPTY) {
                     board(row, column) = HUMAN;
-                    int dummyRow, dummyColumn;
-                    Value value = chooseComputerMove(dummyRow, dummyColumn, alpha, beta, depth + 1);
+                    Row dummyRow;
+                    Column dummyColumn;
+                    Value value{chooseComputerMove(dummyRow, dummyColumn, alpha, beta, depth + 1)};
                     board(row, column) = EMPTY;
                     if (value < beta) {
                         beta = value;
@@ -181,7 +157,7 @@ TicTacToe::Value TicTacToe::chooseHumanMove(int& bestRow, int& bestColumn, Value
     return bestValue;
 }
 
-TicTacToe::Side TicTacToe::side(int row, int column) const {
+TicTacToe::Side TicTacToe::side(Row row, Column column) const {
     return board(row, column);
 }
 
@@ -189,7 +165,7 @@ bool TicTacToe::isUndecided() const {
     return value() == UNDECIDED;
 }
 
-bool TicTacToe::playMove(Side s, int row, int column) {
+bool TicTacToe::playMove(Side s, Row row, Column column) {
     if (row < 0 || row >= 3 || column < 0 || column >= 3 || board(row, column) != EMPTY)
         return false;
     board(row, column) = s;
@@ -203,9 +179,13 @@ bool TicTacToe::boardIsFull() const {
 }
 
 bool TicTacToe::isAWin(Side s) const {
-    for (int i = 0; i < 3; ++i) {
-        if ((board(i, 0) == s && board(i, 1) == s && board(i, 2) == s) ||
-            (board(0, i) == s && board(1, i) == s && board(2, i) == s)) {
+    for (Row r{0}; r < 3; ++r) {
+        if (board(r, 0) == s && board(r, 1) == s && board(r, 2) == s) {
+            return true;
+        }
+    }
+    for (Column c{0}; c < 3; ++c) {
+        if (board(0, c) == s && board(1, c) == s && board(2, c) == s) {
             return true;
         }
     }
@@ -214,132 +194,52 @@ bool TicTacToe::isAWin(Side s) const {
 }
 
 bool TicTacToe::BoardWrapper::operator<(const BoardWrapper& rhs) const {
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3; ++j) {
-            if (board(i, j) != rhs.board(i, j)) {
-                return board(i, j) < rhs.board(i, j);
+    for (Row r{0}; r < 3; ++r) {
+        for (Column c{0}; c < 3; ++c) {
+            if (board(r, c) != rhs.board(r, c)) {
+                return board(r, c) < rhs.board(r, c);
             }
         }
     }
     return false;
 }
 
-#ifdef ANALYSE
-StopWatch::StopWatch() : running(false), total_time(0) {
-#ifdef WIN32
-    LARGE_INTEGER performanceFrequency;
-    if (QueryPerformanceFrequency(&performanceFrequency) == 0) {
-        printError();
-    }
-    f = double(performanceFrequency.QuadPart);
-#endif
-}
-
-void StopWatch::start() {
-    if (!running) {
-        running = true;
-        start_time = getExecutionTime();
-    }
-}
-
-void StopWatch::stop() {
-    if (running) {
-        running = false;
-        total_time = getExecutionTime() - start_time;
-    }
-}
-
-#ifdef WIN32
-long long StopWatch::getExecutionTime() const {
-    LARGE_INTEGER performanceCount;
-    if (QueryPerformanceCounter(&performanceCount) == 0) {
-        printError();
-        return 0;
-    }
-    return performanceCount.QuadPart;
-}
-#else
-clock_t StopWatch::getExecutionTime() const {
-    clock_t t = clock();
-    if (t == -1) {
-        printError();
-        return 0;
-    }
-    return clock();
-}
-#endif
-
-void StopWatch::printError() const {
-#ifdef WIN32
-    LPTSTR lpMsgBuf(0);
-    FormatMessage(
-        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-        NULL,
-        GetLastError(),
-        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        lpMsgBuf,
-        0,
-        NULL
-        );
-    cerr << lpMsgBuf << endl;
-    LocalFree(lpMsgBuf);
-#else
-    cerr << "No timer available\n" << endl;
-#endif
-}
-
-double StopWatch::time() const {
-#ifdef WIN32
-    long long res = running ? getExecutionTime() - start_time : total_time;
-    return res / f;
-#else
-    clock_t res = running ? getExecutionTime() - start_time : total_time;
-    return static_cast<double>(res) / CLK_TCK;
-#endif
-}
-
-ostream& operator<<(ostream& o, const StopWatch& sw) {
-    return o << sw.time() << " sec";
-}
-#endif
-
 void seekOptimal() {
-    int bestRow, bestColumn;
-    map<int, double> results;
+    TicTacToe::Row bestRow;
+    TicTacToe::Column bestColumn;
+    map<int, chrono::microseconds::rep> results;
     for (MAX_DEPTH = 2; MAX_DEPTH <= 9; ++MAX_DEPTH) {
-        cout << "MAX_DEPTH: " << MAX_DEPTH << endl;
-        vector<double> times;
+        cout << "MAX_DEPTH: " << MAX_DEPTH << '\n';
         // repeat every measurement N times to lower error
-        const int N = 10;
-        for (int n = 0; n < N; ++n) {
-            TicTacToe t;
-            StopWatch sw;
-            sw.start();
+        constexpr int N{10};
+        array<chrono::microseconds::rep, N> time;
+        for (auto& t: time) {
+            TicTacToe ttt;
+            auto start{chrono::high_resolution_clock::now()};
             // calculate the first move
-            t.chooseComputerMove(bestRow, bestColumn);
-            sw.stop();
-            times.push_back(sw.time());
+            ttt.chooseComputerMove(bestRow, bestColumn);
+            auto stop{chrono::high_resolution_clock::now()};
+            auto duration{chrono::duration_cast<chrono::microseconds>(stop - start).count()};
+            t = duration;
 #ifdef VERBOSE
-            if (n == 0) {
-                cout << "Map size is: " << t.getMapSize() << endl;
-                cout << "Moves considered: " << t.getAndResetMovesConsidered() << endl;
+            if (&t == &time[0]) {
+                cout << "Map size is: " << ttt.getMapSize() << '\n';
+                cout << "Moves considered: " << ttt.getAndResetMovesConsidered() << '\n';
             }
-            cout << "Executiom time: " << sw.time() << endl;
+            cout << "Executiom time: " << duration << " us\n";
 #endif
         }
-        results[MAX_DEPTH] = accumulate(times.begin(), times.end(), 0.0) / N;
+        results[MAX_DEPTH] = accumulate(time.begin(), time.end(), 0) / N;
 #ifdef VERBOSE
-        cout << "Avarage execution time: " << results[MAX_DEPTH] << endl;
+        cout << "Avarage execution time: " << results[MAX_DEPTH] << " us\n";
 #endif
     }
-    auto min = min_element(results.begin(), results.end(), [](pair<int, double> p1, pair<int, double> p2) {
+    auto min = min_element(results.begin(), results.end(), [](pair<int, chrono::microseconds::rep> p1, pair<int, chrono::microseconds::rep> p2) {
         return p1.second < p2.second;
     });
-    cout << "Optimal value for MAX_DEPTH = " << min->first << endl;
+    cout << "Optimal value for MAX_DEPTH = " << min->first << '\n';
 }
 
 int main() {
     seekOptimal();
-    cin.get();
-    return 0;
 }

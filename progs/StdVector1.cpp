@@ -13,23 +13,33 @@ int main() {
     for (auto e: v) {
         cout << e << " ";
     }
-    cout << endl;
+    cout << '\n';
 
     // kopiëren van een vector
     auto w = v;
     for (auto e: w) {
         cout << e << " ";
     }
-    cout << endl;
+    cout << '\n';
     // vergelijken van vectoren
     if (v != w)
-        cout << "DIT KAN NIET!" << endl;
+        cout << "DIT KAN NIET!\n";
 
-    // v[100] = 12;
+    v[100] = 12;
     // ongeldige index ==> crash (als je geluk hebt!)
-    // v.at(100) = 12;
-    // ongeldige index ==> foutmelding (exception)
-
-    cin.get();
-    return 0;
+    try {
+        v.at(100) = 12;
+        // ongeldige index ==> foutmelding (exception)
+    } catch(const out_of_range& e) {
+        cerr << "Error: " << e.what() << '\n';
+    }
+    v[1000000] = 12;
+    // ongeldige index ==> crash (als je geluk hebt!)
 }
+
+/* Uitvoer:
+0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
+0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
+Error: vector::_M_range_check: __n (which is 100) >= this->size() (which is 15)
+Segmentation fault (core dumped)
+*/

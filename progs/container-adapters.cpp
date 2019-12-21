@@ -5,10 +5,12 @@
 #include <list>
 #include <forward_list>
 #include <iostream>
+#include <typeinfo>
 using namespace std;
 
 template <typename S> void stackTest(S& s) {
-    vector<int> v = {1, 3, 2};
+    cout << "stackTest voor: " << typeid(S).name() << '\n';
+    vector<int> v{1, 3, 2};
     for (auto e: v) {
         s.push(e);
     }
@@ -16,11 +18,12 @@ template <typename S> void stackTest(S& s) {
         cout << s.top() << " ";
         s.pop();
     }
-    cout << endl;
+    cout << '\n';
 }
 
 template <typename Q> void queueTest(Q& q) {
-    vector<int> v = {1, 3, 2};
+    cout << "queueTest voor: " << typeid(Q).name() << '\n';
+    vector<int> v{1, 3, 2};
     for (auto e: v) {
         q.push(e);
     }
@@ -28,11 +31,12 @@ template <typename Q> void queueTest(Q& q) {
         cout << q.front() << " ";
         q.pop();
     }
-    cout << endl;
+    cout << '\n';
 }
 
 template <typename P> void priority_queueTest(P& p) {
-    vector<int> v = {1, 3, 2};
+    cout << "priority_queueTest voor: " << typeid(P).name() << '\n';
+    vector<int> v{1, 3, 2};
     for (auto e: v) {
         p.push(e);
     }
@@ -40,7 +44,7 @@ template <typename P> void priority_queueTest(P& p) {
         cout << p.top() << " ";
         p.pop();
     }
-    cout << endl;
+    cout << '\n';
 }
 
 int main() {
@@ -63,8 +67,8 @@ int main() {
     queueTest(q2);
     queue<int, list<int>> q3;                   // queue implemented with list
     queueTest(q3);
-//  queue<int, forward_list<int>> s4;           // queue can not be implemented with forward_list
-//  queueTest(s4);
+//  queue<int, forward_list<int>> q4;           // queue can not be implemented with forward_list
+//  queueTest(q4);
 //  error: 'class std::forward_list<int>' has no member named 'push_back'
     queue<int> q5;                              // using deque by default
     queueTest(q5);
@@ -81,7 +85,4 @@ int main() {
 //  error: no match for 'operator-'
     priority_queue<int> p5;                    // using vector by default
     priority_queueTest(p5);
-
-    cin.get();
-    return 0;
 }

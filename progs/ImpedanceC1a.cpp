@@ -1,13 +1,11 @@
 #include <iostream>
 #include <complex>
-#include <cmath>
+#include <numbers>
 
 using namespace std;
-// define PI (which is not included in std C++)
-constexpr double PI = atan(1.0) * 4;
 
 complex<double> impedanceC(double c, double f) {
-    return complex<double>{0, -1 / (2 * PI * f * c)};
+    return complex<double>{0, -1 / (2 * numbers::pi * f * c)};
 }
 
 int main() {

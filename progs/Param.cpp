@@ -6,41 +6,37 @@ using namespace std;
 // Voorbeeld call by value:
 void skipLines(int l) {
     while (l-- > 0)
-        cout << endl;
+        cout << '\n';
 }
 
 // Voorveeld call by reference (met behulp van een pointer): 
 void swapInts1(int* p, int* q) {
-    int t(*p);
+    int t{*p};
     *p = *q;
     *q = t;
 }
 
 // Voorveeld call by reference (met behulp van een reference): 
 void swapInts2(int& p, int& q) {
-    int t(p);
+    int t{p};
     p = q;
     q = t;
 }
 
 int main() {
-    int n(7);
-    cout << "Hallo" << endl;
+    int n{7};
+    cout << "Hallo\n";
     skipLines(n);
-    cout << "daar!" << endl;
+    cout << "daar!\n";
     skipLines(3);
 
-    int m(3);
-    cout << "n = " << n << " m = " << m << endl;
+    int m{3};
+    cout << "n = " << n << " m = " << m << '\n';
     swapInts1(&n, &m);
-    cout << "n = " << n << " m = " << m << endl;
+    cout << "n = " << n << " m = " << m << '\n';
     swapInts2(n, m);
-    cout << "n = " << n << " m = " << m << endl;
+    cout << "n = " << n << " m = " << m << '\n';
 
 //  swapInts2(n, 5);
-//  [C++ Error (Microsoft)]: 'swapInts2' : cannot convert parameter 2 from 'int' to 'int &'
-//  [C++ Error (GCC)]:       invalid initialization of non-const reference of type 'int&' from an rvalue of type 'int'
-
-    cin.get();
-    return 0;
+//  Error: cannot bind non-const lvalue reference of type ‘int&’ to an rvalue of type ‘int’
 }

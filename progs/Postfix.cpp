@@ -8,7 +8,7 @@ using namespace std;
 int main() {
     StackWithList<int> s;
     char c;
-    cout << "Type een postfix expressie (met + en * operator) en sluit af met =" << endl;
+    cout << "Type een postfix expressie (met + en * operator) en sluit af met =\n";
     cin >> c;
     while (c != '=') {
         if (isdigit(c)) {
@@ -28,16 +28,13 @@ int main() {
             s.push(op1 * op2);
         }
         else {
-            cout << "Syntax error" << endl;
+            cout << "Syntax error\n";
         }
         cin >> c;
     }
-    cout << "= " << s.top() << endl;
+    cout << "= " << s.top() << '\n';
     s.pop();
     if (!s.empty()) {
-        cout << "Fout operator ontbreekt." << endl;
+        cout << "Fout operator ontbreekt.\n";
     }
-    cin.get();
-    cin.get();
-    return 0;
 }

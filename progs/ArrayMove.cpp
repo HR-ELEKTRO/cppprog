@@ -7,7 +7,7 @@ using namespace std;
 
 class Array {
 public:
-    typedef size_t size_type;
+    using size_type = size_t;
     explicit Array(size_type s);
     Array(const Array& r);
     Array(Array&&); // move constructor

@@ -6,7 +6,7 @@ using namespace std;
 
 ADCCard::ADCCard(): amplifyingFactor(1.0), selectedChannel(1) {
     // voor alle kaarten benodigde code
-    cout << "initialisatie is gestart." << endl;
+    cout << "initialisatie is gestart.\n";
 }
 int ADCCard::getChannel() const {
     return selectedChannel;

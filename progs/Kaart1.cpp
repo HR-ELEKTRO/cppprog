@@ -20,16 +20,16 @@ private:
     int sample() const;
 };
 
-ADCCard::ADCCard(CardType name): type(name), amplifyingFactor(1.0), selectedChannel(1) {
+ADCCard::ADCCard(CardType name): type{name}, amplifyingFactor{1.0}, selectedChannel{1} {
     // ... eventueel voor alle kaarten benodigde code
     switch (type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "AD178 is geinitialiseeerd." << endl;
+            cout << "AD178 is geinitialiseeerd.\n";
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "NI323 is geinitialiseeerd." << endl;
+            cout << "NI323 is geinitialiseeerd.\n";
             break;
     }
 }
@@ -40,11 +40,11 @@ void ADCCard::selectChannel(int channel) {
     switch (type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "Kanaal " << channel << " van AD178 is geselecteerd." << endl;
+            cout << "Kanaal " << channel << " van AD178 is geselecteerd.\n";
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "Kanaal " << channel << " van NI323 is geselecteerd." << endl;
+            cout << "Kanaal " << channel << " van NI323 is geselecteerd.\n";
             break;
     }
 }
@@ -59,11 +59,11 @@ void ADCCard::setAmplifier(double factor) {
     switch (type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "Versterkingsfactor van AD178 is " << factor << "." << endl;
+            cout << "Versterkingsfactor van AD178 is " << factor << ".\n";
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "Versterkingsfactor van NI323 is " << factor << "." << endl;
+            cout << "Versterkingsfactor van NI323 is " << factor << ".\n";
             break;
     }
 }
@@ -93,16 +93,13 @@ int main() {
     cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
     cout.precision(2);
 
-    ADCCard k1(AD178);
+    ADCCard k1{AD178};
     k1.setAmplifier(10);
     k1.selectChannel(3);
-    cout << "Kanaal " << k1.getChannel() << " van kaart k1 = " << k1.read() << " V." << endl;
+    cout << "Kanaal " << k1.getChannel() << " van kaart k1 = " << k1.read() << " V.\n";
 
-    ADCCard k2(NI323);
+    ADCCard k2{NI323};
     k2.setAmplifier(5);
     k2.selectChannel(4);
-    cout << "Kanaal " << k2.getChannel() << " van kaart k2 = " << k2.read() << " V." << endl;
-
-    cin.get();
-    return 0;
+    cout << "Kanaal " << k2.getChannel() << " van kaart k2 = " << k2.read() << " V.\n";
 }

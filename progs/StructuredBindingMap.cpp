@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    map<string, int> m{{"Harry", 1}, {"Ron", 2}, {"Daniel", 3}};
+    map<string, int> m{{"Harry", 1}, {"Ron", 2}, {"Daniël", 3}};
     for (const auto [key, value]: m) {
         cout << key << " = " << value << '\n';
     }

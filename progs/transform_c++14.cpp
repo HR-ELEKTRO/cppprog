@@ -9,13 +9,13 @@ int telop(int i, int j) {
 }
 
 int main() {
-    vector<int> v = {-3, -4, 3, 4};
-    vector<int> w = {1, 2, 3, 4};
-    ostream_iterator<int> iout(cout, " ");
+    vector<int> v{-3, -4, 3, 4};
+    vector<int> w{1, 2, 3, 4};
+    ostream_iterator<int> iout{cout, " "};
     copy(v.cbegin(), v.cend(), iout);
-    cout << endl;
+    cout << '\n';
     copy(w.cbegin(), w.cend(), iout);
-    cout << endl;
+    cout << '\n';
 
 //  Bewerking opgeven met een lambda functie.
 //  Gebruik auto als parametertype (werkt niet voor C++11, wel voor C++14).
@@ -23,8 +23,5 @@ int main() {
         return i1 + i2;
     });
     copy(v.cbegin(), v.cend(), iout);
-    cout << endl;
-
-    cin.get();
-    return 0;
+    cout << '\n';
 }

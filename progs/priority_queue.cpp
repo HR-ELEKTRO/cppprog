@@ -13,7 +13,7 @@ int main() {
         cout << pq0.front() << " ";
         pq0.pop();
     }
-    cout << endl;
+    cout << '\n';
     // output: 3 1 2
     
     // priority_queue default order: sort with < (top = greatest element)
@@ -25,7 +25,7 @@ int main() {
         cout << pq1.top() << " ";
         pq1.pop();
     }
-    cout << endl;
+    cout << '\n';
     // output: 3 2 1
     
     // priority_queue sort with > (std::greater)
@@ -37,14 +37,15 @@ int main() {
         cout << pq2.top() << " ";
         pq2.pop();
     }
-    cout << endl;
+    cout << '\n';
     // output: 1 2 3
     
     // priority_queue sort with > (lambda)
-    auto comp = [](int a, int b) {
-        return a > b;
+    auto comp{[](int a, int b) {
+            return a > b;
+        }
     };
-    priority_queue<int, vector<int>, decltype(comp)> pq3(comp);
+    priority_queue<int, vector<int>, decltype(comp)> pq3{comp};
     pq3.push(3);
     pq3.push(1);
     pq3.push(2);
@@ -52,9 +53,6 @@ int main() {
         cout << pq3.top() << " ";
         pq3.pop();
     }
-    cout << endl;
+    cout << '\n';
     // output: 1 2 3
-
-    cin.get();
-    return 0;
 }

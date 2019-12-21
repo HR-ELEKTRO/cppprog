@@ -9,15 +9,15 @@ void printDubbel(int i) {
 }
 
 int main() {
-    vector<int> v = {-3, -4, 3, 4};
-    ostream_iterator<int> iout(cout, " ");
+    vector<int> v{-3, -4, 3, 4};
+    ostream_iterator<int> iout{cout, " "};
     copy(v.cbegin(), v.cend(), iout);
-    cout << endl;
+    cout << '\n';
 
 //  Bewerking opgeven met een functie.
 //  Nadeel: voor elke bewerking moet een aparte functie worden geschreven.
     for_each(v.cbegin(), v.cend(), printDubbel);
-    cout << endl;
+    cout << '\n';
 
 //  Bewerking opgeven met een lambda functie.
 //  Voordeel: handig als bewerking uniek is.
@@ -25,7 +25,7 @@ int main() {
     for_each(v.cbegin(), v.cend(), [](int i) {
         cout << i << " " << i << " ";
     });
-    cout << endl;
+    cout << '\n';
 
 //  Alternatief voor for_each met lambda functie: gebruik range-based for.
 //  Voordeel: eenvoudigere syntax.
@@ -35,8 +35,5 @@ int main() {
     for (auto i: v) {
         cout << i << " " << i << " ";
     };
-    cout << endl;
-    
-    cin.get();
-    return 0;
+    cout << '\n';
 }

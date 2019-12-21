@@ -8,7 +8,7 @@ using namespace std;
 int main() {
     StackWithList<char> s;
     char c;
-    cout << "Type een expressie met haakjes () [] of {} en sluit af met ." << endl;
+    cout << "Type een expressie met haakjes () [] of {} en sluit af met .\n";
     cin.get(c);
     while (c != '.') {
         if (c == '(' || c == '{' || c == '[') {
@@ -17,7 +17,7 @@ int main() {
         else {
             if (c == ')' || c == '}' || c == ']') {
                 if (s.empty()) {
-                    cout << "Fout " << c << " bijbehorend haakje openen ontbreekt." << endl;
+                    cout << "Fout " << c << " bijbehorend haakje openen ontbreekt.\n";
                 }
                 else {
                     char d{s.top()};

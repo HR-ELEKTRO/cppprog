@@ -11,7 +11,7 @@ using namespace std;
 
 template <typename T> class Array {
 public:
-    typedef size_t size_type;
+    using size_type = size_t;
     explicit Array(size_type s);
 // Support for initializer list
     Array(initializer_list<T> list);

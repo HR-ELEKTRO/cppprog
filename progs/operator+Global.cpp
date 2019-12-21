@@ -48,13 +48,13 @@ int ggd(int n, int m) {
 
 // ADT-definitie:
 
-Breuk::Breuk(): boven(0), onder(1) {
+Breuk::Breuk(): boven{0}, onder{1} {
 }
 
-Breuk::Breuk(int t): boven(t), onder(1) {
+Breuk::Breuk(int t): boven{t}, onder{1} {
 }
 
-Breuk::Breuk(int t, int n): boven(t), onder(n) {
+Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
@@ -65,6 +65,12 @@ Breuk& Breuk::operator+=(const Breuk& right) {
     return *this;
 }
 
+const Breuk Breuk::operator+(const Breuk& right) const {
+    Breuk copyLeft{*this};
+    copyLeft += right;
+    return copyLeft;
+}
+
 Breuk& Breuk::operator-=(const Breuk& right) {
     boven = boven * right.onder - onder * right.boven;
     onder *= right.onder;
@@ -73,7 +79,7 @@ Breuk& Breuk::operator-=(const Breuk& right) {
 }
 
 const Breuk Breuk::operator-(const Breuk& right) const {
-    Breuk copyLeft(*this);
+    Breuk copyLeft{*this};
     copyLeft -= right;
     return copyLeft;
 }
@@ -84,7 +90,7 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d = ggd(boven, onder);
+    int d{ggd(boven, onder)};
     boven /= d;
     onder /= d;
 }
@@ -101,7 +107,7 @@ const Breuk operator+(int left, const Breuk& right) {
 
 const Breuk operator-(int left, const Breuk& right) {
     // aftrekken is niet commutatief!
-    Breuk copyLeft(left);
+    Breuk copyLeft{left};
     copyLeft -= right;
     return copyLeft;
 }
@@ -109,31 +115,28 @@ const Breuk operator-(int left, const Breuk& right) {
 // Hoofdprogramma:
 
 int main() {
-    Breuk b1(2, 3), b2(4, 5), b3;
+    Breuk b1{2, 3}, b2{4, 5}, b3;
     b3 = b1 + b2;
-    cout << b1 << " + " << b2 << " = " << b3 << endl;
-    cout << b1 << " - " << b2 << " = " << b1 - b2 << endl;
+    cout << b1 << " + " << b2 << " = " << b3 << '\n';
+    cout << b1 << " - " << b2 << " = " << b1 - b2 << '\n';
     
 //  kun je bij een Breuk een int optellen?
     b3 = b1 + 5;
-    cout << b1 << " + 5 = " << b3 << endl;
+    cout << b1 << " + 5 = " << b3 << '\n';
 //  Ja, de int wordt omgezet in een Breuk met de constructor Breuk::Breuk(int t)
 //  b3 = b1 + Breuk(5);
 
 //  kun je van een Breuk een int aftrekken?
-    cout << b1 << " - 5 = " << b1 - 5 << endl;
+    cout << b1 << " - 5 = " << b1 - 5 << '\n';
 //  Ja, de int wordt omgezet in een Breuk met de constructor Breuk::Breuk(int t)
     
 //  kun je bij een int een Breuk optellen?
     b3 = 5 + b2;
-    cout << "5 + " << b2 << " = " << b3 << endl;
+    cout << "5 + " << b2 << " = " << b3 << '\n';
 //  Ja, de globale operator+(int left, const Breuk& right) wordt aangeroepen.
 //  b3.operator+(5, b2);
 
 //  kun je van een int een Breuk aftrekken?
-    cout << "5 - " << b2 << " = " << 5 - b2 << endl;
+    cout << "5 - " << b2 << " = " << 5 - b2 << '\n';
 //  Ja, de globale operator-(int left, const Breuk& right) wordt aangeroepen.
-
-    cin.get();  // wait for user before closing console window
-    return 0;
 }

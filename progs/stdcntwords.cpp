@@ -9,22 +9,19 @@ int main() {
     map<string, int> freq;
     cout << "Geef filenaam: ";
     cin >> w;
-    ifstream fin(w);
+    ifstream fin{w};
     while (fin >> w) {
         ++freq[w];
     }
     for (const auto& wordcount: freq) {
-        cout << wordcount.first << " " << wordcount.second << endl;
+        cout << wordcount.first << " " << wordcount.second << '\n';
     }
-    cout << "Enkele belangrijke keywords:" << endl;
-    cout << "do: " << freq["do"] << endl;
-    cout << "else: " << freq["else"] << endl;
-    cout << "for: " << freq["for"] << endl;
-    cout << "if: " << freq["if"] << endl;
-    cout << "return: " << freq["return"] << endl;
-    cout << "switch: " << freq["switch"] << endl;
-    cout << "while: " << freq["while"] << endl;
-    cin.get();
-    cin.get();
-    return 0;
+    cout << "Enkele belangrijke keywords:\n";
+    cout << "do: " << freq["do"] << '\n';
+    cout << "else: " << freq["else"] << '\n';
+    cout << "for: " << freq["for"] << '\n';
+    cout << "if: " << freq["if"] << '\n';
+    cout << "return: " << freq["return"] << '\n';
+    cout << "switch: " << freq["switch"] << '\n';
+    cout << "while: " << freq["while"] << '\n';
 }

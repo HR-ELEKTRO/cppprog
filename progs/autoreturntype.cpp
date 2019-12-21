@@ -7,8 +7,5 @@ auto max3(int i1, int i2, int i3) {
 }
 
 int main() {
-    cout << "max3(12, 18, 17) = " << max3(12, 18, 17);
-
-    cin.get();
-    return 0;
+    cout << "max3(12, 18, 17) = " << max3(12, 18, 17) << '\n';
 }

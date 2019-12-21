@@ -6,7 +6,7 @@ using namespace std;
 
 class Mens {
 public:
-    Mens(const string& n): name(n) {
+    Mens(const string& n): name{n} {
     }
     string naam() const {
         return name;
@@ -24,7 +24,7 @@ private:
 
 class Docent: public Mens {
 public:
-    Docent(const string& n, unsigned short s): Mens(n), sal(s) {
+    Docent(const string& n, unsigned short s): Mens{n}, sal{s} {
     }
     virtual string soort() const {
         return "docent";
@@ -41,36 +41,25 @@ private:
 };
 
 int main() {
-    Docent bd("Harry", 30000);
-    cout << bd.soort() << " " << bd.naam() << " verdient " << bd.salaris() << endl;
-    bd.verhoogSalarisMet(10000);
-    cout << bd.soort() << " " << bd.naam() << " verdient " << bd.salaris() << endl;
+    Docent brojz{"Harry", 30000};
+    cout << brojz.soort() << " " << brojz.naam() << " verdient " << brojz.salaris() << '\n';
+    brojz.verhoogSalarisMet(10000);
+    cout << brojz.soort() << " " << brojz.naam() << " verdient " << brojz.salaris() << '\n';
 
-    Mens m(bd); // Waar blijft het salaris?
-    cout << m.soort() << " " << m.naam() << " verdient " << m.salaris() << endl;
+    Mens m{brojz}; // Waar blijft het salaris?
+    cout << m.soort() << " " << m.naam() << " verdient " << m.salaris() << '\n';
 
-//  Docent jd(m); 
-//  [C++ Error (Microsoft)]: 'Docent::Docent(const Docent &)' : cannot convert parameter 1 from 'Mens' to 'const Docent &' 
-//                           Reason: cannot convert from 'Mens' to 'const Docent'
-//  [C++ Error (GCC)]:       no matching function for call to 'Docent::Docent(Mens&)'
-//                           note: candidates are:
-//                           note: Docent::Docent(const string&, short unsigned int)
-//                           note:   candidate expects 2 arguments, 1 provided
-//                           note: Docent::Docent(const Docent&)
-//                           note:   no known conversion for argument 1 from 'Mens' to 'const Docent&'
+//  Docent versd{m}; 
+//  Error: no matching function for call to ‘Docent::Docent(<brace-enclosed initializer list>)
 
-    Mens& mr(bd);
-    cout << mr.soort() << " " << mr.naam() << " verdient " << mr.salaris() << endl;
+    Mens& mr{brojz};
+    cout << mr.soort() << " " << mr.naam() << " verdient " << mr.salaris() << '\n';
 
-    Mens* mp(&bd);
-    cout << mp->soort() << " " << mp->naam() << " verdient " << mp->salaris() << endl;
-//  ...
-    cin.get();
-    return 0;
+    Mens* mp{&brojz};
+    cout << mp->soort() << " " << mp->naam() << " verdient " << mp->salaris() << '\n';
 }
 
-/*
-Output:
+/* Output:
 docent Harry verdient 30000
 docent Harry verdient 40000
 mens Harry verdient 0

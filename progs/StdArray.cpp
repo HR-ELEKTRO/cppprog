@@ -18,20 +18,30 @@ int main() {
     cout << endl;
 
     // kopiëren van de een array
-    auto b = a;
+    auto b{a};
     for (auto e: b) {
         cout << e << " ";
     }
     cout << endl;
     // vergelijken van array's
     if (a != b)
-        cout << "DIT KAN NIET!" << endl;
+        cout << "DIT KAN NIET!\n";
 
-    // a[100] = 12;
+    a[100] = 12;
     // ongeldige index ==> crash (als je geluk hebt!)
-    // a.at(100) = 12;
-    // ongeldige index ==> foutmelding (exception)
-
-    cin.get();
-    return 0;
+    try {
+        a.at(100) = 12;
+        // ongeldige index ==> foutmelding (exception)
+    } catch(const out_of_range& e) {
+        cerr << "Error: " << e.what() << '\n';
+    }
+    a[10000] = 12;
+    // ongeldige index ==> crash (als je geluk hebt!)
 }
+
+/* Uitvoer:
+0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
+0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
+Error: array::at: __n (which is 100) >= _Nm (which is 15)
+Segmentation fault (core dumped)
+*/

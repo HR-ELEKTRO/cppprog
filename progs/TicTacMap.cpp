@@ -8,34 +8,33 @@ using namespace std;
 // print number of moves considered, time used and map size
 #define ANALYSE
 #ifdef ANALYSE
-#ifdef WIN32
-#include <windows.h>
-#else
-#include <ctime>
-#endif    
+#include <chrono>
 #endif
 
 class TicTacToe {
 public:
     enum Side { EMPTY, HUMAN, COMPUTER };
     enum Value { HUMAN_WINS = -1, DRAW, COMPUTER_WINS, UNDECIDED };
+    using Board = matrix<Side, 3, 3>;
+    using Row = Board::size_type;
+    using Column = Board::size_type;
     TicTacToe()
 #ifdef ANALYSE
-        : movesConsidered(0)
+        : movesConsidered{0}
 #endif
     {
         fill(board.begin(), board.end(), EMPTY);
     }
-    Value chooseComputerMove(int& bestRow, int& bestColumn, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS);
-    Value chooseHumanMove(int& bestRow, int& bestColumn, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS);
-    Side side(int row, int column) const;
+    Value chooseComputerMove(Row& bestRow, Column& bestColumn, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS, int depth = 1);
+    Value chooseHumanMove(Row& bestRow, Column& bestColumn, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS, int depth = 1);
+    Side side(Row row, Column column) const;
     bool isUndecided() const;
-    bool playMove(Side s, int row, int column);
+    bool playMove(Side s, Row row, Column column);
     bool boardIsFull() const;
     bool isAWin(Side s) const;
 #ifdef ANALYSE
     int getAndResetMovesConsidered() {
-        int i = movesConsidered;
+        int i{movesConsidered};
         movesConsidered = 0;
         return i;
     }
@@ -44,7 +43,6 @@ public:
     }
 #endif
 private:
-    typedef matrix<Side, 3, 3> Board;
     Board board;
     Value value() const;
     class BoardWrapper {
@@ -82,35 +80,11 @@ private:
     char humanSymbol;
 };
 
-#ifdef ANALYSE
-class StopWatch {
-public:
-    StopWatch();
-    void start();
-    void stop();
-    double time() const;
-private:
-    bool running;
-    void printError() const;
-#ifdef WIN32
-    double f;
-    long long start_time;
-    long long total_time;
-    long long getExecutionTime() const;
-#else
-    clock_t start_time;
-    clock_t total_time;
-    clock_t getExecutionTime() const;
-#endif
-};
-ostream& operator<<(ostream& o, const StopWatch& sw);
-#endif
-
 TicTacToe::Value TicTacToe::value() const {
     return isAWin(COMPUTER) ? COMPUTER_WINS : isAWin(HUMAN) ? HUMAN_WINS : boardIsFull() ? DRAW : UNDECIDED;
 }
 
-TicTacToe::Value TicTacToe::chooseComputerMove(int& bestRow, int& bestColumn, Value alpha, Value beta) {
+TicTacToe::Value TicTacToe::chooseComputerMove(Row& bestRow, Column& bestColumn, Value alpha, Value beta, int depth) {
 #ifdef ANALYSE
     ++movesConsidered;
 #endif
@@ -120,14 +94,15 @@ TicTacToe::Value TicTacToe::chooseComputerMove(int& bestRow, int& bestColumn, Va
         bestColumn = itr->second.bestColumn;
         return itr->second.value;
     }
-    Value bestValue = value();
+    Value bestValue{value()};
     if (bestValue == UNDECIDED) {
-        for (int row = 0; alpha < beta && row < 3; ++row) {
-            for (int column = 0; alpha < beta && column < 3; ++column) {
+        for (Row row{0}; alpha < beta && row < 3; ++row) {
+            for (Column column{0}; alpha < beta && column < 3; ++column) {
                 if (board(row, column) == EMPTY) {
                     board(row, column) = COMPUTER;
-                    int dummyRow, dummyColumn;
-                    Value value = chooseHumanMove(dummyRow, dummyColumn, alpha, beta);
+                    Row dummyRow;
+                    Column dummyColumn;
+                    Value value{chooseHumanMove(dummyRow, dummyColumn, alpha, beta)};
                     board(row, column) = EMPTY;
                     if (value > alpha) {
                         alpha = value;
@@ -143,7 +118,7 @@ TicTacToe::Value TicTacToe::chooseComputerMove(int& bestRow, int& bestColumn, Va
     return bestValue;
 }
 
-TicTacToe::Value TicTacToe::chooseHumanMove(int& bestRow, int& bestColumn, Value alpha, Value beta) {
+TicTacToe::Value TicTacToe::chooseHumanMove(Row& bestRow, Column& bestColumn, Value alpha, Value beta, int depth) {
 #ifdef ANALYSE
     ++movesConsidered;
 #endif
@@ -153,14 +128,15 @@ TicTacToe::Value TicTacToe::chooseHumanMove(int& bestRow, int& bestColumn, Value
         bestColumn = itr->second.bestColumn;
         return itr->second.value;
     }
-    Value bestValue = value();
+    Value bestValue{value()};
     if (bestValue == UNDECIDED) {
-        for (int row = 0; alpha < beta && row < 3; ++row) {
-            for (int column = 0; alpha < beta && column < 3; ++column) {
+        for (Row row{0}; beta > alpha && row < 3; ++row) {
+            for (Column column{0}; beta > alpha && column < 3; ++column) {
                 if (board(row, column) == EMPTY) {
                     board(row, column) = HUMAN;
-                    int dummyRow, dummyColumn;
-                    Value value = chooseComputerMove(dummyRow, dummyColumn, alpha, beta);
+                    Row dummyRow;
+                    Column dummyColumn;
+                    Value value{chooseComputerMove(dummyRow, dummyColumn, alpha, beta, depth + 1)};
                     board(row, column) = EMPTY;
                     if (value < beta) {
                         beta = value;
@@ -176,7 +152,7 @@ TicTacToe::Value TicTacToe::chooseHumanMove(int& bestRow, int& bestColumn, Value
     return bestValue;
 }
 
-TicTacToe::Side TicTacToe::side(int row, int column) const {
+TicTacToe::Side TicTacToe::side(Row row, Column column) const {
     return board(row, column);
 }
 
@@ -184,7 +160,7 @@ bool TicTacToe::isUndecided() const {
     return value() == UNDECIDED;
 }
 
-bool TicTacToe::playMove(Side s, int row, int column) {
+bool TicTacToe::playMove(Side s, Row row, Column column) {
     if (row < 0 || row >= 3 || column < 0 || column >= 3 || board(row, column) != EMPTY)
         return false;
     board(row, column) = s;
@@ -198,9 +174,13 @@ bool TicTacToe::boardIsFull() const {
 }
 
 bool TicTacToe::isAWin(Side s) const {
-    for (int i = 0; i < 3; ++i) {
-        if ((board(i, 0) == s && board(i, 1) == s && board(i, 2) == s) ||
-            (board(0, i) == s && board(1, i) == s && board(2, i) == s)) {
+    for (Row r{0}; r < 3; ++r) {
+        if (board(r, 0) == s && board(r, 1) == s && board(r, 2) == s) {
+            return true;
+        }
+    }
+    for (Column c{0}; c < 3; ++c) {
+        if (board(0, c) == s && board(1, c) == s && board(2, c) == s) {
             return true;
         }
     }
@@ -209,10 +189,10 @@ bool TicTacToe::isAWin(Side s) const {
 }
 
 bool TicTacToe::BoardWrapper::operator<(const BoardWrapper& rhs) const {
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3; ++j) {
-            if (board(i, j) != rhs.board(i, j)) {
-                return board(i, j) < rhs.board(i, j);
+    for (Row r{0}; r < 3; ++r) {
+        for (Column c{0}; c < 3; ++c) {
+            if (board(r, c) != rhs.board(r, c)) {
+                return board(r, c) < rhs.board(r, c);
             }
         }
     }
@@ -223,163 +203,85 @@ ConsoleTTTGame::ConsoleTTTGame(bool computerGoesFirst) :
 computerSymbol(computerGoesFirst ? 'x' : 'o'), humanSymbol(computerGoesFirst ? 'o' : 'x') {
     if (computerGoesFirst) {
         doComputerMove();
-        cout << endl;
+        cout << '\n';
     }
 }
 
 void ConsoleTTTGame::printBoard() const {
     string streep(3, '-');
-    cout << streep << endl;
-    for (int row = 0; row < 3; ++row) {
-        for (int column = 0; column < 3; ++column)
+    cout << streep << '\n';
+    for (TicTacToe::Row row{0}; row < 3; ++row) {
+        for (TicTacToe::Column column{0}; column < 3; ++column)
         if (t.side(row, column) == TicTacToe::COMPUTER)
             cout << computerSymbol;
         else if (t.side(row, column) == TicTacToe::HUMAN)
             cout << humanSymbol;
         else
             cout << ' ';
-        cout << endl;
+        cout << '\n';
     }
-    cout << streep << endl;
+    cout << streep << '\n';
 }
 
 void ConsoleTTTGame::doComputerMove() {
-    int bestRow, bestColumn;
+    TicTacToe::Row bestRow;
+    TicTacToe::Column bestColumn;
 #ifdef ANALYSE
-    StopWatch sw;
-    sw.start();
+    auto start{chrono::high_resolution_clock::now()};
 #endif
     t.chooseComputerMove(bestRow, bestColumn);
 #ifdef ANALYSE
-    sw.stop();
-    cout << "Calculation time: " << sw << endl;
-    cout << "Map size is: " << t.getMapSize() << endl;
-    cout << "Moves considered: " << t.getAndResetMovesConsidered() << endl;
+    auto stop{chrono::high_resolution_clock::now()};
+    auto duration{chrono::duration_cast<chrono::microseconds>(stop - start).count()};
+    cout << "Calculation time: " << duration << " us\n";
+    cout << "Map size is: " << t.getMapSize() << '\n';
+    cout << "Moves considered: " << t.getAndResetMovesConsidered() << '\n';
 #endif
-    cout << "Computer plays: ROW = " << bestRow << " COLUMN = " << bestColumn << endl;
+    cout << "Computer plays: ROW = " << bestRow << " COLUMN = " << bestColumn << '\n';
     t.playMove(TicTacToe::COMPUTER, bestRow, bestColumn);
 }
 
 void ConsoleTTTGame::play() {
     do {
-        int row, column;
+        TicTacToe::Row row;
+        TicTacToe::Column column;
         do {
             printBoard();
-            cout << endl << "Enter row and column (starts at 0): ";
+            cout << '\n' << "Enter row and column (starts at 0): ";
             cin >> row >> column;
         } while (!t.playMove(TicTacToe::HUMAN, row, column));
-        cout << endl;
+        cout << '\n';
         if (t.isUndecided()) {
             printBoard();
-            cout << endl;
+            cout << '\n';
             doComputerMove();
-            cout << endl;
+            cout << '\n';
         }
     } while (t.isUndecided());
     printBoard();
     if (t.isAWin(TicTacToe::COMPUTER)) {
-        cout << "Computer wins!!" << endl;
+        cout << "Computer wins!!\n";
     }
     else if (t.isAWin(TicTacToe::HUMAN)) {
-        cout << "Human wins!!" << endl;
+        cout << "Human wins!!\n";
     }
     else {
-        cout << "Draw!!" << endl;
+        cout << "Draw!!\n";
     }
 }
-
-#ifdef ANALYSE
-StopWatch::StopWatch() : running(false), total_time(0) {
-#ifdef WIN32
-    LARGE_INTEGER performanceFrequency;
-    if (QueryPerformanceFrequency(&performanceFrequency) == 0) {
-        printError();
-    }
-    f = double(performanceFrequency.QuadPart);
-#endif
-}
-
-void StopWatch::start() {
-    if (!running) {
-        running = true;
-        start_time = getExecutionTime();
-    }
-}
-
-void StopWatch::stop() {
-    if (running) {
-        running = false;
-        total_time = getExecutionTime() - start_time;
-    }
-}
-
-#ifdef WIN32
-long long StopWatch::getExecutionTime() const {
-    LARGE_INTEGER performanceCount;
-    if (QueryPerformanceCounter(&performanceCount) == 0) {
-        printError();
-        return 0;
-    }
-    return performanceCount.QuadPart;
-}
-#else
-clock_t StopWatch::getExecutionTime() const {
-    clock_t t = clock();
-    if (t == -1) {
-        printError();
-        return 0;
-    }
-    return clock();
-}
-#endif
-
-void StopWatch::printError() const {
-#ifdef WIN32
-    LPTSTR lpMsgBuf(0);
-    FormatMessage(
-        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-        NULL,
-        GetLastError(),
-        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        lpMsgBuf,
-        0,
-        NULL
-        );
-    cerr << lpMsgBuf << endl;
-    LocalFree(lpMsgBuf);
-#else
-    cerr << "No timer available\n" << endl;
-#endif
-}
-
-double StopWatch::time() const {
-#ifdef WIN32
-    long long res = running ? getExecutionTime() - start_time : total_time;
-    return res / f;
-#else
-    clock_t res = running ? getExecutionTime() - start_time : total_time;
-    return static_cast<double>(res) / CLK_TCK;
-#endif
-}
-
-ostream& operator<<(ostream& o, const StopWatch& sw) {
-    return o << sw.time() << " sec";
-}
-#endif
 
 int main() {
-    cout << "Welcome to TIC-TAC-TOE" << endl;
-    bool computerGoesFirst = true;
+    cout << "Welcome to TIC-TAC-TOE\n";
+    bool computerGoesFirst{true};
     char again;
     do {
-        ConsoleTTTGame game(computerGoesFirst);
+        ConsoleTTTGame game{computerGoesFirst};
         game.play();
         do {
             cout << "Play again (y/n)? ";
             cin >> again;
         } while (again != 'y' && again != 'Y' && again != 'n' && again != 'N');
         computerGoesFirst = !computerGoesFirst;
-        cout << endl;
+        cout << '\n';
     } while (again != 'n' && again != 'N');
-    return 0;
 }

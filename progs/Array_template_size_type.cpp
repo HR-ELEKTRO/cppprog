@@ -7,7 +7,7 @@ using namespace std;
 
 template <typename T> class Array {
 public:
-    typedef size_t size_type;
+    using size_type = size_t;
     explicit Array(size_type s);
     Array(const Array<T>& v);
     Array<T>& operator=(const Array<T>& r);

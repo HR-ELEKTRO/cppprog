@@ -7,7 +7,7 @@ void leesInts(vector<int>& vec) {
     vec.resize(0);
     int i;
     cout << "Voer een willekeurig aantal integers in, ";
-    cout << "sluit af met een letter:" << endl;
+    cout << "sluit af met een letter:\n";
     while (cin >> i) {
         vec.push_back(i);
     }
@@ -25,8 +25,5 @@ int main() {
     for (auto e: v) {
         cout << e << " ";
     }
-    cout << endl;
-    cin.get();
-    cin.get();
-    return 0;
+    cout << '\n';
 }

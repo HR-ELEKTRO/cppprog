@@ -11,13 +11,10 @@ int main() {
     for (int i = 0; i < 10; ++i) {
         w.push_back(i * i);
     }
-    ostream_iterator<int> out(cout, " ");
-    copy(w.cbegin(), w.cend(), out); cout << endl;
+    ostream_iterator<int> out{cout, " "};
+    copy(w.cbegin(), w.cend(), out); cout << '\n';
         
 //  verwijder alle even elementen:
     w.erase(remove_if(w.begin(), w.end(), bind(equal_to<int>(), bind(modulus<int>(), _1, 2), 0)), w.end());
-    copy(w.cbegin(), w.cend(), out); cout << endl;
-
-    cin.get();
-    return 0;
+    copy(w.cbegin(), w.cend(), out); cout << '\n';
 }

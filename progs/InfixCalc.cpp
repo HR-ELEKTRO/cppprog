@@ -2,6 +2,7 @@
 #include <sstream>
 #include <cctype>
 #include <cassert>
+#include <cmath>
 #include "stacklist.h"
 using namespace std;
 
@@ -23,7 +24,7 @@ private:
 
 int Calculator::calculate(const string& s){
     char c;
-    istringstream is(s);
+    istringstream is{s};
     is >> c;
     while (c != '=') {
         if (isdigit(c)) {
@@ -48,7 +49,7 @@ int Calculator::calculate(const string& s){
             s1.pop();
         }
         else {
-            cout << "Syntax error" << endl;
+            cout << "Syntax error\n";
         }
         is >> c;
     }
@@ -58,7 +59,7 @@ int Calculator::calculate(const string& s){
     int result = s2.top();
     s2.pop();
     if (!s2.empty()) {
-        cout << "Fout operator ontbreekt." << endl;
+        cout << "Fout operator ontbreekt.\n";
         s2.pop();
     }
     return result;
@@ -66,8 +67,9 @@ int Calculator::calculate(const string& s){
 
 bool Calculator::hasLowerPrio(char op1, char op2) {
     return 
-        (op1 == '+' || op1 == '-') && (op2 == '*' || op2 == '/' || op2 == '%' || op2 == '^') ||
-        (op1 == '*' || op1 == '/' || op1 == '%') && (op2 == '^');
+        ((op1 == '+' || op1 == '-') && (op2 == '*' || op2 == '/' || op2 == '%' || op2 == '^')) ||
+        ((op1 == '*' || op1 == '/' || op1 == '%') && (op2 == '^'));
+    // extra haakjes om warning te voorkomen: suggest parentheses around ‘&&’ within ‘||’
 }
 
 void Calculator::processOperator() {
@@ -89,11 +91,10 @@ int main() {
     assert(c.calculate("(3 * 4 + (40 / (23 - 7 % 4)) * 2 ^ 1) ^ 2 =") == 256);
     string s;
     do {
-        cout << "Type een infix expressie en sluit af met <enter>" << endl;
+        cout << "Type een infix expressie en sluit af met <enter>\n";
         getline(cin, s);
         if (!s.empty()) {
-            cout << "= " << c.calculate(s + "=") << endl;
+            cout << "= " << c.calculate(s + "=") << '\n';
         }
     } while (!s.empty());
-    return 0;
 }

@@ -1,95 +1,229 @@
-Debug
-
+Debug -O0
 MAX_DEPTH: 2
 Map size is: 0
 Moves considered: 16811
-Avarage execution time (10 runs): 0.0706661
+Executiom time: 10779 us
+Executiom time: 7857 us
+Executiom time: 8082 us
+Executiom time: 8526 us
+Executiom time: 8312 us
+Executiom time: 10201 us
+Executiom time: 8892 us
+Executiom time: 8604 us
+Executiom time: 10644 us
+Executiom time: 7726 us
+Avarage execution time: 8962 us
 MAX_DEPTH: 3
 Map size is: 30
 Moves considered: 16811
-Avarage execution time (10 runs): 0.0709619
+Executiom time: 8218 us
+Executiom time: 8634 us
+Executiom time: 9861 us
+Executiom time: 7947 us
+Executiom time: 11055 us
+Executiom time: 8926 us
+Executiom time: 8887 us
+Executiom time: 11592 us
+Executiom time: 8505 us
+Executiom time: 9101 us
+Avarage execution time: 9272 us
 MAX_DEPTH: 4
 Map size is: 118
 Moves considered: 14047
-Avarage execution time (10 runs): 0.0632046
+Executiom time: 8078 us
+Executiom time: 8017 us
+Executiom time: 7440 us
+Executiom time: 8433 us
+Executiom time: 7304 us
+Executiom time: 6609 us
+Executiom time: 7853 us
+Executiom time: 7822 us
+Executiom time: 9800 us
+Executiom time: 8050 us
+Avarage execution time: 7940 us
 MAX_DEPTH: 5
 Map size is: 369
 Moves considered: 11523
-Avarage execution time (10 runs): 0.0675519
+Executiom time: 7417 us
+Executiom time: 6908 us
+Executiom time: 7945 us
+Executiom time: 7279 us
+Executiom time: 8451 us
+Executiom time: 7143 us
+Executiom time: 7727 us
+Executiom time: 7130 us
+Executiom time: 8061 us
+Executiom time: 7370 us
+Avarage execution time: 7543 us
 MAX_DEPTH: 6
 Map size is: 841
 Moves considered: 7954
-Avarage execution time (10 runs): 0.0937331
+Executiom time: 8801 us
+Executiom time: 8423 us
+Executiom time: 9216 us
+Executiom time: 9617 us
+Executiom time: 9299 us
+Executiom time: 7866 us
+Executiom time: 8936 us
+Executiom time: 10890 us
+Executiom time: 8606 us
+Executiom time: 9318 us
+Avarage execution time: 9097 us
 MAX_DEPTH: 7
 Map size is: 1513
 Moves considered: 5622
-Avarage execution time (10 runs): 0.139846
+Executiom time: 12321 us
+Executiom time: 15515 us
+Executiom time: 17858 us
+Executiom time: 15737 us
+Executiom time: 15947 us
+Executiom time: 13315 us
+Executiom time: 16888 us
+Executiom time: 16618 us
+Executiom time: 17512 us
+Executiom time: 15003 us
+Avarage execution time: 15671 us
 MAX_DEPTH: 8
 Map size is: 2135
 Moves considered: 4487
-Avarage execution time (10 runs): 0.215412
+Executiom time: 22678 us
+Executiom time: 23733 us
+Executiom time: 21294 us
+Executiom time: 26119 us
+Executiom time: 20966 us
+Executiom time: 18698 us
+Executiom time: 18095 us
+Executiom time: 17534 us
+Executiom time: 17310 us
+Executiom time: 17874 us
+Avarage execution time: 20430 us
 MAX_DEPTH: 9
 Map size is: 2407
 Moves considered: 4272
-Avarage execution time (10 runs): 0.259741
+Executiom time: 19230 us
+Executiom time: 25815 us
+Executiom time: 24881 us
+Executiom time: 25996 us
+Executiom time: 23451 us
+Executiom time: 21967 us
+Executiom time: 21225 us
+Executiom time: 24323 us
+Executiom time: 26921 us
+Executiom time: 23368 us
+Avarage execution time: 23717 us
+Optimal value for MAX_DEPTH = 5
+
+Release -O3
+MAX_DEPTH: 2
+Map size is: 0
+Moves considered: 16811
+Executiom time: 1654 us
+Executiom time: 1894 us
+Executiom time: 1534 us
+Executiom time: 1549 us
+Executiom time: 1735 us
+Executiom time: 1525 us
+Executiom time: 1527 us
+Executiom time: 1821 us
+Executiom time: 1532 us
+Executiom time: 1546 us
+Avarage execution time: 1631 us
+MAX_DEPTH: 3
+Map size is: 30
+Moves considered: 16811
+Executiom time: 1654 us
+Executiom time: 1561 us
+Executiom time: 1549 us
+Executiom time: 2328 us
+Executiom time: 2512 us
+Executiom time: 2208 us
+Executiom time: 2268 us
+Executiom time: 2377 us
+Executiom time: 1560 us
+Executiom time: 1573 us
+Avarage execution time: 1959 us
+MAX_DEPTH: 4
+Map size is: 118
+Moves considered: 14047
+Executiom time: 1671 us
+Executiom time: 1392 us
+Executiom time: 1399 us
+Executiom time: 1451 us
+Executiom time: 1386 us
+Executiom time: 1508 us
+Executiom time: 1964 us
+Executiom time: 1477 us
+Executiom time: 1396 us
+Executiom time: 1524 us
+Avarage execution time: 1516 us
+MAX_DEPTH: 5
+Map size is: 369
+Moves considered: 11523
+Executiom time: 1674 us
+Executiom time: 1431 us
+Executiom time: 1594 us
+Executiom time: 1967 us
+Executiom time: 1686 us
+Executiom time: 1436 us
+Executiom time: 1710 us
+Executiom time: 1419 us
+Executiom time: 1438 us
+Executiom time: 1397 us
+Avarage execution time: 1575 us
+MAX_DEPTH: 6
+Map size is: 841
+Moves considered: 7954
+Executiom time: 1563 us
+Executiom time: 1526 us
+Executiom time: 1539 us
+Executiom time: 1520 us
+Executiom time: 1582 us
+Executiom time: 1531 us
+Executiom time: 1643 us
+Executiom time: 1964 us
+Executiom time: 1668 us
+Executiom time: 1559 us
+Avarage execution time: 1609 us
+MAX_DEPTH: 7
+Map size is: 1513
+Moves considered: 5622
+Executiom time: 2258 us
+Executiom time: 2019 us
+Executiom time: 2057 us
+Executiom time: 1973 us
+Executiom time: 3016 us
+Executiom time: 2657 us
+Executiom time: 2210 us
+Executiom time: 2087 us
+Executiom time: 2007 us
+Executiom time: 1973 us
+Avarage execution time: 2225 us
+MAX_DEPTH: 8
+Map size is: 2135
+Moves considered: 4487
+Executiom time: 2896 us
+Executiom time: 2544 us
+Executiom time: 2542 us
+Executiom time: 2522 us
+Executiom time: 2817 us
+Executiom time: 3231 us
+Executiom time: 2853 us
+Executiom time: 2663 us
+Executiom time: 2533 us
+Executiom time: 2567 us
+Avarage execution time: 2716 us
+MAX_DEPTH: 9
+Map size is: 2407
+Moves considered: 4272
+Executiom time: 2915 us
+Executiom time: 4089 us
+Executiom time: 3905 us
+Executiom time: 3016 us
+Executiom time: 2838 us
+Executiom time: 2891 us
+Executiom time: 3020 us
+Executiom time: 2848 us
+Executiom time: 2741 us
+Executiom time: 2825 us
+Avarage execution time: 3108 us
 Optimal value for MAX_DEPTH = 4
-
-Release
-MAX_DEPTH: 2
-Map size is: 0
-Moves considered: 16811
-Avarage execution time (10 runs): 0.00147545
-MAX_DEPTH: 3
-Map size is: 30
-Moves considered: 16811
-Avarage execution time (10 runs): 0.001519
-MAX_DEPTH: 4
-Map size is: 118
-Moves considered: 14047
-Avarage execution time (10 runs): 0.00160233
-MAX_DEPTH: 5
-Map size is: 369
-Moves considered: 11523
-Avarage execution time (10 runs): 0.00374191
-MAX_DEPTH: 6
-Map size is: 841
-Moves considered: 7954
-Avarage execution time (10 runs): 0.0143848
-MAX_DEPTH: 7
-Map size is: 1513
-Moves considered: 5622
-Avarage execution time (10 runs): 0.0419999
-MAX_DEPTH: 8
-Map size is: 2135
-Moves considered: 4487
-Avarage execution time (10 runs): 0.0502824
-MAX_DEPTH: 9
-Map size is: 2407
-Moves considered: 4272
-Avarage execution time (10 runs): 0.057208
-Optimal value for MAX_DEPTH = 2
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

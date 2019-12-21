@@ -7,22 +7,24 @@ void print(const multiset<string>& bag) {
     cout << "De bag bevat: ";
     for (const auto& e: bag)
         cout << e << " ";
-    cout << endl;
+    cout << '\n';
 }
 
 int main() {
-    multiset<string> docenten {"Harrie", "Jesse", "Paul", "Ineke", "Harry", };
-    docenten.insert("Paul");
+    multiset<string> docenten{"Ron", "Daniël", "Roy", "Harry"};
+    docenten.insert("Elles");
     print(docenten);
     docenten.insert("Harry");
     print(docenten);
-    cout << "Er zijn " << docenten.count("Harry") << " Harry's." << endl;
+    docenten.insert("Harry");
+    print(docenten);
+    cout << "Er zijn " << docenten.count("Harry") << " Harry's.\n";
+    docenten.erase(docenten.find("Harry"));
+    print(docenten);
     docenten.erase("Harry");
     print(docenten);
-    docenten.erase(docenten.find("Paul"));
+    docenten.erase(docenten.find("Elles"));
     print(docenten);
-    docenten.erase(docenten.find("Ineke"), docenten.end());
+    docenten.erase(docenten.find("Ron"), docenten.end());
     print(docenten);
-    cin.get();
-    return 0;
 }

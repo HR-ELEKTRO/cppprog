@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    list<double> resultaten = {0.4, 1.4, 1.5, 4.9, 5.0, 8.9, 9.1, 9.5, 10.0 };
+    list<double> resultaten{0.4, 1.4, 1.5, 4.9, 5.0, 8.9, 9.1, 9.5, 10.0 };
     vector<int> geheleResultaten;
     // Alle resultaten < 1.5 moeten worden afgerond tot 1
     // Alle overige resultaten moeten worden afgerond
@@ -20,7 +20,5 @@ int main() {
     for (auto r : geheleResultaten) {
         cout << r << " ";
     }
-    cout << endl;
-    cin.get();
-    return 0;
+    cout << '\n';
 }

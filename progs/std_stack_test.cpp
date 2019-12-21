@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
     stack<char, list<char>> s;
-    cout << "Type een tekst en sluit af met ." << endl;
+    cout << "Type een tekst en sluit af met .\n";
     char c;
     cin.get(c);
     while (c != '.') {
@@ -16,8 +16,4 @@ int main() {
         cout << s.top();
         s.pop();
     }
-
-    cin.get();
-    cin.get();
-    return 0;
 }

@@ -41,7 +41,7 @@ ostream& operator<<(ostream& o, const Component& c) {
 
 class R: public Component { // R = Weerstand
 public:
-    R(double r): r(r) {
+    R(double r): r{r} {
     }
     virtual complex<double> Z(double) const {
         return r;
@@ -55,7 +55,7 @@ private:
 
 class L: public Component { // L = Spoel
 public:
-    L(double l): l(l) {
+    L(double l): l{l} {
     }
     virtual complex<double> Z(double f) const {
         return complex<double>(0, 2 * PI * f * l);
@@ -69,7 +69,7 @@ private:
 
 class C: public Component { // C = Condensator
 public:
-    C(double c): c(c) {
+    C(double c): c{c} {
     }
     virtual complex<double> Z(double f) const {
         return complex<double>(0, -1 / (2 * PI * f * c));
@@ -82,30 +82,25 @@ private:
 };
 
 void printImpedanceTable(const Component& c) {
-    cout << "Impedantie tabel voor: " << c << endl << endl;
-    cout << setw(10) << "freq" << setw(20) << "Z" << endl;
+    cout << "Impedantie tabel voor: " << c << "\n\n";
+    cout << setw(10) << "freq" << setw(20) << "Z\n";
     for (double freq(10); freq < 10E6; freq *= 10)
-        cout << setw(10) << freq << setw(20) << c.Z(freq) << endl;
-    cout << endl;
+        cout << setw(10) << freq << setw(20) << c.Z(freq) << '\n';
+    cout << '\n';
 }
 
 int main() {
-    R r(1E2);
+    R r{1E2};
     printImpedanceTable(r);
     cin.get();
-    C c(1E-5);
+    C c{1E-5};
     printImpedanceTable(c);
     cin.get();
-    L l(1E-3);
+    L l{1E-3};
     printImpedanceTable(l);
-//  ...
-    cin.get();
-    return 0;
 }
 
-/*
-Uitvoer:
-
+/* Uitvoer:
 Impedantie tabel voor: R(100)
 
       freq                   Z

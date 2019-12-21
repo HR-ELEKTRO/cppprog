@@ -6,7 +6,7 @@ using namespace std;
 
 AD178::AD178() {
     // ... de specifieke voor de AD178 benodigde code
-    cout << "AD178 is geinitialiseeerd." << endl;
+    cout << "AD178 is geinitialiseeerd.\n";
 }
 void AD178::selectChannel(int channel) {
     rememberChannel(channel);

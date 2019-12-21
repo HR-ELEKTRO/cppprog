@@ -8,11 +8,11 @@ using namespace std;
 // met deze functie kun je ook een DEEL van een container afdrukken
 
 template <typename Iter> void print(Iter begin, Iter end) {
-    cout << "De inhoud van de container is:" << endl;
-    for (Iter iter = begin; iter != end; ++iter) {
+    cout << "De inhoud van de container is:\n";
+    for (Iter iter{begin}; iter != end; ++iter) {
         cout << *iter << " ";
     }
-    cout << endl;
+    cout << '\n';
 }
 
 int main() {
@@ -25,8 +25,6 @@ int main() {
     print(v.cbegin(), v.cend());
     print(v.cbegin() + 1, v.cend() - 1);
     print(l.cbegin(), l.cend());
-    string s("Hallo");
+    string s{"Hallo"};
     print(s.cbegin(), s.cend());
-    cin.get();
-    return 0;
 }

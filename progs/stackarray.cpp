@@ -5,9 +5,9 @@
 using namespace std;
 
 int main() {
-    StackWithArray<char> s(32);
+    StackWithArray<char> s{32};
     char c;
-    cout << "Type een tekst en sluit af met ." << endl;
+    cout << "Type een tekst en sluit af met .\n";
     cin.get(c);
     while (c != '.') {
         s.push(c);
@@ -17,7 +17,4 @@ int main() {
         cout << s.top();
         s.pop();
     }
-    cin.get();
-    cin.get();
-    return 0;
 }

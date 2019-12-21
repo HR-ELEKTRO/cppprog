@@ -18,7 +18,7 @@ namespace Zondaar {
     class Breuk {
     public:
         Breuk() {
-            std::cout << "Er is een Zondaar::Breuk geboren." << std::endl;
+            std::cout << "Er is een Zondaar::Breuk geboren.\n";
         }
         //...
     };
@@ -28,40 +28,34 @@ namespace Broeders {
     class Breuk {
     public:
         Breuk() {
-            std::cout << "Er is een Broeders::Breuk geboren." << std::endl;
+            std::cout << "Er is een Broeders::Breuk geboren.\n";
         }
         //...
     };
 }
 
 int main() {
-    std::cout << "std::sin(4.71238898) = " << std::sin(4.71238898) << std::endl;
-    std::cout << "Broeders::sin(4.71238898) = " << Broeders::sin(4.71238898) << std::endl;
-    std::cout << "Zondaar::sin(4.71238898) = " << Zondaar::sin(4.71238898) << std::endl;
+    std::cout << "std::sin(4.71238898) = " << std::sin(4.71238898) << '\n';
+    std::cout << "Broeders::sin(4.71238898) = " << Broeders::sin(4.71238898) << '\n';
+    std::cout << "Zondaar::sin(4.71238898) = " << Zondaar::sin(4.71238898) << '\n';
 
     Broeders::Breuk b1;
     Zondaar::Breuk b2;
 
     {
         using Broeders::sin;
-        std::cout << "sin(4.71238898) = " << sin(4.71238898) << std::endl;
-        std::cout << "std::sin(4.71238898) = " << std::sin(4.71238898) << std::endl;
+        std::cout << "sin(4.71238898) = " << sin(4.71238898) << '\n';
+        std::cout << "std::sin(4.71238898) = " << std::sin(4.71238898) << '\n';
     }
 
     {
         using namespace std;
-        cout << "sin(4.71238898) = " << sin(4.71238898) << endl;
-        cout << "Broeders::sin(4.71238898) = " << Broeders::sin(4.71238898) << endl;
+        cout << "sin(4.71238898) = " << sin(4.71238898) << '\n';
+        cout << "Broeders::sin(4.71238898) = " << Broeders::sin(4.71238898) << '\n';
     }
-
-    using std::cin;
-    cin.get();
-    return 0;
 }
 
-/*
-Uitvoer:
-
+/* Uitvoer:
 std::sin(4.71238898) = -1
 Broeders::sin(4.71238898) = 0
 Zondaar::sin(4.71238898) = 1

@@ -25,22 +25,19 @@ public:
 };
 
 int main() {
-    list<Hond*> kennel = {new Tekkel, new StBernard, new Tekkel};
+    list<Hond*> kennel{new Tekkel, new StBernard, new Tekkel};
     for_each(kennel.cbegin(), kennel.cend(), mem_fn(&Hond::blaf));
-    cout << endl;
+    cout << '\n';
 
 //  alternatief met lambda functie
     for_each(kennel.cbegin(), kennel.cend(), [](const Hond* p) {
         p->blaf();
     });
-    cout << endl;
+    cout << '\n';
 
 //  alternatief met range-based for
     for (const auto p: kennel) {
         p->blaf();
     }
-    cout << endl;
-
-    cin.get();
-    return 0;
+    cout << '\n';
 }

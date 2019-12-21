@@ -1,20 +1,22 @@
+SOLUTION 0
 Welcome to TIC-TAC-TOE Test for losing
 ---
 xo
  x
 
 ---
-Calculation time: 0.00114894 sec
+Calculation time: 164 us
 Moves considered: 238
-Computer plays: ROW = -858993460 COLUMN = -858993460
+Computer plays: ROW = 25769879992 COLUMN = 4294954036
 
+SOLUTION 1
 Welcome to TIC-TAC-TOE Test for losing
 ---
 xo
  x
 
 ---
-Calculation time: 0.00518334 sec
+Calculation time: 130 us
 Moves considered: 238
 Computer plays: ROW = 0 COLUMN = 2
 
@@ -22,6 +24,25 @@ Computer plays: ROW = 0 COLUMN = 2
 xoo
  x
 
+---
+
+Enter row and column (starts at 0): 
+
+SOLUTION 2
+Welcome to TIC-TAC-TOE Test for losing
+---
+xo
+ x
+
+---
+Calculation time: 131 us
+Moves considered: 238
+Computer plays: ROW = 2 COLUMN = 2
+
+---
+xo
+ x
+  o
 ---
 
 Enter row and column (starts at 0):

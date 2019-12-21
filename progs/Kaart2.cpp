@@ -39,9 +39,9 @@ private:
     virtual int sample() const;
 };
 
-ADCCard::ADCCard(): amplifyingFactor(1.0), selectedChannel(1) {
+ADCCard::ADCCard(): amplifyingFactor{1.0}, selectedChannel{1} {
     // ... voor alle kaarten benodigde code
-    cout << "initialisatie is gestart." << endl;
+    cout << "initialisatie is gestart.\n";
 }
 int ADCCard::getChannel() const {
     return selectedChannel;
@@ -58,17 +58,17 @@ void ADCCard::rememberAmplifier(double factor) {
 
 AD178::AD178() {
     // ... de specifieke voor de AD178 benodigde code
-    cout << "AD178 is geinitialiseeerd." << endl;
+    cout << "AD178 is geinitialiseeerd.\n";
 }
 void AD178::selectChannel(int channel) {
     rememberChannel(channel);
     // ... de specifieke voor de AD178 benodigde code
-    cout << "Kanaal " << channel << " van AD178 is geselecteerd." << endl;
+    cout << "Kanaal " << channel << " van AD178 is geselecteerd.\n";
 }
 void AD178::setAmplifier(double factor) {
     rememberAmplifier(factor);
     // ... de specifieke voor de AD178 benodigde code
-    cout << "Versterkingsfactor van AD178 is " << factor << "." << endl;
+    cout << "Versterkingsfactor van AD178 is " << factor << ".\n";
 }
 int AD178::sample() const {
     // ... de specifieke voor de AD178 benodigde code
@@ -77,17 +77,17 @@ int AD178::sample() const {
 
 NI323::NI323() {
     // ... de specifieke voor de NI323 benodigde code
-    cout << "NI323 is geinitialiseeerd." << endl;
+    cout << "NI323 is geinitialiseeerd.\n";
 }
 void NI323::selectChannel(int channel) {
     rememberChannel(channel);
     // ... de specifieke voor de NI323 benodigde code
-    cout << "Kanaal " << channel << " van NI323 is geselecteerd." << endl;
+    cout << "Kanaal " << channel << " van NI323 is geselecteerd.\n";
 }
 void NI323::setAmplifier(double factor) {
     rememberAmplifier(factor);
     // ... de specifieke voor de NI323 benodigde code
-    cout << "Versterkingsfactor van NI323 is " << factor << "." << endl;
+    cout << "Versterkingsfactor van NI323 is " << factor << ".\n";
 }
 int NI323::sample() const {
     // ... de specifieke voor de NI323 benodigde code
@@ -97,7 +97,7 @@ int NI323::sample() const {
 void doIt(ADCCard& selectedChannel) {
     selectedChannel.setAmplifier(10);
     selectedChannel.selectChannel(3);
-    cout << "Kanaal " << selectedChannel.getChannel() << " = " << selectedChannel.read() << " V." << endl;
+    cout << "Kanaal " << selectedChannel.getChannel() << " = " << selectedChannel.read() << " V.\n";
 }
 
 int main() {
@@ -109,7 +109,4 @@ int main() {
     doIt(card1);
     NI323 card2;
     doIt(card2);
-
-    cin.get();
-    return 0;
 }

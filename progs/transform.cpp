@@ -9,19 +9,19 @@ int telop(int i, int j) {
 }
 
 int main() {
-    vector<int> v = {-3, -4, 3, 4};
-    vector<int> w = {1, 2, 3, 4};
-    ostream_iterator<int> iout(cout, " ");
+    vector<int> v{-3, -4, 3, 4};
+    vector<int> w{1, 2, 3, 4};
+    ostream_iterator<int> iout{cout, " "};
     copy(v.cbegin(), v.cend(), iout);
-    cout << endl;
+    cout << '\n';
     copy(w.cbegin(), w.cend(), iout);
-    cout << endl;
+    cout << '\n';
 
 //  Bewerking opgeven met een functie.
 //  Nadeel: voor elke bewerking moet een aparte functie worden geschreven.
     transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), telop);
     copy(v.cbegin(), v.cend(), iout);
-    cout << endl;
+    cout << '\n';
 
 //  Bewerking opgeven met een lambda functie.
 //  Voordeel: handig als bewerking uniek is.
@@ -30,8 +30,5 @@ int main() {
         return i1 + i2;
     });
     copy(v.cbegin(), v.cend(), iout);
-    cout << endl;
-
-    cin.get();
-    return 0;
+    cout << '\n';
 }

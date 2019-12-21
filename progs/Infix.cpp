@@ -23,7 +23,7 @@ int main() {
     StackWithList<char> s1;
     StackWithList<int> s2;
     char c;
-    cout << "Type een infix expressie (met + en * operator) en sluit af met =" << endl;
+    cout << "Type een infix expressie (met + en * operator) en sluit af met =\n";
     cin >> c;
     while (c != '=') {
         if (isdigit(c)) {
@@ -48,20 +48,17 @@ int main() {
             s1.pop();
         }
         else {
-            cout << "Syntax error" << endl;
+            cout << "Syntax error\n";
         }
         cin >> c;
     }
     while (!s1.empty()) {
         processOperator(s1, s2);
     }
-    cout << "= " << s2.top() << endl;
+    cout << "= " << s2.top() << '\n';
     s2.pop();
     if (!s2.empty()) {
-        cout << "Fout operator ontbreekt." << endl;
+        cout << "Fout operator ontbreekt.\n";
         s2.pop();
     }
-    cin.get();
-    cin.get();
-    return 0;
 }

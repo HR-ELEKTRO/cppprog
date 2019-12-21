@@ -91,7 +91,7 @@ public:
     
     class column_iterator: public std::iterator<forward_iterator_tag, Object> {
     public:
-        column_iterator(iterator i): i(i) {
+        column_iterator(iterator i): i{i} {
         }
         const Object& operator*() const {
             return *i;
@@ -100,7 +100,7 @@ public:
             return *i;
         }
         column_iterator operator++(int) {
-            iterator here = i;
+            iterator here{i};
             i += NumCols;
             return here;
         }
@@ -129,13 +129,13 @@ public:
 
     class const_column_iterator: public std::iterator<forward_iterator_tag, Object> {
     public:
-        const_column_iterator(const_iterator i): i(i) {
+        const_column_iterator(const_iterator i): i{i} {
         }
         const Object& operator*() const {
             return *i;
         }
         const_column_iterator operator++(int) {
-            iterator here = i;
+            iterator here{i};
             i += NumCols;
             return here;
         }

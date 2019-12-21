@@ -105,7 +105,7 @@ void Breuk::normaliseer() {
 }
 
 const Breuk operator+(const Breuk& left, const Breuk& right) {
-    Breuk copyLeft(left);
+    Breuk copyLeft{left};
     copyLeft += right;
     return copyLeft;
 }
@@ -121,10 +121,10 @@ istream& operator>>(istream& left, Breuk& right) {
             left.get();
             int noemer;
             if (left >> noemer) right = Breuk(teller, noemer);
-            else right = Breuk(teller);
+            else right = Breuk{teller};
         }
-        else right = Breuk(teller);
-    else right = Breuk();
+        else right = Breuk{teller};
+    else right = Breuk{};
     return left;
 }
 
@@ -161,10 +161,6 @@ int main() {
     else {
         cout << "Error." << endl;
     }
-
-    cin.get();                 // wacht met sluiten console-
-    cin.get();                 // window 
-    return 0;
 }
 //<Breuk3_main2
 

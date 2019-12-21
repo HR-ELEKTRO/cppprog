@@ -4,20 +4,20 @@ using namespace std;
 class Base {
 public:
     void f(int i) const {
-        cout << "Base::f(int) called." << endl;
+        cout << "Base::f(int) called.\n";
     }
     virtual void g(int i) const {
-        cout << "Base::g(int) called." << endl;
+        cout << "Base::g(int) called.\n";
     }
 };
 
 class Derived: public Base {
 public:
     void f(int i) const {
-        cout << "Derived::f(int) called." << endl;
+        cout << "Derived::f(int) called.\n";
     }
     virtual void g(int i) {
-        cout << "Derived::g(int) called." << endl;
+        cout << "Derived::g(int) called.\n";
     }
 };
 

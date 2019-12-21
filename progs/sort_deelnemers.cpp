@@ -15,7 +15,7 @@ private:
     int pnt;
 };
 
-Score::Score(const string& n, int p): nm(n), pnt(p) {
+Score::Score(const string& n, int p): nm{n}, pnt{p} {
 }
 int Score::punten() const {
     return pnt;
@@ -29,7 +29,7 @@ ostream& operator<<(ostream& left, const Score& d) {
 }
 
 int main() {
-    vector<Score> scores = {
+    vector<Score> scores{
         Score("Theo", 300),
         Score("Marie-Louise", 300),
         Score("Koen", 300),
@@ -44,8 +44,6 @@ int main() {
     stable_sort(scores.begin(), scores.end(), [](const Score& d1, const Score& d2) {
         return d1.punten() > d2.punten();
     });
-    ostream_iterator<Score> iout(cout, "\n");
+    ostream_iterator<Score> iout{cout, "\n"};
     copy(scores.begin(), scores.end(), iout);
-    cin.get();
-    return 0;
 }

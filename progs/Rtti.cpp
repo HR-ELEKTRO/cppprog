@@ -7,7 +7,7 @@ public:
     virtual ~Hond() {
     }
     virtual void blaf() const {
-        cout << "Blaf." << endl;
+        cout << "Blaf.\n";
     }
 //  ...
 };
@@ -15,13 +15,13 @@ public:
 class SintBernard: public Hond {
 public:
     virtual void blaf() const {
-        cout << "Woef!" << endl;
+        cout << "Woef!\n";
     }
 //  ...
 };
 
 void printRas(Hond& hr) {
-    cout << typeid(hr).name() << endl;
+    cout << typeid(hr).name() << '\n';
 }
 
 int main() {
@@ -29,16 +29,9 @@ int main() {
     printRas(boris);
     Hond h;
     printRas(h);
-    cin.get();
-    return 0;
 }
 
-/*
-// Output als het programma vertaald is met Microsoft Studio 2012
-class SintBernard
-class Hond
-
-// Output als het programma vertaald is met GCC:
+/* Output:
 11SintBernard
 4Hond
 */

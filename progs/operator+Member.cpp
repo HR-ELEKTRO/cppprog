@@ -39,13 +39,13 @@ int ggd(int n, int m) {
 
 // ADT-definitie:
 
-Breuk::Breuk(): boven(0), onder(1) {
+Breuk::Breuk(): boven{0}, onder{1} {
 }
 
-Breuk::Breuk(int t): boven(t), onder(1) {
+Breuk::Breuk(int t): boven{t}, onder{1} {
 }
 
-Breuk::Breuk(int t, int n): boven(t), onder(n) {
+Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
@@ -57,7 +57,7 @@ Breuk& Breuk::operator+=(const Breuk& right) {
 }
 
 const Breuk Breuk::operator+(const Breuk& right) const {
-    Breuk copyLeft(*this); // maak een kopietje van de receiver
+    Breuk copyLeft{*this}; // maak een kopietje van de receiver
     copyLeft += right;     // tel daar het object right bij op
     return copyLeft;       // geef deze waarde terug
 }
@@ -74,7 +74,7 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d = ggd(boven, onder);
+    int d{ggd(boven, onder)};
     boven /= d;
     onder /= d;
 }
@@ -87,7 +87,7 @@ ostream& operator<<(ostream& left, const Breuk& right) {
 // Hoofdprogramma:
 
 int main() {
-    Breuk b1(2, 3), b2(4, 5), b3;
+    Breuk b1{2, 3}, b2{4, 5}, b3;
     b3 = b1 + b2;
     cout << b1 << " + " << b2 << " = " << b3 << endl;
 
@@ -98,14 +98,9 @@ int main() {
 //  b3 = b1 + Breuk(5);
 
 //  kun je bij een int een Breuk optellen?
-    b3 = 5 + b2;
-    cout << "5 + " << b2 << " = " << b3 << endl;
+//  b3 = 5 + b2;
+//  cout << "5 + " << b2 << " = " << b3 << endl;
 //  Nee
-//  Error (Microsoft): binary '+' : no global operator found which takes type 'Breuk'
-//  Error (GCC):       no match for 'operator+' in '5 + b2'
+//  Error: no match for ‘operator+’ (operand types are ‘int’ and ‘Breuk’)
 //  Zie operator+Global voor een oplossing voor dit probleem
-
-//  ...
-    cin.get();  // wait for user before closing console window
-    return 0;
 }
