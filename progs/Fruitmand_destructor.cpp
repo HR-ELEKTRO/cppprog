@@ -42,7 +42,7 @@ public:
         for (const Fruit* e: fp)
             delete e;
             // Als we de constructor in de class Fruit *NIET* virtual maken geeft de GCC C++ compiler een warning:
-            // Warning: deleting object of abstract class type ‘Fruit’ which has non-virtual destructor will cause undefined behavior
+            // Warning: deleting object of abstract class type `Fruit' which has non-virtual destructor will cause undefined behavior
     }
     void voeg_toe(Fruit* p) {
         fp.push_back(p);

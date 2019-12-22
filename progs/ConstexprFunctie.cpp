@@ -27,7 +27,7 @@ int main() {
     cin >> b;
     
 //  constexpr unsigned int c3 = cpow(a, b);
-//  Error: the value of ‘a’ is not usable in a constant expression
+//  Error: the value of `a' is not usable in a constant expression
     
     cout << "a^b = " << cpow(a, b) << '\n';
     cout << "a^b = " << cpowr(a, b) << '\n';

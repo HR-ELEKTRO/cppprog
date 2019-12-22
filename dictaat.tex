@@ -819,8 +819,154 @@ Dozijn d{move(a)};
 	Dat kan natuurlijk alleen maar als deze gedefinieerd zijn voor de betreffende class, in dit geval |Dozijn|.
 	
 	Het is dus belangrijk om voor een class die een zelfgedefinieerde copy constructor en assingment operator nodig heeft, ook een move constructor en een move assignment operator te definiëren.
+	\item %TODO toevoegen aan meeste uitgebeide versie van Breuk.
+	Voor de ingebouwde types in \Cpp{} kun je zogenoemde literals definiëren.
+	Een literal is een constante waarde.
+	Voorbeelden van literals van het type |int| zijn |42|, |0b0101010| en |0x2A|.
+	|true| is een voorbeeld van een literal van het type |bool|.
+	|'a'| en |'\n'| zijn voorbeelden van literals van het type |char|.
+	|1.2| en |-3.234e-17| zijn voorbeelden van literals van het type |char|.
+	|"Hallo daar"| is een voorbeeld van een C-string literal van het type |const char[11]|.
+	Het is ook mogelijk om literals (constante getallen) te definiëren voor zelfgedefinieerde types zoals |Breuk|.
+	Zie \proglink{user_defined_literals.cpp}.
+	Dit is bijvoorbeeld ook gebruikt in de volgende standaard library classes:
+	\begin{itemize}
+		\item |string|\\
+		|"Hallo daar"s| is een literal van het type |string|.
+		\item |complex|\\
+		|2i| is een literal van het type |complex<double>|.
+		\item |chrono::duration|\\
+		|2ms| is een literal van het type |chrono::duration|.
+	\end{itemize}   
+	\item 
+	Als ons eigen type |T| als key in een ongeordende associatieve container, bijvoorbeeld |unordered_map|, willen gebruiken dan moeten we een template specialisation voor hash<T> definiëren in namespace |std|.
+	Zie \proglink{unordered_map.cpp}.
+\end{itemize}
+
+\section{Templates}
+\begin{itemize}
+	\item 
+	In \Cpp{}20 worden zogenoemde \emph{Concepts} geïntroduceerd.
+	Een concept is een predicate voor een type.
+	Een predicate is een bewerking die waar of onwaar is.
+	Met behulp van concepts kunnen je template argumenten beperken tot verschillende types.
+	Bijvoorbeeld: |template<Elem T>| kan gebruikt worden voor types |T| waarvoor geldt dat |Elem<T>| waar is.
+	Je kunt een concept dus ook zien als een soort van type van een type (dit wordt ook wel een metatype genoemd).
+	\item 
+	Een class template value argument kan als |constexpr| opvraagbaar gemaakt worden buiten de class.
+	\begin{cpplstfragment}
+template<typename T, size_t N>
+class Buffer {
+public:
+	using value_type = T;
+	using size_type = size_t;
+	constexpr size() {
+		return N;
+	}
+private:
+	T[N];
+}
+	\end{cpplstfragment}
+	
+	\item 
+	Sinds \Cpp{}17 kunnen template parameters automatisch door de compiler bepaald worden.
+	\begin{cpplstfragment}
+pair p{1, 0.5}; // p is van het type pair<int, double>
+vector v1{1, 2, 3}; // v1 is van het type vector<int>
+vector v2{v1}; //  // v2 is van het type vector<int>
+	\end{cpplstfragment}
+%TODO toevoegen aan meest complexe Array template.
+Een zogenoemde \emph{deduction guide} kan toegevoegd worden aan een class om compiler hierbij te helpen.
+	\begin{cpplstfragment}
+template<typename Iter>
+	Array(Iter, Iter) -> Array<typename Iter::value_type>;
+	\end{cpplstfragment}
+	Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald kan worden.
+	\begin{cpplstfragment}
+Array a1{1, 2, 3, 4, 5}; // a1 is van het type Array<int> 
+Array a2{v1.begin()+1, v1.end()-1}; // a2 is van het type Array<int>
+	\end{cpplstfragment}
+	
+	\item 
+	%TODO spelling consequent maken
+	Een member-functie kan een functie-template zijn maar dat geldt niet voor een virtual functie.		
+	
+	\item 
+	Een functieobject wordt ook wel een \emph{policy object} genoemd.
+	
+	\item 
+	Een lambda met een |auto| parameter is een soort template en wordt een \emph{generic lambda} genoemd.
+	\begin{cpplstfragment}
+template<typename T> void increment(vector<T>& v) {
+	for_all(v, [](auto& t){ ++t; });
+} 
+	\end{cpplstfragment}
+	
+	\item 
+	Een lambda kan handig gebruikt worden om een groep statements te veranderen in een expressie.
+	%TODO: kan dit gebruikt worden om een Breuk in te lezen in operator<<?
+	Bijvoorbeeld bij een ingewikkelde initialisatie:
+	\begin{cpplstfragment}
+vector<int> v = [&] {
+	switch (m) {
+		case 0:
+			return {0, 2, 4, 6, 8};
+		case 1:
+			return {1, 3, 5, 7, 9};
+		default:
+			return {};
+	}
+};
+	\end{cpplstfragment}
+
+	\item 
+	Ook een variabele kan een template zijn zodat je ook variabelen en constanten als template kunt definiëren.
+	%TODO: duidelijk use case ontbreekt.
+	\begin{cpplstfragment}
+template<typename T> constexpr T pi = atan(static_cast<T>(1))*4;
+	\end{cpplstfragment}
+	Je kunt nu de constante pi als volgt gebruiken:
+	\begin{cpplstfragment}
+auto d{pi<double>}; // d is double
+auto f{pi<float>}; // f is float
+	\end{cpplstfragment}
+	Zie \proglink{pi.cpp}.
+	
+	\item 
+	Met |using| kun je een parametertype van een template \squote{invullen}.
+	In het Engels wordt dit \emph{argument binding} genoemd. 
+	\begin{cpplstfragment}
+template<typename Value>
+using String_map = map<string, Value>;
+
+String_map<int> m; // m is van het type map<string, int>
+	\end{cpplstfragment}
+
+	\item 
+	Sinds \Cpp{}17 kun je een compile time |if| gebruiken.
+	%TODO: kan ik dit gebruiken voor het kiezen van een iterator.
 	
 \end{itemize}
+
+\section{Concepts and Generic Programming}
+Kan pas vanaf \Cpp{}20. Te gedetailleerd voor dit dictaat.
+
+\section{Strings and Regular Expressions}
+\begin{itemize}
+	\item 
+	Sinds \Cpp{}17 is een |string_view| beschikbaar.
+	Een |string_view| is een pointer, lengte paar dat een deel van een sting aanwijst.
+	\item 
+	Bij het gebruik van regular expressions is het handig om een raw string literal te gebruiken |R("Hier heeft \ en " geen speciale betekenis")|.
+	\item 
+	Tip: gebruik |string| als returntype.
+	Vertrouw op move semantics.
+\end{itemize}
+
+\section{Input and Output}
+Include file <filesystem>
+
+
 
 \fi
 
