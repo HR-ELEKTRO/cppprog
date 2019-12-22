@@ -13,7 +13,7 @@ public:
 Hond::~Hond() {
 }
 
-class SintBernard: public Hond {
+class Sint_bernard: public Hond {
 //  ...
 };
 
@@ -26,7 +26,7 @@ class Tekkel: public Hond {
 //  blaf moet als virtual memberfunctie geimplementeerd worden!
 
 void blaf(const Hond* hp) {
-    if (dynamic_cast<const SintBernard*>(hp) != nullptr)
+    if (dynamic_cast<const Sint_bernard*>(hp) != nullptr)
         cout << "Woef!\n";
     else if (dynamic_cast<const Tekkel*>(hp) != nullptr)
         cout << "Kef kef!\n";
@@ -35,12 +35,12 @@ void blaf(const Hond* hp) {
 }
 
 int main() {
-    Hond* borisPtr{new SintBernard};
-    blaf(borisPtr);
-    delete borisPtr;
-    borisPtr = new Tekkel;
-    blaf(borisPtr);
-    delete borisPtr;
+    Hond* boris_ptr{new Sint_bernard};
+    blaf(boris_ptr);
+    delete boris_ptr;
+    boris_ptr = new Tekkel;
+    blaf(boris_ptr);
+    delete boris_ptr;
 }
 
 /* Output:

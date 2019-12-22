@@ -3,11 +3,11 @@
 
 #include "adccard.h"
 
-class BB647: public ADCCard {
+class BB647: public Adccard {
 public:
     BB647();
-    virtual void selectChannel(int channel);
-    virtual void setAmplifier(double factor);
+    virtual void select_channel(int channel);
+    virtual void set_amplifier(double factor);
 private:
     virtual int sample() const;
 };

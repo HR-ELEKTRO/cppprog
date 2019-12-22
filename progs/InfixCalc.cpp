@@ -16,10 +16,10 @@ class Calculator {
 public:
     int calculate(const string& s);
 private:
-    bool hasLowerPrio(char op1, char op2);
-    void processOperator();
-    StackWithList<char> s1;
-    StackWithList<int> s2;
+    bool has_lower_prio(char op1, char op2);
+    void process_operator();
+    Stack_with_list<char> s1;
+    Stack_with_list<int> s2;
 };
 
 int Calculator::calculate(const string& s){
@@ -37,14 +37,14 @@ int Calculator::calculate(const string& s){
             s1.push(c);
         }
         else if (c == '^' || c == '*' || c == '/' || c == '%' || c == '+' || c == '-') {
-            while (!s1.empty() && s1.top() != '(' && !hasLowerPrio(s1.top(), c)) {
-                processOperator();
+            while (!s1.empty() && s1.top() != '(' && !has_lower_prio(s1.top(), c)) {
+                process_operator();
             }
             s1.push(c);
         }
         else if (c == ')') {
             while (s1.top() != '(') {
-                processOperator();
+                process_operator();
             }
             s1.pop();
         }
@@ -54,7 +54,7 @@ int Calculator::calculate(const string& s){
         is >> c;
     }
     while (!s1.empty()) {
-        processOperator();
+        process_operator();
     }
     int result = s2.top();
     s2.pop();
@@ -65,14 +65,14 @@ int Calculator::calculate(const string& s){
     return result;
 }
 
-bool Calculator::hasLowerPrio(char op1, char op2) {
+bool Calculator::has_lower_prio(char op1, char op2) {
     return 
         ((op1 == '+' || op1 == '-') && (op2 == '*' || op2 == '/' || op2 == '%' || op2 == '^')) ||
         ((op1 == '*' || op1 == '/' || op1 == '%') && (op2 == '^'));
     // extra haakjes om warning te voorkomen: suggest parentheses around ‘&&’ within ‘||’
 }
 
-void Calculator::processOperator() {
+void Calculator::process_operator() {
     int op2 = s2.top(); s2.pop();
     int op1 = s2.top(); s2.pop();
     switch (s1.top()) {

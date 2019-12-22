@@ -1,12 +1,12 @@
 #include <iostream>
 using namespace std;
 
-class UitleenbaarItem {
+class Uitleenbaar_item {
 public:
     virtual string id() const = 0;
 };
 
-class DVD final: public UitleenbaarItem {
+class DVD final: public Uitleenbaar_item {
 public:
     virtual string id() const {
         string s;
@@ -15,17 +15,17 @@ public:
     }
 };
 
-class DisneyDVD: public DVD {
+class Disney_DVD: public DVD {
 };
 
 /*
 Het is niet toegestaan om van de class DVD te overerven
 
 De GCC C++ compiler geeft de volgende foutmelding:
-cannot derive from 'final' base 'DVD' in derived type 'DisneyDVD'
+cannot derive from 'final' base 'DVD' in derived type 'disney_DVD'
 */
 
 int main() {
     DVD d;
-    DisneyDVD dd;
+    Disney_DVD dd;
 }

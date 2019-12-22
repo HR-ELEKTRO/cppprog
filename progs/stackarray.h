@@ -1,14 +1,14 @@
-#ifndef _TISD_Bd_StackWithArray_
-#define _TISD_Bd_StackWithArray_
+#ifndef _HR_BROJZ_Stack_with_array_
+#define _HR_BROJZ_Stack_with_array_
 
 #include <iostream>
 #include <cstdlib>
 #include "stack.h"
 
-template <typename T> class StackWithArray: public Stack<T> {
+template <typename T> class Stack_with_array: public Stack<T> {
 public:
-    explicit StackWithArray(size_t size);
-    ~StackWithArray();
+    explicit Stack_with_array(size_t size);
+    ~Stack_with_array();
     virtual void push(const T& t) override;
     virtual void pop() override;
     virtual const T& top() const override;
@@ -20,7 +20,7 @@ private:
     size_t i; // index in a van eerste vrije plaats op de stack
 };
 
-template <typename T> StackWithArray<T>::StackWithArray(size_t size): a(0), s(size), i(0) {
+template <typename T> Stack_with_array<T>::Stack_with_array(size_t size): a(0), s(size), i(0) {
     if (s == 0) {
         std::cerr << "Stack size should be >0" << std::endl;
         s = 0;
@@ -30,11 +30,11 @@ template <typename T> StackWithArray<T>::StackWithArray(size_t size): a(0), s(si
     }
 }
 
-template <typename T> StackWithArray<T>::~StackWithArray() {
+template <typename T> Stack_with_array<T>::~Stack_with_array() {
     delete[] a;
 }
 
-template <typename T> void StackWithArray<T>::push(const T& t) {
+template <typename T> void Stack_with_array<T>::push(const T& t) {
     if (full()) {
         std::cerr << "Can't push on an full stack" << std::endl;
     }
@@ -43,7 +43,7 @@ template <typename T> void StackWithArray<T>::push(const T& t) {
     }
 }
 
-template <typename T> void StackWithArray<T>::pop() {
+template <typename T> void Stack_with_array<T>::pop() {
     if (empty()) {
         std::cerr << "Can't pop from an empty stack" << std::endl;
     }
@@ -52,7 +52,7 @@ template <typename T> void StackWithArray<T>::pop() {
     }
 }
 
-template <typename T> const T& StackWithArray<T>::top() const {
+template <typename T> const T& Stack_with_array<T>::top() const {
     if (empty()) {
         std::cerr << "Can't top from an empty stack" << std::endl;
         std::exit(-1);
@@ -61,11 +61,11 @@ template <typename T> const T& StackWithArray<T>::top() const {
     return a[i - 1];
 }
 
-template <typename T> bool StackWithArray<T>::empty() const {
+template <typename T> bool Stack_with_array<T>::empty() const {
     return i == 0;
 }
 
-template <typename T> bool StackWithArray<T>::full() const {
+template <typename T> bool Stack_with_array<T>::full() const {
     return i == s;
 }
 

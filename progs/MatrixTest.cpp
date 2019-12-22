@@ -11,8 +11,8 @@ int main() {
     for (auto& e : m) {
         e = 0;
     }
-    for (Index row = 0; row < m.numRows(); ++row) {
-        for (Index column = 0; column < m.numCols(); ++column) {
+    for (Index row = 0; row < m.num_rows(); ++row) {
+        for (Index column = 0; column < m.num_cols(); ++column) {
             cout << m(row, column) << " ";
         }
         cout << '\n';

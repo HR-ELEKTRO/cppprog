@@ -2,84 +2,84 @@
 #include <iomanip>
 using namespace std;
 
-class ValueNextPos{
+class Value_next_pos{
 public:
-    ValueNextPos(int v, int p) : val(v), nPos(p) {
+    Value_next_pos(int v, int p) : val(v), n_pos(p) {
     }
     int value() const {
         return val;
     }
-    int nextPos() const {
-        return nPos;
+    int next_pos() const {
+        return n_pos;
     }
 private:
     int val;
-    int nPos;
+    int n_pos;
 };
 
-int positionValue(int pos);
-ValueNextPos valueMoveComputer(int pos, int alpha, int beta);
-ValueNextPos valueMoveHuman(int pos, int alpha, int beta);
+int position_value(int pos);
+Value_next_pos value_move_computer(int pos, int alpha, int beta);
+Value_next_pos value_move_human(int pos, int alpha, int beta);
 
-int positionValue(int pos) {
+int position_value(int pos) {
     static const int value[16] = { 4, 5, 3, 2, 6, 7, 8, 9, 1, 10, 2, 11, 12, 13, 14, 14 };
     return pos >= 15 && pos <= 31 ? value[pos - 15] : -1;
 }
 
-ValueNextPos valueMoveComputer(int pos, int alpha, int beta) {
-    int value = positionValue(pos);
+Value_next_pos value_move_computer(int pos, int alpha, int beta) {
+    int value = position_value(pos);
     if (value != -1)
-        return ValueNextPos(value, pos);
-    int posL = 2 * pos + 1;
-    int posR = 2 * pos + 2;
-    ValueNextPos moveL = valueMoveHuman(posL, alpha, beta);
-    if (moveL.value() > alpha) {
-        alpha = moveL.value();
+        return Value_next_pos(value, pos);
+    int pos_l = 2 * pos + 1;
+    int pos_r = 2 * pos + 2;
+    Value_next_pos move_l = value_move_human(pos_l, alpha, beta);
+    if (move_l.value() > alpha) {
+        alpha = move_l.value();
         if (alpha >= beta) {
-            return ValueNextPos(alpha, posL);
+            return Value_next_pos(alpha, pos_l);
         }
     }
-    ValueNextPos moveR = valueMoveHuman(posR, alpha, beta);
-    return moveR.value() > alpha ? ValueNextPos(moveR.value(), posR) : ValueNextPos(alpha, posL);
+    Value_next_pos move_r = value_move_human(pos_r, alpha, beta);
+    return move_r.value() > alpha ? Value_next_pos(move_r.value(), pos_r) : Value_next_pos(alpha, pos_l);
 }
 
-ValueNextPos valueMoveHuman(int pos, int alpha, int beta) {
-    int value = positionValue(pos);
+Value_next_pos value_move_human(int pos, int alpha, int beta) {
+    int value = position_value(pos);
     if (value != -1) {
-        return ValueNextPos(value, pos);
+        return Value_next_pos(value, pos);
     }
-    int posL = 2 * pos + 1;
-    int posR = 2 * pos + 2;
-    ValueNextPos moveL = valueMoveComputer(posL, alpha, beta);
-    if (moveL.value() < beta) {
-        beta = moveL.value();
+    int pos_l = 2 * pos + 1;
+    int pos_r = 2 * pos + 2;
+    Value_next_pos move_l = value_move_computer(pos_l, alpha, beta);
+    if (move_l.value() < beta) {
+        beta = move_l.value();
         if (beta <= alpha) {
-            return ValueNextPos(beta, posL);
+            return Value_next_pos(beta, pos_l);
         }
     }
-    ValueNextPos moveR = valueMoveComputer(posR, alpha, beta);
-    return moveR.value() < beta ? ValueNextPos(moveR.value(), posR) : ValueNextPos(beta, posL);
+    Value_next_pos move_r = value_move_computer(pos_r, alpha, beta);
+    return move_r.value() < beta ? Value_next_pos(move_r.value(), pos_r) : Value_next_pos(beta, pos_l);
 }
 
 int main() {
     int pos = 0;
     while (pos < 15) {
-        ValueNextPos res = valueMoveComputer(pos, 0, 15);
+        Value_next_pos res = value_move_computer(pos, 0, 15);
         cout << "Minimaal te behalen Maximale waarde = " << res.value() << endl;
-        pos = res.nextPos();
+        pos = res.next_pos();
         cout << "Computer kiest positie: " << pos << endl;
-        int posL = 2 * pos + 1;
-        int posR = 2 * pos + 2;
+        int pos_l = 2 * pos + 1;
+        int pos_r = 2 * pos + 2;
         if (pos < 15) {
-            cout << "Je kunt kiezen voor positie " << posL << " of positie " << posR << endl;
-            cout << "Pssst, " << valueMoveHuman(pos, 0, 15).nextPos() << " is de beste keuze." << endl;
+            cout << "Je kunt kiezen voor positie " << pos_l << " of positie " << pos_r << endl;
+            cout << "Pssst, " << value_move_human(pos, 0, 15).next_pos() << " is de beste keuze." << endl;
             do {
                 cout << "Maak je keuze: ";
                 cin >> pos;
-            } while (pos != posL && pos != posR);
+            } while (pos != pos_l && pos != pos_r);
         }
     }
-    cout << "Behaalde waarde = " << positionValue(pos) << endl;
+    cout << "Behaalde waarde = " << position_value(pos) << endl;
     cin.get();
     cin.get();
 }

@@ -12,13 +12,13 @@ int main() {
     do {
         cin.get(c);
         if (c == 'l' || c == 'L') {
-            s = new StackWithList<char>;
+            s = new Stack_with_list<char>;
         }
         else if (c == 'a' || c == 'A') {
             cout << "Hoeveel elementen wil je gebruiken: ";
             int i;
             cin >> i;
-            s = new StackWithArray<char>(i);
+            s = new Stack_with_array<char>(i);
         }
     } while (s == nullptr);
 

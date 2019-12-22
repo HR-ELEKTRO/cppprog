@@ -5,11 +5,11 @@
 #include "stacklist.h"
 using namespace std;
 
-bool hasLowerPrio(char op1, char op2) {
+bool has_lower_prio(char op1, char op2) {
     return op1 == '+' && op2 == '*';
 }
 
-void processOperator(StackWithList<char>& s1, StackWithList<int>& s2) {
+void process_operator(Stack_with_list<char>& s1, Stack_with_list<int>& s2) {
     int op2 = s2.top(); s2.pop();
     int op1 = s2.top(); s2.pop();
     switch (s1.top()) {
@@ -20,8 +20,8 @@ void processOperator(StackWithList<char>& s1, StackWithList<int>& s2) {
 }
 
 int main() {
-    StackWithList<char> s1;
-    StackWithList<int> s2;
+    Stack_with_list<char> s1;
+    Stack_with_list<int> s2;
     char c;
     cout << "Type een infix expressie (met + en * operator) en sluit af met =\n";
     cin >> c;
@@ -36,14 +36,14 @@ int main() {
             s1.push(c);
         }
         else if (c == '+' || c == '*') {
-            while (!s1.empty() && s1.top() != '(' && !hasLowerPrio(s1.top(), c)) {
-                processOperator(s1, s2);
+            while (!s1.empty() && s1.top() != '(' && !has_lower_prio(s1.top(), c)) {
+                process_operator(s1, s2);
             }
             s1.push(c);
         }
         else if (c == ')') {
             while (s1.top() != '(') {
-                processOperator(s1, s2);
+                process_operator(s1, s2);
             }
             s1.pop();
         }
@@ -53,7 +53,7 @@ int main() {
         cin >> c;
     }
     while (!s1.empty()) {
-        processOperator(s1, s2);
+        process_operator(s1, s2);
     }
     cout << "= " << s2.top() << '\n';
     s2.pop();

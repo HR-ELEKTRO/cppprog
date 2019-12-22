@@ -8,13 +8,13 @@ BB647::BB647() {
     // ... de specifieke voor de BB647 benodigde code
     cout << "BB647 is geinitialiseeerd.\n";
 }
-void BB647::selectChannel(int channel) {
-    rememberChannel(channel);
+void BB647::select_channel(int channel) {
+    remember_channel(channel);
     // ... de specifieke voor de BB647 benodigde code
     cout << "Kanaal " << channel << " van BB647 is geselecteerd.\n";
 }
-void BB647::setAmplifier(double factor) {
-    rememberAmplifier(factor);
+void BB647::set_amplifier(double factor) {
+    remember_amplifier(factor);
     // ... de specifieke voor de BB647 benodigde code
     cout << "Versterkingsfactor van BB647 is " << factor << ".\n";
 }

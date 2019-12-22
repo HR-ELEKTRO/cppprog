@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-void leesInts(vector<int>& vec) {
+void lees_ints(vector<int>& vec) {
     // gooi huidige inhoud vec weg
     vec.resize(0);
     int i;
@@ -20,7 +20,7 @@ int main() {
     // definieer vector
     vector<int> v;
     // vul deze vector
-    leesInts(v);
+    lees_ints(v);
     // druk af
     for (auto e: v) {
         cout << e << " ";

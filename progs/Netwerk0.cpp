@@ -81,7 +81,7 @@ private:
     double c;
 };
 
-void printImpedanceTable(const Component& c) {
+void print_impedance_table(const Component& c) {
     cout << "Impedantie tabel voor: " << c << "\n\n";
     cout << setw(10) << "freq" << setw(20) << "Z\n";
     for (double freq(10); freq < 10E6; freq *= 10)
@@ -91,13 +91,13 @@ void printImpedanceTable(const Component& c) {
 
 int main() {
     R r{1E2};
-    printImpedanceTable(r);
+    print_impedance_table(r);
     cin.get();
     C c{1E-5};
-    printImpedanceTable(c);
+    print_impedance_table(c);
     cin.get();
     L l{1E-3};
-    printImpedanceTable(l);
+    print_impedance_table(l);
 }
 
 /* Uitvoer:

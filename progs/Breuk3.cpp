@@ -87,9 +87,9 @@ void Breuk::normaliseer() {
 }
 
 const Breuk operator+(const Breuk& left, const Breuk& right) {
-    Breuk copyLeft{left};
-    copyLeft += right;
-    return copyLeft;
+    Breuk copy_left{left};
+    copy_left += right;
+    return copy_left;
 }
 
 /* verkorte notatie:
@@ -149,18 +149,18 @@ int main() {
     b3 += {-5, 2};              // verhogen met +=
     cout << b3 << '\n';        // afdrukken met <<
     if (-3 == b3) {            // vergelijken met een int met ==
-        cout << "OK.\n";
+        cout << "Ok.\n";
     } 
     else {
         cout << "Error.\n";
     }
 }
 
-// Output:
+/* Output:
 Geef Breuk (a/b): -1/-2
 Geef nog een Breuk (c/d): 3/4
 1/2 + 3/4 = 5/4
 -1/2
 -3/1
-OK.
+Ok.
 */

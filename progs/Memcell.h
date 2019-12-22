@@ -1,11 +1,11 @@
 // Dit is file Memcell.h
 #ifndef _Memcell_
 #define _Memcell_ // prevent multiple inclusion.
-class MemoryCell {
+class Memory_cell {
 public:
-    int Read() const;
-    void Write(int x);
+    int read() const;
+    void write(int x);
 private:
-    int StoredValue;
+    int stored_value;
 };
 #endif

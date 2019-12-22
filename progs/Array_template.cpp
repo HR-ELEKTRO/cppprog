@@ -68,7 +68,7 @@ template <typename T> bool Array<T>::operator!=(const Array<T>& r) const {
 }
 
 template <typename T> ostream& operator<<(ostream& o, const Array<T>& v) {
-    for (typename Array<T>::int i = 0; i < v.size; ++i) {
+    for (int i = 0; i < v.size; ++i) {
         o << v.data[i];
         if (i != v.size-1)
             o << ',';
@@ -78,7 +78,7 @@ template <typename T> ostream& operator<<(ostream& o, const Array<T>& v) {
 
 int main() {
     cout << "Hoeveel elementen moet de Array bevatten? ";
-    Array<double>::int i; cin >> i;
+    int i; cin >> i;
     if (i > 0) {
         Array<double> v{i};
         for (int j = 0; j < v.length(); ++j)

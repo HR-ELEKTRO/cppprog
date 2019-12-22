@@ -30,11 +30,11 @@ Breuk normaliseer(Breuk b) {
     return b;
 }
 
-Breuk maakBreuk(int t, int n) {
+Breuk maak_Breuk(int t, int n) {
     return normaliseer({t, n});
 }
 
 int main() {
-    auto [teller, noemer]{maakBreuk(2, -4)};
+    auto [teller, noemer]{maak_Breuk(2, -4)};
     cout << "teller = " << teller << " noemer = " << noemer << '\n';
 }

@@ -66,9 +66,9 @@ Breuk& Breuk::operator+=(const Breuk& right) {
 }
 
 const Breuk Breuk::operator+(const Breuk& right) const {
-    Breuk copyLeft{*this};
-    copyLeft += right;
-    return copyLeft;
+    Breuk copy_left{*this};
+    copy_left += right;
+    return copy_left;
 }
 
 Breuk& Breuk::operator-=(const Breuk& right) {
@@ -79,9 +79,9 @@ Breuk& Breuk::operator-=(const Breuk& right) {
 }
 
 const Breuk Breuk::operator-(const Breuk& right) const {
-    Breuk copyLeft{*this};
-    copyLeft -= right;
-    return copyLeft;
+    Breuk copy_left{*this};
+    copy_left -= right;
+    return copy_left;
 }
 
 void Breuk::normaliseer() {
@@ -107,9 +107,9 @@ const Breuk operator+(int left, const Breuk& right) {
 
 const Breuk operator-(int left, const Breuk& right) {
     // aftrekken is niet commutatief!
-    Breuk copyLeft{left};
-    copyLeft -= right;
-    return copyLeft;
+    Breuk copy_left{left};
+    copy_left -= right;
+    return copy_left;
 }
 
 // Hoofdprogramma:

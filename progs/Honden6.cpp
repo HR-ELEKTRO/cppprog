@@ -6,7 +6,7 @@ class Hond {
 public:
     Hond(const string& n);
     virtual ~Hond();
-    void setNaam(const string& n);
+    void set_naam(const string& n);
     virtual void blaf() const =0;
 private:
     string naam;
@@ -19,26 +19,26 @@ public:
     virtual void blaf() const override;
 };
 
-class WhiskeyVat {
+class Whiskey_vat {
 public:
-    WhiskeyVat(int b);
-    ~WhiskeyVat();
-    bool geefBorrel();
+    Whiskey_vat(int b);
+    ~Whiskey_vat();
+    bool geef_borrel();
 private:
-    int aantalBorrels;
+    int aantal_borrels;
 };
 
-WhiskeyVat::WhiskeyVat(int b): aantalBorrels{b} {
-    cout << "Vat met " << aantalBorrels << " borrels aangemaakt.\n";
+Whiskey_vat::Whiskey_vat(int b): aantal_borrels{b} {
+    cout << "Vat met " << aantal_borrels << " borrels aangemaakt.\n";
 }
 
-WhiskeyVat::~WhiskeyVat() {
-    cout << "Vat met " << aantalBorrels << " borrels opgeruimd.\n";
+Whiskey_vat::~Whiskey_vat() {
+    cout << "Vat met " << aantal_borrels << " borrels opgeruimd.\n";
 }
 
-bool WhiskeyVat::geefBorrel() {
-    if (aantalBorrels > 0) {
-        --aantalBorrels;
+bool Whiskey_vat::geef_borrel() {
+    if (aantal_borrels > 0) {
+        --aantal_borrels;
         cout << "Ik kom je helpen, drink deze borrel maar op!\n";
         return true;
     }
@@ -46,14 +46,14 @@ bool WhiskeyVat::geefBorrel() {
     return false;
 }
 
-class SintBernard: public Hond {
+class Sint_bernard: public Hond {
 public:
-    SintBernard(const string& n, int b);
-    virtual ~SintBernard();
+    Sint_bernard(const string& n, int b);
+    virtual ~Sint_bernard();
     virtual void blaf() const override;
     void help();
 private:
-    WhiskeyVat vat;
+    Whiskey_vat vat;
 };
 
 Hond::Hond(const string& n): naam{n} {
@@ -64,7 +64,7 @@ Hond::~Hond() {
     cout << "Helaas, " << naam << " is gestorven.\n";
 }
 
-void Hond::setNaam(const string& n) {
+void Hond::set_naam(const string& n) {
     naam = n;
 }
 
@@ -80,25 +80,25 @@ void Tekkel::blaf() const {
     cout << "Kef kef\n";
 }
 
-SintBernard::SintBernard(const string& n, int b): Hond{n}, vat{b} {
-    cout << "Er is een SintBernard geboren!\n";
+Sint_bernard::Sint_bernard(const string& n, int b): Hond{n}, vat{b} {
+    cout << "Er is een Sint_bernard geboren!\n";
 }
 
-SintBernard::~SintBernard() {
-    cout << "Er is een SintBernard gestorven.\n";
+Sint_bernard::~Sint_bernard() {
+    cout << "Er is een Sint_bernard gestorven.\n";
 }
 
-void SintBernard::blaf() const {
+void Sint_bernard::blaf() const {
     cout << "WOEF, WOEF\n";
 }
 
-void SintBernard::help() {
-    vat.geefBorrel();
+void Sint_bernard::help() {
+    vat.geef_borrel();
     blaf();
 }
 
 int main() {
-    SintBernard h1{"Boris", 10};
+    Sint_bernard h1{"Boris", 10};
     h1.blaf();
     h1.help();
 //  Hond h2{h1};
@@ -112,12 +112,12 @@ int main() {
 /* Uitvoer:
 Hoera, Boris is geboren!
 Vat met 10 borrels aangemaakt.
-Er is een SintBernard geboren!
+Er is een Sint_bernard geboren!
 WOEF, WOEF
 Ik kom je helpen, drink deze borrel maar op!
 WOEF, WOEF
 WOEF, WOEF
-Er is een SintBernard gestorven.
+Er is een Sint_bernard gestorven.
 Vat met 9 borrels opgeruimd.
 Helaas, Boris is gestorven.
 */

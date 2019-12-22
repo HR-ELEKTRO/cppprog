@@ -11,19 +11,19 @@ public:
     static int aantal();
 private:
     string naam;
-    static int aantalHonden;
+    static int aantal_honden;
 };
 
-int Hond::aantalHonden = 0;
+int Hond::aantal_honden = 0;
 
 Hond::Hond(const string& n): naam{n} {
-    ++aantalHonden;
+    ++aantal_honden;
 }
 Hond::~Hond() {
-    --aantalHonden;
+    --aantal_honden;
 }
 int Hond::aantal() {
-    return aantalHonden;
+    return aantal_honden;
 }
 void Hond::blaf() const {
     cout << naam << " zegt: WOEF\n";

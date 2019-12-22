@@ -6,7 +6,7 @@ using namespace std;
 // define PI (which is not included in std C++)
 constexpr double PI = atan(1.0) * 4;
 
-pair<bool, complex<double>> impedanceC(double c, double f) {
+pair<bool, complex<double>> impedance_C(double c, double f) {
     if (c != 0.0 && f != 0.0) 
         return {true, complex<double>{0, -1 / (2 * PI * f * c)}};
     else
@@ -14,11 +14,11 @@ pair<bool, complex<double>> impedanceC(double c, double f) {
 }
 
 int main() {
-    if (auto [gelukt, z]{impedanceC(1e-6, 1e3)}; gelukt) 
+    if (auto [gelukt, z]{impedance_C(1e-6, 1e3)}; gelukt) 
         cout << z << '\n';
     else
         cout << "Kan impedantie niet berekenen.\n";
-    if (auto [gelukt, z]{impedanceC(1e-6, 0)}; gelukt) 
+    if (auto [gelukt, z]{impedance_C(1e-6, 0)}; gelukt) 
         cout << z << '\n';
     else 
         cout << "Kan impedantie niet berekenen.\n";

@@ -5,16 +5,16 @@ class ADCCard {
 public:
     ADCCard();
     virtual ~ADCCard() = default;
-    virtual void selectChannel(int channel) = 0;
-    int getChannel() const;
-    virtual void setAmplifier(double factor) = 0;
+    virtual void select_channel(int channel) = 0;
+    int get_channel() const;
+    virtual void set_amplifier(double factor) = 0;
     double read() const;
 protected:
-    void rememberChannel(int channel);
-    void rememberAmplifier(double factor);
+    void remember_channel(int channel);
+    void remember_amplifier(double factor);
 private:
-    double amplifyingFactor;
-    int selectedChannel;
+    double amplifying_factor;
+    int selected_channel;
     virtual int sample() const = 0;
 };
 

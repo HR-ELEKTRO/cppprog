@@ -17,7 +17,7 @@ public:
     }
 };
 
-class StBernard: public Hond {
+class St_bernard: public Hond {
 public:
     virtual void blaf() const override {
         cout << "Woef woef ";
@@ -25,7 +25,7 @@ public:
 };
 
 int main() {
-    list<Hond*> kennel{new Tekkel, new StBernard, new Tekkel};
+    list<Hond*> kennel{new Tekkel, new St_bernard, new Tekkel};
     for_each(kennel.cbegin(), kennel.cend(), mem_fn(&Hond::blaf));
     cout << '\n';
 

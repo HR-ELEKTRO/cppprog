@@ -3,14 +3,14 @@
 #include <algorithm>
 using namespace std;
 
-bool isPos(int i) {
+bool is_pos(int i) {
     return i >= 0;
 }
 
 template<typename T>
-class IsGreaterEqual {
+class Is_greater_equal {
 public:
-    IsGreaterEqual(int r): right(r) {
+    Is_greater_equal(int r): right(r) {
     }
     bool operator()(int left) const {
         return left >= right;
@@ -24,7 +24,7 @@ int main() {
 //  Zoeken met behulp van een functie als zoekvoorwaarde.
 //  Nadeel: voor elke zoekvoorwaarde moet een aparte 
 //  functie worden geschreven.
-    auto r{find_if(l.cbegin(), l.cend(), isPos)};
+    auto r{find_if(l.cbegin(), l.cend(), is_pos)};
     if (r != l.cend()) {
         cout << "Het eerste positieve element is: " << *r << '\n';
     }
@@ -32,7 +32,7 @@ int main() {
 //  Voordeel: flexibeler dan een functie.
 //  Nadeel: voor elke vergelijkings operator moet een
 //  apart functie-object worden geschreven.
-    r = find_if(l.cbegin(), l.cend(), IsGreaterEqual<int>(0));
+    r = find_if(l.cbegin(), l.cend(), Is_greater_equal<int>(0));
     if (r != l.cend()) {
         cout << "Het eerste positieve element is: " << *r << '\n';
     }

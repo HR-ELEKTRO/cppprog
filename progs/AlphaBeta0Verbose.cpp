@@ -3,8 +3,8 @@
 using namespace std;
 
 int value(int pos);
-int chooseComputerMove(int pos, int alpha = 0, int beta = 15);
-int chooseHumanMove(int pos, int alpha = 0, int beta = 15);
+int choose_computer_move(int pos, int alpha = 0, int beta = 15);
+int choose_human_move(int pos, int alpha = 0, int beta = 15);
 
 const int UNDECIDED = -1;
 
@@ -15,46 +15,46 @@ int value(int pos) {
     return UNDECIDED;
 }
 
-int chooseComputerMove(int pos, int alpha, int beta) {
-    int bestValue = value(pos);
-    if (bestValue == UNDECIDED) {
-        bestValue = alpha;
+int choose_computer_move(int pos, int alpha, int beta) {
+    int best_value = value(pos);
+    if (best_value == UNDECIDED) {
+        best_value = alpha;
         int i;
-        for (i = 1; bestValue < beta && i < 3; ++i) {
-            int value = chooseHumanMove(2 * pos + i, alpha, beta);
-            if (value > bestValue) {
-                bestValue = value;
-                alpha = bestValue;
+        for (i = 1; best_value < beta && i < 3; ++i) {
+            int value = choose_human_move(2 * pos + i, alpha, beta);
+            if (value > best_value) {
+                best_value = value;
+                alpha = best_value;
             }
         }
-        if (bestValue >= beta && i < 3) {
+        if (best_value >= beta && i < 3) {
             cout << "snoei node " << 2 * pos + i << endl;
         }
     }
-    return bestValue;
+    return best_value;
 }
 
-int chooseHumanMove(int pos, int alpha, int beta) {
-    int bestValue = value(pos);
-    if (bestValue == UNDECIDED) {
-        bestValue = beta;
+int choose_human_move(int pos, int alpha, int beta) {
+    int best_value = value(pos);
+    if (best_value == UNDECIDED) {
+        best_value = beta;
         int i;
-        for (i = 1; bestValue > alpha && i < 3; ++i) {
-            int value = chooseComputerMove(2 * pos + i, alpha, beta);
-            if (value < bestValue) {
-                bestValue = value;
-                beta = bestValue;
+        for (i = 1; best_value > alpha && i < 3; ++i) {
+            int value = choose_computer_move(2 * pos + i, alpha, beta);
+            if (value < best_value) {
+                best_value = value;
+                beta = best_value;
             }
         }
-        if (bestValue <= alpha  && i < 3) {
+        if (best_value <= alpha  && i < 3) {
             cout << "snoei node " << 2 * pos + i << endl;
         }
     }
-    return bestValue;
+    return best_value;
 }
 
 int main() {
-    int value = chooseComputerMove(0);
+    int value = choose_computer_move(0);
     cout << "Minimaal te behalen Maximale waarde = " << value << endl;
     cin.get();
 }

@@ -11,14 +11,14 @@ public:
 //  ...
 };
 
-class SintBernard: public Hond {
+class Sint_bernard: public Hond {
 public:
-    SintBernard(int w = 10): whisky{w} {
+    Sint_bernard(int w = 10): whisky{w} {
     }
     virtual void blaf() const {
         cout << "Woef!\n";
     }
-    int geefDrank() {
+    int geef_drank() {
         cout << "Geeft drank.\n";
         int w = whisky;
         whisky = 0;
@@ -29,22 +29,22 @@ private:
     int whisky;
 };
 
-void geefHulp(Hond* hp) {
+void geef_hulp(Hond* hp) {
     hp->blaf();
-//  cout << hp->geefDrank() << " liter.\n";
-//  Error: 'class Hond' has no member named 'geefDrank'
-//  We kunnen een cast gebruiken maar dat geeft foutieve uitvoer als hp niet naar een SintBernard wijst.
-    cout << static_cast<SintBernard*>(hp)->geefDrank() << " liter.\n";
+//  cout << hp->geef_drank() << " liter.\n";
+//  Error: 'class Hond' has no member named 'geef_drank'
+//  We kunnen een cast gebruiken maar dat geeft foutieve uitvoer als hp niet naar een Sint_bernard wijst.
+    cout << static_cast<Sint_bernard*>(hp)->geef_drank() << " liter.\n";
 }
 
 int main() {
-    Hond* borisPtr{new SintBernard};
-    geefHulp(borisPtr);
-    delete borisPtr;
+    Hond* boris_ptr{new Sint_bernard};
+    geef_hulp(boris_ptr);
+    delete boris_ptr;
     
-    Hond* fikkiePtr{new Hond};
-    geefHulp(fikkiePtr);
-    delete fikkiePtr;
+    Hond* fikkie_ptr{new Hond};
+    geef_hulp(fikkie_ptr);
+    delete fikkie_ptr;
 }
 
 /* Output:

@@ -105,9 +105,9 @@ void Breuk::normaliseer() {
 }
 
 const Breuk operator+(const Breuk& left, const Breuk& right) {
-    Breuk copyLeft{left};
-    copyLeft += right;
-    return copyLeft;
+    Breuk copy_left{left};
+    copy_left += right;
+    return copy_left;
 }
 
 ostream& operator<<(ostream& left, const Breuk& right) {

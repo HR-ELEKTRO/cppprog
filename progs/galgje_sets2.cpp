@@ -7,18 +7,18 @@ using namespace std;
 
 int main() {
     string w{"galgje"};
-    set<char> goedGeraden, letters;
+    set<char> goed_geraden, letters;
     copy(w.cbegin(), w.cend(), inserter(letters, letters.begin()));
     do {
         for (auto c: w) {
-            cout << (goedGeraden.count(c) ? c : '.');
+            cout << (goed_geraden.count(c) ? c : '.');
         }
         cout << "\nRaad een letter: ";
         char c{static_cast<char>(cin.get())}; cin.get();
         if (letters.count(c)) {
-            goedGeraden.insert(c);
+            goed_geraden.insert(c);
         }
-    } while (goedGeraden != letters);
+    } while (goed_geraden != letters);
     cout << "Je hebt het woord " << w << " geraden." << endl;
 }
 

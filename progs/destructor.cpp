@@ -4,12 +4,12 @@ using namespace std;
 // define PROBLEM to show problem
 //#define PROBLEM
 
-class WhiskeyVat {
+class Whiskey_vat {
 public:    
-    void maakVol() {
+    void maak_vol() {
         cout << "Het vat is vol\n";
     }
-    void maakLeeg() {
+    void maak_leeg() {
         cout << "Het vat is leeg\n";
     }
 };
@@ -24,24 +24,24 @@ public:
     virtual void blaf() = 0;
 };
 
-class SintBernard: public Hond {
+class Sint_bernard: public Hond {
 public:
-    SintBernard(): vat{new WhiskeyVat} {
-        vat->maakVol();
+    Sint_bernard(): vat{new Whiskey_vat} {
+        vat->maak_vol();
     }
-    virtual ~SintBernard() {
-        vat->maakLeeg();
+    virtual ~Sint_bernard() {
+        vat->maak_leeg();
         delete vat;
     }
     virtual void blaf() {
         cout << "WOEF WOEF\n";
     }
 private:
-    WhiskeyVat* vat;
+    Whiskey_vat* vat;
 };
 
 int main() {
-    Hond* boris{new SintBernard};
+    Hond* boris{new Sint_bernard};
     boris->blaf();
     delete boris;
 }

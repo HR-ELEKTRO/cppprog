@@ -11,14 +11,14 @@ public:
 //  ...
 };
 
-class SintBernard: public Hond {
+class Sint_bernard: public Hond {
 public:
-    SintBernard(int w = 10): whisky{w} {
+    Sint_bernard(int w = 10): whisky{w} {
     }
     virtual void blaf() const {
         cout << "Woef!\n";
     }
-    int geefDrank() {
+    int geef_drank() {
         cout << "Geeft drank.\n";
         int w = whisky;
         whisky = 0;
@@ -29,24 +29,24 @@ private:
     int whisky;
 };
 
-void geefHulp(Hond* hp) {
+void geef_hulp(Hond* hp) {
     hp->blaf();
-    SintBernard* sbp(dynamic_cast<SintBernard*>(hp));
+    Sint_bernard* sbp(dynamic_cast<Sint_bernard*>(hp));
     if (sbp != nullptr)
-        cout << sbp->geefDrank() << " liter.\n";
+        cout << sbp->geef_drank() << " liter.\n";
 }
 
 int main() {
-    Hond* borisPtr{new SintBernard};
-    geefHulp(borisPtr);
-    delete borisPtr;
+    Hond* boris_ptr{new Sint_bernard};
+    geef_hulp(boris_ptr);
+    delete boris_ptr;
     
-    Hond* fikkiePtr{new Hond};
-    geefHulp(fikkiePtr);
-    delete fikkiePtr;
+    Hond* fikkie_ptr{new Hond};
+    geef_hulp(fikkie_ptr);
+    delete fikkie_ptr;
 
-//  SintBernard* sbp{new Hond};
-//  Error: invalid conversion from 'Hond*' to 'SintBernard*'
+//  Sint_bernard* sbp{new Hond};
+//  Error: invalid conversion from 'Hond*' to 'Sint_bernard*'
 }
 
 /* Output:

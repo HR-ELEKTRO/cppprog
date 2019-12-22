@@ -13,19 +13,19 @@ public:
     Int(const Int& r): value{r.value} {
     	cout << "Int met waarde " << value << " wordt gekopieerd.\n";
     }
-    int getValue() const {
+    int get_value() const {
     	return value;
     }
 private:
     int value;
 };
 
-Int maakInt(int i) {
+Int maak_Int(int i) {
 	Int result{i};
 	return result;
 }
 
 int main() {
-	Int local{maakInt(42)};
-	cout << "De waarde van local is " << local.getValue() << '\n';
+	Int local{maak_Int(42)};
+	cout << "De waarde van local is " << local.get_value() << '\n';
 }

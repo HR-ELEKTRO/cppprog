@@ -17,7 +17,7 @@ public:
     }
 };
 
-class SintBernard: public Hond {
+class Sint_bernard: public Hond {
 public:
     virtual void blaf() {
         cout << "Woef woef\n";

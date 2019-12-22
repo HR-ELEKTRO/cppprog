@@ -15,22 +15,22 @@ int value(int pos) {
 
 enum Side {HUMAN, COMPUTER};
 
-int chooseMove(Side s, int pos) {
-    int bestValue = value(pos);
-    if (bestValue == UNDECIDED) {
-        bestValue = s == COMPUTER ? 0 : 15;
+int choose_move(Side s, int pos) {
+    int best_value = value(pos);
+    if (best_value == UNDECIDED) {
+        best_value = s == COMPUTER ? 0 : 15;
         for (int i = 1; i < 3; ++i) {
-            int value = chooseMove(s == COMPUTER ? HUMAN : COMPUTER, 2 * pos + i);
-            if (s == COMPUTER && value > bestValue || s == HUMAN && value < bestValue) {
-                bestValue = value;
+            int value = choose_move(s == COMPUTER ? HUMAN : COMPUTER, 2 * pos + i);
+            if ((s == COMPUTER && value > best_value) || (s == HUMAN && value < best_value)) {
+                best_value = value;
             }
         }
     }
-    return bestValue;
+    return best_value;
 }
 
 int main() {
-    int value = chooseMove(COMPUTER, 0);
+    int value = choose_move(COMPUTER, 0);
     cout << "Minimaal te behalen Maximale waarde = " << value << endl;
     cin.get();
 }

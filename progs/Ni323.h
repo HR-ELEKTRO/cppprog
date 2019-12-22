@@ -5,8 +5,8 @@
 class NI323: public ADCCard {
 public:
     NI323();
-    virtual void selectChannel(int channel);
-    virtual void setAmplifier(double factor);
+    virtual void select_channel(int channel);
+    virtual void set_amplifier(double factor);
 private:
     virtual int sample() const;
 };

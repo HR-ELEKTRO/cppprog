@@ -5,14 +5,14 @@
 #include "stacklist.h"
 using namespace std;
 
-bool hasLowerPrio(char op1, char op2) {
+bool has_lower_prio(char op1, char op2) {
     // geeft true als prio(op1) < prio(op2)
     // eenvoudig omdat alleen + en * toegestaan zijn
     return op1 == '+' && op2 == '*';
 }
 
 int main() {
-    StackWithList<char> s;
+    Stack_with_list<char> s;
     char c;
     cout << "Type een infix expressie (met + en * operator) en sluit af met =\n";
     cin >> c;
@@ -27,7 +27,7 @@ int main() {
             s.push(c);
         }
         else if (c == '+' || c == '*') {
-            while (!s.empty() && s.top() != '(' && !hasLowerPrio(s.top(), c)) {
+            while (!s.empty() && s.top() != '(' && !has_lower_prio(s.top(), c)) {
                 cout << s.top() << " ";
                 s.pop();
             }

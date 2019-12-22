@@ -12,7 +12,7 @@ public:
 //  ...
 };
 
-class SintBernard: public Hond {
+class Sint_bernard: public Hond {
 public:
     virtual void blaf() const {
         cout << "Woef!\n";
@@ -20,18 +20,18 @@ public:
 //  ...
 };
 
-void printRas(Hond& hr) {
+void print_ras(Hond& hr) {
     cout << typeid(hr).name() << '\n';
 }
 
 int main() {
-    SintBernard boris;
-    printRas(boris);
+    Sint_bernard boris;
+    print_ras(boris);
     Hond h;
-    printRas(h);
+    print_ras(h);
 }
 
 /* Output:
-11SintBernard
+12Sint_bernard
 4Hond
 */

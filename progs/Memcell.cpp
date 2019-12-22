@@ -2,10 +2,10 @@
 // Dit is file Memcell.cpp
 #include "Memcell.h"
 
-int MemoryCell::Read() const {
-    return StoredValue;
+int Memory_cell::read() const {
+    return stored_value;
 }
 
-void MemoryCell::Write(int x) {
-    StoredValue = x;
+void Memory_cell::write(int x) {
+    stored_value = x;
 }

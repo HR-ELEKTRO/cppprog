@@ -31,12 +31,12 @@ ostream& operator<<(ostream& left, const Score& d) {
 int main() {
     vector<Score> scores{
         Score("Theo", 300),
-        Score("Marie-Louise", 300),
+        Score("Marie-louise", 300),
         Score("Koen", 300),
         Score("Linda", 300),
-        Score("Marie-Louise", 400),
+        Score("Marie-louise", 400),
         Score("Anne", 300),
-        Score("Marie-Louise", 50)
+        Score("Marie-louise", 50)
     };
     sort(scores.begin(), scores.end(), [](const Score& d1, const Score& d2) {
         return d1.naam() < d2.naam();

@@ -4,7 +4,7 @@
 #include <algorithm>
 using namespace std;
 
-void printDubbel(int i) {
+void print_dubbel(int i) {
     cout << i << " " << i << " ";
 }
 
@@ -16,7 +16,7 @@ int main() {
 
 //  Bewerking opgeven met een functie.
 //  Nadeel: voor elke bewerking moet een aparte functie worden geschreven.
-    for_each(v.cbegin(), v.cend(), printDubbel);
+    for_each(v.cbegin(), v.cend(), print_dubbel);
     cout << '\n';
 
 //  Bewerking opgeven met een lambda functie.

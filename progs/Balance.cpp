@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    StackWithList<char> s;
+    Stack_with_list<char> s;
     char c;
     cout << "Type een expressie met haakjes () [] of {} en sluit af met .\n";
     cin.get(c);

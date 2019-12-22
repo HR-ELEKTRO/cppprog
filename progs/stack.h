@@ -1,5 +1,5 @@
-#ifndef _TISD_Bd_Stack_
-#define _TISD_Bd_Stack_
+#ifndef _HR_BroJZ_Stack_
+#define _HR_BroJZ_Stack_
 
 template <typename T> class Stack {
 public:

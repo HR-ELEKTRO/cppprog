@@ -6,7 +6,7 @@ class Hond {
 public:
     Hond(const string& n);
     virtual ~Hond();
-    void setNaam(const string& n);
+    void set_naam(const string& n);
     virtual void blaf() const;
 private:
     string naam;
@@ -30,7 +30,7 @@ Hond::~Hond() {
     cout << "Helaas, " << naam << " is gestorven.\n";
 }
 
-void Hond::setNaam(const string& n) {
+void Hond::set_naam(const string& n) {
     naam = n;
 }
 

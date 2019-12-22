@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    StackWithList<int> s;
+    Stack_with_list<int> s;
     char c;
     cout << "Type een postfix expressie (met + en * operator) en sluit af met =\n";
     cin >> c;

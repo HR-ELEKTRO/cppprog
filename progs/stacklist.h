@@ -1,5 +1,5 @@
-#ifndef _TISD_Bd_StackWithList_
-#define _TISD_Bd_StackWithList_
+#ifndef _HR_BroJZ_Stack_with_list_
+#define _HR_BroJZ_Stack_with_list_
 
 #include <iostream>
 #include <cstdlib>
@@ -9,10 +9,10 @@
 #include <iostream>
 #endif
 
-template <typename T> class StackWithList: public Stack<T> {
+template <typename T> class Stack_with_list: public Stack<T> {
 public:
-    StackWithList();
-    virtual ~StackWithList() throw();
+    Stack_with_list();
+    virtual ~Stack_with_list() throw();
     virtual void push(const T& t) override;
     virtual void pop() override;
     virtual const T& top() const override;
@@ -28,22 +28,22 @@ private:
     Node* p; // pointer naar de Node aan de top van de stack
 };
 
-template <typename T> StackWithList<T>::StackWithList(): p(0) {
+template <typename T> Stack_with_list<T>::Stack_with_list(): p(0) {
 }
 
-template <typename T> StackWithList<T>::~StackWithList() throw() {
+template <typename T> Stack_with_list<T>::~Stack_with_list() throw() {
 #ifdef VERBOSE
-    std::cerr << "StackWithList<T>::~StackWithList() called" << std::endl; 
+    std::cerr << "Stack_with_list<T>::~Stack_with_list() called" << std::endl; 
 #endif
     while (!empty())
         pop();
 }
 
-template <typename T> void StackWithList<T>::push(const T& t) {
+template <typename T> void Stack_with_list<T>::push(const T& t) {
     p = new Node(t, p);
 }
 
-template <typename T> void StackWithList<T>::pop() {
+template <typename T> void Stack_with_list<T>::pop() {
     if (empty())
         std::cerr << "Can't pop from an empty stack" << std::endl;
     else {
@@ -53,7 +53,7 @@ template <typename T> void StackWithList<T>::pop() {
     }
 }
 
-template <typename T> const T& StackWithList<T>::top() const {
+template <typename T> const T& Stack_with_list<T>::top() const {
     if (empty()) {
         std::cerr << "Can't top from an empty stack" << std::endl;
         std::cin.get();
@@ -64,15 +64,15 @@ template <typename T> const T& StackWithList<T>::top() const {
     return p->data;
 }
 
-template <typename T> bool StackWithList<T>::empty() const {
+template <typename T> bool Stack_with_list<T>::empty() const {
     return p == 0;
 }
 
-template <typename T> bool StackWithList<T>::full() const {
+template <typename T> bool Stack_with_list<T>::full() const {
     return false;
 }
 
-template <typename T> StackWithList<T>::Node::Node(const T& t, Node* n):
+template <typename T> Stack_with_list<T>::Node::Node(const T& t, Node* n):
          data(t), next(n) {
 }
 

@@ -4,23 +4,23 @@
 
 using namespace std;
 
-enum CardType {AD178, NI323};
+enum Card_type {AD178, NI323};
 
 class ADCCard {
 public:
-    ADCCard(CardType name);
-    void selectChannel(int channel);
-    int getChannel() const;
-    void setAmplifier(double factor);
+    ADCCard(Card_type name);
+    void select_channel(int channel);
+    int get_channel() const;
+    void set_amplifier(double factor);
     double read() const;
 private:
-    CardType type;
-    double amplifyingFactor;
-    int selectedChannel;
+    Card_type type;
+    double amplifying_factor;
+    int selected_channel;
     int sample() const;
 };
 
-ADCCard::ADCCard(CardType name): type{name}, amplifyingFactor{1.0}, selectedChannel{1} {
+ADCCard::ADCCard(Card_type name): type{name}, amplifying_factor{1.0}, selected_channel{1} {
     // ... eventueel voor alle kaarten benodigde code
     switch (type) {
         case AD178:
@@ -34,8 +34,8 @@ ADCCard::ADCCard(CardType name): type{name}, amplifyingFactor{1.0}, selectedChan
     }
 }
 
-void ADCCard::selectChannel(int channel) {
-    selectedChannel = channel;
+void ADCCard::select_channel(int channel) {
+    selected_channel = channel;
     // ... eventueel voor alle kaarten benodigde code
     switch (type) {
         case AD178:
@@ -49,12 +49,12 @@ void ADCCard::selectChannel(int channel) {
     }
 }
 
-int ADCCard::getChannel() const {
-    return selectedChannel;
+int ADCCard::get_channel() const {
+    return selected_channel;
 }
 
-void ADCCard::setAmplifier(double factor) {
-    amplifyingFactor = factor;
+void ADCCard::set_amplifier(double factor) {
+    amplifying_factor = factor;
     // ... eventueel voor alle kaarten benodigde code
     switch (type) {
         case AD178:
@@ -74,18 +74,18 @@ int ADCCard::sample() const {
     switch (type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            sample = 0x7FFF; // +5 * amplifyingFactor V
+            sample = 0x7FFF; // +5 * amplifying_factor V
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            sample = -0x8000; // -5 * amplifyingFactor V
+            sample = -0x8000; // -5 * amplifying_factor V
             break;
     }
     return sample;
 }
 
 double ADCCard::read() const {
-    return sample() * amplifyingFactor / 6553.5;
+    return sample() * amplifying_factor / 6553.5;
 }
 
 int main() {
@@ -94,12 +94,12 @@ int main() {
     cout.precision(2);
 
     ADCCard k1{AD178};
-    k1.setAmplifier(10);
-    k1.selectChannel(3);
-    cout << "Kanaal " << k1.getChannel() << " van kaart k1 = " << k1.read() << " V.\n";
+    k1.set_amplifier(10);
+    k1.select_channel(3);
+    cout << "Kanaal " << k1.get_channel() << " van kaart k1 = " << k1.read() << " V.\n";
 
     ADCCard k2{NI323};
-    k2.setAmplifier(5);
-    k2.selectChannel(4);
-    cout << "Kanaal " << k2.getChannel() << " van kaart k2 = " << k2.read() << " V.\n";
+    k2.set_amplifier(5);
+    k2.select_channel(4);
+    cout << "Kanaal " << k2.get_channel() << " van kaart k2 = " << k2.read() << " V.\n";
 }

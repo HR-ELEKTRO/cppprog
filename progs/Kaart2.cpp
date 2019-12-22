@@ -8,24 +8,24 @@ class ADCCard {
 public:
     ADCCard();
     virtual ~ADCCard() = default;
-    virtual void selectChannel(int channel) = 0;
-    int getChannel() const;
-    virtual void setAmplifier(double factor) = 0;
+    virtual void select_channel(int channel) = 0;
+    int get_channel() const;
+    virtual void set_amplifier(double factor) = 0;
     double read() const;
 protected:
-    void rememberChannel(int channel);
-    void rememberAmplifier(double factor);
+    void remember_channel(int channel);
+    void remember_amplifier(double factor);
 private:
-    double amplifyingFactor;
-    int selectedChannel;
+    double amplifying_factor;
+    int selected_channel;
     virtual int sample() const = 0;
 };
 
 class AD178: public ADCCard {
 public:
     AD178();
-    virtual void selectChannel(int channel);
-    virtual void setAmplifier(double factor);
+    virtual void select_channel(int channel);
+    virtual void set_amplifier(double factor);
 private:
     virtual int sample() const;
 };
@@ -33,71 +33,71 @@ private:
 class NI323: public ADCCard {
 public:
     NI323();
-    virtual void selectChannel(int channel);
-    virtual void setAmplifier(double factor);
+    virtual void select_channel(int channel);
+    virtual void set_amplifier(double factor);
 private:
     virtual int sample() const;
 };
 
-ADCCard::ADCCard(): amplifyingFactor{1.0}, selectedChannel{1} {
+ADCCard::ADCCard(): amplifying_factor{1.0}, selected_channel{1} {
     // ... voor alle kaarten benodigde code
     cout << "initialisatie is gestart.\n";
 }
-int ADCCard::getChannel() const {
-    return selectedChannel;
+int ADCCard::get_channel() const {
+    return selected_channel;
 }
 double ADCCard::read() const {
-    return sample() * amplifyingFactor / 6553.5;
+    return sample() * amplifying_factor / 6553.5;
 }
-void ADCCard::rememberChannel(int channel) {
-    selectedChannel = channel;
+void ADCCard::remember_channel(int channel) {
+    selected_channel = channel;
 }
-void ADCCard::rememberAmplifier(double factor) {
-    amplifyingFactor = factor;
+void ADCCard::remember_amplifier(double factor) {
+    amplifying_factor = factor;
 }
 
 AD178::AD178() {
     // ... de specifieke voor de AD178 benodigde code
     cout << "AD178 is geinitialiseeerd.\n";
 }
-void AD178::selectChannel(int channel) {
-    rememberChannel(channel);
+void AD178::select_channel(int channel) {
+    remember_channel(channel);
     // ... de specifieke voor de AD178 benodigde code
     cout << "Kanaal " << channel << " van AD178 is geselecteerd.\n";
 }
-void AD178::setAmplifier(double factor) {
-    rememberAmplifier(factor);
+void AD178::set_amplifier(double factor) {
+    remember_amplifier(factor);
     // ... de specifieke voor de AD178 benodigde code
     cout << "Versterkingsfactor van AD178 is " << factor << ".\n";
 }
 int AD178::sample() const {
     // ... de specifieke voor de AD178 benodigde code
-    return 0x7FFF; // +5 * amplifyingFactor V
+    return 0x7FFF; // +5 * amplifying_factor V
 }
 
 NI323::NI323() {
     // ... de specifieke voor de NI323 benodigde code
     cout << "NI323 is geinitialiseeerd.\n";
 }
-void NI323::selectChannel(int channel) {
-    rememberChannel(channel);
+void NI323::select_channel(int channel) {
+    remember_channel(channel);
     // ... de specifieke voor de NI323 benodigde code
     cout << "Kanaal " << channel << " van NI323 is geselecteerd.\n";
 }
-void NI323::setAmplifier(double factor) {
-    rememberAmplifier(factor);
+void NI323::set_amplifier(double factor) {
+    remember_amplifier(factor);
     // ... de specifieke voor de NI323 benodigde code
     cout << "Versterkingsfactor van NI323 is " << factor << ".\n";
 }
 int NI323::sample() const {
     // ... de specifieke voor de NI323 benodigde code
-    return -0x8000; // -5 * amplifyingFactor V
+    return -0x8000; // -5 * amplifying_factor V
 }
 
-void doIt(ADCCard& selectedChannel) {
-    selectedChannel.setAmplifier(10);
-    selectedChannel.selectChannel(3);
-    cout << "Kanaal " << selectedChannel.getChannel() << " = " << selectedChannel.read() << " V.\n";
+void do_it(ADCCard& selected_channel) {
+    selected_channel.set_amplifier(10);
+    selected_channel.select_channel(3);
+    cout << "Kanaal " << selected_channel.get_channel() << " = " << selected_channel.read() << " V.\n";
 }
 
 int main() {
@@ -106,7 +106,7 @@ int main() {
     cout.precision(2);
     
     AD178 card1;
-    doIt(card1);
+    do_it(card1);
     NI323 card2;
-    doIt(card2);
+    do_it(card2);
 }

@@ -6,40 +6,40 @@
 #include <array>
 #include <algorithm>
 
-template <typename Object, std::size_t NumRows, std::size_t NumCols>
+template <typename Object, std::size_t Num_rows, std::size_t Num_cols>
 class matrix {
 private:
-    using ArrayType = std::array<Object, NumRows * NumCols>;
-    ArrayType a;
+    using Array_type = std::array<Object, Num_rows * Num_cols>;
+    Array_type a;
 public:
     matrix() = default;
     matrix(const initializer_list<Object>& init) {
         if (init.size() > a.size()) throw std::out_of_range("To much elements in initializer list for class matrix.");
         std::copy(init.begin(), init.end(), a.begin());
     }
-    matrix(const ArrayType& init) {
+    matrix(const Array_type& init) {
         std::copy(init.begin(), init.end(), a.begin());
     }
-    using const_iterator = typename ArrayType::const_iterator;
-    using iterator = typename ArrayType::iterator;
-    using size_type = typename ArrayType::size_type;
+    using const_iterator = typename Array_type::const_iterator;
+    using iterator = typename Array_type::iterator;
+    using size_type = typename Array_type::size_type;
     const Object& operator()(size_type row, size_type column) const {
-        return a[row * NumCols + column];
+        return a[row * Num_cols + column];
     }
     Object& operator()(size_type row, size_type column) {
-        return a[row * NumCols + column];
+        return a[row * Num_cols + column];
     }
     const Object& at(size_type row, size_type column) const {
-        return a.at(row * NumCols + column);
+        return a.at(row * Num_cols + column);
     }
     Object& at(size_type row, size_type column) {
-        return a.at(row * NumCols + column);
+        return a.at(row * Num_cols + column);
     }
-    size_type numRows() const {
-        return NumRows;
+    size_type num_rows() const {
+        return Num_rows;
     }
-    size_type numCols() const {
-        return NumCols;
+    size_type num_cols() const {
+        return Num_cols;
     }
     iterator begin() {
         return a.begin();

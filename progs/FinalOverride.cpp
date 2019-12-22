@@ -1,12 +1,12 @@
 #include <iostream>
 using namespace std;
 
-class UitleenbaarItem {
+class Uitleenbaar_item {
 public:
     virtual string id() const = 0;
 };
 
-class DVD: public UitleenbaarItem {
+class DVD: public Uitleenbaar_item {
 public:
     virtual string id() const {
         return barcode;
@@ -15,7 +15,7 @@ private:
     string barcode;
 };
 
-class Boek: public UitleenbaarItem {
+class Boek: public Uitleenbaar_item {
 public:
     virtual string id() const final {
         return ISBN;

@@ -15,9 +15,9 @@ int main() {
     cout.precision(2);
 
     AD178 card1;
-    doIt(card1);
+    do_it(card1);
     NI323 card2;
-    doIt(card2);
+    do_it(card2);
     BB647 card3;   // new!
-    doIt(card3);   // new!
+    do_it(card3);   // new!
 }

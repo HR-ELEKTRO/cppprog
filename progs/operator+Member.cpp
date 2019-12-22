@@ -57,14 +57,14 @@ Breuk& Breuk::operator+=(const Breuk& right) {
 }
 
 const Breuk Breuk::operator+(const Breuk& right) const {
-    Breuk copyLeft{*this}; // maak een kopietje van de receiver
-    copyLeft += right;     // tel daar het object right bij op
-    return copyLeft;       // geef deze waarde terug
+    Breuk copy_left{*this}; // maak een kopietje van de receiver
+    copy_left += right;     // tel daar het object right bij op
+    return copy_left;       // geef deze waarde terug
 }
 
 /* verkorte notatie:
 const Breuk Breuk::operator+(const Breuk& right) const {
-    return copyLeft(*this) += right;
+    return copy_left(*this) += right;
 }
 */
 

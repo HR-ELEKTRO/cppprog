@@ -2,6 +2,6 @@
 #define _doit_
 #include "adccard.h"
 
-void doIt(ADCCard& c);
+void do_it(ADCCard& c);
 
 #endif

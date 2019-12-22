@@ -4,20 +4,20 @@
 using namespace std;
 
 // Voorbeeld call by value:
-void skipLines(int l) {
+void skip_lines(int l) {
     while (l-- > 0)
         cout << '\n';
 }
 
 // Voorveeld call by reference (met behulp van een pointer): 
-void swapInts1(int* p, int* q) {
+void swap_ints1(int* p, int* q) {
     int t{*p};
     *p = *q;
     *q = t;
 }
 
 // Voorveeld call by reference (met behulp van een reference): 
-void swapInts2(int& p, int& q) {
+void swap_ints2(int& p, int& q) {
     int t{p};
     p = q;
     q = t;
@@ -26,17 +26,17 @@ void swapInts2(int& p, int& q) {
 int main() {
     int n{7};
     cout << "Hallo\n";
-    skipLines(n);
+    skip_lines(n);
     cout << "daar!\n";
-    skipLines(3);
+    skip_lines(3);
 
     int m{3};
     cout << "n = " << n << " m = " << m << '\n';
-    swapInts1(&n, &m);
+    swap_ints1(&n, &m);
     cout << "n = " << n << " m = " << m << '\n';
-    swapInts2(n, m);
+    swap_ints2(n, m);
     cout << "n = " << n << " m = " << m << '\n';
 
-//  swapInts2(n, 5);
+//  swap_ints2(n, 5);
 //  Error: cannot bind non-const lvalue reference of type ‘int&’ to an rvalue of type ‘int’
 }

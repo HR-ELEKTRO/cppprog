@@ -37,12 +37,12 @@ public:
 // ...
 };
 
-class FruitMand {
+class Fruit_mand {
 public:
-    void voegToe(unique_ptr<Fruit> p) {
+    void voeg_toe(unique_ptr<Fruit> p) {
         fp.push_back(move(p));
     }
-    void printInhoud() const {
+    void print_inhoud() const {
         cout << "De fruitmand bevat:\n";
         for (const auto& e: fp)
             cout << e->soort() << endl;
@@ -52,11 +52,11 @@ private:
 };
 
 int main() {
-    FruitMand m;
-    m.voegToe(make_unique<Appel>());
-    m.voegToe(make_unique<Peer>());
-    m.voegToe(make_unique<Appel>());
-    m.printInhoud();
+    Fruit_mand m;
+    m.voeg_toe(make_unique<Appel>());
+    m.voeg_toe(make_unique<Peer>());
+    m.voeg_toe(make_unique<Appel>());
+    m.print_inhoud();
     // hier wordt de Fruitmand m verwijderd!
 }
 

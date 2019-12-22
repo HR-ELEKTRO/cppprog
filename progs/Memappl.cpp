@@ -5,8 +5,8 @@
 using namespace std;
 
 int main() {
-    MemoryCell M;
-    M.Write(5);
-    cout << "Cell contents are " << M.Read() << '\n';
+    Memory_cell m;
+    m.write(5);
+    cout << "Cell contents are " << m.read() << '\n';
 //  ...
 }

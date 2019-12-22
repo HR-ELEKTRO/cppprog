@@ -6,18 +6,18 @@ using namespace std;
 
 template<typename T> class Dozijn {
 public:
-    void zetIn(int index, const T& waarde);
-    const T& leesUit(int index) const;
+    void zet_in(int index, const T& waarde);
+    const T& lees_uit(int index) const;
 private:
     T data[12];
 };
 
-template<typename T> void Dozijn<T>::zetIn(int index, const T& waarde) {
+template<typename T> void Dozijn<T>::zet_in(int index, const T& waarde) {
     if (index >= 0 && index < 12) 
         data[index] = waarde;
 }
 
-template<typename T> const T& Dozijn<T>::leesUit(int index) const {
+template<typename T> const T& Dozijn<T>::lees_uit(int index) const {
     if (index < 0)
         index = 0;
     if (index > 11)
@@ -26,29 +26,29 @@ template<typename T> const T& Dozijn<T>::leesUit(int index) const {
 }
 
 template<typename T> ostream& operator<<(ostream& o, const Dozijn<T>& d) {
-    o << d.leesUit(0);
+    o << d.lees_uit(0);
     for (int i = 1; i < 12; ++i)
-        o << ", " << d.leesUit(i);
+        o << ", " << d.lees_uit(i);
     return o;
 }
 
 int main() {
     Dozijn<int> kwadraten;
     for (int j = 0; j < 12; ++j)
-        kwadraten.zetIn(j, j * j);
+        kwadraten.zet_in(j, j * j);
     cout << "kwadraten = " << kwadraten << '\n';
     Dozijn<string> provincies;
-    provincies.zetIn(0, "Drenthe");
-    provincies.zetIn(1, "Flevoland");
-    provincies.zetIn(2, "Friesland");
-    provincies.zetIn(3, "Gelderland");
-    provincies.zetIn(4, "Groningen");
-    provincies.zetIn(5, "Limburg");
-    provincies.zetIn(6, "Noord-Brabant");
-    provincies.zetIn(7, "Noord-Holland");
-    provincies.zetIn(8, "Overijssel");
-    provincies.zetIn(9, "Utrecht");
-    provincies.zetIn(10, "Zeeland");
-    provincies.zetIn(11, "Zuid-Holland");
+    provincies.zet_in(0, "Drenthe");
+    provincies.zet_in(1, "Flevoland");
+    provincies.zet_in(2, "Friesland");
+    provincies.zet_in(3, "Gelderland");
+    provincies.zet_in(4, "Groningen");
+    provincies.zet_in(5, "Limburg");
+    provincies.zet_in(6, "Noord-Brabant");
+    provincies.zet_in(7, "Noord-Holland");
+    provincies.zet_in(8, "Overijssel");
+    provincies.zet_in(9, "Utrecht");
+    provincies.zet_in(10, "Zeeland");
+    provincies.zet_in(11, "Zuid-Holland");
     cout << "provincies = " << provincies << '\n';   
 }

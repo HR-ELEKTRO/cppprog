@@ -4,19 +4,19 @@ using namespace std;
 
 #include "adccard.h"
 
-ADCCard::ADCCard(): amplifyingFactor(1.0), selectedChannel(1) {
+ADCCard::ADCCard(): amplifying_factor(1.0), selected_channel(1) {
     // voor alle kaarten benodigde code
     cout << "initialisatie is gestart.\n";
 }
-int ADCCard::getChannel() const {
-    return selectedChannel;
+int ADCCard::get_channel() const {
+    return selected_channel;
 }
 double ADCCard::read() const {
-    return sample() * amplifyingFactor / 6553.5;
+    return sample() * amplifying_factor / 6553.5;
 }
-void ADCCard::rememberChannel(int channel) {
-    selectedChannel = channel;
+void ADCCard::remember_channel(int channel) {
+    selected_channel = channel;
 }
-void ADCCard::rememberAmplifier(double factor) {
-    amplifyingFactor = factor;
+void ADCCard::remember_amplifier(double factor) {
+    amplifying_factor = factor;
 }

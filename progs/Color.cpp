@@ -15,8 +15,8 @@ class Color {
 public:
     Color();
     Color(int c);
-    int getValue() const;
-    void setValue(int c);
+    int get_value() const;
+    void set_value(int c);
 //  constanten:
     static constexpr int BLACK = 0x00000000;
     static constexpr int RED = 0x00FF0000;
@@ -32,7 +32,7 @@ private:
 };
 
 ostream& operator<<(ostream& o, Color c) {
-    return o << setw(6) << setfill('0') << hex << c.getValue();
+    return o << setw(6) << setfill('0') << hex << c.get_value();
 }
 
 Color::Color(): value{BLACK} {
@@ -41,11 +41,11 @@ Color::Color(): value{BLACK} {
 Color::Color(int v): value{v} {
 }
 
-int Color::getValue() const {
+int Color::get_value() const {
     return value;
 }
 
-void Color::setValue(int v) {
+void Color::set_value(int v) {
     value = v;
 }
 
@@ -56,8 +56,8 @@ class Color {
 public:
     Color();
     Color(int c);
-    int getValue() const;
-    void setValue(int c);
+    int get_value() const;
+    void set_value(int c);
 //  constanten:
     static const int BLACK = 0x00000000;
     static const int RED = 0x00FF0000;
@@ -73,7 +73,7 @@ private:
 };
 
 ostream& operator<<(ostream& o, Color c) {
-    return o << setw(6) << setfill('0') << hex << c.getValue();
+    return o << setw(6) << setfill('0') << hex << c.get_value();
 }
 
 Color::Color(): value{BLACK} {
@@ -82,11 +82,11 @@ Color::Color(): value{BLACK} {
 Color::Color(int v): value{v} {
 }
 
-int Color::getValue() const {
+int Color::get_value() const {
     return value;
 }
 
-void Color::setValue(int v) {
+void Color::set_value(int v) {
     value = v;
 }
 
@@ -97,8 +97,8 @@ class Color {
 public:
     Color();
     Color(int c);
-    int getValue() const;
-    void setValue(int c);
+    int get_value() const;
+    void set_value(int c);
 //  constanten:
     enum {
         BLACK = 0x00000000, RED = 0x00FF0000,
@@ -112,7 +112,7 @@ private:
 };
 
 ostream& operator<<(ostream& o, Color c) {
-    return o << setw(6) << setfill('0') << hex << c.getValue();
+    return o << setw(6) << setfill('0') << hex << c.get_value();
 }
 
 Color::Color(): value{BLACK} {
@@ -121,11 +121,11 @@ Color::Color(): value{BLACK} {
 Color::Color(int v): value{v} {
 }
 
-int Color::getValue() const {
+int Color::get_value() const {
     return value;
 }
 
-void Color::setValue(int v) {
+void Color::set_value(int v) {
     value = v;
 }
 
@@ -135,21 +135,21 @@ int main() {
         using namespace Manier1;
         Color c{Color::YELLOW};
         cout << "c = " << c << '\n';
-        c.setValue(Color::BLUE);
+        c.set_value(Color::BLUE);
         cout << "c = " << c << '\n';
     }
     {
         using namespace Manier2;
         Color c{Color::YELLOW};
         cout << "c = " << c << '\n';
-        c.setValue(Color::BLUE);
+        c.set_value(Color::BLUE);
         cout << "c = " << c << '\n';
     }
     {
         using namespace Manier3;
         Color c{Color::YELLOW};
         cout << "c = " << c << '\n';
-        c.setValue(Color::BLUE);
+        c.set_value(Color::BLUE);
         cout << "c = " << c << '\n';
     }
 }

@@ -27,12 +27,12 @@ public:
 // ...
 };
 
-class FruitMand {
+class Fruit_mand {
 public:
-    void voegToe(Fruit& p) {
+    void voeg_toe(Fruit& p) {
         fp.push_back(&p);
     }
-    void printInhoud() const {
+    void print_inhoud() const {
         cout << "De fruitmand bevat:\n";
         for (const Fruit* e: fp)
             cout << e->soort() << endl;
@@ -42,13 +42,13 @@ private:
 };
 
 int main() {
-    FruitMand m;
+    Fruit_mand m;
     Appel a1, a2;
     Peer p1;
-    m.voegToe(a1);
-    m.voegToe(p1);
-    m.voegToe(a2);
-    m.printInhoud();
+    m.voeg_toe(a1);
+    m.voeg_toe(p1);
+    m.voeg_toe(a2);
+    m.print_inhoud();
 //  ...
 }
 

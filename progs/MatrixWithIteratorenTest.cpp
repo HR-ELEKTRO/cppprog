@@ -40,14 +40,14 @@ int main() {
 
 //  alle rijen afdrukken                 
     cout << "Alle getallen in matrix m2 rij voor rij: \n";
-    for (Matrix::size_type ri = 0; ri != m2.numRows(); ++ri) { 
+    for (Matrix::size_type ri = 0; ri != m2.num_rows(); ++ri) { 
         copy(m2.crowbegin(ri), m2.crowend(ri), iout); cout << '\n';
     }
 //  bepaalde kolom optellen bij andere kolom
     cout << "De derde kolom wordt opgeteld bij de eerste kolom.\n";
     transform(m2.ccolumnbegin(2), m2.ccolumnend(2), m2.ccolumnbegin(0), m2.columnbegin(0), plus<int>());
     cout << "Alle getallen in matrix m2 rij voor rij: \n";
-    for (Matrix::size_type ri(0); ri != m2.numRows(); ++ri) { 
+    for (Matrix::size_type ri(0); ri != m2.num_rows(); ++ri) { 
         copy(m2.crowbegin(ri), m2.crowend(ri), iout); cout << '\n';
     }
     
@@ -55,7 +55,7 @@ int main() {
     cout << "De tweede kolom wordt vermenigvuldigd met de tweede rij.\n";
     transform(m2.ccolumnbegin(1), m2.ccolumnend(1), m2.rowbegin(1), m2.columnbegin(1), multiplies<int>());
     cout << "Alle getallen in matrix m2 rij voor rij: \n";
-    for (Matrix::size_type ri = 0; ri != m2.numRows(); ++ri) { 
+    for (Matrix::size_type ri = 0; ri != m2.num_rows(); ++ri) { 
         copy(m2.crowbegin(ri), m2.crowend(ri), iout); cout << '\n';
     }
 

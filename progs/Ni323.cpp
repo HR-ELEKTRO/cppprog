@@ -8,13 +8,13 @@ NI323::NI323() {
     // ... de specifieke voor de NI323 benodigde code
     cout << "NI323 is geinitialiseeerd." << endl;
 }
-void NI323::selectChannel(int channel) {
-    rememberChannel(channel);
+void NI323::select_channel(int channel) {
+    remember_channel(channel);
     // ... de specifieke voor de NI323 benodigde code
     cout << "Kanaal " << channel << " van NI323 is geselecteerd." << endl;
 }
-void NI323::setAmplifier(double factor) {
-    rememberAmplifier(factor);
+void NI323::set_amplifier(double factor) {
+    remember_amplifier(factor);
     // ... de specifieke voor de NI323 benodigde code
     cout << "Versterkingsfactor van NI323 is " << factor << "." << endl;
 }

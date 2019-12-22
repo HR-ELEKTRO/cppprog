@@ -11,7 +11,7 @@ public:
     ~Test() {
         cout << "Test object met waarde " << waarde << " verwijderd.\n";
     }
-    bool isWaarde(int i) const {
+    bool is_waarde(int i) const {
         return waarde == i;
     }
 private:
@@ -20,7 +20,7 @@ private:
 
 void f0() {
     Test t{1};
-    if (t.isWaarde(0)) {
+    if (t.is_waarde(0)) {
         cout << "Test object heeft waarde 0\n";
         return;
     }
@@ -29,7 +29,7 @@ void f0() {
 
 void f1() {
     Test* p{new Test{1}};
-    if (p->isWaarde(1)) {
+    if (p->is_waarde(1)) {
         cout << "Test object heeft waarde 1\n";
         return;
     }
@@ -39,7 +39,7 @@ void f1() {
 
 void f2() {
     unique_ptr<Test> p{new Test{2}};
-    if (p->isWaarde(2)) {
+    if (p->is_waarde(2)) {
         cout << "Test object heeft waarde 2\n";
         return;
     }

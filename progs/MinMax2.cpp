@@ -3,8 +3,8 @@
 using namespace std;
 
 int value(int pos);
-int chooseComputerMove(int pos, int& bestNextPos);
-int chooseHumanMove(int pos, int& bestNextPos);
+int choose_computer_move(int pos, int& best_next_pos);
+int choose_human_move(int pos, int& best_next_pos);
 
 const int UNDECIDED = -1;
 
@@ -15,55 +15,55 @@ int value(int pos) {
     return UNDECIDED;
 }
 
-int chooseComputerMove(int pos, int& bestNextPos) {
-    int bestValue = value(pos);
-    if (bestValue == UNDECIDED) {
-        bestValue = 0;
+int choose_computer_move(int pos, int& best_next_pos) {
+    int best_value = value(pos);
+    if (best_value == UNDECIDED) {
+        best_value = 0;
         for (int i = 1; i < 3; ++i) {
-            int dummyPos;
-            int value = chooseHumanMove(2 * pos + i, dummyPos);
-            if (value > bestValue) {
-                bestValue = value;
-                bestNextPos = 2 * pos + i;
+            int dummy_pos;
+            int value = choose_human_move(2 * pos + i, dummy_pos);
+            if (value > best_value) {
+                best_value = value;
+                best_next_pos = 2 * pos + i;
             }
         }
     }
-    return bestValue;
+    return best_value;
 }
 
-int chooseHumanMove(int pos, int& bestNextPos) {
-    int bestValue = value(pos);
-    if (bestValue == UNDECIDED) {
-        bestValue = 15;
+int choose_human_move(int pos, int& best_next_pos) {
+    int best_value = value(pos);
+    if (best_value == UNDECIDED) {
+        best_value = 15;
         for (int i = 1; i < 3; ++i) {
-            int dummyPos;
-            int value = chooseComputerMove(2 * pos + i, dummyPos);
-            if (value < bestValue) {
-                bestValue = value;
-                bestNextPos = 2 * pos + i;
+            int dummy_pos;
+            int value = choose_computer_move(2 * pos + i, dummy_pos);
+            if (value < best_value) {
+                best_value = value;
+                best_next_pos = 2 * pos + i;
             }
         }
     }
-    return bestValue;
+    return best_value;
 }
 
 int main() {
-    int pos = 0, bestNextPos, bestValue;
+    int pos = 0, best_next_pos, best_value;
     while (pos < 15) {
-        bestValue = chooseComputerMove(pos, bestNextPos);
-        cout << "Minimaal te behalen Maximale waarde = " << bestValue << endl;
-        pos = bestNextPos;
+        best_value = choose_computer_move(pos, best_next_pos);
+        cout << "Minimaal te behalen Maximale waarde = " << best_value << endl;
+        pos = best_next_pos;
         cout << "Computer kiest positie: " << pos << endl;
-        int posL = 2 * pos + 1;
-        int posR = 2 * pos + 2;
+        int pos_l = 2 * pos + 1;
+        int pos_r = 2 * pos + 2;
         if (pos < 15) {
-            cout << "Je kunt kiezen voor positie " << posL << " of positie " << posR << endl;
-            chooseHumanMove(pos, bestNextPos);
-            cout << "Pssst, " << bestNextPos << " is de beste keuze." << endl;
+            cout << "Je kunt kiezen voor positie " << pos_l << " of positie " << pos_r << endl;
+            choose_human_move(pos, best_next_pos);
+            cout << "Pssst, " << best_next_pos << " is de beste keuze." << endl;
             do {
                 cout << "Maak je keuze: ";
                 cin >> pos;
-            } while (pos != posL && pos != posR);
+            } while (pos != pos_l && pos != pos_r);
         }
     }
     cout << "Behaalde waarde = " << value(pos) << endl;

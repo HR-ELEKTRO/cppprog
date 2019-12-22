@@ -36,18 +36,18 @@ public:
 // ...
 };
 
-class FruitMand {
+class Fruit_mand {
 public:
-    ~FruitMand() {
+    ~Fruit_mand() {
         for (const Fruit* e: fp)
             delete e;
             // Als we de constructor in de class Fruit *NIET* virtual maken geeft de GCC C++ compiler een warning:
             // Warning: deleting object of abstract class type ‘Fruit’ which has non-virtual destructor will cause undefined behavior
     }
-    void voegToe(Fruit* p) {
+    void voeg_toe(Fruit* p) {
         fp.push_back(p);
     }
-    void printInhoud() const {
+    void print_inhoud() const {
         cout << "De fruitmand bevat:\n";
         for (const Fruit* e: fp)
             cout << e->soort() << '\n';
@@ -57,11 +57,11 @@ private:
 };
 
 int main() {
-    FruitMand m;
-    m.voegToe(new Appel);
-    m.voegToe(new Peer);
-    m.voegToe(new Appel);
-    m.printInhoud();
+    Fruit_mand m;
+    m.voeg_toe(new Appel);
+    m.voeg_toe(new Peer);
+    m.voeg_toe(new Appel);
+    m.print_inhoud();
     // hier wordt de Fruitmand m verwijderd!
 }
 

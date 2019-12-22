@@ -6,7 +6,7 @@ class Hond {
 public:
     Hond(const string& n);
     ~Hond();
-    void setNaam(const string& n);
+    void set_naam(const string& n);
     void blaf() const;
 private:
     string naam;
@@ -20,7 +20,7 @@ Hond::~Hond() {
     cout << "Helaas, " << naam << " is gestorven.\n";
 }
 
-void Hond::setNaam(const string& n) {
+void Hond::set_naam(const string& n) {
     naam = n;
 }
 
@@ -31,11 +31,11 @@ void Hond::blaf() const {
 int main() {
     Hond h1{"Fikkie"};
     h1.blaf();
-    h1.setNaam("Kees");
+    h1.set_naam("Kees");
     h1.blaf();
     const Hond h2{"Leika"};
     h2.blaf();
-//  h2.setNaam("Lex");
+//  h2.set_naam("Lex");
 //  Error: passing ‘const Hond’ as ‘this’ argument discards qualifiers
 }
 

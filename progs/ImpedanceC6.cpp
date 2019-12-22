@@ -6,45 +6,45 @@ using namespace std;
 // define PI (which is not included in std C++)
 const double PI = atan(1.0) * 4;
 
-class ImpedanceError {
+class Impedance_error {
 public:
-    virtual ~ImpedanceError() = default;
-    virtual string getErrorMessage() const = 0;
+    virtual ~Impedance_error() = default;
+    virtual string get_error_message() const = 0;
 };
 
-class FrequencyError: public ImpedanceError {
+class Frequency_error: public Impedance_error {
 public:
-    virtual string getErrorMessage() const;
+    virtual string get_error_message() const;
 };
 
-string FrequencyError::getErrorMessage() const {
+string Frequency_error::get_error_message() const {
     return "Frequentie == 0";
 }
 
-class CapacityError: public ImpedanceError {
+class Capacity_error: public Impedance_error {
 public:
-    virtual string getErrorMessage() const;
+    virtual string get_error_message() const;
 };
 
-string CapacityError::getErrorMessage() const {
+string Capacity_error::get_error_message() const {
     return "Capaciteit == 0";
 }
 
-complex<double> impedanceC(double c, double f) {
+complex<double> impedance_C(double c, double f) {
     if (c == 0.0)
-        throw CapacityError();
+        throw Capacity_error();
     if (f == 0.0)
-        throw FrequencyError();
+        throw Frequency_error();
     return complex<double>{0, -1 / (2 * PI * f * c)};
 }
 
 int main() {
     try {
-        cout << impedanceC(1e-6, 1e3) << '\n';
-        cout << impedanceC(1e-6, 0) << '\n';
+        cout << impedance_C(1e-6, 1e3) << '\n';
+        cout << impedance_C(1e-6, 0) << '\n';
         cout << "Dit was het!\n";
-    } catch (const ImpedanceError& e) {
-        cout << e.getErrorMessage() << '\n';
+    } catch (const Impedance_error& e) {
+        cout << e.get_error_message() << '\n';
     }
     cout << "The END.\n";
 }

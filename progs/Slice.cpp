@@ -32,7 +32,7 @@ public:
     virtual unsigned int salaris() const {
         return sal;
     }
-    virtual void verhoogSalarisMet(unsigned short v) {
+    virtual void verhoog_salaris_met(unsigned short v) {
         sal += v;
     }
 // ...
@@ -43,7 +43,7 @@ private:
 int main() {
     Docent brojz{"Harry", 30000};
     cout << brojz.soort() << " " << brojz.naam() << " verdient " << brojz.salaris() << '\n';
-    brojz.verhoogSalarisMet(10000);
+    brojz.verhoog_salaris_met(10000);
     cout << brojz.soort() << " " << brojz.naam() << " verdient " << brojz.salaris() << '\n';
 
     Mens m{brojz}; // Waar blijft het salaris?

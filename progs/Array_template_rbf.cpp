@@ -39,9 +39,9 @@ template <typename T> Array<T>::Array(int s): size{s}, data{new T[s]} {
 }
 
 template <typename T> Array<T>::Array(initializer_list<T> list): size{list.size()}, data{new T[size]} {
-    auto listIter{list.begin()};
+    auto list_iter{list.begin()};
     for (size_type i = 0; i < size; ++i) {
-        data[i] = *listIter++;
+        data[i] = *list_iter++;
     }
 }
 
