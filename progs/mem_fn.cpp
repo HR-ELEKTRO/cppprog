@@ -24,6 +24,16 @@ public:
     }
 };
 
+void fblaf(const Hond* p) {
+    p->blaf();
+}
+
+function pblaf{
+    [](const Hond* p){
+        p->blaf();
+    }
+};
+
 int main() {
     list<Hond*> kennel{new Tekkel, new St_bernard, new Tekkel};
     for_each(kennel.cbegin(), kennel.cend(), mem_fn(&Hond::blaf));
@@ -33,6 +43,14 @@ int main() {
     for_each(kennel.cbegin(), kennel.cend(), [](const Hond* p) {
         p->blaf();
     });
+    cout << '\n';
+
+//  alternatief met functie
+    for_each(kennel.cbegin(), kennel.cend(), fblaf);
+    cout << '\n';
+    
+//  alternatief met function object
+    for_each(kennel.cbegin(), kennel.cend(), pblaf);
     cout << '\n';
 
 //  alternatief met range-based for

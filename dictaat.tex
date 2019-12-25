@@ -143,9 +143,9 @@
 % http://ctan.org/pkg/pifont
 \usepackage{pifont}
 \newcommand{\vtje}{\textcolor{darkgreen}{\ding{51}}}
-\newcommand{\xje}{\textcolor{red}{\ding{55}}}
+\newcommand{\xje}{\textcolor{hrred}{\ding{55}}}
 %\newcommand{\vtje}{\textcolor{cgreen}{\checkmark}}
-%\newcommand{\xje}{\textcolor{red}{$\times$}}
+%\newcommand{\xje}{\textcolor{hrred}{$\times$}}
 
 % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/struktex/struktex.en.pdf
 % Nassi Shneiderman Diagrammen
@@ -560,7 +560,7 @@ auto increment(int i) {
 	Als deze pointer ophoud te bestaan, dan wordt automatisch de operator |delete| aangeroepen op de pointer.
 	Zie \proglink{unique_ptr.cpp}.
 \end{itemize}
-\section{Essentail Operations}
+\section{Essential Operations}
 \begin{itemize}
 	\item 
 	De \Cpp{}-compiler doet zijn best om het onnodig kopiëren van data te voorkomen.
@@ -662,6 +662,7 @@ Int met waarde 42 wordt verwijderd.
 	Ook als de optimalisatie op het maximale level (4) wordt gezet, veranderd de uitvoer niet.
 	%TODO testen met MSP430
 	\item 
+	\label{sec:move}
 	Als een class data bevat die dynamisch is aangemaakt, dan is het belangrijk dat het onnodig kopiëren van deze data wordt voorkomen.
 	Om dit te bereiken moet een \emph{\USE{move constructor}} en \emph{\USE{move assignment operator}} gedefinieerd worden.
 	De parameters van deze \USE{move} functies zijn een zogenoemde \emph{\USE{rvalue reference}}.
@@ -839,8 +840,13 @@ Dozijn d{move(a)};
 		|2ms| is een literal van het type |chrono::duration|.
 	\end{itemize}   
 	\item 
-	Als ons eigen type |T| als key in een ongeordende associatieve container, bijvoorbeeld |unordered_map|, willen gebruiken dan moeten we een template specialisation voor hash<T> definiëren in namespace |std|.
-	Zie \proglink{unordered_map.cpp}.
+	Als je een zelfgedefinieerd type |T| als key in een ongeordende container, bijvoorbeeld |unordered_map|, wilt gebruiken dan moet je 
+	een functie-object gebruiken.
+	Zie \proglink{unordered_map1.cpp}.
+	Als een object meerdere datamembers heeft, dan kun je de hashes van deze datamembers het best met elkaar exor-en om de hash van dit object te bepalen.
+	Als alternatief kun je ook een template specialisation voor hash<T> definiëren in namespace |std|.
+	Het is dan niet meer nodig om de hash operatie mee te geven aan de ongeordende container
+	Zie \proglink{unordered_map2.cpp}.
 \end{itemize}
 
 \section{Templates}
@@ -964,9 +970,155 @@ Kan pas vanaf \Cpp{}20. Te gedetailleerd voor dit dictaat.
 \end{itemize}
 
 \section{Input and Output}
-Include file <filesystem>
+Sinds \Cpp{}17 include file <filesystem>
 
+\section{Containers}
+\begin{itemize}
+	\item 
+	|vector<int> v1{10}| is een vector met één element met de waarde 10.
+	\item 
+	|vector<int> v1(10)| is een vector met tien elementen met de waarde 0.
+	\item 
+	Als een |vector| groeit kunnen de elementen van plaats veranderen. 
+	Pointers en iteratoren naar deze elementen staan dan naar verkeerde adressen te wijzen.
+	Dit kun je voorkomen door met behulp van de functie |reserve|, van tevoren, voldoende elementen te reserveren.
+	Zie \proglink{vector_reserve.cpp}.
+	\item 
+	|Save_vector| is een mooi voorbeeld van overerving.
+	Zie \proglink{Save_vector.cpp}.
+	Werkt niet polymorf omdat operator[] niet |virtual| gedefinieerd is.
+	\item 
+	Range checking kan soms ook aangezet worden als compiler optie.
+	In gcc is dat de optie |-D_GLIBCXX_DEBUG|.
+	\item 
+	|count| bij |list| is $O(1)$ maar |count| bij |forward_list| is $O(n)$.	 
+	\item 
+	De standaardcontainer hebben zogenoemde \emph{emplace}-operaties.
+	Een |vector| heeft naast de bekende |push_back|-operatie ook een |emplace_back|-operatie.
+	De |emplace_back| combineert het toevoegen van een element in de vector met het aanroepen van de constructor van dit element.
+	Dit voorkomt het maken van een kopietje.
+	In het programmafragment:
+	\begin{cpplstfragment}
+vector<Breuk> v;
+v.push_back(Breuk{1, 2});
+	\end{cpplstfragment}
+	Kan de laatste regel efficiënter gecodeerd worden als:
+\begin{cpplstfragment}
+	v.emplace_back(1, 2);
+\end{cpplstfragment}
+Zie \proglink{vector_emplace}.	
+\end{itemize}
+\section{Algorithms}
+\begin{itemize}
+	\item 
+	Werken op een half-open sequence.
+	\item 
+	In \Cpp{}-20 kun je met behulp van Concepts zogenoemde Ranges definiëren waardoor het mogelijk wordt om een container-object aan een algoritme mee te geven. 
+	\item 
+	Sinds \Cpp{}-17 bestaan er ook parallelle versies van de standaard algoritmen.
+	%TODO kan ik niet compileren.
+	Zie \proglink{sort_par.cpp}.
+\end{itemize}
+\section{Utilities}
+\begin{itemize}
+	\item 
+	Sinds \Cpp{}11 bevat de standaard library zogenoemde \emph{smart pointers}.
+	Een |unique_ptr| is een verwijzing naar een object.
+	Deze pointer beheert de levensduur van dit object en heeft een move constructor \cref{sec:move} waarmee het beheer overgedragen kan worden aan een andere |unique_pointer|.
+	Een |unique_pointer| kan, zoals de naam al suggereert, \emph{niet} gekopieerd worden.
+	Hierdoor kun je een |unique_pointer| teruggeven vanuit een functie.
+	Het object wordt verwijderd als de |unique_pointer| die het object beheerd wordt verwijderd.
+	Zie \proglink{unique_pointer.cpp}.
+	\item 
+	Een |shared_ptr| is ook een verwijzing naar een object.
+	Deze pointer beheert ook de levensduur van het betreffende object.
+	Een |shared_pointer| kan in tegenstelling tot een |unique_pointer| wel gekopieerde worden.
+	Het object wordt pas verwijderd, als de laatste |shared_pointer| die naar dit object verwijst, wordt verwijderd.
+	De standaard library bevat in de include file |memory| de functies |make_shared()| en |make_unique| waarmee objecten dynamisch aangemaakt kunnen worden zonder dat |new| expliciet wordt aangeroepen.
+	Smart pointers zijn te verkiezen boven gewone pointers omdat ze de kans op memory leaks sterk verkleinen.
+	Maar smart pointers blijven een soort pointer, dus gebruik ze alleen als er geen eenvoudigere oplossing mogelijk is.
+	Vaak kan het gebruik van een standaard container het gebruik van pointers voorkomen.
+	Als je polymorfisme gebruikt dan moet je een pointer gebruiken.
+	Het gebruik van een |unique_pointer| ligt dan voor de hand.
+	Als het polymorfe object gedeeld moet worden, heb je een |shared_pointer| nodig.
+	%TODO: plaatsen opzoeken waar new gebuikt wordt en verwijzen naar gebruik smart pointers.
+	\item 
+	De standaard functie |forward| lijkt op de eenvoudigere |move| en kan gebruikt worden om een verzameling argumenten exact door te geven.
+	Deze functie wordt onder andere gebruikt om |make_unique| te implementeren:
+	\begin{cpplstfragment}
+template<typename T, typename ... Args>
+unique_ptr<T> make_unique(Args&&... args) {
+	return unique_ptr<T>{new T(std::forward<Args>(args)...)}
+}
+	\end{cpplstfragment}
+	\item 
+	Sinds Cpp{}20 bevat de standaard library de class |span|.
+	Dit is de combinatie van een pointer en een offset.
+	\item 
+	De |valarray<T>| is een speciale container waarbij T een numeriek type moet zijn.
+	Er kunnen rekenkundige bewerkingen op dit type uitgevoerd worden.
+	Een |valarray| lijkt dus meer op een vector zoals we die kennen uit de wiskunde dan een |vector|.
+	Zie \proglink{valarray.cpp}. 
+	Deze rekenkundige bewerkingen kunnen efficiënt geïmplementeerd worden.
+	Zo kan de bewerking:
+	|v3 = 2*v1 + v2| door de compiler vertaald worden in één loop waarin voor elke element van |v| de volgende code wordt uitgevoerd: |v3[i] = 2*v1[i] + v2[i];|.
+	\item 
+	Andere utility classes: |bitset|, |pair|, |tuple|, |variant|, |optional| en |any|.
+	|pair| en |tuple| zijn heterogeen alle andere containers zijn homogeen.
+	|bitset| bevat een vast aantal bits.
+	|variant| is een beter alternatief voor |union|.
+	|optional| is een object dat mogelijk leeg is.
+	|any| is een object dat elk willekeurig type kan bevatten.
+	\item 
+	Type deduction heeft de functie |make_pair| sinds \Cpp{}17 min of meer overbodig gemaakt.
+	%TODO zoek waar |make_pair| gebruikt wordt.
+	Zie \proglink{make_pair.cpp}.
+	Hetzelfde geldt voor |make_tuple|.  
+	\item 
+	De Cpp{}17 standaard library bevat een pool allocator.
+	Deze allocator is sneller dan de standaard allocator, als je veel objecten van dezelfde grootte nodig hebt.
+	Alle standaard containers hebben een extra template argument waarmee je de allocator kunt opgeven.
+	\item 
+	De include file |<chrono>| bevat utilities om met tijd om te gaan.
+	Er zijn user defined suffixes gedefinieerd die je kunt gebruiken om je code leesbaarder te maken.
+	Bijvoorbeeld:
+	\begin{cpplstfragment}
+this_thread::sleep(10ms+500us);
+	\end{cpplstfragment}
+	Ook kun je eenvoudig een timer maken om de executietijd van een stuk code te meten.
+\begin{cpplstfragment}
+auto start{chrono::high_resolution_clock::now()};
+// code die je wilt timen
+auto stop{chrono::high_resolution_clock::now()};
+auto duration{chrono::duration_cast<std::chrono::microseconds>(stop - start).count()};
+cout << "Executietijd = " << duration << " us\n";
+\end{cpplstfragment}
+	\item 
+	Het kiezen van een implementatie afhankelijk van het type van de iterator zal in \Cpp{}20 veel eenvoudiger worden door het gebruik van concepts.
+\end{itemize}
 
+\section{Numerics}
+\begin{itemize}
+	\item 
+	Als er een fout optreedt in een functie uit |<cmath>|, dan wordt dit gerapporteerd door de globale variabele |errno| te vullen met een foutcode.
+	\begin{cpplstfragment}
+errno = 0;
+double d{sqrt(-1)};
+if (errno == EDOM) {
+	cerr << "Domain error for sqrt(-1)\n";
+}
+	\end{cpplstfragment}
+	\item 
+	De include file |<nemeric>| definieert een aantal rekenkundige functies.
+	Onder andere |inner_product|, |gcd| en |lcm|.
+	%TODO: gcd gebruiken in Breuk. Nog en versimpeling t.o.v. C.
+	Helaas is |gcd| pas toegevoegd in \Cpp{}17.
+	Er zijn ook diverse parallelle algoritmen beschikbaar.
+	\item 
+	Cpp{} heeft veel mogelijkheden om random getallen te genereren.
+	Zie \proglink{Dobbelsteen.cpp}. 
+	
+\end{itemize}
 
 \fi
 
@@ -4010,7 +4162,7 @@ Voor degene die echt alles wil begrijpen: een functie met dezelfde parameters in
 \end{itemize}
 
 \needspace{2\baselineskip}
-Voorbeeld van het gebruik van \USE{overriding} en \textcolor{red}{\textbf{verkeerd}} gebruik van \USE{overloading}.
+Voorbeeld van het gebruik van \USE{overriding} en \textcolor{hrred}{\textbf{verkeerd}} gebruik van \USE{overloading}.
 De functie |f| wordt \USE{overloaded} en de functie |g| wordt \USE{overridden} (\proglink{Override.cpp}):
 \cpplstinputfragment[linerange={6-34,38-41}]{Override.cpp}
 
@@ -6872,7 +7024,7 @@ Als je probeert om |sort| uit te voeren op een |list|, dan geeft de compiler een
 
 \begin{lstlisting}[mathescape=true]
 list<int> l = {12, 18, 6};
-sort(l.begin(), l.end()); // $\color{red}\textbf{Error!}$
+sort(l.begin(), l.end()); // $\color{hrred}\textbf{Error!}$
 \end{lstlisting}
 
 Om deze reden zijn er meerder soorten iteratoren in de \Cpp{} standaard gedefinieerd.
@@ -7014,7 +7166,7 @@ Als deze functie echter aangeroepen wordt om het midden van een |list| te vinden
 
 \begin{lstlisting}[mathescape=true]
 list<int> l = {12, 18, 6};
-cout << *find_upper_middle_random_access(l.begin(), l.end()) << endl; // $\color{red}\textbf{Error: no match for 'operator-'}$
+cout << *find_upper_middle_random_access(l.begin(), l.end()) << endl; // $\color{hrred}\textbf{Error: no match for 'operator-'}$
 \end{lstlisting}
 
 Als er \USE{bidirectional} iteratoren beschikbaar zijn, dan kan de functie als volgt geïmplementeerd worden, zie \proglink{find\_upper\_middle\_bidirectional.cpp}:
@@ -7029,7 +7181,7 @@ Als deze functie echter aangeroepen wordt om het midden van een |forward_list| t
 
 \begin{lstlisting}[mathescape=true]
 forward_list<int> l = {12, 18, 6};
-cout << *find_upper_middle_bidirectional(l.begin(), l.end()) << endl; // $\color{red}\textbf{Error: no match for 'operator--'}$
+cout << *find_upper_middle_bidirectional(l.begin(), l.end()) << endl; // $\color{hrred}\textbf{Error: no match for 'operator--'}$
 \end{lstlisting}
 
 Als er \USE{forward} iteratoren beschikbaar zijn, dan kan de functie als volgt geïmplementeerd worden, zie \proglink{find\_upper\_middle\_forward.cpp}:
@@ -7152,7 +7304,7 @@ Om deze reden hebben alle associatieve containers de memberfunctie |find| waarme
 
 \begin{lstlisting}[mathescape=true]
 set<int> priem = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
-auto i1 = find(priem.begin(), priem.end(), 91); // $\color{red}O(n)$
+auto i1 = find(priem.begin(), priem.end(), 91); // $\color{hrred}O(n)$
 auto i2 = priem.find(91); // $\color{darkgreen}O(\log{n})$
 \end{lstlisting}
 
