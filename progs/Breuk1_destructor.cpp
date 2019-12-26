@@ -60,7 +60,6 @@ Breuk::Breuk(int t, int n): boven{t}, onder{n} {
 Breuk::~Breuk() {
     cout << "Een breuk met de waarde " << boven << "/" << onder << " is verwijderd uit het geheugen.\n";
     cout << "Druk op enter om verder te gaan...";
-    cin.get();
 }
 
 int Breuk::teller() const {

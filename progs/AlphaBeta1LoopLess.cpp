@@ -80,6 +80,4 @@ int main() {
         }
     }
     cout << "Behaalde waarde = " << position_value(pos) << endl;
-    cin.get();
-    cin.get();
 }

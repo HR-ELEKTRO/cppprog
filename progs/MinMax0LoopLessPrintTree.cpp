@@ -48,5 +48,4 @@ int main() {
     cin.get();
     cout << endl;
     cout << "Maximaal te behalen waarde = " << value_move_computer(0) << endl;
-    cin.get();
 }

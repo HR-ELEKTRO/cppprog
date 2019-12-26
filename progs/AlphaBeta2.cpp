@@ -67,6 +67,4 @@ int main() {
         }
     }
     cout << "Behaalde waarde = " << value(pos) << endl;
-    cin.get();
-    cin.get();
 }

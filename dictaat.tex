@@ -1058,7 +1058,7 @@ unique_ptr<T> make_unique(Args&&... args) {
 	De |valarray<T>| is een speciale container waarbij T een numeriek type moet zijn.
 	Er kunnen rekenkundige bewerkingen op dit type uitgevoerd worden.
 	Een |valarray| lijkt dus meer op een vector zoals we die kennen uit de wiskunde dan een |vector|.
-	Zie \proglink{valarray.cpp}. 
+	Zie \proglink{valarray.\Cpp{}p}. 
 	Deze rekenkundige bewerkingen kunnen efficiënt geïmplementeerd worden.
 	Zo kan de bewerking:
 	|v3 = 2*v1 + v2| door de compiler vertaald worden in één loop waarin voor elke element van |v| de volgende code wordt uitgevoerd: |v3[i] = 2*v1[i] + v2[i];|.
@@ -1075,7 +1075,7 @@ unique_ptr<T> make_unique(Args&&... args) {
 	Zie \proglink{make_pair.cpp}.
 	Hetzelfde geldt voor |make_tuple|.  
 	\item 
-	De Cpp{}17 standaard library bevat een pool allocator.
+	De \Cpp{}17 standaard library bevat een pool allocator.
 	Deze allocator is sneller dan de standaard allocator, als je veel objecten van dezelfde grootte nodig hebt.
 	Alle standaard containers hebben een extra template argument waarmee je de allocator kunt opgeven.
 	\item 
@@ -1109,15 +1109,49 @@ if (errno == EDOM) {
 }
 	\end{cpplstfragment}
 	\item 
-	De include file |<nemeric>| definieert een aantal rekenkundige functies.
+	De include file |<numeric>| definieert een aantal rekenkundige functies.
 	Onder andere |inner_product|, |gcd| en |lcm|.
 	%TODO: gcd gebruiken in Breuk. Nog en versimpeling t.o.v. C.
 	Helaas is |gcd| pas toegevoegd in \Cpp{}17.
 	Er zijn ook diverse parallelle algoritmen beschikbaar.
 	\item 
-	Cpp{} heeft veel mogelijkheden om random getallen te genereren.
+	\Cpp{} heeft veel mogelijkheden om random getallen te genereren.
 	Zie \proglink{Dobbelsteen.cpp}. 
+	\item 
+	De minimale en maximale waardes van de ingebouwde types kunnen opgevraagd worden met functies die gedeclareerd zijn in |<limits>|.
+	Bijvoorbeeld de maximale waarde voor een |int| is |numeric_limits<int>::max()|.
+\end{itemize}
+\section{Concurrency}
+Kan eventueel nog aan dictaat worden toegevoegd.
+Zie ook oude informatie uit RTSYST, zie \url{bd.eduweb.hhs.nl/rtsyst/studiew.htm}.
+\section{History and Compatibility}
+\begin{itemize}
+	\item 
+	Attributes zijn een gestandaardiseerde manier om taaluitbreidingen te implementeren in \Cpp{}.
+	Een attribute heeft de volgende syntax |[[naam]]|.
+	Er zijn ook een aantal standaard attributes gedefinieerd.
+	Zie \url{https://en.cppreference.com/w/cpp/language/attributes}.
+	Hier volgen enkele voorbeelden:
+	\begin{itemize}
+		\item 
+		De hoofdfunctie in veel embedded systemen bevat een |while(1)|-loop omdat deze functie \squote{altijd} moet blijven draaien.
+		Sommige compilers geven in dit geval een warning.   
+		Je kunt aangeven dat het juist de bedoeling is dat de functie nooit terugkeert door de functie te voorzien van het attribuut |[[noreturn]]|.
+		\item 
+		In |\switch|-statements gebruik je meestal aan het einde van elke |case| een |break|-statement.
+		Soms wil je echter dat het programma na uit uitvoeren van de |case| verdergaat met het uitvoeren van de volgende |case|.
+		In dit geval eindigt de |case| niet met een |break|.
+		Veel compilers geven in dit geval een warning.
+		Je kunt aangeven dat je bewust de |break| hebt weggelaten door het attribuut |[[fallthrough]]| te gebruiken.
+		Zie \proglink{attributes.cpp}.
+	\end{itemize}
+	\item 
+	De standaard library bevat ook de |ratio| voor \emph{compile-time rational arithmetic}.
+	De teller en de noemer zijn template parameters.
+	Een duidelijk use case ontbreekt.
 	
+	
+	    
 \end{itemize}
 
 \fi
@@ -3320,7 +3354,7 @@ Voor al deze details verwijs ik je naar \cite[\hrefpageEckelTwo{121}{hoofdstuk 3
 
 \section{Standaard Templates}
 \label{STL}
-In de \Cpp{} standaard \cite{ISO2014} is een groot aantal standaard \USE{templates} voor datastructuren en algoritmen opgenomen.
+In de \Cpp{}-standaard \cite{ISO2014} is een groot aantal standaard \USE{templates} voor datastructuren en algoritmen opgenomen.
 De basis voor deze verzameling \USE{templates} is in de jaren '90 gelegd door Alex Stepanov en Meng Lee in de zogenoemde STL (\USE{Standard Template Library}).
 In de standaard \USE{library} zijn ook een generiek type |array| en een generiek type |vector| opgenomen.
 

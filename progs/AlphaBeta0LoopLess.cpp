@@ -55,5 +55,4 @@ int value_move_human(int pos, int alpha, int beta) {
 int main() {
     int value = value_move_computer(0, 0, 15);
     cout << "Minimaal te behalen Maximale waarde = " << value << endl;
-    cin.get();
 }
