@@ -1,10 +1,10 @@
-// Werken met breuken in C++ ... zoals met ints!! een echt ADT
+// Werken met breuken in C++ ... zoals met ints!! een echt UDT
 
 #include <iostream>
 #include <cassert>
 using namespace std;
 
-// ADT-declaratie:
+// UDT-declaratie:
 
 class Breuk {
 public:
@@ -45,7 +45,7 @@ int ggd(int n, int m) {
     return n;
 }
 
-// ADT-definitie:
+// UDT-definitie:
 
 Breuk::Breuk(): boven{0}, onder{1} {
 }

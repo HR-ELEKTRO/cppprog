@@ -1,4 +1,4 @@
-// Werken met breuken in C++ ... een eerste stap naar een ADT
+// Werken met breuken in C++ ... een eerste stap naar een UDT
 
 #include <iostream>
 #include <numeric>

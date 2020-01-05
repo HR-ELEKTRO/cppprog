@@ -1,4 +1,4 @@
-// Een oplossing m.b.v. een ADT ... wel herbruikbaar en aanpasbaar maar niet uitbreidbaar!
+// Een oplossing m.b.v. een UDT ... wel herbruikbaar en aanpasbaar maar niet uitbreidbaar!
 
 #include <iostream>
 

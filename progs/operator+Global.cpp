@@ -6,7 +6,7 @@
 #include <cassert>
 using namespace std;
 
-// ADT-declaratie:
+// UDT-declaratie:
 
 class Breuk {
 public:
@@ -46,7 +46,7 @@ int ggd(int n, int m) {
     return n;
 }
 
-// ADT-definitie:
+// UDT-definitie:
 
 Breuk::Breuk(): boven{0}, onder{1} {
 }

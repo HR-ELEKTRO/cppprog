@@ -1,5 +1,5 @@
 # Define target and source file here:
-TARGET       = Dictaat_OGPiCpp
+TARGET       = Dictaat_OPinCpp
 SOURCE       = dictaat
 DEPENDENCIES = style_nl_NL.tex styleCode.tex
 
