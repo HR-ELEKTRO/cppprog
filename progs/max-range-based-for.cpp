@@ -16,6 +16,5 @@ int max(const vector<int>& v) {
 
 int main() {
     vector<int> v = {12, 2, 17, 32, 1, 18};
-    cout << "max = " << max(v) << endl;
-    cin.get();
+    cout << "max = " << max(v) << '\n';
 }

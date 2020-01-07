@@ -84,14 +84,14 @@ int main() {
         Array<double> v{i};
         for (Array<double>::size_type j = 0; j < v.length(); ++j)
             v[j] = sqrt(double(j)); // Vul v met wortels
-        cout << "v[12] = " << v[12] << endl;
+        cout << "v[12] = " << v[12] << '\n';
         Array<int> w{i};
         for (Array<int>::size_type t = 0; t < w.length(); ++t)
             w[t] = t * t;           // Vul w met kwadraten
-        cout << "w[12] = " << w[12] << endl;
+        cout << "w[12] = " << w[12] << '\n';
     }
     else
-        cout << "Dat kan niet!" << endl;
+        cout << "Dat kan niet!\n";
     // ...
     // Array<int> v{10};
     // for (auto e: v) {

@@ -9,20 +9,20 @@ long long fac(long long n) {
 }
 
 int main() {
-    cout << "Geef aantal hokjes: " << endl;
+    cout << "Geef aantal hokjes: ";
     long long n;
     cin >> n;
     if (n > 20) {
-        cout << "Sorry het aantal stellingen past niet in een long long" << endl;
+        cout << "Sorry het aantal stellingen past niet in een long long\n";
     }
     else {
-        cout << "Aantal stellingen:" << endl;
+        cout << "Aantal stellingen:\n";
         long long res = 0;
         for (long long i = 0; i <= n; ++i) {
             long long t = fac(n) / fac(n - i);
-            cout << t << " + " << endl;
+            cout << t << " + " << '\n';
             res += t;
         }
-        cout<< "= " << res << endl;
+        cout<< "= " << res << '\n';
     }
 }

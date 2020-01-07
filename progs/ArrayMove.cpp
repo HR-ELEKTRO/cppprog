@@ -108,7 +108,7 @@ int main() {
     cin >> i;
     if (i > 0) {
         Array a{i};
-        cout << "a = " << a << endl;
+        cout << "a = " << a << '\n';
         for (Array::size_type j = 0; j < a.length(); ++j)
             a[j] = j * j; // vul a met kwadraten
         cout << "a = " << a << '\n';

@@ -22,7 +22,7 @@ private:
 
 template <typename T> Stack_with_array<T>::Stack_with_array(size_t size): a(0), s(size), i(0) {
     if (s == 0) {
-        std::cerr << "Stack size should be >0" << std::endl;
+        std::cerr << "Stack size should be >0\n";
         s = 0;
     }
     else {
@@ -36,7 +36,7 @@ template <typename T> Stack_with_array<T>::~Stack_with_array() {
 
 template <typename T> void Stack_with_array<T>::push(const T& t) {
     if (full()) {
-        std::cerr << "Can't push on an full stack" << std::endl;
+        std::cerr << "Can't push on an full stack\n";
     }
     else {
         a[i++] = t;
@@ -45,7 +45,7 @@ template <typename T> void Stack_with_array<T>::push(const T& t) {
 
 template <typename T> void Stack_with_array<T>::pop() {
     if (empty()) {
-        std::cerr << "Can't pop from an empty stack" << std::endl;
+        std::cerr << "Can't pop from an empty stack\n";
     }
     else {
         --i;
@@ -54,7 +54,7 @@ template <typename T> void Stack_with_array<T>::pop() {
 
 template <typename T> const T& Stack_with_array<T>::top() const {
     if (empty()) {
-        std::cerr << "Can't top from an empty stack" << std::endl;
+        std::cerr << "Can't top from an empty stack\n";
         std::exit(-1);
         // no valid return possible
     }

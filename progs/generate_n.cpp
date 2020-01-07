@@ -11,6 +11,5 @@ int main() {
         ++n; return n * n;
     }); 
     copy(kwadraten.begin(), kwadraten.end(), ostream_iterator<int>(cout, " "));
-    cout << endl;
-    cin.get();
+    cout << '\n';
 }

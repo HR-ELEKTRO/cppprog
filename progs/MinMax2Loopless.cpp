@@ -54,21 +54,19 @@ int main() {
     int pos = 0;
     while (pos < 15) {
         Value_next_pos res = value_move_computer(pos);
-        cout << "Minimaal te behalen Maximale waarde = " << res.value() << endl;
+        cout << "Minimaal te behalen Maximale waarde = " << res.value() << '\n';
         pos = res.next_pos();
-        cout << "Computer kiest positie: " << pos << endl;
+        cout << "Computer kiest positie: " << pos << '\n';
         int pos_l = 2 * pos + 1;
         int pos_r = 2 * pos + 2;
         if (pos < 15) {
-            cout << "Je kunt kiezen voor positie " << pos_l << " of positie " << pos_r << endl;
-            cout << "Pssst, " << value_move_human(pos).next_pos() << " is de beste keuze." << endl;
+            cout << "Je kunt kiezen voor positie " << pos_l << " of positie " << pos_r << '\n';
+            cout << "Pssst, " << value_move_human(pos).next_pos() << " is de beste keuze\n";
             do {
                 cout << "Maak je keuze: ";
                 cin >> pos;
             } while (pos != pos_l && pos != pos_r);
         }
     }
-    cout << "Behaalde waarde = " << position_value(pos) << endl;
-    cin.get();
-    cin.get();
+    cout << "Behaalde waarde = " << position_value(pos) << '\n';
 }

@@ -35,7 +35,7 @@ public:
     void print_inhoud() const {
         cout << "De fruitmand bevat:\n";
         for (const Fruit* e: fp)
-            cout << e->soort() << endl;
+            cout << e->soort() << '\n';
     }
 private:
     vector<Fruit*> fp;

@@ -11,7 +11,7 @@ int main() {
     // probeer een nieuw item toe te voegen:
     auto [iterator, gelukt]{m.insert({"Harry", 4})};
     if (!gelukt) {
-        cout << "Harry zat al in de map" << endl;
+        cout << "Harry zat al in de map\n";
         // pas bestaande item aan:
         m["Harry"] = 4;
     }

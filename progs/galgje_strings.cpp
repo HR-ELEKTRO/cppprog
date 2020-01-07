@@ -15,6 +15,6 @@ int main() {
         }
     }
     while (geraden != w);
-    cout << "Je hebt het woord \"" << w << "\" geraden." << endl;
+    cout << "Je hebt het woord \"" << w << "\" geraden.\n";
 }
 

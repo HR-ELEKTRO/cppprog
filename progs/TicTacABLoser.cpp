@@ -276,12 +276,11 @@ void Console_tttgame::lose() {
 #if SOLUTION != 0
     cout << '\n';
     play();
-    cin.get();
 #endif
 }
 
 int main() {
-    cout << "Welcome to TIC-TAC-TOE Test for losing" << endl;
+    cout << "Welcome to TIC-TAC-TOE Test for losing\n";
     Console_tttgame game{false};
     game.lose();
 }

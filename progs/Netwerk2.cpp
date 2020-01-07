@@ -145,9 +145,9 @@ int main() {
         P p{s1, s2};
         print_impedance_table(p);
     } catch (domain_error& e) {
-        cout << "Exception: " << e.what() << endl;
+        cout << "Exception: " << e.what() << '\n';
     }
-    cout << endl;
+    cout << '\n';
     try {
         R r1{10};
         R r2{0};
@@ -156,7 +156,7 @@ int main() {
         print_impedance_table(p1);
         print_impedance_table(p2);
     } catch (domain_error& e) {
-        cout << "Exception: " << e.what() << endl;
+        cout << "Exception: " << e.what() << '\n';
     }
 }
 

@@ -133,9 +133,9 @@ int main() {
     b3 += 5;                        // verhogen met +=
     cout << b3 << endl;             // afdrukken met <<
     if (-2 == b3) {                 // vergelijken met een int met ==
-        cout << "Ok." << endl;
+        cout << "Ok.\n";
     } 
     else {
-        cout << "Error." << endl;
+        cout << "Error.\n";
     }
 }

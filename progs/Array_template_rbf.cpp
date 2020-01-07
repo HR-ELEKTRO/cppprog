@@ -126,7 +126,7 @@ int main() {
     for (auto e: v) {
         cout << e << " ";
     }
-    cout << endl;
+    cout << '\n';
     Array<double> w(10);
     int i = 1;
     for (auto& e: w) {

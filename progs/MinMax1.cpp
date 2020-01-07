@@ -31,6 +31,5 @@ int choose_move(Side s, int pos) {
 
 int main() {
     int value = choose_move(COMPUTER, 0);
-    cout << "Minimaal te behalen Maximale waarde = " << value << endl;
-    cin.get();
+    cout << "Minimaal te behalen Maximale waarde = " << value << '\n';
 }

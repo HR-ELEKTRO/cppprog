@@ -19,6 +19,6 @@ int main() {
             goed_geraden.insert(c);
         }
     } while (goed_geraden != letters);
-    cout << "Je hebt het woord " << w << " geraden." << endl;
+    cout << "Je hebt het woord " << w << " geraden.\n";
 }
 

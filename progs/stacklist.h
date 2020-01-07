@@ -33,7 +33,7 @@ template <typename T> Stack_with_list<T>::Stack_with_list(): p(0) {
 
 template <typename T> Stack_with_list<T>::~Stack_with_list() throw() {
 #ifdef VERBOSE
-    std::cerr << "Stack_with_list<T>::~Stack_with_list() called" << std::endl; 
+    std::cerr << "Stack_with_list<T>::~Stack_with_list() called\n"; 
 #endif
     while (!empty())
         pop();
@@ -45,7 +45,7 @@ template <typename T> void Stack_with_list<T>::push(const T& t) {
 
 template <typename T> void Stack_with_list<T>::pop() {
     if (empty())
-        std::cerr << "Can't pop from an empty stack" << std::endl;
+        std::cerr << "Can't pop from an empty stack\n";
     else {
         Node* old(p);
         p = p->next;
@@ -55,7 +55,7 @@ template <typename T> void Stack_with_list<T>::pop() {
 
 template <typename T> const T& Stack_with_list<T>::top() const {
     if (empty()) {
-        std::cerr << "Can't top from an empty stack" << std::endl;
+        std::cerr << "Can't top from an empty stack\n";
         std::cin.get();
         std::cin.get();
         std::exit(-1);

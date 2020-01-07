@@ -51,20 +51,20 @@ int main() {
     int pos = 0, best_next_pos, best_value;
     while (pos < 15) {
         best_value = choose_computer_move(pos, best_next_pos);
-        cout << "Minimaal te behalen Maximale waarde = " << best_value << endl;
+        cout << "Minimaal te behalen Maximale waarde = " << best_value << '\n';
         pos = best_next_pos;
-        cout << "Computer kiest positie: " << pos << endl;
+        cout << "Computer kiest positie: " << pos << '\n';
         int pos_l = 2 * pos + 1;
         int pos_r = 2 * pos + 2;
         if (pos < 15) {
-            cout << "Je kunt kiezen voor positie " << pos_l << " of positie " << pos_r << endl;
+            cout << "Je kunt kiezen voor positie " << pos_l << " of positie " << pos_r << '\n';
             choose_human_move(pos, best_next_pos);
-            cout << "Pssst, " << best_next_pos << " is de beste keuze." << endl;
+            cout << "Pssst, " << best_next_pos << " is de beste keuze.\n";
             do {
                 cout << "Maak je keuze: ";
                 cin >> pos;
             } while (pos != pos_l && pos != pos_r);
         }
     }
-    cout << "Behaalde waarde = " << value(pos) << endl;
+    cout << "Behaalde waarde = " << value(pos) << '\n';
 }

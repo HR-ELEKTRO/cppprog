@@ -12,7 +12,7 @@ int position_value(int pos) {
 }
 
 int value_move_computer(int pos, int alpha, int beta) {
-    cout << "pos = " << setw(2) << pos << " alpha = " << setw(2) << alpha << " beta = " << setw(2) << beta << endl;
+    cout << "pos = " << setw(2) << pos << " alpha = " << setw(2) << alpha << " beta = " << setw(2) << beta << '\n';
     int value = position_value(pos);
     if (value != -1) {
         return value;
@@ -23,7 +23,7 @@ int value_move_computer(int pos, int alpha, int beta) {
     if (value_l > alpha) {
         alpha = value_l;
         if (alpha >= beta) {
-            cout << "snoei node " << pos_r << endl;
+            cout << "snoei node " << pos_r << '\n';
             return alpha;
         }
     }
@@ -32,7 +32,7 @@ int value_move_computer(int pos, int alpha, int beta) {
 }
 
 int value_move_human(int pos, int alpha, int beta) {
-    cout << "pos = " << setw(2) << pos << " alpha = " << setw(2) << alpha << " beta = " << setw(2) << beta << endl;
+    cout << "pos = " << setw(2) << pos << " alpha = " << setw(2) << alpha << " beta = " << setw(2) << beta << '\n';
     int value = position_value(pos);
     if (value != -1) {
         return value;
@@ -43,7 +43,7 @@ int value_move_human(int pos, int alpha, int beta) {
     if (value_l < beta) {
         beta = value_l;
         if (beta <= alpha) {
-            cout << "snoei node " << pos_r << endl;
+            cout << "snoei node " << pos_r << '\n';
             return beta;
         }
     }
@@ -54,5 +54,5 @@ int value_move_human(int pos, int alpha, int beta) {
 
 int main() {
     int value = value_move_computer(0, 0, 15);
-    cout << "Minimaal te behalen Maximale waarde = " << value << endl;
+    cout << "Minimaal te behalen Maximale waarde = " << value << '\n';
 }

@@ -89,17 +89,17 @@ ostream& operator<<(ostream& left, const Breuk& right) {
 int main() {
     Breuk b1{2, 3}, b2{4, 5}, b3;
     b3 = b1 + b2;
-    cout << b1 << " + " << b2 << " = " << b3 << endl;
+    cout << b1 << " + " << b2 << " = " << b3 << '\n';
 
 //  kun je bij een Breuk een int optellen?
     b3 = b1 + 5;
-    cout << b1 << " + 5 = " << b3 << endl;
+    cout << b1 << " + 5 = " << b3 << '\n';
 //  Ja, de int wordt omgezet in een Breuk met de constructor Breuk::Breuk(int t)
 //  b3 = b1 + Breuk(5);
 
 //  kun je bij een int een Breuk optellen?
 //  b3 = 5 + b2;
-//  cout << "5 + " << b2 << " = " << b3 << endl;
+//  cout << "5 + " << b2 << " = " << b3 << '\n';
 //  Nee
 //  Error: no match for ‘operator+’ (operand types are ‘int’ and ‘Breuk’)
 //  Zie operator+Global voor een oplossing voor dit probleem

@@ -7,7 +7,7 @@ int main() {
     for (auto element: array) {
         som += element;
     }
-    cout << "som = " << som << endl;
+    cout << "som = " << som << '\n';
 
     for (auto& element: array) {
         element = 0;
@@ -17,7 +17,5 @@ int main() {
     for (auto element: array) {
         som += element;
     }
-    cout << "som = " << som << endl;
-
-    cin.get();
+    cout << "som = " << som << '\n';
 }

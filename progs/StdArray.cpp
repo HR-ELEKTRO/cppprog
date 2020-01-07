@@ -15,14 +15,14 @@ int main() {
     for (auto e: a) {
         cout << e << " ";
     }
-    cout << endl;
+    cout << '\n';
 
     // kopiëren van de een array
     auto b{a};
     for (auto e: b) {
         cout << e << " ";
     }
-    cout << endl;
+    cout << '\n';
     // vergelijken van array's
     if (a != b)
         cout << "DIT KAN NIET!\n";

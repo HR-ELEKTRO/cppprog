@@ -145,21 +145,21 @@ int main() {
     cin >> b2;                 // inlezen met >>
     cout << b1 << "+"          // afdrukken met <<
          << b2 << "="
-         << (b1 + b2) << endl; // optellen met +
+         << (b1 + b2) << '\n'; // optellen met +
     Breuk b3{18, -9};          // definiëren en initialiseren
     if (b1 != b3) {            // vergelijken met !=
         b3++;                  // verhogen met ++
     }
-    cout << b3 << endl;        // afdrukken met <<
+    cout << b3 << '\n';        // afdrukken met <<
     b3 += 5;                   // verhogen met +=
-    cout << b3 << endl;        // afdrukken met <<
+    cout << b3 << '\n';        // afdrukken met <<
     if (-2 == b3) {            // vergelijken met een int
-        cout << "OK." << endl;
+        cout << "OK\n";
     } 
 //<Breuk3_main
 //>Breuk3_main2
     else {
-        cout << "Error." << endl;
+        cout << "Error.\n";
     }
 }
 //<Breuk3_main2
@@ -167,19 +167,19 @@ int main() {
 void dummy() {
 {
 //>som_in_C
-    int array[] = {12, 2, 17, 32, 1, 18};
+    int rij[] = {12, 2, 17, 32, 1, 18};
     size_t i, aantal = sizeof array / sizeof array[0];
     int som = 0;
     for (i = 0; i < aantal; i++) {
-        som += array[i];
+        som += rij[i];
     }
 //<som_in_C
 }
 {
 //>som_in_Cpp_zonder_auto
-    int array[] {12, 2, 17, 32, 1, 18};
+    int rij[] {12, 2, 17, 32, 1, 18};
     int som = 0;
-    for (int element: array) {
+    for (int element: rij) {
         som += element;
     }
 //<som_in_Cpp_zonder_auto

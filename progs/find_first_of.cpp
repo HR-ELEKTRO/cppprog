@@ -12,6 +12,6 @@ int main() {
         return 1; 
     auto eerste_priem{find_first_of(istream_iterator<int>(getallen), istream_iterator<int>(), priem.begin(), priem.end())};
     if (eerste_priem != istream_iterator<int>()) {
-        cout << "Het eerste priemgetal kleiner dan 100 is: " << *eerste_priem << endl;
+        cout << "Het eerste priemgetal kleiner dan 100 is: " << *eerste_priem << '\n';
     } 
 }

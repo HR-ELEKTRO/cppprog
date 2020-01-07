@@ -369,6 +369,54 @@ Grotere verbeteringen zoals data abstractie, objectgeoriënteerd programmeren en
 \Cpp{} is een zeer uitgebreide taal en dit dictaat moet dan ook zeker niet gezien worden als een cursus \Cpp{}.
 In dit dictaat worden slechts de meest belangrijke delen van \Cpp{} behandeld.
 
+\section{\texorpdfstring{\cppcode{main}}{main} zonder \texorpdfstring{\cppcode{return}}{return}}
+In \Cpp{} hoeft de functie |main| geen |return|-statement meer te bevatten. 
+Als niet expliciet een waarde teruggegeven wordt, dan zal het operating systeem de waarde ontvangen die hoort bij een succesvolle afronding van het programma (de waarde~|0|).
+
+\section{Universele initialisatie}	
+In C ben je gewend om een variabele te initialiseren met de volgende syntax:
+\begin{cpplstfragment}[style=cstyle]
+	double d = 4.6;
+\end{cpplstfragment}
+In \Cpp{} kan deze syntax nog steeds gebruikt worden.
+Het is in \Cpp{}, om redenen die verderop in dit dictaat zullen blijken, belangrijk om onderscheid te maken tussen het aanmaken en initialiseren van een variabele en het toekennen van een waarde aan een bestaande variabele (met |=|)\footnote{%
+	Dat het belangrijk is om het verschil te weten tussen een initialisatie en een toekenning (Engels: \USE{assignment}) zal blijken in \csecref{constructor,default copy constructor,default assignment operator}.
+}.
+De bovenstaande syntax kan dan verwarrende zijn. 
+In \Cpp{} kan een variabele ook geïnitialiseerd worden via een zogenoemde \emph{universele initialisatie}.
+De waarde waarmee de variabele geïnitialiseerd moet worden, wordt dan tussen accolades achter de variabelenaam geplaatst.
+Bijvoorbeeld:
+\begin{cpplstfragment}
+	double d {4.6};
+\end{cpplstfragment}
+Eventueel kan tussen de variabelenaam en de accolade openen nog een is-teken gebruikt worden:
+\begin{cpplstfragment}
+	double d = {4.6};
+\end{cpplstfragment}
+Het gebruik van universele initialisatie ten opzichte van de andere mogelijke manieren van initialiseren\footnote{%
+	Een variabele kan ook geïnitialiseerd worden met een is-teken of door het gebruik van ronde haakjes.  
+} heeft de volgende voordelen:
+\begin{itemize}
+	\item Deze vorm kan gebruikt worden op alle plaatsen waar een initialisatie gebruikt kan worden. 
+	Dus bijvoorbeeld ook om een |struct| te initialiseren:
+	\begin{cpplstfragment}
+	struct Breuk {
+		int teller;
+		int noemer;
+	} half {1, 2};
+	\end{cpplstfragment}
+	\item Bij deze vorm van initialisatie zal geen type-conversie plaatsvinden.
+	Bijvoorbeeld:
+	\begin{cpplstfragment}[mathescape=true]
+	int i = 4.6; // i wordt 4. Vreemd!
+	int j {4.6} // $\color{hrred}\textbf{error:}$ narrowing conversion of '4.6' from 'double' to 'int'
+	\end{cpplstfragment}
+\end{itemize}
+Om deze redenen is er voor gekozen om in dit dictaat altijd gebruik te maken van universele initialisatie\footnote{%
+	Dit wordt ook aangeraden in de C	Om deze redenen is er voor gekozen om in dit dictaat altijd gebruik te maken van universele initialisatie\footnote{%
+		Dit wordt ook aangeraden in de C++ Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es23-prefer-the--initializer-syntax}{ES.23}.
+	}.++ Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es23-prefer-the--initializer-syntax}{ES.23}.
+}.	
 \section{Binaire getallen}
 \label{sec:binairegetallen}
 In een \Cpp{} programma kun je constante getallen niet alleen meer in het decimale, octale\footnote{%
@@ -382,15 +430,43 @@ Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} 
 
 \section{\texorpdfstring{\cppcode{auto}}{auto} type}
 \label{sec:autotype}
-In \Cpp{} is het mogelijk om de compiler zelf het type van een variabele te laten bepalen. Dit doe je door in de variabeledefinitie in plaats van een typenaam het \USE{keyword} |auto| te gebruiken. In het onderstaande programma wordt een array \hcode{kam\\-pi\\-oens\\-jaren\\-Feye\\-noord} met integers aangemaakt en verderop in het programma wordt de variabele |eerste| gelijk gemaakt aan het eerste getal uit deze array. 
+Als een variabele geïnitialiseerd wordt, is het mogelijk om de compiler zelf het type van een variabele te laten bepalen. 
+Dit doe je door in de variabeledefinitie in plaats van een typenaam het \USE{keyword} |auto| te gebruiken. 
 
+Bijvoorbeeld:
 \begin{cpplstfragment}
-    int kampioensjarenFeyenoord[] = {1924, 1928, 1936, 1938, 1940, 1961, 1962, 1965, 1969, 1971, 1974, 1984, 1993, 1999, 2017};
-    // ...
-    int eerste = kampioensjarenFeyenoord[0];
+	auto antwoord {42};
+	auto ongeveerPi {3.14};
 \end{cpplstfragment}
 
-Sinds \Cpp{}11 kunnen we het type van de variabele |eerste| ook door de compiler laten bepalen (Engels: type deduction), zie \proglink{auto.cpp}: 
+De variabele |antwoord| is nu van het type |int| en de variabele |ongeveerPi| is nu van het type |double|.
+Meestal is het beter om toch zelf het type te definiëren\footnote{%
+	Onder \Cpp{} experts is dit een punt van discussie. 
+	Er zijn aanhangers van het AAA-idiom (Almost Always Auto) die juist voorstellen om zoveel mogelijk \cppcode{auto} te gebruiken.
+	Wij volgen het advies uit de C++ Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es11-use-auto-to-avoid-redundant-repetition-of-type-names}{ES.11} en gebruiken \cppcode{auto} alleen als dit de code duidelijker maakt. 
+}.
+Dat maakt je programma duidelijker en voorkomt fouten.
+Verderop in dit dictaat zul je een aantal meer zinvolle manieren zien van het gebruik van |auto|:
+\begin{itemize}
+	\item Bij het gebruik van templates, zie \csecref{sec:templates}, is het soms wel erg handig om |auto| te gebruiken.
+	\item Bij het gebruik van een range-based |for|-statement, zie \csecref{range-based for} is het handig om |auto| te gebruiken.
+	\item bij het gebruik van |new|, zie \csecref{sec:new}, is het handig om |auto| te gebruiken omdat je anders het type twee keer moet vermelden.
+	Bijvoorbeeld:
+	\begin{cpplstfragment}
+		auto bp {new Breuk {2,3}};
+	\end{cpplstfragment}
+\end{itemize}
+
+Het gebruik van |auto| kan ook de aanpasbaarheid van je programma vergroten.
+Bijvoorbeeld, in het onderstaande programma wordt een array \hcode{kam\\-pi\\-oens\\-jaren\\-Feye\\-noord} met integers aangemaakt en verderop in het programma wordt de variabele |eerste| gelijk gemaakt aan het eerste getal uit deze array. 
+
+\begin{cpplstfragment}
+	int kampioensjarenFeyenoord[] {1924, 1928, 1936, 1938, 1940, 1961, 1962, 1965, 1969, 1971, 1974, 1984, 1993, 1999, 2017};
+	// ...
+	int eerste {kampioensjarenFeyenoord[0]};
+\end{cpplstfragment}
+
+We kunnen het type van de variabele |eerste| in dit geval ook door de compiler laten bepalen (Engels: type deduction), zie \proglink{auto.cpp}: 
 
 \cpplstinputfragment[linerange={5-7}]{auto.cpp}
 
@@ -398,7 +474,8 @@ Dit komt de onderhoudbaarheid van het programma ten goede want als het type van 
 
 \section{\texorpdfstring{\cppcode{auto}}{auto} return type}
 \label{sec:autoreturntype}
-Sinds \Cpp{}14 is het mogelijk om de compiler zelf het return type van een functie te laten bepalen.\footnote{Dit wordt nog niet ondersteund in Microsoft Visual Studio 2013, maar wel in GCC 4.9.2 met de optie \cppcode{-std=c++14}.} Dit doe je door in de functiedefinitie in plaats van een typenaam het \USE{keyword} |auto| te gebruiken.
+Het is ook mogelijk om de compiler zelf het return type van een functie te laten bepalen.
+Dit doe je door in de functiedefinitie in plaats van een typenaam het \USE{keyword} |auto| te gebruiken.
 In het onderstaande programma wordt een functie \cppcode{max3} gedefinieerd die het maximum van drie integers bepaald. De functie is geïmplementeerd met behulp van de standaard functie |max| die het maximum van 2 getallen bepaald.
 
 \begin{cpplstfragment}
@@ -407,15 +484,16 @@ int max3(int i1, int i2, int i3) {
 }
 \end{cpplstfragment}
 
-Sinds \Cpp{}14 kunnen we het return type van de functie door de compiler laten bepalen (Engels: \USE{return type deduction}), zie \proglink{autoreturntype.cpp}: 
+We kunnen het return type van de functie ook door de compiler laten bepalen (Engels: \USE{return type deduction}), zie \proglink{auto_return_type.cpp}: 
 
-\cpplstinputfragment[linerange={5-7}]{autoreturntype.cpp}
+\cpplstinputfragment[linerange={5-7}]{auto_return_type.cpp}
 
 Dit komt de onderhoudbaarheid van het programma ten goede want als het type van de parameters nu veranderd wordt van |int| naar |short| dan wordt het return type van de functie automatisch aangepast.
 
 \section{Range-based for}
 \label{range-based for}
-In \Cpp11 is een nieuwe variant van de |for|\hyp{}lus, de zogenoemde \emph{\USE{range-based for}}, geïntroduceerd.
+In \Cpp{} kan dezelfde |for|-lus als in C gebruikt worden.
+Maar er is in \Cpp{} ook nieuwe variant van de |for|\hyp{}lus, de zogenoemde \emph{\USE{range-based for}}, beschikbaar.
 Deze for\hyp{}lus is speciaal bedoeld om de elementen van een array%
 \footnote{%
     De standaard \Cpp{} \USE{library} bevat nog vele andere datastructuren die ook met een \USE{range-based for} doorlopen kunnen worden zie \csecref{std::array} en \csecref{std::vector}.
@@ -426,14 +504,14 @@ Het volgende C programmafragment bepaalt de som van alle elementen in een array:
 
 \cpplstinputfragment[linerange={som_in_C-som_in_C}]{fragments.cpp}
 
-Je kunt in \Cpp{}11 hetzelfde bereiken met behulp van een \USE{range-based for}:
+Je kunt in \Cpp hetzelfde bereiken met behulp van een \USE{range-based for}:
 
 \cpplstinputfragment[linerange={som_in_Cpp_zonder_auto-som_in_Cpp_zonder_auto}]{fragments.cpp}
 
 Je ziet dat de syntax van de \USE{range-based for} heel eenvoudig is.
 
-We kunnen het type van de variabelen |som| en |element| ook door de compiler laten bepalen, zie \csecref{sec:autotype} (\proglink{RangeBasedFor.cpp}):
-\cpplstinputfragment[linerange={5-9}]{RangeBasedFor.cpp}
+We kunnen het type van de variabelen |som| en |element| ook door de compiler laten bepalen, zie \csecref{sec:autotype} (\proglink{range-based_for.cpp}):
+\cpplstinputfragment[linerange={5-9}]{range-based_for.cpp}
 
 %TODO: klopt niet!
 Als het type van de variabele |array| gewijzigd wordt, dan wordt het type van de variabelen |som| en |element| automatisch aangepast.
@@ -1831,7 +1909,7 @@ zogenoemde \emph{\USE{range-based for}}. Deze for\hyp{}lus is speciaal bedoeld o
 }\ één voor één te benaderen.
 
 De in \csecref{range-based for} gepresenteerde code laat zien hoe je een array element voor element kunt uitlezen:
-\cpplstinputfragment[linerange={5-9}]{RangeBasedFor.cpp}
+\cpplstinputfragment[linerange={5-9}]{range-based_for.cpp}
 
 De variabele |element| krijgt één voor één een waarde uit de array genaamd |array|. 
 
@@ -7734,67 +7812,11 @@ Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second E
 \section{The Basics}
 \begin{itemize}
 	\item 
-	De functie |main| hoeft geen |return|-statement meer te bevatten. Als geen waarde teruggegeven wordt, dan zal het operating systeem de waarde ontvangen die hoort bij een succesvolle afronding van het programma (de waarde |0|).
-	\item 
 	Om lange getallen beter leesbaar te maken mag een enkel aanhalingsteken (\code{'}) gebruikt worden om groepjes cijfers te onderscheiden.
 	\begin{lstfragment}
-		uint16_t uart_settings = 0b1011'1001'000'1011;
-		int miljard = 1'000'000'000; 
+uint16_t uart_settings = 0b1011'1001'000'1011;
+int miljard = 1'000'000'000; 
 	\end{lstfragment}
-	\item 
-	Een variabele kan geïnitialiseerd worden via zogenoemde \emph{universele initialisatie}.
-	De waarde waarmee de variabele geïnitialiseerd moet worden wordt tussen accolades achter de variabelenaam geplaatst.
-	Bijvoorbeeld:
-	\begin{cpplstfragment}
-		double d {4.2};
-	\end{cpplstfragment}
-	Eventueel kan tussen de variabelenaam en de accolade openen nog een is-teken gebruikt worden:
-	\begin{cpplstfragment}
-		double d = {4.2};
-	\end{cpplstfragment}
-	Het gebruik van universele initialisatie ten opzichte van de andere manieren van initialiseren\footnote{%
-		Een variabele kan ook geïnitialiseerd worden met een is-teken of door het gebruik van ronde haakjes.  
-	} heeft de volgende voordelen:
-	\begin{itemize}
-		\item Deze vorm kan gebruikt worden op alle plaatsen waar een initialisatie gebruikt kan worden. 
-		Dus bijvoorbeeld ook om een |struct| te initialiseren:
-		\begin{cpplstfragment}
-			typedef struct {
-				int teller;
-				int noemer;
-			} Breuk;
-			Breuk half {1, 2};
-		\end{cpplstfragment}
-		\item Bij deze vorm van initialisatie zal geen type-conversie plaatsvinden.
-		Bijvoorbeeld:
-		\begin{cpplstfragment}[mathescape=true]
-			int i = 4.2; // i wordt 4. Vreemd!
-			int j {4.2} // $\color{hrred}\textbf{Error:}$ narrowing conversion of '4.2' from 'double' to 'int' inside { }
-		\end{cpplstfragment}
-		Om deze redenen is er voor gekozen om in dit dictaat altijd gebruik te maken van universele initialisatie.
-		%TODO: doorvoeren in gehele dictaat! Ook voor memberinitialisaties in constructors.
-	\end{itemize}
-	\item
-	Als een variabele geïnitialiseerd wordt is, kan de compiler zelf het type bepalen. Als je wilt dat de compiler dit voor je doet, dan kun je het keyword |auto| gebruiken.
-	Bijvoorbeeld:
-	\begin{cpplstfragment}
-		auto antwoord {42};
-		auto ongeveerPi {3.14};
-	\end{cpplstfragment}
-	De variabele |antwoord| is nu van het type |int| en de variabele |ongeveerPi| is nu van het type |double|.
-	Meestal is het beter om toch zelf het type te definiëren.
-	Dat maakt je programma duidelijker en voorkomt fouten.
-	Verderop in dit dictaat zul je een aantal meer zinvolle manieren zien van het gebruik van |auto|:
-	\begin{itemize}
-		\item Bij het gebruik van templates, zie \cref{sec:templates}, is het soms wel erg handig om |auto| te gebruiken.
-		\item Bij het gebruik van een range-based |for|-statement, zie \cref{range-based for} is het handig om |auto| te gebruiken.
-		%TODO: Stroustrup noemt dit een range-|for|-statement.
-		\item bij het gebruik van |new|, zie \cref{sec:new}, is het handig om |auto| te gebruiken omdat je anders het type twee keer moet vermelden.
-		Bijvoorbeeld:
-		\begin{cpplstfragment}
-			auto bp { new Breuk {2,3} };
-		\end{cpplstfragment}
-	\end{itemize}
 	\item 
 	Verschil tussen |const| en |constexpr|.
 	De |const| modifier zorgt ervoor dat de waarde van het betreffende object\footnote{%

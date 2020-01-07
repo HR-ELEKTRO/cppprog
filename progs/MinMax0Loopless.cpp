@@ -12,7 +12,7 @@ int position_value(int pos) {
 }
 
 int value_move_computer(int pos) {
-    cout << "pos = " << setw(2) << pos << endl;
+    cout << "pos = " << setw(2) << pos << '\n';
     int value = position_value(pos);
     if (value != -1) {
         return value;
@@ -25,7 +25,7 @@ int value_move_computer(int pos) {
 }
 
 int value_move_human(int pos) {
-    cout << "pos = " << setw(2) << pos << endl;
+    cout << "pos = " << setw(2) << pos << '\n';
     int value = position_value(pos);
     if (value != -1) {
         return value;
@@ -39,5 +39,5 @@ int value_move_human(int pos) {
 
 int main() {
     int value = value_move_computer(0);
-    cout << "Minimaal te behalen Maximale waarde = " << value << endl;
+    cout << "Minimaal te behalen Maximale waarde = " << value << '\n';
 }

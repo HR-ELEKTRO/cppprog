@@ -17,7 +17,7 @@ int main() {
         char c{static_cast<char>(cin.get())}; cin.get();
         while (!geraden.insert(c).second) {
             cout << "De letter " << c << " had je al geraden...";
-            cout << endl << "Raad een andere letter: ";
+            cout << "\nRaad een andere letter: ";
             c = cin.get(); cin.get();
         }
     } while (!includes(geraden.begin(), geraden.end(), te_raden.begin(), te_raden.end()));

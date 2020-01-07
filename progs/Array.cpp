@@ -84,34 +84,34 @@ int main() {
     cin >> i;
     if (i > 0) {
         Array a{i};
-        cout << "a = " << a << endl;
+        cout << "a = " << a << '\n';
         for (int j = 0; j < a.length(); ++j)
             a[j] = j * j; // vul a met kwadraten
-        cout << "a = " << a << endl;
+        cout << "a = " << a << '\n';
         Array b{a};
-        cout << "b = " << b << endl;
-        cout << "a[12] = " << a[12] << endl;
-        cout << "b[12] = " << b[12] << endl;
+        cout << "b = " << b << '\n';
+        cout << "a[12] = " << a[12] << '\n';
+        cout << "b[12] = " << b[12] << '\n';
         a[0] = 4; 
-        cout << "a[0] = " << a[0] << endl;
-        cout << "a = " << a << endl;
-        cout << "b = " << b << endl;
+        cout << "a[0] = " << a[0] << '\n';
+        cout << "a = " << a << '\n';
+        cout << "b = " << b << '\n';
 
         if (a == b)
-            cout << "a is nu gelijk aan b." << endl;
+            cout << "a is nu gelijk aan b.\n";
         else 
-            cout << "a is nu ongelijk aan b." << endl;
+            cout << "a is nu ongelijk aan b.\n";
 
         b = a;
-        cout << "b = a is uitgevoerd." << endl;
-        cout << "a = " << a << endl;
-        cout << "b = " << b << endl;
+        cout << "b = a is uitgevoerd.\n";
+        cout << "a = " << a << '\n';
+        cout << "b = " << b << '\n';
 
         if (a != b) 
-            cout << "a is nu ongelijk aan b." << endl;
+            cout << "a is nu ongelijk aan b.\n";
         else 
-            cout << "a is nu gelijk aan b." << endl;
+            cout << "a is nu gelijk aan b.\n";
     }
     else
-        cout << "Doe niet zo negatief!" << endl;
+        cout << "Doe niet zo negatief!\n";
 }

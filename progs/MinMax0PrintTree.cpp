@@ -48,7 +48,7 @@ int choose_human_move(int pos) {
 void print_tree(int pos, int level) {
     if (level != 5) {
         print_tree(2 * pos + 2, level + 1);
-        cout << setw(level * 5) << pos << ":" << value(pos) << endl;
+        cout << setw(level * 5) << pos << ":" << value(pos) << '\n';
         print_tree(2 * pos + 1, level + 1);
     }
 }
@@ -56,7 +56,7 @@ void print_tree(int pos, int level) {
 void print_calculated_tree(int pos, int level) {
     if (level != 5) {
         print_calculated_tree(2 * pos + 2, level + 1);
-        cout << setw(level * 5) << pos << ":" << (level % 2 == 0 ? choose_computer_move(pos) : choose_human_move(pos)) << endl;
+        cout << setw(level * 5) << pos << ":" << (level % 2 == 0 ? choose_computer_move(pos) : choose_human_move(pos)) << '\n';
         print_calculated_tree(2 * pos + 1, level + 1);
     }
 }
@@ -64,10 +64,9 @@ void print_calculated_tree(int pos, int level) {
 int main() {
     print_tree();
     cin.get();
-    cout << endl;
+    cout << '\n';
     print_calculated_tree();
     cin.get();
-    cout << endl;
-    cout << "Maximaal te behalen waarde = " << choose_computer_move(0) << endl;
-    cin.get();
+    cout << '\n';
+    cout << "Maximaal te behalen waarde = " << choose_computer_move(0) << '\n';
 }

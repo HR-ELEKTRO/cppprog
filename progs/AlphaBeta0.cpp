@@ -47,5 +47,5 @@ int choose_human_move(int pos, int alpha, int beta) {
 
 int main() {
     int value = choose_computer_move(0);
-    cout << "Minimaal te behalen Maximale waarde = " << value << endl;
+    cout << "Minimaal te behalen Maximale waarde = " << value << '\n';
 }
