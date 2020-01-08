@@ -124,14 +124,14 @@ int main() {
     cout << "Geef nog een Breuk: ";
     cin >> b2;                      // inlezen met >>
     cout << b1 << "+" << b2 << "=";  // afdrukken met <<
-    cout << (b1 + b2) << endl;      // optellen met +
+    cout << (b1 + b2) << '\n';      // optellen met +
     Breuk b3(18, -9);               // definiëren en initialiseren
     if (b1 != b3) {                 // vergelijken met !=
         b3++;                       // verhogen met ++
     }
-    cout << b3 << endl;             // afdrukken met <<
+    cout << b3 << '\n';             // afdrukken met <<
     b3 += 5;                        // verhogen met +=
-    cout << b3 << endl;             // afdrukken met <<
+    cout << b3 << '\n';             // afdrukken met <<
     if (-2 == b3) {                 // vergelijken met een int met ==
         cout << "Ok.\n";
     } 
