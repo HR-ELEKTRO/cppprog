@@ -51,7 +51,7 @@ Value_next_pos value_move_human(int pos) {
 }
 
 int main() {
-    int pos = 0;
+    int pos {0};
     while (pos < 15) {
         Value_next_pos res = value_move_computer(pos);
         cout << "Minimaal te behalen Maximale waarde = " << res.value() << '\n';

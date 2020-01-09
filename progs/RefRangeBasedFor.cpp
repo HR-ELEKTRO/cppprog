@@ -3,7 +3,7 @@ using namespace std;
 
 int main() {
     int array[] = {12, 2, 17, 32, 1, 18};
-    auto som = 0;
+    int som {0};
     for (auto element: array) {
         som += element;
     }

@@ -3,7 +3,7 @@ using namespace std;
 
 constexpr unsigned int cpow(unsigned int n, unsigned int m) {
     unsigned int result = 1;
-    for (unsigned int i = 0; i < m; ++i) {
+    for (unsigned int i {0}; i < m; ++i) {
         result *= n;
     }
     return result;

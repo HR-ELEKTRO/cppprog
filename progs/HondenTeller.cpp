@@ -14,7 +14,7 @@ private:
     static int aantal_honden;
 };
 
-int Hond::aantal_honden = 0;
+int Hond::aantal_honden {0};
 
 Hond::Hond(const string& n): naam{n} {
     ++aantal_honden;

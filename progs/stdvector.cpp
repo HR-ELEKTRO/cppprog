@@ -53,7 +53,7 @@ double gem1(const vector<int>& vec) {
     if (vec.empty()) {
         return 0;
     }
-    double som = 0.0;
+    double som {0.0};
     for (auto iter = vec.cbegin(); iter != vec.cend(); ++iter) {
         som += *iter;
     }
@@ -65,7 +65,7 @@ double gem2(const vector<int>& vec) {
     if (vec.empty()) {
         return 0;
     }
-    double som = 0.0;
+    double som {0.0};
     for (auto elm : vec) {
         som += elm;
     }

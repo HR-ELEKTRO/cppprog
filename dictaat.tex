@@ -351,6 +351,7 @@ Het bestuderen van dit dictaat zonder voldoende kennis en begrip van C is vergel
 \fi
 
 \chapter[Van C naar C++]{Van C naar \Cpp{}}
+\label{van c naar cpp}
 De ontwerper van \Cpp{} Bjarne Stroustrup gaf op de vraag: \squote{Wat is \Cpp{}?} een aantal jaren geleden het volgende antwoord \cite{Stroustrup2000}:
 %\begin{quotation} % ziet er niet mooi uit omdat de quote maar uit 1 paragraaf bestaat
 \begin{quote}
@@ -417,16 +418,6 @@ Om deze redenen is er voor gekozen om in dit dictaat altijd gebruik te maken van
 		Dit wordt ook aangeraden in de C++ Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es23-prefer-the--initializer-syntax}{ES.23}.
 	}.++ Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es23-prefer-the--initializer-syntax}{ES.23}.
 }.	
-\section{Binaire getallen}
-\label{sec:binairegetallen}
-In een \Cpp{} programma kun je constante getallen niet alleen meer in het decimale, octale\footnote{%
-    Octale getallen kun je invoeren door ze vooraf te laten gaan door een \cppcode{0}. Dus de code \cppcode{int x = 023;} initialiseert de variabele \cppcode{i} met de waarde 19 want $23_8$ is $19_{10}$.  
-} en hexadecimale\footnote{%
-    Hexadecimale getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0x} of \cppcode{0X}. Dus de code \cppcode{int x = 0x23;} initialiseert de variabele \cppcode{i} met de waarde 35 want $23_{16}$ is $35_{10}$.  
-} talstelsel invoeren maar ook in het binaire talstelsel.
-Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} of \cppcode{0B}\footnote{%
-	Hoewel deze notatie \emph{niet} toegestaan is volgens de C-standaard \cite{ISO2018} ondersteunen veel C-compilers zoals de GCC C Compiler en de Texas Instruments Optimizing C Compiler deze notatie ook. 
-}. Dus de code \cppcode{int x = 0b10111101;} initialiseert de variabele \cppcode{i} met de waarde 189 want $10111101_2$ is $189_{10}$.
 
 \section{\texorpdfstring{\cppcode{auto}}{auto} type}
 \label{sec:autotype}
@@ -510,11 +501,13 @@ Je kunt in \Cpp hetzelfde bereiken met behulp van een \USE{range-based for}:
 
 Je ziet dat de syntax van de \USE{range-based for} heel eenvoudig is.
 
-We kunnen het type van de variabelen |som| en |element| ook door de compiler laten bepalen, zie \csecref{sec:autotype} (\proglink{range-based_for.cpp}):
+We kunnen het type van de variabele |element| ook door de compiler laten bepalen\footnote{%
+	Als je het type van de variabele \cppcode{som} ook automatisch van hetzelfde type wilt definiëren als het type van de array \cppcode{rij}, dan kun je \emph{geen} gebruik maken van \cppcode{auto} omdat deze variabel met de waarde \cppcode{0} wordt geïnitialiseerd en dus altijd van het type integer zal zijn als je \cppcode{auto} gebruiken.
+	Met behulp van \cppcode{decltype} is dit wel mogelijk, zie \csecref{decltype}.
+}, zie \csecref{sec:autotype} (\proglink{range-based_for.cpp}):
 \cpplstinputfragment[linerange={5-9}]{range-based_for.cpp}
 
-%TODO: klopt niet!
-Als het type van de variabele |array| gewijzigd wordt, dan wordt het type van de variabelen |som| en |element| automatisch aangepast.
+Als het type van de variabele |rij| gewijzigd wordt, dan wordt het type van de variabele |element| automatisch aangepast.
  
 \section{Constante waarden met \texorpdfstring{\cppcode{constexpr}}{constexpr}}
 \label{constexpr}
@@ -6031,7 +6024,7 @@ Dit voorbeeldprogramma \proglink{stdvector.cpp} laat zien:
 	\item hoe een standaard vector gevuld kan worden;
 	\item hoe door (een deel van) de vector heengelopen kan worden door middel van indexering%
 	\footnote{
-		In \Cpp{}11 kun je hierbij gebruik maken van een \code{decltype} om het type van de index variabele te definiëren.
+		In \Cpp{}11 kun je hierbij gebruik maken van een \code{decltype} om het type van de index variabele te definiëren. Zie \csecref{decltype}.
 	};
 	\item hoe door (een deel van) de vector heengelopen kan worden door middel van een \emph{iterator}%
 	\footnote{
@@ -6796,6 +6789,7 @@ Enkele voorbeelden:
 	\hspace{1em}\labelitemi{} \code{[=]} & elke gebruikte variabele wordt \enquote{by value} ingesloten.\\
 	\hspace{1em}\labelitemi{} \code{[=, \&c]} & \code{c} wordt \enquote{by reference} ingesloten en alle andere gebruikte variabelen worden \enquote{by value} ingesloten.\\
 	\hspace{1em}\labelitemi{} \code{[]} & er worden géén variabelen ingesloten.
+
 \end{tabu}
 
 Het onderstaande programma \proglink{closure.cpp} laat zien hoe je met behulp van een |for_each| algoritme en een \USE{closure} de som van alle even getallen in een range kunt bepalen.\footnote{%
@@ -7807,6 +7801,80 @@ De algoritmen waarnaar in deze paragraaf wordt verwezen, worden in de les verder
 Zie eventueel de PowerPoint presentatie van week 6: \url{http://bd.eduweb.hhs.nl/algods/ppsx/ALGODS.pptm}.
 
 \begin{cpplstShortInline}
+\chapter{Van C naar C++ (de details)}
+In \csecref{van c naar cpp} hebben we enkele kleine verbeteringen van \Cpp{} ten opzichte van zijn voorganger C besproken.
+In dit hoofdstuk bespreken we nog een aantal enkele kleine verbeteringen.
+
+\section{Binaire getallen}
+\label{sec:binairegetallen}
+In een \Cpp{} programma kun je constante getallen niet alleen meer in het decimale, octale\footnote{%
+	Octale getallen kun je invoeren door ze vooraf te laten gaan door een \cppcode{0}. Dus de code \cppcode{int x = 023;} initialiseert de variabele \cppcode{i} met de waarde 19 want $23_8$ is $19_{10}$.  
+} en hexadecimale\footnote{%
+	Hexadecimale getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0x} of \cppcode{0X}. Dus de code \cppcode{int x = 0x23;} initialiseert de variabele \cppcode{i} met de waarde 35 want $23_{16}$ is $35_{10}$.  
+} talstelsel invoeren maar ook in het binaire talstelsel.
+Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} of \cppcode{0B}\footnote{%
+	Hoewel deze notatie \emph{niet} toegestaan is volgens de C-standaard \cite{ISO2018} ondersteunen veel C-compilers zoals de GCC C Compiler en de Texas Instruments Optimizing C Compiler deze notatie ook. 
+}. Dus de code \cppcode{int x = 0b10111101;} initialiseert de variabele \cppcode{i} met de waarde 189 want $10111101_2$ is $189_{10}$.
+
+\section{Digit separators}
+Om lange getallen beter leesbaar te maken mag een enkel aanhalingsteken (\code{'}) gebruikt worden om groepjes cijfers te onderscheiden.
+\begin{lstfragment}
+	uint16_t uart_settings = 0b1011'1001'000'1011;
+	int miljard = 1'000'000'000; 
+\end{lstfragment}
+
+\section{\texorpdfstring{\cppcode{decltype}}{decltype} type}
+\label{decltype}
+In \Cpp{} kun je het type van een expressie opvragen met behulp van het keyword |decltype|.
+Dit kan soms handig zijn.
+Zo zou je bijvoorbeeld de volgende code kunnen schrijven:
+\begin{lstfragment}
+	auto i {42};
+	auto& ri1 {i};
+\end{lstfragment}
+De variabele |i| is nu van het type |int| en de variabele |ri1| is een reference naar |i|.
+Als je nu een tweede referentie wilt definiëren |ri2| die een kopietje is van |ri1|, dan kan dat \emph{niet} als volgt:
+\begin{lstfragment}
+	auto ri2 {ri1};
+\end{lstfragment}
+Het type van de variabele |ri2| is nu namelijk |int| omdat |auto| nooit een reference type oplevert.
+Je zou dit als volgt op kunnen lossen:
+\begin{lstfragment}
+	auto& ri2 {ri1};
+\end{lstfragment}
+Maar dat is niet erg elegant omdat je eigenlijk wilt zeggen dat |ri2| van hetzelfde type moet zijn als |ri1|.
+Dit kan met de volgende code:
+\begin{lstfragment}
+	decltype(ri1) ri2 {ri1};
+\end{lstfragment}
+De type van de variabele |ri2| is gedefieerd als hetzelfde type als |ri1|, dus |ri2| is ook een reference naar |i|.
+De naam |ri1| komt nu twee keer voor in deze code, wat ook weer niet zo elegant is.
+De mooiste manier om aan te geven dat |ri2| van hetzelfde type moet zijn als |ri1| is:
+\begin{lstfragment}
+	int i {42};
+	int& ri1 {i};
+	decltype(auto) ri2 {ri1};
+\end{lstfragment}
+
+In \csecref{range-based for} hebben we de volgende code besproken:
+\cpplstinputfragment[linerange={5-9}]{range-based_for.cpp}
+
+Als het type van de variabele |rij| gewijzigd wordt, dan wordt het type van de variabele |element| automatisch aangepast.
+Je kunt er nu met behulp van |decltype| voor zorgen dat het type van de variabele |som| ook automatisch wordt bepaald:
+\cpplstinputfragment[linerange={5-9}]{decltype.cpp}
+
+Als de rij nu als volgt wordt gedefinieerd:
+\begin{cpplstfragment}
+	double rij[] = {12.5, 2, 17, 32, 1, 18};
+\end{cpplstfragment}
+Dan wordt het type van |som| en |element| ook automatisch aangepast naar |double|.
+
+
+ 
+ 
+
+	
+	
 \chapter{Notes from A Tour if C++, Second Edition}
 Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second Edition} van Bjarne Stroustrup. Deze aantekeningen moeten nog (op de juiste plaats) verwerkt worden in dit dictaat.
 \section{The Basics}

@@ -234,8 +234,7 @@ void Graph::acyclic(const string& start_name) {
         }
     }
     // for all vertices in queue
-    decltype (vertices.size()) iterations;
-    for (iterations = 0; !q.empty(); ++iterations) {
+    for (decltype (vertices.size()) iterations{0}; !q.empty(); ++iterations) {
         Vertex* v{q.front()};
         q.pop();
         for (auto& e: v->adjacent)  {

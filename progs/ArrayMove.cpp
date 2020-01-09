@@ -31,7 +31,7 @@ Array::Array(size_type s): size{s}, data{new int[s]} {
 }
 
 Array::Array(const Array& r): size{r.size}, data{new int[r.size]} {
-    for (size_type i = 0; i < size; ++i)
+    for (size_type i {0}; i < size; ++i)
         data[i] = r.data[i];
 }
 
@@ -74,7 +74,7 @@ Array::size_type Array::length() const {
 bool Array::operator==(const Array& r) const {
     if (size != r.size)
         return false;
-    for (size_type i = 0; i < size; ++i)
+    for (size_type i {0}; i < size; ++i)
         if (data[i] != r.data[i])
             return false;
     return true;
@@ -85,7 +85,7 @@ bool Array::operator!=(const Array& r) const {
 }
 
 ostream& operator<<(ostream& o, const Array& a) {
-    for (Array::size_type i = 0; i < a.size; ++i) {
+    for (Array::size_type i {0}; i < a.size; ++i) {
         o << a.data[i];
         if (i != a.size - 1)
             o << ',';
@@ -96,7 +96,7 @@ ostream& operator<<(ostream& o, const Array& a) {
 Array operator+(const Array& left, const Array& right) {
     assert(left.length() == right.length());
     Array result{left.length()};
-    for (Array::size_type i = 0; i != left.length(); ++i) {
+    for (Array::size_type i {0}; i != left.length(); ++i) {
         result[i] = left[i] + right[i];
     }
     return result;
@@ -109,7 +109,7 @@ int main() {
     if (i > 0) {
         Array a{i};
         cout << "a = " << a << '\n';
-        for (Array::size_type j = 0; j < a.length(); ++j)
+        for (Array::size_type j {0}; j < a.length(); ++j)
             a[j] = j * j; // vul a met kwadraten
         cout << "a = " << a << '\n';
         Array b{a};

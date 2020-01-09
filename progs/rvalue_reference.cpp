@@ -26,7 +26,7 @@ Dozijn::Dozijn(): data{new int[12]} {
 
 Dozijn::Dozijn(const Dozijn& r): data{new int[12]} {
     cout << "Copy constructor aangeroepen\n";
-    for (int i = 0; i < 12; ++i) {
+    for (int i {0}; i < 12; ++i) {
         data[i] = r.data[i];
     }
 }
@@ -38,7 +38,7 @@ Dozijn::Dozijn(Dozijn&& r): data(r.data) {
 
 Dozijn& Dozijn::operator=(const Dozijn& r) {
     cout << "Copy assignment operator aangeroepen\n";
-    for (int i = 0; i < 12; ++i) {
+    for (int i {0}; i < 12; ++i) {
         data[i] = r.data[i];
     }
     return *this;
@@ -66,7 +66,7 @@ const int& Dozijn::operator[](int index) const {
 }
 
 ostream& operator<<(ostream& o, const Dozijn& a) {
-    for (int i = 0; i < 12; ++i) {
+    for (int i {0}; i < 12; ++i) {
         o << a.data[i];
         if (i != 11)
             o << ',';
@@ -76,7 +76,7 @@ ostream& operator<<(ostream& o, const Dozijn& a) {
 
 Dozijn operator+(const Dozijn& left, const Dozijn& right) {
     Dozijn result;
-    for (int i = 0; i != 12; ++i) {
+    for (int i {0}; i != 12; ++i) {
         result[i] = left[i] + right[i];
     }
     return result;
@@ -84,7 +84,7 @@ Dozijn operator+(const Dozijn& left, const Dozijn& right) {
 
 int main() {
     Dozijn a;
-    for (int j = 0; j < 12; ++j)
+    for (int j {0}; j < 12; ++j)
         a[j] = j * j; // vul a met kwadraten
     cout << "a = " << a << '\n';
     Dozijn b{a};

@@ -37,7 +37,7 @@ auto som(array<Tijdsduur, 5> rij) {
 
 int main() {
     array<Tijdsduur, 5> tijdsduur;
-    array<Tijdsduur, 5>::size_type aantal = 0;
+    array<Tijdsduur, 5>::size_type aantal {0};
     do {
         cout << "Type uren en minuten in: ";
         cin >> tijdsduur[aantal].uur >> tijdsduur[aantal].minuten;

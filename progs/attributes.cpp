@@ -27,7 +27,7 @@ string resultaat_naar_tekst(int resultaat) {
 }
 
 int main() {
-    for (int r = 0; r < 12; ++r) {
+    for (int r {0}; r < 12; ++r) {
         cout << r << ": " << resultaat_naar_tekst(r) << '\n';
     }
     [[maybe_unused]] string s{resultaat_naar_tekst(42)};

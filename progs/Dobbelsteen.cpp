@@ -24,14 +24,14 @@ ostream& operator<<(ostream& o, Dobbelsteen& d) {
 
 int main() {
     Dobbelsteen d;
-    for (int i = 0; i < 20; ++i)
+    for (int i {0}; i < 20; ++i)
         cout << d << ", ";
     cout << d << '\n';
     
     // bepaal verdeling
     vector<int> verdeling(6);
-    for (int i = 0; i < 10000000; ++i)
+    for (int i {0}; i < 10000000; ++i)
         ++verdeling[d.rol()-1];
-    for (int i = 0; i < 6; ++i) 
+    for (int i {0}; i < 6; ++i) 
         cout << i+1 << ": " << verdeling[i] << '\n';
 }

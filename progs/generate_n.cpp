@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
     vector<int> kwadraten;
-    int n = 0;
+    int n {0};
     generate_n(back_inserter(kwadraten), 10, [&n]() {
         ++n; return n * n;
     }); 

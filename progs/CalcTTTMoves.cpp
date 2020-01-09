@@ -17,8 +17,8 @@ int main() {
     }
     else {
         cout << "Aantal stellingen:\n";
-        long long res = 0;
-        for (long long i = 0; i <= n; ++i) {
+        long long res {0};
+        for (long long i {0}; i <= n; ++i) {
             long long t = fac(n) / fac(n - i);
             cout << t << " + " << '\n';
             res += t;

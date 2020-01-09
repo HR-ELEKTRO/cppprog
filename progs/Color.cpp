@@ -18,14 +18,14 @@ public:
     int get_value() const;
     void set_value(int c);
 //  constanten:
-    static constexpr int BLACK = 0x00000000;
-    static constexpr int RED = 0x00FF0000;
-    static constexpr int YELLOW = 0x00FFFF00;
-    static constexpr int GREEN = 0x0000FF00;
-    static constexpr int LIGHTBLUE = 0x0000FFFF;
-    static constexpr int BLUE = 0x000000FF;
-    static constexpr int PURPER = 0x00FF00FF;
-    static constexpr int WHITE = 0x00FFFFFF;
+    static constexpr int BLACK {0x00000000};
+    static constexpr int RED {0x00FF0000};
+    static constexpr int YELLOW {0x00FFFF00};
+    static constexpr int GREEN {0x0000FF00};
+    static constexpr int LIGHTBLUE {0x0000FFFF};
+    static constexpr int BLUE {0x000000FF};
+    static constexpr int PURPER {0x00FF00FF};
+    static constexpr int WHITE {0x00FFFFFF};
 //  ...
 private:
     int value;
@@ -59,14 +59,14 @@ public:
     int get_value() const;
     void set_value(int c);
 //  constanten:
-    static const int BLACK = 0x00000000;
-    static const int RED = 0x00FF0000;
-    static const int YELLOW = 0x00FFFF00;
-    static const int GREEN = 0x0000FF00;
-    static const int LIGHTBLUE = 0x0000FFFF;
-    static const int BLUE = 0x000000FF;
-    static const int PURPER = 0x00FF00FF;
-    static const int WHITE = 0x00FFFFFF;
+    static const int BLACK {0x00000000};
+    static const int RED {0x00FF0000};
+    static const int YELLOW {0x00FFFF00};
+    static const int GREEN {0x0000FF00};
+    static const int LIGHTBLUE {0x0000FFFF};
+    static const int BLUE {0x000000FF};
+    static const int PURPER {0x00FF00FF};
+    static const int WHITE {0x00FFFFFF};
 //  ...
 private:
     int value;

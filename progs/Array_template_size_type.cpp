@@ -26,7 +26,7 @@ template <typename T> Array<T>::Array(size_type s): size{s}, data{new T[s]} {
 }
 
 template <typename T> Array<T>::Array(const Array<T>& r): size{r.size}, data{new T[r.size]} {
-    for (size_type i = 0; i < size; ++i)
+    for (size_type i {0}; i < size; ++i)
         data[i] = r.data[i];
 }
 
@@ -58,7 +58,7 @@ template <typename T> typename Array<T>::size_type Array<T>::length() const {
 template <typename T> bool Array<T>::operator==(const Array<T>& r) const {
     if (size != r.size)
         return false;
-    for (size_type i = 0; i < size; ++i)
+    for (size_type i {0}; i < size; ++i)
         if (data[i] != r.data[i])
             return false;
     return true;
@@ -69,7 +69,7 @@ template <typename T> bool Array<T>::operator!=(const Array<T>& r) const {
 }
 
 template <typename T> ostream& operator<<(ostream& o, const Array<T>& v) {
-    for (typename Array<T>::size_type i = 0; i < v.size; ++i) {
+    for (typename Array<T>::size_type i {0}; i < v.size; ++i) {
         o << v.data[i];
         if (i != v.size-1)
             o << ',';
@@ -82,11 +82,11 @@ int main() {
     Array<double>::size_type i; cin >> i;
     if (i > 0) {
         Array<double> v{i};
-        for (Array<double>::size_type j = 0; j < v.length(); ++j)
+        for (Array<double>::size_type j {0}; j < v.length(); ++j)
             v[j] = sqrt(double(j)); // Vul v met wortels
         cout << "v[12] = " << v[12] << '\n';
         Array<int> w{i};
-        for (Array<int>::size_type t = 0; t < w.length(); ++t)
+        for (Array<int>::size_type t {0}; t < w.length(); ++t)
             w[t] = t * t;           // Vul w met kwadraten
         cout << "w[12] = " << w[12] << '\n';
     }

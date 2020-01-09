@@ -34,7 +34,7 @@ template<typename T> ostream& operator<<(ostream& o, const Dozijn<T>& d) {
 
 int main() {
     Dozijn<int> kwadraten;
-    for (int j = 0; j < 12; ++j)
+    for (int j {0}; j < 12; ++j)
         kwadraten.zet_in(j, j * j);
     cout << "kwadraten = " << kwadraten << '\n';
     Dozijn<string> provincies;

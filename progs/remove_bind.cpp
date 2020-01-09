@@ -8,7 +8,7 @@ using namespace std::placeholders;
 
 int main() {
     vector<int> w;
-    for (int i = 0; i < 10; ++i) {
+    for (int i {0}; i < 10; ++i) {
         w.push_back(i * i);
     }
     ostream_iterator<int> out{cout, " "};

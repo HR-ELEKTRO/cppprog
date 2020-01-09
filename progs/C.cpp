@@ -18,14 +18,14 @@ void drukaf(Tijdsduur td) {
 
 // Deze functie drukt een rij met een aantal Tijdsduren af
 void drukaf(Tijdsduur rij[], size_t aantal) {
-    for (size_t teller = 0; teller < aantal; ++teller)
+    for (size_t teller {0}; teller < aantal; ++teller)
         drukaf(rij[teller]);
 }
 
 // Deze functie berekent de totaal Tijdsduur van een rij met een aantal Tijdsduren
 Tijdsduur som(Tijdsduur rij[], size_t aantal) {
     Tijdsduur s{0, 0};
-    for (size_t teller = 0; teller < aantal; ++teller) {
+    for (size_t teller {0}; teller < aantal; ++teller) {
         s.uur += rij[teller].uur;
         s.minuten += rij[teller].minuten;
     }
@@ -37,7 +37,7 @@ Tijdsduur som(Tijdsduur rij[], size_t aantal) {
 int main() {
     constexpr size_t MAX = 5;
     Tijdsduur tijdsduur[MAX];
-    size_t aantal = 0;
+    size_t aantal {0};
     do {
         cout << "Type uren en minuten in: ";
         cin >> tijdsduur[aantal].uur >> tijdsduur[aantal].minuten;

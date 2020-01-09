@@ -40,13 +40,13 @@ template <typename T> Array<T>::Array(int s): size{s}, data{new T[s]} {
 
 template <typename T> Array<T>::Array(initializer_list<T> list): size{list.size()}, data{new T[size]} {
     auto list_iter{list.begin()};
-    for (size_type i = 0; i < size; ++i) {
+    for (size_type i {0}; i < size; ++i) {
         data[i] = *list_iter++;
     }
 }
 
 template <typename T> Array<T>::Array(const Array<T>& r): size{r.size}, data{new T[r.size]} {
-    for (size_type i = 0; i < size; ++i)
+    for (size_type i {0}; i < size; ++i)
         data[i] = r.data[i];
 }
 
@@ -78,7 +78,7 @@ template <typename T> size_type Array<T>::length() const {
 template <typename T> bool Array<T>::operator==(const Array<T>& r) const {
     if (size != r.size)
         return false;
-    for (size_type i = 0; i < size; ++i)
+    for (size_type i {0}; i < size; ++i)
         if (data[i] != r.data[i])
             return false;
     return true;
@@ -113,7 +113,7 @@ template <typename T> const T* Array<T>::cend() const {
 }
 
 template <typename T> ostream& operator<<(ostream& o, const Array<T>& v) {
-    for (size_type i = 0; i < v.size; ++i) {
+    for (size_type i {0}; i < v.size; ++i) {
         o << v.data[i];
         if (i != v.size-1)
             o << ',';

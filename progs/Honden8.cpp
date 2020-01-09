@@ -134,7 +134,7 @@ int main() {
     h2.help();
 //  Maak een kopietje van h1
     Sint_bernard h3{h1};
-    for (int i = 0; i < 5; ++i) {
+    for (int i {0}; i < 5; ++i) {
         h3.help() /* help 5 keer */;
     }
     h1.help();

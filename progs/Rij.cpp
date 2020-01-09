@@ -39,12 +39,12 @@ ostream& operator<<(ostream& o, const Rij<T, N>& r) {
 
 int main() {
     Rij<int, 10> kwad;
-    for (size_t i = 0; i < kwad.aantal_plaatsen(); ++i)
+    for (size_t i {0}; i < kwad.aantal_plaatsen(); ++i)
         kwad.zet_in(i, i * i);
     cout << "kwad = " << kwad << '\n';
 
     Rij<char, 26> alfabet;
-    for (size_t i = 0; i < alfabet.aantal_plaatsen(); ++i)
+    for (size_t i {0}; i < alfabet.aantal_plaatsen(); ++i)
         alfabet.zet_in(i, 'A' + i);
     cout << "alfabet = " << alfabet << '\n';
     cout << "de derde letter van alfabet is " << alfabet.lees_uit(2) << '\n';

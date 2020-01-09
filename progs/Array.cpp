@@ -27,7 +27,7 @@ Array::Array(int s): size{s}, data{new int[s]} {
 }
 
 Array::Array(const Array& r): size{r.size}, data{new int[r.size]} {
-    for (int i = 0; i < size; ++i)
+{0}    for (int i {0}; i < size; ++i)
         data[i] = r.data[i];
 }
 
@@ -59,7 +59,7 @@ int Array::length() const {
 bool Array::operator==(const Array& r) const {
     if (size != r.size)
         return false;
-    for (int i = 0; i < size; ++i)
+    for (int i {0}; i < size; ++i)
         if (data[i] != r.data[i])
             return false;
     return true;
@@ -70,7 +70,7 @@ bool Array::operator!=(const Array& r) const {
 }
 
 ostream& operator<<(ostream& o, const Array& a) {
-    for (int i = 0; i < a.size; ++i) {
+    for (int i {0}; i < a.size; ++i) {
         o << a.data[i];
         if (i != a.size - 1)
             o << ',';
@@ -85,7 +85,7 @@ int main() {
     if (i > 0) {
         Array a{i};
         cout << "a = " << a << '\n';
-        for (int j = 0; j < a.length(); ++j)
+        for (int j {0}; j < a.length(); ++j)
             a[j] = j * j; // vul a met kwadraten
         cout << "a = " << a << '\n';
         Array b{a};

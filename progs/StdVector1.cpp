@@ -6,7 +6,7 @@ int main() {
     // definieer vector van integers
     vector<int> v;
     // vul met kwadraten
-    for (int i = 0; i < 15; ++i) {
+    for (int i {0}; i < 15; ++i) {
         v.push_back(i * i);
     }
     // druk af

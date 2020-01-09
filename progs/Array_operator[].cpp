@@ -27,7 +27,7 @@ private:
 };
 
 Array5::Array5() {
-    for (int i = 0; i < 5; ++i)
+    for (int i {0}; i < 5; ++i)
         data[i] = 0;
 }
 
@@ -50,7 +50,7 @@ private:
 };
 
 Array6::Array6() {
-    for (int i = 0; i < 6; ++i)
+    for (int i {0}; i < 6; ++i)
         data[i] = 0;
 }
 
@@ -69,7 +69,7 @@ private:
 };
 
 Array10::Array10() {
-    for (int i = 0; i < 10; ++i)
+    for (int i {0}; i < 10; ++i)
         data[i] = 0;
 }
 
@@ -85,42 +85,42 @@ const int& Array10::operator[](int index) const {
 
 int main() {
     Array5 v5;
-    for (int i = 0; i < 5; ++i)
+    for (int i {0}; i < 5; ++i)
         v5[i] = i;
     const Array5 w5{v5};
     w5[0] = 5;
 //  Schrijven in een const Array moet niet mogen maar mag hier wel!
-    for (int i = 0; i < 5; ++i)
+    for (int i {0}; i < 5; ++i)
         cout << v5[i];
     cout << '\n';
-    for (int i = 0; i < 5; ++i)
+    for (int i {0}; i < 5; ++i)
         cout << w5[i];
     cout << '\n';
 
     Array6 v6;
-    for (int j = 0; j < 6; ++j)
+    for (int j {0}; j < 6; ++j)
         v6[j] = j;
     const Array6 w6{v6};
 //  w6[0] = 6;
 //  Error: passing ‘const Array6’ as ‘this’ argument discards qualifiers
-    for (int j = 0; j < 6; ++j)
+    for (int j {0}; j < 6; ++j)
         cout << v6[j];
     cout << '\n';
-//  for (int j = 0; j < 6; ++j)
+//  for (int j {0}; j < 6; ++j)
 //      cout << w6[j];
 //  Error: passing ‘const Array6’ as ‘this’ argument discards qualifiers
     cout << '\n';
 
     Array10 v10;
-    for (int k = 0; k < 10; ++k)
+    for (int k {0}; k < 10; ++k)
         v10[k] = k;
     const Array10 w10{v10};
 //  w10[0] = 10;
 //  Error: assignment of read-only location ‘w10.Array10::operator[](0)’
-    for (int k = 0; k < 10; ++k)
+    for (int k {0}; k < 10; ++k)
         cout << v10[k];
     cout << '\n';
-    for (int k = 0; k < 10; ++k)
+    for (int k {0}; k < 10; ++k)
         cout << w10[k];
     cout << '\n';
 }

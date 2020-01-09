@@ -48,7 +48,7 @@ int choose_human_move(int pos, int& best_next_pos) {
 }
 
 int main() {
-    int pos = 0, best_next_pos, best_value;
+    int pos {0}, best_next_pos, best_value;
     while (pos < 15) {
         best_value = choose_computer_move(pos, best_next_pos);
         cout << "Minimaal te behalen Maximale waarde = " << best_value << '\n';

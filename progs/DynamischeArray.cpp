@@ -29,7 +29,7 @@ int main() {
 //  Statische array: grootte is tijdens compilatie bekend.
     Tekkel a[s];
     cout << "5 tekkels zeggen:\n";
-    for (int i = 0; i < s; ++i)
+    for (int i {0}; i < s; ++i)
         a[i].blaf();
 
     int t;
@@ -41,13 +41,13 @@ int main() {
 //  Warning: ISO C++ forbids variable-size array `b'
 //  Vreemd! Zou een fout moeten zijn!    
     cout << t << " tekkels zeggen:\n";
-    for (int i = 0; i < t; ++i)
+    for (int i {0}; i < t; ++i)
         b[i].blaf();
 //*/
 //  Dynamische array: grootte is tijdens compilatie niet bekend.
     Hond* c{new Tekkel[t]};
     cout << t << " tekkels zeggen:\n";
-    for (int i = 0; i < t; ++i)
+    for (int i {0}; i < t; ++i)
         c[i].blaf();
     delete[] c;
 }

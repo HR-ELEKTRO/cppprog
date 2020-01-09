@@ -168,9 +168,9 @@ void dummy() {
 {
 //>som_in_C
     int rij[] = {12, 2, 17, 32, 1, 18};
-    size_t i, aantal = sizeof array / sizeof array[0];
-    int som = 0;
-    for (i = 0; i < aantal; i++) {
+    size_t aantal {sizeof array / sizeof array[0]};
+    int som {0};
+    for (size_t i {0}; i < aantal; i++) {
         som += rij[i];
     }
 //<som_in_C
@@ -178,7 +178,7 @@ void dummy() {
 {
 //>som_in_Cpp_zonder_auto
     int rij[] {12, 2, 17, 32, 1, 18};
-    int som = 0;
+    int som {0};
     for (int element: rij) {
         som += element;
     }
