@@ -1,3 +1,4 @@
+% !TeX spellcheck = nl_NL
 % dictaat Objectgeoriënteerd Programmeren in C++
 % Harry Broeders
 % De bijbehorende makefile genereerd zowel de printed als de ebook versie
@@ -370,6 +371,9 @@ Grotere verbeteringen zoals data abstractie, objectgeoriënteerd programmeren en
 \Cpp{} is een zeer uitgebreide taal en dit dictaat moet dan ook zeker niet gezien worden als een cursus \Cpp{}.
 In dit dictaat worden slechts de meest belangrijke delen van \Cpp{} behandeld.
 
+In dit hoofdstuk bespreken we de kleine verbeteringen van \Cpp{} ten opzichte van zijn voorganger C die je moet weten om de rest van dit dictaat te kunnen lezen.
+Verdere kleine verbeteringen, die ook best handig kunnen zijn bij het programmeren in \Cpp{} kun je vinden in \csecref{van c naar cpp de details}.
+
 \section{\texorpdfstring{\cppcode{main}}{main} zonder \texorpdfstring{\cppcode{return}}{return}}
 In \Cpp{} hoeft de functie |main| geen |return|-statement meer te bevatten. 
 Als niet expliciet een waarde teruggegeven wordt, dan zal het operating systeem de waarde ontvangen die hoort bij een succesvolle afronding van het programma (de waarde~|0|).
@@ -414,15 +418,13 @@ Het gebruik van universele initialisatie ten opzichte van de andere mogelijke ma
 	\end{cpplstfragment}
 \end{itemize}
 Om deze redenen is er voor gekozen om in dit dictaat altijd gebruik te maken van universele initialisatie\footnote{%
-	Dit wordt ook aangeraden in de C	Om deze redenen is er voor gekozen om in dit dictaat altijd gebruik te maken van universele initialisatie\footnote{%
-		Dit wordt ook aangeraden in de C++ Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es23-prefer-the--initializer-syntax}{ES.23}.
-	}.++ Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es23-prefer-the--initializer-syntax}{ES.23}.
+	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es23-prefer-the--initializer-syntax}{ES.23}.
 }.	
 
 \section{\texorpdfstring{\cppcode{auto}}{auto} type}
 \label{sec:autotype}
 Als een variabele geïnitialiseerd wordt, is het mogelijk om de compiler zelf het type van een variabele te laten bepalen. 
-Dit doe je door in de variabeledefinitie in plaats van een typenaam het \USE{keyword} |auto| te gebruiken. 
+Dit doe je door in de variabeledefinitie, in plaats van een typenaam, het \USE{keyword} |auto| te gebruiken. 
 
 Bijvoorbeeld:
 \begin{cpplstfragment}
@@ -434,18 +436,23 @@ De variabele |antwoord| is nu van het type |int| en de variabele |ongeveerPi| is
 Meestal is het beter om toch zelf het type te definiëren\footnote{%
 	Onder \Cpp{} experts is dit een punt van discussie. 
 	Er zijn aanhangers van het AAA-idiom (Almost Always Auto) die juist voorstellen om zoveel mogelijk \cppcode{auto} te gebruiken.
-	Wij volgen het advies uit de C++ Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es11-use-auto-to-avoid-redundant-repetition-of-type-names}{ES.11} en gebruiken \cppcode{auto} alleen als dit de code duidelijker maakt. 
+	Wij volgen het advies uit de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es11-use-auto-to-avoid-redundant-repetition-of-type-names}{ES.11} en gebruiken \cppcode{auto} alleen als dit de code duidelijker maakt. 
 }.
 Dat maakt je programma duidelijker en voorkomt fouten.
 Verderop in dit dictaat zul je een aantal meer zinvolle manieren zien van het gebruik van |auto|:
 \begin{itemize}
 	\item Bij het gebruik van templates, zie \csecref{sec:templates}, is het soms wel erg handig om |auto| te gebruiken.
 	\item Bij het gebruik van een range-based |for|-statement, zie \csecref{range-based for} is het handig om |auto| te gebruiken.
-	\item bij het gebruik van |new|, zie \csecref{sec:new}, is het handig om |auto| te gebruiken omdat je anders het type twee keer moet vermelden.
-	Bijvoorbeeld:
+	\item Bij het gebruik van |new|, zie \csecref{sec:new}, is het handig om |auto| te gebruiken omdat je anders het type twee keer moet vermelden.
+	Bijvoorbeeld in plaats van:
 	\begin{cpplstfragment}
-		auto bp {new Breuk {2,3}};
+	Breuk* bp {new Breuk {2,3}};
 	\end{cpplstfragment}
+	Kun je beter de volgende code gebruiken:
+	\begin{cpplstfragment}
+	auto bp {new Breuk {2,3}};
+	\end{cpplstfragment}
+	
 \end{itemize}
 
 Het gebruik van |auto| kan ook de aanpasbaarheid van je programma vergroten.
@@ -453,7 +460,7 @@ Bijvoorbeeld, in het onderstaande programma wordt een array \hcode{kam\\-pi\\-oe
 
 \begin{cpplstfragment}
 	int kampioensjarenFeyenoord[] {1924, 1928, 1936, 1938, 1940, 1961, 1962, 1965, 1969, 1971, 1974, 1984, 1993, 1999, 2017};
-	// ...
+
 	int eerste {kampioensjarenFeyenoord[0]};
 \end{cpplstfragment}
 
@@ -467,27 +474,36 @@ Dit komt de onderhoudbaarheid van het programma ten goede want als het type van 
 \label{sec:autoreturntype}
 Het is ook mogelijk om de compiler zelf het return type van een functie te laten bepalen.
 Dit doe je door in de functiedefinitie in plaats van een typenaam het \USE{keyword} |auto| te gebruiken.
-In het onderstaande programma wordt een functie \cppcode{max3} gedefinieerd die het maximum van drie integers bepaald. De functie is geïmplementeerd met behulp van de standaard functie |max| die het maximum van 2 getallen bepaald.
+Stel dat in een programma de onderstaande functie \cppcode{samengestelde_interest} is gedefinieerd die een eindkapitaal berekent als een startkapitaal voor een aantal jaren op een spaarrekening wordt gezet tegen een vaste rente. 
 
 \begin{cpplstfragment}
-int max3(int i1, int i2, int i3) {
-    return max(max(i1, i2), i3);
+float samengestelde_interest(float startkapitaal, float rente_per_jaar, int aantal_jaar) {
+	float eindkapitaal {startkapitaal};
+	for (int jaar {1}; jaar <= aantal_jaar; ++jaar) {
+		eindkapitaal = eindkapitaal * (1 + rente_per_jaar);
+	}
+	return eindkapitaal;
 }
 \end{cpplstfragment}
 
 We kunnen het return type van de functie ook door de compiler laten bepalen (Engels: \USE{return type deduction}), zie \proglink{auto_return_type.cpp}: 
 
-\cpplstinputfragment[linerange={5-7}]{auto_return_type.cpp}
+\cpplstinputfragment[linerange={5-11}]{auto_return_type.cpp}
 
-Dit komt de onderhoudbaarheid van het programma ten goede want als het type van de parameters nu veranderd wordt van |int| naar |short| dan wordt het return type van de functie automatisch aangepast.
+Dit komt de onderhoudbaarheid van het programma ten goede.
+Als later blijkt dat het type |float| niet nauwkeurig genoeg is om het eindkapitaal mee te berekenen\footnote{%
+	De functie berekent dat het voor 10 jaar vastzetten van \euro{} \num{100000000} tegen een rente van \SI{1.35}{\percent} \euro{} \num{114350328,00} oplevert.
+	Dit is echter \euro{} \num{2.47} te weinig.
+}, dan hoeft alleen het type van de variabele |eindkapitaal| verandert te worden in |double|. 
+Het return type van de functie wordt dan ook automatisch aangepast van |float| naar |double|.
 
-\section{Range-based for}
+\section{Range-based \texorpdfstring{\cppcode{for}}{for}}
 \label{range-based for}
-In \Cpp{} kan dezelfde |for|-lus als in C gebruikt worden.
+In \Cpp{} kan dezelfde |for|\hyp{}lus als in C gebruikt worden.
 Maar er is in \Cpp{} ook nieuwe variant van de |for|\hyp{}lus, de zogenoemde \emph{\USE{range-based for}}, beschikbaar.
-Deze for\hyp{}lus is speciaal bedoeld om de elementen van een array%
+Deze |for|\hyp{}lus is speciaal bedoeld om de elementen van een array%
 \footnote{%
-    De standaard \Cpp{} \USE{library} bevat nog vele andere datastructuren die ook met een \USE{range-based for} doorlopen kunnen worden zie \csecref{std::array} en \csecref{std::vector}.
+    De standaard \Cpp{} \USE{library} bevat nog vele andere datastructuren die ook met een \USE{range-based} \cppcode{for} doorlopen kunnen worden zie \csecref{std::array} en \csecref{std::vector}.
 } één voor één te benaderen.
 
 \needspace{2\baselineskip}
@@ -495,14 +511,14 @@ Het volgende C programmafragment bepaalt de som van alle elementen in een array:
 
 \cpplstinputfragment[linerange={som_in_C-som_in_C}]{fragments.cpp}
 
-Je kunt in \Cpp hetzelfde bereiken met behulp van een \USE{range-based for}:
+Je kunt in \Cpp hetzelfde bereiken met behulp van een \USE{range-based} |for|:
 
 \cpplstinputfragment[linerange={som_in_Cpp_zonder_auto-som_in_Cpp_zonder_auto}]{fragments.cpp}
 
-Je ziet dat de syntax van de \USE{range-based for} heel eenvoudig is.
+Je ziet dat de syntax van de \USE{range-based} |for| heel eenvoudig is.
 
 We kunnen het type van de variabele |element| ook door de compiler laten bepalen\footnote{%
-	Als je het type van de variabele \cppcode{som} ook automatisch van hetzelfde type wilt definiëren als het type van de array \cppcode{rij}, dan kun je \emph{geen} gebruik maken van \cppcode{auto} omdat deze variabel met de waarde \cppcode{0} wordt geïnitialiseerd en dus altijd van het type integer zal zijn als je \cppcode{auto} gebruiken.
+	Als je het type van de variabele \cppcode{som} ook automatisch van hetzelfde type wilt definiëren als het type van de array \cppcode{rij}, dan kun je \emph{geen} gebruik maken van \cppcode{auto} omdat deze variabel met de waarde \cppcode{0} wordt geïnitialiseerd en dus altijd van het type integer zal zijn als je \cppcode{auto} gebruikt.
 	Met behulp van \cppcode{decltype} is dit wel mogelijk, zie \csecref{decltype}.
 }, zie \csecref{sec:autotype} (\proglink{range-based_for.cpp}):
 \cpplstinputfragment[linerange={5-9}]{range-based_for.cpp}
@@ -515,9 +531,7 @@ Je bent gewend om in C programma's symbolische constanten%
 \footnote{%
     Het gebruik van symbolische constanten maakt het programma beter leesbaar en onderhoudbaar.
 } te definiëren met de \USE{preprocessor directive} |#define|.
-Het is in sinds \Cpp{}11 mogelijk om een zogenoemde \USE{compile time} constante te definiëren met behulp van het \USE{keyword} |constexpr| \footnote{%
-    Het \Cpp{}11 \USE{keyword} \cppcode{constexpr} wordt helaas nog niet ondersteund door Microsoft Visual Studio 2013. Zie \csecref{const} voor een alternatief.
-}.
+In \Cpp{} definieer je een zogenoemde \USE{compile time} constante met behulp van het \USE{keyword} |constexpr|.
 Een \USE{compile time} constante is een constante waarvan de waarde al tijdens het compileren van het programma bepaald kan worden. De grootte van een C\hyp{}array moet bijvoorbeeld een \USE{compile time} constante zijn. Een \USE{compile time} constante kan door de compiler voor een embedded systeem in \USE{read-only} geheugen worden geplaatst.
 
 Voorbeeld met |#define|:
@@ -528,7 +542,7 @@ Voorbeeld met |#define|:
 \needspace{2\baselineskip}
 Hetzelfde voorbeeld met |constexpr|:
 \begin{cpplstfragment}
-constexpr int aantalRegels = 80;
+constexpr int aantalRegels {80};
 \end{cpplstfragment}
 
 Omdat je bij het definiëren van een |constexpr| het type moet opgeven kan de compiler meteen controleren of de initialisatie klopt met dit opgegeven type.
@@ -544,31 +558,32 @@ Een met |constexpr| gedefinieerde symbolische constante is bovendien bekend bij 
 Een \USE{compile time} constante moet je initialiseren:
 \begin{cpplstfragment}[mathescape=true]
 constexpr int k;
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ uninitialized const 'k'
+//  $\color{hrred}\textbf{error:}$ uninitialized const 'k'
 \end{cpplstfragment}
 
 Een \USE{compile time} constante kun je niet initialiseren met een variabele:
 \begin{cpplstfragment}[mathescape=true]
 int i;
 //  ...
-constexpr int m = i;
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ the value of 'i' is not usable in a constant expression
+constexpr int m {i};
+//  $\color{hrred}\textbf{error:}$ the value of 'i' is not usable in a constant expression
 \end{cpplstfragment}
 
 Een \USE{compile time} constante mag je (vanzelfsprekend) niet veranderen:
 \begin{cpplstfragment}[mathescape=true]
 aantalRegels = 79;
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ assignment of read-only variable 'aantalRegels'
+//  $\color{hrred}\textbf{error:}$ assignment of read-only variable 'aantalRegels'
 \end{cpplstfragment}
 
-\needspace{5\baselineskip}
-\sectionrefEckelOne{Read-only variabelen met \texorpdfstring{\cppcode{const}}{const}}{165}{Constants}
+Je kunt in \Cpp{} ook functies definiëren die tijdens \USE{compile time} uitgevoerd kunnen worden, door het returntype met |constexpr| te definiëren, zie \csecref{compile time functies}. 
+
+\section{Read-only variabelen met \texorpdfstring{\cppcode{const}}{const}}
 \label{const}
-Het is in \Cpp{} en C99 mogelijk om een \USE{read-only} variabele, ook wel een constante genoemd, te definiëren met behulp van een |const| \USE{qualifier}. 
+Het is in \Cpp{} net zoals in C mogelijk om een \USE{read-only} variabele, ook wel een constante genoemd, te definiëren met behulp van een |const| \USE{qualifier}. 
 
 Voorbeeld met |const|:
 \begin{cpplstfragment}
-const int aantalRegels = 80;
+const int aantalRegels {80};
 \end{cpplstfragment}
 
 Deze met een |const| \USE{qualifier} gemarkeerde variabele |aantalRegels| kun je alleen uitlezen en je kunt er dus geen andere waarde in wegschrijven. Een constante moet je initialiseren:
@@ -4661,57 +4676,6 @@ inline int Breuk::noemer() const {
 }
 \end{cpplstfragment}
 
-\section{Compile time functies}
-Stel dat je een functie hebt geschreven om $n^m$ te bereken waarbij $n$ en $m$ gehele positieve getallen zijn, je bent er daarbij vanuit gegaan dat het resultaat past in een |unsigned int|:
-
-\cpplstinputfragment[linerange={4-10}]{ConstexprFunctie.cpp}
-
-Deze functie kun je bijvoorbeeld als volgt aanroepen:
-
-\cpplstinputfragment[linerange={33-33}]{ConstexprFunctie.cpp}
-
-De uitvoer van deze regel is dan:
-
-\begin{coutput}
-3^5 = 243
-\end{coutput}
-
-Als je een \USE{compile time} constante wilt definiëren met de waarde $3^5$ dan kun je die niet initialiseren met de zojuist besproken functie |pow|.
-
-\begin{cpplstfragment}[mathescape=true]
-    constexpr unsigned int c = pow(3, 5);
-//  $\color{hrred}\textbf{Error: (GCC)}$ call to non-constexpr function 'unsigned int pow(unsigned int, unsigned int)'
-\end{cpplstfragment}
-
-Nu kun je natuurlijk je rekenmachine pakken en berekenen dat $3^5$ gelijk is aan $243$. De \USE{compile time} constante kan dan als volgt gedefinieerd worden:
-
-\begin{cpplstfragment}[mathescape=true]
-    constexpr unsigned int c = 243; // 3^5
-\end{cpplstfragment}
-
-Nu is in commentaar weergegeven hoe deze \USE{compile time} constante berekend is. Deze code is echter niet goed onderhoudbaar. Als de \USE{compile time} constante bijvoorbeeld gewijzigd moet worden in $4^6$, dan moet je eerst uitrekenen dat dit gelijk is aan $4096$ en vervolgens moet je $243$ vervangen door $4096$ en tot slot moet je niet vergeten om ook het commentaar aan te passen. Het zou natuurlijk veel beter zijn voor de onderhoudbaarheid als de compiler deze waarde zelf zou kunnen berekenen. Sinds \Cpp{}11 is dat inderdaad mogelijk door de functie vooraf te laten gaan door het \USE{keyword} |constexpr|. Zo'n functie wordt een \USE{compile time} functie genoemd omdat een aanroep naar deze  functie niet tijdens het uitvoeren van het programma maar tijdens het vertalen van het programma wordt uitgevoerd. In \Cpp{}11 mag een \USE{compile time} functie alleen bestaan uit een enkel |return|-statement. We kunnen de bovenstaande functie |pow| dus in \Cpp{}11 niet simpel als \USE{compile time} functie definiëren door er |constexpr| voor te zetten:
-
-\begin{cpplstfragment}[mathescape=true]
-constexpr unsigned int cpow(unsigned int n, unsigned int m) {
-//  $\color{hrred}\textbf{Error: (GCC)}$ body of constexpr function 'constexpr unsigned int powc(unsigned int, unsigned int)' not a return-statement
-    unsigned int result = 1;
-    for (unsigned int i = 0; i < m; ++i) {
-        result *= n;
-    }
-    return result;
-}
-\end{cpplstfragment}
-
-In \Cpp{}14 werkt dit wel omdat veel beperkingen voor \USE{compile time} functies daar zijn opgeheven\footnote{Dit wordt helaas nog niet ondersteund door GCC 4.9.2. Ook niet als de optie \cppcode{-std=c++14} wordt gebruikt.}.
-
-Door gebruik te maken van de operator |?:| en recursie is het echter wel mogelijk om in \Cpp{}11 een \USE{compile time} functie te definiëren die $n^m$ kan bereken:
-
-\cpplstinputfragment[linerange={28-30}]{ConstexprFunctie.cpp}
-
-De \USE{compile time} constante kan nu als volgt gedefinieerd worden (\proglink{ConstexprFunctie.cpp}):
-
-\cpplstinputfragment[linerange={43-43}]{ConstexprFunctie.cpp}
-
 \section{Dynamic binding werkt niet in constructors en destructors}
 Als in een memberfunctie een andere memberfunctie van dezelfde class wordt aangeroepen en als die laatste memberfunctie virtual gedefinieerd is, dan wordt een \USE{message} verstuurd naar de \USE{receiver} van de eerste memberfunctie.
 Bij het zoeken van de \USE{method} voor deze \USE{message} wordt eerst gekeken in de class van de \USE{receiver} en daarna in de \USE{base class} van de \USE{receiver} enz.
@@ -7802,6 +7766,7 @@ Zie eventueel de PowerPoint presentatie van week 6: \url{http://bd.eduweb.hhs.nl
 
 \begin{cpplstShortInline}
 \chapter{Van C naar C++ (de details)}
+\label{van c naar cpp de details}
 In \csecref{van c naar cpp} hebben we enkele kleine verbeteringen van \Cpp{} ten opzichte van zijn voorganger C besproken.
 In dit hoofdstuk bespreken we nog een aantal enkele kleine verbeteringen.
 
@@ -7820,7 +7785,7 @@ Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} 
 Om lange getallen beter leesbaar te maken mag een enkel aanhalingsteken (\code{'}) gebruikt worden om groepjes cijfers te onderscheiden.
 \begin{lstfragment}
 	uint16_t uart_settings = 0b1011'1001'000'1011;
-	int miljard = 1'000'000'000; 
+	int32_t miljard = 1'000'000'000; 
 \end{lstfragment}
 
 \section{\texorpdfstring{\cppcode{decltype}}{decltype} type}
@@ -7828,33 +7793,33 @@ Om lange getallen beter leesbaar te maken mag een enkel aanhalingsteken (\code{'
 In \Cpp{} kun je het type van een expressie opvragen met behulp van het keyword |decltype|.
 Dit kan soms handig zijn.
 Zo zou je bijvoorbeeld de volgende code kunnen schrijven:
-\begin{lstfragment}
+\begin{cpplstfragment}
 	auto i {42};
 	auto& ri1 {i};
-\end{lstfragment}
+\end{cpplstfragment}
 De variabele |i| is nu van het type |int| en de variabele |ri1| is een reference naar |i|.
 Als je nu een tweede referentie wilt definiëren |ri2| die een kopietje is van |ri1|, dan kan dat \emph{niet} als volgt:
-\begin{lstfragment}
+\begin{cpplstfragment}
 	auto ri2 {ri1};
-\end{lstfragment}
+\end{cpplstfragment}
 Het type van de variabele |ri2| is nu namelijk |int| omdat |auto| nooit een reference type oplevert.
 Je zou dit als volgt op kunnen lossen:
-\begin{lstfragment}
+\begin{cpplstfragment}
 	auto& ri2 {ri1};
-\end{lstfragment}
+\end{cpplstfragment}
 Maar dat is niet erg elegant omdat je eigenlijk wilt zeggen dat |ri2| van hetzelfde type moet zijn als |ri1|.
 Dit kan met de volgende code:
-\begin{lstfragment}
+\begin{cpplstfragment}
 	decltype(ri1) ri2 {ri1};
-\end{lstfragment}
+\end{cpplstfragment}
 De type van de variabele |ri2| is gedefieerd als hetzelfde type als |ri1|, dus |ri2| is ook een reference naar |i|.
 De naam |ri1| komt nu twee keer voor in deze code, wat ook weer niet zo elegant is.
 De mooiste manier om aan te geven dat |ri2| van hetzelfde type moet zijn als |ri1| is:
-\begin{lstfragment}
+\begin{cpplstfragment}
 	int i {42};
 	int& ri1 {i};
 	decltype(auto) ri2 {ri1};
-\end{lstfragment}
+\end{cpplstfragment}
 
 In \csecref{range-based for} hebben we de volgende code besproken:
 \cpplstinputfragment[linerange={5-9}]{range-based_for.cpp}
@@ -7869,22 +7834,95 @@ Als de rij nu als volgt wordt gedefinieerd:
 \end{cpplstfragment}
 Dan wordt het type van |som| en |element| ook automatisch aangepast naar |double|.
 
+De bovenstaande code is waarschijnlijk ingewikkelder dan je had gedacht.
+De volgende definitie van de variabele |som| lijkt meer voor de hand te liggen:
+\begin{cpplstfragment}
+	decltype(rij[0]) som {0};
+\end{cpplstfragment}
+Dit werkt echter niet omdat |rij[0]| van het type |int&| is en niet van het beoogde type |int|.
+De gcc-compiler geeft de volgende foutmelding:
+\begin{lstfragment}[mathescape=true]
+$\color{hrred}\textbf{error:}$ cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'
+\end{lstfragment}
+In de standaard \Cpp{}-library zijn een aantal functietemplates opgenomen die gebruikt kunnen worden om types te manipuleren. 
+Deze functietemplates zijn gedefinieerd in de standaard include file \href{https://en.cppreference.com/w/cpp/header/type_traits}{\cppcode{<type_traits>}}\footnote{%
+	Zie: \url{https://en.cppreference.com/w/cpp/header/type_traits}.
+}.
+Je kunt de functietemplate \href{https://en.cppreference.com/w/cpp/types/remove_reference}{\cppcode{remove_reference_t}} gebruiken om van een reference type een gewoon type te maken.
+Dus je kunt de variabele |som| als volgt definiëren:
+\begin{cpplstfragment}
+	remove_reference_t<decltype(rij[0])> som1 {0};
+\end{cpplstfragment}
 
- 
- 
+Maar je kunt het type van |som| nu ook afleiden van het type van |rij| waarbij je de functietemplate \href{https://en.cppreference.com/w/cpp/types/remove_extent}{\cppcode{remove_extent_t}} gebruikt om van een eendimensionaal arraytype een gewoon type te maken.
+\begin{cpplstfragment}
+    remove_extent_t<decltype(rij)> som {0};
+\end{cpplstfragment}
 
-	
+\section{Compile time functies}
+\label{compile time functies}
+Stel dat je een functie hebt geschreven om $n^m$ te bereken waarbij $n$ en $m$ gehele positieve getallen zijn, je bent er daarbij vanuit gegaan dat het resultaat past in een |unsigned int|:
+
+\begin{cpplstfragment}
+unsigned int power(unsigned int n, unsigned int m) {
+	unsigned int result = 1;
+	for (unsigned int i {0}; i < m; ++i) {
+		result *= n;
+	}
+	return result;
+}
+\end{cpplstfragment}
+
+Deze functie kun je bijvoorbeeld als volgt aanroepen:
+
+\cpplstinputfragment[linerange={13-13}]{constexpr_functie.cpp}
+
+De uitvoer van deze regel is dan:
+
+\begin{coutput}
+	3^5 = 243
+\end{coutput}
+
+Als je een \USE{compile time} constante wilt definiëren met de waarde $3^5$ dan kun je die niet initialiseren met de zojuist besproken functie |pow|.
+
+\begin{cpplstfragment}[mathescape=true]
+	constexpr unsigned int c = pow(3, 5);
+	//  $\color{hrred}\textbf{Error: (GCC)}$ call to non-constexpr function 'unsigned int pow(unsigned int, unsigned int)'
+\end{cpplstfragment}
+
+Nu kun je natuurlijk je rekenmachine pakken en berekenen dat $3^5$ gelijk is aan $243$. De \USE{compile time} constante kan dan als volgt gedefinieerd worden:
+
+\begin{cpplstfragment}[mathescape=true]
+	constexpr unsigned int c = 243; // 3^5
+\end{cpplstfragment}
+
+Nu is in commentaar weergegeven hoe deze \USE{compile time} constante berekend is. Deze code is echter niet goed onderhoudbaar. Als de \USE{compile time} constante bijvoorbeeld gewijzigd moet worden in $4^6$, dan moet je eerst uitrekenen dat dit gelijk is aan $4096$ en vervolgens moet je $243$ vervangen door $4096$ en tot slot moet je niet vergeten om ook het commentaar aan te passen. Het zou natuurlijk veel beter zijn voor de onderhoudbaarheid als de compiler deze waarde zelf zou kunnen berekenen. Sinds \Cpp{}11 is dat inderdaad mogelijk door de functie vooraf te laten gaan door het \USE{keyword} |constexpr|. Zo'n functie wordt een \USE{compile time} functie genoemd omdat een aanroep naar deze  functie niet tijdens het uitvoeren van het programma maar tijdens het vertalen van het programma wordt uitgevoerd. In \Cpp{}11 mag een \USE{compile time} functie alleen bestaan uit een enkel |return|-statement. We kunnen de bovenstaande functie |pow| dus in \Cpp{}11 niet simpel als \USE{compile time} functie definiëren door er |constexpr| voor te zetten:
+
+\begin{cpplstfragment}[mathescape=true]
+	constexpr unsigned int cpow(unsigned int n, unsigned int m) {
+		//  $\color{hrred}\textbf{Error: (GCC)}$ body of constexpr function 'constexpr unsigned int powc(unsigned int, unsigned int)' not a return-statement
+		unsigned int result = 1;
+		for (unsigned int i = 0; i < m; ++i) {
+			result *= n;
+		}
+		return result;
+	}
+\end{cpplstfragment}
+
+In \Cpp{}14 werkt dit wel omdat veel beperkingen voor \USE{compile time} functies daar zijn opgeheven\footnote{Dit wordt helaas nog niet ondersteund door GCC 4.9.2. Ook niet als de optie \cppcode{-std=c++14} wordt gebruikt.}.
+
+Door gebruik te maken van de operator |?:| en recursie is het echter wel mogelijk om in \Cpp{}11 een \USE{compile time} functie te definiëren die $n^m$ kan bereken:
+
+\cpplstinputfragment[linerange={28-30}]{constexpr_functie.cpp}
+
+De \USE{compile time} constante kan nu als volgt gedefinieerd worden (\proglink{constexpr_functie.cpp}):
+
+\cpplstinputfragment[linerange={43-43}]{constexpr_functie.cpp}
 	
 \chapter{Notes from A Tour if C++, Second Edition}
 Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second Edition} van Bjarne Stroustrup. Deze aantekeningen moeten nog (op de juiste plaats) verwerkt worden in dit dictaat.
 \section{The Basics}
 \begin{itemize}
-	\item 
-	Om lange getallen beter leesbaar te maken mag een enkel aanhalingsteken (\code{'}) gebruikt worden om groepjes cijfers te onderscheiden.
-	\begin{lstfragment}
-uint16_t uart_settings = 0b1011'1001'000'1011;
-int miljard = 1'000'000'000; 
-	\end{lstfragment}
 	\item 
 	Verschil tussen |const| en |constexpr|.
 	De |const| modifier zorgt ervoor dat de waarde van het betreffende object\footnote{%

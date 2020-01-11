@@ -1,11 +1,23 @@
 #include <iostream>
-#include <algorithm>
+#include <cmath>
 using namespace std;
 
-auto max3(int i1, int i2, int i3) {
-    return max(max(i1, i2), i3);
+auto samengestelde_interest(float startkapitaal, float rente_per_jaar, int aantal_jaar) {
+    float eindkapitaal {startkapitaal};
+    for (int jaar {1}; jaar <= aantal_jaar; ++jaar) {
+        eindkapitaal = eindkapitaal * (1 + rente_per_jaar);
+    }
+    return eindkapitaal;
 }
 
+double samengestelde_interest_2(float startkapitaal, float rente_per_jaar, int aantal_jaar) {
+    return startkapitaal * pow((1 + rente_per_jaar), aantal_jaar);
+}
+
+
 int main() {
-    cout << "max3(12, 18, 17) = " << max3(12, 18, 17) << '\n';
+    cout.precision(2);
+    cout.setf(ios::fixed);
+    cout << "100000000 euro tegen 1,35% vast voor 10 jaar levert " << samengestelde_interest(100'000'000, 0.0135, 10) << " euro op.\n";
+    cout << "100000000 euro tegen 1,35% vast voor 10 jaar levert " << samengestelde_interest_2(100'000'000, 0.0135, 10) << " euro op.\n";
 }
