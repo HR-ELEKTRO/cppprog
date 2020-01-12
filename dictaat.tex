@@ -601,7 +601,10 @@ int i;
 const int m = i;
 \end{cpplstfragment}
 
-Als een symbolische constante geïnitialiseerd wordt met een \USE{compile time} constante, zoals de bovenstaande constante |aantalRegels|, dan is deze symbolische constante ook te gebruiken als \USE{compile time} constante. Een \USE{compile time} constante kan door de compiler voor een embedded systeem in \USE{read-only} geheugen worden geplaatst. Als een symbolische constante geïnitialiseerd wordt met een variabele, zoals de bovenstaande constante |m|, dan is deze symbolische constante \emph{niet} te gebruiken als \USE{compile time} constante. Deze constante moet dan niet door de compiler in read-write (RAM) geheugen worden geplaatst omdat de constante tijdens het uitvoeren van het programma (tijdens \USE{run time}) geïnitialiseerd moet worden.
+Als een symbolische constante geïnitialiseerd wordt met een \USE{compile time} constante, zoals de bovenstaande constante |aantalRegels|, dan is deze symbolische constante ook te gebruiken als \USE{compile time} constante. 
+Een \USE{compile time} constante kan door de compiler voor een embedded systeem in \USE{read-only} geheugen worden geplaatst. 
+Als een symbolische constante geïnitialiseerd wordt met een variabele, zoals de bovenstaande constante |m|, dan is deze symbolische constante \emph{niet} te gebruiken als \USE{compile time} constante. 
+Deze constante moet dan niet door de compiler in read-write (RAM) geheugen worden geplaatst omdat de constante tijdens het uitvoeren van het programma (tijdens \USE{run time}) geïnitialiseerd moet worden.
 
 Een constante mag je (vanzelfsprekend) niet veranderen:
 \begin{cpplstfragment}[mathescape=true]
@@ -7880,44 +7883,42 @@ Deze functie kun je bijvoorbeeld als volgt aanroepen:
 De uitvoer van deze regel is dan:
 
 \begin{coutput}
-	3^5 = 243
+3 tot de macht 5 = 243
 \end{coutput}
 
-Als je een \USE{compile time} constante wilt definiëren met de waarde $3^5$ dan kun je die niet initialiseren met de zojuist besproken functie |pow|.
+Als je een |array| wilt definiëren met $3^5$ integers dan kun je die niet definiëren met de zojuist besproken functie |pow|.
 
-\begin{cpplstfragment}[mathescape=true]
-	constexpr unsigned int c = pow(3, 5);
-	//  $\color{hrred}\textbf{Error: (GCC)}$ call to non-constexpr function 'unsigned int pow(unsigned int, unsigned int)'
+%\begin{cpplstfragment}[mathescape=true]
+%	array<int, power(3, 5)> rij;
+%//  $\color{hrred}\textbf{error:}$ call to non-constexpr function 'unsigned int pow(unsigned int, unsigned int)'
+%\end{cpplstfragment}
+
+Nu kun je natuurlijk je rekenmachine pakken en berekenen dat $3^5$ gelijk is aan $243$. De |array| kan dan als volgt gedefinieerd worden:
+
+\begin{cpplstfragment}
+	array<int, 243> rij; // 243 = 3 tot de macht 5
 \end{cpplstfragment}
 
-Nu kun je natuurlijk je rekenmachine pakken en berekenen dat $3^5$ gelijk is aan $243$. De \USE{compile time} constante kan dan als volgt gedefinieerd worden:
+Nu is in commentaar weergegeven hoe het aantal elementen van de |array| berekend is. 
+Deze code is echter niet goed onderhoudbaar. 
+Als het aantal elementen in de |array| bijvoorbeeld gewijzigd moet worden in $4^6$, dan moet je eerst uitrekenen dat dit gelijk is aan $4096$ en vervolgens moet je $243$ vervangen door $4096$ en tot slot moet je niet vergeten om ook het commentaar aan te passen. 
+Het zou natuurlijk veel beter zijn voor de onderhoudbaarheid als de compiler deze waarde zelf zou kunnen berekenen. 
+In \Cpp{} is dat inderdaad mogelijk door de functie vooraf te laten gaan door het \USE{keyword} |constexpr|. 
+Zo'n functie wordt een \USE{compile time} functie genoemd omdat een aanroep naar deze functie niet tijdens het uitvoeren van het programma maar tijdens het vertalen van het programma kan worden uitgevoerd. 
 
-\begin{cpplstfragment}[mathescape=true]
-	constexpr unsigned int c = 243; // 3^5
-\end{cpplstfragment}
+\cpplstinputfragment[linerange={5-11}]{constexpr_functie.cpp}
 
-Nu is in commentaar weergegeven hoe deze \USE{compile time} constante berekend is. Deze code is echter niet goed onderhoudbaar. Als de \USE{compile time} constante bijvoorbeeld gewijzigd moet worden in $4^6$, dan moet je eerst uitrekenen dat dit gelijk is aan $4096$ en vervolgens moet je $243$ vervangen door $4096$ en tot slot moet je niet vergeten om ook het commentaar aan te passen. Het zou natuurlijk veel beter zijn voor de onderhoudbaarheid als de compiler deze waarde zelf zou kunnen berekenen. Sinds \Cpp{}11 is dat inderdaad mogelijk door de functie vooraf te laten gaan door het \USE{keyword} |constexpr|. Zo'n functie wordt een \USE{compile time} functie genoemd omdat een aanroep naar deze  functie niet tijdens het uitvoeren van het programma maar tijdens het vertalen van het programma wordt uitgevoerd. In \Cpp{}11 mag een \USE{compile time} functie alleen bestaan uit een enkel |return|-statement. We kunnen de bovenstaande functie |pow| dus in \Cpp{}11 niet simpel als \USE{compile time} functie definiëren door er |constexpr| voor te zetten:
+De |array| met $3^5$ integers kan nu als volgt gedefinieerd worden (\proglink{constexpr_functie.cpp}):
 
-\begin{cpplstfragment}[mathescape=true]
-	constexpr unsigned int cpow(unsigned int n, unsigned int m) {
-		//  $\color{hrred}\textbf{Error: (GCC)}$ body of constexpr function 'constexpr unsigned int powc(unsigned int, unsigned int)' not a return-statement
-		unsigned int result = 1;
-		for (unsigned int i = 0; i < m; ++i) {
-			result *= n;
-		}
-		return result;
-	}
-\end{cpplstfragment}
+\cpplstinputfragment[linerange={16-16}]{constexpr_functie.cpp}
 
-In \Cpp{}14 werkt dit wel omdat veel beperkingen voor \USE{compile time} functies daar zijn opgeheven\footnote{Dit wordt helaas nog niet ondersteund door GCC 4.9.2. Ook niet als de optie \cppcode{-std=c++14} wordt gebruikt.}.
+De aanroep van een \USE{compile time} functie levert echter alleen een \USE{compile time} constante op als de parameters waarmee de functie wordt aangeroepen ook \USE{compile time} constanten zijn.
+Dit betekent dat een \USE{compile time} functie toch tijdens \USE{run time} uitgevoerd zal worden, als de functie wordt aangeroepen met variabelen.
+Dit is handig omdat het nu dus niet nodig is om een tweede |power|-functie te schrijven (die gedefinieerd is zonder |constexpr|).
 
-Door gebruik te maken van de operator |?:| en recursie is het echter wel mogelijk om in \Cpp{}11 een \USE{compile time} functie te definiëren die $n^m$ kan bereken:
-
-\cpplstinputfragment[linerange={28-30}]{constexpr_functie.cpp}
-
-De \USE{compile time} constante kan nu als volgt gedefinieerd worden (\proglink{constexpr_functie.cpp}):
-
-\cpplstinputfragment[linerange={43-43}]{constexpr_functie.cpp}
+Het is dus aan te bevelen om een functie die nuttig zou kunnen zijn bij het berekenen van een \USE{run time} constante met |constexpr| te definiëren\footnote{%
+	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#f4-if-a-function-may-have-to-be-evaluated-at-compile-time-declare-it-constexpr}{F.4}.
+}.
 	
 \chapter{Notes from A Tour if C++, Second Edition}
 Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second Edition} van Bjarne Stroustrup. Deze aantekeningen moeten nog (op de juiste plaats) verwerkt worden in dit dictaat.
@@ -8095,7 +8096,7 @@ Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second E
 	\cpplstinputfragment[linerange={5-31}]{RVO.cpp}
 	Het enige doel van dit programma is om te kijken of de compiler de return value optimization toepast.
 	Als dit programma gecompileerd wordt met gcc 9.1\footnote{%
-		\code{g++ -std=c++14 -pedantic -Wall -g3 -O0 RVO.cpp}
+		\code{g++ -std=c++14 -pedantic-errors -Wall -g3 -O0 RVO.cpp}
 	}, dan geeft dit programma de volgende uitvoer:
 	\begin{coutput}
 		Int met waarde 42 wordt aangemaakt.
@@ -8109,7 +8110,7 @@ Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second E
 	
 	De gcc-compiler heeft een optie waarmee de RVO uitgezet kan worden.
 	Als we deze optie gebruiken\footnote{%
-		\code{g++ -std=c++14 -pedantic -Wall -g3 -O0 -fno-elide-constructors RVO.cpp}
+		\code{g++ -std=c++14 -pedantic-errors -Wall -g3 -O0 -fno-elide-constructors RVO.cpp}
 	}, dan geeft dit programma de volgende uitvoer:
 	\begin{coutput}
 		Int met waarde 42 wordt aangemaakt.
