@@ -10,17 +10,17 @@ int main() {
     cin >> i;
 
     // Een constexpr moet je initialiseren:
-    constexpr int k;
+    // constexpr int k;
     // Error: uninitialized const 'k'
 
     // Een constexpr moet je initialiseren met een compile time constante
-    constexpr int m {i};
+    // constexpr int m {i};
     // Error: the value of 'i' is not usable in a constant expression
 
-    constexpr int n {j};
+    [[maybe_unused]] constexpr int n {j};
 
     // Een constexpr mag je niet veranderen:
-    j = 7;
+    // j = 7;
     // Error: assignment of read-only variable 'j'
 }
 

@@ -378,6 +378,78 @@ Verdere kleine verbeteringen, die ook best handig kunnen zijn bij het programmer
 In \Cpp{} hoeft de functie |main| geen |return|-statement meer te bevatten. 
 Als niet expliciet een waarde teruggegeven wordt, dan zal het operating systeem de waarde ontvangen die hoort bij een succesvolle afronding van het programma (de waarde~|0|).
 
+\needspace{2\baselineskip}
+\section{Standaard include files}
+De standaard include files hebben in \Cpp{} \emph{geen} extensie (|.h|).
+De standaard \Cpp{} \USE{library} is zeer uitgebreid en in \csecref{sec:stdlib} komen we hier uitgebreid op terug.
+De standaard \Cpp{} \USE{library} bevat ook alle functies, types enz.\ uit de standaard C \USE{library}.
+De \USE{headerfiles} die afkomstig zijn uit de C \USE{library} beginnen in de \Cpp{} \USE{library} allemaal met de letter |c|.
+Dus in \Cpp{} moet je gebruik maken van |#include <cmath>| in plaats van |#include <math.h>|.
+
+Om het mogelijk te maken dat de standaard \USE{library} met andere (oude en nieuwe) \USE{libraries} in één programma kan worden gebruikt zijn in \Cpp{} \USE{namespaces} \label{namespace} opgenomen\footnote{%
+	Namespaces worden verder besproken in \csecref{sec:namespaces}. 
+}. 
+Alle symbolen uit de \Cpp{} standaard \USE{library} bevinden zich in een \USE{namespace} genaamd |std|.
+Als je een symbool uit de \USE{namespace} |std| wilt gebruiken, moet je dit symbool laten voorafgaan door |std::|.
+Als je bijvoorbeeld de som van de sinus en de cosinus van de variabele |x| wilt berekenen in een \Cpp{} programma, dan kun je dit als volgt doen:
+\begin{cpplstfragment}
+#include <cmath>
+//  ...
+	y = std::sin(x) + std::cos(x);
+\end{cpplstfragment}
+In plaats van elk symbool uit de \Cpp{} standaard \USE{library} vooraf te laten gaan door |std::| kun je ook na het inlcuden de volgende regel in het programma opnemen\footnote{%
+	Omdat in dit dictaat uitsluitend gebruik maken van de standaard \USE{library} en niet van andere \USE{libraries} zal deze regel in elk programma, dat in dit dictaat worden besproken, worden opgenomen.
+	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#sf6-use-using-namespace-directives-for-transition-for-foundation-libraries-such-as-std-or-within-a-local-scope-only}{SF.6}. 
+}:
+\begin{cpplstfragment}
+using namespace std;
+\end{cpplstfragment}
+De som van de sinus en de cosinus van de variabele |x| kun je dus in \Cpp{} ook als volgt berekenen:
+\begin{cpplstfragment}
+#include <cmath>
+using namespace std;
+//  ...
+	y = sin(x) + cos(x);
+\end{cpplstfragment}
+
+\section{Input en output met \texorpdfstring{\cppcode{>>}}{>>} en \texorpdfstring{\cppcode{<<}}{<<}}
+\label{iostream}
+Je bent gewend om in C programma's de functies uit de |stdio| bibliotheek te gebruiken voor input en output.
+De meest gebruikte functies zijn |printf| en |scanf|.
+Deze functies zijn echter niet type veilig (\emph{type-save}) omdat de inhoud van het, als eerste argument meegegeven, format (bijvoorbeeld |"%d"|) pas tijdens het uitvoeren van het programma verwerkt wordt.
+De compiler merkt het dus niet als de type aanduidingen (zoals bijvoorbeeld |%d|) die in het format gebruikt zijn niet overeenkomen met de types van de volgende argumenten.
+Tevens is het niet mogelijk om een eigen format type aanduiding aan de bestaande toe te voegen.
+Om deze redenen is in de \Cpp{} standaard \cite{ISO2017} naast de oude |stdio| bibliotheek (om compatibel te blijven) ook een nieuwe I/O \USE{library} |iostream| opgenomen.
+Bij het ontwerpen van nieuwe software kun je het best van deze nieuwe \USE{library} gebruik maken.
+De belangrijkste output faciliteiten van deze \USE{library} zijn de standaard \USE{output stream} |cout| (vergelijkbaar met |stdout|) en de bijbehorende |<<| operator.
+De belangrijkste input faciliteiten van deze \USE{library} zijn de standaard \USE{input stream} |cin| (vergelijkbaar met |stdin|) en de bijbehorende |>>| operator.
+
+\needspace{3\baselineskip}
+Voorbeeld met |stdio|:
+\begin{cpplstfragment}[mathescape=true]
+#include <stdio.h>
+//  ...
+	double d;
+	scanf("%d", d); // deze regel bevat $\color{hrred}\textbf{twee fouten}$!
+	printf("d = %lf\n", d);
+\end{cpplstfragment}
+
+Dit programmadeel bevat twee fouten die niet door de compiler gesignaleerd worden en pas bij executie blijken.
+
+Hetzelfde voorbeeld met |iostream|:
+\begin{cpplstfragment}
+#include <iostream>
+using namespace std;
+//  ...
+	double d;
+	cin >> d; // lees d in vanaf toetsenbord
+	cout << "d = " << d << '\n'; // druk d af op scherm en ga naar het begin van de volgende regel
+\end{cpplstfragment}
+
+De |iostream| \USE{library} is zeer uitgebreid.
+In dit dictaat zullen we daar niet verder op ingaan.
+Zie eventueel voor verdere informatie \cite[hoofdstuk 6: \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus06.html}{IOStreams}]{Brokken2019} of \url{http://en.cppreference.com/w/cpp/io}.
+
 \section{Universele initialisatie}	
 In C ben je gewend om een variabele te initialiseren met de volgende syntax:
 \begin{cpplstfragment}[style=cstyle]
@@ -532,7 +604,10 @@ Je bent gewend om in C programma's symbolische constanten%
     Het gebruik van symbolische constanten maakt het programma beter leesbaar en onderhoudbaar.
 } te definiëren met de \USE{preprocessor directive} |#define|.
 In \Cpp{} definieer je een zogenoemde \USE{compile time} constante met behulp van het \USE{keyword} |constexpr|.
-Een \USE{compile time} constante is een constante waarvan de waarde al tijdens het compileren van het programma bepaald kan worden. De grootte van een C\hyp{}array moet bijvoorbeeld een \USE{compile time} constante zijn. Een \USE{compile time} constante kan door de compiler voor een embedded systeem in \USE{read-only} geheugen worden geplaatst.
+Een \USE{compile time} constante is een constante waarvan de waarde al tijdens het compileren van het programma bepaald kan worden. 
+De grootte van een array moet bijvoorbeeld een \USE{compile time} constante zijn. 
+Ook een |case|-label in een |switch|-statement moet een \USE{compile time} constante zijn.
+Een \USE{compile time} constante kan door de compiler voor een embedded systeem in \USE{read-only} geheugen worden geplaatst.
 
 Voorbeeld met |#define|:
 \begin{cpplstfragment}
@@ -589,8 +664,7 @@ const int aantalRegels {80};
 Deze met een |const| \USE{qualifier} gemarkeerde variabele |aantalRegels| kun je alleen uitlezen en je kunt er dus geen andere waarde in wegschrijven. Een constante moet je initialiseren:
 \begin{cpplstfragment}[mathescape=true]
 const int k;
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'k' : const object must be initialized
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ uninitialized const 'k'
+//  $\color{hrred}\textbf{error:}$ uninitialized const 'k'
 \end{cpplstfragment}
 
 Je mag een constante wel met een variabele initialiseren.
@@ -598,7 +672,7 @@ Je mag een constante wel met een variabele initialiseren.
 \begin{cpplstfragment}
 int i;
 //  ...
-const int m = i;
+const int m {i};
 \end{cpplstfragment}
 
 Als een symbolische constante geïnitialiseerd wordt met een \USE{compile time} constante, zoals de bovenstaande constante |aantalRegels|, dan is deze symbolische constante ook te gebruiken als \USE{compile time} constante. 
@@ -609,92 +683,10 @@ Deze constante moet dan niet door de compiler in read-write (RAM) geheugen worde
 Een constante mag je (vanzelfsprekend) niet veranderen:
 \begin{cpplstfragment}[mathescape=true]
 aantalRegels = 79;
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'aantalRegels' : you cannot assign to a variable that is const
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ assignment of read-only variable 'aantalRegels'
+//  $\color{hrred}\textbf{error:}$ assignment of read-only variable 'aantalRegels'
 \end{cpplstfragment}
 
-Als je een compiler gebruikt die het \USE{keyword} |constexpr|, zie \csecref{constexpr} nog niet ondersteund, dan kun je |const| ook als alternatief voor een met |#define| gedefinieerde symbolische constante gebruiken.
-
-Omdat je bij een |const| \USE{qualifier} het type moet opgeven kan de compiler meteen controleren of de initialisatie klopt met dit opgegeven type.
-Bij het gebruik van de \USE{preprocessor directive} |#define| blijkt dit pas bij het gebruik van de constante en niet bij de definitie.
-De fout is dan vaak moeilijk te vinden.
 In \csecref{const member} zul je zien dat het met een |const| \USE{qualifier} ook mogelijk wordt om constanten (\USE{read-only} variabelen) te definiëren van zelfgemaakte types.
-
-\sectionrefEckelOne{Het type \texorpdfstring{\cppcode{bool}}{bool}}{142}{bool, true, \& false}
-\Cpp{} kent in tegenstelling tot C%
-\footnote{%
-    Vanaf C99 kun je in C ook het type \cppcode[language=C]{bool} gebruiken. 
-    Je moet dan wel de \USE{include file} \cppcode{<stdbool.h>} gebruiken, in \Cpp{} is \cppcode{bool} een \USE{keyword} en hoef je dus niets te includen.
-} het \USE{keyword} |bool|.
-Met dit \USE{keyword} kun je booleaanse variabelen definiëren van het type |bool|.
-Een variabele van dit type heeft slechts twee mogelijke waarden: |true| en |false|.
-In C89 (en ook in oudere versies van \Cpp{}) wordt voor een booleaanse variabele het type |int| gebruikt met daarbij de afspraak dat een waarde |0| (nul) \USE{false} en een waarde ongelijk aan nul \USE{true} betekent.
-Om \Cpp{} zoveel mogelijk compatibel te houden met C wordt een |bool| indien nodig omgezet naar een |int| en vice versa.
-Het gebruik van het type |bool| maakt meteen duidelijk dat het om een booleaanse variabele gaat.
-
-\needspace{2\baselineskip}
-\sectionreftwoEckelOne{Standaard include files}{94}{Including headers}{100}{Namespaces}
-De standaard \Cpp{} \USE{library} bevat ook alle functies, types enz.\ uit de standaard C \USE{library}.
-De \USE{headerfiles} die afkomstig zijn uit de C \USE{library} beginnen in de \Cpp{} \USE{library} allemaal met de letter |c|.
-Dus |#include <cmath>| in plaats van |#include <math.h>|.
-
-Om het mogelijk te maken dat de standaard \USE{library} met andere (oude en nieuwe) \USE{libraries} in één programma kan worden gebruikt zijn in \Cpp{} \USE{namespaces} \label{namespace} opgenomen. 
-Alle symbolen uit de \Cpp{} standaard \USE{library} bevinden zich in een \USE{namespace} genaamd |std|.
-Als je een symbool uit de \USE{namespace} |std| wilt gebruiken, moet je dit symbool laten voorafgaan door |std::|.
-Als je bijvoorbeeld de som van de sinus en de cosinus van de variabele |x| wilt berekenen in een \Cpp{} programma, dan kun je dit als volgt doen:
-\begin{cpplstfragment}
-#include <cmath>
-//  ...
-    y = std::sin(x) + std::cos(x);
-\end{cpplstfragment}
-In plaats van elk symbool uit de \Cpp{} standaard \USE{library} vooraf te laten gaan door |std::| kun je ook na het inluden de volgende regel in het programma opnemen:
-\begin{cpplstfragment}
-using namespace std;
-\end{cpplstfragment}
-De som van de sinus en de cosinus van de variabele |x| kun je dus in \Cpp{} ook als volgt berekenen:
-\begin{cpplstfragment}
-#include <cmath>
-using namespace std;
-//  ...
-    y = sin(x) + cos(x);
-\end{cpplstfragment}
-
-\sectionreftwoEckelOne[Input en output met \texorpdfstring{\cppcode{>>}}{>>} en \texorpdfstring{\cppcode{<<}}{<<}]{Input en output met \cppcode{>>} en \cppcode{<<}\footnote{Deze paragraaf heb je al gelezen als je practicum opgave 1 al hebt gedaan.}}{99}{Using the iostreams class}{107}{Reading input}
-\label{iostream}
-Je bent gewend om in C programma's de functies uit de |stdio| bibliotheek te gebruiken voor input en output.
-De meest gebruikte functies zijn |printf| en |scanf|.
-Deze functies zijn echter niet type veilig (\emph{type-save}) omdat de inhoud van het, als eerste argument meegegeven, format (bijvoorbeeld |"%d"|) pas tijdens het uitvoeren van het programma verwerkt wordt.
-De compiler merkt het dus niet als de type aanduidingen (zoals bijvoorbeeld |%d|) die in het format gebruikt zijn niet overeenkomen met de types van de volgende argumenten.
-Tevens is het niet mogelijk om een eigen format type aanduiding aan de bestaande toe te voegen.
-Om deze redenen is in de \Cpp{} standaard \cite{ISO2014} naast de oude |stdio| bibliotheek (om compatibel te blijven) ook een nieuwe I/O \USE{library} |iostream| opgenomen.
-Bij het ontwerpen van nieuwe software kun je het best van deze nieuwe \USE{library} gebruik maken.
-De belangrijkste output faciliteiten van deze \USE{library} zijn de standaard \USE{output stream} |cout| (vergelijkbaar met |stdout|) en de bijbehorende |<<| operator.
-De belangrijkste input faciliteiten van deze \USE{library} zijn de standaard \USE{input stream} |cin| (vergelijkbaar met |stdin|) en de bijbehorende |>>| operator.
-
-\needspace{3\baselineskip}
-Voorbeeld met |stdio|:
-\begin{cpplstfragment}[mathescape=true]
-#include <stdio.h>
-//  ...
-    double d;
-    scanf("%d", d); // deze regel bevat $\color{hrred}\textbf{twee fouten}$!
-    printf("d = %lf\n", d);
-\end{cpplstfragment}
-
-Dit programmadeel bevat twee fouten die niet door de compiler gesignaleerd worden en pas bij executie blijken.
-
-Hetzelfde voorbeeld met |iostream|:
-\begin{cpplstfragment}
-#include <iostream>
-//  ...
-    double d;
-    std::cin >> d; // lees d in vanaf toetsenbord
-    std::cout << "d = " << d << std::endl; // druk d af op scherm en ga naar het begin van de volgende regel
-\end{cpplstfragment}
-
-De |iostream| \USE{library} is zeer uitgebreid.
-In dit dictaat zullen we daar niet verder op ingaan.
-Zie eventueel voor verdere informatie \cite[hoofdstuk 2 \hrefpageEckelTwo{63}{Iostreams}]{Eckel1999} of \url{http://en.cppreference.com/w/cpp/io}.\footnote{Zie ook \href{http://bd.eduweb.hhs.nl/ogoprg/pract/opdr1.htm}{practicum opgave 1} voor meer uitleg over input en output in \Cpp{}.}
 
 \sectionrefEckelTwo[Het type \texorpdfstring{\cppcode{string}}{string}]{Het type \cppcode{string}\footnote{Deze paragraaf heb je al gelezen als je \href{http://bd.eduweb.hhs.nl/ogoprg/pract/opdr1.htm}{practicum opgave 1} al hebt gedaan.}}{27}{Strings}
 In C wordt een \USE{character} string opgeslagen in een variabele van het type |char[]| (\USE{character array}).
@@ -4428,60 +4420,61 @@ Een |static| memberfunctie heeft ten opzichte van een \enquote{normale} memberfu
 \end{itemize}
 
 \section{Namespaces}
+\label{sec:namespaces}
 Bij grote programma's kunnen verschillende classes \enquote{per ongeluk} dezelfde naam krijgen.
 In \Cpp{} kun je classes (en functies etc.) groeperen in zogenoemde \emph{\USE{namespaces}}:
 \begin{cpplstfragment}
-namespace Bd {
+namespace BroJZ {
    void f(int);
    double sin(double x);
 }
 
 // andere file zelfde namespace:
-namespace Bd {
+namespace BroJZ {
    class string {
    //  ...
    };
 }
 
 // andere namespace:
-namespace Vi {
+namespace VersD {
    class string {
    //  ...
    };
 }
 \end{cpplstfragment}
 
-Je ziet dat in de \USE{namespace} |Bd| een functie |sin| is opgenomen die ook in de standaard \USE{library} is opgenomen.
-De in de \USE{namespace} |Bd| gedefinieerde class |string| is ook in de \USE{namespace} |Vi| en ook in de standaard library gedefinieerd.
+Je ziet dat in de \USE{namespace} |BroJZ| een functie |sin| is opgenomen die ook in de standaard \USE{library} is opgenomen.
+De in de \USE{namespace} |BroJZ| gedefinieerde class |string| is ook in de \USE{namespace} |VersD| en ook in de standaard library gedefinieerd.
 Je hebt in \csecref{namespace} gezien dat alle functies en classes uit de standaard library in de \USE{namespace} |std| zijn opgenomen.
 Je kunt met de \emph{\USE{scope-resolution}} operator |::| aangeven uit welke \USE{namespace} je een class of functie wilt gebruiken:
 \begin{cpplstfragment}
-Bd::string s1 = "Harry";
-Vi::string s2 = "John";
-std::string s3 = "Standard";
+	BroJZ::string s1 {"Harry"};
+	VersD::string s2 {"Daniël"};
+	std::string s3 {"Standard"};
 \end{cpplstfragment}
 
 In het bovenstaande codefragment worden drie objecten gedefinieerd van drie verschillende classes.
-Het object |s1| is van de class |string| die gedefinieerd is in de \USE{namespace} |Bd|, het object |s2| is van de class |string| die gedefinieerd is in de \USE{namespace} |Vi| en het object |s3| is van de class |string| die gedefinieerd is in de \USE{namespace} |std| (de standaard \USE{library}).
+Het object |s1| is van de class |string| die gedefinieerd is in de \USE{namespace} |BroJZ|, het object |s2| is van de class |string| die gedefinieerd is in de \USE{namespace} |VersD| en het object |s3| is van de class |string| die gedefinieerd is in de \USE{namespace} |std| (de standaard \USE{library}).
 Je ziet dat je met behulp van \USE{namespaces} classes die toevallig dezelfde naam hebben toch in 1 programma kunt combineren.
 \USE{namespaces} maken dus het hergebruik van code eenvoudiger.
 
-Als je in een stuk code steeds de |string| uit de \USE{namespace} |Bd| wilt gebruiken, kun je dat opgeven met behulp van een \emph{\USE{using declaration}}.
+Als je in een stuk code steeds de |string| uit de \USE{namespace} |BroJZ| wilt gebruiken, kun je dat opgeven met behulp van een \emph{\USE{using declaration}}.
 \begin{cpplstfragment}
-using Bd::string;
-string s4 = "Hallo";
-string s5 = "Dag";
+	using BroJZ::string;
+	string s4 {"Hallo"};
+	string s5 {"Dag"};
 \end{cpplstfragment}
 
-De objecten |s4| en |s5| zijn nu beide van de class |string| die gedefinieerd is in de \USE{namespace} |Bd|. 
+De objecten |s4| en |s5| zijn nu beide van de class |string| die gedefinieerd is in de \USE{namespace} |BroJZ|. 
 De usingdeclaratie blijft net zolang geldig als een gewone variabeledeclaratie.
 Tot de bijbehorende accolade sluiten dus.
 
-Als je in een stuk code steeds classes en functies uit de \USE{namespace} |Bd| wilt gebruiken, kun je dat opgeven met behulp van een \emph{\USE{using directive}}.
+Als je in een stuk code steeds classes en functies uit de \USE{namespace} |BroJZ| wilt gebruiken, kun je dat opgeven met behulp van een \emph{\USE{using directive}}.
 \begin{cpplstfragment}
-using namespace Bd;
-string s6 = "Hallo";
-double d = sin(0,785398163397448);
+	using namespace BroJZ;
+	string s6 {"Hallo"};
+	double d {sin(0,785398163397448)};
 \end{cpplstfragment}
 
 Het object |s6| is nu van de class |string| die gedefinieerd is in de \USE{namespace} |Bd|.
@@ -7784,6 +7777,13 @@ Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} 
 	Hoewel deze notatie \emph{niet} toegestaan is volgens de C-standaard \cite{ISO2018} ondersteunen veel C-compilers zoals de GCC C Compiler en de Texas Instruments Optimizing C Compiler deze notatie ook. 
 }. Dus de code \cppcode{int x = 0b10111101;} initialiseert de variabele \cppcode{i} met de waarde 189 want $10111101_2$ is $189_{10}$.
 
+\section{Het type \texorpdfstring{\cppcode{bool}}{bool}}
+Als je in een C-programma een variabele van het type |bool| wilt definiëren, dan moet je de file |stdbool.h| includen.
+In \Cpp{} is het niet nodig om een file te includen als je het type |bool| wilt gebruiken.
+In \Cpp{} is \cppcode{bool} een \USE{keyword} en hoef je dus niets te includen.
+Met dit \USE{keyword} kun je booleaanse variabelen definiëren van het type |bool|.
+Een variabele van dit type heeft slechts twee mogelijke waarden: |true| en |false|.
+
 \section{Digit separators}
 Om lange getallen beter leesbaar te maken mag een enkel aanhalingsteken (\code{'}) gebruikt worden om groepjes cijfers te onderscheiden.
 \begin{lstfragment}
@@ -7878,7 +7878,7 @@ unsigned int power(unsigned int n, unsigned int m) {
 
 Deze functie kun je bijvoorbeeld als volgt aanroepen:
 
-\cpplstinputfragment[linerange={13-13}]{constexpr_functie.cpp}
+\cpplstinputfragment[linerange={14-14}]{constexpr_functie.cpp}
 
 De uitvoer van deze regel is dan:
 
@@ -7886,12 +7886,12 @@ De uitvoer van deze regel is dan:
 3 tot de macht 5 = 243
 \end{coutput}
 
-Als je een |array| wilt definiëren met $3^5$ integers dan kun je die niet definiëren met de zojuist besproken functie |pow|.
+Als je een |array| wilt definiëren met $3^5$ integers dan kun je die \emph{niet} definiëren met de zojuist besproken functie |power|.
 
-%\begin{cpplstfragment}[mathescape=true]
-%	array<int, power(3, 5)> rij;
-%//  $\color{hrred}\textbf{error:}$ call to non-constexpr function 'unsigned int pow(unsigned int, unsigned int)'
-%\end{cpplstfragment}
+\begin{cpplstfragment}[mathescape=true]
+	array<int, power(3, 5)> rij;
+//  $\color{hrred}\textbf{error:}$ call to non-constexpr function 'unsigned int pow(unsigned int, unsigned int)'
+\end{cpplstfragment}
 
 Nu kun je natuurlijk je rekenmachine pakken en berekenen dat $3^5$ gelijk is aan $243$. De |array| kan dan als volgt gedefinieerd worden:
 
@@ -7901,19 +7901,23 @@ Nu kun je natuurlijk je rekenmachine pakken en berekenen dat $3^5$ gelijk is aan
 
 Nu is in commentaar weergegeven hoe het aantal elementen van de |array| berekend is. 
 Deze code is echter niet goed onderhoudbaar. 
-Als het aantal elementen in de |array| bijvoorbeeld gewijzigd moet worden in $4^6$, dan moet je eerst uitrekenen dat dit gelijk is aan $4096$ en vervolgens moet je $243$ vervangen door $4096$ en tot slot moet je niet vergeten om ook het commentaar aan te passen. 
+Als het aantal elementen in de |array| bijvoorbeeld gewijzigd moet worden in $3^6$, dan moet je eerst uitrekenen dat dit gelijk is aan $729$ en vervolgens moet je $243$ vervangen door $729$ en tot slot moet je niet vergeten om ook het commentaar aan te passen. 
 Het zou natuurlijk veel beter zijn voor de onderhoudbaarheid als de compiler deze waarde zelf zou kunnen berekenen. 
 In \Cpp{} is dat inderdaad mogelijk door de functie vooraf te laten gaan door het \USE{keyword} |constexpr|. 
-Zo'n functie wordt een \USE{compile time} functie genoemd omdat een aanroep naar deze functie niet tijdens het uitvoeren van het programma maar tijdens het vertalen van het programma kan worden uitgevoerd. 
+Zo'n functie wordt een \USE{compile time} functie genoemd\footnote{%
+	Een \USE{compile time} is vergelijkbaar met een met \cppcode{#define} gedefinieerde macro voor het berekenen van een constante waarde in de programmeertaal C.
+} omdat een aanroep naar deze functie niet alleen tijdens het uitvoeren van het programma maar ook tijdens het vertalen van het programma kan worden uitgevoerd. 
 
 \cpplstinputfragment[linerange={5-11}]{constexpr_functie.cpp}
 
-De |array| met $3^5$ integers kan nu als volgt gedefinieerd worden (\proglink{constexpr_functie.cpp}):
+De |array| met $3^5$ integers kan nu als volgt gedefinieerd worden (\proglink{const\\-expr_\\-func\\-tie.cpp}):
 
 \cpplstinputfragment[linerange={16-16}]{constexpr_functie.cpp}
 
 De aanroep van een \USE{compile time} functie levert echter alleen een \USE{compile time} constante op als de parameters waarmee de functie wordt aangeroepen ook \USE{compile time} constanten zijn.
 Dit betekent dat een \USE{compile time} functie toch tijdens \USE{run time} uitgevoerd zal worden, als de functie wordt aangeroepen met variabelen.
+Dit voorkomt dat er twee identieke functies gedefinieerd moeten worden: één met en één zonder |constexpr|.
+
 Dit is handig omdat het nu dus niet nodig is om een tweede |power|-functie te schrijven (die gedefinieerd is zonder |constexpr|).
 
 Het is dus aan te bevelen om een functie die nuttig zou kunnen zijn bij het berekenen van een \USE{run time} constante met |constexpr| te definiëren\footnote{%
@@ -7924,28 +7928,7 @@ Het is dus aan te bevelen om een functie die nuttig zou kunnen zijn bij het bere
 Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second Edition} van Bjarne Stroustrup. Deze aantekeningen moeten nog (op de juiste plaats) verwerkt worden in dit dictaat.
 \section{The Basics}
 \begin{itemize}
-	\item 
-	Verschil tussen |const| en |constexpr|.
-	De |const| modifier zorgt ervoor dat de waarde van het betreffende object\footnote{%
-		Lees voor nu: variabele. Verderop in dit dictaat zul je nog andere objecten leren kennen.
-	} alleen gelezen kan worden\footnote{%
-		De waarde van een \cppcode{const} object kan bij normaal gebruik alleen gelezen worden.
-		Maar er bestaan hacks om toch in zo'n object te schrijven.
-		Bijvoorbeeld door het gebruik van een \cppcode{const_cast}, zie \cpageref{sec:const_cast}.
-	}.
-	De |constexpr| modifier zorgt ervoor dat de waarde van het object tijdens het compileren al wordt bepaald.\footnote{%
-		Een variabele met \cppcode{constexpr} modifier is vergelijkbaar met een met \cppcode{#define} gedefinieerde naam voor een constante waarde in de programmeertaal C.
-	}
-	\item 
-	Ook het returntype van een functie kan met de modifier |constexpr| gedefinieerd worden.
-	Het moet dan wel mogelijk zijn dat de returnwaarde van de functie door de compiler kan worden uitgerekend.\footnote{%
-		Een functie met \cppcode{constexpr} modifier is vergelijkbaar met een met \cppcode{#define} gedefinieerde macro voor het berekenen van een constante waarde in de programmeertaal C.
-	}
-	Zo'n functie mag ook aangeroepen worden met een argument dat geen |constexpr| is, maar dan is de returnwaarde ook geen |constexpr|. 
-	Dit voorkomt dat er twee identieke functies gedefinieerd moeten worden: één met en één zonder de |constexpr| modifier.
 	
-	Een plaats waar je alleen een constante expressie mag gebruiken is bijvoorbeeld een |case|-label in een |switch|-statement.
-	%TODO: misschien een voorbeeld van geven?
 	\item
 	Reference variabele kan ook geïntroduceerd worden naar aanleiding van de range-based |for|, zie \cref{range-based for}.
 	\begin{cpplstfragment}

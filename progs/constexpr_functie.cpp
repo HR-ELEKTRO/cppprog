@@ -2,7 +2,7 @@
 #include <array>
 using namespace std;
 
-unsigned int power(unsigned int n, unsigned int m) {
+constexpr unsigned int power(unsigned int n, unsigned int m) {
     unsigned int result = 1;
     for (unsigned int i {0}; i < m; ++i) {
         result *= n;
@@ -13,7 +13,8 @@ unsigned int power(unsigned int n, unsigned int m) {
 int main() {
     cout << "3 tot de macht 5 = " << power(3, 5) << '\n';
 
-    array<int, power(3, 5)>;
+    array<int, power(3, 5)> rij;
+    
     constexpr unsigned int c1 = power(3, 5);
     cout << "3 tot de macht 5 = " << c1 << '\n';
 
