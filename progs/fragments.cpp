@@ -187,16 +187,17 @@ void dummy() {
 {
 //>use_abs_overloaded
     double in;
-    std::cin >> in; // lees in
-    std::cout << abs(in) << '\n'; // druk de absolute waarde van in af
+    cin >> in; // lees in
+    cout << abs(in) << '\n'; // druk de absolute waarde van in af
 //<use_abs_overloaded
 }
 {
     
 //>use_def_par
-    print(5, 2);  // uitvoer: 101
-    print(5);     // uitvoer: 5
-    print(5, 10); // uitvoer: 5
+    print(12, 2);  // uitvoer: 1100
+    print(12);     // uitvoer: 12
+    print(12, 10); // uitvoer: 12
+    print(12, 7);  // uitvoer: 15
 //<use_def_par
 }
 {

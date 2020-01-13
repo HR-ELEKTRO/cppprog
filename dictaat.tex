@@ -242,7 +242,7 @@ Daarbij volgen we zoveel mogelijk de \emph{\Cpp{} Core Guidelines}\footnote{
 }.
 
 \section*{Een terugblik op C}
-\label{terugblikC}
+\label{sec:terugblikC}
 We starten dit dictaat met de overgang van gestructureerd programmeren in C naar gestructureerd programmeren in \Cpp{}.
 \emph{Ik ga er van uit dat je de taal C\footnote{%
 	We gaan in dit dictaat uit van de C11 standaard\cite{ISO2011}.
@@ -278,6 +278,14 @@ Dit programma zou je kunnen gebruiken om, van een aantal gewerkte tijden, de tot
 		Deze functie drukt een rij met tijdsduren af.
 		Deze functie heeft twee parameters.
 		De eerste parameter genaamd |rij| is een array met elementen van het type \hcode{Tijds\\-duur}.
+		Een array wordt in C via \USE{call by reference} doorgegeven. Dat wil zeggen dat in feite het beginadres van de array wordt doorgegeven aan de functie\footnote{%
+			Zie eventueel \cite[paragraaf 6.1.4]{Gustedt2019}.
+		}.
+		De functie kan dus de inhoud van de array wijzigen.
+		Om aan te geven dat deze functie dit niet doet is de parameter als \USE{read only} gedefinieerd met behulp van het \USE{keyword} |const|\footnote{%
+			Zie eventueel \cite[takeaway 1.5.6.3]{Gustedt2019}.
+		}.   
+		%TODO: verwijzen naar eigen C-dictaat!
 		De tweede parameter (een variabele van het type |size_t|\footnote{%
 			In C kun je het type \ccode{size_t} gebruikt om het aantal elementen in een array, of de index van een arrayelement, mee aan te geven.
 			Het is een \ccode{unsigned} type en een variabele van dit type kan dus alleen positieve getallen bevatten.
@@ -334,6 +342,7 @@ Dit programma zou je kunnen gebruiken om, van een aantal gewerkte tijden, de tot
 	Tot slot geeft de functie |main| de waarde |0| aan het \USE{operating system} terug.
 	De waarde |0| betekent dat het programma op normale wijze is geëindigd.
 \end{itemize}
+
 Merk op dat dit programma niet meer dan \hcode{MAX_\\-TIJDS\\-DU\\-REN} tijdsduren kan verwerken.
 Dit probleem zou je op kunnen lossen door dynamisch geheugen te gebruiken, maar dat is in C nog niet zo gemakkelijk.
 Later in dit dictaat (\csecref{std::vector}) zul je leren dat dit in \Cpp{} veel gemakkelijker is.
@@ -352,7 +361,7 @@ Het bestuderen van dit dictaat zonder voldoende kennis en begrip van C is vergel
 \fi
 
 \chapter[Van C naar C++]{Van C naar \Cpp{}}
-\label{van c naar cpp}
+\label{sec:vancnaarcpp}
 De ontwerper van \Cpp{} Bjarne Stroustrup gaf op de vraag: \squote{Wat is \Cpp{}?} een aantal jaren geleden het volgende antwoord \cite{Stroustrup2000}:
 %\begin{quotation} % ziet er niet mooi uit omdat de quote maar uit 1 paragraaf bestaat
 \begin{quote}
@@ -372,14 +381,16 @@ Grotere verbeteringen zoals data abstractie, objectgeoriënteerd programmeren en
 In dit dictaat worden slechts de meest belangrijke delen van \Cpp{} behandeld.
 
 In dit hoofdstuk bespreken we de kleine verbeteringen van \Cpp{} ten opzichte van zijn voorganger C die je moet weten om de rest van dit dictaat te kunnen lezen.
-Verdere kleine verbeteringen, die ook best handig kunnen zijn bij het programmeren in \Cpp{} kun je vinden in \csecref{van c naar cpp de details}.
+Verdere kleine verbeteringen, die ook best handig kunnen zijn bij het programmeren in \Cpp{} kun je vinden in \csecref{sec:vancnaarcppdedetails}.
 
 \section{\texorpdfstring{\cppcode{main}}{main} zonder \texorpdfstring{\cppcode{return}}{return}}
+\label{sec:mainzonderreturn}
 In \Cpp{} hoeft de functie |main| geen |return|-statement meer te bevatten. 
 Als niet expliciet een waarde teruggegeven wordt, dan zal het operating systeem de waarde ontvangen die hoort bij een succesvolle afronding van het programma (de waarde~|0|).
 
 \needspace{2\baselineskip}
 \section{Standaard include files}
+\label{sec:standaardincludefiles}
 De standaard include files hebben in \Cpp{} \emph{geen} extensie (|.h|).
 De standaard \Cpp{} \USE{library} is zeer uitgebreid en in \csecref{sec:stdlib} komen we hier uitgebreid op terug.
 De standaard \Cpp{} \USE{library} bevat ook alle functies, types enz.\ uit de standaard C \USE{library}.
@@ -413,7 +424,7 @@ using namespace std;
 \end{cpplstfragment}
 
 \section{Input en output met \texorpdfstring{\cppcode{>>}}{>>} en \texorpdfstring{\cppcode{<<}}{<<}}
-\label{iostream}
+\label{sec:iostream}
 Je bent gewend om in C programma's de functies uit de |stdio| bibliotheek te gebruiken voor input en output.
 De meest gebruikte functies zijn |printf| en |scanf|.
 Deze functies zijn echter niet type veilig (\emph{type-save}) omdat de inhoud van het, als eerste argument meegegeven, format (bijvoorbeeld |"%d"|) pas tijdens het uitvoeren van het programma verwerkt wordt.
@@ -450,7 +461,8 @@ De |iostream| \USE{library} is zeer uitgebreid.
 In dit dictaat zullen we daar niet verder op ingaan.
 Zie eventueel voor verdere informatie \cite[hoofdstuk 6: \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus06.html}{IOStreams}]{Brokken2019} of \url{http://en.cppreference.com/w/cpp/io}.
 
-\section{Universele initialisatie}	
+\section{Universele initialisatie}
+\label{sec:universeleinitialisatie}	
 In C ben je gewend om een variabele te initialiseren met de volgende syntax:
 \begin{cpplstfragment}[style=cstyle]
 	double d = 4.6;
@@ -514,17 +526,7 @@ Dat maakt je programma duidelijker en voorkomt fouten.
 Verderop in dit dictaat zul je een aantal meer zinvolle manieren zien van het gebruik van |auto|:
 \begin{itemize}
 	\item Bij het gebruik van templates, zie \csecref{sec:templates}, is het soms wel erg handig om |auto| te gebruiken.
-	\item Bij het gebruik van een range-based |for|-statement, zie \csecref{range-based for} is het handig om |auto| te gebruiken.
-	\item Bij het gebruik van |new|, zie \csecref{sec:new}, is het handig om |auto| te gebruiken omdat je anders het type twee keer moet vermelden.
-	Bijvoorbeeld in plaats van:
-	\begin{cpplstfragment}
-	Breuk* bp {new Breuk {2,3}};
-	\end{cpplstfragment}
-	Kun je beter de volgende code gebruiken:
-	\begin{cpplstfragment}
-	auto bp {new Breuk {2,3}};
-	\end{cpplstfragment}
-	
+	\item Bij het gebruik van een range-based |for|-statement, zie \csecref{sec:range-basedfor} is het handig om |auto| te gebruiken.
 \end{itemize}
 
 Het gebruik van |auto| kan ook de aanpasbaarheid van je programma vergroten.
@@ -570,7 +572,7 @@ Als later blijkt dat het type |float| niet nauwkeurig genoeg is om het eindkapit
 Het return type van de functie wordt dan ook automatisch aangepast van |float| naar |double|.
 
 \section{Range-based \texorpdfstring{\cppcode{for}}{for}}
-\label{range-based for}
+\label{sec:range-basedfor}
 In \Cpp{} kan dezelfde |for|\hyp{}lus als in C gebruikt worden.
 Maar er is in \Cpp{} ook nieuwe variant van de |for|\hyp{}lus, de zogenoemde \emph{\USE{range-based for}}, beschikbaar.
 Deze |for|\hyp{}lus is speciaal bedoeld om de elementen van een array%
@@ -598,7 +600,7 @@ We kunnen het type van de variabele |element| ook door de compiler laten bepalen
 Als het type van de variabele |rij| gewijzigd wordt, dan wordt het type van de variabele |element| automatisch aangepast.
  
 \section{Constante waarden met \texorpdfstring{\cppcode{constexpr}}{constexpr}}
-\label{constexpr}
+\label{sec:constexpr}
 Je bent gewend om in C programma's symbolische constanten%
 \footnote{%
     Het gebruik van symbolische constanten maakt het programma beter leesbaar en onderhoudbaar.
@@ -653,7 +655,7 @@ aantalRegels = 79;
 Je kunt in \Cpp{} ook functies definiëren die tijdens \USE{compile time} uitgevoerd kunnen worden, door het returntype met |constexpr| te definiëren, zie \csecref{compile time functies}. 
 
 \section{Read-only variabelen met \texorpdfstring{\cppcode{const}}{const}}
-\label{const}
+\label{sec:const}
 Het is in \Cpp{} net zoals in C mogelijk om een \USE{read-only} variabele, ook wel een constante genoemd, te definiëren met behulp van een |const| \USE{qualifier}. 
 
 Voorbeeld met |const|:
@@ -688,14 +690,14 @@ aantalRegels = 79;
 
 In \csecref{const member} zul je zien dat het met een |const| \USE{qualifier} ook mogelijk wordt om constanten (\USE{read-only} variabelen) te definiëren van zelfgemaakte types.
 
-\sectionrefEckelTwo[Het type \texorpdfstring{\cppcode{string}}{string}]{Het type \cppcode{string}\footnote{Deze paragraaf heb je al gelezen als je \href{http://bd.eduweb.hhs.nl/ogoprg/pract/opdr1.htm}{practicum opgave 1} al hebt gedaan.}}{27}{Strings}
+\section{Het type \texorpdfstring{\cppcode{string}}{string}}
+\label{sec:string}
 In C wordt een \USE{character} string opgeslagen in een variabele van het type |char[]| (\USE{character array}).
 De afspraak is dan dat het einde van de \USE{character} string aangegeven wordt door een \USE{null character} |'\0'|.
 In C wordt zo'n variabele aan een functie doorgegeven door middel van een \USE{character} pointer (|char*|).
 Deze manier van het opslaan van \USE{character} strings heeft vele nadelen (waarschijnlijk heb je zelf meerdere malen programma's zien vastlopen door het verkeerd gebruik van deze \USE{character} strings).
 In de standaard \Cpp{} \USE{library} is een nieuw type |string| opgenomen waarin \USE{character} strings op een veilige manier opgeslagen kunnen worden.
 Het bewerken van deze |string|s is ook veel eenvoudiger dan strings opgeslagen in \USE{character} array's.
-Het type |string| komt in de eerste practicumopdracht uitgebreid aan de orde.
 
 Bijvoorbeeld het vergelijken van \USE{character} strings in C:
 \begin{cpplstfragment}
@@ -713,22 +715,27 @@ Het vergelijken van strings gaat in \Cpp{} als volgt:
 \begin{cpplstfragment}
 #include <iostream>
 #include <string>
+using namespace std;
 //  ...
-    std::string str;
-    std::cin >> str;
+    string str;
+    cin >> str;
     if (str == "Hallo") {
         // invoer is Hallo
     }
 \end{cpplstfragment}
 
-\sectionrefEckelOne{Het type \texorpdfstring{\cppcode{vector}}{vector}}{112}{Introducing vector}
+De |string| \USE{library} is zeer uitgebreid.
+In dit dictaat zullen we daar niet verder op ingaan.
+Zie eventueel voor verdere informatie \cite[hoofdstuk 5: \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus05.html}{String}]{Brokken2019} of \url{https://en.cppreference.com/w/cpp/string}.
+
+\section{Het type \texorpdfstring{\cppcode{array}}{array} en \texorpdfstring{\cppcode{vector}}{vector}}
 In de \Cpp{} standaard \USE{library} zijn ook de types |array| en |vector| opgenomen.
 Deze types zijn bedoeld om de oude C\hyp{}array te vervangen.
 In \csecref{std::array} en \csecref{std::vector} komen we hier uitgebreid op terug.
 
 \needspace{5\baselineskip}
-\sectionrefEckelOne{Function name overloading}{327}{Function Overloading}
-\label{function overloading}
+\section{Function name overloading}
+\label{sec:functionoverloading}
 In C mag elke functienaam maar één keer gedefinieerd worden.
 Dit betekent dat twee functies om de absolute waarde te bepalen van variabelen van de types |int| en |double| een verschillende naam moeten hebben.
 In \Cpp{} mag een functienaam meerdere keren gedefinieerd worden (\emph{\USE{function name overloading}}).
@@ -750,7 +757,8 @@ Als je één van deze \USE{overloaded} functies wilt gebruiken om bijvoorbeeld d
 
 De compiler bepaalt nu zelf aan de hand van het type van het gebruikte argument (|in|) welk van de twee bovenstaande |abs| functies aangeroepen wordt.
 
-\sectionrefEckelOne{Default argumenten}{340}{Default Arguments}
+\section{Default argumenten}
+\label{sec:defaultarguments}
 Het is in \Cpp{} mogelijk om voor de laatste parameters van een functie default argumenten te definiëren.
 Stel dat we een functie |print| geschreven hebben waarmee we een integer in elk gewenst talstelsel kunnen afdrukken.
 Het prototype van deze functie is als volgt:
@@ -769,7 +777,7 @@ Als we de waarde 5 in het decimale (tientallig) stelsel willen afdrukken, dan ka
 In dit geval is het handig om bij de laatste parameter een default argument op te geven (in het prototype) zodat we niet steeds het talstelsel 10 als tweede argument hoeven op te geven als we een variabele in het decimale stelsel willen afdrukken.
 \cpplstinputfragment[linerange={def_par-def_par}]{fragments.cpp}
 Als de functie nu met maar één argument wordt aangeroepen, wordt als tweede argument |10| gebruikt zodat het getal in het decimale talstelsel wordt afgedrukt.
-Deze functie kan als volgt worden gebruikt:
+Deze functie kan als volgt worden gebruikt, zie \proglink{default_argument.cpp}:
 \cpplstinputfragment[linerange={use_def_par-use_def_par}]{fragments.cpp}
 
 Het default argument maakt de |print| functie eenvoudiger te gebruiken omdat de gebruiker (de programmeur die deze functies aanroept) niet steeds het tweede argument hoeft mee te geven als zij/hij getallen decimaal wil afdrukken.%
@@ -779,6 +787,7 @@ Het default argument maakt de |print| functie eenvoudiger te gebruiken omdat de 
 }
 
 \section{Naam van een \texorpdfstring{\cppcode{struct}}{struct}}
+\label{sec:structnotypedef}
 In C is de naam van een struct géén typenaam.
 Stel dat de |struct Tijdsduur| bijvoorbeeld als volgt gedefinieerd is:
 \cpplstinputfragment[linerange={struct_Tijdsduur-struct_Tijdsduur}]{fragments.cpp}
@@ -795,47 +804,65 @@ In \Cpp{} is de naam van een struct meteen een typenaam.
 Je kunt variabelen van het type |struct Tijdsduur| dus eenvoudig als volgt definiëren:
 \cpplstinputfragment[linerange={use_struct_Cpp-use_struct_Cpp}]{fragments.cpp}
 
-In practicum opgave 2 zul je zien dat \Cpp{} het mogelijk maakt om op een veel betere manier een tijdsduur te definiëren (als abstract data type).
+In \cref{sec:h2} zul je zien dat \Cpp{} het mogelijk maakt om op een veel betere manier een tijdsduur te definiëren (als user-defined data type).
 
 \section[C++ als een betere C]{\Cpp{} als een betere C}
-Als we de verbeteringen die in C zijn doorgevoerd bij de definitie van \Cpp{} toepassen in het voorbeeld programma van \cpageref{terugblikC}, dan ontstaat het \Cpp{} programma \proglink{C.cpp}:
+Als we de verbeteringen die in C zijn doorgevoerd bij de definitie van \Cpp{} toepassen in het voorbeeld programma van \cpageref{sec:terugblikC}, dan ontstaat het \Cpp{} programma \proglink{C.cpp}:
 \cpplstinputfragment{C.cpp}
 
 \subsection*{Verklaring van de verschillen:}
 \begin{itemize}
-    \item Hier is gebruik gemaakt van de standaard I/O \USE{library} van \Cpp{} in plaats van de standaard C I/O \USE{library}.
-In de eerste regel wordt de file |iostream| geïnclude.
-Dit is nodig om gebruik te kunnen maken van functies, objecten en types die in de standaard \Cpp{} I/O \USE{library} zijn opgenomen.
-In dit programma maak ik gebruik van |cout| (om te schrijven naar het scherm), |endl| (het einde regel teken) en |cin| (om te lezen vanaf het toetsenbord).
-Om gebruik te kunnen maken van een zogenoemde I/O manipulator wordt in de tweede regel de file |iomanip| geïnclude.
-In dit programma maak ik gebruik van de manipulator |setw()| waarmee de breedte van een uitvoerveld gespecificeerd kan worden.
-In de derde regel wordt aangegeven dat de \USE{namespace} |std| wordt gebuikt.
-Dit is nodig om de functies, types enz.\ die in de bovenstaande 2 \USE{include files} zijn gedefinieerd te kunnen gebruiken zonder er steeds |std::| voor te zetten.
-    \item Voor commentaar aan het einde van de regel is hier |//...| gebruikt in plaats van |/*...*/|.
-    \item De naam van de |struct Tijdsuur| kan meteen als typenaam gebruikt worden. Een |typedef| is hier dus niet nodig.
-    \item Om de datavelden van een tijdsduur af te drukken is hier gebruik gemaakt van |cout| in plaats van |printf|.
-Merk op dat nu het type van de datavelden \emph{niet} opgegeven hoeft te worden.
-Bij het gebruik van |printf| werd het type van de datavelden in de format string met |%d| aangegeven.
-De breedte van het uitvoerveld wordt nu met de I/O manipulator |setw| opgegeven in plaats van in de format string van |printf|.
-    \item De functie om een rij af te drukken heeft hier de naam |drukaf| in plaats van |drukafRij|.
-De functie om een tijdsduur af te drukken heet ook al |drukaf|, maar in \Cpp{} is dit geen probleem.
-Ik heb hier dus \USE{function name overloading} toegepast.
-    \item De lokale variabele |teller| is hier in het |for| statement gedefinieerd in plaats van op een aparte regel.
-    \item De \USE{compile time} constante |MAX| is hier als \cppcode[mathescape=true]{constexpr$\footnotemark{}$ int} gedefinieerd in plaats van met |#define|.%
-    \footnotetext{Het \Cpp{}11 \USE{keyword} \cppcode{constexpr} wordt helaas nog niet ondersteund door Microsoft Visual Studio 2013. Als je een compiler gebruikt die het \USE{keyword} \cppcode{constexpr} nog niet ondersteund, dan kun je \cppcode{constexpr} vervangen door \cppcode{const}.}
-    \item Het inlezen vanaf het toetsenbord is hier gedaan met behulp van |cin| in plaats van |scanf|.
-Het object |cin| kan gebruikt worden in een conditie om te testen of de vorige leesbewerking gelukt is.
-De variabele |gelezen| is dus niet meer nodig.
-    \item Als het inlezen op de een of andere manier niet gelukt is, moet het object |cin| gereset worden met behulp van de aanroep |cin.clear();|.
+    \item
+    Hier is gebruik gemaakt van de standaard I/O \USE{library} van \Cpp{}, zie \csecref{sec:iostream} in plaats van de standaard C I/O \USE{library}.
+	In de eerste regel wordt de file |iostream| geïnclude.
+	Dit is nodig om gebruik te kunnen maken van functies, objecten en types die in de standaard \Cpp{} I/O \USE{library} zijn opgenomen.
+	In dit programma maak ik gebruik van |cout| (om te schrijven naar het scherm) en |cin| (om te lezen vanaf het toetsenbord).
+	Om gebruik te kunnen maken van een zogenoemde I/O manipulator wordt in de tweede regel de file |iomanip| geïnclude.
+	In dit programma maak ik gebruik van de manipulator |setw()|\footnote{%
+		Zie eventueel \url{https://en.cppreference.com/w/cpp/io/manip/setw}.
+	} waarmee de breedte van een uitvoerveld gespecificeerd kan worden.
+	In de derde regel wordt aangegeven dat de \USE{namespace} |std| wordt gebuikt, zie \csecref{sec:standaardincludefiles}.
+	Dit is nodig om de functies, types enz.\ die in de bovenstaande twee \USE{include files} zijn gedefinieerd te kunnen gebruiken zonder er steeds |std::| voor te zetten.
+    \item 
+    De naam van de |struct Tijdsuur| kan meteen als typenaam gebruikt worden. Een |typedef| is hier dus niet nodig, zie \csecref{sec:structnotypedef}.
+    \item 
+    Om de datavelden van een tijdsduur af te drukken is hier gebruik gemaakt van |cout| in plaats van |printf|.
+	Merk op dat nu het type van de datavelden \emph{niet} opgegeven hoeft te worden.
+	Bij het gebruik van |printf| werd het type van de datavelden in de format string met |%d| aangegeven.
+	De breedte van het uitvoerveld wordt nu met de I/O manipulator |setw| opgegeven in plaats van in de format string van |printf|.
+    \item 
+    De functie om een rij af te drukken heeft hier de naam |drukaf| in plaats van |drukafRij|.
+	De functie om een tijdsduur af te drukken heet ook al |drukaf|, maar in \Cpp{} is dit geen probleem.
+	Ik heb hier dus \USE{function name overloading} toegepast, zie \csecref{sec:functionoverloading}.
+    \item 
+    De lokale variabele |teller| wordt geïnitialiseerd met een universele initialisatie in plaats van met een toekenning, zie \csecref{sec:universeleinitialisatie}.
+    \item 
+    De \USE{compile time} constante |MAX_TIJDSDUREN| is hier als \cppcode{constexpr} gedefinieerd in plaats van met |#define|, zie \csecref{sec:constexpr}.
+    \item 
+    Het inlezen vanaf het toetsenbord is hier gedaan met behulp van |cin| in plaats van |scanf|.
+	Het object |cin| kan gebruikt worden in een conditie om te testen of de vorige leesbewerking gelukt is.
+	De variabele |gelezen| is dus niet meer nodig.
+    \item 
+    Als het inlezen op de een of andere manier niet gelukt is, moet het object |cin| gereset worden met behulp van de aanroep |cin.clear();|\footnote{%
+    	Zie eventueel \url{https://en.cppreference.com/w/cpp/io/basic_ios/clear}.
+	}.
+	\item 
+	De functie |main| heeft geen |return|-statement meer nodig, zie \csecref{sec:mainzonderreturn}.
 \end{itemize}
 
-Merk op dat dit programma niet meer dan |MAX| tijdsduren kan verwerken.
+Misschien vraag je jezelf af waarom in de functies |drukaf| en |som| geen gebruik is gemaakt van de \USE{range-based} |for|, zie \csecref{sec:range-basedfor}.
+%TODO: hier verder! 
+
+Merk op dat dit programma niet meer dan |MAX_TIJDSDUREN| tijdsduren kan verwerken.
 Later in dit dictaat zul je leren hoe dit probleem is op te lossen door gebruik te maken van het type |vector|, zie \csecref{std::vector}.
 
-Merk op dat de vernieuwingen die in \Cpp{} zijn ingevoerd ten opzichte van C, namelijk het gebruik van abstracte datatypes en objectgeoriënteerde technieken, in dit programma nog \emph{niet} toegepast zijn.
+Merk op dat de vernieuwingen die in \Cpp{} zijn ingevoerd ten opzichte van C, namelijk het gebruik van user-defined datatypes en objectgeoriënteerde technieken, in dit programma nog \emph{niet} toegepast zijn.
 In dit programma wordt \Cpp{} dus op een C manier gebruikt.
 Dit is voor kleine programma's geen probleem.
 Als een programma echter groter is of als het uitbreidbaar of onderhoudbaar moet zijn, kun je beter gebruik maken van de objectgeoriënteerde technieken die \Cpp{} biedt.
+
+In dit hoofdstuk zijn de kleine verbeteringen van \Cpp{} ten opzichte van zijn voorganger C besproken die je moet weten om de rest van dit dictaat te kunnen lezen.
+Verdere kleine verbeteringen, die ook best handig kunnen zijn bij het programmeren in \Cpp{} kun je vinden in \csecref{van c naar cpp de details}.
 
 \ifshowall
 
@@ -1904,14 +1931,14 @@ In alle voorafgaande code waarin een |Breuk| als parameter is gebruikt kan dus b
 }
 
 \section{Reference in range-based for}
-\label{reference in range-based for}
-In \csecref{range-based for} heb je kennis gemaakt met de in \Cpp{}11 geïntroduceerde variant van de |for|\hyp{}lus, de
+\label{sec:referenceinrange-basedfor}
+In \csecref{sec:range-basedfor} heb je kennis gemaakt met de in \Cpp{}11 geïntroduceerde variant van de |for|\hyp{}lus, de
 zogenoemde \emph{\USE{range-based for}}. Deze for\hyp{}lus is speciaal bedoeld om de elementen van een array%
 \footnote{%
     De standaard \Cpp{} \USE{library} bevat nog vele andere datastructuren die ook met een \USE{range-based for} doorlopen kunnen worden zie \csecref{std::array} en \csecref{std::vector}.
 }\ één voor één te benaderen.
 
-De in \csecref{range-based for} gepresenteerde code laat zien hoe je een array element voor element kunt uitlezen:
+De in \csecref{sec:range-basedfor} gepresenteerde code laat zien hoe je een array element voor element kunt uitlezen:
 \cpplstinputfragment[linerange={5-9}]{range-based_for.cpp}
 
 De variabele |element| krijgt één voor één een waarde uit de array genaamd |array|. 
@@ -2419,7 +2446,7 @@ Als echter de functie |swap| ook als volgt aangeroepen wordt:
 \end{cpplstfragment}
 dan heeft dit tot gevolg dat een tweede functie |swap| gegenereerd wordt%
 \footnote{%
-Hier blijkt duidelijk het belang van \USE{function name overloading} (zie \csecref{function overloading}).
+Hier blijkt duidelijk het belang van \USE{function name overloading} (zie \csecref{sec:functionoverloading}).
 }:
 \begin{cpplstfragment}
 void swap(Breuk& p, Breuk& q) {
@@ -2626,7 +2653,7 @@ De voordelen van |array| in vergelijking met een C\hyp{}array:
         \item \ldots\footnote{Zie \url{http://en.cppreference.com/w/cpp/container/array}}
     \end{itemize}
 \end{itemize}
-De elementen van een |array| kunnen, net zoals de elementen van een C\hyp{}array, één voor één gelezen of bewerkt worden met behulp van een \USE{range-based for} (zie \csecref{range-based for} en \csecref{reference in range-based for}).
+De elementen van een |array| kunnen, net zoals de elementen van een C\hyp{}array, één voor één gelezen of bewerkt worden met behulp van een \USE{range-based for} (zie \csecref{sec:range-basedfor} en \csecref{sec:referenceinrange-basedfor}).
 
 Voorbeeld van een programma met een |array| (\proglink{StdArray.cpp}):
 \cpplstinputfragment[linerange={1-37}]{StdArray.cpp}
@@ -2668,7 +2695,7 @@ De voordelen van |vector| in vergelijking met een C\hyp{}array:
     \end{itemize}
 \end{itemize}
 
-De elementen van een |vector| kunnen, net zoals de elementen van een C\hyp{}array, één voor één gelezen of bewerkt worden met behulp van een \USE{range-based for} (zie \csecref{range-based for} en \csecref{reference in range-based for}).
+De elementen van een |vector| kunnen, net zoals de elementen van een C\hyp{}array, één voor één gelezen of bewerkt worden met behulp van een \USE{range-based for} (zie \csecref{sec:range-basedfor} en \csecref{sec:referenceinrange-basedfor}).
 
 Voorbeeld van een programma met een |vector| (\proglink{StdVector1.cpp}):
 \cpplstinputfragment[linerange={1-35}]{StdVector1.cpp}
@@ -3261,7 +3288,7 @@ Je ziet dat de objectgeoriënteerde oplossing een zeer goed \emph{onderhoudbaar}
 \label{override versus overload}
 \label{virtual}
 Het onderscheid tussen memberfunctie \emph{\USE{overloading}} en memberfunctie \emph{\USE{overriding}} is van groot belang.
-Op \csecref{function overloading} heb je gezien dat een functienaam meerdere keren gebruikt (\USE{overloaded}) kan worden.
+Op \csecref{sec:functionoverloading} heb je gezien dat een functienaam meerdere keren gebruikt (\USE{overloaded}) kan worden.
 De compiler zal aan de hand van de gebruikte argumenten de juiste functie selecteren.
 Dit maakt deze functies eenvoudiger te gebruiken omdat de gebruiker (de programmeur die deze functies aanroept) slechts één naam hoeft te onthouden.
 Elke functienaam, dus ook een memberfunctienaam, kan \USE{overloaded} worden.
@@ -4306,7 +4333,7 @@ Er zijn grote verschillen tussen deze class template |FixedArray| en de eerder g
 \end{itemize}
 
 \section{Ondersteuning range-based for voor class template \texorpdfstring{\cppcode{Array}}{Array}}
-De in \csecref{sec:class template array} gegeven class template Array kan niet met behulp van een \USE{range-based for} (zie \csecref{range-based for}) doorlopen worden. Als we dit toch proberen dan krijgen we een foutmelding:
+De in \csecref{sec:class template array} gegeven class template Array kan niet met behulp van een \USE{range-based for} (zie \csecref{sec:range-basedfor}) doorlopen worden. Als we dit toch proberen dan krijgen we een foutmelding:
 
 \begin{cpplstfragment}[mathescape=true]
     for (auto e: v) {
@@ -4484,7 +4511,7 @@ Tot de bijbehorende accolade sluiten dus.
 
 \section{Read-only pointers met \texorpdfstring{\cppcode{const}}{const}}
 %(Zie eventueel Chapter08.html\#Heading248 en Chapter08.html\#Heading253.)
-Je hebt in \csecref{const} gezien hoe je in \Cpp{} de |const| \USE{qualifier} kunt gebruiken om \USE{read-only} variabelen (met een constante waarde) te definiëren.
+Je hebt in \csecref{sec:const} gezien hoe je in \Cpp{} de |const| \USE{qualifier} kunt gebruiken om \USE{read-only} variabelen (met een constante waarde) te definiëren.
 
 Voorbeeld met |const|:
 \begin{cpplstfragment}
@@ -7762,8 +7789,8 @@ Zie eventueel de PowerPoint presentatie van week 6: \url{http://bd.eduweb.hhs.nl
 
 \begin{cpplstShortInline}
 \chapter{Van C naar C++ (de details)}
-\label{van c naar cpp de details}
-In \csecref{van c naar cpp} hebben we enkele kleine verbeteringen van \Cpp{} ten opzichte van zijn voorganger C besproken.
+\label{sec:vancnaarcppdedetails}
+In \csecref{sec:vancnaarcpp} hebben we enkele kleine verbeteringen van \Cpp{} ten opzichte van zijn voorganger C besproken.
 In dit hoofdstuk bespreken we nog een aantal enkele kleine verbeteringen.
 
 \section{Binaire getallen}
@@ -7824,7 +7851,7 @@ De mooiste manier om aan te geven dat |ri2| van hetzelfde type moet zijn als |ri
 	decltype(auto) ri2 {ri1};
 \end{cpplstfragment}
 
-In \csecref{range-based for} hebben we de volgende code besproken:
+In \csecref{sec:range-basedfor} hebben we de volgende code besproken:
 \cpplstinputfragment[linerange={5-9}]{range-based_for.cpp}
 
 Als het type van de variabele |rij| gewijzigd wordt, dan wordt het type van de variabele |element| automatisch aangepast.
@@ -7930,7 +7957,7 @@ Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second E
 \begin{itemize}
 	
 	\item
-	Reference variabele kan ook geïntroduceerd worden naar aanleiding van de range-based |for|, zie \cref{range-based for}.
+	Reference variabele kan ook geïntroduceerd worden naar aanleiding van de range-based |for|, zie \cref{sec:range-basedfor}.
 	\begin{cpplstfragment}
 		array<int, 5> {0, 1, 2, 3, 4};
 		for (auto& i) {
