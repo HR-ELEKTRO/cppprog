@@ -38,17 +38,17 @@ Tijdsduur som(const Tijdsduur rij[], size_t aantal) {
 #define MAX_TIJDSDUREN 5
 
 int main(void) {
-    Tijdsduur tijdsduur[MAX_TIJDSDUREN];
+    Tijdsduur tijdsduren[MAX_TIJDSDUREN];
     size_t aantal = 0;
     int aantal_gelezen_variabelen;
     do {
         printf("Type uren en minuten in: ");
-        aantal_gelezen_variabelen = scanf("%d%d", &tijdsduur[aantal].uur, &tijdsduur[aantal].minuten);
+        aantal_gelezen_variabelen = scanf("%d%d", &tijdsduren[aantal].uur, &tijdsduren[aantal].minuten);
     }
     while (aantal_gelezen_variabelen == 2 && ++aantal < MAX_TIJDSDUREN);
     printf("\n");
-    drukaf_rij(tijdsduur, aantal);
+    drukaf_rij(tijdsduren, aantal);
     printf("De totaal tijdsduur is:\n");
-    drukaf(som(tijdsduur, aantal));
+    drukaf(som(tijdsduren, aantal));
     return 0;
 }

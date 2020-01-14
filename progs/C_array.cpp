@@ -8,6 +8,8 @@ struct Tijdsduur { // Een Tijdsduur bestaat uit:
     int minuten;   //    een aantal minuten.
 };
 
+using Rij = array<Tijdsduur, 5>;
+
 // Deze functie drukt een Tijdsduur af
 void drukaf(Tijdsduur td) {
     if (td.uur == 0)
@@ -18,13 +20,13 @@ void drukaf(Tijdsduur td) {
 }
 
 // Deze functie drukt een rij met Tijdsduren af
-void drukaf(array<Tijdsduur, 5> rij) {
+void drukaf(const Rij& rij) {
     for (auto t: rij)
         drukaf(t);
 }
 
 // Deze functie berekent de totaal Tijdsduur van een rij met Tijdsduren
-auto som(array<Tijdsduur, 5> rij) {
+auto som(const Rij& rij) {
     Tijdsduur s{0, 0};
     for (auto t: rij) {
         s.uur += t.uur;
@@ -36,15 +38,15 @@ auto som(array<Tijdsduur, 5> rij) {
 }
 
 int main() {
-    array<Tijdsduur, 5> tijdsduur;
-    array<Tijdsduur, 5>::size_type aantal {0};
+    Rij tijdsduren;
+    Rij::size_type aantal {0};
     do {
         cout << "Type uren en minuten in: ";
-        cin >> tijdsduur[aantal].uur >> tijdsduur[aantal].minuten;
+        cin >> tijdsduren[aantal].uur >> tijdsduren[aantal].minuten;
     }
-    while (cin && ++aantal < tijdsduur.size());
+    while (cin && ++aantal < tijdsduren.size());
     cout << '\n';
-    drukaf(tijdsduur);
+    drukaf(tijdsduren);
     cout << "De totaal tijdsduur is:\n";
-    drukaf(som(tijdsduur));
+    drukaf(som(tijdsduren));
 }

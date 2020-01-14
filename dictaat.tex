@@ -318,7 +318,7 @@ Dit programma zou je kunnen gebruiken om, van een aantal gewerkte tijden, de tot
 	In de functie |main| wordt een array \hcode{tijds\\-duur} aangemaakt met \hcode{MAX_\\-TIJDS\\-DU\\-REN} elementen van het type \hcode{Tijds\\-duur}.
 	Tevens wordt de integer variabele |aantal| gebruikt om het aantal ingelezen tijdsduren te tellen.
 	Elke tijdsduur bestaat uit twee integers: een aantal uren en een aantal minuten.
-	In de |do|\hyp{}|while|\hyp{}lus worden tijdsduren vanaf het toetsenbord ingelezen in de array |tijdsduur|.
+	In de |do|\hyp{}|while|\hyp{}lus worden tijdsduren vanaf het toetsenbord ingelezen in de array |tijdsduren|.
 	
 	De getallen worden ingelezen met de standaard leesfunctie |scanf|.
 	Deze functie bevindt zich in de standaard C \USE{library} en het prototype van de functie is gedeclareerd in de \USE{headerfile} |stdio.h|.
@@ -729,6 +729,7 @@ In dit dictaat zullen we daar niet verder op ingaan.
 Zie eventueel voor verdere informatie \cite[hoofdstuk 5: \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus05.html}{String}]{Brokken2019} of \url{https://en.cppreference.com/w/cpp/string}.
 
 \section{Het type \texorpdfstring{\cppcode{array}}{array} en \texorpdfstring{\cppcode{vector}}{vector}}
+\label{sec:introarryvector}
 In de \Cpp{} standaard \USE{library} zijn ook de types |array| en |vector| opgenomen.
 Deze types zijn bedoeld om de oude C\hyp{}array te vervangen.
 In \csecref{std::array} en \csecref{std::vector} komen we hier uitgebreid op terug.
@@ -804,7 +805,7 @@ In \Cpp{} is de naam van een struct meteen een typenaam.
 Je kunt variabelen van het type |struct Tijdsduur| dus eenvoudig als volgt definiëren:
 \cpplstinputfragment[linerange={use_struct_Cpp-use_struct_Cpp}]{fragments.cpp}
 
-In \cref{sec:h2} zul je zien dat \Cpp{} het mogelijk maakt om op een veel betere manier een tijdsduur te definiëren (als user-defined data type).
+In \cref{sec:objectandclasses} zul je zien dat \Cpp{} het mogelijk maakt om op een veel betere manier een tijdsduur te definiëren (als user-defined data type).
 
 \section[C++ als een betere C]{\Cpp{} als een betere C}
 Als we de verbeteringen die in C zijn doorgevoerd bij de definitie van \Cpp{} toepassen in het voorbeeld programma van \cpageref{sec:terugblikC}, dan ontstaat het \Cpp{} programma \proglink{C.cpp}:
@@ -834,6 +835,9 @@ Als we de verbeteringen die in C zijn doorgevoerd bij de definitie van \Cpp{} to
     De functie om een rij af te drukken heeft hier de naam |drukaf| in plaats van |drukafRij|.
 	De functie om een tijdsduur af te drukken heet ook al |drukaf|, maar in \Cpp{} is dit geen probleem.
 	Ik heb hier dus \USE{function name overloading} toegepast, zie \csecref{sec:functionoverloading}.
+    \item
+    De functie |som| heeft nu het returntype |auto|.
+    De compiler kan namelijk aan de hand van het |return|-statement zelf bepalen dat het returntype |Tijdsduur| is, zie \csecref{sec:autoreturntype}.
     \item 
     De lokale variabele |teller| wordt geïnitialiseerd met een universele initialisatie in plaats van met een toekenning, zie \csecref{sec:universeleinitialisatie}.
     \item 
@@ -842,32 +846,72 @@ Als we de verbeteringen die in C zijn doorgevoerd bij de definitie van \Cpp{} to
     Het inlezen vanaf het toetsenbord is hier gedaan met behulp van |cin| in plaats van |scanf|.
 	Het object |cin| kan gebruikt worden in een conditie om te testen of de vorige leesbewerking gelukt is.
 	De variabele |gelezen| is dus niet meer nodig.
-    \item 
-    Als het inlezen op de een of andere manier niet gelukt is, moet het object |cin| gereset worden met behulp van de aanroep |cin.clear();|\footnote{%
-    	Zie eventueel \url{https://en.cppreference.com/w/cpp/io/basic_ios/clear}.
-	}.
+%    \item 
+%    Als het inlezen op de een of andere manier niet gelukt is, moet het object |cin| gereset worden met behulp van de aanroep |cin.clear();|\footnote{%
+%    	Zie eventueel \url{https://en.cppreference.com/w/cpp/io/basic_ios/clear}.
+%	}.
 	\item 
 	De functie |main| heeft geen |return|-statement meer nodig, zie \csecref{sec:mainzonderreturn}.
 \end{itemize}
 
-Misschien vraag je jezelf af waarom in de functies |drukaf| en |som| geen gebruik is gemaakt van de \USE{range-based} |for|, zie \csecref{sec:range-basedfor}.
-%TODO: hier verder! 
-
 Merk op dat dit programma niet meer dan |MAX_TIJDSDUREN| tijdsduren kan verwerken.
 Later in dit dictaat zul je leren hoe dit probleem is op te lossen door gebruik te maken van het type |vector|, zie \csecref{std::vector}.
+Aan het einde van dit hoofdstuk geef ik je al een voorproefje. 
+
+Misschien vraag je jezelf af waarom in de functies |drukaf| en |som| geen gebruik is gemaakt van de \USE{range-based} |for|, zie \csecref{sec:range-basedfor}.
+De reden is simpel: het werkt niet.
+De parameter |rij| is namelijk geen echte array maar een referentie naar het beginadres van de array |tijdsduren| die als argument wordt meegegeven bij aanroep.
+In de functie is het aantal elementen van |tijdsduren| dus niet bekend.
+Dat is ook de reden dat we dit aantal zelf als tweede parameter |aantal| mee moeten geven aan de functie.
+Het is dus niet zo handig om in \Cpp{} de ingebouwde array's, die overgenomen zijn uit C, te gebruiken.
+Het is beter om gebruik te maken van de nieuwe types uit de standaard \Cpp{} \USE{library} zoals |array| en |vector|, zie \csecref{sec:introarryvector} en het onderstaande programma.
+Als je toch probeert om een \USE{range-based} |for| te gebruiken, dan krijg je de volgende cryptische foutmeldingen:
+\begin{cpplstfragment}[mathescape=true]
+$\color{hrred}\textbf{error:}$ 'begin' was not declared in this scope; did you mean 'std::begin'?
+$\color{hrred}\textbf{error:}$ 'end' was not declared in this scope; did you mean 'std::end'?
+\end{cpplstfragment}
 
 Merk op dat de vernieuwingen die in \Cpp{} zijn ingevoerd ten opzichte van C, namelijk het gebruik van user-defined datatypes en objectgeoriënteerde technieken, in dit programma nog \emph{niet} toegepast zijn.
 In dit programma wordt \Cpp{} dus op een C manier gebruikt.
 Dit is voor kleine programma's geen probleem.
 Als een programma echter groter is of als het uitbreidbaar of onderhoudbaar moet zijn, kun je beter gebruik maken van de objectgeoriënteerde technieken die \Cpp{} biedt.
 
+Tot slot van dit hoofdstuk bekijken we een versie van bovenstaand programma waarbij gebruik gemaakt wordt van het type |vector| uit de standaard \USE{library}, zie \proglink{C_vector.cpp}.
+Het is bedoeld om je een indruk te geven van mogelijkheden van \Cpp{}.
+Het is niet nodig om alles al helemaal te begrijpen, we komen er in \cref{sec:templates} nog uitgebreid op terug.
+
+\cpplstinputfragment{C_vector.cpp}
+
+\subsection*{Verklaring van de verschillen:}
+\begin{itemize}
+	\item 
+	Hier is gebruik gemaakt van de standaard include file |vector|, zodat het type |vector| gebruikt kan worden.
+	Een |vector<T>|\footnote{%
+		De \code{<} en \code{>} worden hier gebruikt als een soort van haakjes, zie eventueel \cref{sec:templates}
+	} is een datastructuur waarin een onbepaald aantal elementen van het type |T| kan worden opgeslagen. 
+	\item
+	Dit type wordt in |main| gebruikt om een |vector<Tijdsduur>| genaamd \hcode{tijds\\-duren| aan te maken.
+	Hierin kunnen dus een onbepaald aantal elementen van het type |Tijdsduur| worden opgeslagen.
+	Bij het aanmaken is de |vector| nog leeg.
+	\item 
+	In |main| kunnen we nu telkens als een |Tijdsduur t| is ingelezen deze toevoegen aan de |vector| met het statement |tijdsduren.push_back(t)|.
+	De tijdsduur |t| wordt hiermee aan het einde van |tijdsduren| toegevoegd.
+	\item 
+	De functies |drukaf| en |som| hebben nu nog maar één parameter |rij|, van het type |const vector<Tijdsduur>&|.
+	Met het teken |&| geven we aan dat de parameter \USE{call by reference} moet gebruiken en met |const| geven we aan dat de parameter \USE{read-only} moet zijn.
+	Dit doen we omdat we niet willen dat de hele |vector| gekopieerd wordt bij het aanroepen van de functie en omdat we de |vector| alleen uit willen lezen.
+	De |vector| \squote{weet} zelf hoeveel elementen er in zitten, dus dit hoeven we niet meer als tweede parameter aan deze functies mee te geven.
+	\item 
+	Omdat de |vector| zelf weet hoeveel elementen er in zitten, kunnen we nu de \USE{range-based} |for| gebruiken om elementen van de vector één voor één te behandelen.
+\end{itemize}
+
 In dit hoofdstuk zijn de kleine verbeteringen van \Cpp{} ten opzichte van zijn voorganger C besproken die je moet weten om de rest van dit dictaat te kunnen lezen.
-Verdere kleine verbeteringen, die ook best handig kunnen zijn bij het programmeren in \Cpp{} kun je vinden in \csecref{van c naar cpp de details}.
+Verdere kleine verbeteringen, die ook best handig kunnen zijn bij het programmeren in \Cpp{} kun je vinden in \csecref{sec:vancnaarcppdedetails}.
 
 \ifshowall
 
 \chapter{Objects and classes}
-\label{H2}
+\label{sec:objectandclasses}
 In dit hoofdstuk worden de belangrijkste taalconstructies die \Cpp{} biedt voor het programmeren van UDT's (\emph{User-defined Data Types}) besproken.
 Een UDT is een \emph{\USE{user-defined}} type dat voor een gebruiker niet te onderscheiden is van ingebouwde types (zoals |int|).
 
@@ -2718,7 +2762,7 @@ In dit hoofdstuk worden de twee belangrijkste manieren besproken waarop een herb
 Deze twee vormen van hergebruik worden \emph{\USE{composition}} en \emph{\USE{inheritance}} genoemd.
 \USE{Composition} ken je al, maar \USE{inheritance} is (voor jou) nieuw en vormt de kern van OOP\@.
 
-De in \csecref{H2} gedefinieerde class |Breuk| lijkt op het eerste gezicht al een prima herbruikbare softwarecomponent.
+De in \csecref{sec:objectandclasses} gedefinieerde class |Breuk| lijkt op het eerste gezicht al een prima herbruikbare softwarecomponent.
 Als je echter een variant van deze class |Breuk| wilt definiëren, dan heb je op dit moment geen andere keuze dan de class |Breuk| te kopiëren, te voorzien van een andere naam, bijvoorbeeld |MyBreuk|, en de benodigde (kleine) wijzigingen in deze kopie aan te brengen.
 Deze manier van genereren van varianten produceert, zoals je al weet, een minder goed onderhoudbaar programma.
 Je zult in dit hoofdstuk leren hoe je door het toepassen van een objectgeoriënteerde techniek (\USE{inheritance}) een onderhoudbare variant van een herbruikbare softwarecomponent kan maken.

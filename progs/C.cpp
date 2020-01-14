@@ -23,7 +23,7 @@ void drukaf(const Tijdsduur rij[], size_t aantal) {
 }
 
 // Deze functie berekent de totaal Tijdsduur van een rij met een aantal Tijdsduren
-Tijdsduur som(const Tijdsduur rij[], size_t aantal) {
+auto som(const Tijdsduur rij[], size_t aantal) {
     Tijdsduur s {0, 0};
     for (size_t teller {0}; teller < aantal; ++teller) {
         s.uur += rij[teller].uur;
@@ -36,15 +36,15 @@ Tijdsduur som(const Tijdsduur rij[], size_t aantal) {
 
 int main() {
     constexpr size_t MAX_TIJDSDUREN {5};
-    Tijdsduur tijdsduur[MAX_TIJDSDUREN];
+    Tijdsduur tijdsduren[MAX_TIJDSDUREN];
     size_t aantal {0};
     do {
         cout << "Type uren en minuten in: ";
-        cin >> tijdsduur[aantal].uur >> tijdsduur[aantal].minuten;
+        cin >> tijdsduren[aantal].uur >> tijdsduren[aantal].minuten;
     }
-    while (cin && ++aantal < MAX);
+    while (cin && ++aantal < MAX_TIJDSDUREN);
     cout << '\n';
-    drukaf(tijdsduur, aantal);
+    drukaf(tijdsduren, aantal);
     cout << "De totaal tijdsduur is:\n";
-    drukaf(som(tijdsduur, aantal));
+    drukaf(som(tijdsduren, aantal));
 }

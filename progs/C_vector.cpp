@@ -18,13 +18,13 @@ void drukaf(Tijdsduur td) {
 }
 
 // Deze functie drukt een rij met Tijdsduren af
-void drukaf(vector<Tijdsduur> rij) {
+void drukaf(const vector<Tijdsduur>& rij) {
     for (auto t: rij)
         drukaf(t);
 }
 
 // Deze functie berekent de totaal Tijdsduur van een rij met Tijdsduren
-auto som(vector<Tijdsduur> rij) {
+auto som(const vector<Tijdsduur>& rij) {
     Tijdsduur s{0, 0};
     for (auto t: rij) {
         s.uur += t.uur;
@@ -36,17 +36,17 @@ auto som(vector<Tijdsduur> rij) {
 }
 
 int main() {
-    vector<Tijdsduur> tijdsduur;
+    vector<Tijdsduur> tijdsduren;
     do {
         Tijdsduur t;
         cout << "Type uren en minuten in: ";
         cin >> t.uur >> t.minuten;
         if (cin)
-            tijdsduur.push_back(t);
+            tijdsduren.push_back(t);
     }
     while (cin);
     cout << '\n';
-    drukaf(tijdsduur);
+    drukaf(tijdsduren);
     cout << "De totaal tijdsduur is:\n";
-    drukaf(som(tijdsduur));
+    drukaf(som(tijdsduren));
 }
