@@ -688,7 +688,7 @@ aantalRegels = 79;
 //  $\color{hrred}\textbf{error:}$ assignment of read-only variable 'aantalRegels'
 \end{cpplstfragment}
 
-In \csecref{const member} zul je zien dat het met een |const| \USE{qualifier} ook mogelijk wordt om constanten (\USE{read-only} variabelen) te definiëren van zelfgemaakte types.
+In \csecref{sec:constmember} zul je zien dat het met een |const| \USE{qualifier} ook mogelijk wordt om constanten (\USE{read-only} variabelen) te definiëren van zelfgemaakte types.
 
 \section{Het type \texorpdfstring{\cppcode{string}}{string}}
 \label{sec:string}
@@ -890,7 +890,7 @@ Het is niet nodig om alles al helemaal te begrijpen, we komen er in \cref{sec:te
 		De \code{<} en \code{>} worden hier gebruikt als een soort van haakjes, zie eventueel \cref{sec:templates}
 	} is een datastructuur waarin een onbepaald aantal elementen van het type |T| kan worden opgeslagen. 
 	\item
-	Dit type wordt in |main| gebruikt om een |vector<Tijdsduur>| genaamd \hcode{tijds\\-duren| aan te maken.
+	Dit type wordt in |main| gebruikt om een |vector<Tijdsduur>| genaamd \hcode{tijds\\-duren} aan te maken.
 	Hierin kunnen dus een onbepaald aantal elementen van het type |Tijdsduur| worden opgeslagen.
 	Bij het aanmaken is de |vector| nog leeg.
 	\item 
@@ -931,10 +931,10 @@ Deze componenten zijn door anderen geproduceerd en je moet er dus voor betalen, 
 Bij het gebruik zijn alleen de specificaties van de component van belang, de interne werking (implementatie) van de component is voor de gebruiker van de component niet van belang.
 Het opbouwen van hardware met bestaande componenten maakt het ontwerpen en testen eenvoudiger en goedkoper.
 Als bovendien voor standaard interfaces wordt gekozen, kan de hardware ook aanpasbaar en uitbreidbaar zijn (denk bijvoorbeeld aan een PC met \USE{PCI Express bus}).
-Bij het ontwerpen van software was het, voor het ontstaan van OOP, niet gebruikelijk om gebruik te maken van componenten die door anderen ontwikkeld zijn (en waarvoor je dus moet betalen).
+Bij het ontwerpen van software was het, voor het ontstaan van OOP, niet gebruikelijk om gebruik te maken van complexere componenten die door anderen ontwikkeld zijn (en waarvoor je dus moet betalen).
 Vaak werden wel bestaande datastructuren en algoritmen gekopieerd maar die moesten vaak toch aangepast worden.
 Het gebruik van functie \USE{libraries} was wel gebruikelijk maar dit zijn in feite eenvoudige componenten.
-Een voorbeeld van een complexe component is bijvoorbeeld een editor (inclusief menu opties: openen, opslaan, opslaan als, print, printer set-up, bewerken (knippen, kopiëren, plakken), zoeken en zoek\&vervang en inclusief een knoppenbalk).
+Een voorbeeld van een complexe component is bijvoorbeeld een editor (inclusief menu opties: openen, opslaan, opslaan als, print, printer set-up, bewerken (knippen, kopiëren, plakken), zoeken, zoek\&vervang en inclusief een knoppenbalk).
 In alle applicaties waarbij je tekst moet kunnen invoeren kun je deze editor dan hergebruiken.
 Ondanks dat het gebruik van softwarecomponenten, die we kunnen kopen en waarmee we vervolgens zelf applicaties kunnen ontwikkelen, sinds de introductie van OOP is toegenomen blijft het gebruik van softwarecomponenten toch achter bij het gebruik van hardwarecomponenten.
 Dit heeft volgens mij verschillende redenen:
@@ -1005,7 +1005,7 @@ Je kunt een class |Bakker| bijvoorbeeld afleiden door middel van overerving van 
 Dit betekent dan dat de class |Bakker| minimaal dezelfde \USE{messages} ondersteunt als de class |Winkelier| (maar de class |Bakker| kan er wel zijn eigen \USE{methods} aan koppelen!).
 We zeggen: \enquote{Een \cppcode{Bakker} is een \cppcode{Winkelier}} of \enquote{Een \cppcode{Bakker} erft over van \cppcode{Winkelier}} of \enquote{Een \cppcode{Winkelier} is een generalisatie van \cppcode{Bakker}}.
 Composition wordt ook wel \emph{\USE{containment}} of \emph{\USE{aggregation}} genoemd en leidt tot een zogenoemde \enquote{\emph{heeft een}} relatie.
-Je kunt in de definitie van een class |Auto| vijf objecten van de class |Wiel| opnemen.
+Je kunt in de definitie van een class |Auto| vier objecten van de class |Wiel| opnemen.
 De |Auto| kan deze |Wiel|en dan gebruiken om de aan |Auto| gestuurde \USE{messages} uit te voeren.
 We zeggen: \enquote{een \cppcode{Auto} heeft \cppcode{Wiel}en}.
 Welke relatie in een bepaald geval nodig is, is niet altijd eenvoudig te bepalen.
@@ -1064,14 +1064,10 @@ Toen je leerde programmeren in C heb je geleerd hoe je vanuit een probleemstelli
 Deze methode bestond uit het opdelen van het probleem in deelproblemen, die op hun beurt weer werden opgedeeld in deelproblemen enz.\ net zo lang tot de oplossing eenvoudig werd.
 Deze methode heet functionele decompositie.
 De software ontwikkelmethoden die hiervan zijn afgeleid worden \emph{\USE{structured analyse and design}} genoemd.
-De bekende Yourdon methode is daar een voorbeeld van.
+De bekende Yourdon methode \cite{Yourdon2006} is daar een voorbeeld van.
 Bij het gebruik van objectgeoriënteerde programmeertalen ontstaat al snel de
 vraag: Hoe vind ik uitgaande van de probleemstelling de in dit programma benodigde classes en het verband tussen die classes?
-Het antwoord op deze vraag wordt bepaald door de gebruikte OOA (\USE{Object Oriented Analyse}) en OOD (\USE{Object Oriented Design}) methode.%
-\footnote{%
-    Deze onderwerpen komen bij de opleiding Elektrotechniek later in het tweede deel van de OGOPRG lessen aan de orde.
-    Bij de opleiding Technische Informatica zijn deze onderwerpen al aan de orde geweest en komen ze nog uitgebreid bij verschillende andere vakken aan de orde.
-}
+Het antwoord op deze vraag wordt bepaald door de gebruikte OOA (\USE{Object Oriented Analyse}) en OOD (\USE{Object Oriented Design}) methode.
 
 \section{UDT's (User-defined Data Types)}
 \label{UDT}
@@ -1120,7 +1116,7 @@ Het zou beter zijn als alleen de programmeur die verantwoordelijk is voor het on
 Deze nadelen komen voort uit het feit dat in C de definitie van het type |Breuk| niet gekoppeld is aan de bewerkingen die op dit type uitgevoerd kunnen worden.
 Tevens is het niet mogelijk om bepaalde datavelden en/of bewerkingen ontoegankelijk te maken voor programmeurs die dit type gebruiken.
 
-In \Cpp{} kunnen we door gebruik te maken van een {\it class\/} een eigen type |Breuk| als volgt declareren (\proglink{Breuk0zonderRef.cpp}):
+In \Cpp{} kunnen we door gebruik te maken van een {\it class\/} een eigen type |Breuk| als volgt declareren (\proglink{Breuk0.cpp}):
 \begin{cpplstfragment}[mathescape=true]
 $\label{breuk0}$class Breuk {             // Op een object van de class Breuk
 public:                   // kun je de volgende bewerkingen 
@@ -1156,7 +1152,7 @@ private:                  // Een object van de class Breuk
 \makeatletter\let\Hy@footnote@currentHref\saved@Href@A\makeatother 
 \addtocounter{BackrefHyperFootnoteCounter}{-1}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
-\footnotetext{\cppcode{const} memberfunctie wordt pas behandeld in \csecref{const member}.}
+\footnotetext{\cppcode{const} memberfunctie wordt pas behandeld in \csecref{sec:constmember}.}
 \stepcounter{footnote}
 \makeatletter\let\Hy@footnote@currentHref\saved@Href@B\makeatother
 \stepcounter{BackrefHyperFootnoteCounter}
@@ -1181,12 +1177,12 @@ Deze private functies en variabelen zitten ingekapseld in de class |Breuk|.
 Functies die opgenomen zijn in een class worden \emph{memberfuncties} genoemd.
 De \label{Breuk::plus}memberfunctie |plus| kan als volgt gedefinieerd worden%
 \footnote{%
-    De definitie van de memberfuncties \cppcode{leesin}, \cppcode{drukaf} en \cppcode{normaliseer} is hier niet gegeven.
+    De definitie van de memberfuncties \cppcode{leesin}, \cppcode{drukaf} en \cppcode{normaliseer} zijn te vinden in \proglink{Breuk0.cpp}.
 }:
-\cpplstinputfragment[linerange=29-33]{Breuk0zonderRef.cpp}
+\cpplstinputfragment[linerange=30-34]{Breuk0.cpp}
 
 Je kunt objecten (variabelen) van de class (het zelfgedefinieerde type) |Breuk| nu als volgt gebruiken:
-\cpplstinputfragment[linerange=55-59]{Breuk0zonderRef.cpp}
+\cpplstinputfragment[linerange=47-56]{Breuk0.cpp}
 
 Een object heeft drie kenmerken:
 \begin{itemize}
@@ -1212,7 +1208,7 @@ De memberfunctie |plus| kan alleen op een object van de class |Breuk| uitgevoerd
 Dit wordt genoteerd als: |a.plus(b);| Het object |a| wordt de \emph{\USE{receiver}} (ontvanger) van de memberfunctie genoemd.
 Als in de definitie van de memberfunctie |plus| de datavelden |boven| en |onder| gebruikt worden, dan zijn dit de datavelden van de \USE{receiver} (in dit geval object |a|).
 Als in de definitie van de memberfunctie |plus| de memberfunctie |normaliseer| gebruikt wordt, dan wordt deze memberfunctie op de \USE{receiver} uitgevoerd (in dit geval object |a|).
-De betekenis van |const| achter de declaratie van de memberfunctie |drukaf| komt later (\csecref{const member}) aan de orde.
+De betekenis van |const| achter de declaratie van de memberfunctie |drukaf| komt later (\csecref{sec:constmember}) aan de orde.
 
 \needspace{2\baselineskip}
 Deze manier van werken heeft de volgende voordelen:
@@ -1230,7 +1226,7 @@ Alleen de programmeur die verantwoordelijk is voor het onderhouden van de class 
 \end{itemize}
 
 Bij het ontwikkelen van kleine programma's zijn deze voordelen niet zo belangrijk maar bij het ontwikkelen van grote programma's zijn deze voordelen wel erg belangrijk.
-Door gebruik te maken van de |class| |Breuk| met bijbehorende memberfuncties in plaats van de |typedef| |Breuk| met de bijbehorende functies wordt het programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
+Door gebruik te maken van de |class| |Breuk| met bijbehorende memberfuncties in \Cpp{} in plaats van de |typedef struct| |Breuk| met de bijbehorende functies in C wordt het programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
 
 De hierboven gedefinieerde class |Breuk| is erg beperkt. In de inleiding van dit hoofdstuk heb ik geschreven: \enquote{Een UDT is een user-defined type dat voor een gebruiker niet te onderscheiden is van ingebouwde types (zoals \cppcode{int})}.
 Een UDT |Breuk| zal dus als volgt gebruikt moeten kunnen worden:
@@ -1238,7 +1234,7 @@ Een UDT |Breuk| zal dus als volgt gebruikt moeten kunnen worden:
 \iftoggle{ebook}{
 \cpplstinputfragment[linerange={Breuk3_main-Breuk3_main}]{fragments.cpp}
 }{
-\cpplstinputfragment[linerange=135-152]{Breuk3.cpp}
+\cpplstinputfragment[linerange=124-141]{Breuk3.cpp}
 }
 
 Je ziet dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als het ingebouwde type |int| te gebruiken is.
@@ -1266,12 +1262,13 @@ Meteen daarna zal ik één voor één op de bovengenoemde punten ingaan.
 
 \begin{cpplstfragment}[mathescape=true]
 #include <iostream>
+#include <numeric>
 #include <cassert>
 using namespace std;
 
 // Classdeclaratie:
 
-$\label{breuk1 classdeclaratie}$class Breuk {
+$\label{breuk1::classdeclaratie}$class Breuk {
 public:
     // Classinterface. Vertelt:
     // - hoe je een object van deze class kunt maken;
@@ -1282,7 +1279,7 @@ public:
     Breuk(int t);
     Breuk(int t, int n);
     // Vraag memberfuncties zie $\texttt{\cpageref{vraagfuncties}}$.
-    int teller() const; // const memberfunctie zie $\texttt{\csecref{const member}}$.
+    int teller() const; // const memberfunctie zie $\texttt{\csecref{sec:constmember}}$.
     int noemer() const;
     // Doe memberfuncties zie $\texttt{\cpageref{doefuncties}}$.
     void plus(Breuk$%
@@ -1304,19 +1301,6 @@ private:
     int onder;
     void normaliseer();
 };
-
-// Hulpfunctie: bepaald de grootste gemene deler.
-
-int ggd(int n, int m) {
-    if (n == 0) return m;
-    if (m == 0) return n;
-    if (n < 0) n = -n;
-    if (m < 0) m = -m;
-    while (m != n)
-        if (n > m) n -= m;
-        else m -= n;
-    return n;
-}
 
 // Classdefinitie:
 // Vertelt hoe de memberfuncties van de class geïmplenteerd zijn.
@@ -1361,7 +1345,7 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d(ggd(boven, onder));
+    int d {gcd(boven < 0 ? -boven : boven, onder)};
     boven /= d;
     onder /= d;
 }
@@ -1369,20 +1353,18 @@ void Breuk::normaliseer() {
 // Hoofdprogramma:
 
 int main() {$\label{breuk1::main}$
-    Breuk b1(4);
-    cout << "b1(4) = " << b1.teller() << '/' << b1.noemer() << endl;
-    Breuk b2(23, -5);
-    cout << "b2(23, -5) = " << b2.teller() << '/' << b2.noemer() << endl;
-    Breuk b3(b2); // kan dit zomaar? Zie $\texttt{\csecref{default copy constructor}}$.
-    cout << "b3(b2) = " << b3.teller() << '/' << b3.noemer() << endl;
+    Breuk b1 {4};
+    cout << "b1 {4} = " << b1.teller() << '/' << b1.noemer() << '\n';
+    Breuk b2 {23, -5};
+    cout << "b2 {23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
+    Breuk b3 {b2}; // kan dit zomaar? Zie $\texttt{\csecref{sec:defaultcopyconstructor}}$.
+    cout << "b3 {b2} = " << b3.teller() << '/' << b3.noemer() << '\n';
     b3.abs();
-    cout << "b3.abs() = " << b3.teller() << '/' << b3.noemer() << endl;
-    b3 = b2; // kan dit zomaar? Zie $\texttt{\csecref{default assignment operator}}$.
-    cout << "b3 = b2 = " << b3.teller() << '/' << b3.noemer() << endl;
+    cout << "b3.abs() = " << b3.teller() << '/' << b3.noemer() << '\n';
+    b3 = b2; // kan dit zomaar? Zie $\texttt{\csecref{sec:defaultassignmentoperator}}$.
+    cout << "b3 = b2 = " << b3.teller() << '/' << b3.noemer() << '\n';
     b3.plus(5);
-    cout << "b3.plus(5) = " << b3.teller() << '/' << b3.noemer() << endl;
-    cin.get();
-    return 0;
+    cout << "b3.plus(5) = " << b3.teller() << '/' << b3.noemer() << '\n';
 }
 \end{cpplstfragment}
 
@@ -1391,7 +1373,7 @@ int main() {$\label{breuk1::main}$
 \addtocounter{BackrefHyperFootnoteCounter}{-1}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
-    Het is beter om hier een \cppcode{const} \USE{reference} parameter te gebruiken. Dit wordt pas behandeld op \csecref{const reference parameter}.
+    Het is beter om hier een \cppcode{const} \USE{reference} parameter te gebruiken. Dit wordt pas behandeld in \csecref{const reference parameter}.
 }
 \stepcounter{footnote}
 \makeatletter\let\Hy@footnote@currentHref\saved@Href@D\makeatother
@@ -1400,14 +1382,15 @@ int main() {$\label{breuk1::main}$
 \footnotetext{%
     \label{assert}De standaard functie \cppcode{assert} doet niets als de, als argument meegegeven, expressie \cppcode{true} oplevert maar breekt het programma met een passende foutmelding af als dit niet zo is.
     Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan bepaalde voorwaarden (waarvan je \enquote{zeker} weet dat ze geldig zijn) wordt voldaan.
+    %TODO: verwijzing toevoegen
 }
 
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
-b1(4) = 4/1
-b2(23, -5) = -23/5
-b3(b2) = -23/5
+b1 {4} = 4/1
+b2 {23, -5} = -23/5
+b3 {b2} = -23/5
 b3.abs() = 23/5
 b3 = b2 = -23/5
 b3.plus(5) = 2/5
@@ -1417,17 +1400,16 @@ b3.plus(5) = 2/5
 De \label{constructor}\USE{constructors} definiëren hoe een object gemaakt kan worden.
 De \USE{constructors} hebben dezelfde naam als de class. 
 Voor de class |Breuk| heb ik de volgende drie \USE{constructors} gedeclareerd:
-\cpplstinputfragment[linerange=15-17]{Breuk1.cpp}
+\cpplstinputfragment[linerange=16-18]{Breuk1.cpp}
 
 Als een |Breuk| bij het aanmaken niet geïnitialiseerd wordt, dan wordt de \USE{constructor} zonder parameters aangeroepen. 
 In de definitie van deze \USE{constructor} worden dan de datavelden |boven| met |0| en |onder| met |1| geïnitialiseerd. 
 Dit gebeurt in een zogenoemde \label{initialization list}\emph{\USE{initialization list}}. 
-Na het prototype van de \USE{constructor} volgt een |:| waarna de datavelden één voor één geïnitialiseerd worden door middel van de
-|(|\ldots|)| notatie.
-\cpplstinputfragment[linerange=51-52]{Breuk1.cpp}
+Na het prototype van de \USE{constructor} volgt een |:| waarna de datavelden één voor één geïnitialiseerd worden door middel van een universele initialisatie, zie \csecref{sec:universeleinitialisatie}.
+\cpplstinputfragment[linerange=39-40]{Breuk1.cpp}
 
 In dit geval wordt het dataveld |boven| geïnitialiseerd met de waarde |0| en wordt het dataveld |onder| geïnitialiseerd met de waarde |1|, verder is er geen code in de \USE{constructor} opgenomen. 
-Door tussen de |{| en |}| bijvoorbeeld een output opdracht op te nemen zou je een melding op het scherm kunnen geven telkens als een |Breuk|
+Door tussen in de \USE{constructor} een output opdracht op te nemen zou je een melding op het scherm kunnen geven telkens als een |Breuk|
 aangemaakt wordt. 
 Deze \USE{constructor} wordt dus aangeroepen als je een |Breuk| aanmaakt zonder deze te initialiseren. 
 Na het uitvoeren van de onderstaande code heeft de breuk |b1| de waarde \sfrac{0}{1}.
@@ -1438,31 +1420,22 @@ Na het uitvoeren van de onderstaande code heeft de breuk |b1| de waarde \sfrac{0
 De overige \USE{constructors} worden gebruikt als je een |Breuk| bij het aanmaken met één of met twee integers initialiseert.
 Na afloop van de onderstaande code zal het object |b2| de waarde \sfrac{1}{2} bevatten (\sfrac{3}{6} wordt namelijk in de \USE{constructor} genormaliseerd tot \sfrac{1}{2}). 
 \begin{cpplstfragment}
-    Breuk b2(3,6); // roep \USE{constructor} met twee int parameters aan
+    Breuk b2 {3, 6}; // roep \USE{constructor} met twee int parameters aan
 \end{cpplstfragment}
 
 Deze \USE{constructor} |Breuk(int t, int n);| heb ik als volgt gedefinieerd:
-\cpplstinputfragment[linerange=57-59]{Breuk1.cpp}
+\cpplstinputfragment[linerange=45-47]{Breuk1.cpp}
 
-%Sinds \Cpp{}11 kun je alle variabelen en objecten initialiseren met behulp van zogenoemde uniforme initialisatie (Engels \emph{\USE{uniform initialization}}). Bij uniforme initialisatie gebruik je accolades eventueel voorafgegaan door een |=|-teken.
-
-\begin{cpplstfragment}
-    Breuk b3{3,6}; // roep constructor met twee int parameters aan
-    Breuk b4 = {3,6}; // roep constructor met twee int parameters aan
-\end{cpplstfragment}
-
-Sinds \Cpp{}11\footnote{Deze zogenoemde \emph{\USE{delegating constructors}} zijn beschikbaar in Microsoft Visual Studio vanaf versie 2012 en in GCC vanaf versie 4.7.} is het mogelijk om vanuit een \USE{constructor} een andere \USE{constructor} van dezelfde class aan te roepen in de \USE{initialization list}. 
-De \USE{constructor} zonder parameters kan dus ook als volgt worden geïmplementeerd%
-%TODO: harde return nodig in ebook versie. Is dat niet te vermijden?
-\iftoggle{ebook}{\\
-}{} (\proglink{Breuk1ConstructorCallsConstructor.cpp}):
-\cpplstinputfragment[linerange=35-36]{Breuk1ConstructorCallsConstructor.cpp}
+Het is ook mogelijk om vanuit een \USE{constructor} een andere \USE{constructor} van dezelfde class aan te roepen in de \USE{initialization list}. 
+De \USE{constructor} zonder parameters kan dus ook als volgt worden geïmplementeerd
+(\proglink{Breuk1_constructor_calls_constructor.cpp}):
+\cpplstinputfragment[linerange=23-24]{Breuk1_constructor_calls_constructor.cpp}
 
 Door het definiëren van \USE{constructors} kun je er dus voor zorgen dat elk object bij het aanmaken geïnitialiseerd wordt. 
 Fouten die voortkomen uit het gebruik van een niet geïnitialiseerde variabele worden hiermee voorkomen. 
 Het is dus verstandig om voor elke class één of meer \USE{constructors} te definiëren%
 \footnote{%
-    Door het slim gebruik van default argumenten kun je het aantal \USE{constructors} vaak beperken. 
+    Door het slim gebruik van default argumenten, zie \csecref{sec:defaultarguments}, kun je het aantal \USE{constructors} vaak beperken. 
     Alle drie de \USE{constructors} die ik voor de class \cppcode{Breuk} gedefinieerd heb zouden door één \USE{constructor} met default argumenten vervangen kunnen worden:
     \cppcode{Breuk::Breuk(int t = 0, int n = 1);}.
 }.
@@ -1479,7 +1452,7 @@ Het initialiseren van datavelden vanuit de \USE{constructor} kan op twee maniere
 De eerste methode heeft de voorkeur, omdat dit altijd werkt. Een constante dataveld kan bijvoorbeeld niet met een \USE{assignment} geïnitialiseerd worden.
 
 Dus gebruik:
-\cpplstinputfragment[linerange=51-52]{Breuk1.cpp}
+\cpplstinputfragment[linerange=39-40]{Breuk1.cpp}
 in plaats van:
 \begin{cpplstfragment}[mathescape=true]
 Breuk::Breuk() {
@@ -1488,10 +1461,10 @@ Breuk::Breuk() {
 }
 \end{cpplstfragment}
 
-\sectionrefEckelOne{Constructors en type conversies}{561}{Constructor conversion}
-\label{conversie constructor}
+\section{Constructors en type conversies}
+\label{sec:conversieconstructor}
 In het bovenstaande programma wordt, aan het einde van de functie |main|, de memberfunctie |plus| als volgt aangeroepen:
-\cpplstinputfragment[linerange=103-103]{Breuk1.cpp}
+\cpplstinputfragment[linerange=74-74]{Breuk1.cpp}
 
 Uit de uitvoer blijkt dat dit \enquote{gewoon} werkt: |b3| wordt verhoogd met \sfrac{5}{1}. 
 Op zich is dit vreemd want de memberfunctie |plus| is gedefinieerd met een |Breuk| als parameter en niet met een |int| als parameter.
@@ -1518,13 +1491,14 @@ Als je dus een \USE{constructor} |Breuk(int)| definieert, wordt het type |int| i
 }.
 
 \needspace{2\baselineskip}
-\sectionrefEckelOne{Default copy constructor}{493}{Default copy-constructor}
-\label{default copy constructor}
+\section{Default copy constructor}
+\label{sec:defaultcopyconstructor}
 Een \USE{copy constructor} wordt gebruikt als een object gekopieerd moet worden. Dit is het geval als:
 \begin{itemize}
     \item een object geïnitialiseerd wordt met een object van dezelfde class;
     \item een object als argument wordt doorgegeven aan een functie;\footnote{In \csecref{sec:referenceparameters} zul je zien dat je in \Cpp{} een argument aan een functie ook kunt meegeven zonder dat er een kopie wordt gemaakt.}
     \item een object als waarde wordt teruggegeven vanuit een functie.\footnote{In \csecref{refreturn} zul je zien dat je in \Cpp{} in plaats van de waarde van een object ook het object zelf kunt teruggeven vanuit een functie. Er hoeft in dat geval geen kopie gemaakt te worden.}
+	%TODO: verwijzen nar ROV optimalisatie
 \end{itemize}
 
 De compiler zal als de programmeur geen \USE{copy constructor} definieert zelf een \emph{\USE{default copy constructor}} genereren. 
@@ -1534,7 +1508,7 @@ Het is ook mogelijk om zelf een \USE{copy constructor} te definiëren (wordt lat
 In het programma op \cpageref{breuk1::main} wordt de \USE{copy constructor} van de class |Breuk| als volgt gebruikt:
 
 \begin{cpplstfragment}
-    Breuk b3{b2};
+    Breuk b3 {b2};
 \end{cpplstfragment}
 
 De door de compiler gegenereerde \USE{default copy constructor} zal nu een object van de class |Breuk| aanmaken genaamd |b3| en de waarde van de private variabelen |boven| en |onder| uit de |Breuk| genaamd |b2| kopiëren naar |b3|.
@@ -1558,10 +1532,10 @@ De \USE{default copy constructor} van de class |Rechthoek| zal nu de private var
 Als er in de class |Rechthoek| geen enkele \USE{constructor} gedefinieerd is dan wordt door de compiler een \USE{default constructor} gedefinieerd, zie \cpageref{default constructor}. Deze \USE{default constructor} zal de \USE{default constructor} van de class |Breuk| aanroepen om de private variabelen |lengte| en |breedte| te initialiseren. Als we dus een object van de class |Rechthoek| aanmaken dan zorgt de \USE{default constructor} ervoor dat beide private variabelen de waarde \sfrac{0}{1} krijgen.
 
 \section{Default assignment operator}
-\label{default assignment operator}
+\label{sec:defaultassignmentoperator}
 Als geen \USE{assignment operator} (|=|) gedefinieerd is, wordt door de compiler een \emph{\USE{default assignment operator}} aangemaakt.
 Deze \USE{default assignment operator} roept voor elk dataveld de \USE{assignment operator} van dit veld aan (Engels: \emph{\USE{memberwise assignment}}). 
-Het is ook mogelijk om zelf een \USE{assignment operator} te definiëren (wordt later behandeld, zie eventueel \csecref{assignment operator}) maar voor de class |Breuk| voldoet de door de compiler gedefinieerde \USE{assignment operator} prima.
+Het is ook mogelijk om zelf een \USE{assignment operator} te definiëren (wordt later behandeld, zie eventueel \csecref{sec:assignmentoperator}) maar voor de class |Breuk| voldoet de door de compiler gedefinieerde \USE{assignment operator} prima.
 
 In het programma op \cpageref{breuk1::main} wordt de \USE{assignment operator} van de class |Breuk| als volgt gebruikt:
 
@@ -1581,27 +1555,28 @@ De \USE{default assignment operator} zal er voor zorgen dat, als een private var
 
 De \USE{default assignment operator} van de class |Rechthoek| zal nu de private variabelen |lengte| en |breedte| van |r1| naar |r2| kopiëren. Beide variabelen bestaan voor zich weer uit de private variabelen |boven| en |onder|, die ook automatisch gekopieerd worden.
 
-\sectionrefEckelOne{const memberfuncties}{380}{const objects \& member functions}
-\label{const member}
+\section{\texorpdfstring{\cppcode{const}}{const} memberfuncties}
+\label{sec:constmember}
 Een object (variabele) van de class (het zelfgedefinieerde type) |Breuk| kan ook als \USE{read-only} object gedefinieerd worden. 
 Bijvoorbeeld:
 \begin{cpplstfragment}
-    Breuk b(1, 3);           // variabele b met waarde 1/3
-    const Breuk halve(1, 2); // constante halve met waarde 1/2
+    Breuk b {1, 3};           // variabele b met waarde 1/3
+    const Breuk halve {1, 2}; // constante halve met waarde 1/2
 \end{cpplstfragment}
 \needspace{3\baselineskip}
 Een |const| |Breuk| mag je (vanzelfsprekend) niet veranderen.
 \begin{cpplstfragment}[mathescape=true]
     halve = b; 
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ binary '=' : no operator found which operand of type 'const Breuk'
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ no match for 'operator=' in 'halve = b'
+//  $\color{hrred}\textbf{error:}$ passing 'const Breuk' as 'this' argument discards qualifiers$\footnotemark$
 \end{cpplstfragment}
+\footnotetext{Deze foutmelding is niet erg helder. De \cppcode{this} pointer wordt behandeld op \csecref{this}.}
+
 Stel jezelf nu eens de vraag welke memberfuncties je aan mag roepen op het object |halve|%
 \footnote{%
-    Zie \cpageref{breuk1 classdeclaratie} voor de declaratie van de class \cppcode{Breuk}.
+    Zie \cpageref{breuk1::classdeclaratie} voor de declaratie van de class \cppcode{Breuk}.
 }.
 De memberfuncties |teller| en |noemer| kunnen zonder problemen worden aangeroepen op een \USE{read-only} breuk omdat ze de waarde van de breuk niet veranderen. 
-De memberfuncties |plus| en |abs| mogen echter niet op het object |halve| worden aangeroepen omdat deze memberfuncties dit object zouden wijzigen en een \USE{read-only} object mag je vanzelfsprekend niet veranderen. 
+De memberfuncties |plus| en |abs| mogen echter niet op het object |halve| worden aangeroepen omdat deze memberfuncties dit object zouden (kunnen) wijzigen en een \USE{read-only} object mag je vanzelfsprekend niet veranderen. 
 De compiler kan niet (altijd%
 \footnote{%
     De compiler kan dit zeker niet als de classdefinitie separaat van de applicatie gecompileerd wordt. Zie \csecref{separaat compileren}.
@@ -1609,22 +1584,21 @@ De compiler kan niet (altijd%
 Daarom mag je een memberfunctie alleen aanroepen voor een |const| object als je expliciet aanduidt dat deze memberfunctie het object niet verandert. 
 Dit doe je door het \USE{keyword} |const| achter de memberfunctie te plaatsten. 
 Bijvoorbeeld:
-\cpplstinputfragment[linerange=18-18]{Breuk1.cpp}
+\cpplstinputfragment[linerange=19-19]{Breuk1.cpp}
 
 Met deze |const| memberfunctie kun je de |teller| van een |Breuk| opvragen. De implementatie is erg eenvoudig:
-\cpplstinputfragment[linerange=61-63]{Breuk1.cpp}
+\cpplstinputfragment[linerange=49-51]{Breuk1.cpp}
 
 Je kunt de memberfunctie |teller| nu dus ook aanroepen voor \USE{read-only} breuken:
 \begin{cpplstfragment}
-    const Breuk halve{1, 2}; // constante halve met waarde 1/2
+    const Breuk halve {1, 2}; // constante halve met waarde 1/2
     cout << halve.teller() << endl;
 \end{cpplstfragment}
 
 Het aanroepen van de memberfunctie |plus| voor de |const| |Breuk| |halve| geeft echter een foutmelding en dat is precies de bedoeling want bij een \USE{read-only} object moet je niets kunnen optellen:
 \begin{cpplstfragment}[mathescape=true]
     halve.plus(b); 
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'Breuk::plus' : cannot convert 'this'$\footnotemark$  pointer from 'const Breuk' to 'Breuk &'
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ no matching function for call to 'Breuk::plus(Breuk&) const'
+//  $\color{hrred}\textbf{error:}$ passing 'const Breuk' as 'this' argument discards qualifiers$\footnotemark$
 \end{cpplstfragment}
 
 \footnotetext{Deze foutmelding is niet erg helder. De \cppcode{this} pointer wordt behandeld op \csecref{this}.}
@@ -1633,8 +1607,7 @@ Als je probeert om in een |const| memberfunctie toch de \USE{receiver} te verand
 \begin{cpplstfragment}[mathescape=true]
 int Breuk::teller() const {
     boven = 1; // teller probeert vals te spelen
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'boven' cannot be modified because it is being accessed through a const object
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ assignment of member 'Breuk::boven' in read-only object
+//  $\color{hrred}\textbf{error:}$ assignment of member 'Breuk::boven' in read-only object
 \end{cpplstfragment}
 
 Door het toepassen van \USE{function name overloading} is het mogelijk om 2 functies te definiëren met dezelfde naam en met dezelfde parameters waarbij de ene |const| is en de andere niet, maar dit is erg gedetailleerd en zal ik hier niet behandelen%
@@ -1646,15 +1619,20 @@ Door het toepassen van \USE{function name overloading} is het mogelijk om 2 func
 We kunnen nu de memberfuncties van een class in twee groepen opdelen:
 \begin{itemize}
     \item \label{vraagfuncties}\textbf{Vraag-functies.}\\
-Deze memberfuncties kunnen gebruikt worden om de toestand van een object op te vragen. 
-Deze memberfuncties hebben over het algemeen wel een return type, geen parameters en zijn const memberfuncties.
+	Deze memberfuncties kunnen gebruikt worden om de toestand van een object op te vragen. 
+	Deze memberfuncties hebben over het algemeen wel een return type, geen parameters en zijn const memberfuncties.
     \item \label{doefuncties}\textbf{Doe-functies.}\\
-Deze memberfuncties kunnen gebruikt worden om de toestand van een object te veranderen. 
-Deze memberfuncties hebben over het algemeen geen return type (|void|), wel parameters en zijn non-const memberfuncties.
+	Deze memberfuncties kunnen gebruikt worden om de toestand van een object te veranderen. 
+	Deze memberfuncties hebben over het algemeen geen return type (|void|), wel parameters en zijn non-const memberfuncties.
 \end{itemize}
 
 \section{Class invariant}
-In de memberfuncties van de class |Breuk| wordt ervoor gezorgd dat elk object van de class |Breuk| een noemer $>0$ heeft en de ggd (grootste gemene deler) van de teller en noemer 1 is.
+In de memberfuncties van de class |Breuk| wordt ervoor gezorgd dat elk object van de class |Breuk| een noemer $>0$ heeft en de grootste gemene deler van de teller en noemer 1 is\footnote{%
+	Dit wordt gedaan door de teller en noemer te delen door de grootste gemene deler van teller en noemer.
+	Deze waarde wordt berekend met behulp van de standaardfunctie \cppcode{gcd} die gedeclareerd is in de header file \cppcode{<numeric>}.
+	Deze functie is pas beschikbaar sinds \Cpp{}17.
+	Als je nog gebruik maakt van \Cpp{}14, dan zul je de functie \cppcode{gcd} zelf moeten definiëren, zie \proglink{Breuk1_met_eigen_gcd.cpp}.
+}.
 Door de noemer altijd $>0$ te maken kan het teken van de |Breuk| eenvoudig bepaald worden (= teken van teller). 
 Door de |Breuk| altijd te normaliseren wordt onnodige overflow van de datavelden |boven| en |onder| voorkomen. 
 Een voorwaarde waaraan elk object van een class voldoet wordt een \emph{class invariant} genoemd. 
@@ -1675,6 +1653,7 @@ Ik zal nu eerst de complete broncode presenteren van het programma \proglink{Bre
 
 \begin{cpplstfragment}[mathescape=true]
 #include <iostream>
+#include <numeric>
 #include <cassert>
 using namespace std;
 
@@ -1701,14 +1680,12 @@ void Breuk::operator+=(Breuk right) {
 }
 
 int main() {
-    Breuk b1(14, 4);
-    cout << "b1(14, 4) = " << b1.teller() << '/' << b1.noemer() << endl;
-    Breuk b2(23, -5);
-    cout << "b2(23, -5) = " << b2.teller() << '/' << b2.noemer() << endl;
-    b1 += b2;
-    cout << "b1 += b2 = " << b1.teller() << '/' << b1.noemer() << endl;
-    cin.get();
-    return 0;
+    Breuk b1 {14, 4};
+	cout << "b1 {14, 4} = " << b1.teller() << '/' << b1.noemer() << '\n';
+	Breuk b2 {23, -5};
+	cout << "b2 {23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
+	b1 += b2;
+	cout << "b1 += b2 = " << b1.teller() << '/' << b1.noemer() << '\n';
 }
 \end{cpplstfragment}
 
@@ -1719,20 +1696,19 @@ int main() {
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
-b1(14, 4) = 7/2
-b2(23, -5) = -23/5
+b1 {14, 4} = 7/2
+b2 {23, -5} = -23/5
 b1 += b2 = -11/10
 \end{coutput}
 
-\sectionrefEckelOne{Operator overloading}{511}{Operator overloading}
+\section{Operator overloading}
 In de taal \Cpp{} kun je de betekenis van operatoren (zoals bijvoorbeeld |+=|) definiëren voor zelfgedefinieerde types. Als het statement:
-\cpplstinputfragment[linerange=77-77]{Breuk2.cpp}
+\cpplstinputfragment[linerange=65-65]{Breuk2.cpp}
 vertaald moet worden, waarbij |b1| en |b2| objecten zijn van de class |Breuk|, zal de compiler \enquote{kijken} of in de class |Breuk| de |operator+=| memberfunctie gedefinieerd is. 
 Als dit niet het geval is, levert het bovenstaande statement de volgende foutmelding op:
 \begin{cpplstfragment}[mathescape=true]
     b1 += b2;
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ binary '+=' : 'Breuk' does not define this operator
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ no match for 'operator+=' in 'b1 += b2'
+//  $\color{hrred}\textbf{error:}$ no match for 'operator+=' (operand types are 'Breuk' and 'Breuk')
 \end{cpplstfragment}
 
 Als de |Breuk::operator+=| memberfunctie wel gedefinieerd is, wordt het bovenstaande statement geïnterpreteerd als:
@@ -1757,7 +1733,8 @@ liggend is.
 De compiler heeft er geen enkele moeilijkheid mee als je bijvoorbeeld de memberfunctie |Breuk::operator+=| definieert die de als argument meegegeven |Breuk| van de \USE{receiver} aftrekt. 
 De programmeurs die de class |Breuk| gebruiken zullen dit minder kunnen waarderen.
 
-Er blijkt nu toch nog een verschil te zijn tussen het gebruik van de operator |+=| voor het zelfgedefinieerde type |Breuk| en het gebruik van de operator |+=| voor het ingebouwde type |int|. Bij het type |int| kun je de operator |+=| als volgt gebruiken: |a += b += c;|. 
+Er blijkt nu toch nog een verschil te zijn tussen het gebruik van de operator |+=| voor het zelfgedefinieerde type |Breuk| en het gebruik van de operator |+=| voor het ingebouwde type |int|. 
+Bij het type |int| kun je de operator |+=| als volgt gebruiken: |a += b += c;|. 
 Dit wordt omdat de operator |+=| van rechts naar links geëvalueerd wordt als volgt geïnterpreteerd |a += (b += c)|. 
 Dit betekent dat eerst |c| bij |b| wordt opgeteld en dat het resultaat van deze optelling weer bij |a| wordt opgeteld. 
 Zowel |b| als |a| hebben na de optelling een waarde toegekend gekregen. 
@@ -1765,8 +1742,7 @@ Als je dit probeert als |a|, |b| en |c| van het type |Breuk| zijn, verschijnt de
 
 \begin{cpplstfragment}[mathescape=true]
     a += b += c;
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ binary '+=' : no operator found which takes a right-hand operand of type 'void'
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ no match for 'operator+=' in 'a += b.Breuk::operator+=(c)'
+//  $\color{hrred}\textbf{error:}$ no match for 'operator+=' (operand types are 'Breuk' and 'void')
 \end{cpplstfragment}
 
 Dit komt doordat de |Breuk::operator+=| memberfunctie geen return type heeft (|void|). 
@@ -1819,32 +1795,27 @@ Dit is natuurlijk niet de bedoeling, het is de bedoeling dat |c| bij |a| wordt o
 
 De bedenker van \Cpp{}, Bjarne Stroustrup, heeft om dit probleem op te lossen een heel nieuw soort variabele aan \Cpp{} toegevoegd: de \emph{\USE{reference}} variabele.
 
-\sectionrefEckelOne{Reference variabelen}{475}{References in \texorpdfstring{\Cpp{}}{C++}}
+\section{Reference variabelen}
 Een \label{reference}\emph{\USE{reference}} is niets anders dan een alias (andere naam) voor de variabele waarnaar hij verwijst (of anders gezegd: refereert). 
 Alle operaties die op een variabele zijn toegestaan zijn ook toegestaan op een \USE{reference} die naar die variabele verwijst.
 
 \begin{cpplstfragment}[mathescape=true]
-    int i{3}$\footnotemark$;
-    int& j{i}; // een reference moet geïnitialiseerd worden
-               // er bestaat nu 1 variabele met 2 namen (i en j)
-    j = 4;     // i is nu gelijk aan 4
-               // een reference is gewoon een "pseudoniem"
+    int i {3}$\footnotemark$;
+    int& j {i}; // een reference moet geïnitialiseerd worden
+                // er bestaat nu 1 variabele met 2 namen (i en j)
+    j = 4;      // i is nu gelijk aan 4
+                // een reference is gewoon een "pseudoniem"
 \end{cpplstfragment}
-
-%TODO: universal initialization toevoegen in H1 (dan kan deze voetnoot weg)
-\footnotetext{%
-    Tot nu toe is een integer geïnitialiseerd met de uit C overgenomen syntax \cppcode{int i = 3;}.
-    In \Cpp{} mag je ook de syntax \hbox{\cppcode{int i(3);}} of 
-    \hbox{\cppcode{int i\{3\};}} of \hbox{\cppcode{int i = \{3\};}} gebruiken, alsof het ingebouwde type \cppcode{int} een \USE{constructor} heeft die je aanroept. 
-    De syntax met accolades heeft de voorkeur omdat deze syntax (uniforme initialisatie) in alle gevallen werkt, bijvoorbeeld ook bij zelfgedefinieerde types (classes) zoals \cppcode{Breuk}. Toch worden variabelen van de ingebouwde types in de praktijk meestal met een enkel \cppcode{=}\hyp{}teken geïnitialiseerd. 
-    Een object \cppcode{b} van de class \cppcode{Breuk} kun je met de waarde \sfrac{3}{7} initialiseren met de syntax \cppcode{Breuk b(3, 7);} of \cppcode{Breuk b\{3, 7\};} of \cppcode{Breuk b = \{3, 7\};}.
-}
 
 Een \USE{reference} lijkt een beetje op een pointer maar er zijn toch belangrijke verschillen: 
 \begin{itemize}
     \item Als je de variabele waar een pointer |p| naar wijst wilt benaderen, moet je de notatie |*p| gebruiken maar als je de variabele waar een \USE{reference} |r| naar verwijst wilt benaderen kun je gewoon |r| gebruiken.
     \item Een pointer die naar de variabele |v| wijst kun je later naar een andere variabele laten wijzen maar een \USE{reference} die naar de variabele |v| verwijst kun je later niet naar een andere variabele laten verwijzen.
-    \item Een pointer kan ook naar geen enkele variabele wijzen (de waarde is dan |0|) maar een \USE{reference} verwijst altijd naar een variabele.
+    \item Een pointer kan ook naar geen enkele variabele wijzen (de waarde is dan gelijk aan |nullptr|\footnote{%
+    	In de programmeertaal C gebruikte je \cppcode{NULL} als waarde voor een pointer die nergens naar wees.
+    	Deze constante is in een aantal include file gedefinieerd, onder andere in \cppcode{<stdio.h>}.
+    	In \Cpp{} wordt de waarde \cppcode{nullptr} gebruikt, die in de taal zelf is gedefinieerd.
+	}) maar een \USE{reference} verwijst altijd naar een variabele.
 \end{itemize}
 
 \section{Reference parameters}
@@ -2218,7 +2189,7 @@ Het gebruik van het return type |const Breuk| in plaats van |Breuk| bij de postf
 \section{Conversie operatoren}
 %TODO heeft verwijzing naar Eckel zin?
 \label{conversion operator}
-Een \USE{constructor} van class |Breuk| met één parameter van het type |T| wordt door de compiler gebruikt als een variabele van het type |T| moet worden geconverteerd naar het type |Breuk| (zie \csecref{conversie constructor}).  
+Een \USE{constructor} van class |Breuk| met één parameter van het type |T| wordt door de compiler gebruikt als een variabele van het type |T| moet worden geconverteerd naar het type |Breuk| (zie \csecref{sec:conversieconstructor}).  
 \label{type conversie}%
 Door het definiëren van een conversie operator voor het type |T| kan de programmeur ervoor zorgen dat objecten van de class |Breuk| door de compiler (indien nodig) omgezet kunnen worden naar het type |T|.
 Stel dat je wilt dat een |Breuk| die op een plaats wordt gebruikt waar de compiler een |int| verwacht, door de compiler omgezet wordt naar het \enquote{gehele deel} van de |Breuk| dan kun je dit als volgt implementeren:
@@ -3970,7 +3941,7 @@ Als we goed kijken, zien we dat deze \USE{destructor} wordt aangeroepen bij het 
 \cpplstinputfragment[linerange={108-108}]{Breuk1_destructor.cpp}
 
 Snap je welk |Breuk| object aan het einde van deze regel wordt verwijderd? 
-Lees indien nodig \csecref{conversie constructor} nog eens door.
+Lees indien nodig \csecref{sec:conversieconstructor} nog eens door.
 De memberfunctie |plus| verwacht een |Breuk| object als argument.
 De integer |5| wordt met de \USE{constructor} |Breuk(5)| omgezet naar een |Breuk| object.
 Dit impliciet door de compiler aangemaakte object wordt dus aan het einde van de regel (nadat de memberfunctie |plus| is aangeroepen en teruggekeerd) weer uit het geheugen verwijderd.
@@ -4196,7 +4167,7 @@ int main() {
 \section{\texorpdfstring{\cppcode{explicit}}{explicit} constructor}
 % (Zie eventueel TICPP Chapter12.html\#Heading373.)
 De \USE{constructor} |Array(int)| is |explicit| gedeclareerd om te voorkomen dat de compiler deze \USE{constructor} gebruikt om een |int| automatisch om te zetten naar een |Array|.
-Zie \csecref{conversie constructor}.
+Zie \csecref{sec:conversieconstructor}.
 
 \section{Copy constructor en default copy constructor}
 \label{copy constructor} 
@@ -4250,7 +4221,7 @@ Als je namelijk een |Array| als (\USE{call by value}) parameter gebruikt, moet e
 
 \section{Overloading \texorpdfstring{\cppcode{operator=}}{operator=}}
 % (Zie eventueel TICPP Chapter12.html\#Heading366.)
-\label{assignment operator}
+\label{sec:assignmentoperator}
 Voor de door de compiler gegenereerde \USE{assignment operator} geldt ongeveer hetzelfde verhaal als voor de door de compiler gegenereerde \USE{copy constructor}.
 Na het statement |b = a;| zal de situatie zoals gegeven in \cref{fig:assign1} ontstaan.
 Je ziet dat de door de compiler gegenereerde \USE{assignment operator} niet alleen onjuist werkt maar bovendien een memory leak veroorzaakt.

@@ -32,13 +32,8 @@ void Breuk::plus(Breuk b) {
     normaliseer();
 }
 
-unsigned int ggd(unsigned int n, unsigned int m) {
-    if (n == 0) return m;
-    if (m == 0) return n;
-    while (m != n)
-        if (n > m) n -= m;
-        else m -= n;
-    return n;
+int gcd(int n, int m) {
+    return m == 0 ? n: gcd(m, n % m); 
 }
 
 void Breuk::normaliseer() {
@@ -46,7 +41,7 @@ void Breuk::normaliseer() {
         onder =- onder;
         boven =- boven;
     }
-    int d = ggd(boven < 0 ? -boven : boven, onder);
+    int d {ggd(boven < 0 ? -boven : boven, onder)};
     boven /= d;
     onder /= d;
 }

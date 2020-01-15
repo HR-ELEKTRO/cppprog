@@ -1,7 +1,6 @@
 // Werken met breuken in C++ ... constructor, const memberfuncties
 
 #include <iostream>
-#include <numeric>
 #include <cassert>
 using namespace std;
 
@@ -31,6 +30,11 @@ private:
     int onder;
     void normaliseer();
 };
+
+// Hulpfunctie:
+int gcd(int n, int m) {
+    return m == 0 ? n: gcd(m, n % m); 
+}
 
 // Classdefinitie:
 // Vertelt hoe de memberfuncties van de class geïmplenteerd zijn.

@@ -1,19 +1,18 @@
 // Werken met breuken in C++ ... een eerste stap naar een UDT
 
 #include <iostream>
-#include <numeric>
 #include <cassert>
 using namespace std;
 
-class Breuk {            // Op een object van de class Breuk
-public:                  // kun je de volgende bewerkingen uitvoeren:
-    void leesin();       //    inlezen vanuit het toetsenbord.
-    void drukaf() const; //    afdrukken op het scherm.
-    void plus(Breuk b);  //    een Breuk erbij optellen.
-private:                 // Een object van de class Breuk heeft privé:
-    int boven;           //    een teller,
-    int onder;           //    een noemer en
-    void normaliseer();  //    een functie normaliseer.
+class Breuk {                  // Op een object van de class Breuk
+public:                        // kun je de volgende bewerkingen uitvoeren:
+    void leesin();             //    inlezen vanuit het toetsenbord.
+    void drukaf() const;       //    afdrukken op het scherm.
+    void plus(const Breuk& b); //    een Breuk erbij optellen.
+private:                       // Een object van de class Breuk heeft privé:
+    int boven;                 //    een teller,
+    int onder;                 //    een noemer en
+    void normaliseer();        //    een functie normaliseer.
 };
 
 void Breuk::leesin() {
@@ -27,10 +26,14 @@ void Breuk::drukaf() const {
     cout << boven << "/" << onder;
 }
 
-void Breuk::plus(Breuk b) {
+void Breuk::plus(const Breuk& b) {
     boven = boven * b.onder + onder * b.boven;
     onder *= b.onder;
     normaliseer();
+}
+
+int gcd(int n, int m) {
+    return m == 0 ? n: gcd(m, n % m); 
 }
 
 void Breuk::normaliseer() {
@@ -38,7 +41,7 @@ void Breuk::normaliseer() {
         onder =- onder;
         boven =- boven;
     }
-    int d {gcd(boven < 0 ? -boven : boven, onder)};
+    int d = gcd(boven < 0 ? -boven : boven, onder);
     boven /= d;
     onder /= d;
 }

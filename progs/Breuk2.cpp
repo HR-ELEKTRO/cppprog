@@ -1,6 +1,7 @@
 // Werken met breuken in C++ ... operator overloading
 
 #include <iostream>
+#include <numeric>
 #include <cassert>
 using namespace std;
 
@@ -11,7 +12,7 @@ public:
     Breuk(int t, int n);
     int teller() const;
     int noemer() const;
-    void operator+=(Breuk right);
+    //~ void operator+=(Breuk right);
 //  ...
 //  Er zijn nog veel uitbreidingen mogelijk
 //  ...
@@ -20,19 +21,6 @@ private:
     int onder;
     void normaliseer();
 };
-
-// Hulpfunctie: bepaald de grootste gemene deler.
-
-int ggd(int n, int m) {
-    if (n == 0) return m;
-    if (m == 0) return n;
-    if (n < 0) n = -n;
-    if (m < 0) m = -m;
-    while (m != n)
-        if (n > m) n -= m;
-        else m -= n;
-    return n;
-}
 
 // Classdefinitie:
 
@@ -48,11 +36,11 @@ int Breuk::noemer() const {
     return onder;
 }
 
-void Breuk::operator+=(Breuk right) {
-    boven = boven * right.onder + onder * right.boven;
-    onder *= right.onder;
-    normaliseer();
-}
+//~ void Breuk::operator+=(Breuk right) {
+    //~ boven = boven * right.onder + onder * right.boven;
+    //~ onder *= right.onder;
+    //~ normaliseer();
+//~ }
 
 void Breuk::normaliseer() {
     assert(onder != 0);
@@ -60,20 +48,20 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d = ggd(boven, onder);
+    int d {gcd(boven < 0 ? -boven : boven, onder)};
     boven /= d;
     onder /= d;
     // controle of nog steeds aan de invariant van de class wordt voldaan:
-    assert(onder > 0 && ggd(boven, onder) == 1);
+    assert(onder > 0 && gcd(boven, onder) == 1);
 }
 
 // Hoofdprogramma:
 
 int main() {
-    Breuk b1{14, 4};
-    cout << "b1{14, 4} = " << b1.teller() << '/' << b1.noemer() << '\n';
-    Breuk b2{23, -5};
-    cout << "b2{23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
+    Breuk b1 {14, 4};
+    cout << "b1 {14, 4} = " << b1.teller() << '/' << b1.noemer() << '\n';
+    Breuk b2 {23, -5};
+    cout << "b2 {23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
     b1 += b2;
     cout << "b1 += b2 = " << b1.teller() << '/' << b1.noemer() << '\n';
 
@@ -84,8 +72,8 @@ int main() {
 }
 
 /* Output:
-b1{14, 4} = 7/2
-b2{23, -5} = -23/5
+b1 {14, 4} = 7/2
+b2 {23, -5} = -23/5
 b1 += b2 = -11/10
 */
 
