@@ -1,6 +1,7 @@
 // Werken met breuken in C++ ... zoals met ints!! een echt UDT
 
 #include <iostream>
+#include <numeric>
 #include <cassert>
 using namespace std;
 
@@ -31,19 +32,6 @@ const Breuk operator+(const Breuk& left, const Breuk& right);
 // ...
 // Er zijn nog veel uitbreidingen mogelijk
 // ...
-
-// Hulpfunctie: bepaald de grootste gemene deler.
-
-int ggd(int n, int m) {
-    if (n == 0) return m;
-    if (m == 0) return n;
-    if (n < 0) n = -n;
-    if (m < 0) m = -m;
-    while (m != n)
-        if (n > m) n -= m;
-        else m -= n;
-    return n;
-}
 
 // UDT-definitie:
 
@@ -81,20 +69,20 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d = ggd(boven, onder);
+    int d {gcd(boven < 0 ? -boven : boven, onder)};
     boven /= d;
     onder /= d;
 }
 
 const Breuk operator+(const Breuk& left, const Breuk& right) {
-    Breuk copy_left{left};
+    Breuk copy_left {left};
     copy_left += right;
     return copy_left;
 }
 
 /* verkorte notatie:
 const Breuk operator+(const Breuk& left, const Breuk& right) {
-    return Breuk{left} += right;
+    return Breuk {left} += right;
 }
 */
 
@@ -141,12 +129,12 @@ int main() {
     cout << b1 << " + " 
          << b2 << " = "        // afdrukken met <<
          << (b1 + b2) << '\n'; // optellen met +
-    Breuk b3{18, -12};          // definiëren en initialiseren
+    Breuk b3{18, -12};         // definiëren en initialiseren
     if (b1 != b3) {            // vergelijken met !=
         b3++;                  // verhogen met ++
     }
     cout << b3 << '\n';        // afdrukken met <<
-    b3 += {-5, 2};              // verhogen met +=
+    b3 += {-5, 2};             // verhogen met +=
     cout << b3 << '\n';        // afdrukken met <<
     if (-3 == b3) {            // vergelijken met een int met ==
         cout << "Ok.\n";

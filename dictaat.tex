@@ -1158,7 +1158,7 @@ private:                  // Een object van de class Breuk
 \stepcounter{BackrefHyperFootnoteCounter}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
-    Het is beter om hier een \cppcode{const} \USE{reference} parameter te gebruiken. Dit wordt pas behandeld in \csecref{const reference parameter}.%
+    Het is beter om hier een \cppcode{const} \USE{reference} parameter te gebruiken. Dit wordt pas behandeld in \csecref{sec:constreferenceparameter}.%
 }
 De class |Breuk| koppelt een bepaalde datastructuur (twee interne integer variabelen genaamd |boven| en |onder|) met de bij deze datastructuur behorende bewerkingen%
 \footnote{%
@@ -1373,7 +1373,7 @@ int main() {$\label{breuk1::main}$
 \addtocounter{BackrefHyperFootnoteCounter}{-1}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
-    Het is beter om hier een \cppcode{const} \USE{reference} parameter te gebruiken. Dit wordt pas behandeld in \csecref{const reference parameter}.
+    Het is beter om hier een \cppcode{const} \USE{reference} parameter te gebruiken. Dit wordt pas behandeld in \csecref{sec:constreferenceparameter}.
 }
 \stepcounter{footnote}
 \makeatletter\let\Hy@footnote@currentHref\saved@Href@D\makeatother
@@ -1690,7 +1690,7 @@ int main() {
 \end{cpplstfragment}
 
 \footnotetext{%
-    Het is beter om hier een \cppcode{const} \USE{reference} parameter te gebruiken. Dit wordt pas behandeld in \csecref{const reference parameter}.
+    Het is beter om hier een \cppcode{const} \USE{reference} parameter te gebruiken. Dit wordt pas behandeld in \csecref{sec:constreferenceparameter}.
 }
 
 \needspace{2\baselineskip}
@@ -1833,25 +1833,22 @@ Bij een functieaanroep wordt dus de \emph{waarde} van de actuele parameter naar 
 }. 
 Het is dus geen probleem als de actuele parameter een constante is.
 \begin{cpplstfragment}
-void slaRegelsOver(int aantal) {
+void sla_regels_over(int aantal) {
     while (aantal > 0) {
-        cout << endl;
+        cout << '\n';
         aantal = aantal - 1;
     }
 }
 //  ...
-    int n = 7;
-    slaRegelsOver(n);  // waarde van n wordt gekopieerd naar l
-    cout << "n = " << n 
-         << endl;  // uitvoer: n = 7
-    slaRegelsOver(3);  // waarde 3 wordt gekopieerd naar l
+    int n {7};
+    sla_regels_over(n); // waarde van n wordt gekopieerd naar l
+    cout << "n = " << n << '\n'; // uitvoer: n = 7
+    sla_regels_over(3); // waarde 3 wordt gekopieerd naar l
 \end{cpplstfragment}
 
-Als je het argument dat bij de aanroep wordt gebruikt wel wilt aanpassen vanuit de functie, dan kan dit in
-C alleen door het gebruik van pointers.
-\label{swapInts}
-\begin{cpplstfragment}
-void swapInts(int* p, int* q) {
+Als je het argument dat bij de aanroep wordt gebruikt wel wilt aanpassen vanuit de functie, dan kan dit in C alleen door het gebruik van pointers.
+\begin{lstfragment}[style=cstyle]
+void swap_ints(int* p, int* q) {
     int t = *p;
     *p = *q;
     *q = t;
@@ -1859,22 +1856,23 @@ void swapInts(int* p, int* q) {
 //  ...
     int i = 3;
     int j = 4;
-    swapInts(&i, &j);
-\end{cpplstfragment}
+    swap_ints(&i, &j);
+\end{lstfragment}
 
 In \Cpp{} kun je als alternatief ook een \USE{reference} als formele parameter gebruiken. 
 Dit maakt het mogelijk om het bij aanroep meegegeven argument (de actuele parameter) vanuit de functie aan te passen. 
 De formele parameter is dan namelijk een pseudoniem (andere naam) voor het aan de functie meegegeven argument.
+\label{code:swap_ints}
 \begin{cpplstfragment}
-void swapInts(int& p, int& q) {
-    int t(p);
+void swap_ints(int& p, int& q) {
+    int t {p};
     p = q;
     q = t;
 }
 //  ...
-    int i(3);
-    int j(4);
-    swapInts(i, j);
+    int i {3};
+    int j {4};
+    swap_ints(i, j);
 \end{cpplstfragment}
 
 Een \USE{reference} parameter wordt geïmplementeerd door niet de waarde van het bij aanroep meegegeven argument te kopiëren maar door het adres van het bij aanroep meegegeven argument te kopiëren. 
@@ -1882,18 +1880,17 @@ Als dan in de functie aan de formele parameter een nieuwe waarde wordt toegekend
 
 Dit betekent dat het vanzelfsprekend niet mogelijk is om als argument een constante te gebruiken omdat aan een constante geen nieuwe waarde toegekend mag worden. Bijvoorbeeld:
 \begin{cpplstfragment}[mathescape=true]
-    swapInts(i, 5);
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'swapInts' : cannot convert parameter 2 from 'int' to 'int &'
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ invalid initialization of non-const reference of type 'int&' from an rvalue of type 'int'
+    swap_ints(i, 5);
+//  $\color{hrred}\textbf{error:}$ cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'
 \end{cpplstfragment}
 
-Zie \proglink{Param.cpp} voor een compleet voorbeeldprogramma.
+Zie \proglink{param.cpp} voor een compleet voorbeeldprogramma.
 
 \section{\texorpdfstring{\cppcode{const}}{const} reference parameters}
-\label{const reference parameter}
+\label{sec:constreferenceparameter}
 Er is nog een andere reden om een \USE{reference} parameter in plaats van een \enquote{normale} \USE{value} parameter te gebruiken. 
-Bij een \USE{reference} parameter wordt zoals we hebben gezien een adres (een vast aantal bytes\footnote{Op een AVR microcontroller bestaat een adres uit 2 bytes, op een 32-bits systemen uit 4 bytes en op 64-bits systeem uit 8 bytes.}) gekopieerd terwijl bij een \USE{value} parameter de waarde (een variabel aantal bytes, afhankelijk van het type) gekopieerd wordt. 
-Als de waarde veel geheugenruimte in beslag neemt, is het om performance redenen beter om een \USE{reference} parameter te gebruiken.\footnote{Later zullen we zien dat er nog een veel belangrijke reden is om een \USE{reference} parameter in plaats van een \USE{value} parameter te gebruiken, zie \csecref{polymorfisme}.}
+Bij een \USE{reference} parameter wordt zoals we hebben gezien een adres (een vast aantal bytes\footnote{Op een MSP430 microcontroller bestaat een adres uit 2 bytes, op een CC3220 microcontroller uit 4 bytes en op 64-bits pc uit 8 bytes.}) gekopieerd terwijl bij een \USE{value} parameter de waarde (een variabel aantal bytes, afhankelijk van het type) gekopieerd wordt. 
+Als de waarde veel geheugenruimte in beslag neemt, is het om performance redenen beter om een \USE{reference} parameter te gebruiken.\footnote{Later zullen we zien dat er nog een veel belangrijke reden is om een \USE{reference} parameter in plaats van een \USE{value} parameter te gebruiken, zie \csecref{sec:polymorfisme}.}
 Om er voor te zorgen dat deze functie toch aangeroepen kan worden met een constante kan deze parameter dan het beste als |const| \USE{reference} parameter gedefinieerd worden. Het wordt dan ook onmogelijk om in de functie een waarde aan de formele parameter toe te kennen.
 
 \begin{cpplstfragment}[mathescape=true]
@@ -1909,19 +1906,18 @@ Als je probeert om een |const| \USE{reference} parameter in de functie te verand
 \begin{cpplstfragment}[mathescape=true]
 void drukaf(const Tijdsduur& td) {
     td.uur = 23; // drukaf probeert vals te spelen
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'uur' cannot be modified because it is being accessed through a const object
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ assignment of member 'Tijdsduur::uur' in read-only object
+//  $\color{hrred}\textbf{error:}$ assignment of member 'Tijdsduur::uur' in read-only object
 \end{cpplstfragment}
 
 In alle voorafgaande code waarin een |Breuk| als parameter is gebruikt kan dus beter%
 \footnote{%
     Een breuk bestaat uit 2 \cppcode{int}s. 
     Op een AVR microcontroller bestaat elke \cppcode{int} uit 2 bytes en een \cppcode{Breuk} dus uit $2 \times 2 = 4$ bytes. 
-    Een adres bestaat op een AVR uit 2 bytes en kan dus sneller gekopieerd worden dan een \cppcode{Breuk}. 
-    Op een 32-bits systeem bestaat een \cppcode{int} uit 4 bytes en een \cppcode{Breuk} dus uit $2 \times 4 = 8$ bytes. 
-    Een adres bestaat op een 32-bits systeem uit 4 bytes en kan dus sneller gekopieerd worden dan een \cppcode{Breuk}.
-    Op een 64-bits systeem bestaat een \cppcode{int} uit 4 bytes en een \cppcode{Breuk} dus uit $2 \times 4 = 8$ bytes. 
-    Een adres bestaat op een 64-bits systeem uit 8 bytes en kan dus net zo snel gekopieerd worden als een \cppcode{Breuk}.
+    Een adres bestaat op een MSP430 uit 2 bytes en kan dus sneller gekopieerd worden dan een \cppcode{Breuk}. 
+    Op een CC3220 microcontroller bestaat een \cppcode{int} uit 4 bytes en een \cppcode{Breuk} dus uit $2 \times 4 = 8$ bytes. 
+    Een adres bestaat op een CC3220 microcontroller uit 4 bytes en kan dus sneller gekopieerd worden dan een \cppcode{Breuk}.
+    Op een 64-bits pc bestaat een \cppcode{int} uit 4 bytes en een \cppcode{Breuk} dus uit $2 \times 4 = 8$ bytes. 
+    Een adres bestaat op een 64-bits pc uit 8 bytes en kan dus net zo snel gekopieerd worden als een \cppcode{Breuk}.
 } een |const Breuk&| als parameter worden gebruikt (Bijvoorbeeld op \cpageref{better used const reference 1},  \pageref{better used const reference 2} en \pageref{better used const reference 3}.)
 
 \section[Parameter FAQ]{Parameter FAQ\protect\footnote{FAQ = Frequently Asked Questions (veelgestelde vragen).}}
@@ -1942,13 +1938,13 @@ In alle voorafgaande code waarin een |Breuk| als parameter is gebruikt kan dus b
     Wanneer gebruik je een \cppcode{T*} parameter in plaats van een \cppcode{T&} parameter?
 }{
     Gebruik een \cppcode{T*} als je ook \enquote{niets} door wilt kunnen geven. Een \USE{reference} \emph{moet} namelijk altijd ergens naar verwijzen. 
-    Een pointer kan ook nergens naar wijzen (de waarde van de pointer is dan \cppcode{0}).
+    Een pointer kan ook nergens naar wijzen (de waarde van de pointer is dan \cppcode{nullptr}).
 }
 
 \section{Reference in range-based for}
 \label{sec:referenceinrange-basedfor}
-In \csecref{sec:range-basedfor} heb je kennis gemaakt met de in \Cpp{}11 geïntroduceerde variant van de |for|\hyp{}lus, de
-zogenoemde \emph{\USE{range-based for}}. Deze for\hyp{}lus is speciaal bedoeld om de elementen van een array%
+In \csecref{sec:range-basedfor} heb je kennis gemaakt met de zogenoemde \emph{\USE{range-based for}}. 
+Deze for\hyp{}lus is speciaal bedoeld om de elementen van een array%
 \footnote{%
     De standaard \Cpp{} \USE{library} bevat nog vele andere datastructuren die ook met een \USE{range-based for} doorlopen kunnen worden zie \csecref{std::array} en \csecref{std::vector}.
 }\ één voor één te benaderen.
@@ -1959,21 +1955,21 @@ De in \csecref{sec:range-basedfor} gepresenteerde code laat zien hoe je een arra
 De variabele |element| krijgt één voor één een waarde uit de array genaamd |array|. 
 
 Als je element voor element wilt aanpassen, moet je een |int&| of |auto&| gebruiken in de \USE{range-based for}:
-\cpplstinputfragment[linerange=12-14]{RefRangeBasedFor.cpp}
+\cpplstinputfragment[linerange=12-14]{ref_range-based_for.cpp}
 
-De \USE{reference} |element| is nu één voor één een alias voor een element uit de array genaamd |array|. Zie \proglink{RefRangeBasedFor.cpp} voor een compleet voorbeeldprogramma.
+De \USE{reference} |element| is nu één voor één een alias voor een element uit de array genaamd |rij|. Zie \proglink{ref_range-based_for.cpp} voor een compleet voorbeeldprogramma.
 
 \section{Reference return type}
 \label{refreturn}
 Als een functie een waarde teruggeeft door middel van een |return| statement, wordt de waarde van de expressie achter het |return| statement gekopieerd naar de plaats waar de functie aangeroepen is.
-Door nu een \USE{reference} als return type te gebruiken kun je een alias in plaats van een waarde teruggeven. Deze alias kun je dan gebruiken om een waarde aan toe te kennen. Zie voorbeeldprogramma \proglink{Refret.cpp}: 
-\cpplstinputfragment[linerange={6-9,36-38,40-40,42-42}]{Refret.cpp}
+Door nu een \USE{reference} als return type te gebruiken kun je een alias in plaats van een waarde teruggeven. Deze alias kun je dan gebruiken om een waarde aan toe te kennen. Zie voorbeeldprogramma \proglink{ref_ret.cpp}: 
+\cpplstinputfragment[linerange={6-9,32-34,36-36,38-38}]{ref_ret.cpp}
 
 Pas op dat je geen \USE{reference} naar een lokale variabele teruggeeft. Na afloop van een functie worden de lokale variabelen uit het geheugen verwijderd. 
 De referentie verwijst dan naar een niet meer bestaande variabele.
 \begin{cpplstfragment}[mathescape=true]
 int& som(int i1, int i2) {
-    int s = i1 + i2;
+    int s {i1 + i2};
     return s; // $\color{hrred}\textbf{Een gemene fout!}$
 }
 //  ...
@@ -1984,29 +1980,27 @@ Deze fout (het zogenoemde \label{dangling reference}\emph{\USE{dangling referenc
 De geheugenplaats wordt alleen vrijgegeven voor hergebruik. 
 Dit heeft tot gevolg dat de bovenstaande aanroep van |som| meestal gewoon werkt%
 \footnote{%
-    De Microsoft Visual Studio \Cpp{} compiler geeft de \USE{warning}: \error{returning address of local variable or temporary}. 
-    De GCC \Cpp{} compiler geeft de \USE{warning}: \error{reference to local variable s returned}
+    De GCC \Cpp{} compiler geeft de \USE{warning}: \error{reference to local variable 's' returned}.
 }.
 De fout in de definitie van de functie |som| komt pas aan het licht als we de functie bijvoorbeeld als volgt aanroepen:
 
 \begin{cpplstfragment}
-    int& s1 = som(1, 2);
-    int& s2 = som(3, 4);
-    cout << "1 + 2 = " << s1 << endl;
-    cout << "3 + 4 = " << s2 << endl;
+    int& s1 {som(1, 2)};
+    int& s2 {som(3, 4)};
+    cout << "1 + 2 = " << s1 << '\n';
+    cout << "3 + 4 = " << s2 << '\n';
 \end{cpplstfragment}
 
-De uitvoer van dit programma is\footnote{Het programma is gecompileerd met Microsoft Visual Studio 2013}:
+De uitvoer van dit programma is\footnote{Het programma is gecompileerd met GCC versie 9.1.0.}:
 
 \begin{coutput}
-1 + 2 = 7
-3 + 4 = 2009302084
+Segmentation fault (core dumped)
 \end{coutput}
 
 Hetzelfde gevaar is trouwens ook aanwezig als je een pointer (bijvoorbeeld |int*|) als return type kiest (het zogenoemde \emph{\USE{dangling pointer problem}}). 
 \begin{cpplstfragment}[mathescape=true]
 int* som(int i1, int i2) {
-    int s = i1 + i2;
+    int s {i1 + i2};
     return &s; // $\color{hrred}\textbf{Een gemene fout!}$
 }
 //  ...
@@ -2015,20 +2009,19 @@ int* som(int i1, int i2) {
 
 Je moet er dan voor oppassen dat de pointer niet naar een variabele wijst die na afloop van de functie niet meer bestaat%
 \footnote{%
-    De Microsoft Visual Studio \Cpp{} compiler geeft de \USE{warning}: \error{returning address of local variable or temporary}. 
-    De GCC \Cpp{} compiler geeft de \USE{warning}: \error{address of local variable s returned}.
+    De GCC \Cpp{} compiler geeft de \USE{warning}: \error{address of local variable 's' returned}.
 }.
 
 Een goede manier om de waarde van een lokale variabele terug te geven vanuit een functie is door een \enquote{gewoon} type (geen \USE{reference} en ook geen pointer) als return type te gebruiken.  
 \begin{cpplstfragment}[mathescape=true]
 int som(int i1, int i2) {
-    int s = i1 + i2;
-    return s; // $\color{green}\textbf{Correct!}$
+    int s {i1 + i2};
+    return s; // $\color{darkgreen}\textbf{Correct!}$
 }
 //  ...
     c = som(a, b);
 \end{cpplstfragment}
-Zie \proglink{Refret.cpp} voor een compleet voorbeeldprogramma.
+Zie \proglink{ref_ret.cpp} voor een compleet voorbeeldprogramma.
 
 \section{Reference return type (deel 2)}
 In de |Breuk::operator+=| memberfunctie die gegeven is op \cpageref{operator+= niet correct} zal bij het uitvoeren van
@@ -2039,290 +2032,11 @@ Dit is natuurlijk niet de bedoeling, het is de bedoeling dat |c| bij |a| wordt o
 Hiermee zorgen we er meteen voor dat de expressie \hbox{\cppcode{(a += b) += c}} gewoon goed (zoals bij integers) werkt. 
 De |operator+=| memberfunctie kan dan als volgt gedeclareerd worden:
 \label{operator+= correct}
-\cpplstinputfragment[linerange=60-65]{Breuk3.cpp}
+\cpplstinputfragment[linerange=48-53]{Breuk3.cpp}
 
-\section{Operator overloading (deel 2)}
 Behalve de operator |+=| kun je ook andere operatoren \USE{overloaden}. 
-Voor de class |Breuk| kun je bijvoorbeeld de operator |+| definiëren, zodat objecten |b1| en |b2| van de class |Breuk| gewoon door middel van \hbox{\cppcode{b1 + b2}} opgeteld kunnen worden. 
-\cpplstinputfragment[linerange={10-17,25-25,58-63,88-91,108-108}]{operator+Member.cpp}
-
-Zoals je ziet heb ik de |operator+| eenvoudig geïmplementeerd door gebruik te maken van de al eerder gedefinieerde \hcode{operator\\-+=}. 
-De code kan nog verder vereenvoudigd worden tot:
-\cpplstinputfragment[linerange=66-68]{operator+Member.cpp}
-
-Zie \proglink{operator+Member.cpp} voor een compleet voorbeeldprogramma.
-
-\section{\texorpdfstring{\cppcode{operator+}}{operator+} FAQ}
-\qa{
-    Waarom gebruik je \cppcode{const Breuk} in plaats van \cppcode{Breuk} als return type bij \cppcode{operator+}?
-}{
-    Dit heb ik afgekeken van Scott Meyers \cite{Meyers2005} en \cite{Meyers1995}.
-    Als \cppcode{a}, \cppcode{b} en \cppcode{c} van het type \cppcode{int} zijn, levert de expressie \cppcode{(a + b) += c} de volgende (onduidelijke) foutmelding op \error{Error: left operand must be l-value}. 
-    Dit is goed omdat het optellen van \cppcode{c} bij een tijdelijke variabele (de som \cppcode{a + b} wordt namelijk aan een tijdelijke variabele toegekend) zinloos is. 
-    De tijdelijke variabele wordt namelijk meteen na het berekenen van de expressie weer verwijderd. 
-    Waarschijnlijk heeft de programmeur \cppcode{(a += b) += c} bedoeld. 
-    Als \cppcode{a}, \cppcode{b} en \cppcode{c} van het type \cppcode{Breuk} zijn en we kiezen als return type van \cppcode{Breuk::operator+} het type \cppcode{Breuk}, dan zal de expressie \cppcode{(a + b) += c} zonder foutmelding vertaald worden. 
-    Als we echter als return type \cppcode{const Breuk} gebruiken, dan levert deze expressie wel een foutmelding op omdat de \cppcode{operator+=} niet op een \cppcode{const} object uitgevoerd kan worden. 
-    Als je het zelfgedefinieerde type \cppcode{Breuk} zoveel mogelijk op het ingebouwde type \cppcode{int} wilt laten lijken (en dat wil je), dan moet je dus \cppcode{const Breuk} in plaats van \cppcode{Breuk} als return type van de \cppcode{operator+} gebruiken.%
-    \footnote{%
-        Dat dit nogal subtiel is blijkt wel uit het feit dat Bjarne Stroustrup (de ontwerper van \Cpp{}) in een vergelijkbaar voorbeeld \cite[blz. 528]{Stroustrup2013} geen \cppcode{const} bij het return type gebruikt.
-    }
-}
-\qa{
-    Kun je de \cppcode{operator+} niet beter een \USE{reference return type} geven zodat het maken van de kopie bij return voorkomen wordt?
-}{
-    Nee! 
-    We hebben een lokale kopie aangemaakt waarin de som is berekend. 
-    Als we een \USE{reference} teruggeven naar deze lokale kopie, ontstaat na return een zogenoemde \USE{dangling reference} (zie \cpageref{dangling reference}) omdat de lokale variabele na afloop van de memberfunctie opgeruimd wordt.
-}
-\qa{
-Kun je in de \cppcode{operator+} de benodigde lokale variabele niet met \cppcode{new}\footnote{De operator \cppcode{new} wordt pas besproken in \csecref{sec:new} van dit dictaat.} aanmaken zodat we toch een \USE{reference} kunnen teruggeven? 
-De met \cppcode{new} aangemaakte variabele blijft immers na afloop van de \cppcode{operator+} memberfunctie gewoon bestaan.
-}{
-    Ja dit kan wel, maar je kunt het beter \emph{niet} doen. 
-    De met \cppcode{new} aangemaakte variabele zal namelijk (zo lang het programma draait) nooit meer vrijgegeven worden. Dit is een voorbeeld van een
-\emph{memory leak}. 
-    Elke keer als er twee breuken opgeteld worden neemt het beschikbare geheugen af!
-}
-\qa{
-    Kun je de implementatie van \cppcode{operator+} niet nog verder vereenvoudigen tot:\\
-\cppcode{return *this += right;}
-}{
-    Nee! 
-    Na de bewerking \cppcode{c = a + b;} is dan niet alleen \cppcode{c} gelijk geworden aan de som van \cppcode{a} en \cppcode{b} maar
-is ook \cppcode{a} gelijk geworden aan de som van \cppcode{a} en \cppcode{b} en dat is natuurlijk niet de bedoeling.
-}
-\qa{
-    Kun je bij een \cppcode{Breuk} ook een \cppcode{int} optellen?\\
-\cppcode{Breuk a(1, 2);}\\
-\cppcode{Breuk b = a + 1;}
-}{
-    Ja. 
-    De expressie \cppcode{a + 1} wordt geïnterpreteerd als \cppcode{a.operator+(1)}. De compiler zal dan \enquote{kijken} of de memberfunctie \cppcode{Breuk::operator+(int)} gedefinieerd is. 
-    Dit is hier niet het geval. De compiler \enquote{ziet} dat er wel een memberfunctie \cppcode{Breuk::operator+(const Breuk&)} gedefinieerd is en zal vervolgens \enquote{kijken} of de \cppcode{int} omgezet kan worden naar een \cppcode{Breuk}. 
-    Dit is in dit geval mogelijk door gebruik te maken van de \USE{constructor} \cppcode{Breuk(int)}. 
-    De compiler maakt dan met deze \USE{constructor} een tijdelijke variabele van het type \cppcode{Breuk} aan en initialiseert deze variabele met \cppcode{1}.
-    Vervolgens wordt een \USE{reference} naar deze tijdelijke variabele als argument aan de \cppcode{operator+} memberfunctie meegegeven. De tijdelijke variabele wordt na het uitvoeren van de \cppcode{operator+} memberfunctie weer opgeruimd.
-}
-\qa{
-    Kun je bij een \cppcode{int} ook een \cppcode{Breuk} optellen?\\
-\cppcode{Breuk a(1, 2);}\\
-\cppcode{Breuk b = 1 + a;}    
-}{
-    Nee, nu niet. De expressie \cppcode{1 + a} wordt geïnterpreteerd als \cppcode{1.operator+(a)}. 
-    De compiler zal dan \enquote{kijken} of de het ingebouwde type \cppcode{int} het optellen met een \cppcode{Breuk} heeft gedefinieerd. 
-    Dit is vanzelfsprekend niet het geval. 
-    De compiler \enquote{ziet} dat wel gedefinieerd is hoe een \cppcode{int} bij een \cppcode{int} opgeteld moet worden en zal vervolgens \enquote{kijken} of de \cppcode{Breuk} omgezet kan worden naar een \cppcode{int}. 
-    Dit is in dit geval ook niet mogelijk\footnote{Op \csecref{conversion operator} zal ik bespreken hoe je deze type conversie indien gewenst zelf kunt definiëren.}. De Microsoft Visual Studio \Cpp{} compiler geeft de volgende foutmelding: \error{binary '+' : no global operator found which takes type 'Breuk'}. De GCC \Cpp{} compiler genereert een iets duidelijkere foutmelding: \error{No match for 'operator+' in '3 + b'}. 
-    Als je echter de \cppcode{operator+} niet als memberfunctie definieert maar in plaats daarvan de globale \cppcode{operator+} overloadt, dan wordt het wel mogelijk om een \cppcode{int} bij een \cppcode{Breuk} op te tellen.
-}
-
-\section{Operator overloading (deel 3)}
-Naast het definiëren van operatoren als memberfuncties van zelfgedefinieerde types kun je ook de globale operatoren \USE{overloaden}%
-\footnote{%
-    De operatoren \cppcode{=}, \cppcode{[]}, \cppcode{()} en \cppcode{->} kunnen echter alleen als memberfunctie \USE{overloaded} worden.
-}. 
-De globale |operator+| is onder andere gedeclareerd voor het ingebouwde type |int|:
-\begin{cpplstfragment}
-const int operator+(int, int);
-\end{cpplstfragment}
-
-Merk op dat deze globale operator twee parameters heeft, dit in tegenstelling tot de memberfunctie |Breuk::operator+| die slechts één parameter heeft. 
-Bij deze memberfunctie wordt de parameter opgeteld bij de \USE{receiver}. 
-Een globale operator heeft geen \USE{receiver} dus zijn voor een optelling twee parameters nodig. 
-Een expressie zoals: |a + b| zal dus, als |a| en |b| beide van het type |int| zijn, geïnterpreteerd worden als |operator+(a, b)|. 
-Je kunt nu door gebruik te maken van \USE{operator overloading} zelf zoveel globale |operator+| functies definiëren als je maar wilt.
-
-Als je dus een |Breuk| bij een |int| wilt kunnen optellen, kun je de volgende globale |operator+| definiëren:
-\cpplstinputfragment[linerange={97-97,99-100}]{operator+Global.cpp}
-
-Deze implementatie roept simpelweg de |Breuk::operator+| memberfunctie aan! Optellen is namelijk commutatief, dat wil zeggen dat $a + b$ gelijk is aan $b + a$. Als we van een |int| een |Breuk| willen aftrekken, moet een andere aanpak worden gekozen want aftrekken is niet commutatief, $a - b$ is namelijk ongelijk aan $b - a$.
-\cpplstinputfragment[linerange={102-102,104-107}]{operator+Global.cpp}
-
-Deze implementatie roept de |Breuk::operator-=| memberfunctie aan. Die moet dan natuurlijk wel gedefinieerd zijn:
-\cpplstinputfragment[linerange={68-73}]{operator+Global.cpp}
-
-Zie \proglink{operator+Global.cpp} voor een compleet voorbeeldprogramma.
-
-In plaats van zowel een memberfunctie |Breuk::operator+(const Breuk&)| en een globale |operator+(int, const Breuk&)| te declareren kun je ook één globale |operator+(const Breuk&, const Breuk&)| declareren.
-
-Voorbeeld van het \USE{overloaden} van de globale |operator+| voor objecten van de class |Breuk|:
-\cpplstinputfragment[linerange={9-10,12-12,14-14,17-17,26-26,89-93}]{Breuk3.cpp}
-
-Voor de fijnproever: de implementatie van |operator+| kan ook in 1 regel:
-\cpplstinputfragment[linerange={96-98}]{Breuk3.cpp}
-
-Voor de connaisseur (echte kenner): De implementatie kan ook zo:
-\cpplstinputfragment[linerange={102-104}]{Breuk3.cpp}
-
-Doordat de eerste parameter |left| hier als \USE{call by value} (zie \cpageref{call by value}) is gedeclareerd wordt bij aanroep \enquote{van zelf} een kopietje van het linker argument van de |operator+| gemaakt.
-
-Zie \proglink{Breuk3.cpp} voor een compleet voorbeeldprogramma.
-
-De unary operatoren (dat zijn operatoren met 1 operand, zoals |!|) en de \USE{assignment} operatoren (zoals |+=|) kunnen het beste als memberfunctie \USE{overloaded} worden. De overige binaire operatoren (dat zijn operatoren met 2 operanden, zoals |+|) kunnen het beste als gewone functie \USE{overloaded} worden. 
-In dit geval wordt namelijk (indien nodig) de linker operand of de rechter operand geconverteerd naar het benodigde type.
-
-\section{Overloaden \texorpdfstring{\cppcode{operator++}}{operator++} en \texorpdfstring{\cppcode{operator--}}{operator--}}
-%TODO heeft verwijzing naar Eckel zin?
-Bij het \USE{overloaden} van de |operator++| en |operator--| ontstaat een probleem omdat beide zowel een \emph{prefix} als een \emph{postfix} operator variant kennen%
-\footnote{%
-    Voor wie het niet meer weet: Een postfix operator \cppcode{++} wordt na afloop van de expressie uitgevoerd dus \cppcode{a = b++;} wordt geïnterpreteerd als \cppcode{a = b; b = b + 1;}. 
-    De prefix operator \cppcode{++} wordt voorafgaand aan de expressie uitgevoerd dus \cppcode{a = ++b;} wordt geïnterpreteerd als \cppcode{b = b + 1; a = b;}.
-}. 
-Dit probleem is opgelost door de postfix versie te voorzien van een (dummy) |int| parameter. 
-
-Voorbeeld van het \USE{overloaden} van |operator++| voor objecten van de class |Breuk|:
-\cpplstinputfragment[linerange={9-10,12-12,14-17,26-26}]{Breuk3.cpp}
-De implementatie van deze memberfuncties wordt in \csecref{Breuk::operator++ implementatie} gegeven.
-%verwijzen naar page gaat niet omdat programma wordt ingelezen uit cpp file
-
-Het gebruik van het return type |Breuk&| in plaats van |const Breuk&| bij de prefix |operator++| zorgt ervoor dat de expressie |a = ++++b| als |a| en |b| van het type |Breuk| zijn gewoon werkt%
-\footnote{%
-    \cppcode{a = ++++b} wordt geïnterpreteerd als \cppcode{a = ++(++b)}. \cppcode{b} wordt dus eerst met \cppcode{1} verhoogd, daarna nogmaals met \cppcode{1} verhoogd en tenslotte wordt deze waarde aan \cppcode{a} toegekend. Oftewel \cppcode{a = ++++b} is hetzelfde als \cppcode{b = b + 2; a = b}.
-} (net zoals bij het type |int|). 
-Het gebruik van het return type |const Breuk| in plaats van |Breuk| bij de postfix |operator++| zorgt ervoor dat de expressie |b++++| als |b| van het type |Breuk| is een error%
-\footnote{%
-    \cppcode{a = b++++} wordt geïnterpreteerd als \cppcode{a = (b++)++}. De postfix versie van de \cppcode{operator++} maakt een kopietje van \cppcode{b}, verhoogd de waarde van \cppcode{b} en geeft tot slot de waarde van het kopietje (de \emph{oude} waarde van \cppcode{b}) terug. Het is niet mogelijk om de operator ++ op deze returnwaarde uit te voeren. De Microsoft Visual \Cpp{} compiler geeft de error: \error{'++' needs l-value}.
-    Met \error{l-value} wordt een expressie bedoeld die links van een = teken gebruikt kan worden.
-} geeft (net zoals bij het type |int|).
-
-\section{Conversie operatoren}
-%TODO heeft verwijzing naar Eckel zin?
-\label{conversion operator}
-Een \USE{constructor} van class |Breuk| met één parameter van het type |T| wordt door de compiler gebruikt als een variabele van het type |T| moet worden geconverteerd naar het type |Breuk| (zie \csecref{sec:conversieconstructor}).  
-\label{type conversie}%
-Door het definiëren van een conversie operator voor het type |T| kan de programmeur ervoor zorgen dat objecten van de class |Breuk| door de compiler (indien nodig) omgezet kunnen worden naar het type |T|.
-Stel dat je wilt dat een |Breuk| die op een plaats wordt gebruikt waar de compiler een |int| verwacht, door de compiler omgezet wordt naar het \enquote{gehele deel} van de |Breuk| dan kun je dit als volgt implementeren:
-
-\begin{cpplstfragment}
-class Breuk {
-    // ...
-    operator int () const;
-    // ...
-};
-
-Breuk::operator int () const {
-    return boven / onder;
-}
-\end{cpplstfragment}
-
-Pas op bij conversies: definieer geen conversie waarbij informatie verloren gaat!
-%TODO: Waarom dan niet?
-%TODO: Voorbeeld maken
-Is het dan wel verstandig om een |Breuk| automatisch te laten converteren naar een |int|?\footnote{%
-    Nee! Het is overigens ook niet verstandig om een \cppcode{Breuk} automatisch te laten converteren naar een \cppcode{double}, want ook daarbij gaat informatie verloren (de zogenoemde afrondfout).
-}
-
-\section{Voorbeeld class \texorpdfstring{\cppcode{Breuk}}{Breuk} (derde versie)}
-Dit voorbeeld is een uitbreiding van de in \csecref{breuk2} gegeven class |Breuk| (versie 2). 
-In deze versie zijn de operator |==| en de operator |!=| toegevoegd. 
-We zullen een nieuwe vriend (\emph{\USE{friend}}) leren kennen die ons helpt bij het implementeren van deze operatoren. 
-Ook zul je leren hoe je een object van de class |Breuk| kunt wegschrijven en inlezen door middel van de |iostream| \USE{library}, zodat de operator |<<| voor wegschrijven en de operator |>>| voor inlezen gebruikt kan worden (door middel van \USE{operator overloading}).
-De memberfuncties |teller| en |noemer| zijn nu niet meer nodig. 
-Het wegschrijven van een |Breuk| (bijvoorbeeld op het scherm) en het inlezen van een |Breuk| (bijvoorbeeld van het toetsenbord) gaat nu op precies dezelfde wijze als het wegschrijven en het inlezen van een |int|. 
-Dit maakt het type |Breuk| voor programmeurs erg eenvoudig te gebruiken. 
-Ik zal nu eerst de complete broncode presenteren van het programma \proglink{Breuk3.cpp} waarin het type |Breuk| gedeclareerd, geïmplementeerd en gebruikt wordt. 
-Meteen daarna zal ik op bovengenoemde punten één voor één ingaan.
-\label{Breuk::operator++ implementatie}
-\cpplstinputfragment[linerange={3-5,8-34,36-46,49-93,106-131}]{Breuk3.cpp}
-\iftoggle{ebook}{
-    \cpplstinputfragment[linerange={Breuk3_main-Breuk3_main,Breuk3_main2-Breuk3_main2}]{fragments.cpp}
-}{
-    \cpplstinputfragment[linerange={135-160}]{Breuk3.cpp}
-}
-
-Ik heb ervoor gekozen om de globale |operator==| te \USE{overloaden} in plaats van een memberfunctie |Breuk::operator==| te definiëren.
-Dit heeft als voordeel dat zowel het linker als het rechter argument indien nodig naar het type |Breuk| geconverteerd kan worden.
-Dus zowel de expressies| b == 3| als |3 == b| kunnen worden gebruikt als |b| van het type |Breuk| is. 
-De implementatie van deze globale |operator ==| is als volgt:
-\cpplstinputfragment[linerange={125-127}]{Breuk3.cpp}
-
-Dit levert bij compilatie echter de volgende fouten op: \error{cannot access private member declared in class 'Breuk'}.
-
-De globaal gedefinieerde |operator==| is namelijk geen memberfunctie en heeft dus geen toegang tot de private velden van de class |Breuk|. Maar gelukkig is er een vriend die ons hier te hulp komt: de \emph{\USE{friend function}}.
-
-\section{\texorpdfstring{\cppcode{friend}}{friend} functions}
- %Heeft verwijzing naar Eckel zin?
-Een functie kan als \USE{friend} van een class gedeclareerd worden. 
-Deze \USE{friend} functies hebben dezelfde rechten als memberfuncties van de class. 
-Vanuit een \USE{friend} functie van een class heb je dus toegang tot de private \USE{members} van die class. 
-Omdat een \USE{friend} functie geen memberfunctie is van de class, is er geen \USE{receiver} object. 
-Je moet dus, om de private \USE{members} te kunnen gebruiken, zelf in de \USE{friend} functie aangeven welk object je wilt gebruiken. 
-Ook memberfuncties van een andere class kunnen als \USE{friend} functies gedeclareerd worden. 
-Als een class als \USE{friend} gedeclareerd wordt, betekent dit dat alle 
-memberfuncties van die class \USE{friend} functies zijn.
-
-De zojuist besproken globale |operator==| kan dus eenvoudig als \USE{friend} van de class |Breuk| gedeclareerd worden waardoor de \USE{compiler errors} als sneeuw voor de zon verdwijnen.
-\begin{cpplstfragment}
-class Breuk {
-public:
-    // ...
-private:
-    // ...
-\USE{friend} bool operator==(const Breuk& left, const Breuk& right);
-};
-\end{cpplstfragment}
-
-Het maakt niets uit of een \USE{friend} declaratie in het private of in het public deel van de class geplaatst wordt. 
-Hoewel een \USE{friend} functie binnen de class gedeclareerd wordt is een \USE{friend} functie géén memberfunctie maar een globale (normale) functie. 
-In deze \USE{friend} functie kun je de \USE{private members} |boven| en |onder| van de class |Breuk| zonder problemen gebruiken.
-
-In eerste instantie lijkt het er misschien op dat een \USE{friend} functie in tegenspraak is met het principe van \USE{information hiding}. 
-Dit is echter niet het geval; een class besluit namelijk zelf wie zijn vrienden zijn.
-Voor alle overige functies (geen \USE{member} en geen \USE{friend}) geldt nog steeds dat de private datavelden en private memberfuncties ontoegankelijk zijn. 
-Net zoals in het gewone leven moet een class zijn vrienden met zorg selecteren. 
-Als je elke functie als \USE{friend} van elke class declareert, wordt het principe van \USE{information hiding} natuurlijk wel overboord gegooid.
-
-De globale |operator!=| is als volgt \USE{overloaded} voor het type |Breuk|:
-\cpplstinputfragment[linerange={129-131}]{Breuk3.cpp}
-
-Bij de implementatie is gebruik gemaakt van de al eerder voor het type |Breuk| \USE{overloaded} globale |operator==|. 
-Het is dus niet nodig om deze |operator!=| als \USE{friend} functie van de class |Breuk| te definiëren.
-
-\section{Operator overloading (deel 4)} 
-%(Zie eventueel TICPP Chapter12.html\#Heading364.)
-\label{sec:overload output}
-Het object |cout| dat in de \USE{headerfile}| iostream.h| gedeclareerd is, is van het type |ostream|. 
-Om er voor te zorgen dat je een |Breuk| |b| op het scherm kunt afdrukken door middel van: |cout << b|, moet je, zoals je nu zo langzamerhand wel zult begrijpen, de globale |operator<<| \USE{overloaden}%
-\footnote{%
-    We hebben hier geen keuze omdat het definiëren van de memberfunctie \hcode[style=cppstyle]{ostream::\\-oper\\-ator<<\\-(const Breuk)} geen reële mogelijkheid is.
-    De class \cppcode{ostream} is namelijk in de \cppcode{iostream} \USE{library} gedeclareerd en deze \USE{library} kunnen (en willen) we natuurlijk niet aanpassen.
-}:
-\begin{cpplstfragment}
-ostream& operator<<(ostream& left, const Breuk& right) {
-    left << right.boven << '/' << right.onder;
-    return left; 
-}
-\end{cpplstfragment}
-%
-Deze globale operator gebruikt de private velden van de class |Breuk| en moet daarom als \USE{friend} van deze class gedeclareerd worden. 
-Als eerste parameter is een |ostream&| gebruikt omdat de operator het als argument meegegeven object (in ons geval |cout|) moet kunnen aanpassen. 
-Als return type is het type |ostream&| gebruikt. 
-De als parameter meegegeven |ostream&| wordt ook weer teruggegeven. 
-Dit heeft tot gevolg dat je verschillende |<<| operatoren achter elkaar kunt \enquote{rijgen}. 
-Bijvoorbeeld:
-\begin{cpplstfragment}
-    cout << "De breuk a = " << a << " en de breuk b = " << b << endl;
-\end{cpplstfragment}
-
-Omdat alle ingebouwde \USE{overloaded} |<<| operatoren met als eerste parameter een |ostream&| deze \USE{reference} ook weer als return waarde teruggeven kun je de bovenstaande |operator<<| vereenvoudigen tot:
-\cpplstinputfragment[linerange={107-109}]{Breuk3.cpp}
-
-Op vergelijkbare wijze kun je de globale |operator>>| \USE{overloaden} zodat de objecten |a| en |b| van de class |Breuk| als volgt ingelezen kunnen worden: |cin >> a >> b|
-
-Voor het type van de eerste parameter en het return type moet je in dit geval |istream| gebruiken.
-
-Als je deze laatste versie van |Breuk| vergelijkt met versie 0 op \cpageref{breuk0}, dan is eigenlijk het enige belangrijke verschil dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als de ingebouwde types te gebruiken is. 
-\newcounter{pagediff}%
-\setcounter{pagediff}{\value{page}}%
-\addtocounter{pagediff}{-\getpagerefnumber{breuk0}}%
-Je hebt er \thepagediff{} pagina's gedetailleerde informatie voor door moeten worstelen om dit te bereiken. 
-Dat dit toch de moeite waard is heb ik op een van de eerste van die \thepagediff{} pagina's al een keer benadrukt, maar het zou kunnen zijn dat je door alle tussenliggende details het uiteindelijke nut van alle inspanning vergeten bent. 
-Dus zal ik hier nogmaals antwoord geven op de vraag: \enquote{Is het al die inspanningen wel waard om een \cppcode{Breuk} zo te maken dat je hem net zoals een ingebouwd type kan gebruiken?} 
-Ja! 
-Het maken van de class |Breuk| is dan wel een hele inspanning maar iedere programmeur kan vervolgens dit zelfgedefinieerde type, als hij of  zij de naam |Breuk| maar kent, als vanzelf (intuïtief) gebruiken. 
-Er is daarbij geen handleiding of helpfunctie nodig is, omdat het type |Breuk| zich net zo gedraagt als een ingebouwd type. 
-De class |Breuk| hoeft maar één keer gemaakt te worden, maar zal talloze malen gebruikt worden.
+Deze kennis heb je echter niet nodig om de rest van dit dictaat te begrijpen.
+Hoe je andere operatoren kunt overloaden bij het type |Breuk| kun je vinden in \csecref{sec:objectsandclassesdetails}.
 
 %TODO: Herschrijven naar het type Breuk. Maar dat is practicum opgave...
 \section{Voorbeeld separate compilation van class \texorpdfstring{\hcode{Me\\-mo\\-ry\\-Cell}}{MemoryCell}}
@@ -2382,7 +2096,7 @@ We noemen dit \emph{generiek} programmeren.
 Pas tijdens het (her)gebruik van de functie of class moeten we specificeren welk type gebruikt moet worden.
 
 \section{Template functies}
-Op \cpageref{swapInts} heb ik de functie |swapInts| besproken waarmee twee |int| variabelen verwisseld kunnen worden:
+Op \cpageref{code:swap_ints} heb ik de functie |swapInts| besproken waarmee twee |int| variabelen verwisseld kunnen worden:
 \begin{cpplstfragment}
 void swapInts(int& p, int& q) {
     int t(p);
@@ -2901,8 +2615,7 @@ private:
 }
 
 \section{Polymorfisme}
-\label{polymorphism}
-\label{polymorfisme}
+\label{sec:polymorfisme}
 % (Zie eventueel TICPP Chapter15.html.)
 Als de classes |Base| en |Derived| zoals hierboven gedefinieerd zijn, kan een pointer van het type |Base*| niet alleen wijzen naar een object van de class |Base| maar ook naar een object van de class |Derived|.
 Want een |Derived| IS-A (is een) |Base|.
@@ -4749,7 +4462,7 @@ De \USE{method} die wordt uitgevoerd bij de ontvangst van een \USE{message} is d
     Elke class (die virtuele functies bevat) heeft zo'n virtuele functietabel en elk object van zo'n class bevat een (verborgen) pointer naar deze tabel.
     Via deze tabel met memberfunctiepointers kan \USE{late binding} op een zeer snelle manier (zonder te zoeken) worden geïmplementeerd.
 }, dit wordt \emph{\USE{dynamic binding}} (ook wel \emph{\USE{late binding}}) genoemd.
-Maar dit wist je natuurlijk allemaal al lang (lees \csecref{inleidingOODOOP} en \csecref{polymorfisme} nog maar eens door).
+Maar dit wist je natuurlijk allemaal al lang (lees \csecref{inleidingOODOOP} en \csecref{sec:polymorfisme} nog maar eens door).
 
 In een \USE{constructor} en in een \USE{destructor} werkt \USE{dynamic binding} echter niet! 
 Op het eerste gezicht is dit vreemd maar als je er goed over nadenkt dan blijkt het toch logisch te zijn.
@@ -5099,7 +4812,7 @@ In de \Cpp{} standaard is om deze reden een nieuwe syntax voor casting gedefinie
 
 In dit geval moeten we een |reinterpret_cast| gebruiken omdat de \USE{cast} niet portable is.
 
-Stel dat je een \Cpp{} programma schrijft dat moet draaien op een AVR ATmega32 microcontroller.
+Stel dat je een \Cpp{} programma schrijft dat moet draaien op een MSP430 microcontroller.
 Als je de output poort B van deze controller wilt aansturen, kan dat via adres 0x38.
 Dit kun je in \Cpp{} als volgt doen:
 \begin{cpplstfragment}[mathescape=true]
@@ -7965,6 +7678,293 @@ Dit is handig omdat het nu dus niet nodig is om een tweede |power|-functie te sc
 Het is dus aan te bevelen om een functie die nuttig zou kunnen zijn bij het berekenen van een \USE{run time} constante met |constexpr| te definiëren\footnote{%
 	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#f4-if-a-function-may-have-to-be-evaluated-at-compile-time-declare-it-constexpr}{F.4}.
 }.
+
+\chapter{Objects and classes (de details)}
+\label{sec:objectandclassesdetails}
+\section{Operator overloading (deel 2)}
+Behalve de operator |+=| kun je ook andere operatoren \USE{overloaden}. 
+Voor de class |Breuk| kun je bijvoorbeeld de operator |+| definiëren, zodat objecten |b1| en |b2| van de class |Breuk| gewoon door middel van \hbox{\cppcode{b1 + b2}} opgeteld kunnen worden. 
+\cpplstinputfragment[linerange={10-17,25-25,58-63,88-91,108-108}]{operator+Member.cpp}
+
+Zoals je ziet heb ik de |operator+| eenvoudig geïmplementeerd door gebruik te maken van de al eerder gedefinieerde \hcode{operator\\-+=}. 
+De code kan nog verder vereenvoudigd worden tot:
+\cpplstinputfragment[linerange=66-68]{operator+Member.cpp}
+
+Zie \proglink{operator+Member.cpp} voor een compleet voorbeeldprogramma.
+
+\section{\texorpdfstring{\cppcode{operator+}}{operator+} FAQ}
+\qa{
+	Waarom gebruik je \cppcode{const Breuk} in plaats van \cppcode{Breuk} als return type bij \cppcode{operator+}?
+}{
+	Dit heb ik afgekeken van Scott Meyers \cite{Meyers2005} en \cite{Meyers1995}.
+	Als \cppcode{a}, \cppcode{b} en \cppcode{c} van het type \cppcode{int} zijn, levert de expressie \cppcode{(a + b) += c} de volgende (onduidelijke) foutmelding op \error{Error: left operand must be l-value}. 
+	Dit is goed omdat het optellen van \cppcode{c} bij een tijdelijke variabele (de som \cppcode{a + b} wordt namelijk aan een tijdelijke variabele toegekend) zinloos is. 
+	De tijdelijke variabele wordt namelijk meteen na het berekenen van de expressie weer verwijderd. 
+	Waarschijnlijk heeft de programmeur \cppcode{(a += b) += c} bedoeld. 
+	Als \cppcode{a}, \cppcode{b} en \cppcode{c} van het type \cppcode{Breuk} zijn en we kiezen als return type van \cppcode{Breuk::operator+} het type \cppcode{Breuk}, dan zal de expressie \cppcode{(a + b) += c} zonder foutmelding vertaald worden. 
+	Als we echter als return type \cppcode{const Breuk} gebruiken, dan levert deze expressie wel een foutmelding op omdat de \cppcode{operator+=} niet op een \cppcode{const} object uitgevoerd kan worden. 
+	Als je het zelfgedefinieerde type \cppcode{Breuk} zoveel mogelijk op het ingebouwde type \cppcode{int} wilt laten lijken (en dat wil je), dan moet je dus \cppcode{const Breuk} in plaats van \cppcode{Breuk} als return type van de \cppcode{operator+} gebruiken.%
+	\footnote{%
+		Dat dit nogal subtiel is blijkt wel uit het feit dat Bjarne Stroustrup (de ontwerper van \Cpp{}) in een vergelijkbaar voorbeeld \cite[blz. 528]{Stroustrup2013} geen \cppcode{const} bij het return type gebruikt.
+	}
+}
+\qa{
+	Kun je de \cppcode{operator+} niet beter een \USE{reference return type} geven zodat het maken van de kopie bij return voorkomen wordt?
+}{
+	Nee! 
+	We hebben een lokale kopie aangemaakt waarin de som is berekend. 
+	Als we een \USE{reference} teruggeven naar deze lokale kopie, ontstaat na return een zogenoemde \USE{dangling reference} (zie \cpageref{dangling reference}) omdat de lokale variabele na afloop van de memberfunctie opgeruimd wordt.
+}
+\qa{
+	Kun je in de \cppcode{operator+} de benodigde lokale variabele niet met \cppcode{new}\footnote{De operator \cppcode{new} wordt pas besproken in \csecref{sec:new} van dit dictaat.} aanmaken zodat we toch een \USE{reference} kunnen teruggeven? 
+	De met \cppcode{new} aangemaakte variabele blijft immers na afloop van de \cppcode{operator+} memberfunctie gewoon bestaan.
+}{
+	Ja dit kan wel, maar je kunt het beter \emph{niet} doen. 
+	De met \cppcode{new} aangemaakte variabele zal namelijk (zo lang het programma draait) nooit meer vrijgegeven worden. Dit is een voorbeeld van een
+	\emph{memory leak}. 
+	Elke keer als er twee breuken opgeteld worden neemt het beschikbare geheugen af!
+}
+\qa{
+	Kun je de implementatie van \cppcode{operator+} niet nog verder vereenvoudigen tot:\\
+	\cppcode{return *this += right;}
+}{
+	Nee! 
+	Na de bewerking \cppcode{c = a + b;} is dan niet alleen \cppcode{c} gelijk geworden aan de som van \cppcode{a} en \cppcode{b} maar
+	is ook \cppcode{a} gelijk geworden aan de som van \cppcode{a} en \cppcode{b} en dat is natuurlijk niet de bedoeling.
+}
+\qa{
+	Kun je bij een \cppcode{Breuk} ook een \cppcode{int} optellen?\\
+	\cppcode{Breuk a(1, 2);}\\
+	\cppcode{Breuk b = a + 1;}
+}{
+	Ja. 
+	De expressie \cppcode{a + 1} wordt geïnterpreteerd als \cppcode{a.operator+(1)}. De compiler zal dan \enquote{kijken} of de memberfunctie \cppcode{Breuk::operator+(int)} gedefinieerd is. 
+	Dit is hier niet het geval. De compiler \enquote{ziet} dat er wel een memberfunctie \cppcode{Breuk::operator+(const Breuk&)} gedefinieerd is en zal vervolgens \enquote{kijken} of de \cppcode{int} omgezet kan worden naar een \cppcode{Breuk}. 
+	Dit is in dit geval mogelijk door gebruik te maken van de \USE{constructor} \cppcode{Breuk(int)}. 
+	De compiler maakt dan met deze \USE{constructor} een tijdelijke variabele van het type \cppcode{Breuk} aan en initialiseert deze variabele met \cppcode{1}.
+	Vervolgens wordt een \USE{reference} naar deze tijdelijke variabele als argument aan de \cppcode{operator+} memberfunctie meegegeven. De tijdelijke variabele wordt na het uitvoeren van de \cppcode{operator+} memberfunctie weer opgeruimd.
+}
+\qa{
+	Kun je bij een \cppcode{int} ook een \cppcode{Breuk} optellen?\\
+	\cppcode{Breuk a(1, 2);}\\
+	\cppcode{Breuk b = 1 + a;}    
+}{
+	Nee, nu niet. De expressie \cppcode{1 + a} wordt geïnterpreteerd als \cppcode{1.operator+(a)}. 
+	De compiler zal dan \enquote{kijken} of de het ingebouwde type \cppcode{int} het optellen met een \cppcode{Breuk} heeft gedefinieerd. 
+	Dit is vanzelfsprekend niet het geval. 
+	De compiler \enquote{ziet} dat wel gedefinieerd is hoe een \cppcode{int} bij een \cppcode{int} opgeteld moet worden en zal vervolgens \enquote{kijken} of de \cppcode{Breuk} omgezet kan worden naar een \cppcode{int}. 
+	Dit is in dit geval ook niet mogelijk\footnote{Op \csecref{conversion operator} zal ik bespreken hoe je deze type conversie indien gewenst zelf kunt definiëren.}. De Microsoft Visual Studio \Cpp{} compiler geeft de volgende foutmelding: \error{binary '+' : no global operator found which takes type 'Breuk'}. De GCC \Cpp{} compiler genereert een iets duidelijkere foutmelding: \error{No match for 'operator+' in '3 + b'}. 
+	Als je echter de \cppcode{operator+} niet als memberfunctie definieert maar in plaats daarvan de globale \cppcode{operator+} overloadt, dan wordt het wel mogelijk om een \cppcode{int} bij een \cppcode{Breuk} op te tellen.
+}
+
+\section{Operator overloading (deel 3)}
+Naast het definiëren van operatoren als memberfuncties van zelfgedefinieerde types kun je ook de globale operatoren \USE{overloaden}%
+\footnote{%
+	De operatoren \cppcode{=}, \cppcode{[]}, \cppcode{()} en \cppcode{->} kunnen echter alleen als memberfunctie \USE{overloaded} worden.
+}. 
+De globale |operator+| is onder andere gedeclareerd voor het ingebouwde type |int|:
+\begin{cpplstfragment}
+	const int operator+(int, int);
+\end{cpplstfragment}
+
+Merk op dat deze globale operator twee parameters heeft, dit in tegenstelling tot de memberfunctie |Breuk::operator+| die slechts één parameter heeft. 
+Bij deze memberfunctie wordt de parameter opgeteld bij de \USE{receiver}. 
+Een globale operator heeft geen \USE{receiver} dus zijn voor een optelling twee parameters nodig. 
+Een expressie zoals: |a + b| zal dus, als |a| en |b| beide van het type |int| zijn, geïnterpreteerd worden als |operator+(a, b)|. 
+Je kunt nu door gebruik te maken van \USE{operator overloading} zelf zoveel globale |operator+| functies definiëren als je maar wilt.
+
+Als je dus een |Breuk| bij een |int| wilt kunnen optellen, kun je de volgende globale |operator+| definiëren:
+\cpplstinputfragment[linerange={97-97,99-100}]{operator+Global.cpp}
+
+Deze implementatie roept simpelweg de |Breuk::operator+| memberfunctie aan! Optellen is namelijk commutatief, dat wil zeggen dat $a + b$ gelijk is aan $b + a$. Als we van een |int| een |Breuk| willen aftrekken, moet een andere aanpak worden gekozen want aftrekken is niet commutatief, $a - b$ is namelijk ongelijk aan $b - a$.
+\cpplstinputfragment[linerange={102-102,104-107}]{operator+Global.cpp}
+
+Deze implementatie roept de |Breuk::operator-=| memberfunctie aan. Die moet dan natuurlijk wel gedefinieerd zijn:
+\cpplstinputfragment[linerange={68-73}]{operator+Global.cpp}
+
+Zie \proglink{operator+Global.cpp} voor een compleet voorbeeldprogramma.
+
+In plaats van zowel een memberfunctie |Breuk::operator+(const Breuk&)| en een globale |operator+(int, const Breuk&)| te declareren kun je ook één globale |operator+(const Breuk&, const Breuk&)| declareren.
+
+Voorbeeld van het \USE{overloaden} van de globale |operator+| voor objecten van de class |Breuk|:
+\cpplstinputfragment[linerange={9-10,12-12,14-14,17-17,26-26,89-93}]{Breuk3.cpp}
+
+Voor de fijnproever: de implementatie van |operator+| kan ook in 1 regel:
+\cpplstinputfragment[linerange={96-98}]{Breuk3.cpp}
+
+Voor de connaisseur (echte kenner): De implementatie kan ook zo:
+\cpplstinputfragment[linerange={102-104}]{Breuk3.cpp}
+
+Doordat de eerste parameter |left| hier als \USE{call by value} (zie \cpageref{call by value}) is gedeclareerd wordt bij aanroep \enquote{van zelf} een kopietje van het linker argument van de |operator+| gemaakt.
+
+Zie \proglink{Breuk3.cpp} voor een compleet voorbeeldprogramma.
+
+De unary operatoren (dat zijn operatoren met 1 operand, zoals |!|) en de \USE{assignment} operatoren (zoals |+=|) kunnen het beste als memberfunctie \USE{overloaded} worden. De overige binaire operatoren (dat zijn operatoren met 2 operanden, zoals |+|) kunnen het beste als gewone functie \USE{overloaded} worden. 
+In dit geval wordt namelijk (indien nodig) de linker operand of de rechter operand geconverteerd naar het benodigde type.
+
+\section{Overloaden \texorpdfstring{\cppcode{operator++}}{operator++} en \texorpdfstring{\cppcode{operator--}}{operator--}}
+%TODO heeft verwijzing naar Eckel zin?
+Bij het \USE{overloaden} van de |operator++| en |operator--| ontstaat een probleem omdat beide zowel een \emph{prefix} als een \emph{postfix} operator variant kennen%
+\footnote{%
+	Voor wie het niet meer weet: Een postfix operator \cppcode{++} wordt na afloop van de expressie uitgevoerd dus \cppcode{a = b++;} wordt geïnterpreteerd als \cppcode{a = b; b = b + 1;}. 
+	De prefix operator \cppcode{++} wordt voorafgaand aan de expressie uitgevoerd dus \cppcode{a = ++b;} wordt geïnterpreteerd als \cppcode{b = b + 1; a = b;}.
+}. 
+Dit probleem is opgelost door de postfix versie te voorzien van een (dummy) |int| parameter. 
+
+Voorbeeld van het \USE{overloaden} van |operator++| voor objecten van de class |Breuk|:
+\cpplstinputfragment[linerange={9-10,12-12,14-17,26-26}]{Breuk3.cpp}
+De implementatie van deze memberfuncties wordt in \csecref{Breuk::operator++ implementatie} gegeven.
+%verwijzen naar page gaat niet omdat programma wordt ingelezen uit cpp file
+
+Het gebruik van het return type |Breuk&| in plaats van |const Breuk&| bij de prefix |operator++| zorgt ervoor dat de expressie |a = ++++b| als |a| en |b| van het type |Breuk| zijn gewoon werkt%
+\footnote{%
+	\cppcode{a = ++++b} wordt geïnterpreteerd als \cppcode{a = ++(++b)}. \cppcode{b} wordt dus eerst met \cppcode{1} verhoogd, daarna nogmaals met \cppcode{1} verhoogd en tenslotte wordt deze waarde aan \cppcode{a} toegekend. Oftewel \cppcode{a = ++++b} is hetzelfde als \cppcode{b = b + 2; a = b}.
+} (net zoals bij het type |int|). 
+Het gebruik van het return type |const Breuk| in plaats van |Breuk| bij de postfix |operator++| zorgt ervoor dat de expressie |b++++| als |b| van het type |Breuk| is een error%
+\footnote{%
+	\cppcode{a = b++++} wordt geïnterpreteerd als \cppcode{a = (b++)++}. De postfix versie van de \cppcode{operator++} maakt een kopietje van \cppcode{b}, verhoogd de waarde van \cppcode{b} en geeft tot slot de waarde van het kopietje (de \emph{oude} waarde van \cppcode{b}) terug. Het is niet mogelijk om de operator ++ op deze returnwaarde uit te voeren. De Microsoft Visual \Cpp{} compiler geeft de error: \error{'++' needs l-value}.
+	Met \error{l-value} wordt een expressie bedoeld die links van een = teken gebruikt kan worden.
+} geeft (net zoals bij het type |int|).
+
+\section{Conversie operatoren}
+%TODO heeft verwijzing naar Eckel zin?
+\label{conversion operator}
+Een \USE{constructor} van class |Breuk| met één parameter van het type |T| wordt door de compiler gebruikt als een variabele van het type |T| moet worden geconverteerd naar het type |Breuk| (zie \csecref{sec:conversieconstructor}).  
+\label{type conversie}%
+Door het definiëren van een conversie operator voor het type |T| kan de programmeur ervoor zorgen dat objecten van de class |Breuk| door de compiler (indien nodig) omgezet kunnen worden naar het type |T|.
+Stel dat je wilt dat een |Breuk| die op een plaats wordt gebruikt waar de compiler een |int| verwacht, door de compiler omgezet wordt naar het \enquote{gehele deel} van de |Breuk| dan kun je dit als volgt implementeren:
+
+\begin{cpplstfragment}
+	class Breuk {
+		// ...
+		operator int () const;
+		// ...
+	};
+	
+	Breuk::operator int () const {
+		return boven / onder;
+	}
+\end{cpplstfragment}
+
+Pas op bij conversies: definieer geen conversie waarbij informatie verloren gaat!
+%TODO: Waarom dan niet?
+%TODO: Voorbeeld maken
+Is het dan wel verstandig om een |Breuk| automatisch te laten converteren naar een |int|?\footnote{%
+	Nee! Het is overigens ook niet verstandig om een \cppcode{Breuk} automatisch te laten converteren naar een \cppcode{double}, want ook daarbij gaat informatie verloren (de zogenoemde afrondfout).
+}
+
+\section{Voorbeeld class \texorpdfstring{\cppcode{Breuk}}{Breuk} (derde versie)}
+Dit voorbeeld is een uitbreiding van de in \csecref{breuk2} gegeven class |Breuk| (versie 2). 
+In deze versie zijn de operator |==| en de operator |!=| toegevoegd. 
+We zullen een nieuwe vriend (\emph{\USE{friend}}) leren kennen die ons helpt bij het implementeren van deze operatoren. 
+Ook zul je leren hoe je een object van de class |Breuk| kunt wegschrijven en inlezen door middel van de |iostream| \USE{library}, zodat de operator |<<| voor wegschrijven en de operator |>>| voor inlezen gebruikt kan worden (door middel van \USE{operator overloading}).
+De memberfuncties |teller| en |noemer| zijn nu niet meer nodig. 
+Het wegschrijven van een |Breuk| (bijvoorbeeld op het scherm) en het inlezen van een |Breuk| (bijvoorbeeld van het toetsenbord) gaat nu op precies dezelfde wijze als het wegschrijven en het inlezen van een |int|. 
+Dit maakt het type |Breuk| voor programmeurs erg eenvoudig te gebruiken. 
+Ik zal nu eerst de complete broncode presenteren van het programma \proglink{Breuk3.cpp} waarin het type |Breuk| gedeclareerd, geïmplementeerd en gebruikt wordt. 
+Meteen daarna zal ik op bovengenoemde punten één voor één ingaan.
+\label{Breuk::operator++ implementatie}
+\cpplstinputfragment[linerange={3-5,8-34,36-46,49-93,106-131}]{Breuk3.cpp}
+\iftoggle{ebook}{
+	\cpplstinputfragment[linerange={Breuk3_main-Breuk3_main,Breuk3_main2-Breuk3_main2}]{fragments.cpp}
+}{
+	\cpplstinputfragment[linerange={135-160}]{Breuk3.cpp}
+}
+
+Ik heb ervoor gekozen om de globale |operator==| te \USE{overloaden} in plaats van een memberfunctie |Breuk::operator==| te definiëren.
+Dit heeft als voordeel dat zowel het linker als het rechter argument indien nodig naar het type |Breuk| geconverteerd kan worden.
+Dus zowel de expressies| b == 3| als |3 == b| kunnen worden gebruikt als |b| van het type |Breuk| is. 
+De implementatie van deze globale |operator ==| is als volgt:
+\cpplstinputfragment[linerange={125-127}]{Breuk3.cpp}
+
+Dit levert bij compilatie echter de volgende fouten op: \error{cannot access private member declared in class 'Breuk'}.
+
+De globaal gedefinieerde |operator==| is namelijk geen memberfunctie en heeft dus geen toegang tot de private velden van de class |Breuk|. Maar gelukkig is er een vriend die ons hier te hulp komt: de \emph{\USE{friend function}}.
+
+\section{\texorpdfstring{\cppcode{friend}}{friend} functions}
+%Heeft verwijzing naar Eckel zin?
+Een functie kan als \USE{friend} van een class gedeclareerd worden. 
+Deze \USE{friend} functies hebben dezelfde rechten als memberfuncties van de class. 
+Vanuit een \USE{friend} functie van een class heb je dus toegang tot de private \USE{members} van die class. 
+Omdat een \USE{friend} functie geen memberfunctie is van de class, is er geen \USE{receiver} object. 
+Je moet dus, om de private \USE{members} te kunnen gebruiken, zelf in de \USE{friend} functie aangeven welk object je wilt gebruiken. 
+Ook memberfuncties van een andere class kunnen als \USE{friend} functies gedeclareerd worden. 
+Als een class als \USE{friend} gedeclareerd wordt, betekent dit dat alle 
+memberfuncties van die class \USE{friend} functies zijn.
+
+De zojuist besproken globale |operator==| kan dus eenvoudig als \USE{friend} van de class |Breuk| gedeclareerd worden waardoor de \USE{compiler errors} als sneeuw voor de zon verdwijnen.
+\begin{cpplstfragment}
+	class Breuk {
+		public:
+		// ...
+		private:
+		// ...
+		\USE{friend} bool operator==(const Breuk& left, const Breuk& right);
+	};
+\end{cpplstfragment}
+
+Het maakt niets uit of een \USE{friend} declaratie in het private of in het public deel van de class geplaatst wordt. 
+Hoewel een \USE{friend} functie binnen de class gedeclareerd wordt is een \USE{friend} functie géén memberfunctie maar een globale (normale) functie. 
+In deze \USE{friend} functie kun je de \USE{private members} |boven| en |onder| van de class |Breuk| zonder problemen gebruiken.
+
+In eerste instantie lijkt het er misschien op dat een \USE{friend} functie in tegenspraak is met het principe van \USE{information hiding}. 
+Dit is echter niet het geval; een class besluit namelijk zelf wie zijn vrienden zijn.
+Voor alle overige functies (geen \USE{member} en geen \USE{friend}) geldt nog steeds dat de private datavelden en private memberfuncties ontoegankelijk zijn. 
+Net zoals in het gewone leven moet een class zijn vrienden met zorg selecteren. 
+Als je elke functie als \USE{friend} van elke class declareert, wordt het principe van \USE{information hiding} natuurlijk wel overboord gegooid.
+
+De globale |operator!=| is als volgt \USE{overloaded} voor het type |Breuk|:
+\cpplstinputfragment[linerange={129-131}]{Breuk3.cpp}
+
+Bij de implementatie is gebruik gemaakt van de al eerder voor het type |Breuk| \USE{overloaded} globale |operator==|. 
+Het is dus niet nodig om deze |operator!=| als \USE{friend} functie van de class |Breuk| te definiëren.
+
+\section{Operator overloading (deel 4)} 
+%(Zie eventueel TICPP Chapter12.html\#Heading364.)
+\label{sec:overload output}
+Het object |cout| dat in de \USE{headerfile}| iostream.h| gedeclareerd is, is van het type |ostream|. 
+Om er voor te zorgen dat je een |Breuk| |b| op het scherm kunt afdrukken door middel van: |cout << b|, moet je, zoals je nu zo langzamerhand wel zult begrijpen, de globale |operator<<| \USE{overloaden}%
+\footnote{%
+	We hebben hier geen keuze omdat het definiëren van de memberfunctie \hcode[style=cppstyle]{ostream::\\-oper\\-ator<<\\-(const Breuk)} geen reële mogelijkheid is.
+	De class \cppcode{ostream} is namelijk in de \cppcode{iostream} \USE{library} gedeclareerd en deze \USE{library} kunnen (en willen) we natuurlijk niet aanpassen.
+}:
+\begin{cpplstfragment}
+	ostream& operator<<(ostream& left, const Breuk& right) {
+		left << right.boven << '/' << right.onder;
+		return left; 
+	}
+\end{cpplstfragment}
+%
+Deze globale operator gebruikt de private velden van de class |Breuk| en moet daarom als \USE{friend} van deze class gedeclareerd worden. 
+Als eerste parameter is een |ostream&| gebruikt omdat de operator het als argument meegegeven object (in ons geval |cout|) moet kunnen aanpassen. 
+Als return type is het type |ostream&| gebruikt. 
+De als parameter meegegeven |ostream&| wordt ook weer teruggegeven. 
+Dit heeft tot gevolg dat je verschillende |<<| operatoren achter elkaar kunt \enquote{rijgen}. 
+Bijvoorbeeld:
+\begin{cpplstfragment}
+	cout << "De breuk a = " << a << " en de breuk b = " << b << endl;
+\end{cpplstfragment}
+
+Omdat alle ingebouwde \USE{overloaded} |<<| operatoren met als eerste parameter een |ostream&| deze \USE{reference} ook weer als return waarde teruggeven kun je de bovenstaande |operator<<| vereenvoudigen tot:
+\cpplstinputfragment[linerange={107-109}]{Breuk3.cpp}
+
+Op vergelijkbare wijze kun je de globale |operator>>| \USE{overloaden} zodat de objecten |a| en |b| van de class |Breuk| als volgt ingelezen kunnen worden: |cin >> a >> b|
+
+Voor het type van de eerste parameter en het return type moet je in dit geval |istream| gebruiken.
+
+Als je deze laatste versie van |Breuk| vergelijkt met versie 0 op \cpageref{breuk0}, dan is eigenlijk het enige belangrijke verschil dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als de ingebouwde types te gebruiken is. 
+\newcounter{pagediff}%
+\setcounter{pagediff}{\value{page}}%
+\addtocounter{pagediff}{-\getpagerefnumber{breuk0}}%
+Je hebt er \thepagediff{} pagina's gedetailleerde informatie voor door moeten worstelen om dit te bereiken. 
+Dat dit toch de moeite waard is heb ik op een van de eerste van die \thepagediff{} pagina's al een keer benadrukt, maar het zou kunnen zijn dat je door alle tussenliggende details het uiteindelijke nut van alle inspanning vergeten bent. 
+Dus zal ik hier nogmaals antwoord geven op de vraag: \enquote{Is het al die inspanningen wel waard om een \cppcode{Breuk} zo te maken dat je hem net zoals een ingebouwd type kan gebruiken?} 
+Ja! 
+Het maken van de class |Breuk| is dan wel een hele inspanning maar iedere programmeur kan vervolgens dit zelfgedefinieerde type, als hij of  zij de naam |Breuk| maar kent, als vanzelf (intuïtief) gebruiken. 
+Er is daarbij geen handleiding of helpfunctie nodig is, omdat het type |Breuk| zich net zo gedraagt als een ingebouwd type. 
+De class |Breuk| hoeft maar één keer gemaakt te worden, maar zal talloze malen gebruikt worden.
+
+
 	
 \chapter{Notes from A Tour if C++, Second Edition}
 Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second Edition} van Bjarne Stroustrup. Deze aantekeningen moeten nog (op de juiste plaats) verwerkt worden in dit dictaat.
@@ -8239,7 +8239,7 @@ Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second E
 	\begin{itemize}
 		\item 
 		De |operator+| wordt aangeroepen waarbij de parameter |left| een referentie is naar |b| en |right| een referentie is naar |c|\footnote{%
-			Door hier const reference parameters te gebruiken zorgen we ervoor dat \code{b} en \code{c} niet gekopieerd hoeven te worden en niet veranderd kunnen worden. Zie \csecref{const reference parameter}. 
+			Door hier const reference parameters te gebruiken zorgen we ervoor dat \code{b} en \code{c} niet gekopieerd hoeven te worden en niet veranderd kunnen worden. Zie \csecref{sec:constreferenceparameter}. 
 		}.
 		\item 
 		De constructor |Dozijn()| wordt aangeroepen om de variabele |result| aan te maken.

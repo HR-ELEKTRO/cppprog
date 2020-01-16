@@ -2,19 +2,19 @@
 using namespace std;
 
 int main() {
-    int array[] = {12, 2, 17, 32, 1, 18};
+    int rij[] = {12, 2, 17, 32, 1, 18};
     int som {0};
-    for (auto element: array) {
+    for (auto element: rij) {
         som += element;
     }
     cout << "som = " << som << '\n';
 
-    for (auto& element: array) {
+    for (auto& element: rij) {
         element = 0;
     }
 
     som = 0;
-    for (auto element: array) {
+    for (auto element: rij) {
         som += element;
     }
     cout << "som = " << som << '\n';

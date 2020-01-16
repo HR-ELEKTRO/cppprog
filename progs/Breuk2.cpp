@@ -12,7 +12,7 @@ public:
     Breuk(int t, int n);
     int teller() const;
     int noemer() const;
-    //~ void operator+=(Breuk right);
+    void operator+=(Breuk right);
 //  ...
 //  Er zijn nog veel uitbreidingen mogelijk
 //  ...
@@ -36,11 +36,11 @@ int Breuk::noemer() const {
     return onder;
 }
 
-//~ void Breuk::operator+=(Breuk right) {
-    //~ boven = boven * right.onder + onder * right.boven;
-    //~ onder *= right.onder;
-    //~ normaliseer();
-//~ }
+void Breuk::operator+=(Breuk right) {
+    boven = boven * right.onder + onder * right.boven;
+    onder *= right.onder;
+    normaliseer();
+}
 
 void Breuk::normaliseer() {
     assert(onder != 0);
