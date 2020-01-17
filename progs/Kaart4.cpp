@@ -4,20 +4,20 @@
 
 using namespace std;
 
-#include "ad178.h"
-#include "ni323.h"
-#include "bb647.h" // new!
-#include "doit.h"
+#include "Ad178.h"
+#include "Ni323.h"
+#include "Bb647.h" // new!e d
+#include "do_measurement.h"
 
 int main() {
     // druk alle doubles af met 2 cijfers na de decimale punt
-    cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
+    cout.setf(ios_base::fixed, ios_base::floatfield);
     cout.precision(2);
 
     AD178 card1;
-    do_it(card1);
+    do_measurement(card1, 10, 3);
     NI323 card2;
-    do_it(card2);
+    do_measurement(card2, 5, 4);
     BB647 card3;   // new!
-    do_it(card3);   // new!
+    do_measurement(card3, 2, 7);
 }

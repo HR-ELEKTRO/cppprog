@@ -4,9 +4,9 @@
 
 using namespace std;
 
-#include "ad178.h"
-#include "ni323.h"
-#include "doit.h"
+#include "Ad178.h"
+#include "Ni323.h"
+#include "do_measurement.h"
 
 int main() {
     // druk alle doubles af met 2 cijfers na de decimale punt
@@ -14,7 +14,7 @@ int main() {
     cout.precision(2);
     
     AD178 card1;
-    do_it(card1);
+    do_measurement(card1, 10, 3);
     NI323 card2;
-    do_it(card2);
+    do_measurement(card2, 5, 4);
 }

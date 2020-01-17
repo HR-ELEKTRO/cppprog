@@ -21,6 +21,6 @@ ostream& operator<<(ostream& os, Stoplicht s) {
 
 int main()
 {
-    Stoplicht s{Stoplicht::rood};
+    Stoplicht s {Stoplicht::rood};
     cout << "s = " << s << '\n';
 }

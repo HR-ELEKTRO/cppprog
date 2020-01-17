@@ -192,7 +192,7 @@ Dit dictaat is lang geleden begonnen als een korte introductie van \Cpp{} geschr
 
 Alle programmacode in dit dictaat is getest met GCC%
 \footnote{%
-    De GNU \USE{Compiler Collection} (GCC) bevat een zeer veel gebruikte open source \Cpp{}-compiler. Zie \url{http://gcc.gnu.org/}
+    De GNU \USE{Compiler Collection} (GCC) bevat een zeer veel gebruikte open source \Cpp{}\hyp{}compiler. Zie \url{http://gcc.gnu.org/}
 } versie 9.1.0 en 
 Texas Instruments Optimizing C/C++ Compiler
 versie 19.6.0.STS voor ARM en MSP430%
@@ -1569,7 +1569,7 @@ Een |const| |Breuk| mag je (vanzelfsprekend) niet veranderen.
     halve = b; 
 //  $\color{hrred}\textbf{error:}$ passing 'const Breuk' as 'this' argument discards qualifiers$\footnotemark$
 \end{cpplstfragment}
-\footnotetext{Deze foutmelding is niet erg helder. De \cppcode{this} pointer wordt behandeld op \csecref{this}.}
+\footnotetext{Deze foutmelding is niet erg helder. De \cppcode{this} pointer wordt behandeld in \csecref{this}.}
 
 Stel jezelf nu eens de vraag welke memberfuncties je aan mag roepen op het object |halve|%
 \footnote{%
@@ -1592,7 +1592,7 @@ Met deze |const| memberfunctie kun je de |teller| van een |Breuk| opvragen. De i
 Je kunt de memberfunctie |teller| nu dus ook aanroepen voor \USE{read-only} breuken:
 \begin{cpplstfragment}
     const Breuk halve {1, 2}; // constante halve met waarde 1/2
-    cout << halve.teller() << endl;
+    cout << halve.teller() << '\n';
 \end{cpplstfragment}
 
 Het aanroepen van de memberfunctie |plus| voor de |const| |Breuk| |halve| geeft echter een foutmelding en dat is precies de bedoeling want bij een \USE{read-only} object moet je niets kunnen optellen:
@@ -1601,7 +1601,7 @@ Het aanroepen van de memberfunctie |plus| voor de |const| |Breuk| |halve| geeft 
 //  $\color{hrred}\textbf{error:}$ passing 'const Breuk' as 'this' argument discards qualifiers$\footnotemark$
 \end{cpplstfragment}
 
-\footnotetext{Deze foutmelding is niet erg helder. De \cppcode{this} pointer wordt behandeld op \csecref{this}.}
+\footnotetext{Deze foutmelding is niet erg helder. De \cppcode{this} pointer wordt behandeld in \csecref{this}.}
 
 Als je probeert om in een |const| memberfunctie toch de \USE{receiver} te veranderen, krijg je de volgende foutmelding:
 \begin{cpplstfragment}[mathescape=true]
@@ -1944,9 +1944,9 @@ In alle voorafgaande code waarin een |Breuk| als parameter is gebruikt kan dus b
 \section{Reference in range-based for}
 \label{sec:referenceinrange-basedfor}
 In \csecref{sec:range-basedfor} heb je kennis gemaakt met de zogenoemde \emph{\USE{range-based for}}. 
-Deze for\hyp{}lus is speciaal bedoeld om de elementen van een array%
+Deze |for|\hyp{}lus is speciaal bedoeld om de elementen van een array%
 \footnote{%
-    De standaard \Cpp{} \USE{library} bevat nog vele andere datastructuren die ook met een \USE{range-based for} doorlopen kunnen worden zie \csecref{std::array} en \csecref{std::vector}.
+    De standaard \Cpp{} \USE{library} bevat nog vele andere datastructuren die ook met een \USE{range-based} \cppcode{for} doorlopen kunnen worden zie \csecref{std::array} en \csecref{std::vector}.
 }\ één voor één te benaderen.
 
 De in \csecref{sec:range-basedfor} gepresenteerde code laat zien hoe je een array element voor element kunt uitlezen:
@@ -1954,7 +1954,7 @@ De in \csecref{sec:range-basedfor} gepresenteerde code laat zien hoe je een arra
 
 De variabele |element| krijgt één voor één een waarde uit de array genaamd |array|. 
 
-Als je element voor element wilt aanpassen, moet je een |int&| of |auto&| gebruiken in de \USE{range-based for}:
+Als je element voor element wilt aanpassen, moet je een |int&| of |auto&| gebruiken in de \USE{range-based} |for|:
 \cpplstinputfragment[linerange=12-14]{ref_range-based_for.cpp}
 
 De \USE{reference} |element| is nu één voor één een alias voor een element uit de array genaamd |rij|. Zie \proglink{ref_range-based_for.cpp} voor een compleet voorbeeldprogramma.
@@ -1980,7 +1980,7 @@ Deze fout (het zogenoemde \label{dangling reference}\emph{\USE{dangling referenc
 De geheugenplaats wordt alleen vrijgegeven voor hergebruik. 
 Dit heeft tot gevolg dat de bovenstaande aanroep van |som| meestal gewoon werkt%
 \footnote{%
-    De GCC \Cpp{} compiler geeft de \USE{warning}: \error{reference to local variable 's' returned}.
+    De GCC \Cpp{}\hyp{}compiler geeft de \USE{warning}: \error{reference to local variable 's' returned}.
 }.
 De fout in de definitie van de functie |som| komt pas aan het licht als we de functie bijvoorbeeld als volgt aanroepen:
 
@@ -2009,7 +2009,7 @@ int* som(int i1, int i2) {
 
 Je moet er dan voor oppassen dat de pointer niet naar een variabele wijst die na afloop van de functie niet meer bestaat%
 \footnote{%
-    De GCC \Cpp{} compiler geeft de \USE{warning}: \error{address of local variable 's' returned}.
+    De GCC \Cpp{}-geeft de \USE{warning}: \error{address of local variable 's' returned}.
 }.
 
 Een goede manier om de waarde van een lokale variabele terug te geven vanuit een functie is door een \enquote{gewoon} type (geen \USE{reference} en ook geen pointer) als return type te gebruiken.  
@@ -2024,6 +2024,7 @@ int som(int i1, int i2) {
 Zie \proglink{ref_ret.cpp} voor een compleet voorbeeldprogramma.
 
 \section{Reference return type (deel 2)}
+\label{sec:Breuk::operator+=}
 In de |Breuk::operator+=| memberfunctie die gegeven is op \cpageref{operator+= niet correct} zal bij het uitvoeren van
 het |return| statement een kopie van het huidige object worden teruggegeven. 
 Dit is echter niet correct.
@@ -2098,15 +2099,15 @@ Pas tijdens het (her)gebruik van de functie of class moeten we specificeren welk
 \section{Template functies}
 Op \cpageref{code:swap_ints} heb ik de functie |swapInts| besproken waarmee twee |int| variabelen verwisseld kunnen worden:
 \begin{cpplstfragment}
-void swapInts(int& p, int& q) {
-    int t(p);
+void swap_nts(int& p, int& q) {
+    int t {p};
     p = q;
     q = t;
 }
 \end{cpplstfragment}
 
 Als je twee |double| variabelen wilt verwisselen, kun je deze functie niet rechtstreeks gebruiken.
-Waarschijnlijk ben je op dit moment gewend om de functie |swapInts| op de volgende wijze te \enquote{hergebruiken}:
+Waarschijnlijk ben je op dit moment gewend om de functie |swap_ints| op de volgende wijze te \enquote{hergebruiken}:
 \begin{itemize}
     \item Maak een kopie van de functie met behulp van de editor functies \enquote{knippen} en \enquote{plakken}.
     \item Vervang het type |int| door het type |double| met behulp van de editor functie \enquote{zoek en vervang}.
@@ -2120,8 +2121,8 @@ Deze vorm van hergebruik heeft de volgende nadelen:
 Door middel van een functietemplate kun je de handelingen (knippen, plakken, zoeken en vervangen) die nodig zijn om een functie geschikt te maken voor een ander datatype automatiseren.
 Je definieert dan een zogenoemde \emph{generieke} functie, een functie die je als het ware voor verschillende datatypes kunt gebruiken.
 
-De definitie van de functietemplate voor |swap| ziet er als volgt uit (\proglink{SwapTemplate.cpp}):
-\cpplstinputfragment[linerange={14-18}]{SwapTemplate.cpp}
+De definitie van de functietemplate voor |swap| ziet er als volgt uit (\proglink{swap_template.cpp}):
+\cpplstinputfragment[linerange={6-10}]{swap_template.cpp}
 
 Na het \USE{keyword} |template| volgt een lijst van template\hyp{}parameters tussen |<| en |>|.
 Een template\hyp{}parameter zal meestal een type zijn%
@@ -2153,14 +2154,19 @@ Als je nu de functie |swap| aanroept, zal de compiler zelf afhankelijk van het t
 } door voor het template\hyp{}parameter (in dit geval |T|) het betreffende type in te vullen.
 
 Dus de aanroep:
-\cpplstinputfragment[linerange={21-22,24-24}]{SwapTemplate.cpp}
+\begin{cpplstfragment}[mathescape=true]
+	int n {2};
+	int m {3};
+	swap(n, m);$\footnotemark$
+\end{cpplstfragment}
+\footnotetext{In het bestand \proglink{swap_template.cpp} zul je zien dat hier \cppcode{::swap(n, m)} staat. De extra \cppcode{::} is nodig om aan te geven dat de door ons gedefinieerde \cppcode{swap} en niet de standaard gedefinieerde \cppcode{std::swap} gebruikt moet worden.}
 heeft tot gevolg dat de volgende functie gegenereerd wordt%
 \footnote{%
     Als je zelf deze functie al gedefinieerd hebt, zal de compiler geen functie genereren maar de al gedefinieerde functie gebruiken.
 }:
 \begin{cpplstfragment}
 void swap(int& p, int& q) {
-    int t(p);
+    int t {p};
     p = q;
     q = t;
 }
@@ -2169,8 +2175,8 @@ void swap(int& p, int& q) {
 Als de functie |swap| daarna opnieuw met twee |int|'s als argumenten aangeroepen wordt, dan wordt gewoon de al gegenereerde functie aangeroepen.
 Als echter de functie |swap| ook als volgt aangeroepen wordt:
 \begin{cpplstfragment}
-    Breuk b(1, 2);
-    Breuk c(3, 4);
+    Breuk b {1, 2};
+    Breuk c {3, 4};
     swap(b, c);
 \end{cpplstfragment}
 dan heeft dit tot gevolg dat een tweede functie |swap| gegenereerd wordt%
@@ -2179,7 +2185,7 @@ Hier blijkt duidelijk het belang van \USE{function name overloading} (zie \csecr
 }:
 \begin{cpplstfragment}
 void swap(Breuk& p, Breuk& q) {
-    Breuk t(p);
+    Breuk t {p};
     p = q;
     q = t;
 }
@@ -2198,15 +2204,14 @@ Het gebruik van een functietemplate heeft echter ook het volgende nadeel:
 \begin{itemize}
     \item Doordat de compiler de volledige functietemplate definitie nodig heeft om een functie aanroep te kunnen vertalen moet de definitie van de functietemplate in een \USE{headerfile} (|.h| file) opgenomen worden en geïnclude worden in elke |.cpp| file waarin de functietemplate gebruikt wordt.
     Het is niet mogelijk om de functietemplate afzonderlijk te compileren tot een object file en deze later aan de rest van de code te \enquote{linken} zoals dit met een \enquote{gewone} functie wel kan.
-%DETAIL: C++11 external template kan gebruikt worden om te voorkomen dat een template in meerdere "translation units" geïnstantieerd wordt en kan daardoor compiletijd besparen.
 \end{itemize}
-
+%TODO: voetnoot toevoegen over \Cpp20 oplossing voor dit probleem
 Bij het ontwikkelen van kleine programma's zijn deze voordelen misschien niet zo belangrijk maar bij het ontwikkelen van grote programma's zijn deze voordelen wel erg belangrijk.
-Door gebruik te maken van een functietemplate in plaats van \enquote{met de hand} verschillende versies van een functie aan te maken
-wordt een programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
+Door gebruik te maken van een functietemplate in plaats van \enquote{met de hand} verschillende versies van een functie aan te maken wordt een programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
+
+De functietemplate |swap| is hier als voorbeeld zelf gedefinieerd, maar in de praktijk is dit niet nodig omdat deze functietemplate al in de standaard \Cpp{}\hyp{}library is opgenomen.
 
 \section{Class Templates}
-% (Zie eventueel TICPP Chapter16.html.)
 In de vorige paragraaf hebben we gezien dat je een template van een functie kunt maken waardoor de functie generiek wordt.
 Een generieke functie kun je voor verschillende datatypes gebruiken.
 Als je de generieke functie aanroept, zal de compiler zelf afhankelijk van het type van de gebruikte argumenten de benodigde \enquote{versie} van de generieke functie genereren door voor de template\hyp{}parameter het betreffende type in te vullen.
@@ -2231,7 +2236,7 @@ De waarde |13| kan, bijvoorbeeld, als volgt op plaats nummer |3| worden weggezet
 Deze waarde kan uit het object worden \enquote{gelezen} door de boodschap |leesUit| naar het object te sturen.
 Bijvoorbeeld:
 \begin{cpplstfragment}
-    cout << "De plaats nummer 3 in d bevat de waarde: " << d.leesUit(3) << endl;
+    cout << "De plaats nummer 3 in d bevat de waarde: " << d.leesUit(3) << '\n';
 \end{cpplstfragment}
 
 De implementatie van memberfuncties van de class |Dozijn| is als volgt:
@@ -2255,11 +2260,11 @@ int Dozijn::leesUit(int index) const {
 
 De als argument meegegeven |index| wordt bij beide memberfuncties gecontroleerd.
 
-Om de inhoud van een object van de class |Dozijn| eenvoudig te kunnen afdrukken is de |operator<<| als volgt \USE{overloaded}:
+Om de inhoud van een object van de class |Dozijn| eenvoudig te kunnen afdrukken is de |operator<<| als volgt \USE{overloaded}, zie \csecref{sec:overloadoutput}:
 \cpplstinputfragment[linerange={27-32}]{Dozijn.cpp}
 
 Je kunt de class |Dozijn| bijvoorbeeld als volgt gebruiken:
-\cpplstinputfragment[linerange={34-42}]{Dozijn.cpp}
+\cpplstinputfragment[linerange={34-39}]{Dozijn.cpp}
 
 \needspace{2\baselineskip}
 Dit programma geeft de volgende uitvoer:
@@ -2280,7 +2285,7 @@ Dozijn<Breuk> db; // een dozijn breuken
 
 \section{Voorbeeld class template \texorpdfstring{\cppcode{Dozijn}}{Dozijn}}
 De \emph{class template} |Dozijn| kan als volgt worden gedeclareerd (\proglink{DozijnTemplate.cpp}):
-\cpplstinputfragment[linerange={7-13}]{DozijnTemplate.cpp}
+\cpplstinputfragment[linerange={7-13}]{Dozijn_template.cpp}
 
 Merk op dat de parameter |index| nog steeds van het type |int| is.
 De \enquote{plaatsen} in het |Dozijn| zijn altijd genummerd van |0| t/m |11| onafhankelijk van het type van de elementen die in het |Dozijn| opgeslagen worden.
@@ -2288,16 +2293,16 @@ Het type van de private array |data| is nu van het type |T| en dit type is een p
 De tweede parameter van de memberfunctie |zetIn| en het return type van |leesUit| zijn van het type |const T&| in plaats van het type |T| om onnodige kopietjes te voorkomen.
 Alle memberfuncties van de \emph{template} class zijn vanzelfsprekend ook \emph{\USE{templates}}.
 De memberfuncties van de tempate class |Dozijn| kunnen als volgt gedefinieerd worden:
-\cpplstinputfragment[linerange={15-26}]{DozijnTemplate.cpp}
+\cpplstinputfragment[linerange={15-26}]{Dozijn_template.cpp}
 
 De memberfunctie |leesUit| geeft nu de waarde van plaats |0| terug als de |index <= 0| is en geeft de waarde van plaats |11| terug als de |index >= 11| is.
 Je kunt in dit geval namelijk niet de waarde |0| teruggeven zoals we bij het |Dozijn| met integers (op \cpageref{return Dozijn::leesUit}) gedaan hebben omdat we niet weten of het type |T| wel een waarde |0| kan hebben.
 
 Om de inhoud van een |Dozijn| van een willekeurig type eenvoudig te kunnen afdrukken is de |operator<<| met behulp van een template als volgt \USE{overloaded}:
-\cpplstinputfragment[linerange={28-33}]{DozijnTemplate.cpp}
+\cpplstinputfragment[linerange={28-33}]{Dozijn_template.cpp}
 
 Deze class template |Dozijn| kan nu als volgt gebruikt worden:
-\cpplstinputfragment[linerange={35-56}]{DozijnTemplate.cpp}
+\cpplstinputfragment[linerange={35-54}]{Dozijn_template.cpp}
 
 Bij het gebruik van de class template |Dozijn| kan de compiler niet zelf bepalen wat het type |T| moet zijn.
 Vandaar dat je dit bij het gebruik van de class template |Dozijn| zelf moet specificeren.
@@ -2314,23 +2319,34 @@ Je ziet dat je de class template |Dozijn| kunt gebruiken om twaalf elementen van
 \section{Voorbeeld class template \texorpdfstring{\cppcode{Rij}}{Rij}}
 \label{Rij}
 In de, in de vorige paragraaf beschreven, class template |Dozijn| kunnen we twaalf elementen van een type naar keuze opslaan.
-Als we meer dan twaalf elementen willen opslaan, kunnen we deze template niet gebruiken.
-We zouden nu bijvoorbeeld een class template |Gros| kunnen definiëren waar honderdvierenveertig elementen
-in passen door de class template |Dozijn| te kopiëren en overal de waarde 12 te vervangen door de waarde 144.
+Als je meer dan twaalf elementen wilt opslaan, kun je deze template niet gebruiken.
+Je zou nu bijvoorbeeld een class template |Gros| kunnen definiëren waar honderdvierenveertig elementen in passen door de class template |Dozijn| te kopiëren en overal de waarde 12 te vervangen door de waarde 144.
 Het kopiëren van code is echter, zoals je weet, slecht voor de onderhoudbaarheid.
-We kunnen beter een class template |Rij| definiëren waarbij we het gewenste aantal elementen als (tweede) template\hyp{}parameter kunnen opgeven.
+Je kunt beter een class template |Rij| definiëren waarbij je het gewenste aantal elementen als (tweede) template\hyp{}parameter kunnen opgeven.
 
 De class template |Rij| kan als volgt worden gedeclareerd (\proglink{Rij.cpp}):
-\cpplstinputfragment[linerange={6-13}]{Rij.cpp}
+\cpplstinputfragment[linerange={7-14}]{Rij.cpp}
+
+Je ziet dat het standaard type |size_t| gebruikt is als type van de tweede template\hyp{}parameter |N|.
+Het type |size_t| wordt in C en \Cpp{} gebruikt om de grootte van een object mee aan te geven en een variabele van dit type kan alleen positief zijn.
+Dit is een logische keuze omdat het aantal elementen in een |Rij| ook alleen maar positief kan zijn.
+Het type |size_t| is ook gebruikt als type van de parameter |index| van de memberfuncties |zet_in| en |lees_uit|. Deze |index| kan ook alleen maar positief zijn.
+
+De functie |aantal_plaatsen| is een zogenoemde \USE{compile time} functie, die zoals de naam al zegt ook tijdens het compileren van het programma kan worden uitgevoerd, zie \csecref{compile time functies}.
+De returnwaarde van deze functie is dus te gebruiken op plaatsen waar een compile time constante vereist is, zie \csecref{sec:constexpr}.
+Je kunt bijvoorbeeld een rij definiëren die evenveel plaatsen bevat als een al eerder gedefinieerde rij\footnote{%
+	Het argument dat wordt meegegeven aan een non-type template-parameter moet een compile time constante zijn, zie \url{https://en.cppreference.com/w/cpp/language/constant_expression}.
+}:
+\cpplstinputfragment[linerange={40-40,51-51}]{Rij.cpp}
 
 De memberfuncties van de tempate class |Rij| kunnen als volgt gedefinieerd worden:
-\cpplstinputfragment[linerange={15-27}]{Rij.cpp}
+\cpplstinputfragment[linerange={16-25}]{Rij.cpp}
 
 Om de inhoud van een |Rij| eenvoudig te kunnen afdrukken is de |operator<<| met behulp van een template als volgt \USE{overloaded}:
-\cpplstinputfragment[linerange={29-35}]{Rij.cpp}
+\cpplstinputfragment[linerange={31-37}]{Rij.cpp}
 
 Deze class template |Rij| kan nu als volgt gebruikt worden:
-\cpplstinputfragment[linerange={37-46,49-52}]{Rij.cpp}
+\cpplstinputfragment[linerange={39-48,55-55}]{Rij.cpp}
 
 De uitvoer van het bovenstaande programma is:
 % cpplstfragment gebruikt in plaats van coutput zodat regel netjes afgebroken wordt.
@@ -2342,7 +2358,7 @@ alfabet = A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X
 Je ziet dat je de class template |Rij| kunt gebruiken om 10 elementen van het type |int| in op te slaan maar ook om 26 elementen van het type |char| in op te slaan.
 
 \section{Template details}
-Over \USE{templates} valt nog veel meer te vertellen:
+Over \USE{templates} valt nog veel meer te vertellen, onder andere:
 \begin{itemize}
     \item \USE{Template specialisation};\\
     Een speciale versie van een template die alleen voor een bepaald type (bijvoorbeeld |int|) of voor bepaalde types (bijvoorbeeld |T*|) wordt gebruikt.
@@ -2352,11 +2368,12 @@ Over \USE{templates} valt nog veel meer te vertellen:
     \item Default waarden voor template\hyp{}parameters.\\
     Net zoals voor gewone functie parameters kun je voor template\hyp{}parameters ook default waarden (of types) specificeren.
 \end{itemize}
-Voor al deze details verwijs ik je naar \cite[\hrefpageEckelTwo{121}{hoofdstuk 3}]{Eckel1999} en \cite[hoofdstuk 23 t/m 29]{Stroustrup2013}.
+Voor al deze details verwijs ik je naar \cite[hoofdstuk \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{22}, \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{23} en \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{24}]{Brokken2019},  \cite[hoofdstuk 23 t/m 29]{Stroustrup2013} en \cite{Vandevoorde2017}.
 
 \section{Standaard Templates}
 \label{STL}
-In de \Cpp{}-standaard \cite{ISO2014} is een groot aantal standaard \USE{templates} voor datastructuren en algoritmen opgenomen.
+In de \Cpp{}-standaard \cite{ISO2014} is een groot aantal standaard \USE{templates} voor datastructuren en algoritmen opgenomen. 
+In \csecref{STL} komen we hier nog uitgebreid op terug.
 De basis voor deze verzameling \USE{templates} is in de jaren '90 gelegd door Alex Stepanov en Meng Lee in de zogenoemde STL (\USE{Standard Template Library}).
 In de standaard \USE{library} zijn ook een generiek type |array| en een generiek type |vector| opgenomen.
 
@@ -2382,16 +2399,18 @@ De voordelen van |array| in vergelijking met een C\hyp{}array:
         \item \ldots\footnote{Zie \url{http://en.cppreference.com/w/cpp/container/array}}
     \end{itemize}
 \end{itemize}
-De elementen van een |array| kunnen, net zoals de elementen van een C\hyp{}array, één voor één gelezen of bewerkt worden met behulp van een \USE{range-based for} (zie \csecref{sec:range-basedfor} en \csecref{sec:referenceinrange-basedfor}).
+De elementen van een |array| kunnen, net zoals de elementen van een C\hyp{}array, één voor één gelezen of bewerkt worden met behulp van een \USE{range-based} |for| (zie \csecref{sec:range-basedfor} en \csecref{sec:referenceinrange-basedfor}).
 
-Voorbeeld van een programma met een |array| (\proglink{StdArray.cpp}):
-\cpplstinputfragment[linerange={1-37}]{StdArray.cpp}
+Voorbeeld van een programma met een |array| (\proglink{std_array.cpp}):
+\cpplstinputfragment[linerange={1-40}]{std_array.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
 0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
 0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
+Error: array::at: \_\_n (which is 100) >= \_Nm (which is 15)
+Segmentation fault (core dumped)
 \end{coutput}
 
 \section{\texorpdfstring{\cppcode{std::vector}}{std::vector}}
@@ -2419,28 +2438,43 @@ De voordelen van |vector| in vergelijking met een C\hyp{}array:
         % Hierdoor blijft de gemiddelde tijd voor het toevoegen van een element van de orde O(1).
         \item |push_back(...)| voeg een element toe aan de |vector|.
         Na afloop is de |size| van de |vector| dus met 1 toegenomen.
-        \item |resize(...)| Verander de |size| van de |vector|.
+        \item |resize(...)| verander de |size| van de |vector|.
         \item \ldots\footnote{Zie \url{http://en.cppreference.com/w/cpp/container/vector}}
     \end{itemize}
 \end{itemize}
 
-De elementen van een |vector| kunnen, net zoals de elementen van een C\hyp{}array, één voor één gelezen of bewerkt worden met behulp van een \USE{range-based for} (zie \csecref{sec:range-basedfor} en \csecref{sec:referenceinrange-basedfor}).
+De elementen van een |vector| kunnen, net zoals de elementen van een C\hyp{}array, één voor één gelezen of bewerkt worden met behulp van een \USE{range-based} |for| (zie \csecref{sec:range-basedfor} en \csecref{sec:referenceinrange-basedfor}).
 
-Voorbeeld van een programma met een |vector| (\proglink{StdVector1.cpp}):
-\cpplstinputfragment[linerange={1-35}]{StdVector1.cpp}
+Voorbeeld van een programma met een |vector| (\proglink{std_vector1.cpp}):
+\cpplstinputfragment[linerange={1-38}]{std_vector1.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
+% cpplstfragment gebruikt in plaats van coutput zodat regel netjes afgebroken wordt.
+\begin{cpplstfragment}[language=]
+0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
+0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
+Error: vector::_M_range_check: __n (which is 100) >= this->size() (which is 15)
+Segmentation fault (core dumped)
+\end{cpplstfragment}
+
+Voorbeeldprogramma om een onbekend aantal elementen in een |vector| in te lezen (\proglink{std_vector2.cpp}):
+\cpplstinputfragment[linerange={1-37}]{std_vector2.cpp}
+
+Mogelijke invoer \footnote{%
+	De invoer is groen en onderstreept weergegeven.
+} en uitvoer van dit programma:
 \begin{coutput}
-0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
-0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
+Voer een willekeurig aantal integers in, sluit af met een letter:
+\cinput{1 2 3 4 5 6 7 8 9 10 stop}
+1 2 3 4 5 6 7 8 9 10
+Voer een willekeurig aantal integers in, sluit af met een letter:
+\cinput{1 2 3 4 Hoedje van papier}
+1 2 3 4
 \end{coutput}
 
-Voorbeeldprogramma om een onbekend aantal elementen in een |vector| in te lezen (\proglink{StdVector2.cpp}):
-\cpplstinputfragment[linerange={1-32}]{StdVector2.cpp}
-
 \chapter{Inheritance}
-\label{H4}
+\label{sec:inheritance}
 Een van de belangrijkste doelen van \Cpp{} is het ondersteunen van het hergebruik van code.
 In het vorige hoofdstuk werd één van de taalconstructies die \Cpp{} biedt om hergebruik van code mogelijk te maken, de \emph{template}, besproken.
 In dit hoofdstuk worden de twee belangrijkste manieren besproken waarop een herbruikbare softwarecomponent gebruikt kan worden om een nieuwe (ook weer herbruikbare) softwarecomponent te maken.
@@ -2512,7 +2546,7 @@ class Bloemiste: public$\footnotemark$ Winkelier {
 \end{cpplstfragment}
 \end{minipage}
 \hfill
-\begin{minipage}[c]{.32\textwidth}
+\begin{minipage}[c]{.34\textwidth}
 \vspace{-5ex}
 \figuur[H]{scale=1}{inheritance}{Schematische weergave van \USE{inheritance}.}
 \end{minipage}
@@ -2523,7 +2557,7 @@ class Bloemiste: public$\footnotemark$ Winkelier {
     Wij gebruiken altijd public \USE{inheritance} (niet vergeten om het \USE{keyword} \cppcode{public} achter de \cppcode{:} te typen anders krijg je per default private \USE{inheritance}).
 }
 
-\vspace{-1ex}
+\vspace{1ex}
 Je kunt van een \USE{base class} meerdere \USE{derived classes} afleiden.
 Je kunt een \USE{derived class} ook weer als \USE{base class} voor een nieuwe afleiding gebruiken.
 %TODO: Eventueel tekening toevoegen.
@@ -2628,7 +2662,7 @@ Later in dit hoofdstuk zal blijken dat \emph{polymorfisme} de kern is waar het b
     \USE{Inheritance}, dat vaak als de kern van OOP wordt genoemd is mijn inziens alleen een middel om polymorfisme te implementeren.
 }.
 Door het toepassen van polymorfisme kun je software maken die eenvoudig aangepast, uitgebreid en hergebruikt kan worden.
-(Zie het uitgebreide voorbeeld op \csecref{ADC probleem}.)
+(Zie het uitgebreide voorbeeld in \csecref{ADC probleem}.)
 
 Als ik nu de volgende functie definieer:
 \begin{cpplstfragment}
@@ -2641,6 +2675,7 @@ Dit kan omdat de parameter |p| van de functie polymorf is.
 De functie wordt daardoor dus zelf ook polymorf (veelvormig).
 
 \section{Memberfunctie overriding}
+\label{sec:memberfunctieoverriding}
 Een \USE{derived class} kan, zoals we al hebben gezien, datavelden en memberfuncties toevoegen aan de \USE{base class}.
 Een \USE{derived class} kan bovendien memberfuncties die in de \USE{base class} geïmplementeerd zijn in de \USE{derived class} een andere implementatie geven (\label{overridden}\emph{\USE{overridden}}).
 Dit kan alleen als de \USE{base class} de memberfunctie \emph{virtual}\label{virtual} heeft gedeclareerd:%
@@ -2653,19 +2688,19 @@ Dit kan alleen als de \USE{base class} de memberfunctie \emph{virtual}\label{vir
 class Base {
 public:
     virtual void printName() const {
-        cout << "Ik ben een Base." << endl;
+        cout << "Ik ben een Base.\n";
     }
 };
 class Derived: public Base {
 public:
-    virtual$\footnotemark%
+    $\footnotemark%
     \makeatletter%
     \global\let\saved@Href@E\Hy@footnote@currentHref%
-    \makeatother$ void printName() const $\footnotemark
+    \makeatother$ void printName() const override$\footnotemark
         \makeatletter%
         \global\let\saved@Href@F\Hy@footnote@currentHref%
         \makeatother$ {
-        cout << "Ik ben een Derived." << endl;
+        cout << "Ik ben een Derived.\n";
     }
 };
 \end{cpplstfragment}%
@@ -2674,16 +2709,19 @@ public:
 \addtocounter{BackrefHyperFootnoteCounter}{-1}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
-    Het \USE{keyword} \cppcode{virtual} kan hier weggelaten worden.
+    Het \USE{keyword} \cppcode{virtual} kan ook hier gebruikt worden maar kan ook weggelaten worden.
     Als een memberfunctie eenmaal virtual gedeclareerd is, blijft hij namelijk virtual.
-    Het is echter mijn inziens duidelijker het \USE{keyword} \cppcode{virtual} ook in de \USE{derived class} op te nemen.
+    %Het is echter mijn inziens duidelijker het \USE{keyword} \cppcode{virtual} ook in de \USE{derived class} op te nemen.
 }
 \stepcounter{footnote}
 \makeatletter\let\Hy@footnote@currentHref\saved@Href@F\makeatother
 \stepcounter{BackrefHyperFootnoteCounter}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
-    Sinds \Cpp{}11 is het mogelijk om expliciet met behulp van het woord \cppcode{override} aan te geven dat deze memberfunctie een, reeds in de \USE{base class} gedeclareerde memberfunctie, \USE{override}. Zie \csecref{sec:explicitoverride}. 
+    Het is mogelijk om expliciet met behulp van het \USE{keyword} \cppcode{override} aan te geven dat deze memberfunctie een, reeds in de \USE{base class} gedeclareerde memberfunctie, \USE{override}. 
+    Zie \csecref{sec:explicitoverride}.
+    Omdat dit \USE{keyword} pas in \Cpp{}11 is toegevoegd, is het niet verplicht om dit te gebruiken.
+    In de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#c128-virtual-functions-should-specify-exactly-one-of-virtual-override-or-final}{C.128} wordt aangeraden om bij het \USE{overridden} van een memberfunctie het \USE{keyword} \cppcode{override} te gebruiken en het keyword \cppcode{virtual} weg te laten.
 }
 Als via een polymorfe pointer een memberfunctie wordt aangeroepen, wordt de memberfunctie van de class van het object waar de pointer naar wijst aangeroepen.
 Omdat een polymorfe pointer tijdens het uitvoeren van het programma naar objecten van verschillende classes kan wijzen, kan de keuze van de memberfunctie pas tijdens het uitvoeren van het programma worden bepaald.
@@ -2697,8 +2735,8 @@ Voorbeeld van het gebruik van polymorfisme:
 \begin{cpplstfragment}
 Base b;
 Derived d;
-Base* bp1(&b);
-Base* bp2(&d);
+Base* bp1 {&b};
+Base* bp2 {&d};
 bp1->printName();
 bp2->printName();
 \end{cpplstfragment}
@@ -2716,13 +2754,13 @@ Als ik het feit dat een |Derived| IS-A |Base| in het bovenstaande programma verw
 class Base {
 public:
     virtual void printName() const {
-        cout << "Ik ben een Base." << endl;
+        cout << "Ik ben een Base.\n";
     }
 };
 
 class Derived: public Base {
 public:
-    virtual void printName() const {
+    void printName() const override {
         cout << "Ik ben een Derived en ";
         Base::printName();
     }
@@ -2734,8 +2772,8 @@ Voorbeeld van het gebruik van polymorfisme:
 \begin{cpplstfragment}
 Base b;
 Derived d;
-Base* bp1(&b);
-Base* bp2(&d);
+Base* bp1 {&b};
+Base* bp2 {&d};
 bp1->printName();
 bp2->printName();
 \end{cpplstfragment}
@@ -2755,13 +2793,13 @@ Als class |Derived| overerft van class |Base|, geldt \enquote{\cppcode{Derived} 
 Dat wil zeggen dat elke bewerking die op een object (variabele) van class (type) |Base| uitgevoerd kan worden ook op een object (variabele) van class (type) |Derived| uitgevoerd moet kunnen worden.
 In de class |Derived| moet je alleen datavelden en memberfuncties toevoegen en/of virtual memberfuncties \USE{overridden}, maar nooit memberfuncties van de class |Base| \USE{overloaden}.
 Het verkeerd gebruik van \USE{inheritance} is een van de meest voorkomende fouten bij OOP\@.
-Een leuke vraag op dit gebied is: is een struisvogel een vogel? (Oftewel mag een class |struisvogel| overerven van class |vogel|?) 
-Het antwoord is afhankelijk van de declaratie van |vogel|.
-Als een |vogel| een (non-virtual) memberfunctie |vlieg()| heeft waarmee het dataveld |hoogte > 0| wordt, dan niet! 
-In dit geval heeft de ontwerper van de class |vogel| een fout gemaakt (door te denken dat alle vogels kunnen vliegen).
+Een leuke vraag op dit gebied is: is een struisvogel een vogel? (Oftewel mag een class |Struisvogel| overerven van class |Vogel|?) 
+Het antwoord is afhankelijk van de declaratie van de class |Vogel|.
+Als een |Vogel| een (non-virtual) memberfunctie |vlieg()| heeft waarmee het dataveld |hoogte > 0| wordt, dan niet! 
+In dit geval heeft de ontwerper van de class |Vogel| een fout gemaakt (door te denken dat alle vogels kunnen vliegen) en kun je de class |Struisvogel| \emph{niet} overerven van class |Vogel|.
 
 \section{Abstract base class}
-%(Zie eventueel TICPP Chapter15.html\#Heading447.)
+\label{sec:abc}
 Het is mogelijk om een virtual memberfunctie in een \USE{base class} alleen maar te declareren en nog niet te implementeren.
 Dit wordt dan een \label{pure virtual}\emph{pure virtual} memberfunctie genoemd en de betreffende \USE{base class} wordt een \emph{\USE{Abstract Base Class} (ABC)} genoemd.
 Een virtual memberfunctie kan pure virtual gemaakt worden door de declaratie af te sluiten met |= 0;|.
@@ -2782,8 +2820,8 @@ Als de objecten |d1| en |d2| op onderstaande wijze gedefinieerd zijn, dan zijn d
 \begin{cpplstfragment}
 class Base {
 public:
-    Base(): v(0) { }
-    Base(int i): v(i) { }
+    Base(): v{0} { }
+    Base(int i): v{i} { }
 private:
     int v;
 };
@@ -2798,19 +2836,18 @@ private:
 \begin{cpplstfragment}
 class Derived: public Base {
 public:
-    Derived(): w(1) { } // roept automatisch Base() aan.
-    Derived(int i, int j): Base(i), w(j) { }
+    Derived(): w{1} { } // roept automatisch Base() aan.
+    Derived(int i, int j): Base{i}, w{j} { }
 private:
     int w;
 };
 
 //  ...
     Derived d1;
-    Derived d2(3, 4);
+    Derived d2 {3, 4};
 \end{cpplstfragment}
 
 \section{protected members}
-%(Zie eventueel TICPP Chapter14.html\#Heading420.)
 Het is in \Cpp{} ook mogelijk om in een \USE{base class} datavelden en memberfuncties te definiëren die niet toegankelijk zijn voor gebruikers van objecten van deze class, maar die wel vanuit de van deze \USE{base class} afgeleide classes bereikbaar zijn.
 Dit wordt in de classdeclaratie aangegeven door het \USE{keyword} |protected| te gebruiken.
 
@@ -2825,7 +2862,9 @@ private:
 };
 \end{cpplstfragment}
 
-Het definiëren van \USE{protected} datavelden wordt afgeraden omdat dit slecht is voor de onderhoudbaarheid van de code.
+Het definiëren van \USE{protected} datavelden wordt afgeraden\footnote{%
+	Zie de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#nr7-dont-make-all-data-members-protected}{NR.7}.
+} omdat dit slecht is voor de onderhoudbaarheid van de code.
 Als een \USE{protected} dataveld een illegale waar\-de krijgt, moet alle broncode worden doorzocht om de plaatsen te vinden waar dit dataveld veranderd wordt. 
 In elke \USE{derived class} is het \USE{protected} dataveld namelijk te veranderen.
 Het is soms wel zinvol om \USE{protected} memberfuncties te definiëren.
@@ -2869,16 +2908,16 @@ Voor elk deelprobleem definieer ik vervolgens een functie:
 Voor elke kaart die in het programma gebruikt wordt moeten een aantal gegevens bijgehouden worden zoals: het kaarttype, de ingestelde versterkingsfactor en het geselecteerde kanaal.
 Om deze gegevens per kaart netjes bij elkaar te houden heb ik de struct |ADCCard| gedeclareerd.
 Voor elke kaart die in het programma gebruikt wordt, wordt dan een variabele van dit struct type aangemaakt.
-Aan elk van de eerder genoemde functies wordt de te gebruiken kaart dan als parameter van het type |ADCCard| doorgegeven. Zie \proglink{Kaart0.cpp}:
+Aan elk van de eerder genoemde functies wordt de te gebruiken kaart dan als parameter van het type |ADCCard| doorgegeven. Zie \proglink{kaart0.cpp}:
 
-\cpplstinputfragment[linerange={7-22,24-26,28-37,39-41,43-56,58-60,62-71,73-75,77-86,91-101}]{Kaart0.cpp}
+\cpplstinputfragment[linerange={7-22,24-26,28-37,39-41,43-56,58-60,62-71,73-75,77-86,91-102}]{kaart0.cpp}
 
 %Het |switch| statement uit |initCard| wordt in de functies |selectChannel|, |setAmplifier| en |sampleCard| op soortgelijke wijze gebruikt.
 
 Hopelijk heb je allang zelf de nadelen van deze aanpak bedacht:
 \begin{itemize}
     \item Iedere programmeur die gebruikt maakt van het type |struct| |ADCCard| kan een waarde toekennen aan de datavelden.
-    Zo zou een programmeur die de struct |ADCCard| gebruikt in plaats van de functie |selectChannel| het statement |++adc.c;| kunnen bedenken om het geselecteerde kanaal met 1 te verhogen.
+    Zo zou een programmeur die de struct |ADCCard| gebruikt in plaats van de functie |selectChannel| het statement |++c1.selected_channel;| kunnen bedenken om het geselecteerde kanaal met 1 te verhogen.
     Dit werkt natuurlijk niet omdat dan alleen het in de struct opgeslagen kanaalnummer verhoogd wordt terwijl in werkelijkheid geen ander kanaal geselecteerd wordt.
     \item Iedere programmeur die gebruikt maakt van het type |struct| |ADCCard| kan er voor kiezen om zelf de code voor het inlezen van een spanning in volts \enquote{uit te vinden} in plaats van gebruik te maken van de functie |readCard|.
     Er valt dus niet te garanderen dat altijd de juiste formule wordt gebruikt.
@@ -2896,9 +2935,9 @@ Deze problemen kunnen voorkomen worden als een UDT gebruikt wordt, waarin zowel 
 \footnote{%
     De I/O registers van de ADC kaart zelf zijn helaas niet in te kapselen.
     We kunnen dus niet voorkomen dat een programmeur in plaats van de UDT \cppcode{ADCCard} te gebruiken rechtstreeks de kaart aanspreekt.
-}. Zie \proglink{Kaart1.cpp}:
+}. Zie \proglink{kaart1.cpp}:
 
-\cpplstinputfragment[linerange={7-27,29-31,33-42,44-46,48-61,63-65,67-76,78-80,82-91,96-104}]{Kaart1.cpp}
+\cpplstinputfragment[linerange={7-27,29-31,33-42,44-46,48-61,63-65,67-76,78-80,82-91,96-105}]{kaart1.cpp}
 
 %Het |switch| statement uit |initCard| wordt in de functies |selectChannel|, |setAmplifier| en |sampleCard| op soortgelijke wijze gebruikt.
 Aan deze oplossingsmethode zit echter nog steeds het volgende nadeel:
@@ -2937,8 +2976,6 @@ Beide kaarten hebben dezelfde functionaliteit en kunnen dus worden afgeleid van 
 \footnote{%
     Het bepalen van de benodigde classes en hun onderlinge relaties is bij grotere programma's niet zo eenvoudig.
     Het bepalen van de benodigde classes en hun relaties wordt OOA (\USE{Object Oriented Analyse}) en OOD (\USE{Object Oriented Design}) genoemd.
-    Hoe je dit moet doen wordt voor Elektrotechniek studenten later in het tweede deel van OGOPRG behandeld.
-    Bij de opleiding Technische Informatica is dit al behandeld en komt het later in andere vakken nog uitgebreid aan de orde.
 }.
 Dit is schematisch weergeven in het UML class diagram dat gegeven is in \cref{fig:adc}.
 Ik heb de \USE{base class} als volgt gedeclareerd:
@@ -2982,19 +3019,19 @@ De memberfunctie |sample| heb ik private gedefinieerd omdat deze functie alleen 
 Ook gebruikers van deze \USE{derived classes} hebben mijn inziens de memberfunctie |sample| niet nodig.
 Ze worden dus door mij verplicht de memberfunctie |read| te gebruiken zodat de returnwaarde altijd in volts is (ik hoop hiermee fouten bij het gebruik te voorkomen).
 
-Van de abstracte \USE{base class} |ADCCard| heb ik vervolgens de concrete classes |AD178| en |NI323| afgeleid. Zie \proglink{Kaart2.cpp}:
-\cpplstinputfragment[linerange={24-40}]{Kaart2.cpp}
+Van de abstracte \USE{base class} |ADCCard| heb ik vervolgens de concrete classes |AD178| en |NI323| afgeleid. Zie \proglink{kaart2.cpp}:
+\cpplstinputfragment[linerange={24-40}]{kaart2.cpp}
 
 De diverse classes heb ik als volgt geïmplementeerd:
-\cpplstinputfragment[linerange={42-43,45-60,62-65,67-70,72-74,76-79,81-84,86-89,91-93,95-95}]{Kaart2.cpp}
+\cpplstinputfragment[linerange={42-43,45-60,62-65,67-70,72-74,76-79,81-84,86-89,91-93,95-95}]{kaart2.cpp}
 
 De onderstaande functie heb ik een polymorfe parameter gegeven zodat hij met elk type ADC kaart gebruikt kan worden.
-\cpplstinputfragment[linerange={99-103}]{Kaart2.cpp}
+\cpplstinputfragment[linerange={97-101}]{kaart2.cpp}
 
 Deze functie kan ik dan als volgt gebruiken:
-\cpplstinputfragment[linerange={105-105,110-113}]{Kaart2.cpp}
+\cpplstinputfragment[linerange={103-103,108-112}]{kaart2.cpp}
 
-Merk op dat de functie |doIt| de in de \USE{base class} |ADCCard| gedefinieerde memberfunctie |read| aanroept die op zijn beurt de in de \emph{derived} class gedefinieerde memberfunctie |sample| aanroept.
+Merk op dat de functie |do_measurement| de in de \USE{base class} |ADCCard| gedefinieerde memberfunctie |read| aanroept die op zijn beurt de in de \emph{derived} class gedefinieerde memberfunctie |sample| aanroept.
 
 \subsection{Een kaart toevoegen}
 Als het programma nu aangepast moet worden zodat een nieuwe kaart (typenaam BB647) ook gebruikt kan worden, dan kan dit heel eenvoudig door de volgende class te declareren (\proglink{Bb647.h}):
@@ -3004,11 +3041,11 @@ Met de volgende implementatie (\proglink{Bb647.cpp}):
 \cpplstinputfragment[linerange={7-8,10-13,15-18,20-22,24-24}]{Bb647.cpp}
 
 Het programma |main| kan nu als volgt aangepast worden (\proglink{Kaart4.cpp}):
-\cpplstinputfragment[linerange={12-12,17-22}]{Kaart4.cpp}
+\cpplstinputfragment[linerange={12-12,17-23}]{kaart4.cpp}
 
 Als alle functie- en classdeclaraties in aparte |.h| en alle functie- en classdefinities in aparte |.cpp| files opgenomen zijn, dan hoeft alleen de nieuwe class en de nieuwe |main| functie opnieuw vertaald te worden.
 De rest van het programma kan dan eenvoudig (zonder hercompilatie) meegelinkt worden.
-Dit voordeel komt voort uit het feit dat de functie |doIt| polymorf is.
+Dit voordeel komt voort uit het feit dat de functie |do_measurement| polymorf is.
 Aan de parameter die gedefinieerd is als een \hbox{\cppcode{ADCCard&}} kun je objecten van elke van deze class afgeleide classes (|AD178|, |NI323| of |BB647|) gebruiken.
 Je ziet dat de objectgeoriënteerde oplossing een zeer goed \emph{onderhoudbaar} en \emph{uitbreidbaar} programma oplevert.
 
@@ -3016,7 +3053,7 @@ Je ziet dat de objectgeoriënteerde oplossing een zeer goed \emph{onderhoudbaar}
 \label{override versus overload}
 \label{virtual}
 Het onderscheid tussen memberfunctie \emph{\USE{overloading}} en memberfunctie \emph{\USE{overriding}} is van groot belang.
-Op \csecref{sec:functionoverloading} heb je gezien dat een functienaam meerdere keren gebruikt (\USE{overloaded}) kan worden.
+In \csecref{sec:functionoverloading} heb je gezien dat een functienaam meerdere keren gebruikt (\USE{overloaded}) kan worden.
 De compiler zal aan de hand van de gebruikte argumenten de juiste functie selecteren.
 Dit maakt deze functies eenvoudiger te gebruiken omdat de gebruiker (de programmeur die deze functies aanroept) slechts één naam hoeft te onthouden.
 Elke functienaam, dus ook een memberfunctienaam, kan \USE{overloaded} worden.
@@ -3026,9 +3063,9 @@ Bij een aanroep van de memberfunctienaam wordt de juiste memberfunctie door de c
 \needspace{2\baselineskip}
 Voorbeeld%
 \footnote{%
-    In dit voorbeeld (en ook in enkele volgende voorbeelden) heb ik de memberfunctie in de class zelf gedefinieerd.
-    Dit zogenaamd \emph{inline} definiëren (zie ook \csecref{inline}) heeft als voordeel dat ik iets minder hoef te typen, maar het nadeel is dat de class niet meer afzonderlijk gecompileerd kan worden (zie \csecref{separaat compileren}).
-} van het gebruik van \USE{overloading} van memberfuncties (\proglink{Overload.cpp}):
+	In dit voorbeeld (en ook in enkele volgende voorbeelden) heb ik de memberfunctie in de class zelf gedefinieerd.
+	Dit zogenaamd \emph{inline} definiëren (zie ook \csecref{inline}) heeft als voordeel dat ik iets minder hoef te typen, maar het nadeel is dat de class niet meer afzonderlijk gecompileerd kan worden (zie \csecref{separaat compileren}).
+} van het gebruik van \USE{overloading} van memberfuncties (\proglink{overload.cpp}):
 \cpplstinputfragment[linerange={6-20}]{Overload.cpp}
 
 \needspace{2\baselineskip}
@@ -3042,78 +3079,77 @@ Ik ben f(int)
 Het is niet goed mogelijk om een memberfunctie uit een \USE{base class} in een \USE{derived class} te \USE{overloaden}.
 Als dit toch geprobeerd wordt, maakt dit alle functies van de \USE{base class} met dezelfde naam onzichtbaar (\emph{\USE{hiding rule}}).
 
-Voorbeeld van het verkeerd gebruik van \USE{overloading} en de \USE{hiding rule} (\proglink{Hide.cpp}):
+Voorbeeld van het verkeerd gebruik van \USE{overloading} en de \USE{hiding rule} (\proglink{hide.cpp}):
 \begin{cpplstfragment}[mathescape=true]
 // Dit voorbeeld laat zien hoe het $\color{hrred}\textbf{NIET}$ moet!
 // Je moet overloading en overerving $\color{hrred}\textbf{NIET}$ combineren!
 
 class Base {
-public:
-    void f() const {
-        cout << "Ik ben f()" << endl;
-    }
+	public:
+	void f() const {
+		cout << "Ik ben f()\n";
+	}
 };
 
 class Derived: public Base {
-public:
-    void f(int i) const$%
-    \footnotemark%
-    \makeatletter%
-    \global\let\saved@Href@P\Hy@footnote@currentHref%
-    \makeatother%
-    $ { // Verberg f() !! Geen goed idee !!!
-        cout << "Ik ben f(int)" << endl;
-    }
+	public:
+	void f(int i) const$%
+	\footnotemark%
+	\makeatletter%
+	\global\let\saved@Href@P\Hy@footnote@currentHref%
+	\makeatother%
+	$ { // Verberg f() !! Geen goed idee !!!
+		cout << "Ik ben f(int)\n";
+	}
 };
 
 void func(Base& b) {
-    b.f();
+	b.f();
 }
 
 int main() {
-    Base b;
-    Derived d;
-
-    b.f();
-    d.f(3);
-
-    d.f(); 
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'Derived::f' : function does not take 0 arguments$%
-    \footnotemark%
-    \makeatletter%
-    \global\let\saved@Href@Q\Hy@footnote@currentHref%
-    \makeatother%
-    $
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ no matching function for call to 'Derived::f()'
-    d.Base::f();$%
-    \footnotemark%
-    \makeatletter%
-    \global\let\saved@Href@R\Hy@footnote@currentHref%
-    \makeatother%
-    $
-    // ...    
+	Base b;
+	Derived d;
+	
+	b.f();
+	d.f(3);
+	
+	d.f(); 
+	//  $\color{hrred}\textbf{error:}$ no matching function for call to 'Derived::f()'$%
+	\footnotemark%
+	\makeatletter%
+	\global\let\saved@Href@Q\Hy@footnote@currentHref%
+	\makeatother%
+	$
+	d.Base::f();$%
+	\footnotemark%
+	\makeatletter%
+	\global\let\saved@Href@R\Hy@footnote@currentHref%
+	\makeatother%
+	$
+	// ...    
 \end{cpplstfragment}
-
+	
 \addtocounter{footnote}{-2}
 \makeatletter\let\Hy@footnote@currentHref\saved@Href@P\makeatother 
 \addtocounter{BackrefHyperFootnoteCounter}{-2}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
-    De memberfunctie \cppcode{Derived::f(int)} verbergt (Engels: \USE{hides}) de memberfunctie \cppcode{Base::f()}.
+	De memberfunctie \cppcode{Derived::f(int)} verbergt (Engels: \USE{hides}) de memberfunctie \cppcode{Base::f()}.
 }
 \stepcounter{footnote}
 \makeatletter\let\Hy@footnote@currentHref\saved@Href@Q\makeatother
 \stepcounter{BackrefHyperFootnoteCounter}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
-    De functie \cppcode{Base::f()} wordt verborgen (Engels: \USE{hidden}) door de functies \cppcode{Derived::f(int)}.
+	De functie \cppcode{Base::f()} wordt verborgen (Engels: \USE{hidden}) door de functies \cppcode{Derived::f(int)}.
 }
 \stepcounter{footnote}
 \makeatletter\let\Hy@footnote@currentHref\saved@Href@R\makeatother
 \stepcounter{BackrefHyperFootnoteCounter}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
-Voor degene die echt alles wil weten: De \USE{hidden} memberfunctie kan nog \emph{wel} aangeroepen worden door gebruik te maken van zijn zogenoemde \emph{\USE{qualified name}}: \hcode[style=cppstyle]{base_\\-class_\\-name::\\-member_\\-function_\\-name}.
+	Voor degene die echt alles wil weten: De \USE{hidden} memberfunctie kan nog \emph{wel} aangeroepen worden door gebruik te maken van zijn zogenoemde \emph{\USE{qualified name}}: \hcode[style=cppstyle]{base_\\-class_\\-name::\\-member_\\-function_\\-name}.
 }
 
 Uitvoer (nadat code |d.f();| is verwijderd):
@@ -3128,7 +3164,7 @@ Stel dat programmeur Bas een \USE{base class} |Base| heeft geschreven waarin \em
 Een andere programmeur, Dewi, heeft een class |Derived| geschreven die overerft van de class |Base|.
 In de class |Derived| is de memberfunctie |f(double)| gedefinieerd.
 In het hoofdprogramma wordt deze memberfunctie aangeroepen met een |int| als argument.
-Deze |int| wordt door de conversie regels van \Cpp{} automatisch omgezet in een |double|. Zie \proglink{HideReden.cpp}:
+Deze |int| wordt door de conversie regels van \Cpp{} automatisch omgezet in een |double|. Zie \proglink{hide_reden.cpp}:
 
 \begin{cpplstfragment}
 // Code van Bas
@@ -3141,7 +3177,7 @@ public:
 class Derived: public Base {
 public:
     void f(double d) const {
-        cout << "Ik ben f(double)" << endl;
+        cout << "Ik ben f(double)\n";
     }
 };
 
@@ -3164,7 +3200,7 @@ class Base {
 public:
     // ...
     void f(int i) const {
-        cout << "Ik ben f(int)" << endl;
+        cout << "Ik ben f(int)\n";
     }
 };
 \end{cpplstfragment}
@@ -3198,8 +3234,8 @@ Voor degene die echt alles wil begrijpen: een functie met dezelfde parameters in
 
 \needspace{2\baselineskip}
 Voorbeeld van het gebruik van \USE{overriding} en \textcolor{hrred}{\textbf{verkeerd}} gebruik van \USE{overloading}.
-De functie |f| wordt \USE{overloaded} en de functie |g| wordt \USE{overridden} (\proglink{Override.cpp}):
-\cpplstinputfragment[linerange={6-34,38-41}]{Override.cpp}
+De functie |f| wordt \USE{overloaded} en de functie |g| wordt \USE{overridden} (\proglink{override.cpp}):
+\cpplstinputfragment[linerange={6-34,38-41}]{override.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -3215,19 +3251,21 @@ Base::g(int) called.
 
 \section{Expliciet overridden van memberfuncties}
 \label{sec:explicitoverride}
-Sinds \Cpp{}11 kun je \emph{expliciet} aangeven dat je een memberfunctie wilt \USE{overridden}.
+In \csecref{sec:memberfunctieoverriding} hebben we je aangeraden om \emph{expliciet} aan te geven dat je een memberfunctie wilt \USE{overridden}.
 Dit voorkomt dat je een functie \enquote{per ongeluk} overloadt.
+Omdat het \USE{keyword} |override| pas in \Cpp{}11 is toegevoegd, is het niet verplicht om het \USE{keyword} |override| te gebruiken.
+In deze paragraaf zul je zien wat er fout kan gaan als je het \USE{keyword} |override| \emph{niet} gebruikt.
 
-Stel dat de volgende \USE{base class} is gegeven (\proglink{AccidentalOverload.cpp}):
-\cpplstinputfragment[linerange={4-12}]{AccidentalOverload.cpp}
+Stel dat de volgende \USE{base class} is gegeven (\proglink{accidental_overload.cpp}):
+\cpplstinputfragment[linerange={4-12}]{accidental_overload.cpp}
 
 Een (niet zo snuggere) programmeur wil nu van deze \USE{base class} een class afleiden en daarbij zowel de
 functie |f| als de functie |g| \emph{\USE{overridden}}:
-\cpplstinputfragment[linerange={14-22}]{AccidentalOverload.cpp}
+\cpplstinputfragment[linerange={14-22}]{accidental_overload.cpp}
 
 \needspace{2\baselineskip}
 De programmeur heeft het volgende testprogramma geschreven:
-\cpplstinputfragment[linerange={43-48}]{AccidentalOverload.cpp}
+\cpplstinputfragment[linerange={43-48}]{accidental_overload.cpp}
 
 \needspace{3\baselineskip}
 De programmeur, die denkt zowel |f| als |g| \USE{overridden} te hebben, verwachtte de volgende uitvoer:
@@ -3248,11 +3286,11 @@ De functie |g| in de \USE{derived class} heeft een andere definitie dan in de ba
 memberfunctie maar in de \USE{derived class} ontbreekt het woordje |const|).
 De functie |g| wordt dus \USE{overloaded} in plaats van \USE{overridden}.
 
-Sinds \Cpp{}11 kunnen we deze problemen voorkomen door expliciet aan te geven dat we een functie willen \USE{overridden}.
+We kunnen deze problemen eenvoudig voorkomen door expliciet aan te geven dat we een functie willen \USE{overridden}.
 Dit kun je doen door het woord |override| achter de declaratie van de memberfunctie te plaatsen.
 
-De class |Derived| kan dan als volgt gedefinieerd worden (\proglink{ExplicitOverride.cpp}):
-\cpplstinputfragment[linerange={14-22}]{ExplicitOverride.cpp}
+De class |Derived| kan dan als volgt gedefinieerd worden (\proglink{explicit_override.cpp}):
+\cpplstinputfragment[linerange={14-22}]{explicit_override.cpp}
 
 De programmeur geeft hier expliciet aan dat het de bedoeling is om |f| en |g| te \USE{overridden}.
 Als deze class vertaald wordt, zal de compiler een foutmelding geven:
@@ -3260,54 +3298,61 @@ Als deze class vertaald wordt, zal de compiler een foutmelding geven:
 class Derived: public Base {
 public:
     void f(int i) const override {
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'Derived::f' : method with override specifier 'override' did not override any base class methods
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ 'void Derived::f(int) const' marked override, but does not override
-        cout << "Derived::f(int) called." << endl;
+//  $\color{hrred}\textbf{error:}$ 'void Derived::f(int) const' marked override, but does not override
+        cout << "Derived::f(int) called.\n";
     }
-    virtual void g(int i) override {
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'Derived::g' : method with override specifier 'override' did not override any base class methods
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ 'virtual void Derived::g(int)' marked override, but does not override
-        cout << "Derived::g(int) called." << endl;
+    void g(int i) override {
+//  $\color{hrred}\textbf{error:}$ 'void Derived::g(int)' marked override, but does not override
+        cout << "Derived::g(int) called.\n";
     }
 };
 \end{cpplstfragment}
 
+Het is dus, om fouten te voorkomen, het beste om elke functie die je override expliciet als zodanig te declareren\footnote{%
+	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#c128-virtual-functions-should-specify-exactly-one-of-virtual-override-or-final}{C.128}.
+}
+.
+   
 \section{\texorpdfstring{\cppcode{final}}{final} overriding van memberfuncties}
 Een functie die in een \USE{derived class} \USE{overridden} is kan, in een class die weer afgeleid is van deze class, opnieuw \USE{overridden} worden.
 Normaal is dit geen probleem, maar in sommige gevallen is dit ongewenst.
-Sinds \Cpp{}11 kunnen we expliciet aangeven dat een functie die \USE{overridden} is niet verder \USE{overridden} mag worden.
-Stel dat we in een bibliotheekapplicatie een basis class |UitleenbaarItem| hebben met een puur virtuele memberfunctie |id| waarmee het id van het betreffende item kan worden opgevraagd.
+Je kunt ook expliciet aangeven dat een functie die \USE{overridden} is niet verder \USE{overridden} mag worden.
+Stel dat we in een bibliotheekapplicatie een basis class |Uitleenbaar_item| hebben met een puur virtuele memberfunctie |id| waarmee het id van het betreffende item kan worden opgevraagd.
 Van deze basis class zijn verschillende classes zoals |Boek| en |DVD| afgeleid elk met een \USE{overridden} memberfunctie |id|.
 In de class |Boek| gebruiken we het ISBN nummer als id.
 Stel dat we niet willen dat deze implementatie van de functie |id| in classes die afgeleid worden van |Boek| \USE{overridden} wordt dan kunnen we de functie in de class |Boek| met het woord |final| markeren.
-Het is dan niet meer toegestaan om deze functie (verder) te \USE{overridden}. Zie \proglink{FinalOverride.cpp}:
-\cpplstinputfragment[linerange={4-23}]{FinalOverride.cpp}
+Het is dan niet meer toegestaan om deze functie (verder) te \USE{overridden}. Zie \proglink{final_override.cpp}:
+\cpplstinputfragment[linerange={4-25}]{final_override.cpp}
 
 Als je nu toch probeert om in een \USE{derived class} van |Boek| de memberfunctie |id| te \USE{overridden}, dan
 geeft de compiler een foutmelding:
 \begin{cpplstfragment}[mathescape=true]
 class Reisgids: public Boek {
-    virtual string id() const {
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'Boek::id': function declared as 'final' cannot be overridden by 'Reisgids::id'
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ virtual function 'virtual std::string Reisgids::id() const' overriding final function 
+    string id() const override {
+//  $\color{hrred}\textbf{error:}$ virtual function 'virtual std::string Reisgids::id() const' overriding final function 
     }
 };
 \end{cpplstfragment}
 
-\section{\texorpdfstring{\cppcode{final}}{final} overerving}
-Soms is het niet de bedoeling dat een class als \USE{base class} gebruikt wordt. Sinds \Cpp{}11 kunnen we expliciet aangeven dat je niet kunt overerven van een bepaalde class door in de class declaratie meteen na de naam het woord |final| te gebruiken. Stel dat we in een bibliotheekapplicatie een basis class |UitleenbaarItem| hebben gedefinieerd waar de class |DVD| van afgeleid is. Stel dat we niet willen dat deze class als basis class gebruikt wordt, dan kunnen we de class |DVD| met het woord |final| markeren. Het is dan niet meer toegestaan om van deze class te overerven.
+De \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#c139-use-final-sparingly}{C.138} raad je aan om het \USE{keyword} |final| spaarzaam te gebruiken omdat het de uitbreidbaarheid en aanpasbaarheid van je code belemmerd.
+Soms is dat zinvol en nodig, maar meestal niet.
 
-Zie \proglink{FinalInheritance.cpp}:
-\cpplstinputfragment[linerange={4-16}]{FinalInheritance.cpp}
+\section{\texorpdfstring{\cppcode{final}}{final} overerving}
+Soms is het niet de bedoeling dat een class als \USE{base class} gebruikt wordt. Je kunt expliciet aangeven dat je niet kunt overerven van een bepaalde class door in de class declaratie meteen na de naam het woord |final| te gebruiken. Stel dat we in een bibliotheekapplicatie een basis class |Uitleenbaar_item| hebben gedefinieerd waar de class |DVD| van afgeleid is. Stel dat we niet willen dat deze class als basis class gebruikt wordt, dan kunnen we de class |DVD| met het woord |final| markeren. Het is dan niet meer toegestaan om van deze class te overerven.
+
+Zie \proglink{final_inheritance.cpp}:
+\cpplstinputfragment[linerange={4-16}]{final_inheritance.cpp}
 
 Als je nu toch probeert om van de class |DVD| te overerven, dan
 geeft de compiler een foutmelding:
 \begin{cpplstfragment}[mathescape=true]
 class DisneyDVD: public DVD {
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'DisneyDVD': cannot inherit form 'DVD' as it has been declared as 'final'
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ cannot derive from 'final' base 'DVD' in derived type 'DisneyDVD' 
+//  $\color{hrred}\textbf{error:}$ cannot derive from 'final' base 'DVD' in derived type 'DisneyDVD' 
 };
 \end{cpplstfragment}
+
+De \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#c139-use-final-sparingly}{C.138} raad je aan om het \USE{keyword} |final| spaarzaam te gebruiken omdat het de uitbreidbaarheid en aanpasbaarheid van je code belemmerd.
+Soms is dat zinvol en nodig, maar meestal niet.
 
 \section{Slicing problem}
 \label{slicing probleem} 
@@ -3322,8 +3367,8 @@ Dit probleem wordt het \emph{\USE{slicing problem}} genoemd.
 Het is dus aan te raden om nooit een object van een \USE{derived class} toe te kennen aan een object van de \USE{base class}.
 %Nog een stap verder is .... NIET afleiden van concrete classes (\USE{assignment problem}) etc
  
-Voorbeeld van slicing (\proglink{Slice.cpp}):
-\cpplstinputfragment[linerange={7-50,61-67}]{Slice.cpp}
+Voorbeeld van slicing (\proglink{slice.cpp}):
+\cpplstinputfragment[linerange={7-50,54-60}]{slice.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -3335,14 +3380,17 @@ docent Harry verdient 40000
 docent Harry verdient 40000
 \end{coutput}
 
+Merk op dat het slicing probleem \emph{niet} kan voorkomen als je overerft van een abstracte base classes, zie \csecref{sec:abc}.
+Van een ABC kunnen namelijk geen objecten aangemaakt worden.
+Probeer dus zoveel mogelijk over te erven van abstracte base classes en maak classes die bedoeld zijn om van over te erven abstract.
+
 \section{Voorbeeld: Opslaan van polymorfe objecten in een \texorpdfstring{\cppcode{vector}}{vector}}
-% (Zie eventueel TICPP Chapter15.html\#Heading456.)
 In het voorgaande programma heb je gezien dat alleen pointers en \USE{references} polymorf kunnen zijn. 
 Als we dus polymorfe objecten willen opslaan, kan dit alleen door pointers of \USE{references} naar deze objecten op te slaan.
 Het opslaan van \USE{references} in een |vector| is echter niet mogelijk omdat een \USE{reference} altijd moet verwijzen naar een object dat al bestaat en bij het aanmaken van de |vector| weten we nog niet welke objecten in de |vector| moeten worden opgeslagen.
 De enige mogelijkheid is dus het opslaan van polymorfe pointers naar objecten.
-Hier volgt een voorbeeld van het gebruik van een |vector| en polymorfisme (\proglink{Fruitmand.cpp}):
-\cpplstinputfragment[linerange={8-52}]{Fruitmand.cpp}
+Hier volgt een voorbeeld van het gebruik van een |vector| en polymorfisme (\proglink{fruitmand.cpp}):
+\cpplstinputfragment[linerange={8-52}]{fruitmand.cpp}
 
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
@@ -3353,6 +3401,8 @@ Appel
 \end{coutput}
 
 Omdat de |vector| nu pointers naar de objecten bevat, moeten we zelf goed opletten dat deze objecten niet verwijderd worden voordat de |vector| wordt verwijderd.
+
+De abstract base class |Fruit| moet eigenlijk een |virtual| destructor hebben, zie \csecref{sec:virtualdestructor}. 
 
 \section{Voorbeeld: impedantie calculator}
 \label{impedance calculator}
@@ -3395,22 +3445,23 @@ public:
 
 \footnotetext{%
     Dit is een zogenoemde \emph{\USE{virtual destructor}}, waarom het nodig is om een \USE{virtual destructor} te definiëren wordt verderop in dit dictaat besproken.
-    Zie \csecref{virtual destructor}.
+    Zie \csecref{sec:virtualdestructor}.
 }
 
 \figuur{scale=1}{component1}{\cppcode{R}, \cppcode{L} en \cppcode{C} zijn afgeleid van \cppcode{Component}}
 
-Het type |complex| is opgenomen in de standaard \Cpp{} \USE{library}. 
-%Zie eventueel Volume 2 van TICPP.
+Het type |complex| is opgenomen in de standaard \Cpp{} \USE{library}\footnote{%
+	Zie eventueel \url{https://en.cppreference.com/w/cpp/numeric/complex}.
+}. 
 De functie |Z| moet in een van |Component| afgeleide class de impedantie berekenen (een complex getal) bij de als parameter gegeven frequentie |f|.
 De functie |print| moet in een van |Component| afgeleide class het type en de waarde afdrukken op de als parameter gegeven \USE{output stream} |o|.
-Bijvoorbeeld: |L(1E-3)| voor een spoel van 1mH.
+Bijvoorbeeld: |L(1E-3)| voor een spoel van \SI{1}{\milli\henry}.
 
-Als we componenten ook met behulp van de |operator<<| willen afdrukken, moeten we deze operator als volgt \USE{overloaden} (\proglink{Netwerk0.cpp}):
-\cpplstinputfragment[linerange={37-40}]{Netwerk0.cpp}
+Als we componenten ook met behulp van de |operator<<| willen afdrukken, moeten we deze operator als volgt \USE{overloaden} (\proglink{netwerk0.cpp}), zie \csecref{sec:overloadoutput}:
+\cpplstinputfragment[linerange={37-40}]{netwerk0.cpp}
 
 De classes |R|, |L| en |C| kunnen dan als volgt gebruikt worden:
-\cpplstinputfragment[linerange={84-101}]{Netwerk0.cpp}
+\cpplstinputfragment[linerange={84-99}]{netwerk0.cpp}
 
 Merk op dat de functie |printImpedanceTable| niet \enquote{weet} welke |Component| gebruikt wordt.
 Dit betekent dat deze polymorfe functie voor alle huidige \enquote{soorten} componenten te gebruiken is.
@@ -3540,7 +3591,7 @@ In dit hoofdstuk worden de volgende onderwerpen besproken:
     \item Destructor.
     %(Zie eventueel TICPP Chapter06.html\#Heading226.)
 \end{itemize}
-Deze technieken worden vervolgens toegepast bij het maken van een UDT |Array|. Aan het einde van het hoofdstuk zal ik laten zien hoe je er voor kunt zorgen dat je deze UDT ook met een \USE{range-based for} kunt doorlopen en met een initialisatielijst kunt initialiseren.
+Deze technieken worden vervolgens toegepast bij het maken van een UDT |Array|. Aan het einde van het hoofdstuk zal ik laten zien hoe je er voor kunt zorgen dat je deze UDT ook met een \USE{range-based} |for| kunt doorlopen en met een initialisatielijst kunt initialiseren.
 
 \section{Dynamische geheugen allocatie (\texorpdfstring{\cppcode{new}}{new} en \texorpdfstring{\cppcode{delete}}{delete})}
 \label{sec:delete}\label{sec:new}
@@ -3603,8 +3654,8 @@ public:
 
 Breuk::~Breuk() {
     cout << "Een breuk met de waarde " << boven << "/" << onder
-         << " is verwijderd uit het geheugen." << endl
-         << "Druk op enter om verder te gaan..." << endl;
+         << " is verwijderd uit het geheugen.\n"
+         << "Druk op enter om verder te gaan...\n";
     cin.get();
 }
 \end{cpplstfragment}
@@ -3677,7 +3728,7 @@ Snap je waarom?%
 }
 
 \section{Virtual destructor}
-\label{virtual destructor} 
+\label{sec:virtualdestructor} 
 %(Zie eventueel TICPP Chapter15.html\#Heading456.)
 Als een class nu of in de toekomst als \USE{base class} gebruikt wordt, moet de \USE{destructor} virtual zijn zodat van deze class afgeleide classes via een polymorfe pointer \enquote{deleted} kunnen worden.
 
@@ -3834,34 +3885,31 @@ int main() {
     int i; 
     cin >> i;
     if (i > 0) {
-        Array a(i);
-        for (int j = 0; j < a.length(); ++j)
+        Array a {i};
+        for (int j {0}; j < a.length(); ++j)
             a[j] = j * j; // vul a met kwadraten
-        Array b(a);
-        cout << "b = " << b << endl;
-        cout << "a[12] = " << a[12] << endl;
-        cout << "b[12] = " << b[12] << endl;
+        Array b {a};
+        cout << "b = " << b << '\n';
+        cout << "a[12] = " << a[12] << '\n';
+        cout << "b[12] = " << b[12] << '\n';
         a[0] = 4; 
-        cout << "a[0] = " << a[0] << endl;
+        cout << "a[0] = " << a[0] << '\n';
 
         if (a == b)
-            cout << "a is nu gelijk aan b." << endl;
+            cout << "a is nu gelijk aan b.\n";
         else 
-            cout << "a is nu ongelijk aan b." << endl;
+            cout << "a is nu ongelijk aan b.\n";
 
         b = a;
-        cout << "b = a is uitgevoerd." << endl;
+        cout << "b = a is uitgevoerd.\n";
 
         if (a != b) 
-            cout << "a is nu ongelijk aan b." << endl;
+            cout << "a is nu ongelijk aan b.\n";
         else 
-            cout << "a is nu gelijk aan b." << endl;
+            cout << "a is nu gelijk aan b.\n";
     }
     else
-        cout << "Doe niet zo negatief!" << endl;
-    cin.get();
-    cin.get();
-    return 0;
+        cout << "Doe niet zo negatief!\n";
 }
 \end{cpplstfragment}
 
@@ -4060,8 +4108,8 @@ Er zijn grote verschillen tussen deze class template |FixedArray| en de eerder g
     De expressies |a != b| en |a = b| enz. zijn dan wel toegestaan.
 \end{itemize}
 
-\section{Ondersteuning range-based for voor class template \texorpdfstring{\cppcode{Array}}{Array}}
-De in \csecref{sec:class template array} gegeven class template Array kan niet met behulp van een \USE{range-based for} (zie \csecref{sec:range-basedfor}) doorlopen worden. Als we dit toch proberen dan krijgen we een foutmelding:
+\section{Ondersteuning range-based \texorpdfstring{\cppcode{for}}{for} voor class template \texorpdfstring{\cppcode{Array}}{Array}}
+De in \csecref{sec:class template array} gegeven class template Array kan niet met behulp van een \USE{range-based} |for| (zie \csecref{sec:range-basedfor}) doorlopen worden. Als we dit toch proberen dan krijgen we een foutmelding:
 
 \begin{cpplstfragment}[mathescape=true]
     for (auto e: v) {
@@ -4537,7 +4585,7 @@ Ook het berekenen van de impedantie van een condensator bij 0 Hz veroorzaakt dez
 Het zal voor iedereen duidelijk zijn dat zulke vreemde uitvoer tijdens het uitvoeren van het programma voorkomen moet worden.
 
 \subsection{Het gebruik van \texorpdfstring{\cppcode{assert}}{assert}}
-Op \csecref{assert} heb je al kennis gemaakt met de standaard functie |assert|.
+In \csecref{assert} heb je al kennis gemaakt met de standaard functie |assert|.
 Deze functie doet niets als de, als argument meegegeven, expressie |true| oplevert maar breekt het programma met een passende foutmelding af als dit niet zo is.
 Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan een bepaalde voorwaarden (waarvan je \enquote{zeker} weet dat ze geldig zijn) wordt voldaan.
 Je kunt de functie |impedanceC| voorzien van een \USE{assertion} (\proglink{ImpedanceC2.cpp}):
@@ -4715,11 +4763,11 @@ Dus:
     try {
     //  ...
     } catch (FrequencyError&) {
-        cout << "FrequencyError exception" << endl;
+        cout << "FrequencyError exception\n";
     } catch (ImpedanceError&) {
-        cout << "Other exception derived from ImpedanceError" << endl;
+        cout << "Other exception derived from ImpedanceError\n";
     } catch (...) {
-        cout << "Other exception" << endl;
+        cout << "Other exception\n";
     }
 \end{cpplstfragment}
 
@@ -4731,9 +4779,9 @@ Waarom verschijnt bij het uitvoeren van de onderstaande code de foutmelding \hco
     try {
     //  ...
     } catch (ImpedanceError&) {
-        cout << "Other exception derived from ImpedanceError" << endl;
+        cout << "Other exception derived from ImpedanceError\n";
     } catch (FrequencyError&) {
-        cout << "FrequencyError exception" << endl;
+        cout << "FrequencyError exception\n";
     }
 \end{cpplstfragment}
 
@@ -4879,11 +4927,11 @@ Voorbeeld (\proglink{Casting4.cpp}):
 \begin{cpplstfragment}[mathescape=true]
 void geefHulp(Hond* hp) { 
     hp->blaf();
-//  cout << hp->geefDrank() << " liter." << endl;
+//  cout << hp->geefDrank() << " liter.\n";
 //  $\color{hrred}\textbf{Error: (Microsoft)}$ 'geefDrank' : is not a member of 'Hond'
 //  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ 'class Hond' has no member named 'geefDrank'
 //  We kunnen een cast gebruiken maar dat geeft foutieve uitvoer als hp niet naar een SintBernard wijst.
-    cout << static_cast<SintBernard*>(hp)->geefDrank() << " liter." << endl;
+    cout << static_cast<SintBernard*>(hp)->geefDrank() << " liter.\n";
 }
 \end{cpplstfragment}
 
@@ -5004,11 +5052,11 @@ class Tekkel: public Hond {
 
 void blaf(const Hond* hp) {
     if (dynamic_cast<const SintBernard*>(hp) != 0)
-        cout << "Woef!" << endl;
+        cout << "Woef!\n";
     else if (dynamic_cast<const Tekkel*>(hp) != 0)
-        cout << "Kef kef!" << endl;
+        cout << "Kef kef!\n";
     else
-        cout << "Blaf." << endl;
+        cout << "Blaf.\n";
 }
 \end{cpplstfragment}
 
@@ -5157,7 +5205,7 @@ Deze \USE{library} is in de één na laatste versie van de \Cpp{} standaard%
 \footnotetext{%
 	Een zogenoemde \USE{late draft version} van de \Cpp{}14 standaard is beschikbaar op \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4296}.
 }
-\USE{Microsoft Visual Studio 2012 Express for Windows Desktop} (de \Cpp{} compiler die wij gebruiken) ondersteunt de meeste van deze uitbreidingen (maar niet alle).
+\USE{Microsoft Visual Studio 2012 Express for Windows Desktop} (de \Cpp{}\hyp{}compiler die wij gebruiken) ondersteunt de meeste van deze uitbreidingen (maar niet alle).
 In dit dictaat gaan we uitgebreid op deze standaard \Cpp{} \USE{library} in.
 
 Deze module worden afgesloten met het behandelen van een aantal applicaties waarin gebruik gemaakt wordt van standaard datastructuren.
@@ -5868,16 +5916,16 @@ De |map| heeft een indexeringsoperator (|operator[]|) waardoor de sleutel als ee
 
 Een map met een |string| als sleutel en een |unsigned int| als waarde kun je als volgt aanmaken:
 \begin{lstlisting}
-std::map<std::string, unsigned int> telefoonNummer;
+	map<string, unsigned int> telefoonNummer;
 \end{lstlisting}
 Met behulp van indexering kun je nu het telefoonnummer\footnote{De nul waarmee het telefoonnummer begint, wordt niet opgeslagen.
 	Als je per ongeluk toch de nul invoert \code{telefoonNummer["Sonja"] = 0612345678;}, dan interpreteert de \Cpp{}\hyp{}compiler dit als een getal in het octale talstelsel en dat levert in dit geval een foutmelding op omdat een octaal getal alleen de cijfers 0 tot en met 7 mag bevatten.} van |Sonja| in deze |map| zetten.
 \begin{lstlisting}
-telefoonNummer["Sonja"] = 612345678;
+	telefoonNummer["Sonja"] = 612345678;
 \end{lstlisting}
 Het telefoonnummer van |Sonja| kan nu, wederom met behulp van indexering, als volgt worden opgezocht en afgedrukt.
 \begin{lstlisting}
-std::cout << "Sonja : " << telefoonNummer["Sonja"] << std::endl;
+	cout << "Sonja : " << telefoonNummer["Sonja"] << '\n';
 \end{lstlisting}
 Je ziet dat een |map| gebruikt kan worden alsof het een soort array (of |vector|) is waarbij de index geen integer hoeft te zijn.
 Dit soort array's worden in veel andere programmeertalen (waaronder JavaScript en PHP) associatieve array's genoemd.
@@ -6151,7 +6199,7 @@ Als deze functie echter aangeroepen wordt om het midden van een |list| te vinden
 
 \begin{lstlisting}[mathescape=true]
 list<int> l = {12, 18, 6};
-cout << *find_upper_middle_random_access(l.begin(), l.end()) << endl; // $\color{hrred}\textbf{Error: no match for 'operator-'}$
+cout << *find_upper_middle_random_access(l.begin(), l.end()) << '\n'; // $\color{hrred}\textbf{Error: no match for 'operator-'}$
 \end{lstlisting}
 
 Als er \USE{bidirectional} iteratoren beschikbaar zijn, dan kan de functie als volgt geïmplementeerd worden, zie \proglink{find\_upper\_middle\_bidirectional.cpp}:
@@ -6166,7 +6214,7 @@ Als deze functie echter aangeroepen wordt om het midden van een |forward_list| t
 
 \begin{lstlisting}[mathescape=true]
 forward_list<int> l = {12, 18, 6};
-cout << *find_upper_middle_bidirectional(l.begin(), l.end()) << endl; // $\color{hrred}\textbf{Error: no match for 'operator--'}$
+cout << *find_upper_middle_bidirectional(l.begin(), l.end()) << '\n'; // $\color{hrred}\textbf{Error: no match for 'operator--'}$
 \end{lstlisting}
 
 Als er \USE{forward} iteratoren beschikbaar zijn, dan kan de functie als volgt geïmplementeerd worden, zie \proglink{find\_upper\_middle\_forward.cpp}:
@@ -6385,9 +6433,9 @@ Later, op \cpageref{pag:any_of}, wordt besproken hoe we dit met behulp van |any_
 
 \cpplstinputfragment[linerange={1-26}]{find.cpp}
 
-Invoer
-\footnote{De invoer is groen en onderstreept weergegeven.}
-en uitvoer van dit programma:
+Mogelijke invoer \footnote{%
+	De invoer is groen en onderstreept weergegeven.
+} en uitvoer van dit programma:
 \begin{coutput}
 	......
 	Geef een letter: \cinput{h}
@@ -6521,7 +6569,7 @@ Het expliciet specificeren dat de variabele |somEven| ingesloten moet worden in 
 \label{sec:returntypelambda}
 Bij alle tot nu toe gebruikte lambda\hyp{}functies kan de compiler zelf het returntype van de functie bepalen.
 Als de code van een lambda\hyp{}functie slechts uit een |return|\hyp{}statement bestaat dan is dit altijd mogelijk.
-Als de lambda\hyp{}functie uit meer instructies bestaat dan neemt een \Cpp{}11 compiler aan dat het returntype |void| is.
+Als de lambda\hyp{}functie uit meer instructies bestaat dan neemt een \Cpp{}11\hyp{}compiler aan dat het returntype |void| is.
 In \Cpp{}14 probeert de compiler in dit geval ook het correct type te bepalen maar er zijn situaties waarbij dit niet mogelijk is.
 Als de compiler niet in staat is om zelf het returntype te bepalen, dan kan het returntype gespecificeerd worden na de parameterlijst van de lambda\hyp{}functie |-> typenaam|.
 
@@ -7529,7 +7577,7 @@ In een \Cpp{} programma kun je constante getallen niet alleen meer in het decima
 	Hexadecimale getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0x} of \cppcode{0X}. Dus de code \cppcode{int x = 0x23;} initialiseert de variabele \cppcode{i} met de waarde 35 want $23_{16}$ is $35_{10}$.  
 } talstelsel invoeren maar ook in het binaire talstelsel.
 Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} of \cppcode{0B}\footnote{%
-	Hoewel deze notatie \emph{niet} toegestaan is volgens de C-standaard \cite{ISO2018} ondersteunen veel C-compilers zoals de GCC C Compiler en de Texas Instruments Optimizing C Compiler deze notatie ook. 
+	Hoewel deze notatie \emph{niet} toegestaan is volgens de C-standaard \cite{ISO2018} ondersteunen veel C\hyp{}compilers zoals de GCC C\hyp{}compiler en de Texas Instruments Optimizing C Compiler deze notatie ook. 
 }. Dus de code \cppcode{int x = 0b10111101;} initialiseert de variabele \cppcode{i} met de waarde 189 want $10111101_2$ is $189_{10}$.
 
 \section{Het type \texorpdfstring{\cppcode{bool}}{bool}}
@@ -7598,7 +7646,7 @@ De volgende definitie van de variabele |som| lijkt meer voor de hand te liggen:
 	decltype(rij[0]) som {0};
 \end{cpplstfragment}
 Dit werkt echter niet omdat |rij[0]| van het type |int&| is en niet van het beoogde type |int|.
-De gcc-compiler geeft de volgende foutmelding:
+De GCC \Cpp{}\hyp{}compiler geeft de volgende foutmelding:
 \begin{lstfragment}[mathescape=true]
 $\color{hrred}\textbf{error:}$ cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'
 \end{lstfragment}
@@ -7681,28 +7729,37 @@ Het is dus aan te bevelen om een functie die nuttig zou kunnen zijn bij het bere
 
 \chapter{Objects and classes (de details)}
 \label{sec:objectandclassesdetails}
+In \csecref{sec:objectandclasses} heb je geleerd wat een UDT is.
+Als voorbeeld van een UDT hebben we de class |Breuk| behandeld.
+In \csecref{sec:Breuk::operator+=} heb je gezien hoe je de |operator+=| kunt \USE{overloaden} voor de class |Breuk|.
+In dit hoofdstuk leer je hoe je andere operatoren kunt \USE{overloaden} voor de class |Breuk| zodat je een object van deze class op dezelfde manier kunt gebruiken als een variabele van het type |int|.
+
+In C heb je de |enum| leren kennen.
+In \Cpp{} is een verbeterde versie, zogenoemde |enum class|, toegevoegd.
+Deze verbeterde versie wordt in dit hoofdstuk besproken. 
+
 \section{Operator overloading (deel 2)}
 Behalve de operator |+=| kun je ook andere operatoren \USE{overloaden}. 
 Voor de class |Breuk| kun je bijvoorbeeld de operator |+| definiëren, zodat objecten |b1| en |b2| van de class |Breuk| gewoon door middel van \hbox{\cppcode{b1 + b2}} opgeteld kunnen worden. 
-\cpplstinputfragment[linerange={10-17,25-25,58-63,88-91,108-108}]{operator+Member.cpp}
+\cpplstinputfragment[linerange={11-18,26-26,46-51,76-79}]{operator+_member.cpp}
 
 Zoals je ziet heb ik de |operator+| eenvoudig geïmplementeerd door gebruik te maken van de al eerder gedefinieerde \hcode{operator\\-+=}. 
 De code kan nog verder vereenvoudigd worden tot:
-\cpplstinputfragment[linerange=66-68]{operator+Member.cpp}
+\cpplstinputfragment[linerange=54-56]{operator+_member.cpp}
 
-Zie \proglink{operator+Member.cpp} voor een compleet voorbeeldprogramma.
+Zie \proglink{operator+_member.cpp} voor een compleet voorbeeldprogramma.
 
 \section{\texorpdfstring{\cppcode{operator+}}{operator+} FAQ}
 \qa{
 	Waarom gebruik je \cppcode{const Breuk} in plaats van \cppcode{Breuk} als return type bij \cppcode{operator+}?
 }{
 	Dit heb ik afgekeken van Scott Meyers \cite{Meyers2005} en \cite{Meyers1995}.
-	Als \cppcode{a}, \cppcode{b} en \cppcode{c} van het type \cppcode{int} zijn, levert de expressie \cppcode{(a + b) += c} de volgende (onduidelijke) foutmelding op \error{Error: left operand must be l-value}. 
+	Als \cppcode{a}, \cppcode{b} en \cppcode{c} van het type \cppcode{int} zijn, levert de expressie \cppcode{(a + b) += c} de volgende (onduidelijke) foutmelding op \error{error: lvalue required as left operand of assignment}. 
 	Dit is goed omdat het optellen van \cppcode{c} bij een tijdelijke variabele (de som \cppcode{a + b} wordt namelijk aan een tijdelijke variabele toegekend) zinloos is. 
 	De tijdelijke variabele wordt namelijk meteen na het berekenen van de expressie weer verwijderd. 
 	Waarschijnlijk heeft de programmeur \cppcode{(a += b) += c} bedoeld. 
 	Als \cppcode{a}, \cppcode{b} en \cppcode{c} van het type \cppcode{Breuk} zijn en we kiezen als return type van \cppcode{Breuk::operator+} het type \cppcode{Breuk}, dan zal de expressie \cppcode{(a + b) += c} zonder foutmelding vertaald worden. 
-	Als we echter als return type \cppcode{const Breuk} gebruiken, dan levert deze expressie wel een foutmelding op omdat de \cppcode{operator+=} niet op een \cppcode{const} object uitgevoerd kan worden. 
+	Als we echter als return type \cppcode{const Breuk} gebruiken, dan levert deze expressie wel een foutmelding op omdat de \cppcode{operator+=} niet op een \cppcode{const} object uitgevoerd kan worden: \error{error: passing 'const Breuk' as 'this' argument discards qualifiers}. 
 	Als je het zelfgedefinieerde type \cppcode{Breuk} zoveel mogelijk op het ingebouwde type \cppcode{int} wilt laten lijken (en dat wil je), dan moet je dus \cppcode{const Breuk} in plaats van \cppcode{Breuk} als return type van de \cppcode{operator+} gebruiken.%
 	\footnote{%
 		Dat dit nogal subtiel is blijkt wel uit het feit dat Bjarne Stroustrup (de ontwerper van \Cpp{}) in een vergelijkbaar voorbeeld \cite[blz. 528]{Stroustrup2013} geen \cppcode{const} bij het return type gebruikt.
@@ -7716,7 +7773,7 @@ Zie \proglink{operator+Member.cpp} voor een compleet voorbeeldprogramma.
 	Als we een \USE{reference} teruggeven naar deze lokale kopie, ontstaat na return een zogenoemde \USE{dangling reference} (zie \cpageref{dangling reference}) omdat de lokale variabele na afloop van de memberfunctie opgeruimd wordt.
 }
 \qa{
-	Kun je in de \cppcode{operator+} de benodigde lokale variabele niet met \cppcode{new}\footnote{De operator \cppcode{new} wordt pas besproken in \csecref{sec:new} van dit dictaat.} aanmaken zodat we toch een \USE{reference} kunnen teruggeven? 
+	Kun je in de \cppcode{operator+} de benodigde lokale variabele niet met \cppcode{new}, zie \csecref{sec:new} aanmaken zodat we toch een \USE{reference} kunnen teruggeven? 
 	De met \cppcode{new} aangemaakte variabele blijft immers na afloop van de \cppcode{operator+} memberfunctie gewoon bestaan.
 }{
 	Ja dit kan wel, maar je kunt het beter \emph{niet} doen. 
@@ -7734,8 +7791,8 @@ Zie \proglink{operator+Member.cpp} voor een compleet voorbeeldprogramma.
 }
 \qa{
 	Kun je bij een \cppcode{Breuk} ook een \cppcode{int} optellen?\\
-	\cppcode{Breuk a(1, 2);}\\
-	\cppcode{Breuk b = a + 1;}
+	\cppcode{Breuk a {1, 2};}\\
+	\cppcode{Breuk b {a + 1}}
 }{
 	Ja. 
 	De expressie \cppcode{a + 1} wordt geïnterpreteerd als \cppcode{a.operator+(1)}. De compiler zal dan \enquote{kijken} of de memberfunctie \cppcode{Breuk::operator+(int)} gedefinieerd is. 
@@ -7746,14 +7803,14 @@ Zie \proglink{operator+Member.cpp} voor een compleet voorbeeldprogramma.
 }
 \qa{
 	Kun je bij een \cppcode{int} ook een \cppcode{Breuk} optellen?\\
-	\cppcode{Breuk a(1, 2);}\\
-	\cppcode{Breuk b = 1 + a;}    
+	\cppcode{Breuk a {1, 2};}\\
+	\cppcode{Breuk b {1 + a};}    
 }{
 	Nee, nu niet. De expressie \cppcode{1 + a} wordt geïnterpreteerd als \cppcode{1.operator+(a)}. 
 	De compiler zal dan \enquote{kijken} of de het ingebouwde type \cppcode{int} het optellen met een \cppcode{Breuk} heeft gedefinieerd. 
 	Dit is vanzelfsprekend niet het geval. 
 	De compiler \enquote{ziet} dat wel gedefinieerd is hoe een \cppcode{int} bij een \cppcode{int} opgeteld moet worden en zal vervolgens \enquote{kijken} of de \cppcode{Breuk} omgezet kan worden naar een \cppcode{int}. 
-	Dit is in dit geval ook niet mogelijk\footnote{Op \csecref{conversion operator} zal ik bespreken hoe je deze type conversie indien gewenst zelf kunt definiëren.}. De Microsoft Visual Studio \Cpp{} compiler geeft de volgende foutmelding: \error{binary '+' : no global operator found which takes type 'Breuk'}. De GCC \Cpp{} compiler genereert een iets duidelijkere foutmelding: \error{No match for 'operator+' in '3 + b'}. 
+	Dit is in dit geval ook niet mogelijk\footnote{In \csecref{sec:conversionoperator} zal ik bespreken hoe je deze type conversie indien gewenst zelf kunt definiëren.}. De GCC \Cpp{}\hyp{}compiler genereert de volgende foutmelding: \error{no match for 'operator+' (operand types are 'int' and 'Breuk')}. 
 	Als je echter de \cppcode{operator+} niet als memberfunctie definieert maar in plaats daarvan de globale \cppcode{operator+} overloadt, dan wordt het wel mogelijk om een \cppcode{int} bij een \cppcode{Breuk} op te tellen.
 }
 
@@ -7774,26 +7831,26 @@ Een expressie zoals: |a + b| zal dus, als |a| en |b| beide van het type |int| zi
 Je kunt nu door gebruik te maken van \USE{operator overloading} zelf zoveel globale |operator+| functies definiëren als je maar wilt.
 
 Als je dus een |Breuk| bij een |int| wilt kunnen optellen, kun je de volgende globale |operator+| definiëren:
-\cpplstinputfragment[linerange={97-97,99-100}]{operator+Global.cpp}
+\cpplstinputfragment[linerange={90-90,92-93}]{operator+_global.cpp}
 
 Deze implementatie roept simpelweg de |Breuk::operator+| memberfunctie aan! Optellen is namelijk commutatief, dat wil zeggen dat $a + b$ gelijk is aan $b + a$. Als we van een |int| een |Breuk| willen aftrekken, moet een andere aanpak worden gekozen want aftrekken is niet commutatief, $a - b$ is namelijk ongelijk aan $b - a$.
-\cpplstinputfragment[linerange={102-102,104-107}]{operator+Global.cpp}
+\cpplstinputfragment[linerange={95-95,97-100}]{operator+_global.cpp}
 
 Deze implementatie roept de |Breuk::operator-=| memberfunctie aan. Die moet dan natuurlijk wel gedefinieerd zijn:
-\cpplstinputfragment[linerange={68-73}]{operator+Global.cpp}
+\cpplstinputfragment[linerange={62-67}]{operator+_global.cpp}
 
-Zie \proglink{operator+Global.cpp} voor een compleet voorbeeldprogramma.
+Zie \proglink{operator+_global.cpp} voor een compleet voorbeeldprogramma.
 
 In plaats van zowel een memberfunctie |Breuk::operator+(const Breuk&)| en een globale |operator+(int, const Breuk&)| te declareren kun je ook één globale |operator+(const Breuk&, const Breuk&)| declareren.
 
 Voorbeeld van het \USE{overloaden} van de globale |operator+| voor objecten van de class |Breuk|:
-\cpplstinputfragment[linerange={9-10,12-12,14-14,17-17,26-26,89-93}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={10-11,13-13,15-15,18-18,27-27,77-81}]{Breuk3.cpp}
 
 Voor de fijnproever: de implementatie van |operator+| kan ook in 1 regel:
-\cpplstinputfragment[linerange={96-98}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={84-86}]{Breuk3.cpp}
 
 Voor de connaisseur (echte kenner): De implementatie kan ook zo:
-\cpplstinputfragment[linerange={102-104}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={90-92}]{Breuk3.cpp}
 
 Doordat de eerste parameter |left| hier als \USE{call by value} (zie \cpageref{call by value}) is gedeclareerd wordt bij aanroep \enquote{van zelf} een kopietje van het linker argument van de |operator+| gemaakt.
 
@@ -7803,7 +7860,6 @@ De unary operatoren (dat zijn operatoren met 1 operand, zoals |!|) en de \USE{as
 In dit geval wordt namelijk (indien nodig) de linker operand of de rechter operand geconverteerd naar het benodigde type.
 
 \section{Overloaden \texorpdfstring{\cppcode{operator++}}{operator++} en \texorpdfstring{\cppcode{operator--}}{operator--}}
-%TODO heeft verwijzing naar Eckel zin?
 Bij het \USE{overloaden} van de |operator++| en |operator--| ontstaat een probleem omdat beide zowel een \emph{prefix} als een \emph{postfix} operator variant kennen%
 \footnote{%
 	Voor wie het niet meer weet: Een postfix operator \cppcode{++} wordt na afloop van de expressie uitgevoerd dus \cppcode{a = b++;} wordt geïnterpreteerd als \cppcode{a = b; b = b + 1;}. 
@@ -7812,7 +7868,7 @@ Bij het \USE{overloaden} van de |operator++| en |operator--| ontstaat een proble
 Dit probleem is opgelost door de postfix versie te voorzien van een (dummy) |int| parameter. 
 
 Voorbeeld van het \USE{overloaden} van |operator++| voor objecten van de class |Breuk|:
-\cpplstinputfragment[linerange={9-10,12-12,14-17,26-26}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={10-11,13-13,15-18,27-27}]{Breuk3.cpp}
 De implementatie van deze memberfuncties wordt in \csecref{Breuk::operator++ implementatie} gegeven.
 %verwijzen naar page gaat niet omdat programma wordt ingelezen uit cpp file
 
@@ -7822,13 +7878,12 @@ Het gebruik van het return type |Breuk&| in plaats van |const Breuk&| bij de pre
 } (net zoals bij het type |int|). 
 Het gebruik van het return type |const Breuk| in plaats van |Breuk| bij de postfix |operator++| zorgt ervoor dat de expressie |b++++| als |b| van het type |Breuk| is een error%
 \footnote{%
-	\cppcode{a = b++++} wordt geïnterpreteerd als \cppcode{a = (b++)++}. De postfix versie van de \cppcode{operator++} maakt een kopietje van \cppcode{b}, verhoogd de waarde van \cppcode{b} en geeft tot slot de waarde van het kopietje (de \emph{oude} waarde van \cppcode{b}) terug. Het is niet mogelijk om de operator ++ op deze returnwaarde uit te voeren. De Microsoft Visual \Cpp{} compiler geeft de error: \error{'++' needs l-value}.
-	Met \error{l-value} wordt een expressie bedoeld die links van een = teken gebruikt kan worden.
+	\cppcode{a = b++++} wordt geïnterpreteerd als \cppcode{a = (b++)++}. De postfix versie van de \cppcode{operator++} maakt een kopietje van \cppcode{b}, verhoogd de waarde van \cppcode{b} en geeft tot slot de waarde van het kopietje (de \emph{oude} waarde van \cppcode{b}) terug. Het is niet mogelijk om de operator ++ op deze returnwaarde uit te voeren. De GCC \Cpp{}\hyp{}compiler geeft de error: \error{error: lvalue required as increment operand}.
+	Met \error{lvalue} wordt een expressie bedoeld die links van een = teken gebruikt kan worden.
 } geeft (net zoals bij het type |int|).
 
 \section{Conversie operatoren}
-%TODO heeft verwijzing naar Eckel zin?
-\label{conversion operator}
+\label{sec:conversionoperator}
 Een \USE{constructor} van class |Breuk| met één parameter van het type |T| wordt door de compiler gebruikt als een variabele van het type |T| moet worden geconverteerd naar het type |Breuk| (zie \csecref{sec:conversieconstructor}).  
 \label{type conversie}%
 Door het definiëren van een conversie operator voor het type |T| kan de programmeur ervoor zorgen dat objecten van de class |Breuk| door de compiler (indien nodig) omgezet kunnen worden naar het type |T|.
@@ -7864,25 +7919,25 @@ Dit maakt het type |Breuk| voor programmeurs erg eenvoudig te gebruiken.
 Ik zal nu eerst de complete broncode presenteren van het programma \proglink{Breuk3.cpp} waarin het type |Breuk| gedeclareerd, geïmplementeerd en gebruikt wordt. 
 Meteen daarna zal ik op bovengenoemde punten één voor één ingaan.
 \label{Breuk::operator++ implementatie}
-\cpplstinputfragment[linerange={3-5,8-34,36-46,49-93,106-131}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={3-6,9-35,38-81,94-119}]{Breuk3.cpp}
 \iftoggle{ebook}{
 	\cpplstinputfragment[linerange={Breuk3_main-Breuk3_main,Breuk3_main2-Breuk3_main2}]{fragments.cpp}
 }{
-	\cpplstinputfragment[linerange={135-160}]{Breuk3.cpp}
+	\cpplstinputfragment[linerange={122-145}]{Breuk3.cpp}
 }
 
 Ik heb ervoor gekozen om de globale |operator==| te \USE{overloaden} in plaats van een memberfunctie |Breuk::operator==| te definiëren.
 Dit heeft als voordeel dat zowel het linker als het rechter argument indien nodig naar het type |Breuk| geconverteerd kan worden.
 Dus zowel de expressies| b == 3| als |3 == b| kunnen worden gebruikt als |b| van het type |Breuk| is. 
 De implementatie van deze globale |operator ==| is als volgt:
-\cpplstinputfragment[linerange={125-127}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={113-115}]{Breuk3.cpp}
 
-Dit levert bij compilatie echter de volgende fouten op: \error{cannot access private member declared in class 'Breuk'}.
+Dit levert bij compilatie echter de volgende fouten op: \error{error: 'int Breuk::boven' is private within this context} en \error{error: 'int Breuk::onder' is private within this context}.
 
 De globaal gedefinieerde |operator==| is namelijk geen memberfunctie en heeft dus geen toegang tot de private velden van de class |Breuk|. Maar gelukkig is er een vriend die ons hier te hulp komt: de \emph{\USE{friend function}}.
 
 \section{\texorpdfstring{\cppcode{friend}}{friend} functions}
-%Heeft verwijzing naar Eckel zin?
+\label{sec:friend}
 Een functie kan als \USE{friend} van een class gedeclareerd worden. 
 Deze \USE{friend} functies hebben dezelfde rechten als memberfuncties van de class. 
 Vanuit een \USE{friend} functie van een class heb je dus toegang tot de private \USE{members} van die class. 
@@ -7894,13 +7949,13 @@ memberfuncties van die class \USE{friend} functies zijn.
 
 De zojuist besproken globale |operator==| kan dus eenvoudig als \USE{friend} van de class |Breuk| gedeclareerd worden waardoor de \USE{compiler errors} als sneeuw voor de zon verdwijnen.
 \begin{cpplstfragment}
-	class Breuk {
-		public:
-		// ...
-		private:
-		// ...
-		\USE{friend} bool operator==(const Breuk& left, const Breuk& right);
-	};
+class Breuk {
+public:
+	// ...
+private:
+	// ...
+friend bool operator==(const Breuk& left, const Breuk& right);
+};
 \end{cpplstfragment}
 
 Het maakt niets uit of een \USE{friend} declaratie in het private of in het public deel van de class geplaatst wordt. 
@@ -7914,14 +7969,13 @@ Net zoals in het gewone leven moet een class zijn vrienden met zorg selecteren.
 Als je elke functie als \USE{friend} van elke class declareert, wordt het principe van \USE{information hiding} natuurlijk wel overboord gegooid.
 
 De globale |operator!=| is als volgt \USE{overloaded} voor het type |Breuk|:
-\cpplstinputfragment[linerange={129-131}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={117-119}]{Breuk3.cpp}
 
 Bij de implementatie is gebruik gemaakt van de al eerder voor het type |Breuk| \USE{overloaded} globale |operator==|. 
 Het is dus niet nodig om deze |operator!=| als \USE{friend} functie van de class |Breuk| te definiëren.
 
 \section{Operator overloading (deel 4)} 
-%(Zie eventueel TICPP Chapter12.html\#Heading364.)
-\label{sec:overload output}
+\label{sec:overloadoutput}
 Het object |cout| dat in de \USE{headerfile}| iostream.h| gedeclareerd is, is van het type |ostream|. 
 Om er voor te zorgen dat je een |Breuk| |b| op het scherm kunt afdrukken door middel van: |cout << b|, moet je, zoals je nu zo langzamerhand wel zult begrijpen, de globale |operator<<| \USE{overloaden}%
 \footnote{%
@@ -7929,43 +7983,90 @@ Om er voor te zorgen dat je een |Breuk| |b| op het scherm kunt afdrukken door mi
 	De class \cppcode{ostream} is namelijk in de \cppcode{iostream} \USE{library} gedeclareerd en deze \USE{library} kunnen (en willen) we natuurlijk niet aanpassen.
 }:
 \begin{cpplstfragment}
-	ostream& operator<<(ostream& left, const Breuk& right) {
-		left << right.boven << '/' << right.onder;
-		return left; 
-	}
+ostream& operator<<(ostream& left, const Breuk& right) {
+	left << right.boven << '/' << right.onder;
+	return left; 
+}
 \end{cpplstfragment}
 %
-Deze globale operator gebruikt de private velden van de class |Breuk| en moet daarom als \USE{friend} van deze class gedeclareerd worden. 
+Deze globale operator gebruikt de private velden van de class |Breuk| en moet daarom als \USE{friend} van deze class gedeclareerd worden, zie \csecref{sec:friend}. 
 Als eerste parameter is een |ostream&| gebruikt omdat de operator het als argument meegegeven object (in ons geval |cout|) moet kunnen aanpassen. 
 Als return type is het type |ostream&| gebruikt. 
 De als parameter meegegeven |ostream&| wordt ook weer teruggegeven. 
 Dit heeft tot gevolg dat je verschillende |<<| operatoren achter elkaar kunt \enquote{rijgen}. 
 Bijvoorbeeld:
 \begin{cpplstfragment}
-	cout << "De breuk a = " << a << " en de breuk b = " << b << endl;
+	cout << "De breuk a = " << a << " en de breuk b = " << b << '\n';
 \end{cpplstfragment}
 
 Omdat alle ingebouwde \USE{overloaded} |<<| operatoren met als eerste parameter een |ostream&| deze \USE{reference} ook weer als return waarde teruggeven kun je de bovenstaande |operator<<| vereenvoudigen tot:
-\cpplstinputfragment[linerange={107-109}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={95-97}]{Breuk3.cpp}
 
 Op vergelijkbare wijze kun je de globale |operator>>| \USE{overloaden} zodat de objecten |a| en |b| van de class |Breuk| als volgt ingelezen kunnen worden: |cin >> a >> b|
 
 Voor het type van de eerste parameter en het return type moet je in dit geval |istream| gebruiken.
 
 Als je deze laatste versie van |Breuk| vergelijkt met versie 0 op \cpageref{breuk0}, dan is eigenlijk het enige belangrijke verschil dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als de ingebouwde types te gebruiken is. 
-\newcounter{pagediff}%
-\setcounter{pagediff}{\value{page}}%
-\addtocounter{pagediff}{-\getpagerefnumber{breuk0}}%
-Je hebt er \thepagediff{} pagina's gedetailleerde informatie voor door moeten worstelen om dit te bereiken. 
-Dat dit toch de moeite waard is heb ik op een van de eerste van die \thepagediff{} pagina's al een keer benadrukt, maar het zou kunnen zijn dat je door alle tussenliggende details het uiteindelijke nut van alle inspanning vergeten bent. 
+Je hebt er heel wat pagina's gedetailleerde informatie voor door moeten worstelen om dit te bereiken. 
+Dat dit toch de moeite waard is heb ik op een van de eerste van die pagina's al een keer benadrukt, maar het zou kunnen zijn dat je door alle tussenliggende details het uiteindelijke nut van alle inspanning vergeten bent. 
 Dus zal ik hier nogmaals antwoord geven op de vraag: \enquote{Is het al die inspanningen wel waard om een \cppcode{Breuk} zo te maken dat je hem net zoals een ingebouwd type kan gebruiken?} 
 Ja! 
 Het maken van de class |Breuk| is dan wel een hele inspanning maar iedere programmeur kan vervolgens dit zelfgedefinieerde type, als hij of  zij de naam |Breuk| maar kent, als vanzelf (intuïtief) gebruiken. 
 Er is daarbij geen handleiding of helpfunctie nodig is, omdat het type |Breuk| zich net zo gedraagt als een ingebouwd type. 
 De class |Breuk| hoeft maar één keer gemaakt te worden, maar zal talloze malen gebruikt worden.
 
+Natuurlijk is het nog beter en slimmer om een goedgeteste implementatie van het type |Breuk| te zoeken en te hergebruiken, bijvoorbeeld |boost::rational|\footnote{%
+	Zie \url{https://www.boost.org/doc/libs/1_72_0/libs/rational/rational.html}.
+}.
+In dit dictaat heb ik het type |Breuk| stap voor stap ontwikkeld om je te leren hoe je zoiets in \Cpp{} kunt doen.
+In de praktijk moet je deze kennis alleen toepassen om een UDT mee te definiëren die je nergens kunt vinden.
 
-	
+\section{\texorpdfstring{\cppcode{enum class}}{enum class}}
+\label{sec:enumclass}
+In C heb je de |enum| leren kennen, zie eventueel \cite[paragraaf 5.6.2]{Gustedt2019} of \url{https://en.cppreference.com/w/c/language/enum}.
+In \Cpp{} is een verbeterde versie, zogenoemde |enum class|, toegevoegd.
+
+In C en \Cpp{} kun je een \squote{gewoon} enumeratie-type als volgt definiëren en gebruiken\footnote{%
+	In C heb je een \ccode{typedef} nodig om hetzelfde te bereiken: \ccode{typedef enum { groen, oranje, rood } Stoplicht;}. In \Cpp{} is de naam van een enumeratie automatisch een type. 
+}:
+\begin{cpplstfragment}
+	enum Stoplicht {groen, oranje, rood};
+	Stoplicht s = rood;
+	cout << "s = " << s << '\n';
+\end{cpplstfragment}
+De namen die je gebruikt in de |enum| zijn niets anders dan namen voor integer constanten. 
+Ze worden automatisch genummerd vanaf |0|\footnote{%
+	Je kunt indien gewenst de waarde die bij elke naam hoort ook opgeven.
+	Bijvoorbeeld:
+	\cppcode{typedef enum {groen = 7, oranje = 13, rood} Stoplicht};
+	De naam \code{groen} heeft nu de waarde \code{7}, \code{oranje} de waarde \code{13} en \code{rood} de waarde 14. Als je geen waarde opgeeft, wordt er doorgenummerd.
+}.
+De uitvoer van de bovenstaande code is dus:
+\begin{coutput}
+	s = 2
+\end{coutput}
+De naam |rood| wordt, zoals je ziet automatisch omgezet naar een integer.
+De naam |rood| kun je overal waar de |enum Stoplicht| zichtbaar is gebruiken.
+Omdat een |enum| vaak globaal gedefinieerd wordt, leidt dit bij grotere programma's tot problemen als er ook een |enum Kleur| is gedefinieerd die ook de naam |rood| definieert.
+Als je in plaats van een |enum| een |enum class| gebruikt dan wordt zogenoemde \squote{\USE{strong typing}} gebruikt en zijn de namen \squote{\USE{scoped}}.
+Bijvoorbeeld:
+\begin{cpplstfragment}
+	enum class Stoplicht {groen, oranje, rood};
+	Stoplicht s = Stoplicht::rood;
+	if (s == Stoplicht::rood) cout << "s = rood\n";
+\end{cpplstfragment}
+Het gebruik van \squote{\USE{strong typing}} zorgt ervoor dat een variabele van het type |Stoplicht| \emph{niet} meer automatisch omgezet wordt naar een integer.
+Je kunt zo'n variabele dus niet zonder meer printen\footnote{%
+	Als je dit wel wilt, dan moet je operator overloading gebruiken, zie \cref{sec:overloadoutput} en \proglink{enum_\\-class.cpp}.
+}.
+Het feit dat de namen \squote{\USE{scoped}} zorgt ervoor dat je moet aangeven van welk type een enumeratie-waarde (naam) is. 
+Je moet dus |Stoplicht::rood| gebruiken in plaats van |rood|. 
+Dit zorgt ervoor dat je de naam |rood| meerdere keren als enumeratie-waarde kunt gebruiken.
+Bijvoorbeeld ook voor |Kleur::rood|.
+Omdat het gebruik van |enum class| geen onverwachtse verrassingen op kan leveren gebruiken we in dit dictaat |enum class| in plaats van |enum|\footnote{%
+	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#enum3-prefer-class-enums-over-plain-enums}{Enum.3}. 
+}.
+
 \chapter{Notes from A Tour if C++, Second Edition}
 Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second Edition} van Bjarne Stroustrup. Deze aantekeningen moeten nog (op de juiste plaats) verwerkt worden in dit dictaat.
 \section{The Basics}
@@ -7993,49 +8094,6 @@ Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second E
 	%Niet relevant: gebruik Variant i.p.v. union
 \end{itemize}
 \section{User-Defined Types}
-\begin{itemize}
-	\item 
-	In \Cpp{} kun je een verbeterde variant van enumeraties gebruiken, zogenoemde |enum class|es.
-	%TODO: haakjes vallen weg in ccode
-	In \Cpp{} kun je een \squote{gewoon} enumeratie-type als volgt definiëren en gebruiken\footnote{%
-		In C heb je een \ccode{typedef} nodig om hetzelfde te bereiken: \ccode{typedef enum { groen, oranje, rood } Stoplicht;}. In \Cpp{} is de naam van een enumeratie automatisch een type. 
-	}:
-	\begin{cpplstfragment}
-		enum Stoplicht {groen, oranje, rood};
-		Stoplicht s = rood;
-		cout << "s = " << s << '\n';
-	\end{cpplstfragment}
-	Een namen die je gebruikt in de |enum| zijn niets anders dan namen voor integer constanten. 
-	Ze worden automatisch genummerd vanaf |0|\footnote{%
-		Je kunt indien gewenst de waarde die bij elke naam hoort ook opgeven.
-		Bijvoorbeeld:
-		\cppcode{typedef enum {groen = 7, oranje = 13, rood} Stoplicht};
-		De naam \code{groen} heeft nu de waarde \code{7}, \code{oranje} de waarde \code{13} en \code{rood} de waarde 14. Als je geen waarde opgeeft, wordt er doorgenummerd.
-	}.
-	De uitvoer van de bovenstaande code is dus:
-	\begin{coutput}
-		s = 2
-	\end{coutput}
-	De naam |rood| wordt, zoals je ziet automatisch omgezet naar een integer.
-	De naam |rood| kun je overal waar de |enum Stoplicht| zichtbaar is gebruiken.
-	Omdat een |enum| vaak globaal gedefinieerd wordt, leidt dit bij grotere programma's tot problemen als er ook een |enum Kleur| is gedefinieerd die ook de naam |rood| definieert.
-	Als je in plaats van een |enum| een |enum class| gebruikt dan wordt zogenoemde \squote{\USE{strong typing}} gebruikt en zijn de namen \squote{\USE{scoped}}.
-	Bijvoorbeeld:
-	\begin{cpplstfragment}
-		enum class Stoplicht {groen, oranje, rood};
-		Stoplicht s = Stoplicht::rood;
-		if (s == Stoplicht::rood) cout << "s = rood\n";
-	\end{cpplstfragment}
-	Het gebruik van \squote{\USE{strong typing}} zorgt ervoor dat een variabele van het type |Stoplicht| \emph{niet} meer automatisch omgezet wordt naar een integer.
-	Je kunt zo'n variabele dus niet zonder meer printen\footnote{%
-		Als je dit wel wilt, dan moet je operator overloading gebruiken, zie \cref{sec:overload output} en \proglink{enumClass.cpp}.
-	}.
-	Het feit dat de namen \squote{\USE{scoped}} zorgt ervoor dat je moet aangeven van welk type een enumeratie-waarde (naam) is. 
-	Je moet dus |Stoplicht::rood| gebruiken in plaats van |rood|. 
-	Dit zorgt ervoor dat je de naam |rood| meerdere keren als enumeratie-waarde kunt gebruiken.
-	Bijvoorbeeld ook voor |Kleur::rood|.
-	Omdat het gebruik van |enum class| geen onverwachtse verrassingen op kan leveren gebruiken we in dit dictaat |enum class| in plaats van |enum|.
-\end{itemize}
 \section{Modularity}
 \begin{itemize}
 	\item 
@@ -8108,7 +8166,7 @@ Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second E
 \section{Essential Operations}
 \begin{itemize}
 	\item 
-	De \Cpp{}-compiler doet zijn best om het onnodig kopiëren van data te voorkomen.
+	De \Cpp{}\hyp{}compiler doet zijn best om het onnodig kopiëren van data te voorkomen.
 	Deze compiler optimalisatie techniek wordt \squote{\USE{copy elision}}\footnote{%
 		Het Engelse woord \squote{\USE{elision}} betekent \squote{weglating}.
 	} genoemd.
@@ -8128,12 +8186,12 @@ Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second E
 		De waarde van local is 42
 		Int met waarde 42 wordt verwijderd.
 	\end{coutput}  
-	Blijkbaar is de gcc-compiler zo slim om alle benodigde kopieeracties weg te optimaliseren\footnote{%
+	Blijkbaar is de GCC \Cpp{}\hyp{}compiler zo slim om alle benodigde kopieeracties weg te optimaliseren\footnote{%
 		Ondanks het feit dat we de optie \code{-O0} hebben meegegeven. Volgens de documentatie van gcc\footnotemark{} disabled de optie \code{-O0} de meeste optimalisaties (maar de RVO blijkbaar niet.) 
 	}.
 	\footnotetext{Zie: \url{ https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html}.}
 	
-	De gcc-compiler heeft een optie waarmee de RVO uitgezet kan worden.
+	De GCC \Cpp{}\hyp{}compiler heeft een optie waarmee de RVO uitgezet kan worden.
 	Als we deze optie gebruiken\footnote{%
 		\code{g++ -std=c++14 -pedantic-errors -Wall -g3 -O0 -fno-elide-constructors RVO.cpp}
 	}, dan geeft dit programma de volgende uitvoer:
@@ -8192,7 +8250,7 @@ Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second E
 		Tot slot wordt de destructor van |Int| aangeroepen om de variabele |local| (die bij het aanmaken nog |result| heette) te verwijderen.
 	\end{itemize}
 	Als we bovenstaand programma compileren\footnote{%
-		De gebruikte versie van de TI-compiler is 18.12.4.
+		De gebruikte versie van de TI \Cpp{}\hyp{}compiler is 18.12.4.
 	} en uitvoeren op een CC3220 Launchpad met de compiler optimalisatie op \squote{off}, dan geeft het de volgende uitvoer:
 	\begin{coutput}
 		[Cortex_M4_0] Int met waarde 42 wordt aangemaakt.

@@ -1,14 +1,14 @@
 #ifndef _ni323_
 #define _ni323_
-#include "adccard.h"
+#include "Adccard.h"
 
 class NI323: public ADCCard {
 public:
     NI323();
-    virtual void select_channel(int channel);
-    virtual void set_amplifier(double factor);
+    void select_channel(int channel) override;
+    void set_amplifier(double factor) override;
 private:
-    virtual int sample() const;
+    int sample() const override;
 };
 
 #endif

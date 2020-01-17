@@ -19,7 +19,7 @@ public:
     void f(int i) const { // f is overloaded!
         cout << "Derived::f(int) called.\n";
     }
-    virtual void g(int i) const { // g is overridden
+    void g(int i) const override { // g is overridden
         cout << "Derived::g(int) called.\n";
     }
 // ...

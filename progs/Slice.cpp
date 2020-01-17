@@ -26,10 +26,10 @@ class Docent: public Mens {
 public:
     Docent(const string& n, unsigned short s): Mens{n}, sal{s} {
     }
-    virtual string soort() const {
+    string soort() const override {
         return "docent";
     }
-    virtual unsigned int salaris() const {
+    unsigned int salaris() const override {
         return sal;
     }
     virtual void verhoog_salaris_met(unsigned short v) {

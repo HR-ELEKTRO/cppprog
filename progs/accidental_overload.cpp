@@ -13,29 +13,37 @@ public:
 
 class Derived: public Base {
 public:
-    void f(int i) const override {
+    void f(int i) const {
         cout << "Derived::f(int) called.\n";
     }
-    virtual void g(int i) override {
+    void g(int i) {
         cout << "Derived::g(int) called.\n";
     }
 };
 
 /* 
 In de bovenstaande afgeleide class is het de bedoeling om zowel f als g te overridden.
-Beide functies worden echter NIET overridden.
+Beide functies worden echter NIET overridden maar overloaded.
 f wordt niet overridden omdat f in de base class niet virtual is gedeclareerd.
 g wordt niet overridden omdat g in de base class const is en in de derived class niet.
-Door expliciet aan te geven dat we f en g willen overridden geeft de compiler een foutmelding.
 
-De GCC C++ compiler geeft de volgende foutmeldingen:
-'void Derived::f(int) const' marked override, but does not override
-'virtual void Derived::g(int)' marked override, but does not override
+De programmeur, die denkt zowel f als g overridden te hebben, verwachtte de volgende uitvoer:
+
+Derived::f(int) called.
+Derived::g(int) called.
+
+De werkelijke uitvoer is echter:
+
+Base::f(int) called.
+Base::g(int) called.
+
+Zie explicit_override.cpp hoe je kunt voorkomen dat functies "per ongeluk" overloaded worden. 
 */
 
 int main() {
     Derived d;
-    Base* pb{&d};
+    Base* pb {&d};
     pb->f(3);
     pb->g(3);
+    // ...
 }

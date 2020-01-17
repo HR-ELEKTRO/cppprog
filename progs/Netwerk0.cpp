@@ -5,7 +5,7 @@
 
 using namespace std;
 // define PI (which is not included in std C++)
-const double PI = atan(1.0) * 4;
+constexpr double PI = atan(1.0) * 4;
 
 /*
 Uitgangspunten:
@@ -43,10 +43,10 @@ class R: public Component { // R = Weerstand
 public:
     R(double r): r{r} {
     }
-    virtual complex<double> Z(double) const {
+    complex<double> Z(double) const override {
         return r;
     }
-    virtual void print(ostream& o) const {
+    void print(ostream& o) const override {
         o << "R(" << r << ")";
     }
 private:
@@ -57,10 +57,10 @@ class L: public Component { // L = Spoel
 public:
     L(double l): l{l} {
     }
-    virtual complex<double> Z(double f) const {
+    complex<double> Z(double f) const override {
         return complex<double>(0, 2 * PI * f * l);
     }
-    virtual void print(ostream& o) const {
+    void print(ostream& o) const override {
         o << "L(" << l << ")";
     }
 private:
@@ -71,10 +71,10 @@ class C: public Component { // C = Condensator
 public:
     C(double c): c{c} {
     }
-    virtual complex<double> Z(double f) const {
+    complex<double> Z(double f) const override {
         return complex<double>(0, -1 / (2 * PI * f * c));
     }
-    virtual void print(ostream& o) const {
+    void print(ostream& o) const override {
         o << "C(" << c << ")";
     }
 private:
@@ -90,13 +90,11 @@ void print_impedance_table(const Component& c) {
 }
 
 int main() {
-    R r{1E2};
+    R r {1E2};
     print_impedance_table(r);
-    cin.get();
-    C c{1E-5};
+    C c {1E-5};
     print_impedance_table(c);
-    cin.get();
-    L l{1E-3};
+    L l {1E-3};
     print_impedance_table(l);
 }
 

@@ -27,7 +27,7 @@ template<typename T> const T& Dozijn<T>::lees_uit(int index) const {
 
 template<typename T> ostream& operator<<(ostream& o, const Dozijn<T>& d) {
     o << d.lees_uit(0);
-    for (int i = 1; i < 12; ++i)
+    for (int i {1}; i < 12; ++i)
         o << ", " << d.lees_uit(i);
     return o;
 }

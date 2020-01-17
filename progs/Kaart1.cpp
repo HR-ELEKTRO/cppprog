@@ -90,15 +90,15 @@ double ADCCard::read() const {
 
 int main() {
     // druk alle doubles af met 2 cijfers na de decimale punt
-    cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
+    cout.setf(ios_base::fixed, ios_base::floatfield);
     cout.precision(2);
 
-    ADCCard k1{AD178};
+    ADCCard k1 {AD178};
     k1.set_amplifier(10);
     k1.select_channel(3);
     cout << "Kanaal " << k1.get_channel() << " van kaart k1 = " << k1.read() << " V.\n";
 
-    ADCCard k2{NI323};
+    ADCCard k2 {NI323};
     k2.set_amplifier(5);
     k2.select_channel(4);
     cout << "Kanaal " << k2.get_channel() << " van kaart k2 = " << k2.read() << " V.\n";

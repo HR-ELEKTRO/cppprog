@@ -29,7 +29,7 @@ public:
     Sint_bernard(): vat{new Whiskey_vat} {
         vat->maak_vol();
     }
-    virtual ~Sint_bernard() {
+    ~Sint_bernard() override {
         vat->maak_leeg();
         delete vat;
     }
@@ -41,9 +41,7 @@ private:
 };
 
 int main() {
-    Hond* boris{new Sint_bernard};
+    Hond* boris {new Sint_bernard};
     boris->blaf();
     delete boris;
 }
-
-

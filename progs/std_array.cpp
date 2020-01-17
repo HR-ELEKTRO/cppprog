@@ -6,7 +6,7 @@ int main() {
     // definieer array van 15 integers
     array<int, 15> a;
     // vul met kwadraten
-    int i = 0;
+    int i {0};
     for (auto& e: a) {
         e = i * i;
         ++i;
@@ -18,14 +18,14 @@ int main() {
     cout << '\n';
 
     // kopiëren van de een array
-    auto b{a};
+    auto b {a};
     for (auto e: b) {
         cout << e << " ";
     }
     cout << '\n';
     // vergelijken van array's
     if (a != b)
-        cout << "DIT KAN NIET!\n";
+        cout << "Dit kan niet waar zijn!\n";
 
     a[100] = 12;
     // ongeldige index ==> crash (als je geluk hebt!)

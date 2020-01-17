@@ -16,7 +16,7 @@ int main() {
     cout << '\n';
 
     // kopiëren van een vector
-    auto w = v;
+    auto w {v};
     for (auto e: w) {
         cout << e << " ";
     }

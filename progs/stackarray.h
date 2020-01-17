@@ -8,12 +8,12 @@
 template <typename T> class Stack_with_array: public Stack<T> {
 public:
     explicit Stack_with_array(size_t size);
-    ~Stack_with_array();
-    virtual void push(const T& t) override;
-    virtual void pop() override;
-    virtual const T& top() const override;
-    virtual bool empty() const override;
-    virtual bool full() const override;
+    ~Stack_with_array() override;
+    void push(const T& t) override;
+    void pop() override;
+    const T& top() const override;
+    bool empty() const override;
+    bool full() const override;
 private:
     T* a;     // pointer naar de array
     size_t s; // size van a (max aantal elementen op de stack)

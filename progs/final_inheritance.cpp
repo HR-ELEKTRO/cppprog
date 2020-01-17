@@ -8,7 +8,7 @@ public:
 
 class DVD final: public Uitleenbaar_item {
 public:
-    virtual string id() const {
+    string id() const override {
         string s;
         // ...
         return s;

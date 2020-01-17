@@ -14,7 +14,7 @@ public:
 
 class Sint_bernard: public Hond {
 public:
-    virtual void blaf() const {
+    void blaf() const override {
         cout << "Woef!\n";
     }
 //  ...

@@ -15,8 +15,8 @@ private:
 class Tekkel: public Hond {
 public:
     Tekkel(const string& n);
-    virtual ~Tekkel();
-    virtual void blaf() const override;
+    ~Tekkel() override;
+    void blaf() const override;
 };
 
 class Whiskey_vat {
@@ -49,8 +49,8 @@ bool Whiskey_vat::geef_borrel() {
 class Sint_bernard: public Hond {
 public:
     Sint_bernard(const string& n, int b);
-    virtual ~Sint_bernard();
-    virtual void blaf() const override;
+    ~Sint_bernard() override;
+    void blaf() const override;
     void help();
 private:
     Whiskey_vat vat;

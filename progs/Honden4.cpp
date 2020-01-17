@@ -15,11 +15,10 @@ private:
 class Tekkel: public Hond {
 public:
     Tekkel(const string& n);
-    virtual ~Tekkel();
-    virtual void blaft() const; // OOPS foutje
-//  Beter alternatief:
-//  virtual void blaft() const override ; // foutje wordt nu door de compiler gemeld:
-//  Error: 'virtual void Tekkel::blaft() const' marked override, but does not override
+    ~Tekkel() override;
+    void blaft() const override; // OOPS foutje
+//  foutje wordt door de compiler gemeld:
+//  Error: 'void Tekkel::blaft() const' marked override, but does not override
 };
 
 Hond::Hond(const string& n): naam{n} {

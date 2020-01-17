@@ -1,16 +1,15 @@
 #ifndef _bb674_
 #define _bb674_
 
-#include "adccard.h"
+#include "Adccard.h"
 
-class BB647: public Adccard {
+class BB647: public ADCCard {
 public:
     BB647();
-    virtual void select_channel(int channel);
-    virtual void set_amplifier(double factor);
+    void select_channel(int channel) override;
+    void set_amplifier(double factor) override;
 private:
-    virtual int sample() const;
+    int sample() const override;
 };
 
 #endif
-

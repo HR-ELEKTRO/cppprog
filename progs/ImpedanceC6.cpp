@@ -14,7 +14,7 @@ public:
 
 class Frequency_error: public Impedance_error {
 public:
-    virtual string get_error_message() const;
+    string get_error_message() const override;
 };
 
 string Frequency_error::get_error_message() const {
@@ -23,7 +23,7 @@ string Frequency_error::get_error_message() const {
 
 class Capacity_error: public Impedance_error {
 public:
-    virtual string get_error_message() const;
+    string get_error_message() const override;
 };
 
 string Capacity_error::get_error_message() const {

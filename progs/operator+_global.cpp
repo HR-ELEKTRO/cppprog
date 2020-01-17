@@ -1,8 +1,9 @@
 // Oplossing voor probleem met memberfunctie operator+
 // In plaats van 1 member operator+ en 1 globale operator+ kan er ook 
-// alleen een globale operator+ gebruikt worden. Zie breuk3.cpp
+// alleen een globale operator+ gebruikt worden. Zie Breuk3.cpp
 
 #include <iostream>
+#include <numeric>
 #include <cassert>
 using namespace std;
 
@@ -32,19 +33,6 @@ const Breuk operator-(int left, const Breuk& right);
 // ...
 // Er zijn nog veel uitbreidingen mogelijk
 // ...
-
-// Hulpfunctie: bepaald de grootste gemene deler.
-
-int ggd(int n, int m) {
-    if (n == 0) return m;
-    if (m == 0) return n;
-    if (n < 0) n = -n;
-    if (m < 0) m = -m;
-    while (m != n)
-        if (n > m) n -= m;
-        else m -= n;
-    return n;
-}
 
 // UDT-definitie:
 
@@ -79,7 +67,7 @@ Breuk& Breuk::operator-=(const Breuk& right) {
 }
 
 const Breuk Breuk::operator-(const Breuk& right) const {
-    Breuk copy_left{*this};
+    Breuk copy_left {*this};
     copy_left -= right;
     return copy_left;
 }
@@ -90,11 +78,10 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d{ggd(boven, onder)};
+    int d {gcd(boven < 0 ? -boven : boven, onder)};
     boven /= d;
     onder /= d;
 }
-
 
 ostream& operator<<(ostream& left, const Breuk& right) {
     return left << right.boven << '/' << right.onder;
@@ -107,7 +94,7 @@ const Breuk operator+(int left, const Breuk& right) {
 
 const Breuk operator-(int left, const Breuk& right) {
     // aftrekken is niet commutatief!
-    Breuk copy_left{left};
+    Breuk copy_left {left};
     copy_left -= right;
     return copy_left;
 }
@@ -115,7 +102,7 @@ const Breuk operator-(int left, const Breuk& right) {
 // Hoofdprogramma:
 
 int main() {
-    Breuk b1{2, 3}, b2{4, 5}, b3;
+    Breuk b1 {2, 3}, b2 {4, 5}, b3;
     b3 = b1 + b2;
     cout << b1 << " + " << b2 << " = " << b3 << '\n';
     cout << b1 << " - " << b2 << " = " << b1 - b2 << '\n';
@@ -124,7 +111,7 @@ int main() {
     b3 = b1 + 5;
     cout << b1 << " + 5 = " << b3 << '\n';
 //  Ja, de int wordt omgezet in een Breuk met de constructor Breuk::Breuk(int t)
-//  b3 = b1 + Breuk(5);
+//  b3 = b1 + Breuk {5};
 
 //  kun je van een Breuk een int aftrekken?
     cout << b1 << " - 5 = " << b1 - 5 << '\n';

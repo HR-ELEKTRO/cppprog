@@ -53,10 +53,10 @@ class R: public Component { // R = Weerstand
 public:
     R(double r): r{r} {
     }
-    virtual complex<double> Z(double) const {
+    complex<double> Z(double) const override {
         return r;
     }
-    virtual void print(ostream& o) const {
+    void print(ostream& o) const override {
         o << "R(" << r << ")";
     }
 private:
@@ -67,10 +67,10 @@ class L: public Component { // L = Spoel
 public:
     L(double l): l{l} {
     }
-    virtual complex<double> Z(double f) const {
+    complex<double> Z(double f) const override {
         return complex<double>(0, 2 * PI * f * l);
     }
-    virtual void print(ostream& o) const {
+    void print(ostream& o) const override {
         o << "L(" << l << ")";
     }
 private:
@@ -81,14 +81,14 @@ class C: public Component { // C = Condensator
 public:
     C(double c): c{c} {
     }
-    virtual complex<double> Z(double f) const {
+    complex<double> Z(double f) const override {
         if (c == 0.0)
             throw domain_error("Capacity == 0");
         if (f == 0.0)
             throw domain_error("Frequency == 0");
         return complex<double>(0, -1 / (2 * PI * f * c));
     }
-    virtual void print(ostream& o) const {
+    void print(ostream& o) const override {
         o << "C(" << c << ")";
     }
 private:
@@ -99,10 +99,10 @@ class S: public Component { // S = Serie schakeling van twee componenten
 public:
     S(const Component& c1, const Component& c2): c1{c1}, c2{c2} {
     }
-    virtual complex<double> Z(double f) const {
+    complex<double> Z(double f) const override {
         return c1.Z(f) + c2.Z(f);
     }
-    virtual void print(ostream& o) const {
+    void print(ostream& o) const override {
         o << "(" << c1 << "+" << c2 << ")";
     }
 private:
@@ -114,12 +114,12 @@ class P: public Component { // P = Parallel schakeling van twee componenten
 public:
     P(const Component& c1, const Component& c2): c1{c1}, c2{c2} {
     }
-    virtual complex<double> Z(double f) const {
+    complex<double> Z(double f) const override {
         if (c1.Z(f) + c2.Z(f) == complex<double>(0, 0))
             throw domain_error("Impedance of parallel circuit can not be calculated (due to divide by zero)");
         return (c1.Z(f) * c2.Z(f)) / (c1.Z(f) + c2.Z(f));
     }
-    virtual void print(ostream& o) const {
+    void print(ostream& o) const override {
         o << "(" << c1 << "//" << c2 << ")";
     }
 private:

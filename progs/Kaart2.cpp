@@ -24,19 +24,19 @@ private:
 class AD178: public ADCCard {
 public:
     AD178();
-    virtual void select_channel(int channel);
-    virtual void set_amplifier(double factor);
+    void select_channel(int channel) override;
+    void set_amplifier(double factor) override;
 private:
-    virtual int sample() const;
+    int sample() const override;
 };
 
 class NI323: public ADCCard {
 public:
     NI323();
-    virtual void select_channel(int channel);
-    virtual void set_amplifier(double factor);
+    void select_channel(int channel) override;
+    void set_amplifier(double factor) override;
 private:
-    virtual int sample() const;
+    int sample() const override;
 };
 
 ADCCard::ADCCard(): amplifying_factor{1.0}, selected_channel{1} {
@@ -94,10 +94,10 @@ int NI323::sample() const {
     return -0x8000; // -5 * amplifying_factor V
 }
 
-void do_it(ADCCard& selected_channel) {
-    selected_channel.set_amplifier(10);
-    selected_channel.select_channel(3);
-    cout << "Kanaal " << selected_channel.get_channel() << " = " << selected_channel.read() << " V.\n";
+void do_measurement(ADCCard& card, double factor, int channel) {
+    card.set_amplifier(factor);
+    card.select_channel(channel);
+    cout << "Kanaal " << card.get_channel() << " = " << card.read() << " V.\n";
 }
 
 int main() {
@@ -106,7 +106,7 @@ int main() {
     cout.precision(2);
     
     AD178 card1;
-    do_it(card1);
+    do_measurement(card1, 10, 3);
     NI323 card2;
-    do_it(card2);
+    do_measurement(card2, 5, 4);
 }

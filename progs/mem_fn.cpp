@@ -12,14 +12,14 @@ public:
 
 class Tekkel: public Hond {
 public:
-    virtual void blaf() const override {
+    void blaf() const override {
         cout << "Kef kef ";
     }
 };
 
 class St_bernard: public Hond {
 public:
-    virtual void blaf() const override {
+    void blaf() const override {
         cout << "Woef woef ";
     }
 };

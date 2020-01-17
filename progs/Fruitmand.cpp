@@ -13,7 +13,7 @@ public:
 
 class Appel: public Fruit {
 public:
-    virtual string soort() const {
+    string soort() const override {
         return "Appel";
     }
 // ...
@@ -21,7 +21,7 @@ public:
 
 class Peer: public Fruit {
 public:
-    virtual string soort() const {
+    string soort() const override {
         return "Peer";
     }
 // ...
@@ -49,7 +49,6 @@ int main() {
     m.voeg_toe(p1);
     m.voeg_toe(a2);
     m.print_inhoud();
-//  ...
 }
 
 /* Uitvoer:

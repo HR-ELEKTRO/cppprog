@@ -2,7 +2,7 @@
 #include <iomanip>
 using namespace std;
 
-#include "adccard.h"
+#include "Adccard.h"
 
 ADCCard::ADCCard(): amplifying_factor(1.0), selected_channel(1) {
     // voor alle kaarten benodigde code

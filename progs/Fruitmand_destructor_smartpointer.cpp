@@ -17,10 +17,10 @@ public:
 
 class Appel: public Fruit {
 public:
-    virtual ~Appel() {
+    ~Appel() override {
         cout << "Er is een Appel verwijderd.\n";
     }
-    virtual string soort() const {
+    string soort() const override {
         return "Appel";
     }
 // ...
@@ -28,10 +28,10 @@ public:
 
 class Peer: public Fruit {
 public:
-    virtual ~Peer() {
+    ~Peer() override {
         cout << "Er is een Peer verwijderd.\n";
     }
-    virtual string soort() const {
+    string soort() const override {
         return "Peer";
     }
 // ...
@@ -73,7 +73,7 @@ Er is een Appel verwijderd.
 Er is een stuk Fruit verwijderd.
 */
 
-// Als we de constructor in de class Fruit *NIET* virtual maken:
+// Als we de destructor in de class Fruit *NIET* virtual maken:
 /* Uitvoer:
 De fruitmand bevat:
 Appel

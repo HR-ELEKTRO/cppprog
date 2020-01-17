@@ -12,14 +12,14 @@ Hond::~Hond() {
 
 class Tekkel: public Hond {
 public:
-    virtual void blaf() {
+    void blaf() override {
         cout << "Kef kef\n";
     }
 };
 
 class Sint_bernard: public Hond {
 public:
-    virtual void blaf() {
+    void blaf() override {
         cout << "Woef woef\n";
     }
 };

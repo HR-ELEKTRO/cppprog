@@ -16,8 +16,8 @@ private:
 class Tekkel: public Hond {
 public:
     Tekkel(const string& n);
-    virtual ~Tekkel();
-    virtual void blaf() const override;
+    ~Tekkel() override;
+    void blaf() const override;
 };
 
 class Whiskey_vat {
@@ -52,9 +52,9 @@ public:
     Sint_bernard(const string& n); /* aanmaken van een Sint_bernard zonder Whiskey_vat */
     Sint_bernard(const string& n, int b); /* aanmaken van een Sint_bernard met Whiskey_vat gevuld met b borrels*/
     Sint_bernard(const Sint_bernard& s);
-    virtual ~Sint_bernard();
+    ~Sint_bernard() override;
     Sint_bernard& operator=(const Sint_bernard& r);
-    virtual void blaf() const override;
+    void blaf() const override;
     void help();
 private:
     Whiskey_vat* vat_ptr;

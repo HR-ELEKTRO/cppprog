@@ -85,7 +85,7 @@ double read_card(const ADCCard& card) {
 
 int main() {
     // druk alle doubles af met 2 cijfers na de decimale punt
-    cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
+    cout.setf(ios_base::fixed, ios_base::floatfield);
     cout.precision(2);
     
     ADCCard c1;

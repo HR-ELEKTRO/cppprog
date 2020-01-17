@@ -18,7 +18,7 @@ private:
 
 class Appel: public Fruit {
 private:
-    virtual string soort() const {
+    string soort() const override {
         return "Appel";
     }
 //  ...
@@ -26,7 +26,7 @@ private:
 
 class Peer: public Fruit {
 private:
-    virtual string soort() const {
+    string soort() const override {
         return "Peer";
     }
 //  ...

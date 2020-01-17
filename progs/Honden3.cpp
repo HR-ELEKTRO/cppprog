@@ -15,8 +15,8 @@ private:
 class Tekkel: public Hond {
 public:
     Tekkel(const string& n);
-    virtual ~Tekkel();
-    virtual void blaf() const;
+    ~Tekkel() override;
+    void blaf() const override;
 };
 
 Hond::Hond(const string& n): naam{n} {

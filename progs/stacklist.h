@@ -12,12 +12,12 @@
 template <typename T> class Stack_with_list: public Stack<T> {
 public:
     Stack_with_list();
-    virtual ~Stack_with_list() throw();
-    virtual void push(const T& t) override;
-    virtual void pop() override;
-    virtual const T& top() const override;
-    virtual bool empty() const override;
-    virtual bool full() const override;
+    ~Stack_with_list() throw() override;
+    void push(const T& t) override;
+    void pop() override;
+    const T& top() const override;
+    bool empty() const override;
+    bool full() const override;
 private:
     class Node {
     public:

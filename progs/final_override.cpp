@@ -8,7 +8,7 @@ public:
 
 class DVD: public Uitleenbaar_item {
 public:
-    virtual string id() const {
+    string id() const override {
         return barcode;
     }
 private:
@@ -17,7 +17,7 @@ private:
 
 class Boek: public Uitleenbaar_item {
 public:
-    virtual string id() const final {
+    string id() const final {
         return ISBN;
     }
 private:
@@ -25,7 +25,7 @@ private:
 };
 
 class Reisgids: public Boek {
-    virtual string id() const {
+    string id() const override {
         return bestemming;
     }
 private:
@@ -37,7 +37,7 @@ In de bovenstaande derived class Reisgids is het niet toegestaan
 om de functie id() te overridden omdat deze functie in de base
 class Boek als final gemarkeerd is.
 
-De GCC C++ compiler geeft de volgende foutmeldingen:
+De GCC C++ compiler geeft de volgende foutmelding:
  virtual function ‘virtual std::string Reisgids::id() const’ overriding final function
 */
 

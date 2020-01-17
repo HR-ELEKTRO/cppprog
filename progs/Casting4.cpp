@@ -15,7 +15,7 @@ class Sint_bernard: public Hond {
 public:
     Sint_bernard(int w = 10): whisky{w} {
     }
-    virtual void blaf() const {
+    void blaf() const override {
         cout << "Woef!\n";
     }
     int geef_drank() {

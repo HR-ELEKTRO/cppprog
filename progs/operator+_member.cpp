@@ -2,6 +2,7 @@
 // Zie operator+Global voor een oplossing voor dit probleem
 
 #include <iostream>
+#include <numeric>
 #include <cassert>
 using namespace std;
 
@@ -24,19 +25,6 @@ private:
 friend ostream& operator<<(ostream& out, const Breuk& b);
 };
 
-// Hulpfunctie: bepaald de grootste gemene deler.
-
-int ggd(int n, int m) {
-    if (n == 0) return m;
-    if (m == 0) return n;
-    if (n < 0) n = -n;
-    if (m < 0) m = -m;
-    while (m != n)
-        if (n > m) n -= m;
-        else m -= n;
-    return n;
-}
-
 // UDT-definitie:
 
 Breuk::Breuk(): boven{0}, onder{1} {
@@ -57,14 +45,14 @@ Breuk& Breuk::operator+=(const Breuk& right) {
 }
 
 const Breuk Breuk::operator+(const Breuk& right) const {
-    Breuk copy_left{*this}; // maak een kopietje van de receiver
+    Breuk copy_left {*this}; // maak een kopietje van de receiver
     copy_left += right;     // tel daar het object right bij op
     return copy_left;       // geef deze waarde terug
 }
 
 /* verkorte notatie:
 const Breuk Breuk::operator+(const Breuk& right) const {
-    return copy_left(*this) += right;
+    return copy_left {*this} += right;
 }
 */
 
@@ -74,7 +62,7 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d{ggd(boven, onder)};
+    int d {gcd(boven < 0 ? -boven : boven, onder)};
     boven /= d;
     onder /= d;
 }
@@ -87,7 +75,7 @@ ostream& operator<<(ostream& left, const Breuk& right) {
 // Hoofdprogramma:
 
 int main() {
-    Breuk b1{2, 3}, b2{4, 5}, b3;
+    Breuk b1 {2, 3}, b2 {4, 5}, b3;
     b3 = b1 + b2;
     cout << b1 << " + " << b2 << " = " << b3 << '\n';
 
@@ -102,5 +90,5 @@ int main() {
 //  cout << "5 + " << b2 << " = " << b3 << '\n';
 //  Nee
 //  Error: no match for ‘operator+’ (operand types are ‘int’ and ‘Breuk’)
-//  Zie operator+Global voor een oplossing voor dit probleem
+//  Zie operator+_global voor een oplossing voor dit probleem
 }

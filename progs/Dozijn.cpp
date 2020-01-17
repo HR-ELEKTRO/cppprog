@@ -26,7 +26,7 @@ int Dozijn::lees_uit(int index) const {
 
 ostream& operator<<(ostream& o, const Dozijn& d) {
     o << d.lees_uit(0);
-    for (int i = 1; i < 12; ++i)
+    for (int i {1}; i < 12; ++i)
         o << ", " << d.lees_uit(i);
     return o;
 }
