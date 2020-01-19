@@ -7,34 +7,34 @@ using namespace std;
 
 class Array {
 public:
-    explicit Array(int s);
+    using size_type = size_t;
+    explicit Array(size_type s);
     Array(const Array& r);
     Array& operator=(const Array& r);
     ~Array();
-    int& operator[](int index);
-    const int& operator[](int index) const;
-    int length() const;
+    int& operator[](size_type index);
+    const int& operator[](size_type index) const;
+    size_type length() const;
     bool operator==(const Array& r) const;
     bool operator!=(const Array& r) const;
 private:
-    int size;
+    size_type size;
     int* data;
-
 friend ostream& operator<<(ostream& o, const Array& a);
 };
 
-Array::Array(int s): size{s}, data{new int[s]} {
+Array::Array(size_type s): size{s}, data{new int[s]} {
 }
 
 Array::Array(const Array& r): size{r.size}, data{new int[r.size]} {
-{0}    for (int i {0}; i < size; ++i)
+    for (size_type i {0}; i < size; ++i)
         data[i] = r.data[i];
 }
 
 Array& Array::operator=(const Array& r) {
-    Array t{r};
-    std::swap(data, t.data);
-    std::swap(size, t.size);
+    Array t {r};
+    swap(data, t.data);
+    swap(size, t.size);
     return *this;
 }
 
@@ -42,24 +42,24 @@ Array::~Array() {
     delete[] data;
 }
 
-int& Array::operator[](int index) {
-    assert(index >= 0 && index < size);
+int& Array::operator[](size_type index) {
+    assert(index < size);
     return data[index];
 }
 
-const int& Array::operator[](int index) const {
-    assert(index >= 0 && index < size);
+const int& Array::operator[](size_type index) const {
+    assert(index < size);
     return data[index];
 }
 
-int Array::length() const {
+Array::size_type Array::length() const {
     return size;
 }
 
 bool Array::operator==(const Array& r) const {
     if (size != r.size)
         return false;
-    for (int i {0}; i < size; ++i)
+    for (size_type i {0}; i < size; ++i)
         if (data[i] != r.data[i])
             return false;
     return true;
@@ -70,7 +70,7 @@ bool Array::operator!=(const Array& r) const {
 }
 
 ostream& operator<<(ostream& o, const Array& a) {
-    for (int i {0}; i < a.size; ++i) {
+    for (Array::size_type i {0}; i < a.size; ++i) {
         o << a.data[i];
         if (i != a.size - 1)
             o << ',';
@@ -80,38 +80,34 @@ ostream& operator<<(ostream& o, const Array& a) {
 
 int main() {
     cout << "Hoeveel elementen moet de Array bevatten? ";
-    int i; 
+    Array::size_type i; 
     cin >> i;
-    if (i > 0) {
-        Array a{i};
-        cout << "a = " << a << '\n';
-        for (int j {0}; j < a.length(); ++j)
-            a[j] = j * j; // vul a met kwadraten
-        cout << "a = " << a << '\n';
-        Array b{a};
-        cout << "b = " << b << '\n';
-        cout << "a[12] = " << a[12] << '\n';
-        cout << "b[12] = " << b[12] << '\n';
-        a[0] = 4; 
-        cout << "a[0] = " << a[0] << '\n';
-        cout << "a = " << a << '\n';
-        cout << "b = " << b << '\n';
+    Array a {i};
+    cout << "a = " << a << '\n';
+    for (Array::size_type j {0}; j < a.length(); ++j)
+        a[j] = j * j; // vul a met kwadraten
+    cout << "a = " << a << '\n';
+    Array b {a};
+    cout << "b = " << b << '\n';
+    cout << "a[12] = " << a[12] << '\n';
+    cout << "b[12] = " << b[12] << '\n';
+    a[0] = 4; 
+    cout << "a[0] = " << a[0] << '\n';
+    cout << "a = " << a << '\n';
+    cout << "b = " << b << '\n';
 
-        if (a == b)
-            cout << "a is nu gelijk aan b.\n";
-        else 
-            cout << "a is nu ongelijk aan b.\n";
+    if (a == b)
+        cout << "a is nu gelijk aan b.\n";
+    else 
+        cout << "a is nu ongelijk aan b.\n";
 
-        b = a;
-        cout << "b = a is uitgevoerd.\n";
-        cout << "a = " << a << '\n';
-        cout << "b = " << b << '\n';
+    b = a;
+    cout << "b = a is uitgevoerd.\n";
+    cout << "a = " << a << '\n';
+    cout << "b = " << b << '\n';
 
-        if (a != b) 
-            cout << "a is nu ongelijk aan b.\n";
-        else 
-            cout << "a is nu gelijk aan b.\n";
-    }
-    else
-        cout << "Doe niet zo negatief!\n";
+    if (a != b) 
+        cout << "a is nu ongelijk aan b.\n";
+    else 
+        cout << "a is nu gelijk aan b.\n";
 }

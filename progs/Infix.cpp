@@ -10,8 +10,8 @@ bool has_lower_prio(char op1, char op2) {
 }
 
 void process_operator(Stack_with_list<char>& s1, Stack_with_list<int>& s2) {
-    int op2 = s2.top(); s2.pop();
-    int op1 = s2.top(); s2.pop();
+    int op2 {s2.top()}; s2.pop();
+    int op1 {s2.top()}; s2.pop();
     switch (s1.top()) {
         case '*': s2.push(op1 * op2); break;
         case '+': s2.push(op1 + op2); break;

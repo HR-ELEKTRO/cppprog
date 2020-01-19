@@ -131,25 +131,25 @@ void Color::set_value(int v) {
 
 }
 int main() {
-    {
-        using namespace Manier1;
-        Color c{Color::YELLOW};
-        cout << "c = " << c << '\n';
-        c.set_value(Color::BLUE);
-        cout << "c = " << c << '\n';
-    }
-    {
-        using namespace Manier2;
-        Color c{Color::YELLOW};
-        cout << "c = " << c << '\n';
-        c.set_value(Color::BLUE);
-        cout << "c = " << c << '\n';
-    }
-    {
-        using namespace Manier3;
-        Color c{Color::YELLOW};
-        cout << "c = " << c << '\n';
-        c.set_value(Color::BLUE);
-        cout << "c = " << c << '\n';
-    }
+{
+    using namespace Manier1;
+    Color c {Color::YELLOW};
+    cout << "c = " << c << '\n';
+    c.set_value(Color::BLUE);
+    cout << "c = " << c << '\n';
+}
+{
+    using namespace Manier2;
+    Color c {Color::YELLOW};
+    cout << "c = " << c << '\n';
+    c.set_value(Color::BLUE);
+    cout << "c = " << c << '\n';
+}
+{
+    using namespace Manier3;
+    Color c {Color::YELLOW};
+    cout << "c = " << c << '\n';
+    c.set_value(Color::BLUE);
+    cout << "c = " << c << '\n';
+}
 }

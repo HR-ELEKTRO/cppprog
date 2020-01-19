@@ -4,7 +4,7 @@
 
 using namespace std;
 // define PI (which is not included in std C++)
-constexpr double PI = atan(1.0) * 4;
+constexpr double PI {atan(1.0) * 4};
 
 complex<double> impedance_C(double c, double f) {
     return complex<double>{0, -1 / (2 * PI * f * c)};
@@ -18,6 +18,6 @@ int main() {
 
 /* Uitvoer:
 (0,-159.155)
-(0,-1.#INF)
+(0,-inf)
 The END.
 */

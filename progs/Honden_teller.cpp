@@ -32,10 +32,10 @@ void Hond::blaf() const {
 int main() {
     cout << "Er zijn nu " << Hond::aantal() << " honden.\n";
     {
-        Hond h1{"Boris"};
+        Hond h1 {"Boris"};
         h1.blaf();
         cout << "Er zijn nu " << Hond::aantal() << " honden.\n";
-        Hond h2{"Fikkie"};
+        Hond h2 {"Fikkie"};
         h2.blaf();
         cout << "Er zijn nu " << Hond::aantal() << " honden.\n";
     }

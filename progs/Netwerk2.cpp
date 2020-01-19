@@ -83,9 +83,9 @@ public:
     }
     complex<double> Z(double f) const override {
         if (c == 0.0)
-            throw domain_error("Capacity == 0");
+            throw domain_error {"Capacity == 0"};
         if (f == 0.0)
-            throw domain_error("Frequency == 0");
+            throw domain_error {"Frequency == 0"};
         return complex<double>(0, -1 / (2 * PI * f * c));
     }
     void print(ostream& o) const override {
@@ -116,7 +116,7 @@ public:
     }
     complex<double> Z(double f) const override {
         if (c1.Z(f) + c2.Z(f) == complex<double>(0, 0))
-            throw domain_error("Impedance of parallel circuit can not be calculated (due to divide by zero)");
+            throw domain_error {"Impedance of parallel circuit can not be calculated (due to divide by zero)"};
         return (c1.Z(f) * c2.Z(f)) / (c1.Z(f) + c2.Z(f));
     }
     void print(ostream& o) const override {
@@ -137,22 +137,22 @@ void print_impedance_table(const Component& c) {
 
 int main() {
     try {
-        R r1{1E2};
-        C c1{0}; // om te testen!
-        L l1{3E-2};
-        S s1{r1, c1};
-        S s2{r1, l1};
-        P p{s1, s2};
+        R r1 {1E2};
+        C c1 {0}; // om te testen!
+        L l1 {3E-2};
+        S s1 {r1, c1};
+        S s2 {r1, l1};
+        P p {s1, s2};
         print_impedance_table(p);
     } catch (domain_error& e) {
         cout << "Exception: " << e.what() << '\n';
     }
     cout << '\n';
     try {
-        R r1{10};
-        R r2{0};
-        P p1{r1, r1};
-        P p2{r2, r2}; // om te testen!
+        R r1 {10};
+        R r2 {0};
+        P p1 {r1, r1};
+        P p2 {r2, r2}; // om te testen!
         print_impedance_table(p1);
         print_impedance_table(p2);
     } catch (domain_error& e) {

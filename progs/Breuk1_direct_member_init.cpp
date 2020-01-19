@@ -1,4 +1,5 @@
 #include <iostream>
+#include <numeric>
 #include <cassert>
 using namespace std;
 
@@ -13,21 +14,10 @@ public:
 //  Er zijn nog veel uitbreidingen mogelijk.
 //  ...
 private:
-    int boven{0}; // directe initialisatie
-    int onder{1}; // directe initialisatie
+    int boven {0}; // directe initialisatie
+    int onder {1}; // directe initialisatie
     void normaliseer();
 };
-
-int ggd(int n, int m) {
-    if (n == 0) return m;
-    if (m == 0) return n;
-    if (n < 0) n = -n;
-    if (m < 0) m = -m;
-    while (m != n)
-        if (n > m) n -= m;
-        else m -= n;
-    return n;
-}
 
 Breuk::Breuk() { // geen initialization list 
 }
@@ -53,7 +43,7 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d = ggd(boven, onder);
+    int d {gcd(boven < 0 ? -boven : boven, onder)};
     boven /= d;
     onder /= d;
 }
@@ -61,15 +51,15 @@ void Breuk::normaliseer() {
 int main() {
     Breuk b1;
     cout << "b1 = " << b1.teller() << '/' << b1.noemer() << '\n';
-    Breuk b2{4};
-    cout << "b2{4} = " << b2.teller() << '/' << b2.noemer() << '\n';
-    Breuk b3{23, -5};
-    cout << "b3{23, -5} = " << b3.teller() << '/' << b3.noemer() << '\n';
+    Breuk b2 {4};
+    cout << "b2 {4} = " << b2.teller() << '/' << b2.noemer() << '\n';
+    Breuk b3 {23, -5};
+    cout << "b3 {23, -5} = " << b3.teller() << '/' << b3.noemer() << '\n';
 }
 
 /*
 Uitvoer:
 b1 = 0/1
-b2{4} = 4/1
-b3{23, -5} = -23/5
+b2 {4} = 4/1
+b3 {23, -5} = -23/5
 */

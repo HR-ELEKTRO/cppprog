@@ -41,21 +41,21 @@ private:
 };
 
 int main() {
-    Docent brojz{"Harry", 30000};
+    Docent brojz {"Harry", 30000};
     cout << brojz.soort() << " " << brojz.naam() << " verdient " << brojz.salaris() << '\n';
     brojz.verhoog_salaris_met(10000);
     cout << brojz.soort() << " " << brojz.naam() << " verdient " << brojz.salaris() << '\n';
 
-    Mens m{brojz}; // Waar blijft het salaris?
+    Mens m {brojz}; // Waar blijft het salaris?
     cout << m.soort() << " " << m.naam() << " verdient " << m.salaris() << '\n';
 
-//  Docent versd{m}; 
+//  Docent versd {m}; 
 //  Error: no matching function for call to ‘Docent::Docent(<brace-enclosed initializer list>)
 
-    Mens& mr{brojz};
+    Mens& mr {brojz};
     cout << mr.soort() << " " << mr.naam() << " verdient " << mr.salaris() << '\n';
 
-    Mens* mp{&brojz};
+    Mens* mp {&brojz};
     cout << mp->soort() << " " << mp->naam() << " verdient " << mp->salaris() << '\n';
 }
 

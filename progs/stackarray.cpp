@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    Stack_with_array<char> s{32};
+    Stack_with_array<char> s {32};
     char c;
     cout << "Type een tekst en sluit af met .\n";
     cin.get(c);

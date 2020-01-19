@@ -5,14 +5,14 @@
 
 using namespace std;
 // define PI (which is not included in std C++)
-const double PI = atan(1.0) * 4;
+const double PI {atan(1.0) * 4};
 
 complex<double> impedance_C(double c, double f) throw(domain_error) {
-    //  warning: dynamic exception specifications are deprecated in C++11
+    //  error: ISO C++17 does not allow dynamic exception specifications
     if (c == 0.0)
-        throw domain_error("Capaciteit == 0");
+        throw domain_error {"Capaciteit == 0"};
     if (f == 0.0)
-        throw domain_error("Frequentie == 0");
+        throw domain_error {"Frequentie == 0"};
     return complex<double>{0, -1 / (2 * PI * f * c)};
 }
 

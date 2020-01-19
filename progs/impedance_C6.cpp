@@ -4,7 +4,7 @@
 
 using namespace std;
 // define PI (which is not included in std C++)
-const double PI = atan(1.0) * 4;
+const double PI {atan(1.0) * 4};
 
 class Impedance_error {
 public:
@@ -32,9 +32,9 @@ string Capacity_error::get_error_message() const {
 
 complex<double> impedance_C(double c, double f) {
     if (c == 0.0)
-        throw Capacity_error();
+        throw Capacity_error {};
     if (f == 0.0)
-        throw Frequency_error();
+        throw Frequency_error {};
     return complex<double>{0, -1 / (2 * PI * f * c)};
 }
 

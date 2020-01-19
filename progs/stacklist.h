@@ -12,7 +12,7 @@
 template <typename T> class Stack_with_list: public Stack<T> {
 public:
     Stack_with_list();
-    ~Stack_with_list() throw() override;
+    ~Stack_with_list() override;
     void push(const T& t) override;
     void pop() override;
     const T& top() const override;
@@ -31,7 +31,7 @@ private:
 template <typename T> Stack_with_list<T>::Stack_with_list(): p(0) {
 }
 
-template <typename T> Stack_with_list<T>::~Stack_with_list() throw() {
+template <typename T> Stack_with_list<T>::~Stack_with_list() {
 #ifdef VERBOSE
     std::cerr << "Stack_with_list<T>::~Stack_with_list() called\n"; 
 #endif

@@ -4,7 +4,7 @@
 
 using namespace std;
 // define PI (which is not included in std C++)
-constexpr double PI = atan(1.0) * 4;
+constexpr double PI {atan(1.0) * 4};
 
 bool impedance_C(complex<double>& res, double c, double f) {
     if (c != 0.0 && f != 0.0) {

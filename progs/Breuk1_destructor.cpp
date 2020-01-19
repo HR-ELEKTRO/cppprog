@@ -1,6 +1,7 @@
 // Werken met breuken in C++ ... destructor
 
 #include <iostream>
+#include <numeric>
 #include <cassert>
 using namespace std;
 
@@ -30,19 +31,6 @@ private:
     void normaliseer();
 };
 
-// Hulpfunctie: bepaald de grootste gemene deler.
-
-int ggd(int n, int m) {
-    if (n == 0) return m;
-    if (m == 0) return n;
-    if (n < 0) n = -n;
-    if (m < 0) m = -m;
-    while (m != n)
-        if (n > m) n -= m;
-        else m -= n;
-    return n;
-}
-
 // Classdefinitie:
 // Vertelt hoe de memberfuncties van de class geïmplenteerd zijn.
 // Dit is voor gebruikers van de class niet van belang.
@@ -59,7 +47,6 @@ Breuk::Breuk(int t, int n): boven{t}, onder{n} {
 
 Breuk::~Breuk() {
     cout << "Een breuk met de waarde " << boven << "/" << onder << " is verwijderd uit het geheugen.\n";
-    cout << "Druk op enter om verder te gaan...";
 }
 
 int Breuk::teller() const {
@@ -87,7 +74,7 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d = ggd(boven, onder);
+    int d {gcd(boven < 0 ? -boven : boven, onder)};
     boven /= d;
     onder /= d;
 }
@@ -95,12 +82,12 @@ void Breuk::normaliseer() {
 // Hoofdprogramma:
 
 int main() {
-    Breuk b1{4};
-    cout << "b1{4} = " << b1.teller() << '/' << b1.noemer() << '\n';
-    Breuk b2{23, -5};
-    cout << "b2{23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
-    Breuk b3{b2};
-    cout << "b3{b2} = " << b3.teller() << '/' << b3.noemer() << '\n';
+    Breuk b1 {4};
+    cout << "b1 {4} = " << b1.teller() << '/' << b1.noemer() << '\n';
+    Breuk b2 {23, -5};
+    cout << "b2 {23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
+    Breuk b3 {b2};
+    cout << "b3 {b2} = " << b3.teller() << '/' << b3.noemer() << '\n';
     b3.abs();
     cout << "b3.abs() = " << b3.teller() << '/' << b3.noemer() << '\n';
     b3 = b2;
@@ -110,9 +97,9 @@ int main() {
 }
 
 /* Output:
-b1{4} = 4/1
-b2{23, -5} = -23/5
-b3{b2} = -23/5
+b1 {4} = 4/1
+b2 {23, -5} = -23/5
+b3 {b2} = -23/5
 b3.abs() = 23/5
 b3 = b2 = -23/5
 Een breuk met de waarde 5/1 is verwijderd uit het geheugen.

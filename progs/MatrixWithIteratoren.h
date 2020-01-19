@@ -14,7 +14,7 @@ private:
 public:
     matrix() = default;
     matrix(const initializer_list<Object>& init) {
-        if (init.size() > a.size()) throw std::out_of_range("To much elements in initializer list for class matrix.");
+        if (init.size() > a.size()) throw std::out_of_range {"To much elements in initializer list for class matrix."};
         std::copy(init.begin(), init.end(), a.begin());
     }
     matrix(const Array_type& init) {
@@ -65,27 +65,27 @@ public:
     }
     
     iterator rowbegin(size_t r) {
-        if (r >= Num_rows) throw std::out_of_range("Row number to high for matrix::rowbegin.");
+        if (r >= Num_rows) throw std::out_of_range {"Row number to high for matrix::rowbegin."};
         return a.begin() + r * Num_cols;
     }
     iterator rowend(size_t r) {
-        if (r >= Num_rows) throw std::out_of_range("Row number to high for matrix::rowend.");
+        if (r >= Num_rows) throw std::out_of_range {"Row number to high for matrix::rowend."};
         return a.begin() + (r + 1) * Num_cols;
     }
     const_iterator rowbegin(size_t r) const {
-        if (r >= Num_rows) throw std::out_of_range("Row number to high for matrix::rowbegin.");
+        if (r >= Num_rows) throw std::out_of_range {"Row number to high for matrix::rowbegin."};
         return a.cbegin() + r * Num_cols;
     }
     const_iterator rowend(size_t r) const {
-        if (r >= Num_rows) throw std::out_of_range("Row number to high for matrix::rowend.");
+        if (r >= Num_rows) throw std::out_of_range {"Row number to high for matrix::rowend."};
         return a.cbegin() + (r + 1) * Num_cols;
     }
     const_iterator crowbegin(size_t r) const {
-        if (r >= Num_rows) throw std::out_of_range("Row number to high for matrix::crowbegin.");
+        if (r >= Num_rows) throw std::out_of_range {"Row number to high for matrix::crowbegin."};
         return a.cbegin() + r * Num_cols;
     }
     const_iterator crowend(size_t r) const {
-        if (r >= Num_rows) throw std::out_of_range("Row number to high for matrix::crowend.");
+        if (r >= Num_rows) throw std::out_of_range {"Row number to high for matrix::crowend."};
         return a.cbegin() + (r + 1) * Num_cols;
     }
     
@@ -119,11 +119,11 @@ public:
     };
     
     column_iterator columnbegin(size_t c) {
-        if (c >= Num_cols) throw std::out_of_range("Column number to high for matrix::columnbegin.");
+        if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::columnbegin."};
         return column_iterator(begin() + c);
     }
     column_iterator columnend(size_t c) {
-        if (c >= Num_cols) throw std::out_of_range("Column number to high for matrix::columnend.");
+        if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::columnend."};
         return column_iterator(begin() + c + Num_rows * Num_cols);
     }
 
@@ -154,19 +154,19 @@ public:
     };
 
     const_column_iterator columnbegin(size_t c) const {
-        if (c >= Num_cols) throw std::out_of_range("Column number to high for matrix::columnbegin.");
+        if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::columnbegin."};
         return const_column_iterator(begin() + c);
     }
     const_column_iterator columnend(size_t c) const {
-        if (c >= Num_cols) throw std::out_of_range("Column number to high for matrix::columnend.");
+        if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::columnend."};
         return const_column_iterator(begin() + c + Num_rows * Num_cols);
     }
     const_column_iterator ccolumnbegin(size_t c) const {
-        if (c >= Num_cols) throw std::out_of_range("Column number to high for matrix::ccolumnbegin.");
+        if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::ccolumnbegin."};
         return const_column_iterator(begin() + c);
     }
     const_column_iterator ccolumnend(size_t c) const {
-        if (c >= Num_cols) throw std::out_of_range("Column number to high for matrix::ccolumnend.");
+        if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::ccolumnend."};
         return const_column_iterator(begin() + c + Num_rows * Num_cols);
     }
 

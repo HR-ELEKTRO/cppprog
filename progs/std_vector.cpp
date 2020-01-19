@@ -5,7 +5,7 @@ using namespace std;
 // Afdrukken van een vector door middel van indexering.
 void print1(const vector<int>& vec) {
     cout << "De inhoud van de vector is:\n";
-    for (vector<int>::size_type index{0}; index != vec.size(); ++index) {
+    for (vector<int>::size_type index {0}; index != vec.size(); ++index) {
         cout << vec[index] << " ";
     }
     cout << '\n';
@@ -15,7 +15,7 @@ void print1(const vector<int>& vec) {
 // Afdrukken van een vector door middel van indexering met decltype.
 void print2(const vector<int>& vec) {
     cout << "De inhoud van de vector is:\n";
-    for (decltype(vec.size()) index{0}; index != vec.size(); ++index) {
+    for (decltype(vec.size()) index {0}; index != vec.size(); ++index) {
         cout << vec[index] << " ";
     }
     cout << '\n';
@@ -24,7 +24,7 @@ void print2(const vector<int>& vec) {
 // Afdrukken van een vector door middel van iterator.
 void print3(const vector<int>& vec) {
     cout << "De inhoud van de vector is:\n";
-    for (vector<int>::const_iterator iter{vec.begin()}; iter != vec.end(); ++iter) {
+    for (vector<int>::const_iterator iter {vec.cbegin()}; iter != vec.cend(); ++iter) {
         cout << *iter << " ";
     }
     cout << '\n';
@@ -33,7 +33,7 @@ void print3(const vector<int>& vec) {
 // Afdrukken van een vector door middel van iterator met auto.
 void print4(const vector<int>& vec) {
     cout << "De inhoud van de vector is:\n";
-    for (auto iter{vec.cbegin()}; iter != vec.cend(); ++iter) {
+    for (auto iter {vec.cbegin()}; iter != vec.cend(); ++iter) {
         cout << *iter << " ";
     }
     cout << '\n';
@@ -42,7 +42,7 @@ void print4(const vector<int>& vec) {
 // Afdrukken van een vector door middel van range-based for.
 void print5(const vector<int>& vec) {
     cout << "De inhoud van de vector is:\n";
-    for (auto elm : vec) {
+    for (auto elm: vec) {
         cout << elm << " ";
     }
     cout << '\n';
@@ -54,7 +54,7 @@ double gem1(const vector<int>& vec) {
         return 0;
     }
     double som {0.0};
-    for (auto iter = vec.cbegin(); iter != vec.cend(); ++iter) {
+    for (auto iter {vec.cbegin()}; iter != vec.cend(); ++iter) {
         som += *iter;
     }
     return som / vec.size();
@@ -66,7 +66,7 @@ double gem2(const vector<int>& vec) {
         return 0;
     }
     double som {0.0};
-    for (auto elm : vec) {
+    for (auto elm: vec) {
         som += elm;
     }
     return som / vec.size();
@@ -90,7 +90,7 @@ int main() {
     cout << "Het gemiddelde is: " << gem2(v) << '\n';
     cout << "Nu wordt een deel van de vector bewerkt.\n";
     if (v.size() >= 4) {
-        for (auto iter = v.begin() + 2; iter != v.begin() + 4; ++iter) {
+        for (auto iter {v.begin() + 2}; iter != v.begin() + 4; ++iter) {
             *iter *= 2;
         }
     }

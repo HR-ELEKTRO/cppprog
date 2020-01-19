@@ -24,7 +24,7 @@ private:
 
 int Calculator::calculate(const string& s){
     char c;
-    istringstream is{s};
+    istringstream is {s};
     is >> c;
     while (c != '=') {
         if (isdigit(c)) {
@@ -56,7 +56,7 @@ int Calculator::calculate(const string& s){
     while (!s1.empty()) {
         process_operator();
     }
-    int result = s2.top();
+    int result {s2.top()};
     s2.pop();
     if (!s2.empty()) {
         cout << "Fout operator ontbreekt.\n";
@@ -73,8 +73,8 @@ bool Calculator::has_lower_prio(char op1, char op2) {
 }
 
 void Calculator::process_operator() {
-    int op2 = s2.top(); s2.pop();
-    int op1 = s2.top(); s2.pop();
+    int op2 {s2.top()}; s2.pop();
+    int op1 {s2.top()}; s2.pop();
     switch (s1.top()) {
         case '^': s2.push(static_cast<int>(pow(op1, op2))); break;
         case '*': s2.push(op1 * op2); break;
@@ -94,7 +94,7 @@ int main() {
         cout << "Type een infix expressie en sluit af met <enter>\n";
         getline(cin, s);
         if (!s.empty()) {
-            cout << "= " << c.calculate(s + "=") << '\n';
+            cout << "= " << c.calculate(s + '=') << '\n';
         }
     } while (!s.empty());
 }

@@ -20,7 +20,7 @@ int main() {
                     cout << "Fout " << c << " bijbehorend haakje openen ontbreekt.\n";
                 }
                 else {
-                    char d{s.top()};
+                    char d {s.top()};
                     s.pop();
                     if ((d == '(' && c != ')') || (d == '{' && c != '}') || (d == '[' && c != ']')) {
                         cout << "Fout " << c << " bijbehorend haakje openen ontbreekt.\n";
@@ -31,7 +31,7 @@ int main() {
         cin.get(c);
     }
     while (!s.empty()) {
-        char d{s.top()};
+        char d {s.top()};
         s.pop();
         cout << "Fout " << d << " bijbehorend haakje sluiten ontbreekt.\n";
     }

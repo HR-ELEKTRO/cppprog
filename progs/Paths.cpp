@@ -105,14 +105,14 @@ Graph::Vertex* Graph::get_vertex(const string& vertex_name) {
 Graph::Vertex* Graph::find_vertex(const string& vertex_name) {
     auto itr{vertices.find(vertex_name)};
     if (itr == vertices.end())
-        throw runtime_error(vertex_name + " is not a vertex in this graph");
+        throw runtime_error {vertex_name + " is not a vertex in this graph"};
     return itr->second;
 }
 
 const Graph::Vertex* Graph::find_vertex(const string& vertex_name) const {
     auto itr{vertices.find(vertex_name)};
     if (itr == vertices.end())
-        throw runtime_error(vertex_name + " is not a vertex in this graph");
+        throw runtime_error {vertex_name + " is not a vertex in this graph"};
     return itr->second;
 }
 
@@ -172,7 +172,7 @@ void Graph::dijkstra(const string& start_name) {
                 Vertex* w{e.destination};
                 int cvw{e.costs};
                 if (cvw < 0) {
-                    throw runtime_error("Graph has negative edges");
+                    throw runtime_error {"Graph has negative edges"};
                 }
                 if (w->costs > v->costs + cvw) {
                     w->costs = v->costs + cvw;
@@ -197,7 +197,7 @@ void Graph::negative(const string& start_name) {
         q.pop();
         v->is_on_queue = false;
         if (v->times_queued > vertices.size()) {
-            throw runtime_error("Negative cycle detected");
+            throw runtime_error {"Negative cycle detected"};
         }
         for (auto& e: v->adjacent) {
             Vertex* w{e.destination};
@@ -251,7 +251,7 @@ void Graph::acyclic(const string& start_name) {
         }
     }
     if (iterations != vertices.size()) {
-        throw runtime_error("Graph has a cycle!");
+        throw runtime_error {"Graph has a cycle!"};
     }
 }
 
@@ -295,7 +295,7 @@ int main() {
             }
             ifstream in_file{file_name};
             if (!in_file) {
-                throw runtime_error("Cannot open " + file_name);
+                throw runtime_error {"Cannot open " + file_name};
             }
             Graph g;
             cout << "Reading file ";
@@ -333,7 +333,7 @@ int main() {
                 case 'A': g.acyclic(start_name); break;
                 case 'q':
                 case 'Q': return false;
-                default: throw runtime_error("Wrong input, try again.");
+                default: throw runtime_error {"Wrong input, try again."};
                 }
                 g.print_path(dest_name);
             }

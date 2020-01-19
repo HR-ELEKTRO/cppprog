@@ -14,7 +14,7 @@ private:
 public:
     matrix() = default;
     matrix(const initializer_list<Object>& init) {
-        if (init.size() > a.size()) throw std::out_of_range("To much elements in initializer list for class matrix.");
+        if (init.size() > a.size()) throw std::out_of_range {"To much elements in initializer list for class matrix."};
         std::copy(init.begin(), init.end(), a.begin());
     }
     matrix(const Array_type& init) {

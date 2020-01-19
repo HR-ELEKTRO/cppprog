@@ -20,7 +20,7 @@ private:
     size_t i; // index in a van eerste vrije plaats op de stack
 };
 
-template <typename T> Stack_with_array<T>::Stack_with_array(size_t size): a(0), s(size), i(0) {
+template <typename T> Stack_with_array<T>::Stack_with_array(size_t size): a{0}, s{size}, i{0} {
     if (s == 0) {
         std::cerr << "Stack size should be >0\n";
         s = 0;

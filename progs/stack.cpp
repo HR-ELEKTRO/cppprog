@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    Stack<char>* s{nullptr};
+    Stack<char>* s {nullptr};
 
     cout << "Welke stack wil je gebruiken (l = list, a = array): ";
     char c;

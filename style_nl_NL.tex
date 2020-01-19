@@ -906,7 +906,8 @@
 
 \makeatletter
 \newlength{\module@code@width}
-\settowidth{\module@code@width}{\modulecode}
+% Hack om nette C++ te krijgen
+\settowidth{\module@code@width}{C++}
 \addtolength{\module@code@width}{6mm}
 
 \newlength{\page@number@width}
