@@ -9,9 +9,9 @@ int telop(int i, int j) {
 }
 
 int main() {
-    vector<int> v{-3, -4, 3, 4};
-    vector<int> w{1, 2, 3, 4};
-    ostream_iterator<int> iout{cout, " "};
+    vector<int> v {-3, -4, 3, 4};
+    vector<int> w {1, 2, 3, 4};
+    ostream_iterator<int> iout {cout, " "};
     copy(v.cbegin(), v.cend(), iout);
     cout << '\n';
     copy(w.cbegin(), w.cend(), iout);
@@ -24,11 +24,21 @@ int main() {
     cout << '\n';
 
 //  Bewerking opgeven met een lambda functie.
-//  Voordeel: handig als bewerking uniek is.
-//  Nadeel: geen hergebruik mogelijk.
+//  Voordeel: meest handige oplossing als zoekvoorwaarde uniek is.
+//  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
     transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), [](int i1, int i2) {
         return i1 + i2;
     });
+    copy(v.cbegin(), v.cend(), iout);
+    cout << '\n';
+
+//  Bewerking opgeven met een opgeslagen lambda functie.
+//  Voordeel: meest handige oplossing als bewerking vaker voorkomt.
+//  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
+    auto add {[](int i1, int i2) {
+        return i1 + i2;
+    }};
+    transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), add);
     copy(v.cbegin(), v.cend(), iout);
     cout << '\n';
 }

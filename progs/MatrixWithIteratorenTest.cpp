@@ -14,7 +14,7 @@ int main() {
         e = 0;
     }
     cout << "Alle getallen in matrix m1: \n";
-    ostream_iterator<int> iout{cout, " "};
+    ostream_iterator<int> iout {cout, " "};
     copy(m1.cbegin(), m1.cend(), iout); cout << '\n';
 
 //  hele matrix doorlopen

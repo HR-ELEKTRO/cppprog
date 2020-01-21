@@ -20,11 +20,11 @@ private:
 };
 
 int main() {
-    list<int> l{-3, -4, 3, 4};
+    list<int> l {-3, -4, 3, 4};
 //  Zoeken met behulp van een functie als zoekvoorwaarde.
 //  Nadeel: voor elke zoekvoorwaarde moet een aparte 
 //  functie worden geschreven.
-    auto r{find_if(l.cbegin(), l.cend(), is_pos)};
+    auto r {find_if(l.cbegin(), l.cend(), is_pos)};
     if (r != l.cend()) {
         cout << "Het eerste positieve element is: " << *r << '\n';
     }
@@ -37,11 +37,21 @@ int main() {
         cout << "Het eerste positieve element is: " << *r << '\n';
     }
 //  Zoeken met behulp van een lambda functie als zoekvoorwaarde.
-//  Voordeel: handig als zoekvoorwaarde uniek is.
-//  Nadeel: geen hergebruik mogelijk.
+//  Voordeel: meest handige oplossing als zoekvoorwaarde uniek is.
+//  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
     r = find_if(l.cbegin(), l.cend(), [](int i) {
         return i >= 0;
     });
+    if (r != l.end()) {
+        cout << "Het eerste positieve element is: " << *r << '\n';
+    }
+//  Zoeken met behulp van een opgeslagen lambda functie als zoekvoorwaarde.
+//  Voordeel: meest handige oplossing als zoekvoorwaarde vaker voorkomt.
+//  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
+    auto is_positief {[](int i) {
+        return i >= 0;
+    }};
+    r = find_if(l.cbegin(), l.cend(), is_positief);
     if (r != l.end()) {
         cout << "Het eerste positieve element is: " << *r << '\n';
     }

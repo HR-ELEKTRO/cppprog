@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    string w{"galgje"};
+    string w {"galgje"};
     set<char> goed_geraden, letters;
     copy(w.cbegin(), w.cend(), inserter(letters, letters.begin()));
     do {
@@ -14,11 +14,11 @@ int main() {
             cout << (goed_geraden.count(c) ? c : '.');
         }
         cout << "\nRaad een letter: ";
-        char c{static_cast<char>(cin.get())}; cin.get();
+        char c {static_cast<char>(cin.get())}; cin.get();
         if (letters.count(c)) {
             goed_geraden.insert(c);
         }
+        cout << "De letter '" << c << "' komt " << count(w.cbegin(), w.cend(), c) << " keer voor in het te raden woord.\n";
     } while (goed_geraden != letters);
     cout << "Je hebt het woord " << w << " geraden.\n";
 }
-

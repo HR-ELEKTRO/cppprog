@@ -9,13 +9,13 @@ int main() {
     for (int i {0}; i < 10; ++i) {
         v.push_back(i * i);
     }
-    vector<int> w{v};
+    vector<int> w {v};
         
 //  code om te laten zien hoe remove werkt:
-    ostream_iterator<int> out{cout, " "};
+    ostream_iterator<int> out {cout, " "};
     cout << "Na initialisatie:\n";
     copy(v.cbegin(), v.cend(), out);
-    auto end{remove_if(v.begin(), v.end(), [](int i) {
+    auto end {remove_if(v.begin(), v.end(), [](int i) {
             return i % 2 == 0;
         })
     };

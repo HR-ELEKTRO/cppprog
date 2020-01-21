@@ -11,7 +11,7 @@ void print(const multiset<string>& bag) {
 }
 
 int main() {
-    multiset<string> docenten{"Ron", "Daniël", "Roy", "Harry"};
+    multiset<string> docenten {"Ron", "Daniël", "Roy", "Harry"};
     docenten.insert("Elles");
     print(docenten);
     docenten.insert("Harry");

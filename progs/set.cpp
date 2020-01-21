@@ -11,10 +11,10 @@ void print(const set<string>& s) {
 }
 
 int main() {
-    set<string> docenten{"Ron", "Daniël", "Roy", "Harry"};
+    set<string> docenten {"Ron", "Daniël", "Roy", "Harry"};
     docenten.insert("Elles");
     print(docenten);
-    auto result{docenten.insert("Harry")};
+    auto result {docenten.insert("Harry")};
     if (!result.second)
         cout << "1 Harry is genoeg.\n";
     cout << "Er is " << docenten.count("Ron") << " Ron.\n";

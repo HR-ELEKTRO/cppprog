@@ -9,7 +9,7 @@ int main() {
     map<string, int> freq;
     cout << "Geef filenaam: ";
     cin >> w;
-    ifstream fin{w};
+    ifstream fin {w};
     while (fin >> w) {
         ++freq[w];
     }

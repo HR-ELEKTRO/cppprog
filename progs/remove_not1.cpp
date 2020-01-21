@@ -11,7 +11,7 @@ int main() {
     for (int i {0}; i < 10; ++i) {
         w.push_back(i * i);
     }
-    ostream_iterator<int> out{cout, " "};
+    ostream_iterator<int> out {cout, " "};
     copy(w.cbegin(), w.cend(), out); cout << '\n';
         
 //  verwijder alle even elementen:

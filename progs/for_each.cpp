@@ -10,7 +10,7 @@ void print_dubbel(int i) {
 
 int main() {
     vector<int> v{-3, -4, 3, 4};
-    ostream_iterator<int> iout{cout, " "};
+    ostream_iterator<int> iout {cout, " "};
     copy(v.cbegin(), v.cend(), iout);
     cout << '\n';
 
@@ -20,13 +20,22 @@ int main() {
     cout << '\n';
 
 //  Bewerking opgeven met een lambda functie.
-//  Voordeel: handig als bewerking uniek is.
-//  Nadeel: geen hergebruik mogelijk.
+//  Voordeel: meest handige oplossing als zoekvoorwaarde uniek is.
+//  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
     for_each(v.cbegin(), v.cend(), [](int i) {
         cout << i << " " << i << " ";
     });
     cout << '\n';
 
+//  Bewerking opgeven met een opgeslagen lambda functie.
+//  Voordeel: meest handige oplossing als bewerking vaker voorkomt.
+//  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
+    auto print_twice {[](int i) {
+        cout << i << " " << i << " ";
+    }};
+    for_each(v.cbegin(), v.cend(), print_twice);
+    cout << '\n';
+    
 //  Alternatief voor for_each met lambda functie: gebruik range-based for.
 //  Voordeel: eenvoudigere syntax.
 //  Nadeel: werkt alleen als de gehele container doorlopen moet worden,

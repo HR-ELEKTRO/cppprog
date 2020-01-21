@@ -9,9 +9,9 @@ int telop(int i, int j) {
 }
 
 int main() {
-    vector<int> v{-3, -4, 3, 4};
-    vector<int> w{1, 2, 3, 4};
-    ostream_iterator<int> iout{cout, " "};
+    vector<int> v {-3, -4, 3, 4};
+    vector<int> w {1, 2, 3, 4};
+    ostream_iterator<int> iout {cout, " "};
     copy(v.cbegin(), v.cend(), iout);
     cout << '\n';
     copy(w.cbegin(), w.cend(), iout);

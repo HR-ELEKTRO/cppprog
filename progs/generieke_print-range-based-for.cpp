@@ -4,13 +4,13 @@
 #include <string>
 using namespace std;
 
-// generieke print m.b.v. iterator
-// kan gebruikt worden voor ALLE containers
+// generieke print m.b.v. range-based-for
+// kan gebruikt worden voor ALLE containers  waarvan de elementen geprint kunnen worden met operator<<
 
 template<typename C> void print(const C& c) {
     cout << "De inhoud van de container is:\n";
-    for (auto iter{c.cbegin()}; iter != c.cend(); ++iter) {
-        cout << *iter << " ";
+    for (const auto& e: c) {
+        cout << e << " ";
     }
     cout << '\n';
 }
@@ -18,12 +18,12 @@ template<typename C> void print(const C& c) {
 int main() {
     vector<int> v;
     list<double> l;
-    for (int i = 1; i <= 10; ++i) {
+    for (int i {1}; i <= 10; ++i) {
         v.push_back(i);
         l.push_back(1.0 / i);
     }
     print(v);
     print(l);
-    string s{"Hallo"};
+    string s {"Hallo"};
     print(s);
 }

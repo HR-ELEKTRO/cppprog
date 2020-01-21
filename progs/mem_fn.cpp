@@ -1,7 +1,6 @@
 #include <iostream>
 #include <list>
 #include <algorithm>
-#include <functional>
 using namespace std;
 
 class Hond {
@@ -28,19 +27,13 @@ void fblaf(const Hond* p) {
     p->blaf();
 }
 
-function pblaf{
-    [](const Hond* p){
-        p->blaf();
-    }
-};
-
 int main() {
     list<Hond*> kennel{new Tekkel, new St_bernard, new Tekkel};
     for_each(kennel.cbegin(), kennel.cend(), mem_fn(&Hond::blaf));
     cout << '\n';
 
 //  alternatief met lambda functie
-    for_each(kennel.cbegin(), kennel.cend(), [](const Hond* p) {
+    for_each(kennel.cbegin(), kennel.cend(), [](const auto p) {
         p->blaf();
     });
     cout << '\n';
@@ -49,13 +42,13 @@ int main() {
     for_each(kennel.cbegin(), kennel.cend(), fblaf);
     cout << '\n';
     
-//  alternatief met function object
-    for_each(kennel.cbegin(), kennel.cend(), pblaf);
-    cout << '\n';
-
 //  alternatief met range-based for
     for (const auto p: kennel) {
         p->blaf();
     }
     cout << '\n';
+
+    for (auto p: kennel) {
+        delete p;
+    }
 }

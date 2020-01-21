@@ -10,6 +10,6 @@ int main() {
     generate_n(back_inserter(kwadraten), 10, [&n]() {
         ++n; return n * n;
     }); 
-    copy(kwadraten.begin(), kwadraten.end(), ostream_iterator<int>(cout, " "));
+    copy(kwadraten.begin(), kwadraten.end(), ostream_iterator<int> {cout, " "});
     cout << '\n';
 }

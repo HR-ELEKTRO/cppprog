@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
     vector<int> v{-3, -4, 3, 4};
-    ostream_iterator<int> iout{cout, " "};
+    ostream_iterator<int> iout {cout, " "};
     copy(v.cbegin(), v.cend(), iout);
     cout << '\n';
 

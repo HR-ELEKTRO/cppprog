@@ -100,7 +100,7 @@ public:
             return *i;
         }
         column_iterator operator++(int) {
-            iterator here{i};
+            iterator here {i};
             i += Num_cols;
             return here;
         }
@@ -124,7 +124,7 @@ public:
     }
     column_iterator columnend(size_t c) {
         if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::columnend."};
-        return column_iterator(begin() + c + Num_rows * Num_cols);
+        return column_iterator {begin() + c + Num_rows * Num_cols};
     }
 
     class const_column_iterator: public std::iterator<forward_iterator_tag, Object> {
@@ -135,7 +135,7 @@ public:
             return *i;
         }
         const_column_iterator operator++(int) {
-            iterator here{i};
+            iterator here {i};
             i += Num_cols;
             return here;
         }
@@ -155,19 +155,19 @@ public:
 
     const_column_iterator columnbegin(size_t c) const {
         if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::columnbegin."};
-        return const_column_iterator(begin() + c);
+        return const_column_iterator {begin() + c};
     }
     const_column_iterator columnend(size_t c) const {
         if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::columnend."};
-        return const_column_iterator(begin() + c + Num_rows * Num_cols);
+        return const_column_iterator {begin() + c + Num_rows * Num_cols};
     }
     const_column_iterator ccolumnbegin(size_t c) const {
         if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::ccolumnbegin."};
-        return const_column_iterator(begin() + c);
+        return const_column_iterator {begin() + c};
     }
     const_column_iterator ccolumnend(size_t c) const {
         if (c >= Num_cols) throw std::out_of_range {"Column number to high for matrix::ccolumnend."};
-        return const_column_iterator(begin() + c + Num_rows * Num_cols);
+        return const_column_iterator {begin() + c + Num_rows * Num_cols};
     }
 
 };

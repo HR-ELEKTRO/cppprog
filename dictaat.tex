@@ -392,7 +392,7 @@ De belangrijkste input faciliteiten van deze \USE{library} zijn de standaard \US
 
 \needspace{3\baselineskip}
 Voorbeeld met |stdio|:
-\begin{cpplstfragment}[mathescape=true]
+\begin{cpplstfragment}[style=cstyle,mathescape=true]
 #include <stdio.h>
 //  ...
 	double d;
@@ -3829,8 +3829,8 @@ Het belangrijkste is dat je weet wanneer je welke datastructuur kunt toepassen e
 	priority queue & $O(\log{n})$ & $O(\log{n})$ & $O(1)$ & \small{event-driven simulatie} & \small{binary heap}         
 }{6}
 
-%TODO Eventueel nog theorie + voorbeelden toevoegen.
-%Ik vul een hele les met het uitleggen van deze tabel.
+%TODO theorie + voorbeelden toevoegen.
+%Ik vulde vroeger een hele les met het uitleggen van deze tabel.
 
 \footnotetext{
 	Een vector kan dynamisch gemaakt worden door op het moment dat de array vol is een nieuwe array aan te maken die twee keer zo groot is als de oorspronkelijke array.
@@ -4154,12 +4154,12 @@ Met een iterator kun je als volgt door een |std::string| heenlopen en de karakte
 Met behulp van een |string::const_iterator| kun je de karakters uit de |string| alleen lezen.
 De memberfunctie |cbegin()| geeft een |const_iterator| terug naar het eerste karakter van de string.
 De memberfunctie |cend()| geeft een |const_iterator| terug net na het laatste karakter van de string.
-Met behulp van een |string::iterator| kun je de karakters in de |string| ook overschrijven.
+Met behulp van een \hcode{string::itera\\-tor} kun je de karakters in de |string| ook overschrijven.
 De memberfunctie |begin()| geeft een |iterator| terug naar het eerste karakter van de string.
 De memberfunctie |end()| geeft een |iterator| terug net na het laatste element van de string.
 
 Je kunt ook het \USE{keyword} |auto| gebruiken om de compiler zelf het type van de iterator te laten bepalen.
-\cpplstinputfragment[linerange={42-45}]{std_string.cpp}
+\cpplstinputfragment[linerange={40-43}]{std_string.cpp}
 
 \section{Containers}
 De standaard \Cpp{} \USE{library} bevat verschillende containers.
@@ -4191,7 +4191,7 @@ De standaard \Cpp{} \USE{library} bevat de volgende sequentiële containers:
 	\item |bitset| (wordt in dit dictaat verder niet besproken)
 \end{itemize}
 
-Een gewone C\hyp{}array) |[]| is ook een sequentiële container.
+Een gewone C\hyp{}array (|[]|) is ook een sequentiële container.
 
 Bepaalde sequentiële containers kunnen met behulp van zogenoemde adapter classes van een bepaalde interface worden voorzien.
 De standaard \Cpp{} \USE{library} bevat de volgende adapters:
@@ -4327,21 +4327,21 @@ De laatste implementatie |print5| gebruikt een \USE{range\hyp{}based for} om de 
 
 Geïnspireerd door dit voorbeeld zou je een generieke |print| functie kunnen bedenken waarmee elk willekeurige container afgedrukt kan worden.
 We kunnen voor deze generieke functie geen indexering gebruiken omdat indexering niet bij alle containers gebruikt kan worden.
-We zouden wel, als volgt, gebruik kunnen maken van een iterator, zie \proglink{generiekPrint-iterator.cpp}:
+We zouden wel, als volgt, gebruik kunnen maken van een iterator, zie \proglink{generieke_print-iterator.cpp}:
 
-\cpplstinputfragment[linerange={10-16}]{generiekPrint-iterator.cpp}
+\cpplstinputfragment[linerange={10-16}]{generieke_print-iterator.cpp}
 
-Het is, ook in dit geval, eenvoudiger om gebruik te maken van een \USE{range\hyp{}based for}, zie \proglink{generiekPrint-range-based-for.cpp}:
+Het is, ook in dit geval, eenvoudiger om gebruik te maken van een \USE{range\hyp{}based for}, zie \proglink{generieke_print-range-based-for.cpp}:
 
-\cpplstinputfragment[linerange={10-16}]{generiekPrint-range-based-for.cpp}
+\cpplstinputfragment[linerange={10-16}]{generieke_print-range-based-for.cpp}
 
 In de bovenstaande functie is een |const auto&| gebruikt om een onnodig kopietje te voorkomen.
 We weten immers niet hoe groot de elementen in de container zijn.
 
 Bovenstaande twee generieke |print| functies drukken altijd de inhoud van de gehele container af.
-Als we ook een gedeelte van een container af willen kunnen drukken met de generieke |print| functie, dan moeten we de functie twee iteratoren meegeven, zie \proglink{generiekPrint-range.cpp}:
+Als we ook een gedeelte van een container af willen kunnen drukken met de generieke |print| functie, dan moeten we de functie twee iteratoren meegeven, zie \proglink{generieke_print-range.cpp}:
 
-\cpplstinputfragment[linerange={10-16}]{generiekPrint-range.cpp}
+\cpplstinputfragment[linerange={10-16}]{generieke_print-range.cpp}
 
 De eerste iterator |begin| wijst naar het eerste element dat moet worden afgedrukt en de tweede iterator |end| wijst net voorbij het laatste element dat moet worden afgedrukt.
 Als de iteratoren |i1| en |i2| aan deze functie worden meegegeven, dan worden alle elementen vanaf |i1| tot (en dus \emph{niet} tot en met) |i2| afgedrukt.
@@ -4350,10 +4350,10 @@ In \Cpp{} wordt zo'n halfopen interval van twee iteratoren een \emph{range} geno
 Alle algoritmen uit de standaard \Cpp{} \USE{library} gebruiken ranges als parameters zodat ze ook op een deel van een container uitgevoerd kunnen worden.
 
 De bovenstaande generieke |print| kan gebruikt worden om de vector |v| volledig af te drukken:
-\cpplstinputfragment[linerange={25-25}]{generiekPrint-range.cpp}
+\cpplstinputfragment[linerange={25-25}]{generieke_print-range.cpp}
 
 Dezelfde functie kan ook gebruikt worden om alle elementen van de vector |v| af te drukken \emph{behalve} de eerste en de laatste:
-\cpplstinputfragment[linerange={26-26}]{generiekPrint-range.cpp}
+\cpplstinputfragment[linerange={26-26}]{generieke_print-range.cpp}
 
 \subsection{Container adapters}
 Bepaalde sequentiële containers kunnen met behulp van zogenoemde adapter classes van een bepaalde interface worden voorzien.
@@ -4367,12 +4367,12 @@ De standaard \Cpp{} \USE{library} bevat de volgende adapters:
 Bij het aanmaken van een |stack| kun je aangeven (als tweede template argument) of voor de implementatie een |vector|, |deque| of
 |list| gebruikt moet worden:
 
-\begin{lstlisting}
+\begin{cpplstfragment}
 stack<int, vector<int>> s1; // stack implemented with vector
 stack<int, deque<int>> s2;  // stack implemented with deque
 stack<int, list<int>> s3;   // stack implemented with list
 stack<int> s4;              // using deque by default
-\end{lstlisting}
+\end{cpplstfragment}
 
 Als je niets opgeeft, wordt (default) een |deque| gebruikt.
 %TODO waarom?
@@ -4392,9 +4392,9 @@ Je kunt een |priority_queue| dus niet implementeren met een |list| omdat de elem
 	In de les wordt dit verder uitgelegd.}
 
 \subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::stack}}{std::stack}}
-Het onderstaande voorbeeldprogramma \proglink{stdbalanced.cpp} is identiek aan het programma uit \csecref{sec:balance} maar in plaats van de zelfgemaakte \hcode{Stack\\-With\\-List} wordt nu de standaard |stack| gebruikt.
+Het onderstaande voorbeeldprogramma \proglink{std_balanced.cpp} is identiek aan het programma uit \csecref{sec:balance} maar in plaats van de zelfgemaakte \hcode{Stack\\-With\\-List} wordt nu de standaard |stack| gebruikt.
 
-\cpplstinputfragment[linerange={1-41}]{stdbalanced.cpp}
+\cpplstinputfragment[linerange={1-41}]{std_balanced.cpp}
 
 \subsection{Associatieve containers}
 \label{sec:asscon}
@@ -4403,6 +4403,7 @@ In een associatieve container wordt de volgorde van de elementen bepaald door de
 Hierdoor kan de zoekfunctie voor een associatieve container sneller werken dan voor een sequentiële container.
 In \cref{fig:asscon} zijn de belangrijkste associatieve containers conceptueel weergegeven.
 
+%TODO: omzetten naar TikZ
 \figuur{width=10cm}{asscon}{Overzicht van de belangrijkste associatieve containers.}
 
 In een |set| kan elk element slechts één maal voorkomen, net zoals in een wiskundige verzameling (Engels: set).
@@ -4414,7 +4415,7 @@ Ken jij zo'n uitzondering?\footnote{Zie \url{http://nl.wikipedia.org/wiki/Flodde
 Deze sleutels worden zodanig in de |set| opgeslagen dat je snel kunt opzoeken of een sleutel zich in de |set| bevindt.
 
 In een |multiset| kunnen sleutels meerdere keren voorkomen, in de wiskunde wordt dit ook wel een zak (Engels: \USE{bag}) genoemd.
-De |multiset| in \cref{fig:asscon} bevat de roepnamen van enkele docenten van TIS Delft.
+De |multiset| in \cref{fig:asscon} bevat de roepnamen van een bepaalde groep mensen.
 De roepnaam |Harry| komt zoals je ziet drie maal voor in deze |multiset|.
 Deze sleutels worden zodanig in de |multiset| opgeslagen dat je snel kunt opzoeken hoe vaak een sleutel zich in de |multiset| bevindt.
 
@@ -4432,18 +4433,18 @@ De elementen in een |map| zijn dus van het type |pair<const Key, Value>| waarbij
 De |map| heeft een indexeringsoperator (|operator[]|) waardoor de sleutel als een index kan worden gebruikt om de bijbehorende waarde te benaderen.
 
 Een map met een |string| als sleutel en een |unsigned int| als waarde kun je als volgt aanmaken:
-\begin{lstlisting}
+\begin{cpplstfragment}
 	map<string, unsigned int> telefoonNummer;
-\end{lstlisting}
+\end{cpplstfragment}
 Met behulp van indexering kun je nu het telefoonnummer\footnote{De nul waarmee het telefoonnummer begint, wordt niet opgeslagen.
 	Als je per ongeluk toch de nul invoert \code{telefoonNummer["Sonja"] = 0612345678;}, dan interpreteert de \Cpp{}\hyp{}compiler dit als een getal in het octale talstelsel en dat levert in dit geval een foutmelding op omdat een octaal getal alleen de cijfers 0 tot en met 7 mag bevatten.} van |Sonja| in deze |map| zetten.
-\begin{lstlisting}
+\begin{cpplstfragment}
 	telefoonNummer["Sonja"] = 612345678;
-\end{lstlisting}
+\end{cpplstfragment}
 Het telefoonnummer van |Sonja| kan nu, wederom met behulp van indexering, als volgt worden opgezocht en afgedrukt.
-\begin{lstlisting}
+\begin{cpplstfragment}
 	cout << "Sonja : " << telefoonNummer["Sonja"] << '\n';
-\end{lstlisting}
+\end{cpplstfragment}
 Je ziet dat een |map| gebruikt kan worden alsof het een soort array (of |vector|) is waarbij de index geen integer hoeft te zijn.
 Dit soort array's worden in veel andere programmeertalen (waaronder JavaScript en PHP) associatieve array's genoemd.
 
@@ -4453,12 +4454,12 @@ Dit kan al snel tot verwarring leiden: gaat het hier om dezelfde |Sonja| die twe
 Omdat er meerdere verschillende waarden met dezelfde sleutel geassocieerd kunnen zijn ondersteund de |multimap| geen indexering.
 Om die reden wordt de container |map| in de praktijk vaker gebruikt dan de container |multimap|.
 
-Sinds \Cpp{}11 bevat de standaard \USE{library} twee verschillende implementaties van deze vier associatieve containers.
-De al sinds \Cpp{}98 aanwezige containers |set|, |multiset|, |map| en |multimap| worden geïmplementeerd met behulp van een zoekboom (Engels: \USE{search tree}).
+De standaard \USE{library} bevat twee verschillende implementaties van deze vier associatieve containers.
+De containers |set|, |multiset|, |map| en |multimap| worden geïmplementeerd met behulp van een zoekboom (Engels: \USE{search tree}).
 Zoals je in \cref{tab:datastructuren} kunt zien zijn de executietijden van de operaties |insert|, |erase| en |find| voor een zoekboom allemaal $O(\log{n})$.
 De sleutels worden van laag naar hoog gesorteerd (met behulp van de standaard comperatorfunctie |less|) opgeslagen.
 Als je een andere sorteervolgorde wilt, dan kun je zelf een andere comperatorfunctie opgeven.
-De in sinds \Cpp{}11 beschikbare containers \hcode{un\\-ordered_\\-set}, \hcode{un\\-ordered_\\-multi\\-set}, \hcode{un\\-ordered_\\-map} en \hcode{un\\-ordered_\\-multi\\-map} worden geïmplementeerd met behulp van een hashtabel (Engels: \USE{hash table}).
+De containers \hcode{un\\-ordered_\\-set}, \hcode{un\\-ordered_\\-multi\\-set}, \hcode{un\\-ordered_\\-map} en \hcode{un\\-ordered_\\-multi\\-map} worden geïmplementeerd met behulp van een hashtabel (Engels: \USE{hash table}).
 Zoals je in \cref{tab:datastructuren} kunt zien zijn de executietijden van de operaties |insert|, |erase| en |find| voor een hashtabel allemaal $O(1)$.
 Als de hashtabel echter te vol raakt, of als een slechte hashfunctie wordt gebruikt, dan kunnen deze executietijden $O(n)$ worden.
 De in de standaard opgenomen |unsorted_...| containers zullen automatisch groeien als het aantal elementen in de container gedeeld door het aantal plaatsen in de hashtabel (de zogenoemde \hcode{load_\\-factor}) groter wordt dan de \hcode{max_\\-load_\\-factor}, die een default waarde heeft van 1.0.
@@ -4501,14 +4502,14 @@ Een |set| heeft de volgende vier memberfuncties:
 	Een |multiset| heeft dezelfde memberfunctie en in dat geval kan de returnwaarde wel groter dan 1 zijn.
 \end{itemize}
 
-\cpplstinputfragment[linerange={1-25}]{set.cpp}
+\cpplstinputfragment[linerange={1-23}]{set.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
-	De set bevat: Harry Ineke Jesse Paul
-	1 Harry is genoeg.
-	Er is 1 Jesse.
-	De set bevat: Ineke Jesse Paul
+De set bevat: Daniël Elles Harry Ron Roy
+1 Harry is genoeg.
+Er is 1 Ron.
+De set bevat: Daniël Elles Ron Roy
 \end{coutput}
 
 \subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::multiset}}{std::multiset} (bag)}
@@ -4518,50 +4519,52 @@ De memberfunctie |insert| geeft echter alleen een iterator als returnwaarde in p
 Het invoegen in een multiset kan namelijk niet mislukken.
 Als bij de memberfunctie |erase| een sleutel als argument wordt weergegeven, dan worden alle sleutels met die specifieke waarde uit de |multiset| verwijderd.
 Als je slechts één sleutel wil verwijderen dan moet je een iterator als argument aan |erase| meegeven.
-\cpplstinputfragment[linerange={1-28}]{multiset.cpp}
+\cpplstinputfragment[linerange={1-30}]{multiset.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
-	De bag bevat: Harrie Harry Ineke Jesse Paul Paul
-	De bag bevat: Harrie Harry Harry Ineke Jesse Paul Paul
-	Er zijn 2 Harry's.
-	De bag bevat: Harrie Ineke Jesse Paul Paul
-	De bag bevat: Harrie Ineke Jesse Paul
-	De bag bevat: Harrie
+De bag bevat: Daniël Elles Harry Ron Roy
+De bag bevat: Daniël Elles Harry Harry Ron Roy
+De bag bevat: Daniël Elles Harry Harry Harry Ron Roy
+Er zijn 3 Harry's.
+De bag bevat: Daniël Elles Harry Harry Ron Roy
+De bag bevat: Daniël Elles Ron Roy
+De bag bevat: Daniël Ron Roy
+De bag bevat: Daniël
 \end{coutput}
 
 \subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::unordered_set}}{std::unordered\_set}}
 Vergelijk het onderstaande programma \proglink{unordered\_set.cpp} met het programma uit \csecref{sec:set} en let op de verschillen tussen een |set| en een \hcode{un\\-ordered_\\-set}.
 
-\cpplstinputfragment[linerange={1-33}]{unordered_set.cpp}
+\cpplstinputfragment[linerange={1-31}]{unordered_set.cpp}
 
 Een mogelijke\footnote{%
 	De uitvoer kan variëren afhankelijk van de gebruikte compiler.
-	In dit geval is GCC 4.9.2 gebruikt.%
+	In dit geval is GCC 9.1 gebruikt.%
 } uitvoer van dit programma:
 
-\begin{lstlisting}[language=]
-De set bevat: Harry Ineke Paul Jesse 
+\begin{cpplstfragment}[language=]
+De set bevat: Harry Roy Daniël Elles Ron
 1 Harry is genoeg.
-Er is 1 Jesse.
-De set bevat: Ineke Paul Jesse 
+Er is 1 Elles.
+De set bevat: Roy Daniël Elles Ron
 De hash table heeft 5 buckets.
-Elke bucket bevat gemiddeld 0.6 elementen.
+Elke bucket bevat gemiddeld 0.8 elementen.
 De maximale load_factor is 1.
 We voegen nu nog 34 namen toe.
-De set bevat: Jory René Nakib Remy Robin Richard Chesron Niels Miguel Thijs Jelle Tom Daniël Tako Arend Pascal Rens Maikel Raymond Leo Bart Ralf Rick Eric Ivan Willem-Pieter Mark Bas Patrick Jaap Sebastiaan Jesse Remko Paul David Ineke 
+De set bevat: Jory René Nakib Remy Robin Richard Remko David Chesron Niels Miguel Thijs Jelle Tako Arend Pascal Rens Maikel Raymond Leo Bart Ralf Rick Eric Ivan Willem-Pieter Mark Bas Patrick Jaap Sebastiaan Ron Elles Tom Daniël Roy
 De hash table heeft 41 buckets.
 Elke bucket bevat gemiddeld 0.878049 elementen.
-\end{lstlisting}
+\end{cpplstfragment}
 
 \subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::map}}{std::map}}
 \label{sec:vbmap}
-Het onderstaande voorbeeldprogramma \proglink{stdcntwords.cpp} gebruikt een |map| om de woordfrequentie te tellen.
+Het onderstaande voorbeeldprogramma \proglink{count_words.cpp} gebruikt een |map| om de woordfrequentie te tellen.
 Van een aantal belangrijke C/\Cpp{} \USE{keywords} wordt het aantal maal dat ze voorkomen afgedrukt.
 Een |map| heeft dezelfde memberfuncties als een |set|, zie \csecref{sec:set}.
 Je kunt daarnaast ook gebruik maken van indexering waarbij de sleutel als index wordt gebruikt.
 
-\cpplstinputfragment[linerange={1-30}]{stdcntwords.cpp}
+\cpplstinputfragment[linerange={1-27}]{count_words.cpp}
 
 \section{Iteratoren}
 \label{sec:iteratoren}
@@ -4572,10 +4575,10 @@ Sommige algoritmen maken namelijk gebruik van bepaalde bewerkingen die niet door
 Het standaard |sort| algoritme maakt bijvoorbeeld gebruik van indexering en die bewerking wordt niet ondersteund door een |list|.
 Als je probeert om |sort| uit te voeren op een |list|, dan geeft de compiler een foutmelding.
 
-\begin{lstlisting}[mathescape=true]
-list<int> l = {12, 18, 6};
-sort(l.begin(), l.end()); // $\color{hrred}\textbf{Error!}$
-\end{lstlisting}
+\begin{cpplstfragment}[mathescape=true]
+list<int> l {12, 18, 6};
+sort(l.begin(), l.end()); // $\color{hrred}\textbf{error:}$ no match for 'operator-'
+\end{cpplstfragment}
 
 Om deze reden zijn er meerder soorten iteratoren in de \Cpp{} standaard gedefinieerd.
 Elke soort ondersteund bepaalde bewerkingen.
@@ -4714,10 +4717,10 @@ Door een template te gebruiken kan deze functie aangeroepen worden voor elke con
 De executietijd van deze functie is $O(1)$.
 Als deze functie echter aangeroepen wordt om het midden van een |list| te vinden dan geeft de compiler een foutmelding:
 
-\begin{lstlisting}[mathescape=true]
+\begin{cpplstfragment}[mathescape=true]
 list<int> l = {12, 18, 6};
-cout << *find_upper_middle_random_access(l.begin(), l.end()) << '\n'; // $\color{hrred}\textbf{Error: no match for 'operator-'}$
-\end{lstlisting}
+cout << *find_upper_middle_random_access(l.begin(), l.end()) << '\n'; // $\color{hrred}\textbf{error:}$ no match for 'operator-'
+\end{cpplstfragment}
 
 Als er \USE{bidirectional} iteratoren beschikbaar zijn, dan kan de functie als volgt geïmplementeerd worden, zie \proglink{find\_upper\_middle\_bidirectional.cpp}:
 
@@ -4729,10 +4732,10 @@ Door een template te gebruiken kan deze functie aangeroepen worden voor elke con
 De executietijd van deze functie is $O(n)$.
 Als deze functie echter aangeroepen wordt om het midden van een |forward_list| te vinden dan geeft de compiler een foutmelding:
 
-\begin{lstlisting}[mathescape=true]
-forward_list<int> l = {12, 18, 6};
-cout << *find_upper_middle_bidirectional(l.begin(), l.end()) << '\n'; // $\color{hrred}\textbf{Error: no match for 'operator--'}$
-\end{lstlisting}
+\begin{cpplstfragment}[mathescape=true]
+forward_list<int> l {12, 18, 6};
+cout << *find_upper_middle_bidirectional(l.begin(), l.end()) << '\n'; // $\color{hrred}\textbf{error:}$ no match for 'operator--'
+\end{cpplstfragment}
 
 Als er \USE{forward} iteratoren beschikbaar zijn, dan kan de functie als volgt geïmplementeerd worden, zie \proglink{find\_upper\_middle\_forward.cpp}:
 
@@ -4812,15 +4815,15 @@ Er zijn twee \USE{stream}\hyp{}iteratoren beschikbaar:
 
 \subsection{Voorbeeldprogramma's met iteratoren}
 \label{sec:vbiteratoren}
-In het onderstaande voorbeeldprogramma \proglink{streamitr.cpp} wordt het gebruik van \USE{stream}\hyp{} en \USE{insert}\hyp{}iteratoren gedemonstreerd:  
+In het onderstaande voorbeeldprogramma \proglink{stream_iterator.cpp} wordt het gebruik van \USE{stream}\hyp{} en \USE{insert}\hyp{}iteratoren gedemonstreerd:  
 
-\cpplstinputfragment[linerange={1-21}]{streamitr.cpp}
+\cpplstinputfragment[linerange={1-21}]{stream_iterator.cpp}
 
 De integers uit het bestand \hcode{ge\\-tal\\-len_on\\-ge\\-sor\\-teerd.txt} worden ingelezen in de |vector| genaamd |rij|, gesorteerd en vervolgens weggeschreven naar het bestand \hcode{ge\\-tal\\-len_ge\\-sor\\-teerd.txt}.
 Het gebruikte algoritme |copy| heeft drie parameters: een iterator naar de plaats waar begonnen wordt met lezen, een iterator naar de plaatst tot waar gelezen wordt en een iterator naar de plaats waar begonnen wordt met schrijven.
 
 In het onderstaande voorbeeldprogramma \proglink{iteratoren.cpp} wordt het gebruik van \hbox{\USE{stream}\hyp{},} \USE{insert}\hyp{} en \USE{reverse}\hyp{}iteratoren gedemonstreerd:  
-\cpplstinputfragment[linerange={1-19}]{iteratoren.cpp}
+\cpplstinputfragment[linerange={1-16}]{iteratoren.cpp}
 
 De strings uit het bestand |namen.txt| worden ingelezen in de |set| genaamd |namen|.
 Vervolgens wordt de inhoud van deze |set| van achter naar voor op het scherm afgedrukt, één string per regel.
@@ -4843,20 +4846,20 @@ Sommige containers hebben voor bepaalde bewerkingen specifieke memberfuncties:
 Je hebt in \csecref{sec:iteratoren} gezien dat het |sort| algoritme niet gebruikt kan worden om een |list| te sorteren.
 Om deze reden heeft een |list| de memberfunctie |sort| waarmee de lijst wel gesorteerd kan worden.
 
-\begin{lstlisting}[mathescape=true]
-list<int> l = {12, 18, 6};
-l.sort(); // $\color{darkgreen}\textbf{Ok!}$
-\end{lstlisting}
+\begin{cpplstfragment}[mathescape=true]
+list<int> l {12, 18, 6};
+l.sort(); // $\color{darkgreen}\textbf{Ok}$
+\end{cpplstfragment}
 
 Het |find| algoritme voert een lineaire zoekactie uit en de executietijd is dus $O(n)$.
 Je hebt in \csecref{sec:asscon} gezien dat de \enquote{gewone} associatieve containers een zoekactie kunnen uitvoeren met executietijd $O(\log{n})$ en de \enquote{ongesorteerde} associatieve containers een zoekactie kunnen uitvoeren met executietijd $O(1)$, als ze niet te vol zijn en als een goede hashfunctie gebruikt wordt.
 Om deze reden hebben alle associatieve containers de memberfunctie |find| waarmee snel in de container gezocht kan worden.
 
-\begin{lstlisting}[mathescape=true]
-set<int> priem = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
-auto i1 = find(priem.begin(), priem.end(), 91); // $\color{hrred}O(n)$
-auto i2 = priem.find(91); // $\color{darkgreen}O(\log{n})$
-\end{lstlisting}
+\begin{cpplstfragment}[mathescape=true]
+set<int> priem {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
+auto i1 {find(priem.begin(), priem.end(), 91)}; // $\color{hrred}O(n)$
+auto i2 {priem.find(91)}; // $\color{darkgreen}O(\log{n})$
+\end{cpplstfragment}
 
 Kijk dus voordat je een generiek algoritme gebruikt bij een bepaalde container altijd eerst of er een specifieke memberfunctie bij die container beschikbaar is.\\Zie \proglink{algorithm\_vs\_memberfunction.cpp}.
 
@@ -4872,12 +4875,12 @@ De volgende algoritmen kun je gebruiken om een bepaald element te zoeken in een 
 	\item |find_if|; Zoek het eerste element dat voldoet aan een bepaalde voorwaarde.\footnote{%
 		Bijvoorbeeld: zoek het eerste element $>0$.
 	}
-	\item |find_if_not|; Zoek het eerste element dat niet voldoet aan een bepaalde voorwaarde (sinds \Cpp{}11).
+	\item |find_if_not|; Zoek het eerste element dat niet voldoet aan een bepaalde voorwaarde.
 	\item |find_first_of|\footnotemark{}; Zoek het eerste element met een waarde uit een bepaalde range van waarden.
 	\item |adjacent_find|; Zoek de eerste twee opeenvolgende elementen met dezelfde waarde.
 \end{itemize}
 \footnotetext{Bedenk zelf waarom er geen algoritmen nodig zijn om het laatste in plaats van het eerste element te zoeken.
-	Kijk indien nodig ter inspiratie in \csecref{sec:revitr}.}
+Kijk indien nodig ter inspiratie in \csecref{sec:revitr}.}
 
 De volgende algoritmen kun je gebruiken om bepaalde elementen te tellen in een range:
 \begin{itemize}
@@ -4931,50 +4934,74 @@ De executietijd van |find_end| is $O(m\times{}(n-m))$.
 \subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::find}}{std::find}}
 \label{sec:find}
 In het onderstaande voorbeeldprogramma \proglink{find.cpp} wordt het |find| algoritme gebruikt om het bekende spelletje galgje te implementeren.
+%TODO: dit niet de handigste manier om galgje te implementeren. Beter voorbeeld zoeken.
 
 Dit programma werkt als volgt.
 De string |w| bevat het woord dat geraden moet worden.
-De |vector<bool>| genaamd |gevonden| wordt gevuld met $n$ maal de waarde |false|, waarbij $n$ het aantal karakters in het te raden woord is.
+De |vector<bool>| genaamd |gevonden| wordt gevuld met $n$ maal de waarde |false|, waarbij $n$ het aantal karakters in het te raden woord is.\footnote{%
+	Je ziet dat hier \emph{geen} gebruik gemaakt wordt van een universele initialisatie, zie \csecref{sec:universeleinitialisatie}.
+	Als je bij een container een universele initialisatie gebruikt dan worden de elementen in de initialisatielijst in de container geplaatst.
+	Als je een van de andere constructors van een container wilt gebruiken, zoals de contructor \cppcode{vector(size_type count, const T& value)}, zie \url{https://en.cppreference.com/w/cpp/container/vector/vector}, dan moet je ronde haakjes gebruiken in plaats van accolades bij het aanroepen van de constructor. 
+}
 In de |for|\hyp{}loop worden alle tot dusver gevonden letters van het te raden woord afgedrukt.
 Voor elke nog niet gevonden letter wordt een punt afgedrukt.
-Als de gebruiker een letter heeft ingevoerd, worden de bijbehorende posities in de |vector| |gevonden| |true| gemaakt.
+
+Als de gebruiker een letter heeft ingevoerd\footnote{%
+	Je ziet dat de functie \cppcode{cin.get()} gebruikt wordt om het door de gebruiker ingevoerde karakter in te lezen.
+	De \cppcode{static_cast}, zie \csecref{sec:casting}, is nodig omdat deze functie geen \cppcode{char} teruggeeft maar een integer.
+	Hierdoor kan deze functie de speciale waarde \cppcode{Traits::eof()} teruggeven als het einde van de invoer bereikt is.
+	Als je deze cast wilt voorkomen, dan kun je de variabele \cppcode{c} ook als volgt initialiseren: \cppcode{c = cin.get();}.
+	De tweede \cppcode{cin.get();} is nodig om de door de gebruiker ingetoetste \squote{Enter} in te lezen (en weg te gooien).
+}, worden de bijbehorende posities in de |vector| |gevonden| |true| gemaakt.
 Dit gebeurt door de ingevoerde letter te zoeken in het te raden woord met behulp van de |find| functie.
 Als de returnwaarde van |find| ongelijk is aan het tweede argument dat aan |find| is meegegeven, dan refereert de iterator |itr| naar de gevonden letter.
 De index van deze letter is te berekenen met de expressie |itr - w.cbegin()|.
 Op deze index wordt in de |vector| |gevonden| |true| geschreven om te markeren dat deze letter gevonden is.
 Vervolgens wordt de iterator |itr| een karakter verder geplaatst en vanaf deze positie wordt opnieuw naar de ingevoerde letter gezocht.
+Tevens wordt in de variabele |count| bijgehouden hoe vaak de letter gevonden is.
+
 Het zoeken en markeren herhaald zich net zolang tot deze letter niet meer gevonden wordt.
 Zolang de waarde |false| nog in de |vector| |gevonden| voorkomt, zijn nog niet alle letters van het te raden woord geraden.
 We maken hier gebruik van |count| om het aantal maal te tellen dat de waarde |false| in de |vector| |gevonden| voorkomt.
-Later, op \cpageref{pag:any_of}, wordt besproken hoe we dit met behulp van |any_of| kunnen doen.
+Later, op \cpageref{pag:any_of}, wordt besproken hoe je dit met behulp van |any_of| kunt doen.
 
-\cpplstinputfragment[linerange={1-26}]{find.cpp}
+\cpplstinputfragment[linerange={1-27}]{find.cpp}
 
-Mogelijke invoer \footnote{%
+Mogelijke invoer\footnote{%
 	De invoer is groen en onderstreept weergegeven.
 } en uitvoer van dit programma:
 \begin{coutput}
-	......
-	Geef een letter: \cinput{h}
-	......
-	Geef een letter: \cinput{a}
-	.a....
-	Geef een letter: \cinput{r}
-	.a....
-	Geef een letter: \cinput{r}
-	.a....
-	Geef een letter: \cinput{y}
-	.a....
-	Geef een letter: \cinput{g}
-	ga.g..
-	Geef een letter: \cinput{l}
-	galg..
-	Geef een letter: \cinput{j}
-	galgj.
-	Geef een letter: \cinput{e}
-	galgje
-	Je hebt het woord "galgje" geraden!
+......
+Raad een letter: \cinput{h}
+De letter 'h' komt 0 keer voor in het te raden woord
+......
+Raad een letter: \cinput{a}
+De letter 'a' komt 1 keer voor in het te raden woord
+.a....
+Raad een letter: \cinput{r}
+De letter 'r' komt 0 keer voor in het te raden woord
+.a....
+Raad een letter: \cinput{r}
+De letter 'r' komt 0 keer voor in het te raden woord
+.a....
+Raad een letter: \cinput{y}
+De letter 'y' komt 0 keer voor in het te raden woord
+.a....
+Raad een letter: \cinput{g}
+De letter 'g' komt 2 keer voor in het te raden woord
+ga.g..
+Raad een letter: \cinput{l}
+De letter 'l' komt 1 keer voor in het te raden woord
+galg..
+Raad een letter: \cinput{j}
+De letter 'j' komt 1 keer voor in het te raden woord
+galgj.
+Raad een letter: \cinput{e}
+De letter 'e' komt 1 keer voor in het te raden woord
+Je hebt het woord "galgje" geraden.
 \end{coutput}
+
+Dit is zeker niet de meest efficiënte en meest eenvoudige implementatie van het spelletje galgje. Een eenvoudigere en efficiëntere versie vind je in \proglink{galgje_strings.cpp}.
 
 \subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::find_if}}{std::find\_if}}
 \label{sec:findif}
@@ -4995,22 +5022,22 @@ De zoekvoorwaarde (condition) wordt op drie verschillende manieren opgegeven:
 	die een |bool| teruggeeft die aangeeft of aan de voorwaarde wordt voldaan.
 \end{itemize}
 
-\cpplstinputfragment[linerange={1-60}]{find_if.cpp}
+\cpplstinputfragment[linerange={1-47,58-58}]{find_if.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
-	Het eerste positieve element is: 3
-	Het eerste positieve element is: 3
-	Het eerste positieve element is: 3
+Het eerste positieve element is: 3
+Het eerste positieve element is: 3
+Het eerste positieve element is: 3
 \end{coutput}
 
 \label{pag:any_of}
 Nu je gezien hebt hoe, met behulp van een lambda expressie, een bepaalde voorwaarde kan worden opgegeven kunnen we de conditie van de do\hyp{}while\hyp{}lus in het programma uit \csecref{sec:find} verbeteren.
 
 De regel:
-\cpplstinputfragment[linerange={22-22}]{find.cpp}
+\cpplstinputfragment[linerange={25-25}]{find.cpp}
 kan vervangen worden door (zie \proglink{galgje\_find.cpp}):
-\cpplstinputfragment[linerange={22-24}]{galgje_find.cpp}
+\cpplstinputfragment[linerange={26-28}]{galgje_find.cpp}
 
 Het |any_of| algoritme is sneller dan het |count| algoritme omdat het niet altijd alle elementen hoeft af te gaan.
 Om te testen of één of meer elementen in de |vector| |gevonden| de waarde |false| hebben werden de elementen die |false| zijn geteld, met |count| en vervolgens werd gekeken of dit een waarde ongelijk aan nul opleverde.
@@ -5021,28 +5048,28 @@ Beiden algoritmen zijn O(n) maar de |any_of| zal altijd sneller zijn.
 \label{sec:findfirstof}
 Het onderstaande voorbeeldprogramma \proglink{find\_first\_of} laat zien hoe je het standaard algoritme |find_first_of| kunt gebruiken om het eerste priemgetal kleiner dan honderd in een bestand gevuld met integers te zoeken.
 
-\cpplstinputfragment[linerange={1-18}]{find_first_of.cpp}
+\cpplstinputfragment[linerange={1-17}]{find_first_of.cpp}
 
 \subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::for_each}}{std::for\_each}}
 \label{sec:foreach}
-Het onderstaande voorbeeldprogramma \proglink{for\_each.cpp} laat zien hoe je het standaard algoritme |for_each| kunt gebruiken om elk element van een |vector| 2x af te drukken.
+Het onderstaande voorbeeldprogramma \proglink{for\_each.cpp} laat zien hoe je het standaard algoritme |for_each| kunt gebruiken om elk element van een |vector| dubbel af te drukken.
 De bewerking die voor elk element uitgevoerd moet worden, wordt op twee verschillende manieren opgegeven:
 \begin{itemize}
 	\item door middel van een \emph{functie} die de bewerking uitvoert;
 	\item door middel van een \emph{lambda\hyp{}functie} die de bewerking uitvoert.
 \end{itemize}
 
-\cpplstinputfragment[linerange={1-28,39-42}]{for_each.cpp}
+\cpplstinputfragment[linerange={1-28,48-48}]{for_each.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
-	-3 -4 3 4
-	-3 -3 -4 -4 3 3 4 4
-	-3 -3 -4 -4 3 3 4 4
+-3 -4 3 4
+-3 -3 -4 -4 3 3 4 4
+-3 -3 -4 -4 3 3 4 4
 \end{coutput}
 
 We kunnen alle elementen van een vector ook dubbel afdrukken met behulp van een \USE{range\hyp{}based for}:
-\cpplstinputfragment[linerange={35-38}]{for_each.cpp}
+\cpplstinputfragment[linerange={44-47}]{for_each.cpp}
 
 Het gebruik van een \USE{range\hyp{}based for} heeft dezelfde voordelen en nadelen als het gebruik van een |for_each| met een lambda\hyp{}functie.
 De syntax van de \USE{range\hyp{}based for} is echter eenvoudiger.
@@ -5058,16 +5085,16 @@ Een lambda\hyp{}functie is een anoniem functie\hyp{}object dat wordt gedefinieer
 \subsubsection{Closure}
 \label{sec:closure}
 Soms wil je bij het definiëren van een lambda\hyp{}functie in de code van deze functie gebruik maken van variabelen die buiten de lambda\hyp{}functie gedefinieerd zijn.
-Een lambda functie waarbij dit mogelijk is wordt een \emph{\USE{closure}} genoemd (Nederlands: insluiting).
+Het object dat door een lambda functie wordt aangemaakt en waarin waarden van of verwijzingen naar variabelen van buiten de functie kunnen worden opgenomen wordt een \emph{\USE{closure}} genoemd (Nederlands: insluiting).
 De variabelen die ingesloten moeten worden in de \USE{closure} worden tussen [ en ] opgegeven.
 Deze ingesloten variabelen kunnen in de code van de \USE{closure} gebruikt worden.
 Enkele voorbeelden:
 
 \begin{tabu}{X[-1]X}
 	\hspace{1em}\labelitemi{} \code{[a, \&b]} & \code{a} wordt \enquote{by value} en \code{b} wordt \enquote{by reference} ingesloten.\\
-	\hspace{1em}\labelitemi{} \code{[\&]} & elke gebruikte variabele wordt \enquote{by reference} ingesloten.\\
-	\hspace{1em}\labelitemi{} \code{[=]} & elke gebruikte variabele wordt \enquote{by value} ingesloten.\\
-	\hspace{1em}\labelitemi{} \code{[=, \&c]} & \code{c} wordt \enquote{by reference} ingesloten en alle andere gebruikte variabelen worden \enquote{by value} ingesloten.\\
+	\hspace{1em}\labelitemi{} \code{[\&]} & elke in de lambda-functie gebruikte variabele wordt \enquote{by reference} ingesloten.\\
+	\hspace{1em}\labelitemi{} \code{[=]} & elke in de lambda-functie gebruikte variabele wordt \enquote{by value} ingesloten.\\
+	\hspace{1em}\labelitemi{} \code{[=, \&c]} & \code{c} wordt \enquote{by reference} ingesloten en alle andere in de lambda-functie gebruikte variabelen worden \enquote{by value} ingesloten.\\
 	\hspace{1em}\labelitemi{} \code{[]} & er worden géén variabelen ingesloten.
 
 \end{tabu}
@@ -5077,42 +5104,38 @@ Het onderstaande programma \proglink{closure.cpp} laat zien hoe je met behulp va
 	Zie online: \proglink{accumulate.cpp}.
 }
 
-\cpplstinputfragment[linerange={1-17}]{closure.cpp}
+\cpplstinputfragment[linerange={1-15}]{closure.cpp}
 
-In plaats van |[&somEven]| kan ook |[&]| gebruikt worden.
-Het expliciet specificeren dat de variabele |somEven| ingesloten moet worden in de \USE{closure} heeft als voordeel dat de compiler een foutmelding geeft als je per ongeluk een andere variabele in de code van de \USE{closure} gebruikt.
+In plaats van |[&som_even]| kan ook |[&]| gebruikt worden.
+Het expliciet specificeren dat de variabele |som_even| ingesloten moet worden in de \USE{closure} heeft als voordeel dat de compiler een foutmelding geeft als je per ongeluk een andere variabele in de code van de lambda-functie gebruikt.
 
 \subsubsection{Returntype van een lambda\hyp{}functie}
 \label{sec:returntypelambda}
 Bij alle tot nu toe gebruikte lambda\hyp{}functies kan de compiler zelf het returntype van de functie bepalen.
-Als de code van een lambda\hyp{}functie slechts uit een |return|\hyp{}statement bestaat dan is dit altijd mogelijk.
-Als de lambda\hyp{}functie uit meer instructies bestaat dan neemt een \Cpp{}11\hyp{}compiler aan dat het returntype |void| is.
-In \Cpp{}14 probeert de compiler in dit geval ook het correct type te bepalen maar er zijn situaties waarbij dit niet mogelijk is.
+Er zijn situaties waarbij dit niet mogelijk is.
 Als de compiler niet in staat is om zelf het returntype te bepalen, dan kan het returntype gespecificeerd worden na de parameterlijst van de lambda\hyp{}functie |-> typenaam|.
 
-In het onderstaande programma \proglink{res2geheel.cpp} wordt een |list| met toetsresultaten met één decimaal cijfer getransformeerd\footnote{%
+In het onderstaande programma \proglink{resultaat_naar_geheel.cpp} wordt een |list| met toetsresultaten met één decimaal cijfer getransformeerd\footnote{%
 	Zie voor informatie over het \code{transform} algoritme \url{http://en.cppreference.com/w/cpp/algorithm/transform} of verderop in dit dictaat: \csecref{sec:transform}.
 } 
 naar een |vector| met gehele toetsresultaten.
 Daarbij moeten de oorspronkelijke resultaten worden afgerond.
 Het minimaal te behalen gehele toetsresultaat is echter 1, dus alle oorspronkelijke toetsresultaten < 1.5 moeten omgezet worden naar 1.
 
-\cpplstinputfragment[linerange={1-26}]{res2geheel.cpp}
+\cpplstinputfragment[linerange={1-26}]{resultaat_naar_geheel.cpp}
 
 In dit geval is het noodzakelijk om het returntype van de lambda\hyp{}functie expliciet op te geven.
-De compiler is niet in staat om zelf het returntype te bepalen (ook niet in \Cpp{}14) omdat de |round| functie een |double| teruggeeft.
+De compiler is niet in staat om zelf het returntype te bepalen omdat de |round| functie een |double| teruggeeft.
 Het returntype van de lambda\hyp{}functie zou dus |int| of |double| kunnen zijn en alleen de programmeur weet wat de bedoeling is.
+Als je het returntype niet specificeert krijg je de volgende foutmelding: \error{error: inconsistent types 'int' and 'double' deduced for lambda return type}.
 
 \subsubsection{Lambda\hyp{}functieparametertype met \texorpdfstring{\code{auto}}{auto}}
 \label{sec:autolambdapar}
-In \Cpp{}14 is het mogelijk om het parametertype van een lambda\hyp{}function als |auto| te definiëren.%
-\footnote{%
-	De code in deze paragraaf is getest met GCC 4.9.2 en gecompileerd met de optie \code{-std=c++14}.
-}
+Het is ook mogelijk om het parametertype van een lambda\hyp{}function als |auto| te definiëren.%
 De compiler bepaalt dan zelf het juiste type.
-Zo kan in de |find_if| uit \csecref{sec:findif} de zoekvoorwaarde in \Cpp{}14 als volgt gedefinieerd worden:
+Zo kan in de |find_if| uit \csecref{sec:findif} de zoekvoorwaarde ook als volgt gedefinieerd worden:
 
-\cpplstinputfragment[linerange={7-15}]{find_if_c++14.cpp}
+\cpplstinputfragment[linerange={7-16}]{find_if_auto.cpp}
 
 De compiler bepaalt nu zelf dat het parametertype van de lambda functie |int| moet zijn omdat de elementen van de |list| |l| van het type |int| zijn.
 
@@ -5209,19 +5232,19 @@ De transformatie (bewerking) wordt op twee\footnote{%
 	\item door middel van een \emph{lambda\hyp{}functie} die de transformatie uitvoert.
 \end{itemize}
 
-\cpplstinputfragment[linerange={1-44}]{transform.cpp}
+\cpplstinputfragment[linerange={1-33,44-44}]{transform.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
-	-3 -4 3 4
-	1 2 3 4
-	-2 -2 6 8
-	-1 0 9 12
+-3 -4 3 4
+1 2 3 4
+-2 -2 6 8
+-1 0 9 12
 \end{coutput}
 
-In \Cpp{}14 kun je |auto| gebruiken om de parametertypes van de lambda\hyp{}functie te definiëren, zoals besproken in \csecref{sec:autolambdapar}:
+Je kunt ook |auto| gebruiken om de parametertypes van de lambda\hyp{}functie te definiëren, zoals besproken in \csecref{sec:autolambdapar}:
 
-\cpplstinputfragment[linerange={12-13,22-24}]{transform_c++14.cpp}
+\cpplstinputfragment[linerange={12-13,22-24}]{transform_auto.cpp}
 
 De compiler bepaalt nu zelf de parametertypes van de lambda\hyp{}functie.
 Het type van parameter |i1| moet |int| zijn omdat de elementen van de |vector| |v| van het type |int| zijn.
@@ -5238,20 +5261,20 @@ De |remove| algoritmen plaatsen alle elementen die niet verwijderd moeten worden
 Daarna moet de memberfunctie |erase| van de betreffende container aangeroepen worden om deze elementen daadwerkelijk te verwijderen.
 Dit wordt gedemonstreerd in het onderstaande programma \proglink{remove.cpp}:
 
-\cpplstinputfragment[linerange={1-38}]{remove.cpp}
+\cpplstinputfragment[linerange={1-36}]{remove.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
-	Na initialisatie:
-	0 1 4 9 16 25 36 49 64 81
-	Na remove (tot returned iterator):
-	1 9 25 49 81
-	Na remove (hele vector):
-	1 9 25 49 81 25 36 49 64 81
-	Na erase (hele vector):
-	1 9 25 49 81
-	Na remove binnen erase:
-	1 9 25 49 81
+Na initialisatie:
+0 1 4 9 16 25 36 49 64 81
+Na remove (tot returned iterator):
+1 9 25 49 81
+Na remove (hele vector):
+1 9 25 49 81 25 36 49 64 81
+Na erase (hele vector):
+1 9 25 49 81
+Na remove binnen erase:
+1 9 25 49 81
 \end{coutput}
 
 \subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::generate_n}}{std::generate\_n}}
@@ -5260,7 +5283,7 @@ In \csecref{sec:remove} werd de |vector| |v| gevuld met kwadraten door een |for|
 Als alternatief kunnen we ook gebruik maken van het algoritme |generate_n|, een \USE{insert}\hyp{}iterator (zie \csecref{sec:insitr}) en een \USE{closure} (zie \csecref{sec:closure}.
 Al kun je jezelf in dit geval natuurlijk wel afvragen of de |for|\hyp{}lus niet eenvoudiger en duidelijker is.
 
-\cpplstinputfragment[linerange={1-43}]{generate_n.cpp}
+\cpplstinputfragment[linerange={1-15}]{generate_n.cpp}
 
 \subsection{Sorteren en bewerkingen op gesorteerde ranges}
 \label{sec:algo3}
@@ -5302,12 +5325,12 @@ Je kunt echter ook indien gewenst zelf een vergelijkingsfunctie definiëren.
 Deze vergelijkingsfunctie moet als derde argument aan |sort| worden meegegeven.
 Dit is nodig als je in een andere volgorde wilt sorteren of als voor de te sorteren objecten geen |operator<| gedefinieerd is.
 
-Als je de getallen in het programma \proglink{streamitr.cpp} uit \csecref{sec:vbiteratoren} van hoog naar laag wilt sorteren dan kun je de regel:
-\cpplstinputfragment[linerange={14-14}]{streamitr.cpp}
+Als je de getallen in het programma \proglink{stream_iterator.cpp} uit \csecref{sec:vbiteratoren} van hoog naar laag wilt sorteren dan kun je de regel:
+\cpplstinputfragment[linerange={15-15}]{stream_iterator.cpp}
 vervangen door (zie \proglink{sort\_lambda.cpp})\footnote{%
 	Er is een nog eenvoudigere manier, zie \csecref{sec:stdfunctieobjecten}.
 }:
-\cpplstinputfragment[linerange={14-16}]{sort_lambda.cpp}
+\cpplstinputfragment[linerange={15-17}]{sort_lambda.cpp}
 
 Een |stable_sort| is nodig als een range \enquote{dubbel} gesorteerd moet worden.
 Stel dat bij een spelletje, na afloop van elk spel, de naam van de speler en het behaalde aantal punten opgeslagen worden in een |vector| met objecten van de class |Score|.
@@ -5316,17 +5339,17 @@ Bij de tweede sorteeroperatie mogen scores met een gelijk aantal punten niet in 
 Voor de tweede sorteeroperatie moet dus een |stable_sort| gebruikt worden.
 Zie \proglink{sort\_deelnemers.cpp}.
 
-\cpplstinputfragment[linerange={1-51}]{sort_deelnemers.cpp}
+\cpplstinputfragment[linerange={1-49}]{sort_deelnemers.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
-	400 Marie-Louise
-	300 Anne
-	300 Koen
-	300 Linda
-	300 Marie-Louise
-	300 Theo
-	50 Marie-Louise
+400 Marie-Louise
+300 Anne
+300 Koen
+300 Linda
+300 Marie-Louise
+300 Theo
+50 Marie-Louise
 \end{coutput}
 
 \subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::includes}}{std::includes}}
@@ -5349,46 +5372,55 @@ Als dit niet lukt\footnote{%
 wordt net zo lang om een nieuwe letter gevraagd tot het toevoegen wel lukt.
 Zolang de verzameling |te_raden| nog \emph{geen} deelverzameling is van de verzameling |geraden|, zijn nog niet alle letters van het te raden woord geraden.
 
-\cpplstinputfragment[linerange={1-27}]{galgje_sets.cpp}
+\cpplstinputfragment[linerange={1-26}]{galgje_sets.cpp}
 
 Invoer en uitvoer van dit programma:
 \begin{coutput}
-	......
-	Raad een letter: \cinput{h}
-	......
-	Raad een letter: \cinput{a}
-	.a....
-	Raad een letter: \cinput{g}
-	ga.g..
-	Raad een letter: \cinput{a}
-	De letter a had je al geraden...
-	Raad een andere letter: \cinput{h}
-	De letter h had je al geraden...
-	Raad een andere letter: \cinput{e}
-	ga.g.e
-	Raad een letter: \cinput{i}
-	ga.g.e
-	Raad een letter: \cinput{j}
-	ga.gje
-	Raad een letter: \cinput{l}
-	Je hebt het woord galgje geraden.
+......
+Raad een letter: \cinput{h}
+De letter 'h' komt 0 keer voor in het te raden woord.
+......
+Raad een letter: \cinput{a}
+De letter 'a' komt 1 keer voor in het te raden woord.
+.a....
+Raad een letter: \cinput{g}
+De letter 'g' komt 2 keer voor in het te raden woord.
+ga.g..
+Raad een letter: \cinput{a}
+De letter a had je al geraden...
+Raad een andere letter: \cinput{h}
+De letter h had je al geraden...
+Raad een andere letter: \cinput{e}
+De letter 'e' komt 1 keer voor in het te raden woord.
+ga.g.e
+Raad een letter: \cinput{i}
+De letter 'i' komt 0 keer voor in het te raden woord.
+ga.g.e
+Raad een letter: \cinput{j}
+De letter 'j' komt 1 keer voor in het te raden woord.
+ga.gje
+Raad een letter: \cinput{l}
+De letter 'l' komt 1 keer voor in het te raden woord.
+Je hebt het woord galgje geraden.
 \end{coutput}
 
 \subsubsection{Voorbeeldprogramma dat generiek en objectgeoriënteerd programmeren combineert}
 De standaard functie |mem_fn| vormt de koppeling tussen generiek programmeren en objectgeoriënteerd programmeren omdat hiermee een memberfunctie kan worden omgezet in een functie\hyp{}object, zie \proglink{mem\_fn.cpp}.
 
-\cpplstinputfragment[linerange={1-36,43-46}]{mem_fn.cpp}
+\cpplstinputfragment[linerange={1-33,54-54}]{mem_fn.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
-	Kef kef Woef woef Kef kef
-	Kef kef Woef woef Kef kef
+Kef kef Woef woef Kef kef
 \end{coutput}
 
-Je kunt alle honden in de kennel ook laten blaffen met behulp van een \USE{range\hyp{}based for}:
-\cpplstinputfragment[linerange={39-42}]{mem_fn.cpp}
+Je kunt alle honden in de kennel ook laten blaffen met behulp van lambda-functie:
+\cpplstinputfragment[linerange={36-39}]{mem_fn.cpp}
 
-Het gebruik van een \USE{range\hyp{}based for} is eenvoudiger dan het gebruik van een |for_each| met een lambda\hyp{}functie.
+Je kunt alle honden in de kennel ook laten blaffen met behulp van een \USE{range\hyp{}based for}:
+\cpplstinputfragment[linerange={46-49}]{mem_fn.cpp}
+
+Het gebruik van een \USE{range\hyp{}based for} is eenvoudiger dan het gebruik van een |for_each|.
 De \USE{range\hyp{}based for} kan echter alleen gebruikt worden als de hele container moet worden doorlopen.
 Met een |for_each| kan ook een deel van een container doorlopen worden.
 
@@ -5405,7 +5437,7 @@ Dit blijkt inderdaad mogelijk door gebruik te maken van zogenoemde iterator tags
 In de standaard \Cpp{} \USE{library} is voor elke iteratorsoort een zogenoemd \hcode{iterator_\\-tag} type gedefinieerd.
 Er is dus een \hcode{random_\\-access_\\-iterator_\\-tag} type, een \hcode{bi\\-di\\-rec\\-tional_\\-iterator_\\-tag} en een \hcode{forward_\\-iterator_\\-tag}.
 We definiëren nu drie overloaded\footnote{%
-	Zie \cppdictaatseccite{1.10}.
+	Zie \csecref{sec:functionoverloading}.
 } template functies die allemaal \hcode{find_\\-upper_\\-middle} heten en behalve de twee parameters |begin| en |end| nog een derde parameter hebben genaamd |dummy|.
 Deze |dummy| parameter is van het type van de betreffende \hcode{iterator_\\-tag}.
 Deze parameter wordt verder in de implementatie van de functie niet gebruikt.
@@ -5438,14 +5470,14 @@ Het gebruik van standaard functie\hyp{}objecten is vooral handig als de operatie
 
 Zo kun je bijvoorbeeld de |vector| |w| bij de |vector| |v| optellen door middel van een |transfer| algoritme met een standaard functie\hyp{}object |plus|, zie \proglink{transfer\_plus}.
 
-\cpplstinputfragment[linerange={1-25}]{transform_plus.cpp}
+\cpplstinputfragment[linerange={1-22}]{transform_plus.cpp}
 
 Als je dit vergelijkt met het gebruik van een functie of lambda\hyp{}functie zoals in \csecref{sec:transform}, dan zie je dat het gebruik van een standaard functie\hyp{}object in dit geval eenvoudiger is.
 
 De code die in \csecref{sec:sort} gegeven is om een |vector| met integers van hoog naar laag te sorteren (zie \proglink{sort\_lambda.cpp}):
-\cpplstinputfragment[linerange={14-16}]{sort_lambda.cpp}
+\cpplstinputfragment[linerange={15-17}]{sort_lambda.cpp}
 kan sterk vereenvoudigd worden door het gebruik van een standaard functie\hyp{}object (zie \proglink{sort\_greater.cpp}):
-\cpplstinputfragment[linerange={15-15}]{sort_greater.cpp}
+\cpplstinputfragment[linerange={16-16}]{sort_greater.cpp}
 
 Het gebruik van een standaard functie\hyp{}object om een voorwaarde door te geven aan één van de |_if| algoritmen is minder eenvoudig.
 In \csecref{sec:findif} heb je gezien dat het eerste getal $\ge{}0$ in een |list| met integers opgezocht kan worden door deze voorwaarde aan |find_if| door te geven met behulp van een functie of een lambda\hyp{}functie.
@@ -5456,21 +5488,21 @@ Er moet dan gebruik gemaakt worden van de standaard functie |bind| waarmee een f
 Het standaard functie\hyp{}object |greater_equal<int>()| heeft twee parameters en bepaalt bij aanroep of het eerste argument $\ge{}$ aan het tweede argument is.
 Met behulp van |bind| kan hiervan een functie\hyp{}object gemaakt worden met slechts één parameter die bij aanroep bepaald of het argument $\ge{}0$ is, door de tweede parameter van |greater_equal<int>()| te binden aan de waarde $0$.
 De aanroep van |bind| ziet er dan als volgt uit: 
-\begin{lstlisting}
+\begin{cpplstfragment}
 bind(greater_equal<int>(), _1, 0)
-\end{lstlisting}
+\end{cpplstfragment}
 De |_1| is een zogenoemde \USE{placeholder}\footnote{%
 	De \USE{placeholders} zijn gedefinieerd in een aparte \code{namespace} genaamd \hcode{std::\\-place\\-holders}.
 } en geeft aan dat de eerste (en enige) parameter van het door |bind| teruggegeven functie\hyp{}object ingevuld moet worden als eerste argument van |greater_equal<int>()|.
 De |0| geeft aan dat de constante waarde $0$ ingevuld moet worden als tweede argument van |greater_equal<int>()|.
 Het door |bind| teruggegeven functie\hyp{}object kan  vervolgens aan het |find_if| algoritme worden doorgegeven om de eerste integer $\ge{}0$ in de |vector| |rij| te vinden, zie \proglink{find\_if\_bind.cpp}:
 
-\cpplstinputfragment[linerange={1-16}]{find_if_bind.cpp}
+\cpplstinputfragment[linerange={1-14}]{find_if_bind.cpp}
 
 Persoonlijk vind ik het gebruik van een lambda\hyp{}functie in dit geval eenvoudiger, zie \csecref{sec:findif}.
 
 In \csecref{sec:remove} heb je gezien hoe de even getallen uit een |vector| met integers verwijderd kunnen worden met behulp van een lambda\hyp{}functie, zie \proglink{remove.cpp}:
-\cpplstinputfragment[linerange={30-32}]{remove.cpp}
+\cpplstinputfragment[linerange={31-33}]{remove.cpp}
 
 Dit zou ook met behulp van standaard functie\hyp{}objecten kunnen, zie \proglink{remove\_bind.cpp}:
 
@@ -5481,7 +5513,7 @@ Ook in dit geval vind ik het gebruik van een lambda\hyp{}functie eenvoudiger.
 \chapter{Toepassingen van datastructuren}
 \label{sec:Toepassingen}
 In dit hoofdstuk worden algoritmen en datastructuren toegepast om de computer het spelletje Boter, Kaas en Eieren te laten spelen.
-Een andere toepassing die, in de les maar niet in dit dictaat, wordt besproken is het berekenen van het kortste pad in een \USE{graph}.
+Een andere toepassing is het berekenen van het kortste pad in een \USE{graph}.
 
 \section{Boter, Kaas en Eieren}
 \label{sec:BoterKaasEnEieren}
@@ -6388,6 +6420,7 @@ wijzen. Let op: je kunt |i| zelf wel wijzigen!
 \end{cpplstfragment}
 
 \subsection{Casting}
+\label{sec:casting}
 Door middel van \emph{casting}%
 \footnote{%
     Het Engelse woord casting betekent onder andere in een mal gieten.

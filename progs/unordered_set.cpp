@@ -11,10 +11,10 @@ void print(const unordered_set<string>& s) {
 }
 
 int main() {
-    unordered_set<string> mensen{"Ron", "Daniël", "Roy", "Harry"};
+    unordered_set<string> mensen {"Ron", "Daniël", "Roy", "Harry"};
     mensen.insert("Elles");
     print(mensen);
-    auto result = mensen.insert("Harry");
+    auto result {mensen.insert("Harry")};
     if (!result.second)
         cout << "1 Harry is genoeg.\n";
     cout << "Er is " << mensen.count("Elles") << " Elles.\n";

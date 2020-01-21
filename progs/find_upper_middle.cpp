@@ -15,8 +15,8 @@
 using namespace std;
 
 template <typename I>
-I find_upper_middle(I begin, I end, forward_iterator_tag dummy) {
-    I i{begin};
+I find_upper_middle(I begin, I end, forward_iterator_tag /*dummy*/) {
+    I i {begin};
     while (begin != end) {
         ++begin;
         if (begin != end) {
@@ -28,7 +28,7 @@ I find_upper_middle(I begin, I end, forward_iterator_tag dummy) {
 }
 
 template <typename I>
-I find_upper_middle(I begin, I end, bidirectional_iterator_tag dummy) {
+I find_upper_middle(I begin, I end, bidirectional_iterator_tag /*dummy*/) {
     while (begin != end) {
         --end;
         if (begin != end) {
@@ -39,27 +39,27 @@ I find_upper_middle(I begin, I end, bidirectional_iterator_tag dummy) {
 }
 
 template <typename I>
-I find_upper_middle(I begin, I end, random_access_iterator_tag dummy) {
+I find_upper_middle(I begin, I end, random_access_iterator_tag /*dummy*/) {
     return begin + (end - begin)/2;
 }
 
 template <typename I>
 I find_upper_middle(I begin, I end) {
-    return find_upper_middle(begin, end, typename iterator_traits<I>::iterator_category());
+    return find_upper_middle(begin, end, typename iterator_traits<I>::iterator_category {});
 }
 
 int main() {
-    forward_list<int> fl{1, 2};
+    forward_list<int> fl {1, 2};
     if (*find_upper_middle(fl.begin(), fl.end()) != 2) {
         cerr << "Test 1 failed!\n";
         return 1;
     }
-    list<int> l{1, 2, 3};
+    list<int> l {1, 2, 3};
     if (*find_upper_middle(l.begin(), l.end()) != 2) {
         cerr << "Test 2 failed!\n";
         return 2;
     }
-    vector<int> v{1, 2, 3, 4};
+    vector<int> v {1, 2, 3, 4};
     if (*find_upper_middle(v.begin(), v.end()) != 3) {
         cerr << "Test 3 failed!\n";
         return 3;
