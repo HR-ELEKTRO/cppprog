@@ -33,7 +33,7 @@ public:
     bool is_awin(Side s) const;
     #ifdef ANALYSE
     int get_and_reset_moves_considered() {
-        int i{moves_considered};
+        int i {moves_considered};
         moves_considered = 0;
         return i;
     }
@@ -66,16 +66,16 @@ Tic_tac_toe::Value Tic_tac_toe::choose_computer_move(Row& best_row, Column& best
 #ifdef ANALYSE
     ++moves_considered;
 #endif
-    Value best_value{value()};
+    Value best_value {value()};
     if (best_value == UNDECIDED) {
         best_value = HUMAN_WINS;
-        for (Row row{0}; alpha < beta && row < 3; ++row) {
-            for (Column column{0}; alpha < beta && column < 3; ++column) {
+        for (Row row {0}; alpha < beta && row < 3; ++row) {
+            for (Column column {0}; alpha < beta && column < 3; ++column) {
                 if (board(row, column) == EMPTY) {
                     board(row, column) = COMPUTER;
                     Row dummy_row;
                     Column dummy_column;
-                    Value value{choose_human_move(dummy_row, dummy_column, alpha, beta)};
+                    Value value {choose_human_move(dummy_row, dummy_column, alpha, beta)};
                     board(row, column) = EMPTY;
                     if (value > best_value) {
                         best_value = value;
@@ -93,16 +93,16 @@ Tic_tac_toe::Value Tic_tac_toe::choose_human_move(Row& best_row, Column& best_co
 #ifdef ANALYSE
     ++moves_considered;
 #endif
-    Value best_value{value()};
+    Value best_value {value()};
     if (best_value == UNDECIDED) {
         best_value = COMPUTER_WINS;
-        for (Row row{0}; beta > alpha && row < 3; ++row) {
-            for (Column column{0}; beta > alpha && column < 3; ++column) {
+        for (Row row {0}; beta > alpha && row < 3; ++row) {
+            for (Column column {0}; beta > alpha && column < 3; ++column) {
                 if (board(row, column) == EMPTY) {
                     board(row, column) = HUMAN;
                     Row dummy_row;
                     Column dummy_column;
-                    Value value{choose_computer_move(dummy_row, dummy_column, alpha, beta)};
+                    Value value {choose_computer_move(dummy_row, dummy_column, alpha, beta)};
                     board(row, column) = EMPTY;
                     if (value < best_value) {
                         best_value = value;
@@ -125,7 +125,7 @@ bool Tic_tac_toe::is_undecided() const {
 }
 
 bool Tic_tac_toe::play_move(Side s, Row row, Column column) {
-    if (row < 0 || row >= 3 || column < 0 || column >= 3 || board(row, column) != EMPTY)
+    if (row >= 3 || column >= 3 || board(row, column) != EMPTY)
         return false;
     board(row, column) = s;
     return true;
@@ -138,12 +138,12 @@ bool Tic_tac_toe::board_is_full() const {
 }
 
 bool Tic_tac_toe::is_awin(Side s) const {
-    for (Row r{0}; r < 3; ++r) {
+    for (Row r {0}; r < 3; ++r) {
         if (board(r, 0) == s && board(r, 1) == s && board(r, 2) == s) {
             return true;
         }
     }
-    for (Column c{0}; c < 3; ++c) {
+    for (Column c {0}; c < 3; ++c) {
         if (board(0, c) == s && board(1, c) == s && board(2, c) == s) {
             return true;
         }
@@ -163,8 +163,8 @@ Console_tttgame::Console_tttgame(bool computer_goes_first) :
 void Console_tttgame::print_board() const {
     string streep(3, '-');
     cout << streep << '\n';
-    for (Tic_tac_toe::Row row{0}; row < 3; ++row) {
-        for (Tic_tac_toe::Column column{0}; column < 3; ++column)
+    for (Tic_tac_toe::Row row {0}; row < 3; ++row) {
+        for (Tic_tac_toe::Column column {0}; column < 3; ++column)
         if (t.side(row, column) == Tic_tac_toe::COMPUTER)
             cout << computer_symbol;
         else if (t.side(row, column) == Tic_tac_toe::HUMAN)
@@ -180,12 +180,12 @@ void Console_tttgame::do_computer_move() {
     Tic_tac_toe::Row best_row;
     Tic_tac_toe::Column best_column;
 #ifdef ANALYSE
-    auto start{chrono::high_resolution_clock::now()};
+    auto start {chrono::high_resolution_clock::now()};
 #endif
     t.choose_computer_move(best_row, best_column);
 #ifdef ANALYSE
-    auto stop{chrono::high_resolution_clock::now()};
-    auto duration{chrono::duration_cast<std::chrono::microseconds>(stop - start).count()};
+    auto stop {chrono::high_resolution_clock::now()};
+    auto duration {chrono::duration_cast<std::chrono::microseconds>(stop - start).count()};
     cout << "Calculation time: " << duration << " us\n";
     cout << "Moves considered: " << t.get_and_reset_moves_considered() << '\n';
 #endif
@@ -224,10 +224,10 @@ void Console_tttgame::play() {
 
 int main() {
     cout << "Welcome to TIC-TAC-TOE\n";
-    bool computer_goes_first{true};
+    bool computer_goes_first {true};
     char again;
     do {
-        Console_tttgame game{computer_goes_first};
+        Console_tttgame game {computer_goes_first};
         game.play();
         do {
             cout << "Play again (y/n)? ";

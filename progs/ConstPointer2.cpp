@@ -1,9 +1,9 @@
 // Constante pointers
 
 int main() {
-    int i{3};
-    const int j{4};
-    const int* p{&i};
+    int i {3};
+    const int j {4};
+    const int* p {&i};
     // p wijst naar i en je kunt i niet via p wijzigen.
     // Let op: je kunt i zelf wel rechtstreeks wijzigen!
     i = 4;
@@ -13,7 +13,7 @@ int main() {
     p = &j;
     // Goed
 
-    int* const q{&i};
+    int* const q {&i};
     // q wijst naar i en je kunt q nergens anders meer naar laten wijzen. 
     // Let op: je kunt i wel via q (of rechtstreeks) wijzigen.
     i = 4;
@@ -23,7 +23,7 @@ int main() {
     q = &j;
     // Error: assignment of read-only variable 'q'
 
-    const int* const r{&i};
+    const int* const r {&i};
     // r wijst naar i en je kunt i niet via r wijzigen en je kunt r nergens anders meer naar laten wijzen.
     // Let op: je kunt i zelf wel rechtstreeks wijzigen!
     i = 4;

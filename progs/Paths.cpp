@@ -135,7 +135,7 @@ void Graph::print_path(const string& destination_name) const {
 
 void Graph::unweighted(const string& start_name) {
     reset();
-    Vertex* start{find_vertex(start_name)};
+    Vertex* start {find_vertex(start_name)};
     start->costs = 0;
     queue<Vertex*> q;
     q.push(start);
@@ -155,7 +155,7 @@ void Graph::unweighted(const string& start_name) {
 
 void Graph::dijkstra(const string& start_name) {
     reset();
-    Vertex* start{find_vertex(start_name)};
+    Vertex* start {find_vertex(start_name)};
     start->costs = 0;
     auto ptr_vector_greater{[](Vertex* p, Vertex* q) { 
             return p->costs > q->costs; 
@@ -186,7 +186,7 @@ void Graph::dijkstra(const string& start_name) {
 
 void Graph::negative(const string& start_name) {
     reset();
-    Vertex* start{find_vertex(start_name)};
+    Vertex* start {find_vertex(start_name)};
     start->costs = 0;
     queue<Vertex*> q;
     q.push(start);
@@ -217,7 +217,7 @@ void Graph::negative(const string& start_name) {
 
 void Graph::acyclic(const string& start_name) {
     reset();
-    Vertex* start{find_vertex(start_name)};
+    Vertex* start {find_vertex(start_name)};
     start->costs = 0;
     queue<Vertex*> q;
     // calculate all indegrees
@@ -293,7 +293,7 @@ int main() {
                 string base_name{file_name.substr(0, file_name.find(".txt"))};
                 system(("start https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/" + base_name + ".png").c_str());
             }
-            ifstream in_file{file_name};
+            ifstream in_file {file_name};
             if (!in_file) {
                 throw runtime_error {"Cannot open " + file_name};
             }

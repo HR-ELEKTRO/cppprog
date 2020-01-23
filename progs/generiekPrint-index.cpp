@@ -19,7 +19,7 @@ template<typename C> void print(const C& c) {
 int main() {
     vector<int> v;
     deque<double> d;
-    for (int i = 1; i <= 10; ++i) {
+    for (int i {1}; i <= 10; ++i) {
         v.push_back(i);
         d.push_back(1.0 / i);
     }

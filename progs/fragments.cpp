@@ -167,7 +167,7 @@ int main() {
 void dummy() {
 {
 //>som_in_C
-    int rij[] = {12, 2, 17, 32, 1, 18};
+    int rij[] {12, 2, 17, 32, 1, 18};
     size_t aantal {sizeof array / sizeof array[0]};
     int som {0};
     for (size_t i {0}; i < aantal; i++) {

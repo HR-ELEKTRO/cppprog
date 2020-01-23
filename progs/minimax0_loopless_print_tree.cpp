@@ -10,7 +10,7 @@ int value_move_computer(int pos);
 int value_move_human(int pos);
 
 int position_value(int pos) {
-    static const int value[16] = {4, 5, 3, 2, 6, 7, 8, 9, 1, 10, 2, 11, 12, 13, 14, 14};
+    static const int value[16] {4, 5, 3, 2, 6, 7, 8, 9, 1, 10, 2, 11, 12, 13, 14, 14};
     return pos >= 15 && pos <= 31 ? value[pos - 15]: -1;
 }
 
@@ -31,12 +31,12 @@ void print_calculated_tree(int pos, int level) {
 }
 
 int value_move_computer(int pos) {
-    int value = position_value(pos);
+    int value {position_value(pos)};
     return value != -1 ? value : max(value_move_human(2 * pos + 1), value_move_human(2 * pos + 2));
 }
 
 int value_move_human(int pos) {
-    int value = position_value(pos);
+    int value {position_value(pos)};
     return value != -1 ? value : min(value_move_computer(2 * pos + 1), value_move_computer(2 * pos + 2));
 }
 

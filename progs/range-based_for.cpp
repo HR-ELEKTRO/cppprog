@@ -2,7 +2,7 @@
 using namespace std;
 
 int main() {
-    int rij[] = {12, 2, 17, 32, 1, 18};
+    int rij[] {12, 2, 17, 32, 1, 18};
     int som {0};
     for (auto element: rij) {
         som += element;

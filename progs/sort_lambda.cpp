@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
     vector<int> rij;
-    ifstream fin{"getallen_ongesorteerd.txt"};
+    ifstream fin {"getallen_ongesorteerd.txt"};
     if (!fin)
         return 1; // kan fin niet openen
     istream_iterator<int> iin {fin}, einde;

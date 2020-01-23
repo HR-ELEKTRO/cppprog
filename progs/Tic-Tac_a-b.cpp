@@ -8,25 +8,12 @@ using namespace std;
 #define ANALYSE
 #ifdef ANALYSE
 #include <chrono>
-#endif    
-
-// this program is written to analyze the problem reported by Marc Cornet
-// the algorithm does not choose a value when it is in a losing situation
-
-// define SOLUTION 0 to show the problem
-
-// define SOLUTION 1 to show first solution
-// in this solution best_row and best_column are initialized with the first valid move
-
-// define SOLUTION 2 to show secons solution
-// in this solution the best_value is overridden if a value equal to best_value is found
-
-#define SOLUTION 2
+#endif
 
 class Tic_tac_toe {
 public:
-    enum Side { EMPTY, HUMAN, COMPUTER };
-    enum Value { HUMAN_WINS = -1, DRAW, COMPUTER_WINS, UNDECIDED };
+    enum Side {EMPTY, HUMAN, COMPUTER};
+    enum Value {HUMAN_WINS = -1, DRAW, COMPUTER_WINS, UNDECIDED};
     using Board = matrix<Side, 3, 3>;
     using Row = Board::size_type;
     using Column = Board::size_type;
@@ -39,9 +26,6 @@ public:
     }
     Value choose_computer_move(Row& best_row, Column& best_column, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS);
     Value choose_human_move(Row& best_row, Column& best_column, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS);
-#if SOLUTION == 1
-    void find_first_valid_move(Row& valid_row, Column& valid_column);
-#endif
     Side side(Row row, Column column) const;
     bool is_undecided() const;
     bool play_move(Side s, Row row, Column column);
@@ -49,7 +33,7 @@ public:
     bool is_awin(Side s) const;
 #ifdef ANALYSE
     int get_and_reset_moves_considered() {
-        int i{moves_considered};
+        int i {moves_considered};
         moves_considered = 0;
         return i;
     }
@@ -66,7 +50,6 @@ class Console_tttgame {
 public:
     explicit Console_tttgame(bool computer_goes_first);
     void play();
-    void lose();
 private:
     void print_board() const;
     void do_computer_move();
@@ -83,21 +66,17 @@ Tic_tac_toe::Value Tic_tac_toe::choose_computer_move(Row& best_row, Column& best
 #ifdef ANALYSE
     ++moves_considered;
 #endif
-    Value best_value{value()};
+    Value best_value {value()};
     if (best_value == UNDECIDED) {
-        for (Row row{0}; alpha < beta && row < 3; ++row) {
-            for (Column column{0}; alpha < beta && column < 3; ++column) {
+        for (Row row {0}; alpha < beta && row < 3; ++row) {
+            for (Column column {0}; alpha < beta && column < 3; ++column) {
                 if (board(row, column) == EMPTY) {
                     board(row, column) = COMPUTER;
                     Row dummy_row;
                     Column dummy_column;
-                    Value value{choose_human_move(dummy_row, dummy_column, alpha, beta)};
+                    Value value {choose_human_move(dummy_row, dummy_column, alpha, beta)};
                     board(row, column) = EMPTY;
-#if SOLUTION == 2
-                    if (value >= alpha) {
-#else
                     if (value > alpha) {
-#endif
                         alpha = value;
                         best_row = row;
                         best_column = column;
@@ -114,21 +93,17 @@ Tic_tac_toe::Value Tic_tac_toe::choose_human_move(Row& best_row, Column& best_co
 #ifdef ANALYSE
     ++moves_considered;
 #endif
-    Value best_value{value()};
+    Value best_value {value()};
     if (best_value == UNDECIDED) {
-        for (Row row{0}; beta > alpha && row < 3; ++row) {
-            for (Column column{0}; beta > alpha && column < 3; ++column) {
+        for (Row row {0}; beta > alpha && row < 3; ++row) {
+            for (Column column {0}; beta > alpha && column < 3; ++column) {
                 if (board(row, column) == EMPTY) {
                     board(row, column) = HUMAN;
                     Row dummy_row;
                     Column dummy_column;
-                    Value value{choose_computer_move(dummy_row, dummy_column, alpha, beta)};
+                    Value value {choose_computer_move(dummy_row, dummy_column, alpha, beta)};
                     board(row, column) = EMPTY;
-#if SOLUTION == 2
-                    if (value <= beta) {
-#else                        
                     if (value < beta) {
-#endif
                         beta = value;
                         best_row = row;
                         best_column = column;
@@ -141,20 +116,6 @@ Tic_tac_toe::Value Tic_tac_toe::choose_human_move(Row& best_row, Column& best_co
     return best_value;
 }
 
-#if SOLUTION == 1
-void Tic_tac_toe::find_first_valid_move(Row& valid_row, Column& valid_column) {
-    for (Row row{0}; row < 3; ++row) {
-        for (Column column{0}; column < 3; ++column) {
-            if (board(row, column) == EMPTY) {
-                valid_row = row;
-                valid_column = column;
-                return;
-            }
-        }
-    }
-}
-#endif
-
 Tic_tac_toe::Side Tic_tac_toe::side(Row row, Column column) const {
     return board(row, column);
 }
@@ -164,7 +125,7 @@ bool Tic_tac_toe::is_undecided() const {
 }
 
 bool Tic_tac_toe::play_move(Side s, Row row, Column column) {
-    if (row < 0 || row >= 3 || column < 0 || column >= 3 || board(row, column) != EMPTY)
+    if (row >= 3 || column >= 3 || board(row, column) != EMPTY)
         return false;
     board(row, column) = s;
     return true;
@@ -177,12 +138,12 @@ bool Tic_tac_toe::board_is_full() const {
 }
 
 bool Tic_tac_toe::is_awin(Side s) const {
-    for (Row r{0}; r < 3; ++r) {
+    for (Row r {0}; r < 3; ++r) {
         if (board(r, 0) == s && board(r, 1) == s && board(r, 2) == s) {
             return true;
         }
     }
-    for (Column c{0}; c < 3; ++c) {
+    for (Column c {0}; c < 3; ++c) {
         if (board(0, c) == s && board(1, c) == s && board(2, c) == s) {
             return true;
         }
@@ -202,8 +163,8 @@ computer_symbol(computer_goes_first ? 'x' : 'o'), human_symbol(computer_goes_fir
 void Console_tttgame::print_board() const {
     string streep(3, '-');
     cout << streep << '\n';
-    for (Tic_tac_toe::Row row{0}; row < 3; ++row) {
-        for (Tic_tac_toe::Column column{0}; column < 3; ++column)
+    for (Tic_tac_toe::Row row {0}; row < 3; ++row) {
+        for (Tic_tac_toe::Column column {0}; column < 3; ++column)
         if (t.side(row, column) == Tic_tac_toe::COMPUTER)
             cout << computer_symbol;
         else if (t.side(row, column) == Tic_tac_toe::HUMAN)
@@ -219,17 +180,12 @@ void Console_tttgame::do_computer_move() {
     Tic_tac_toe::Row best_row;
     Tic_tac_toe::Column best_column;
 #ifdef ANALYSE
-    auto start{chrono::high_resolution_clock::now()};
-#endif
-#if SOLUTION == 1
-    // choose the first valid move
-    t.find_first_valid_move(best_row, best_column);
-    // search for a better move
+    auto start {chrono::high_resolution_clock::now()};
 #endif
     t.choose_computer_move(best_row, best_column);
 #ifdef ANALYSE
-    auto stop{chrono::high_resolution_clock::now()};
-    auto duration{chrono::duration_cast<chrono::microseconds>(stop - start).count()};
+    auto stop {chrono::high_resolution_clock::now()};
+    auto duration {chrono::duration_cast<chrono::microseconds>(stop - start).count()};
     cout << "Calculation time: " << duration << " us\n";
     cout << "Moves considered: " << t.get_and_reset_moves_considered() << '\n';
 #endif
@@ -266,21 +222,18 @@ void Console_tttgame::play() {
     }
 }
 
-void Console_tttgame::lose() {
-    // place computer in losing situation
-    t.play_move(Tic_tac_toe::HUMAN, 0, 0);
-    t.play_move(Tic_tac_toe::COMPUTER, 0, 1);
-    t.play_move(Tic_tac_toe::HUMAN, 1, 1);
-    print_board();
-    do_computer_move();
-#if SOLUTION != 0
-    cout << '\n';
-    play();
-#endif
-}
-
 int main() {
-    cout << "Welcome to TIC-TAC-TOE Test for losing\n";
-    Console_tttgame game{false};
-    game.lose();
+    cout << "Welcome to TIC-TAC-TOE\n";
+    bool computer_goes_first {true};
+    char again;
+    do {
+        Console_tttgame game {computer_goes_first};
+        game.play();
+        do {
+            cout << "Play again (y/n)? ";
+            cin >> again;
+        } while (again != 'y' && again != 'Y' && again != 'n' && again != 'N');
+        computer_goes_first = !computer_goes_first;
+        cout << '\n';
+    } while (again != 'n' && again != 'N');
 }

@@ -5518,7 +5518,7 @@ Een andere toepassing is het berekenen van het kortste pad in een \USE{graph}.
 \section{Boter, Kaas en Eieren}
 \label{sec:BoterKaasEnEieren}
 In deze paragraaf wordt besproken hoe je een computer het spelletje Boter, Kaas en Eieren kunt laten spelen.
-In de les is, of wordt, uitgelegd hoe je de beste zet kunt vinden in een spelboom (Engels: \USE{game tree}) door het minimax algoritme toe te passen.
+Maar eerst wordt uitgelegd hoe je de beste zet kunt vinden in een spelboom (Engels: \USE{game tree}) door het minimax algoritme toe te passen.
 In de volgende paragraaf wordt uitgelegd hoe je dit algoritme kunt implementeren in \Cpp{}.
 Daarna zal worden uitgelegd hoe je dit algoritme kunt versnellen door de zogenoemde \squote{\USE{alpha-beta pruning}} toe te passen.
 Tot slot zal verwezen worden naar programma's waarin het minimax algoritme en \USE{alpha-beta pruning} zijn toegepast om een computer Boter, Kaas en Eieren te laten spelen.
@@ -5554,61 +5554,61 @@ De hoogst haalbare waarde kan bepaald worden door van onder naar boven door de b
 \end{itemize} 
 Omdat je dus afwisselend kiest voor de maximale (als de computer aan de beurt is) en de minimale (als de tegenstander aan de beurt is) waarde wordt dit algoritme het minimax algoritme genoemd.
 
-In het onderstaande programma \proglink{MinMax0.cpp} wordt de boom uit \cref{fig:gameTree1} gebruikt en wordt de hoogst haalbare waarde berekend met het minimax algoritme.
+In het onderstaande programma \proglink{Minimax0.cpp} wordt de boom uit \cref{fig:gameTree1} gebruikt en wordt de hoogst haalbare waarde berekend met het minimax algoritme.
 Er wordt daarbij gebruik gemaakt van 2 functies die elkaar (recursief) aanroepen.
 
-\cpplstinputfragment[linerange={1-50}]{MinMax0.cpp}
+\cpplstinputfragment[linerange={1-49}]{Minimax0.cpp}
 
 De functie |value| geeft \hcode{UN\\-DE\\-CIDED} terug als de waarde van de positie berekend moet worden.
 Als de positie zich in de onderste laag van de boom bevindt en de waarde dus bekend is, geeft |value| deze waarde terug.
 
-\newcommand{\chooseComputerMove}[1]{\hcode{cho\\-ose\\-Com\\-puter\\-Move(#1)}}
-\newcommand{\chooseHumanMove}[1]{\hcode{cho\\-ose\\-Hu\\-man\\-Move\\-(#1)}}
+\newcommand{\chooseComputerMove}[1]{\hcode{cho\\-ose_\\-com\\-puter_\\-move(#1)}}
+\newcommand{\chooseHumanMove}[1]{\hcode{cho\\-ose_\\-hu\\-man_\\-move\\-(#1)}}
 % eigenlijk niet correct value kun je niet afbreken
 \newcommand{\functievalue}[1]{functie \hcode{va\\-lue\\-(#1)}}
 \newcommand{\valueelement}[1]{\hcode[mathescape]{va\\-lue\\-[#1]}}
 
-De functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen om te bepalen wat de waarde van de positie |pos| is als de computer aan de beurt is in deze positie.
+De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen om te bepalen wat de waarde van de positie |pos| is als de computer aan de beurt is in deze positie.
 Deze functie moet dus het \emph{maximum} bepalen van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
 In deze binaire boom zijn dat de posities: |2 * pos + 1| en |2 * pos + 2|.
-Bij binnenkomst van de functie \hcode{choose\\-Com\\-puter\\-Move} wordt eerst de functie |value| aangeroepen.
-De returnwaarde van deze functie wordt opgeslagen in de lokale variabele \hcode{best\\-Value}.
-Als de waarde van \hcode{best\\-Value} ongelijk is aan \hcode{UN\\-DE\\-CIDED}, kan de functie \hcode{choose\\-Com\\-puter\\-Move} deze waarde meteen teruggeven.
+Bij binnenkomst van de functie \hcode{choose_\\-com\\-puter_\\-move} wordt eerst de functie |value| aangeroepen.
+De returnwaarde van deze functie wordt opgeslagen in de lokale variabele \hcode{best_\\value}.
+Als de waarde van \hcode{best_\\value} ongelijk is aan \hcode{UN\\-DE\\-CIDED}, kan de functie \hcode{choose_\\-com\\-puter_\\-move} deze waarde meteen teruggeven.
 De positie |pos| bevindt zich in dat geval in de onderste laag van de boom.
-Als de positie |pos| waarmee de functie \hcode{choose\\-Com\\-puter\\-Move} is aangeroepen zich niet in de onderste laag van de boom bevindt, geeft de functie |value| de waarde \hcode{UN\\-DE\\-CIDED} terug en wordt de waarde van de variabele \hcode{best\\-Value} gelijk gemaakt aan het \emph{absolute minimum} (in dit geval |0|).
+Als de positie |pos| waarmee de functie \hcode{choose_\\-com\\-puter_\\-move} is aangeroepen zich niet in de onderste laag van de boom bevindt, geeft de functie |value| de waarde \hcode{UN\\-DE\\-CIDED} terug en wordt de waarde van de variabele \hcode{best_\\value} gelijk gemaakt aan het \emph{absolute minimum} (in dit geval |0|).
 Het is logisch dat een functie die het maximum moet bepalen begint met het (tot dan toe gevonden) maximum gelijk te maken aan het absolute minimum.
 Vervolgens wordt in de |for|\hyp{}lus de waarde van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden bepaald.
-Dit gebeurt door het aanroepen van de functie \hcode{choose\\-Hu\\-man\\-Move} met als argument |2 * pos + i| waarbij |i| achtereenvolgens de waarde |1| en |2| heeft.
-We moeten hier de functie \hcode{choose\\-Hu\\-man\\-Move} aanroepen omdat als in positie |pos| de computer aan de beurt is, in de posities die vanuit de positie |pos| bereikt kunnen worden de tegenstander (mens) aan de beurt zal zijn.
+Dit gebeurt door het aanroepen van de functie \hcode{choose_\\-hu\\-man_\\-move} met als argument |2 * pos + i| waarbij |i| achtereenvolgens de waarde |1| en |2| heeft.
+We moeten hier de functie \hcode{choose_\\-hu\\-man_\\-move} aanroepen omdat als in positie |pos| de computer aan de beurt is, in de posities die vanuit de positie |pos| bereikt kunnen worden de tegenstander (mens) aan de beurt zal zijn.
 De returnwaarde van deze functie wordt opgeslagen in de lokale variabele |value|.
-Als de waarde van |value| groter is dan het tot nu toe gevonden maximum (opgeslagen in de variabele \hcode{best\\-Value}), dan wordt het tot nu toe gevonden maximum gelijk gemaakt aan |value|.
-Aan het einde van de |for|\hyp{}lus zal de variabele \hcode{best\\-Value} dus het maximum bevatten van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
-De waarde van \hcode{best\\-Value} wordt teruggegeven aan de aanroepende functie.
+Als de waarde van |value| groter is dan het tot nu toe gevonden maximum (opgeslagen in de variabele \hcode{best_\\value}), dan wordt het tot nu toe gevonden maximum gelijk gemaakt aan |value|.
+Aan het einde van de |for|\hyp{}lus zal de variabele \hcode{best_\\value} dus het maximum bevatten van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
+De waarde van \hcode{best_\\value} wordt teruggegeven aan de aanroepende functie.
 
-De functie \hcode{choose\\-Hu\\-man\\-Move} wordt aangeroepen als de mens aan de beurt is en lijkt erg veel op de functie \hcode{choose\\-Com\\-puter\\-Move}, in plaats van het maximum wordt echter het minimum bepaald.
+De functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen als de mens aan de beurt is en lijkt erg veel op de functie \hcode{choose_\\-com\\-puter_\\-move}, in plaats van het maximum wordt echter het minimum bepaald.
 
-De functie \hcode{choose\\-Hu\\-man\\-Move} wordt aangeroepen om te bepalen wat de waarde van de positie |pos| is als de mens aan de beurt is in deze positie.
+De functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen om te bepalen wat de waarde van de positie |pos| is als de mens aan de beurt is in deze positie.
 Deze functie moet dus het \emph{minimum} bepalen van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
 In deze binaire boom zijn dat de posities: |2 * pos + 1| en |2 * pos + 2|.
-Bij binnenkomst van de functie \hcode{choose\\-Hu\\-man\\-Move} wordt eerst de functie |value| aangeroepen.
-De returnwaarde van deze functie wordt opgeslagen in de lokale variabele \hcode{best\\-Value}.
-Als de waarde van \hcode{best\\-Value} ongelijk is aan \hcode{UN\\-DE\\-CIDED}, kan de functie \hcode{choose\\-Hu\\-man\\-Move} deze waarde meteen teruggeven.
+Bij binnenkomst van de functie \hcode{choose_\\-hu\\-man_\\-move} wordt eerst de functie |value| aangeroepen.
+De returnwaarde van deze functie wordt opgeslagen in de lokale variabele \hcode{best_\\value}.
+Als de waarde van \hcode{best_\\value} ongelijk is aan \hcode{UN\\-DE\\-CIDED}, kan de functie \hcode{choose_\\-hu\\-man_\\-move} deze waarde meteen teruggeven.
 De positie |pos| bevindt zich in dat geval in de onderste laag van de boom.
-Als de positie |pos| waarmee de functie \hcode{choose\\-Hu\\-man\\-Move} is aangeroepen zich niet in de onderste laag van de boom bevindt, geeft de functie |value| de waarde \hcode{UN\\-DE\\-CIDED} terug en wordt de waarde van de variabele \hcode{best\\-Value} gelijk gemaakt aan het \emph{absolute maximum} (in dit geval |15|).
+Als de positie |pos| waarmee de functie \hcode{choose_\\-hu\\-man_\\-move} is aangeroepen zich niet in de onderste laag van de boom bevindt, geeft de functie |value| de waarde \hcode{UN\\-DE\\-CIDED} terug en wordt de waarde van de variabele \hcode{best_\\value} gelijk gemaakt aan het \emph{absolute maximum} (in dit geval |15|).
 Het is logisch dat een functie die het minimum moet bepalen begint met het (tot dan toe gevonden) minimum gelijk te maken aan het absolute maximum.
 Vervolgens wordt in de |for|\hyp{}lus de waarde van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden bepaald.
-Dit gebeurt door het aanroepen van de functie \hcode{choose\\-Com\\-puter\\-Move} met als argument |2 * pos + i| waarbij |i| achtereenvolgens de waarde |1| en |2| heeft.
-We moeten hier de functie \hcode{choose\\-Com\\-puter\\-Move} aanroepen omdat als in positie |pos| de mens aan de beurt is, in de posities die vanuit de positie |pos| bereikt kunnen worden de computer aan de beurt zal zijn.
+Dit gebeurt door het aanroepen van de functie \hcode{choose_\\-com\\-puter_\\-move} met als argument |2 * pos + i| waarbij |i| achtereenvolgens de waarde |1| en |2| heeft.
+We moeten hier de functie \hcode{choose_\\-com\\-puter_\\-move} aanroepen omdat als in positie |pos| de mens aan de beurt is, in de posities die vanuit de positie |pos| bereikt kunnen worden de computer aan de beurt zal zijn.
 De returnwaarde van deze functie wordt opgeslagen in de lokale variabele |value|.
-Als de waarde van |value| kleiner is dan het tot nu toe gevonden minimum (opgeslagen in de variabele \hcode{best\\-Value}), dan wordt het tot nu toe gevonden minimum gelijk gemaakt aan |value|.
-Aan het einde van de |for|\hyp{}lus zal de variabele \hcode{best\\-Value} dus het minimum bevatten van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
-De waarde van \hcode{best\\-Value} wordt teruggegeven aan de aanroepende functie.
+Als de waarde van |value| kleiner is dan het tot nu toe gevonden minimum (opgeslagen in de variabele \hcode{best_\\value}), dan wordt het tot nu toe gevonden minimum gelijk gemaakt aan |value|.
+Aan het einde van de |for|\hyp{}lus zal de variabele \hcode{best_\\value} dus het minimum bevatten van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
+De waarde van \hcode{best_\\value} wordt teruggegeven aan de aanroepende functie.
 
 In de functie |main| wordt ervan uitgegaan dat de computer in positie |0| aan de beurt is.
 
 De uitvoer van dit programma is:
 \begin{coutput}
-	Minimaal te behalen Maximale waarde = 4
+Minimaal te behalen Maximale waarde = 4
 \end{coutput}
 
 Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinvol om het uitvoeren van dit programma stap voor stap te volgen, eventueel met behulp van een debugger.
@@ -5617,50 +5617,50 @@ Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinv
 	De parameter |pos| krijgt dus de waarde |0|.
 	Vervolgens wordt de \functievalue{0} aangeroepen.
 	De parameter |pos| van de functie |value| krijgt dus de waarde |0| en deze functie geeft \hcode{UN\\-DE\\-CIDED} terug.
-	Deze waarde wordt toegekend aan de lokale variabel \hcode{best\\-Value} van de functie \hcode{choose\\-Com\\-puter\\-Move}.
+	Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
 	De voorwaarde van de |if| is dus |true| en de code binnen de |if| wordt uitgevoerd.
-	De lokale variabele \hcode{best\\-Value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
-	De variabele |i| krijgt de waarde |1| en de functie \hcode{choose\\-Hu\\-man\\-Move} wordt aangeroepen met |2 * 0 + 1| is |1| als argument.
+	De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
+	De variabele |i| krijgt de waarde |1| en de functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 0 + 1| is |1| als argument.
 	\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 		\item Vanuit de functie \chooseComputerMove{0} wordt dus de functie \chooseHumanMove{1} aangeroepen.
 		Vervolgens wordt de \functievalue{1} aangeroepen en deze functie geeft \hcode{UN\\-DE\\-CIDED} terug.
-		Deze waarde wordt toegekend aan de lokale variabel \hcode{best\\-Value} van de functie \hcode{choose\\-Hu\\-man\\-Move}.
+		Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-hu\\-man_\\-move}.
 		De voorwaarde van de |if| is dus |true| en de code binnen de |if| wordt uitgevoerd.
-		De lokale variabele \hcode{best\\-Value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
-		De variabele |i| krijgt de waarde |1| en de functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen met |2 * 1 + 1| is |3| als argument.
+		De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
+		De variabele |i| krijgt de waarde |1| en de functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 1 + 1| is |3| als argument.
 		\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 			\item Vanuit de functie \chooseHumanMove{1}wordt dus de functie \chooseComputerMove{3} aangeroepen.
 			Vervolgens wordt de \functievalue{3} aangeroepen en
 			deze functie geeft \hcode{UN\\-DE\\-CIDED} terug.
-			Deze waarde wordt toegekend aan de lokale variabel \hcode{best\\-Value} van de functie \hcode{choose\\-Com\\-puter\\-Move}.
+			Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
 			De code binnen de |if| wordt uitgevoerd.
-			De lokale variabele \hcode{best\\-Value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
-			De variabele |i| krijgt de waarde |1| en de functie \hcode{choose\\-Hu\\-man\\-Move} wordt aangeroepen met |2 * 3 + 1| is |7| als argument.
+			De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
+			De variabele |i| krijgt de waarde |1| en de functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 3 + 1| is |7| als argument.
 			\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 				\item Vanuit de functie \chooseComputerMove{3} wordt dus de functie \chooseHumanMove{7} aangeroepen.
 				Vervolgens wordt de \functievalue{7} aangeroepen en deze functie geeft \hcode{UN\\-DE\\-CIDED} terug.
-				Deze waarde wordt toegekend aan de lokale variabel \hcode{best\\-Value} van de functie \hcode{choose\\-Hu\\-man\\-Move}.
+				Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-hu\\-man_\\-move}.
 				De code binnen de |if| wordt uitgevoerd.
-				De lokale variabele \hcode{best\\-Value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
-				De variabele |i| krijgt de waarde |1| en de functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen met |2 * 7 + 1| is |15| als argument.
+				De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
+				De variabele |i| krijgt de waarde |1| en de functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 7 + 1| is |15| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{7} wordt dus de functie \chooseComputerMove{15} aangeroepen.
 					Vervolgens wordt de \functievalue{15} aangeroepen en deze functie geeft array-element \valueelement{pos $\ \mbox{-}\ $ 15} is \valueelement{0} is |4| terug.
-					Deze waarde wordt toegekend aan de lokale variabel \hcode{best\\-Value} van de functie \hcode{choose\\-Com\\-puter\\-Move}.
+					Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
 					De voorwaarde van de |if| is nu |false| en de waarde |4| wordt teruggegeven.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{7}.
-				De lokale variabele |value| krijgt de waarde |4| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best\\-Value} (|4| is kleiner dan |15|) krijgt \hcode{best\\-Value} de waarde |4|.
+				De lokale variabele |value| krijgt de waarde |4| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best_\\value} (|4| is kleiner dan |15|) krijgt \hcode{best_\\value} de waarde |4|.
 				De |for|-lus wordt vervolgd.
-				De variabele |i| krijgt de waarde |2| en de functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen met |2 * 7 + 2| is |16| als argument.
+				De variabele |i| krijgt de waarde |2| en de functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 7 + 2| is |16| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{7} wordt dus de functie \chooseComputerMove{16} aangeroepen.
 					Vervolgens wordt de \functievalue{16} aangeroepen en deze functie geeft array-element \valueelement{pos $\ \mbox{-}\ $ 15} is \valueelement{1} is |5| terug.
-					Deze waarde wordt toegekend aan de lokale variabel \hcode{best\\-Value} van de functie \hcode{choose\\-Com\\-puter\\-Move}.
+					Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
 					De voorwaarde van de |if| is nu |false| en de waarde |5| wordt teruggegeven.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{7}.
-				De lokale variabele |value| krijgt de waarde |5| en omdat de waarde van |value| niet kleiner is dan de waarde van \hcode{best\\-Value} (|5| is niet kleiner dan |4|) behoudt \hcode{best\\-Value} de waarde |4|.
+				De lokale variabele |value| krijgt de waarde |5| en omdat de waarde van |value| niet kleiner is dan de waarde van \hcode{best_\\value} (|5| is niet kleiner dan |4|) behoudt \hcode{best_\\value} de waarde |4|.
 				De |for|-lus is nu voltooid.
 				Deze situatie is weergegeven in \cref{fig:gameTree2}.
 				De functie \chooseHumanMove{7} geeft de waarde |4| terug.
@@ -5669,37 +5669,37 @@ Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinv
 				
 			\end{enumerate}
 			\item We keren terug naar de functie \chooseComputerMove{3}.
-			De lokale variabele |value| krijgt de waarde |4| en omdat de waarde van |value| groter is dan de waarde van \hcode{best\\-Value} (|4| is groter dan |0|) krijgt \hcode{best\\-Value} de waarde |4|.
+			De lokale variabele |value| krijgt de waarde |4| en omdat de waarde van |value| groter is dan de waarde van \hcode{best_\\value} (|4| is groter dan |0|) krijgt \hcode{best_\\value} de waarde |4|.
 			De |for|-lus wordt vervolgd.
-			De variabele |i| krijgt de waarde |2| en de functie \hcode{choose\\-Hu\\-man\\-Move} wordt aangeroepen met |2 * 3 + 2| is |8| als argument.
+			De variabele |i| krijgt de waarde |2| en de functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 3 + 2| is |8| als argument.
 			\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 				\item Vanuit de functie \chooseComputerMove{3} wordt dus de functie \chooseHumanMove{8} aangeroepen.
 				Vervolgens geeft de \functievalue{8} \hcode{UN\\-DE\\-CIDED} terug.
-				Deze waarde wordt toegekend aan de lokale variabel \hcode{best\\-Value} van de functie \hcode{choose\\-Hu\\-man\\-Move} en de code binnen de |if| wordt uitgevoerd.
-				De lokale variabele \hcode{best\\-Value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
-				De variabele |i| krijgt de waarde |1| en de functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen met |2 * 8 + 1| is |17| als argument.
+				Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-hu\\-man_\\-move} en de code binnen de |if| wordt uitgevoerd.
+				De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
+				De variabele |i| krijgt de waarde |1| en de functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 8 + 1| is |17| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{8} wordt dus de functie \chooseComputerMove{17} aangeroepen.
 					Vervolgens wordt de \functievalue{17} aangeroepen en die geeft array-element \valueelement{17 $\ \mbox{-}\ $ 15} is \valueelement{2} is |3| terug.
-					Deze waarde wordt teruggegeven vanuit de functie \hcode{choose\\-Com\\-puter\\-Move}.
+					Deze waarde wordt teruggegeven vanuit de functie \hcode{choose_\\-com\\-puter_\\-move}.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{8}.
-				De lokale variabele |value| krijgt de waarde |3| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best\\-Value} (|3| is kleiner dan |15|) krijgt \hcode{best\\-Value} de waarde |4|.
+				De lokale variabele |value| krijgt de waarde |3| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best_\\value} (|3| is kleiner dan |15|) krijgt \hcode{best_\\value} de waarde |4|.
 				De |for|-lus wordt vervolgd.
-				De variabele |i| krijgt de waarde |2| en de functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen met |2 * 8 + 2| is |18| als argument.
+				De variabele |i| krijgt de waarde |2| en de functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 8 + 2| is |18| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{8} wordt dus de functie \chooseComputerMove{18} aangeroepen.
 					Vervolgens wordt de \functievalue{18} aangeroepen en die geeft array-element \valueelement{18 $\ \mbox{-}\ $ 15} is \valueelement{3} is |2| terug.
-					Deze waarde wordt teruggegeven vanuit de functie \hcode{choose\\-Com\\-puter\\-Move}.
+					Deze waarde wordt teruggegeven vanuit de functie \hcode{choose_\\-com\\-puter_\\-move}.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{8}.
-				De lokale variabele |value| krijgt de waarde |2| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best\\-Value} (|2| is kleiner dan |3|) krijgt \hcode{best\\-Value} de waarde |2|.
+				De lokale variabele |value| krijgt de waarde |2| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best_\\value} (|2| is kleiner dan |3|) krijgt \hcode{best_\\value} de waarde |2|.
 				De |for|-lus is nu voltooid.
 				De functie \chooseHumanMove{8} geeft de waarde |2| terug.
 			\end{enumerate}
 			\item
 			We keren terug naar de functie \chooseComputerMove{3}.
-			De lokale variabele |value| krijgt de waar\-de |2| en omdat de waarde van |value| niet groter is dan de waarde van \hcode{best\\-Value} (|2| is niet groter dan |2|) behoudt \hcode{best\\-Value} de waarde |4|.
+			De lokale variabele |value| krijgt de waar\-de |2| en omdat de waarde van |value| niet groter is dan de waarde van \hcode{best_\\value} (|2| is niet groter dan |2|) behoudt \hcode{best_\\value} de waarde |4|.
 			De |for|-lus is nu voltooid.
 			Deze situatie is weergegeven in \cref{fig:gameTree3}.
 			De functie \chooseComputerMove{3} geeft de waarde |4| terug.
@@ -5709,68 +5709,68 @@ Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinv
 		\end{enumerate}
 		\item
 		We keren terug naar de functie \chooseHumanMove{1}.
-		Omdat de geretourneerde waarde (|4|) kleiner is dan de waarde van \hcode{best\\-Value} (|15|) krijgt \hcode{best\\-Value} de waarde |4|.
+		Omdat de geretourneerde waarde (|4|) kleiner is dan de waarde van \hcode{best_\\value} (|15|) krijgt \hcode{best_\\value} de waarde |4|.
 		De |for|-lus wordt vervolgd.
-		De functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen met |2 * 1 + 2| is |4| als argument.
+		De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 1 + 2| is |4| als argument.
 		\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 			\item Vanuit de functie \chooseHumanMove{1}wordt dus de functie \chooseComputerMove{4} aangeroepen.
-			De lokale variabele \hcode{best\\-Value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
-			De functie \hcode{choose\\-Hu\\-man\\-Move} wordt aangeroepen met |2 * 4 + 1| is |9| als argument.
+			De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
+			De functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 4 + 1| is |9| als argument.
 			\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 				\item Vanuit de functie \chooseComputerMove{4} wordt dus de functie \chooseHumanMove{9} aangeroepen.
-				De lokale variabele \hcode{best\\-Value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
-				De functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen met |2 * 9 + 1| is |19| als argument.
+				De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
+				De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 9 + 1| is |19| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{9} wordt dus de functie \chooseComputerMove{19} aangeroepen die de waarde |6| teruggeeft.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{9}.
-				Omdat de geretourneerde waar\-de (|6|) kleiner is dan de waarde van \hcode{best\\-Value} (|15|) krijgt \hcode{best\\-Value} de waarde |6|.
+				Omdat de geretourneerde waar\-de (|6|) kleiner is dan de waarde van \hcode{best_\\value} (|15|) krijgt \hcode{best_\\value} de waarde |6|.
 				De |for|-lus wordt vervolgd.
-				De functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen met |2 * 9 + 2| is |20| als argument.
+				De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 9 + 2| is |20| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{9} wordt dus de functie \chooseComputerMove{20} aangeroepen die de waarde |7| teruggeeft.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{9}.
-				Omdat de geretourneerde waar\-de (|7|) niet kleiner is dan de waarde van \hcode{best\\-Value} (|6|) geeft de functie \chooseHumanMove{9} de waarde |6| terug.
+				Omdat de geretourneerde waar\-de (|7|) niet kleiner is dan de waarde van \hcode{best_\\value} (|6|) geeft de functie \chooseHumanMove{9} de waarde |6| terug.
 			\end{enumerate}
 			\item
 			We keren terug naar de functie \chooseComputerMove{4}.
-			Omdat de geretourneerde waarde (|6|) groter is dan de waarde van \hcode{best\\-Value} (|0|) krijgt \hcode{best\\-Value} de waarde |6|.
+			Omdat de geretourneerde waarde (|6|) groter is dan de waarde van \hcode{best_\\value} (|0|) krijgt \hcode{best_\\value} de waarde |6|.
 			De |for|-lus wordt vervolgd.
-			De functie \hcode{choose\\-Hu\\-man\\-Move} wordt aangeroepen met |2 * 4 +| |2| is |10| als argument.
+			De functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 4 +| |2| is |10| als argument.
 			\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 				\item Vanuit de functie \chooseComputerMove{4} wordt dus de functie \chooseHumanMove{10} aangeroepen.
-				De lokale variabele \hcode{best\\-Value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
-				De functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen met |2 * 10 + 1| is |21| als argument.
+				De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
+				De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 10 + 1| is |21| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item De functie \chooseComputerMove{21} geeft de waarde |8| terug.
 				\end{enumerate}
-				\item Omdat de geretourneerde waarde (|8|) kleiner is dan de waarde van \hcode{best\\-Value} (|15|) krijgt \hcode{best\\-Value} de waarde |8|.
+				\item Omdat de geretourneerde waarde (|8|) kleiner is dan de waarde van \hcode{best_\\value} (|15|) krijgt \hcode{best_\\value} de waarde |8|.
 				De |for|-lus wordt vervolgd.
-				De functie \hcode{choose\\-Com\\-puter\\-Move} wordt aangeroepen met |2 * 10 + 2| is |22| als argument.
+				De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 10 + 2| is |22| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item De functie \chooseComputerMove{22} geeft de waarde |9| terug.
 				\end{enumerate}
-				\item Omdat de geretourneerde waarde (|9|) niet kleiner is dan de waarde van \hcode{best\\-Value} (|8|) geeft de functie \chooseHumanMove{9} de waarde |8| terug.
+				\item Omdat de geretourneerde waarde (|9|) niet kleiner is dan de waarde van \hcode{best_\\value} (|8|) geeft de functie \chooseHumanMove{9} de waarde |8| terug.
 			\end{enumerate}
 			\item
 			We keren terug naar de functie \chooseComputerMove{4}.
-			Omdat de geretourneerde waarde (|8|) groter is dan de waarde van \hcode{best\\-Value} (|6|) geeft de functie \chooseComputerMove{3} geeft de waarde |8| terug.
+			Omdat de geretourneerde waarde (|8|) groter is dan de waarde van \hcode{best_\\value} (|6|) geeft de functie \chooseComputerMove{3} geeft de waarde |8| terug.
 		\end{enumerate}
 		\item We keren terug naar de functie \chooseHumanMove{1}.
-		Omdat de geretourneerde waarde (|8|) niet kleiner is dan de waarde van \hcode{best\\-Value} (|4|) geeft de functie \chooseHumanMove{1} de waarde |4| terug.
+		Omdat de geretourneerde waarde (|8|) niet kleiner is dan de waarde van \hcode{best_\\value} (|4|) geeft de functie \chooseHumanMove{1} de waarde |4| terug.
 	\end{enumerate}
 	\item We keren terug naar de functie \chooseComputerMove{0}.
-	Omdat de geretourneerde waarde (|4|) groter is dan de waarde van \hcode{best\\-Value} (|0|) krijgt \hcode{best\\-Value} de waarde |4|.
+	Omdat de geretourneerde waarde (|4|) groter is dan de waarde van \hcode{best_\\value} (|0|) krijgt \hcode{best_\\value} de waarde |4|.
 	De |for|-lus wordt vervolgd.
-	De functie \hcode{choose\\-Hu\\-man\\-Move} wordt aangeroepen met |2 * 0 + 2| is |2| als argument.
+	De functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 0 + 2| is |2| als argument.
 	\begin{enumerate}[label*=\arabic*,leftmargin=1em]
 		\item $\cdots$
 		\item $\cdots$
 		\item $\cdots$ De functie \chooseHumanMove{2} geeft de waarde |2| terug.
 	\end{enumerate}
 	\item We keren terug naar de functie \chooseComputerMove{0}.
-	Omdat de geretourneerde waarde (|2|) niet groter is dan de waarde van \hcode{best\\-Value} (|4|) geeft de functie \chooseComputerMove{0} de waarde |4| terug.
+	Omdat de geretourneerde waarde (|2|) niet groter is dan de waarde van \hcode{best_\\value} (|4|) geeft de functie \chooseComputerMove{0} de waarde |4| terug.
 	Deze situatie is weergegeven in \cref{fig:gameTree4}.
 	
 	\figuur{scale=0.5}{gameTree4}{Spelboom net voor het einde van het uitvoeren van \chooseComputerMove{0}.}
@@ -5779,15 +5779,15 @@ Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinv
 
 In de \cref{fig:gameTree4} kun je zien dat met behulp van het minimax algoritme de best bereikbare positie voor de computer wordt gevonden.
 
-In het programma \proglink{MinMax0PrintTree.cpp} wordt de spelboom weergegeven in \cref{fig:gameTree1} geprint met behulp van de recursieve functie |printTree|.
-De berekende waarde voor elke positie weergegeven in \cref{fig:gameTree4} wordt geprint met behulp van de recursieve functie \hcode{print\\-Cal\\-cu\\-lated\\-Tree}.
+In het programma \proglink{minimax0_print_tree.cpp} wordt de spelboom weergegeven in \cref{fig:gameTree1} geprint met behulp van de recursieve functie |print_tree|.
+De berekende waarde voor elke positie weergegeven in \cref{fig:gameTree4} wordt geprint met behulp van de recursieve functie \hcode{print_\\-cal\\-cu\\-lated_\\-Tree}.
 Beide functies zijn hieronder weergegeven:
 
-\cpplstinputfragment[linerange={48-62}]{MinMax0PrintTree.cpp}
+\cpplstinputfragment[linerange={48-62}]{minimax0_print_tree.cpp}
 
-Het is ook mogelijk om de functies |valueMoveComputer| en |valueMoveHuman| te combineren tot 1 functie, zie \proglink{MinMax1.cpp}:
+Het is ook mogelijk om de functies |value_move_computer| en |value_move_human| te combineren tot 1 functie, zie \proglink{minimax1.cpp}:
 
-\cpplstinputfragment[linerange={16-30}]{MinMax1.cpp}
+\cpplstinputfragment[linerange={16-30}]{minimax1.cpp}
 
 Er zijn echter twee redenen om dit \emph{niet} te doen:\begin{itemize}
 	\item De functie wordt moeilijker te begrijpen en dus moeilijker te debuggen en/of aan te passen.
@@ -5798,28 +5798,28 @@ Er zijn echter twee redenen om dit \emph{niet} te doen:\begin{itemize}
 In het bovenstaande programma wordt alleen de waarde van de positie bepaald.
 Dit is uiteraard niet voldoende.
 We moeten ook weten welke zet we moeten doen om deze waarde te bereiken!
-Dit kan \enquote{eenvoudig} worden bereikt door bij het zoeken naar de maximale of minimale waarde de beste positie op te slaan in de uitvoerparameter |bestNextPos|.
-De functies \hcode{choose\\-Com\\-puter\\-Move} en \hcode{choose\\-Hu\\-man\\-Move} moeten dan als volgt worden aangepast:
+Dit kan \enquote{eenvoudig} worden bereikt door bij het zoeken naar de maximale of minimale waarde de beste positie op te slaan in de uitvoerparameter |best_next_pos|.
+De functies \hcode{choose_\\-com\\-puter_\\-move} en \hcode{choose_\\-hu\\-man_\\-move} moeten dan als volgt worden aangepast:
 
-\cpplstinputfragment[linerange={18-48}]{MinMax2.cpp}
+\cpplstinputfragment[linerange={18-48}]{minimax2.cpp}
 
 In de functie |main| kunnen we deze functies als volgt gebruiken om beste zet voor de computer respectievelijk de gebruiker te bepalen:
 
-\cpplstinputfragment[linerange={50-72}]{MinMax2.cpp}
+\cpplstinputfragment[linerange={50-72}]{minimax2.cpp}
 
-Een mogelijke uitvoer van dit programma \proglink{MinMax2.cpp} is als volgt:
+Een mogelijke uitvoer van dit programma \proglink{minimax2.cpp} is als volgt:
 \begin{coutput}
-	Minimaal te behalen Maximale waarde = 4
-	Computer kiest positie: 1
-	Je kunt kiezen voor positie 3 of positie 4
-	Pssst, 3 is de beste keuze.
-	Maak je keuze: \cinput{4}
-	Minimaal te behalen Maximale waarde = 8
-	Computer kiest positie: 10
-	Je kunt kiezen voor positie 21 of positie 22
-	Pssst, 21 is de beste keuze.
-	Maak je keuze: \cinput{22}
-	Behaalde waarde = 9
+Minimaal te behalen Maximale waarde = 4
+Computer kiest positie: 1
+Je kunt kiezen voor positie 3 of positie 4
+Pssst, 3 is de beste keuze.
+Maak je keuze: \cinput{4}
+Minimaal te behalen Maximale waarde = 8
+Computer kiest positie: 10
+Je kunt kiezen voor positie 21 of positie 22
+Pssst, 21 is de beste keuze.
+Maak je keuze: \cinput{22}
+Behaalde waarde = 9
 \end{coutput}
 
 De bijbehorende weg door de spelboom is weergegeven in \cref{fig:gameTree5}.
@@ -5827,10 +5827,10 @@ De computer behaald in dit geval de waarde |9|.
 Deze waarde is hoger dan de minimaal te behalen maximale waarde van |4|.
 Dit komt omdat de mens, ondanks de tips die hij/zij krijgt, steeds de \enquote{zwakste} keuze maakt.
 
-\figuur{scale=0.5}{gameTree5}{Mogelijke weg door de spelboom bij het uitvoeren van MinMax2.cpp.}
+\figuur{scale=0.5}{gameTree5}{Mogelijke weg door de spelboom bij het uitvoeren van minimax2.cpp.}
 
 \subsection{Alpha\hyp{}beta pruning}
-\label{sec:AlphaBetaPruning}
+\label{sec:alphaBetaPruning}
 Bij het zoeken naar een \emph{minimale} waarde op een bepaalde positie kun je stoppen zodra je een waarde hebt gevonden die \emph{kleiner of gelijk} is aan de tot dan toe gevonden \emph{maximale} waarde in de \emph{bovenliggende} positie.
 
 \figuur{scale=0.5}{gameTree6}{In deze spelboom is het niet nodig om de waarde van positie 18 te bepalen.}
@@ -5854,7 +5854,7 @@ Dit deel van de boom hoeft niet \enquote{doorzocht} te worden en we kunnen als h
 \figuur{scale=0.5}{gameTree7}{De tak naar positie 18 kan worden gesnoeid uit de boom.}
 
 Om dit mogelijk te maken moet wel de tot dan toe gevonden maximale waarde van de bovenliggende positie worden doorgegeven aan de onderliggende posities.
-Dit gebeurt in het onderstaande programma \proglink{AlphaBeta0.cpp} door middel van de parameter \USE{alpha}.
+Dit gebeurt in het onderstaande programma \proglink{alpha_beta0.cpp} door middel van de parameter \USE{alpha}.
 Deze naam is toevallig zo gekozen door de bedenkers van dit algoritme en heeft verder geen betekenis \cite{Knuth1975}.
 
 \figuur{scale=0.5}{gameTree8}{In deze spelboom is het niet nodig om de waarde van posities 10, 21 en 22 te bepalen.}
@@ -5879,77 +5879,77 @@ Dit deel van de boom hoeft niet \enquote{doorzocht} te worden en we kunnen de sp
 \figuur{scale=0.5}{gameTree9}{De tak naar positie 10 kan worden gesnoeid uit de boom.}
 
 Om dit mogelijk te maken moet wel de tot dan toe gevonden minimale waarde van de bovenliggende positie worden doorgegeven aan de onderliggende posities.
-Dit gebeurt in het onderstaande programma \proglink{AlphaBeta0.cpp} door middel van de parameter beta.
+Dit gebeurt in het onderstaande programma \proglink{alpha_beta0.cpp} door middel van de parameter beta.
 Deze naam is toevallig zo gekozen door de bedenkers van dit zogenoemde \USE{alpha\hyp{}beta pruning} algoritme en heeft verder geen betekenis \cite{Knuth1975}.
 
-\cpplstinputfragment[linerange={1-52}]{AlphaBeta0.cpp}
+\cpplstinputfragment[linerange={1-51}]{alpha_beta0.cpp}
 
-In een uitgebreidere versie van het bovenstaande programma, genaamd \proglink{Alpha\\-Beta0\\-Ver\\-bose.cpp}, wordt output naar |cout| gestuurd als er gesnoeid wordt.
+In een uitgebreidere versie van het bovenstaande programma, genaamd \proglink{alpha_\\-beta0_\\-ver\\-bose.cpp}, wordt output naar |cout| gestuurd als er gesnoeid wordt.
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
-	snoei node 18
-	snoei node 10
-	snoei node 24
-	snoei node 26
-	snoei node 6
-	Minimaal te behalen Maximale waarde = 4
+snoei node 18
+snoei node 10
+snoei node 24
+snoei node 26
+snoei node 6
+Minimaal te behalen Maximale waarde = 4
 \end{coutput}
 
 In \cref{fig:gameTree10} is te zien welke takken het \USE{alpha\hyp{}beta} algoritme de spelboom uit \cref{fig:gameTree1} heeft gesnoeid.
 
 \figuur{scale=0.5}{gameTree10}{De gesnoeide boom.}
 
-Bij de eerste aanroep van de functie |valueMoveComputer| moet voor |alpha| het absolute minimum (in dit geval 0) en voor |beta| het absolute maximum (in dit geval 15) worden ingevuld.
+Bij de eerste aanroep van de functie |value_move_computer| moet voor |alpha| het absolute minimum (in dit geval 0) en voor |beta| het absolute maximum (in dit geval 15) worden ingevuld.
 Dit is logisch want |alpha| is het tot nu toe gevonden maximum in de bovenliggende posities (we hebben in dit geval geen bovenliggende posities dus het tot nu toe gevonden maximum is het absolute minimum) en |beta| is het tot nu toe gevonden minimum in de bovenliggende posities (we hebben in dit geval geen bovenliggende posities dus het tot nu toe gevonden minimum is het absolute maximum).
 
-Je ziet dat bij het bepalen van de maximale waarde in een positie de waarde van \hcode{best\\-Value} wordt geïnitialiseerd met |alpha| en niet met het absolute minimum (|0|).
+Je ziet dat bij het bepalen van de maximale waarde in een positie de waarde van \hcode{best_\\value} wordt geïnitialiseerd met |alpha| en niet met het absolute minimum (|0|).
 Een, in een bovenliggende positie gevonden, tijdelijk maximum mag namelijk \emph{niet} in een (2 lagen dieper) onderliggende positie op een \emph{lagere} waarde worden gezet!
-Als je \hcode{best\\-Value} initialiseert met |0|, wordt de positie 26 \emph{niet} gesnoeid!
+Als je \hcode{best_\\value} initialiseert met |0|, wordt de positie 26 \emph{niet} gesnoeid!
 Probeer maar.
 
-Om dezelfde reden moet bij het bepalen van de minimale waarde in een positie de waarde van \hcode{best\\-Value} worden geïnitialiseerd met |beta| en niet met het absolute maximum (|15|).
+Om dezelfde reden moet bij het bepalen van de minimale waarde in een positie de waarde van \hcode{best_\\value} worden geïnitialiseerd met |beta| en niet met het absolute maximum (|15|).
 Een, in een bovenliggende positie gevonden, tijdelijk minimum mag namelijk \emph{niet} in een (2 lagen dieper) onderliggende positie op een \emph{hogere} waarde worden gezet!
 
-Merk op dat in de functie \hcode{choose\\-Com\\-puter\\-Move} de expressie |bestValue < beta| vervangen kan worden door |alpha < beta| omdat \hcode{best\\-Value} en |alpha| in de |for|\hyp{}lus altijd dezelfde waarde hebben.
-In de |for|\hyp{}lus is het gebruik van \hcode{best\\-Value} dus overbodig.
-Merk op dat in de functie \hcode{choose\\-Hu\\-man\\-Move} de expressie |bestValue > alpha| vervangen kan worden door |beta > alpha| omdat \hcode{best\\-Value} en |beta| in de |for|\hyp{}lus altijd dezelfde waarde hebben.
-In de |for|\hyp{}lus is het gebruik van \hcode{best\\-Value} dus overbodig.
+Merk op dat in de functie \hcode{choose_\\-com\\-puter_\\-move} de expressie |best_value < beta| vervangen kan worden door |alpha < beta| omdat \hcode{best_\\value} en |alpha| in de |for|\hyp{}lus altijd dezelfde waarde hebben.
+In de |for|\hyp{}lus is het gebruik van \hcode{best_\\value} dus overbodig.
+Merk op dat in de functie \hcode{choose_\\-hu\\-man_\\-move} de expressie |best_value > alpha| vervangen kan worden door |beta > alpha| omdat \hcode{best_\\value} en |beta| in de |for|\hyp{}lus altijd dezelfde waarde hebben.
+In de |for|\hyp{}lus is het gebruik van \hcode{best_\\value} dus overbodig.
 De expressie |beta > alpha| kan vervangen worden door |alpha < beta| die exact hetzelfde betekent.
-In het onderstaande programma \proglink{AlphaBeta1.cpp} zijn deze wijzigingen doorgevoerd:
+In het onderstaande programma \proglink{alpha_beta1.cpp} zijn deze wijzigingen doorgevoerd:
 
-\cpplstinputfragment[linerange={18-44}]{AlphaBeta1.cpp}
+\cpplstinputfragment[linerange={18-44}]{alpha_beta1.cpp}
 
-De voorwaarde om te snoeien is dus in de functies \hcode{choose\\-Com\\-puter\\-Move} en \hcode{choose\\-Hu\\-man\\-Move} exact hetzelfde, namelijk |alpha| $\geq$ |beta|.
-In \cref{fig:gameTree11} zijn de waarden van |alpha| en |beta| bij elke aanroep van \hcode{choose\\-Com\\-puter\\-Move} en \hcode{choose\\-Hu\\-man\\-Move} gegeven.
-Om de werking van dit \USE{alpha\hyp{}beta} algoritme helemaal te doorgronden is het heel zinvol om het uitvoeren van het programma \proglink{AlphaBeta1Verbose.c} stap voor stap te volgen, eventueel met behulp van een debugger.
+De voorwaarde om te snoeien is dus in de functies \hcode{choose_\\-com\\-puter_\\-move} en \hcode{choose_\\-hu\\-man_\\-move} exact hetzelfde, namelijk |alpha| $\geq$ |beta|.
+In \cref{fig:gameTree11} zijn de waarden van |alpha| en |beta| bij elke aanroep van \hcode{choose_\\-com\\-puter_\\-move} en \hcode{choose_\\-hu\\-man_\\-move} gegeven.
+Om de werking van dit \USE{alpha\hyp{}beta} algoritme helemaal te doorgronden is het heel zinvol om het uitvoeren van het programma \proglink{alpha_beta1Verbose.c} stap voor stap te volgen, eventueel met behulp van een debugger.
 
-\figuur{scale=0.5}{gameTree11}{De waarde van \USE{alpha} en \USE{beta} bij elke aanroep van \code{chooseComputerMove} en \code{chooseHumanMove}.}
+\figuur{scale=0.5}{gameTree11}{De waarde van \USE{alpha} en \USE{beta} bij elke aanroep van \code{choose_computer_move} en \code{choose_human_move}.}
 
 In het bovenstaande programma wordt alleen de waarde van de positie bepaald.
 Dit is uiteraard niet voldoende.
 We moeten ook weten welke zet we moeten doen om deze waarde te bereiken!
-Dit kan weer worden bereikt door bij het zoeken naar de maximale of minimale waarde de beste positie op te slaan in de uitvoerparameter |bestNextPos|.
-De functies \hcode{choose\\-Com\\-puter\\-Move} en \hcode{choose\\-Hu\\-man\\-Move} moeten dan worden aangepast zoals weergegeven in het onderstaande programma \proglink{AlphaBeta2.cpp}.
+Dit kan weer worden bereikt door bij het zoeken naar de maximale of minimale waarde de beste positie op te slaan in de uitvoerparameter |best_next_pos|.
+De functies \hcode{choose_\\-com\\-puter_\\-move} en \hcode{choose_\\-hu\\-man_\\-move} moeten dan worden aangepast zoals weergegeven in het onderstaande programma \proglink{alpha_beta2.cpp}.
 
-\cpplstinputfragment[linerange={18-48}]{AlphaBeta2.cpp}
+\cpplstinputfragment[linerange={18-48}]{alpha_beta2.cpp}
 
 De volgorde waarin de mogelijke volgende posities worden onderzocht heeft invloed op het gedrag van het \USE{alpha\hyp{}beta} algoritme.
-In het programma \proglink{Alpha\\-Beta1\\-Verbose.cpp} wordt deze volgorde bepaald door de regel:
+In het programma \proglink{alpha_\\-beta1\\-verbose.cpp} wordt deze volgorde bepaald door de regel:
 
-\cpplstinputfragment[linerange={22-22}]{AlphaBeta1Verbose.cpp}
+\cpplstinputfragment[linerange={22-22}]{alpha_beta1_verbose.cpp}
 
 De mogelijke posities worden dus van links naar rechts doorzocht.
 We kunnen de mogelijke posities ook van rechts naar links doorzoeken door de bovenstaande regel te vervangen door de regel:
 
-\cpplstinputfragment[linerange={22-22}]{AlphaBeta3Verbose.cpp}
+\cpplstinputfragment[linerange={22-22}]{alpha_beta3_verbose.cpp}
 
-In het resulterende programma \proglink{AlphaBeta3Verbose.cpp} kan heel wat minder worden gesnoeid.
+In het resulterende programma \proglink{alpha_beta3_verbose.cpp} kan heel wat minder worden gesnoeid.
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
-	snoei node 27
-	snoei node 19
-	snoei node 17
-	Minimaal te behalen Maximale waarde = 4
+snoei node 27
+snoei node 19
+snoei node 17
+Minimaal te behalen Maximale waarde = 4
 \end{coutput}
 
 In \cref{fig:gameTree12} is te zien welke takken het alpha\hyp{}beta algoritme de spelboom uit \cref{fig:gameTree1} heeft gesnoeid als de boom van rechts naar links wordt doorlopen.
@@ -5963,20 +5963,21 @@ Al deze programma's maken gebruik van een matrix class (zie \proglink{Matrix.h})
 
 Online zijn de volgende programma's beschikbaar:
 \begin{itemize}
-	\item \USE{Tic-Tac-Toe} programma met minimax algoritme: \proglink{TicTacSlow.cpp}.
-	\item \USE{Tic-Tac-Toe} programma met \USE{alpha-beta pruning}: \proglink{TicTacAB.cpp}.
-	\item \USE{Tic-Tac-Toe} programma met \USE{alpha-beta pruning} en \USE{transposition table} met behulp van |std::map|: \proglink{TicTacMap.cpp}.
+	\item \USE{Tic-Tac-Toe} programma met minimax algoritme: \proglink{Tic-Tac_slow.cpp}.
+	\item \USE{Tic-Tac-Toe} programma met \USE{alpha-beta pruning}: \proglink{Tic-Tac_a-b.cpp}.
+	\item \USE{Tic-Tac-Toe} programma met \USE{alpha-beta pruning} en \USE{transposition table} met behulp van |std::map|: \proglink{Tic-Tac_map.cpp}.
 \end{itemize}
 
 De bovenstaande programma's kiezen geen zet als alle mogelijke zetten tot verlies leiden.
-Dit is bij \USE{Tic-Tac-Toe} geen probleem omdat de computer niet kan verliezen maar bij ingewikkeldere spellen is dit wel een probleem! Dit probleem wordt gedemonstreerd en opgelost in het programma \proglink{TicTacABLoser.cpp} (met dank aan Marc Cornet).
+Dit is bij \USE{Tic-Tac-Toe} geen probleem omdat de computer niet kan verliezen maar bij ingewikkeldere spellen is dit wel een probleem! Dit probleem wordt gedemonstreerd en opgelost in het programma \proglink{Tic-Tac_a-b_loser.cpp} (met dank aan Marc Cornet).
 
-Bij het gebruik van een transpositietabel kun je de diepte waarop de tabel gebruik wordt limiteren, zie \proglink{TicTacMapRestrictedDepth.cpp}.
+Bij het gebruik van een transpositietabel kun je de diepte waarop de tabel gebruik wordt limiteren, zie \proglink{Tic-Tac_map_restricted_depth.cpp}.
 Daarbij moet de optimale waarde van \hcode{MAX_\\-TABLE_\\-DEPTH} worden bepaald.
-Dit kun je doen met het programma \proglink{TicTacDetermineMaxTableDepth.cpp}.
+Dit kun je doen met het programma \proglink{Tic-Tac_determine_MAX_TABLE_DEPTH.cpp}.
 
-De programma's waarnaar in deze paragraaf wordt verwezen, worden in de les verder besproken.
-Zie eventueel de PowerPoint presentatie van week 5: \url{http://bd.eduweb.hhs.nl/algods/ppsx/ALGODS.pptm}.
+%De programma's waarnaar in deze paragraaf wordt verwezen, worden in de les verder besproken.
+%Zie eventueel de PowerPoint presentatie van week 5: \url{http://bd.eduweb.hhs.nl/algods/ppsx/ALGODS.pptm}.
+%TODO: verhaal uit presentatie hier opnemen.
 \end{cpplstShortInline}
 
 \section{Het zoeken van het kortste pad in een \USE{graph}}

@@ -128,7 +128,7 @@ int main() {
     }
     cout << '\n';
     Array<double> w(10);
-    int i = 1;
+    int i {1};
     for (auto& e: w) {
         e = 1.0/i++;
     }

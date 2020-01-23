@@ -7,37 +7,37 @@ int value_move_computer(int pos);
 int value_move_human(int pos);
 
 int position_value(int pos) {
-    static const int value[16] = {4, 5, 3, 2, 6, 7, 8, 9, 1, 10, 2, 11, 12, 13, 14, 14};
+    static const int value[16] {4, 5, 3, 2, 6, 7, 8, 9, 1, 10, 2, 11, 12, 13, 14, 14};
     return pos >= 15 && pos <= 31 ? value[pos - 15]: -1;
 }
 
 int value_move_computer(int pos) {
     cout << "pos = " << setw(2) << pos << '\n';
-    int value = position_value(pos);
+    int value {position_value(pos)};
     if (value != -1) {
         return value;
     }
-    int pos_l = 2 * pos + 1;
-    int pos_r = 2 * pos + 2;
-    int value_l = value_move_human(pos_l);
-    int value_r = value_move_human(pos_r);
+    int pos_l {2 * pos + 1};
+    int pos_r {2 * pos + 2};
+    int value_l {value_move_human(pos_l)};
+    int value_r {value_move_human(pos_r)};
     return value_l > value_r ? value_l : value_r;
 }
 
 int value_move_human(int pos) {
     cout << "pos = " << setw(2) << pos << '\n';
-    int value = position_value(pos);
+    int value {position_value(pos)};
     if (value != -1) {
         return value;
     }
-    int pos_l = 2 * pos + 1;
-    int pos_r = 2 * pos + 2;
-    int value_l = value_move_computer(pos_l);
-    int value_r = value_move_computer(pos_r);
-    return value_l > value_r ? value_l : value_r;
+    int pos_l {2 * pos + 1};
+    int pos_r {2 * pos + 2};
+    int value_l {value_move_computer(pos_l)};
+    int value_r {value_move_computer(pos_r)};
+    return value_l < value_r ? value_l : value_r;
 }
 
 int main() {
-    int value = value_move_computer(0);
+    int value {value_move_computer(0)};
     cout << "Minimaal te behalen Maximale waarde = " << value << '\n';
 }
