@@ -3,8 +3,7 @@ using namespace std;
 
 class Hond {
 public:
-    virtual ~Hond() {
-    }
+    virtual ~Hond() = default;
     virtual void blaf() const {
         cout << "Blaf.\n";
     }
@@ -20,7 +19,7 @@ public:
     }
     int geef_drank() {
         cout << "Geeft drank.\n";
-        int w = whisky;
+        int w {whisky};
         whisky = 0;
         return w;
     };
@@ -38,11 +37,11 @@ void geef_hulp(Hond* hp) {
 }
 
 int main() {
-    Hond* boris_ptr{new Sint_bernard};
+    Hond* boris_ptr {new Sint_bernard};
     geef_hulp(boris_ptr);
     delete boris_ptr;
     
-    Hond* fikkie_ptr{new Hond};
+    Hond* fikkie_ptr {new Hond};
     geef_hulp(fikkie_ptr);
     delete fikkie_ptr;
 }

@@ -4,8 +4,7 @@ using namespace std;
 
 class Hond {
 public:
-    virtual ~Hond() {
-    }
+    virtual ~Hond() = default;
     virtual void blaf() const {
         cout << "Blaf.\n";
     }
@@ -21,7 +20,7 @@ public:
     }
     int geef_drank() {
         cout << "Geeft drank.\n";
-        int w = whisky;
+        int w {whisky};
         whisky = 0;
         return w;
     };
@@ -33,7 +32,7 @@ private:
 void geef_hulp(Hond& hr) {
     hr.blaf();
     try {
-        Sint_bernard& sbr{dynamic_cast<Sint_bernard&>(hr)};
+        Sint_bernard& sbr {dynamic_cast<Sint_bernard&>(hr)};
         cout << sbr.geef_drank() << " liter.\n";
     } catch (bad_cast) {
     // Warning: catching polymorphic type ‘class std::bad_cast’ by value

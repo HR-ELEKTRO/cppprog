@@ -4,8 +4,7 @@ using namespace std;
 
 class Hond {
 public:
-    virtual ~Hond() {
-    }
+    virtual ~Hond() = default;
     virtual void blaf() const {
         cout << "Blaf.\n";
     }

@@ -3,12 +3,9 @@ using namespace std;
 
 class Hond {
 public:
-    virtual ~Hond();
+    virtual ~Hond() = default;
     virtual void blaf() = 0;
 };
-
-Hond::~Hond() {
-}
 
 class Tekkel: public Hond {
 public:

@@ -20,9 +20,17 @@ int main() {
     cout << '\n';
 
 //  Bewerking opgeven met een lambda functie.
-//  Voordeel: meest handige oplossing als zoekvoorwaarde uniek is.
+//  Voordeel: handige oplossing als zoekvoorwaarde uniek is.
 //  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
     for_each(v.cbegin(), v.cend(), [](int i) {
+        cout << i << " " << i << " ";
+    });
+    cout << '\n';
+
+//  Bewerking opgeven met een lambda functie met auto parameter.
+//  Voordeel: meest handige oplossing als zoekvoorwaarde uniek is.
+//  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
+    for_each(v.cbegin(), v.cend(), [](auto i) {
         cout << i << " " << i << " ";
     });
     cout << '\n';
@@ -30,7 +38,7 @@ int main() {
 //  Bewerking opgeven met een opgeslagen lambda functie.
 //  Voordeel: meest handige oplossing als bewerking vaker voorkomt.
 //  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
-    auto print_twice {[](int i) {
+    auto print_twice {[](auto i) {
         cout << i << " " << i << " ";
     }};
     for_each(v.cbegin(), v.cend(), print_twice);

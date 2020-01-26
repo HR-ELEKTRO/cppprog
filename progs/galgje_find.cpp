@@ -5,7 +5,6 @@
 using namespace std;
 
 int main() {
-int main() {
     string w {"galgje"}; 
     vector<bool> gevonden (w.size(), false);
     do {
@@ -23,7 +22,7 @@ int main() {
         }
         cout << "De letter '" << c << "' komt " << count << " keer voor in het te raden woord.\n";
     }
-    while (any_of(gevonden.cbegin(), gevonden.cend(), [](bool b) {
+    while (any_of(gevonden.cbegin(), gevonden.cend(), [](auto b) {
         return b == false;
     }));
     cout << "Je hebt het woord \"" << w << "\" geraden.\n";

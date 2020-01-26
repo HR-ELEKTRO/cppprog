@@ -38,10 +38,10 @@ int main() {
         Score {"Anne", 300},
         Score {"Marie-louise", 50}
     };
-    sort(scores.begin(), scores.end(), [](const Score& d1, const Score& d2) {
+    sort(scores.begin(), scores.end(), [](const auto& d1, const auto& d2) {
         return d1.naam() < d2.naam();
     });
-    stable_sort(scores.begin(), scores.end(), [](const Score& d1, const Score& d2) {
+    stable_sort(scores.begin(), scores.end(), [](const auto& d1, const auto& d2) {
         return d1.punten() > d2.punten();
     });
     ostream_iterator<Score> iout {cout, "\n"};

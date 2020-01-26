@@ -17,7 +17,7 @@ constexpr Breuk operator/(int left, Breuk right) {
 }
 
 int main() {
-    Breuk b{1, 6};
+    Breuk b {1, 6};
     cout << b.boven << "/" << b.onder << '\n';
     b = 1/6_b;
     cout << b.boven << "/" << b.onder << '\n';

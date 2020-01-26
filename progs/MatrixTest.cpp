@@ -21,45 +21,42 @@ int main() {
         cout << *i << " ";
     }
     cout << '\n';
-    for_each(m.begin(), m.end(), [](int& i){
+    for_each(m.begin(), m.end(), [](auto& i){
         i += 1;
     });
-    for_each(m.begin(), m.end(), [](const int& i){
+    for_each(m.begin(), m.end(), [](const auto& i){
         cout << i << " ";
     });
     cout << '\n';
-    for_each(m.cbegin(), m.cend(), [](const int& i){
+    for_each(m.cbegin(), m.cend(), [](const auto& i){
         cout << i << " ";
     });
     cout << '\n';
 
-    const Matrix cm{m};
-    for_each(cm.begin(), cm.end(), [](const int& i){
+    const Matrix cm {m};
+    for_each(cm.begin(), cm.end(), [](const auto& i){
         cout << i << " ";
     });
     cout << '\n';
 //  Should give compiler error!
-//  for_each(cm.begin(), cm.end(), [](int& i){
+//  for_each(cm.begin(), cm.end(), [](auto& i){
 //      i += 1;
 //  });
 
-    Matrix m2{1, 2, 3, 
-              4, 5, 6};
+    Matrix m2 {1, 2, 3, 
+               4, 5, 6};
     for (auto e : m2) {
         cout << e << " ";
     }
     cout << '\n';
 
 //  Should give compiler error!
-//  Matrix m3{{1, 2, 3, 
-//             4, 5, 6, 7}};
-
-    Matrix m4{1, 2, 3, 
-              4, 5, 6};
+//  Matrix m3 {{1, 2, 3, 
+//              4, 5, 6, 7}};
 
     try {
-        Matrix m5{1, 2, 3, 
-                  4, 5, 6, 7};
+        Matrix m4 {1, 2, 3, 
+                   4, 5, 6, 7};
     } catch (exception& e) {
         cerr << "Error: " << e.what() << '\n';
     }        

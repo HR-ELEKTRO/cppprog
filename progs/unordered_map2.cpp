@@ -33,7 +33,7 @@ namespace std
 }
 
 int main() {
-    unordered_map<Hond, int,  Hond_hash> honden_teller;
+    unordered_map<Hond, int> honden_teller;
     honden_teller[Hond{"Fikkie"}] = 3;
     honden_teller[Hond{"Boris"}] = 5;
     for (auto ht: honden_teller) {

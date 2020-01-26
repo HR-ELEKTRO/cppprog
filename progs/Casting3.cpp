@@ -7,7 +7,7 @@ void stiekem(const string& a) {
 }
 
 int main() {
-    string s("Dag");
+    string s {"Dag"};
     cout << "s = " << s << '\n';
     stiekem(s);
     cout << "s = " << s << '\n';

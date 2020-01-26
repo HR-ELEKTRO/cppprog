@@ -41,15 +41,15 @@ Array::Array(Array&& r): size{r.size}, data(r.data) {
 }
 
 Array& Array::operator=(const Array& r) {
-    Array t{r};
-    std::swap(size, t.size);
-    std::swap(data, t.data);
+    Array t {r};
+    swap(size, t.size);
+    swap(data, t.data);
     return *this;
 }
 
 Array& Array::operator=(Array&& r) {
-    std::swap(size, r.size);
-    std::swap(data, r.data);
+    swap(size, r.size);
+    swap(data, r.data);
     return *this;
 }
 
@@ -95,7 +95,7 @@ ostream& operator<<(ostream& o, const Array& a) {
 
 Array operator+(const Array& left, const Array& right) {
     assert(left.length() == right.length());
-    Array result{left.length()};
+    Array result {left.length()};
     for (Array::size_type i {0}; i != left.length(); ++i) {
         result[i] = left[i] + right[i];
     }
@@ -107,12 +107,12 @@ int main() {
     Array::size_type i;
     cin >> i;
     if (i > 0) {
-        Array a{i};
+        Array a {i};
         cout << "a = " << a << '\n';
         for (Array::size_type j {0}; j < a.length(); ++j)
             a[j] = j * j; // vul a met kwadraten
         cout << "a = " << a << '\n';
-        Array b{a};
+        Array b {a};
         cout << "b = " << b << '\n';
         cout << "a[12] = " << a[12] << '\n';
         cout << "b[12] = " << b[12] << '\n';
@@ -126,7 +126,7 @@ int main() {
         else 
             cout << "a is nu ongelijk aan b.\n";
 
-        Array r{a.length()};
+        Array r {a.length()};
         r = a + b;
         cout << "r = " << r << '\n';
 

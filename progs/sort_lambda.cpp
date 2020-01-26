@@ -12,7 +12,7 @@ int main() {
         return 1; // kan fin niet openen
     istream_iterator<int> iin {fin}, einde;
     copy(iin, einde, back_inserter(rij));
-    sort(rij.begin(), rij.end(), [](int i, int j) {
+    sort(rij.begin(), rij.end(), [](auto i, auto j) {
         return i > j;
     });
     ofstream fout {"getallen_gesorteerd.txt"};

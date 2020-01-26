@@ -1,7 +1,11 @@
 #include <iostream>
 #include <list>
 #include <algorithm>
+#include <vector>
 using namespace std;
+
+class Hond { /* ... */ };
+class Sint_bernard: public Hond { /* ... */ };
 
 int main() {
     int a, b, c;
@@ -11,6 +15,31 @@ int main() {
 //  a = b++++;
 //  error: lvalue required as increment operand
     list<int> l {12, 18, 6};
-    sort(l.begin(), l.end());
-
+//  sort(l.begin(), l.end());
+//  error: no match for ‘operator-’
+    int i;
+//  i = "Hallo";
+//  error: invalid conversion from 'const char*' to 'int'
+//  i = (int)"Hallo";
+//  error: cast from 'const char*' to 'int' loses precision
+//  i = int("Hallo");
+//  error: cast from 'const char*' to 'int' loses precision
+//  i = reinterpret_cast<int>("Hallo");
+//  error: cast from 'const char*' to 'int' loses precision
+    using ll = long long;
+    ll i64;
+    i64 = (ll)"Hallo";
+    i64 = ll("Hallo");
+    i64 = reinterpret_cast<ll>("Hallo");
+    Hond* hp = new Sint_bernard; // OK: een Sint_bernard is een Hond
+//  Sint_bernard* sbp = new Hond; // NOT OK: een Hond is geen Sint_bernard
+//  error: invalid conversion from 'Hond*' to 'Sint_bernard*' 
+	vector v1 {1, 2, 3}; // v1 is van het type vector<int>
+    for (auto e: v1)
+        cout << e << " ";
+    cout << '\n';
+	vector v2 {v1}; // v2 is ook van het type vector<int>
+    for (auto e: v2)
+        cout << e << " ";
+    cout << '\n';
 }

@@ -5,27 +5,27 @@ using namespace std;
 class Int {
 public:
     Int(int i): value{i} {
-    	cout << "Int met waarde " << value << " wordt aangemaakt.\n";
+        cout << "Int met waarde " << value << " wordt aangemaakt.\n";
     }
     ~Int() {
-    	cout << "Int met waarde " << value << " wordt verwijderd.\n";
+        cout << "Int met waarde " << value << " wordt verwijderd.\n";
     }
     Int(const Int& r): value{r.value} {
-    	cout << "Int met waarde " << value << " wordt gekopieerd.\n";
+        cout << "Int met waarde " << value << " wordt gekopieerd.\n";
     }
     int get_value() const {
-    	return value;
+        return value;
     }
 private:
     int value;
 };
 
 Int maak_Int(int i) {
-	Int result{i};
-	return result;
+    Int result {i};
+    return result;
 }
 
 int main() {
-	Int local{maak_Int(42)};
-	cout << "De waarde van local is " << local.get_value() << '\n';
+    Int local {maak_Int(42)};
+    cout << "De waarde van local is " << local.get_value() << '\n';
 }

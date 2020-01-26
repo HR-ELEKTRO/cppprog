@@ -41,7 +41,7 @@ int main() {
     // output: 1 2 3
     
     // priority_queue sort with > (lambda)
-    auto comp{[](int a, int b) {
+    auto comp{[](auto a, auto b) {
             return a > b;
         }
     };

@@ -37,9 +37,18 @@ int main() {
         cout << "Het eerste positieve element is: " << *r << '\n';
     }
 //  Zoeken met behulp van een lambda functie als zoekvoorwaarde.
-//  Voordeel: meest handige oplossing als zoekvoorwaarde uniek is.
+//  Voordeel: handige oplossing als zoekvoorwaarde uniek is.
 //  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
     r = find_if(l.cbegin(), l.cend(), [](int i) {
+        return i >= 0;
+    });
+    if (r != l.end()) {
+        cout << "Het eerste positieve element is: " << *r << '\n';
+    }
+//  Zoeken met behulp van een lambda functie met auto parameter als zoekvoorwaarde.
+//  Voordeel: meest handige oplossing als zoekvoorwaarde uniek is.
+//  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
+    r = find_if(l.cbegin(), l.cend(), [](auto i) {
         return i >= 0;
     });
     if (r != l.end()) {
@@ -48,7 +57,7 @@ int main() {
 //  Zoeken met behulp van een opgeslagen lambda functie als zoekvoorwaarde.
 //  Voordeel: meest handige oplossing als zoekvoorwaarde vaker voorkomt.
 //  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
-    auto is_positief {[](int i) {
+    auto is_positief {[](auto i) {
         return i >= 0;
     }};
     r = find_if(l.cbegin(), l.cend(), is_positief);

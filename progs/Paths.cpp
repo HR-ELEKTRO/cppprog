@@ -15,6 +15,7 @@ public:
     ~Graph();
     void add_edge(const string& source_name, const string& dest_name, int cost);
     void print_path(const string& dest_name) const;
+    // four algorithms to calculate the shortest path:
     void unweighted(const string& start_name);
     void dijkstra(const string& start_name);
     void negative(const string& start_name);
@@ -36,7 +37,7 @@ private:
         Vertex* previous;
         int costs;
         // used for dijkstra algorithm
-        bool is_processed; // Vertex is already is_processed
+        bool is_processed; // Vertex is already processed
         // used for negative algorithm
         unsigned int times_queued; // number of time that this Vertex is placed on the queue  
         bool is_on_queue; // this Vertex is currently present on the queue
@@ -50,7 +51,7 @@ private:
     const Vertex* find_vertex(const string& vertex_name) const;
     void reset();
     map<string, Vertex*> vertices;
-    static constexpr int INF{INT_MAX};
+    static constexpr int INF {INT_MAX};
 };
 
 Graph::Vertex::Edge::Edge(Vertex* v, int costs): destination{v}, costs{costs} {
@@ -82,19 +83,19 @@ void Graph::Vertex::print_path() const {
 }
 
 Graph::~Graph() {
-    for (auto& p : vertices) {
+    for (auto& p: vertices) {
         delete p.second;
     }
 }
 
 void Graph::reset() {
-    for (auto& p : vertices) {
+    for (auto& p: vertices) {
         p.second->reset();
     }
 }
 
 Graph::Vertex* Graph::get_vertex(const string& vertex_name) {
-    Vertex* v{vertices[vertex_name]};
+    Vertex* v {vertices[vertex_name]};
     if (v == 0) {
         v = new Vertex(vertex_name);
         vertices[vertex_name] = v;
@@ -103,27 +104,27 @@ Graph::Vertex* Graph::get_vertex(const string& vertex_name) {
 }
 
 Graph::Vertex* Graph::find_vertex(const string& vertex_name) {
-    auto itr{vertices.find(vertex_name)};
+    auto itr {vertices.find(vertex_name)};
     if (itr == vertices.end())
         throw runtime_error {vertex_name + " is not a vertex in this graph"};
     return itr->second;
 }
 
 const Graph::Vertex* Graph::find_vertex(const string& vertex_name) const {
-    auto itr{vertices.find(vertex_name)};
+    auto itr {vertices.find(vertex_name)};
     if (itr == vertices.end())
         throw runtime_error {vertex_name + " is not a vertex in this graph"};
     return itr->second;
 }
 
 void Graph::add_edge(const string& source_name, const string& dest_name, int cost) {
-    Vertex* v{get_vertex(source_name)};
-    Vertex* w{get_vertex(dest_name)};
+    Vertex* v {get_vertex(source_name)};
+    Vertex* w {get_vertex(dest_name)};
     v->add_edge(w, cost);
 }
 
 void Graph::print_path(const string& destination_name) const {
-    const Vertex* destination{find_vertex(destination_name)};
+    const Vertex* destination {find_vertex(destination_name)};
     if (destination->costs == INF)
         cout << destination_name << " is unreachable";
     else {
@@ -140,10 +141,10 @@ void Graph::unweighted(const string& start_name) {
     queue<Vertex*> q;
     q.push(start);
     while (!q.empty()) {
-        Vertex* v{q.front()};
+        Vertex* v {q.front()};
         q.pop();
-        for (auto& e : v->adjacent) {
-            Vertex* w{e.destination};
+        for (auto& e: v->adjacent) {
+            Vertex* w {e.destination};
             if (w->costs == INF) {
                 w->costs = v->costs + 1;
                 w->previous = v;
@@ -157,20 +158,20 @@ void Graph::dijkstra(const string& start_name) {
     reset();
     Vertex* start {find_vertex(start_name)};
     start->costs = 0;
-    auto ptr_vector_greater{[](Vertex* p, Vertex* q) { 
+    auto ptr_vector_greater {[](auto* p, auto* q) { 
             return p->costs > q->costs; 
         }
     };
-    priority_queue<Vertex*, vector<Vertex*>, decltype(ptr_vector_greater)> pq(ptr_vector_greater);
+    priority_queue<Vertex*, vector<Vertex*>, decltype(ptr_vector_greater)> pq {ptr_vector_greater};
     pq.push(start);
     while (!pq.empty()) {
-        Vertex* v{pq.top()};
+        Vertex* v {pq.top()};
         pq.pop();
         if (!v->is_processed) {
             v->is_processed = true;
             for (auto& e: v->adjacent) {
-                Vertex* w{e.destination};
-                int cvw{e.costs};
+                Vertex* w {e.destination};
+                int cvw {e.costs};
                 if (cvw < 0) {
                     throw runtime_error {"Graph has negative edges"};
                 }
@@ -193,15 +194,15 @@ void Graph::negative(const string& start_name) {
     start->is_on_queue = true;
     start->times_queued += 1;
     while (!q.empty()) {
-        Vertex* v{q.front()};
+        Vertex* v {q.front()};
         q.pop();
         v->is_on_queue = false;
         if (v->times_queued > vertices.size()) {
             throw runtime_error {"Negative cycle detected"};
         }
         for (auto& e: v->adjacent) {
-            Vertex* w{e.destination};
-            int cvw{e.costs};
+            Vertex* w {e.destination};
+            int cvw {e.costs};
             if (w->costs > v->costs + cvw) {
                 w->costs = v->costs + cvw;
                 w->previous = v;
@@ -221,25 +222,26 @@ void Graph::acyclic(const string& start_name) {
     start->costs = 0;
     queue<Vertex*> q;
     // calculate all indegrees
-    for (auto& p : vertices) {
-        for (auto& e : p.second->adjacent) {
+    for (auto& p: vertices) {
+        for (auto&e : p.second->adjacent) {
             e.destination->indegree += 1;
         }
     }
     // start with vertices with indegree 0
-    for (auto& p : vertices) {
+    for (auto& p: vertices) {
         Vertex* v = p.second;
         if (v->indegree == 0) {
             q.push(v);
         }
     }
     // for all vertices in queue
-    for (decltype (vertices.size()) iterations{0}; !q.empty(); ++iterations) {
-        Vertex* v{q.front()};
+    decltype(vertices.size()) iterations {0};
+    while (!q.empty()) {
+        Vertex* v {q.front()};
         q.pop();
         for (auto& e: v->adjacent)  {
-            Vertex* w{e.destination};
-            int cvw{e.costs};
+            Vertex* w {e.destination};
+            int cvw {e.costs};
             w->indegree -= 1;
             if (w->indegree == 0) {
                 q.push(w);
@@ -249,6 +251,7 @@ void Graph::acyclic(const string& start_name) {
                 w->previous = v;
             }
         }
+        ++iterations;
     }
     if (iterations != vertices.size()) {
         throw runtime_error {"Graph has a cycle!"};
@@ -262,10 +265,10 @@ int main() {
         while (pasen != pinksteren) {
             string file_name;
             do {
-                cout << "p = positive (https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_positive.png),\n";
-                cout << "n = negative (https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_negative.png),\n";
-                cout << "a = acyclic  (https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_acyclic.png),\n";
-                cout << "s = steden (acyclic) (https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_steden.png) or\n";
+                cout << "p = positive (graph_positive.png),\n";
+                cout << "n = negative (graph_negative.png),\n";
+                cout << "a = acyclic  (graph_acyclic.png),\n";
+                cout << "s = steden (acyclic) (graph_steden.png) or\n";
                 cout << "q = quit.\n";
                 cout << "Choose graph: ";
                 char c;
@@ -290,7 +293,7 @@ int main() {
                 cin >> c; cin.get();
             } while (c != 'y' && c != 'n');
             if (c == 'y') {
-                string base_name{file_name.substr(0, file_name.find(".txt"))};
+                string base_name {file_name.substr(0, file_name.find(".txt"))};
                 system(("start https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/" + base_name + ".png").c_str());
             }
             ifstream in_file {file_name};
@@ -303,7 +306,7 @@ int main() {
             while (getline(in_file, one_line)) {
                 string source, dest;
                 int cost;
-                istringstream st{one_line};
+                istringstream st {one_line};
                 if (st >> source >> dest >> cost) {
                     g.add_edge(source, dest, cost);
                     cout << ".";

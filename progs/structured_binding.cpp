@@ -18,12 +18,12 @@ Adres adreslocatie_HR(string locatie) {
 
 int main() {
     // Zonder stuctured binding:
-    Adres ap{adreslocatie_HR("AP")};
+    Adres ap {adreslocatie_HR("AP")};
     cout << "Het adres van de locatie AP van de HR is: "
          << ap.straatnaam << ' ' << ap.huisnummer << ", " << ap.plaatsnaam << '\n';
     
     // Met stuctured binding:
-    auto [straat, nr, plaats]{adreslocatie_HR("AP")};
+    auto [straat, nr, plaats] {adreslocatie_HR("AP")};
     cout << "Het adres van de locatie AP van de HR is: "
          << straat << ' ' << nr << ", " << plaats << '\n';
 }

@@ -6,12 +6,9 @@ using namespace std;
 
 class Hond {
 public:
-    virtual ~Hond();
+    virtual ~Hond() = default;
 //  ...
 };
-
-Hond::~Hond() {
-}
 
 class Sint_bernard: public Hond {
 //  ...

@@ -17,7 +17,7 @@ public:
 class Hond {
 public:
 #ifndef PROBLEM
-    virtual ~Hond() { } 
+    virtual ~Hond() = default; 
 #else
 // Warning: deleting object of abstract class type ‘Hond’ which has non-virtual destructor will cause undefined behavior
 #endif

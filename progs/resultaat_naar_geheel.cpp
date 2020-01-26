@@ -11,7 +11,7 @@ int main() {
     vector<int> gehele_resultaten;
     // Alle resultaten < 1.5 moeten worden afgerond tot 1
     // Alle overige resultaten moeten worden afgerond
-    transform(resultaten.cbegin(), resultaten.cend(), back_inserter(gehele_resultaten), [](double r) -> int {
+    transform(resultaten.cbegin(), resultaten.cend(), back_inserter(gehele_resultaten), [](auto r) -> int {
         if (r < 1.5) {
             return 1;
         }

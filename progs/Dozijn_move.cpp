@@ -74,39 +74,31 @@ ostream& operator<<(ostream& o, const Dozijn& a) {
     return o;
 }
 
-void swap(Dozijn& d1, Dozijn& d2) {
-    Dozijn hulp {d1};
-    d1 = d2;
-    d2 = hulp;
-}
-
-void swap_move(Dozijn& d1, Dozijn& d2) {
-    Dozijn hulp {move(d1)};
-    d1 = move(d2);
-    d2 = move(hulp);
+Dozijn operator+(const Dozijn& left, const Dozijn& right) {
+    Dozijn result;
+    for (int i {0}; i != 12; ++i) {
+        result[i] = left[i] + right[i];
+    }
+    return result;
 }
 
 int main() {
-    Dozijn a, b;
-    for (int j {0}; j < 12; ++j) {
-        a[j] = j + j; // vul a met dubbelen
-        b[j] = j * j; // vul b met kwadraten
-    }
+    Dozijn a;
+    for (int j {0}; j < 12; ++j)
+        a[j] = j * j; // vul a met kwadraten
     cout << "a = " << a << '\n';
+    Dozijn b {a};
     cout << "b = " << b << '\n';
 
-    swap(a, b);
+    Dozijn c {a + b};
+    cout << "c = " << c << '\n';
 
+    a = b + c;
     cout << "a = " << a << '\n';
+
+    b = move(c); // alleen als je zeker weet c niet meer nodig te hebben
     cout << "b = " << b << '\n';
 
-    swap_move(a, b);
-
-    cout << "a = " << a << '\n';
-    cout << "b = " << b << '\n';
-
-    std::swap(a, b);
-
-    cout << "a = " << a << '\n';
-    cout << "b = " << b << '\n';
+    Dozijn d{move(a)}; // alleen als je zeker weet a niet meer nodig te hebben
+    cout << "d = " << d << '\n';
 }

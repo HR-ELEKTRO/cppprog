@@ -18,7 +18,7 @@ int main() {
     copy(m1.cbegin(), m1.cend(), iout); cout << '\n';
 
 //  hele matrix doorlopen
-    for_each(m1.begin(), m1.end(), [](int& i){
+    for_each(m1.begin(), m1.end(), [](auto& i){
         i += 1;
     });
     cout << "Alle getallen in matrix m1 met 1 verhoogd: \n";

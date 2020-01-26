@@ -7,15 +7,9 @@
 %TODO: gebruik Engelse woorden nogeens overwegen.
 %TODO: memberfunctie template.
 %TODO: C++11 nullptr. Waarom gebruik je nullptr in plaats van 0? Overloading int en * (te gedetailleerd?). 
-%TODO: C++11 static_assert (te gedetailleerd?).
-%TODO: C++11 RValue reference en move constructor (toevoegen aan voorbeeld met Array).
-%TODO: C++11 uniform initialisation (no narrowing: verschil tussen int i = 2.6; int i(2.6); en int i{2.6};
-%TODO: C++11 smart pointers toevoegen.
-%TODO: C++11 enum class (voorbeeld met Color aanpassen?)
 %TODO: C++11 using in plaats van typedef (te gedetailleerd, want typedef wordt in dictaat niet gebruikt?)
 
 %TODO: Lambda functie werkt sneller dan gewone functie in algoritmen omdat er betere optimalisatie mogelijk is.
-%TODO: m.b.v. auto kun je lambda wel hergebruiken.
 %TODO: emplace als alternatief voor insert nog toevoegen. Je kunt met emplace een expliciete of impliciete aanroep naar de constructor omzeilen. Dus vector<Breuk> vb; vb.emplace(3,4); in plaats van vb.insert(Breuk(3,4));
 %TODO: Voorwaarde voor operator< !(a<b) && !(b<a) && !(a<c) && !(c <a) -> !(b<c) && !(c<b)
 
@@ -29,18 +23,13 @@
 \newcommand{\modulecode}{\Cpp}
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
-\newcommand{\huidigeversie}{0.2}
+\newcommand{\huidigeversie}{0.3}
 % start a new line by using \\ 
 \newcommand{\auteurs}{
 	J.Z.M. Broeders
 }
 
 \input{style_nl_NL.tex}
-
-% only show part not marked with showall
-\newif\ifshowall 
-\showalltrue 
-%\showallfalse
 
 \newcommand{\mail}{\href{mailto:J.Z.M.Broeders@hhs.nl}{J.Z.M.Broeders@hhs.nl}}
 \newcommand{\opleiding}{Elektrotechniek}
@@ -54,7 +43,7 @@
 \usepackage{needspace}
 
 \newcommand{\progs}{progs}
-\newcommand{\progsurl}{https://bitbucket.org/HR_ELEKTRO/cppprog/src/master/progs/}
+\newcommand{\progsurl}{https://bitbucket.org/HR_ELEKTRO/cppprog/src/master/progs}
 \input{styleCode.tex}
 
 % Question Answer paar voor FAQ
@@ -129,7 +118,6 @@
 \usetocstyle{KOMAlike}
 
 \begin{document}
-\ifshowall
 \frontmatter
 \titelpagina{cpp}
 
@@ -309,12 +297,6 @@ Het bestuderen van dit dictaat zonder voldoende kennis en begrip van C is vergel
 \end{clstShortInline}
 
 \begin{cpplstShortInline}
-
-\else
-\mainmatter
-\begin{cpplstShortInline}
-\fi
-
 \chapter[Van C naar C++]{Van C naar \Cpp{}}
 \label{sec:vancnaarcpp}
 De ontwerper van \Cpp{} Bjarne Stroustrup gaf op de vraag: \squote{Wat is \Cpp{}?} een aantal jaren geleden het volgende antwoord \cite{Stroustrup2000}:
@@ -553,6 +535,8 @@ We kunnen het type van de variabele |element| ook door de compiler laten bepalen
 \cpplstinputfragment[linerange={5-9}]{range-based_for.cpp}
 
 Als het type van de variabele |rij| gewijzigd wordt, dan wordt het type van de variabele |element| automatisch aangepast.
+
+Als je de elementen in de |rij| wilt veranderen in de \USE{range-based} |for| dan heb je een zogenoemde reference variabele nodig. Dit wordt verderop in dit dictaat uitgelegd in \csecref{reference} en \csecref{sec:referenceinrange-basedfor}.
  
 \section{Constante waarden met \texorpdfstring{\cppcode{constexpr}}{constexpr}}
 \label{sec:constexpr}
@@ -865,8 +849,6 @@ Het is niet nodig om alles al helemaal te begrijpen, we komen er in \cref{sec:te
 In dit hoofdstuk zijn de kleine verbeteringen van \Cpp{} ten opzichte van zijn voorganger C besproken die je moet weten om de rest van dit dictaat te kunnen lezen.
 Verdere kleine verbeteringen, die ook best handig kunnen zijn bij het programmeren in \Cpp{} kun je vinden in \csecref{sec:vancnaarcppdedetails}.
 
-\ifshowall
-
 \chapter{Objects and classes}
 \label{sec:objectandclasses}
 In dit hoofdstuk worden de belangrijkste taalconstructies die \Cpp{} biedt voor het programmeren van UDT's (\emph{User-defined Data Types}) besproken.
@@ -1130,6 +1112,10 @@ Functies en variabelen die private zijn kunnen alleen door functies van de class
     Het gebruik van private variabelen is alleen bedoeld om \enquote{onbewust} verkeerd gebruik tegen te gaan.
 }
 Deze private functies en variabelen zitten ingekapseld in de class |Breuk|.
+De implementatie van de class is zichtbaar in de definitie van de class (als |private| datamembers). 
+Dit zorgt ervoor dat compiler een object van een UDT, ook wel een \emph{concrete} class genoemd, efficiënt (zowel in ruimte als in tijd) kan implementeren en bewerken.
+Het nadeel is echter dat een concrete class opnieuw gecompileerd moet worden als de implementatie wijzigt.
+Verderop in dit dictaat kun je leren hoe je door een zogenoemde \emph{abstracte} class te gebruiken ervoor kunt zorgen dat niet alles opnieuw gecompileerd hoeft te worden bij een wijziging of uitbreiding, zie \csecref{sec:adcoo}. 
 
 Functies die opgenomen zijn in een class worden \emph{memberfuncties} genoemd.
 De \label{Breuk::plus}memberfunctie |plus| kan als volgt gedefinieerd worden%
@@ -2055,6 +2041,7 @@ We noemen dit \emph{generiek} programmeren.
 Pas tijdens het (her)gebruik van de functie of class moeten we specificeren welk type gebruikt moet worden.
 
 \section{Template functies}
+\label{sec:templatefunctie}
 Op \cpageref{code:swap_ints} heb ik de functie |swapInts| besproken waarmee twee |int| variabelen verwisseld kunnen worden:
 \begin{cpplstfragment}
 void swap_nts(int& p, int& q) {
@@ -2932,6 +2919,7 @@ De (gekochte) UDT |ADCCard| is een herbruikbare softwarecomponent die echter nie
 Je zult zien dat je door het toepassen van de objectgeoriënteerde technieken \USE{inheritance} en polymorfisme wel een softwarecomponent kan maken die door de gebruiker uitgebreid kan worden zonder dat de gebruiker de broncode van de originele component hoeft te wijzigen.
 
 \subsection{Een objectgeoriënteerde oplossing}
+\label{sec:adcoo}
 Bij het toepassen van de objectgeoriënteerde benadering constateer ik dat in het programma twee types ADC kaarten gebruikt worden.
 Beide kaarten hebben dezelfde functionaliteit en kunnen dus worden afgeleid van dezelfde \USE{base class}%
 \footnote{%
@@ -3223,6 +3211,47 @@ In \csecref{std::vector} heb je gezien hoe, door het gebruik van een |std::vecto
 De enige grens is dan de grootte van het beschikbare (virtuele) werkgeheugen.
 De |std::vector| is geïmplementeerd met behulp van van dynamische geheugenallocatie.
 
+\section{Smart pointers}
+Het resultaat van |new| toekennen aan een \squote{naakte} pointer is vragen om problemen.
+Voordat je het weet vergeet je om |delete| aan te roepen en heb je een geheugenlek veroorzaakt. 
+
+Een eenvoudige oplossing is het gebruik van zogenoemde \emph{smart pointers} die in de standaard library zijn opgenomen.
+Er zijn twee soorten smart pointers die veel gebruikt worden.
+De |unique_pointer| en de |shared_pointer|.
+
+Een |unique_ptr| gebruik je als er één eigenaar is van de data waar de pointer naar wijst.
+Als deze pointer ophoud te bestaan, dan wordt automatisch de operator |delete| aangeroepen op de pointer.
+Zie \proglink{unique_ptr.cpp}.
+
+In de onderstaande functie wordt dynamisch een object aangemaakt van de class |Test|.
+De functie kan via twee paden verlaten worden.
+De programmeur is echter vergeten om in een van deze paden |delete| aan te roepen.
+Ook als de functie |is_waarde| een exception gooit, dan wordt |delete| niet aangeroepen.
+Deze functie kan dus een geheugenlek veroorzaken. 
+ 
+\cpplstinputfragment[linerange={30-38}]{unique_ptr.cpp}
+
+In de onderstaande functie wordt dynamisch een object aangemaakt van de class |Test|.
+De functie kan via twee paden verlaten worden.
+In dit geval wordt de pointer die door |new| wordt teruggegeven opgeslagen in een |unique_ptr|.
+De programmeur hoeft er nu niet meer aan te denken om |delete| aan te roepen.
+De |unique_ptr| neemt deze verantwoordelijkheid over.
+Ook als de functie |is_waarde| een exception, zie \csecref{exceptions}, gooit, dan wordt |delete| door |unique_ptr| aangeroepen.
+Als een functie verlaten wordt doordat er een excption wordt gegooid, dan worden de lokale variabelen namelijk netjes verwijderd.
+Deze functie kan dus \emph{geen} geheugenlek veroorzaken. 
+
+\cpplstinputfragment[linerange={40-47}]{unique_ptr.cpp}
+
+Je kunt ook gebruik maken van de standaard functie |make_unique| om een dynamisch object aan te maken.
+Het is nu ook niet meer nodig om zelf |new| aan te roepen:
+
+\cpplstinputfragment[linerange={50-50}]{unique_ptr.cpp}
+
+Als een |unique_ptr| wordt gekopieerd naar een andere |unique_ptr|, bijvoorbeeld bij aanroep of return van een functie, dan wordt de verantwoordelijkheid om de data vrij te geven overgedragen van de eerste naar de tweede pointer.
+
+Een |shared_ptr| gebruik je als het eigenaarschap van de data waar de pointer naar wijst moet worden gedeeld door meerdere pointers.
+Als een |shared_ptr| wordt gekopieerd, dan wordt de data waar de pointer naar wijst pas vrijgegeven als alle |shared_ptr|s naar deze data zijn verwijderd.
+
 %TODO: Tilde is niet correct (maar wel acceptabel)
 \section{Destructor \texorpdfstring{\textasciitilde{}\cppcode{Breuk}}{\textasciitilde{}Breuk}}
 %(Zie eventueel TICPP Chapter06.html\#Heading226.)
@@ -3369,6 +3398,33 @@ Deze automatisch aangemaakte \USE{destructor} is echter \emph{niet} virtual.
 In elke class die nu of in de toekomst als \USE{base class} gebruikt wordt moeten we dus zelf een \USE{virtual destructor} declareren\footnote{%
 	Zie ook de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#c127-a-class-with-a-virtual-function-should-have-a-virtual-or-protected-destructor}{C.127}.
 }. Achter de declaratie kan de code |= default| gebruikt worden om aan te geven dat de default implementatie van de \USE{destructor}, zie \cpageref{default destructor} gebruikt moet worden. 
+
+\section{Toepassing van \texorpdfstring{\cppcode{unique_ptr}}{unique_ptr}}
+\label{sec:toepassingunique_ptr}
+In de voorgaande paragraaf is de class |Fruitmand| als volgt gedefinieerd:
+
+\cpplstinputfragment[linerange={39-43,45-56}]{Fruitmand_destructor.cpp}
+
+Deze class werd als volgt gebruikt:
+
+\cpplstinputfragment[linerange={59-63}]{Fruitmand_destructor.cpp}
+
+De class |Fruitmand| heeft een destructor waarin al het aan de fruitmand toegevoegde fruit wordt ge|delete| als de fruitmand wordt vrijgegeven.
+We kunnen deze verantwoordelijkheid ook overdragen aan een smart pointer.
+De |Fruitmand| bevat dan een |vector| van |unique_ptr|s en heeft geen destructor meer nodig:
+
+\cpplstinputfragment[linerange={40-52}]{Fruitmand_destructor_smart_pointer.cpp}
+
+De standaardfunctie |move|, zie \cpageref{std::move}, wordt gebruikt om er voor te zorgen dat het eigenaarschap overgedragen wordt van de smart pointer |p| naar een in de |vector| opgeslagen |unique_ptr|. 
+
+Deze class kan nu als volgt gebruikt worden:
+
+\cpplstinputfragment[linerange={55-59}]{Fruitmand_destructor_smart_pointer.cpp}
+
+Als de variabele |m| wordt verwijderd, wordt de (default) destructor van |Fruitmand| aangeroepen.
+Deze (default) destructor roept de destructor aan van al zijn datamembers in dit geval is dat |m.fp|.
+De destructor van deze |vector| roept de destructor aan van alle elementen van de |vector|.
+Elk element is een |unique_pointer| en elke destructor van die |unique_pointer| roept |delete| aan om het door de |unique_pointer| beheerde dynamische geheugen weer vrij te geven. 
 
 \chapter{Exceptions}
 \label{exceptions}
@@ -3613,8 +3669,8 @@ Over \USE{exceptions} valt nog veel meer te vertellen:
     Speciale syntax om \USE{exceptions} die optreden bij het initialiseren van datavelden in een \USE{constructor} op te vangen.
     \item \textbf{\USE{Re-throw}.}\\
     Gebruik van |throw| zonder argument in een catch blok om de zojuist opgevangen \USE{exception} weer door te gooien.
-    \item \textbf{\USE{Exception} specification.}\\
-    Speciale syntax om in het prototype van een functie aan te geven
+    \item \textbf{\USE{No exception} specification.}\\
+    Speciaal keyword |noexcept| om in het prototype van een functie aan te geven
     dat deze functie geen \USE{exceptions} kan veroorzaken.
     \item \textbf{\USE{Exceptions} in de std \USE{library}.}\\
     Een overzicht van alle \USE{exceptions} die in de standaard \USE{library} gedefinieerd zijn%
@@ -3626,10 +3682,6 @@ Voor al deze details verwijs ik je naar \cite[\href{http://www.icce.rug.nl/docum
 %TODO: Hier volgt ALGODS dictaat moet nog samengesmolten worden
 
 % verwijzingen naar C++ dictaat
-\newcommand{\urlcppdictaat}{http://bd.eduweb.hhs.nl/ogoprg/pdf/Dictaat_OGPiCpp\iftoggle{ebook}{_ebook}{}.pdf}
-\newcommand{\cppdictaatsecref}[2][paragraaf~]{\pdfsecref[#1]{\urlcppdictaat}{#2}}
-\newcommand{\cppdictaatseccite}[2][paragraaf~]{\cite[{\cppdictaatsecref[#1]{#2}}]{Broeders2014}}
-
 %Harde break om vreemd afbreken te voorkomen
 \chapter[Inleiding algoritmen en datastructuren]{Inleiding algoritmen en \\datastructuren}
 In het vervolg van dit dictaat gaan we de kennis die we hebben opgedaan betreffende objectgeoriënteerd programmeren in \Cpp{} toepassen bij het gebruiken en ontwikkelen van algoritmen en datastructuren. 
@@ -4119,9 +4171,10 @@ In de praktijk zal het niet vaak voorkomen dat je de gebruiker van een applicati
 Het kan echter wel voorkomen dat bij het vertalen van het programma nog niet bekend is hoe groot de objecten zijn die op de \USE{stack} geplaatst moeten worden.
 In dat geval is het handig dat je dynamisch (tijdens \USE{run time}), afhankelijk van de grootte van de objecten, kunt kiezen welke implementatie van een \USE{stack} gebruikt wordt om de overhead te minimaliseren.
 
-\chapter[De ISO/ANSI standaard C++ \USE{library}]{De ISO/ANSI standaard \Cpp{} \USE{library}}
+\chapter[De standaard C++ \USE{library}]{De standaard \Cpp{} \USE{library}}
 \label{sec:stdlib}
-De standaard \Cpp{} \USE{library} bevat: \emph{containers}, \emph{iteratoren} en \emph{algoritmen}.
+De standaard \Cpp{} \USE{library} is zeer uitgebreid en beslaat 14 hoofdstukken en ruim 800 pagina's in de \Cpp{} standaard \cite{ISO2017}. 
+In het vervolg van dit dictaat kijken we naar \emph{containers}, \emph{iteratoren} en \emph{algoritmen}.
 De in \csecref{sec:Datastructuren} geïntroduceerde datastructuren worden in de standaard \Cpp{} \USE{library} \emph{containers} genoemd.
 Een \emph{iterator} kan gebruikt worden om de elementen in een container te benaderen.
 Je kunt in \Cpp{} met een iterator door een container heenlopen zoals je in C met een pointer door een array kunt lopen.
@@ -4138,7 +4191,7 @@ Een algoritme kan ook data uit slechts één container lezen en het resultaat in
 	A = Algoritme, C = Container, i = iterator, b = begin, e = end, [ib,ie) = range van ib tot ie.}
 
 \section{Voorbeeldprogramma met \texorpdfstring{\code{std::string}}{std::string}}
-\label{sec:string}
+\label{sec:vbstring}
 Het voorbeeldprogramma \proglink{std_string.cpp} laat zien dat je met een iterator door een \hcode{std\\-::\\-string} kunt lopen op dezelfde manier als dat je met een pointer door een C\hyp{}string kunt lopen.
 Een C\hyp{}string is een array van karakters waarbij het einde van de string wordt aangegeven door het karakter NUL (|'\0'|).
 
@@ -4161,7 +4214,41 @@ De memberfunctie |end()| geeft een |iterator| terug net na het laatste element v
 Je kunt ook het \USE{keyword} |auto| gebruiken om de compiler zelf het type van de iterator te laten bepalen.
 \cpplstinputfragment[linerange={40-43}]{std_string.cpp}
 
-\section{Containers}
+\section{Overzicht van de standaard library}
+De standaard \Cpp{} \USE{library} \cite{ISO2017} is zeer uitgebreid. 
+In het vervolg van dit dictaat kijken we naar \USE{containers} (zie \csecref{sec:containers}), iteratoren (zie \csecref{sec:iteratoren}) en algoritmen (zie \csecref{sec:algoritmen}).
+De \USE{library} bevat daarnaast ook faciliteiten voor: \USE{strings}, \USE{localization}, \USE{containers}, \USE{iterators}, \USE{algorithms}, \USE{numerics}, \USE{input/output}, \USE{regular expressions}, \USE{threads} en nog veel meer.
+
+Alle informatie is beschikbaar op \url{https://en.cppreference.com/w/cpp}.
+Als je niet kunt vinden wat je zoekt in de standaard \USE{library} dan kun je ook gebruik maken van vele open source libraries. Een overzicht vind je op \url{https://en.cppreference.com/w/cpp/links/libs}.
+
+%TODO: in de gaten houden of deze links stabiel zijn.
+Ook in \citetitle{Brokken2019} \cite{Brokken2019} is veel informatie te vinden, onder andere over \USE{library}-faciliteiten voor:
+\USE{strings}
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus05.html\#l98}{§5}]{Brokken2019}, 
+%\USE{localization}, 
+\USE{smart pointers}
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l366}{§18.3},\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l373}{§18.4} en \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l380}{§18.5}]{Brokken2019},
+\USE{containers}
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus12.html\#l265}{§12}]{Brokken2019}, 
+\USE{iterators}
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l359}{§18.2}]{Brokken2019}, 
+\USE{algorithms}
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus19.html\#l419}{§19}]{Brokken2019}, 
+%\USE{numerics}, 
+\USE{input/output}
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus06.html\#l106}{§6}]{Brokken2019}, 
+\USE{regular expressions}
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l388}{§18.8}]{Brokken2019}, 
+\USE{threads}
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus20.html\#l493}{§20}]{Brokken2019},
+\USE{randomization}
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l399}{§18.9}]{Brokken2019},
+\USE{date and time} \cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus04.html\#l81}{§4.2}]{Brokken2019} en
+\USE{filesystem} \cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus04.html\#l86}{§4.3}]{Brokken2019}.
+
+\chapter{Containers}
+\label{sec:containers}
 De standaard \Cpp{} \USE{library} bevat verschillende containers.
 Een container waarmee je in \csecref{std::vector} al hebt kennisgemaakt is de |std::vector|.
 Elke container is als een template gedefinieerd zodat het type van de elementen die in de container opgeslagen kunnen worden, gevarieerd kan worden.
@@ -4213,7 +4300,7 @@ De standaard \Cpp{} \USE{library} bevat de volgende associatieve containers:
 	\item |unordered_multimap|
 \end{itemize}
 
-\subsection{Sequentiële containers}
+\section{Sequentiële containers}
 \label{sec:seqcon}
 In \cref{fig:sequential_containers} zijn de belangrijkste sequentiële containers conceptueel weergegeven.
 Een |array| heeft een vaste grootte die als tweede template argument wordt opgegeven bij het definiëren van het type van de |array|, zie \csecref{std::array}.
@@ -4298,7 +4385,7 @@ Via de achterwaartse pointer kan het element voor de plaats waar ingevoegd moet 
 
 %TODO eventueel toevoegen: hoe is een vector geïmplenteerd? Hoe is een deque geïmplementeerd?
 %
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::vector}}{std::vector}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::vector}}{std::vector}}
 Dit voorbeeldprogramma \proglink{stdvector.cpp} laat zien:
 \begin{itemize}
 	\item hoe een standaard vector gevuld kan worden;
@@ -4355,7 +4442,7 @@ De bovenstaande generieke |print| kan gebruikt worden om de vector |v| volledig 
 Dezelfde functie kan ook gebruikt worden om alle elementen van de vector |v| af te drukken \emph{behalve} de eerste en de laatste:
 \cpplstinputfragment[linerange={26-26}]{generieke_print-range.cpp}
 
-\subsection{Container adapters}
+\section{Container adapters}
 Bepaalde sequentiële containers kunnen met behulp van zogenoemde adapter classes van een bepaalde interface worden voorzien.
 De standaard \Cpp{} \USE{library} bevat de volgende adapters:
 \begin{itemize}
@@ -4391,12 +4478,12 @@ Je kunt een |priority_queue| dus niet implementeren met een |list| omdat de elem
 	Zie \url{http://en.wikipedia.org/wiki/Binary_heap}.
 	In de les wordt dit verder uitgelegd.}
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::stack}}{std::stack}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::stack}}{std::stack}}
 Het onderstaande voorbeeldprogramma \proglink{std_balanced.cpp} is identiek aan het programma uit \csecref{sec:balance} maar in plaats van de zelfgemaakte \hcode{Stack\\-With\\-List} wordt nu de standaard |stack| gebruikt.
 
 \cpplstinputfragment[linerange={1-41}]{std_balanced.cpp}
 
-\subsection{Associatieve containers}
+\section{Associatieve containers}
 \label{sec:asscon}
 In een sequentiële container blijft de volgorde van de elementen ongewijzigd, zie \csecref{sec:seqcon}.
 In een associatieve container wordt de volgorde van de elementen bepaald door de container zelf.
@@ -4471,7 +4558,7 @@ Als je een zelf gedefinieerd type als sleutel wilt gebruiken dan moet je zelf ee
 	Zie \url{http://en.cppreference.com/w/cpp/utility/hash}%
 }.
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::set}}{std::set}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::set}}{std::set}}
 \label{sec:set}
 In een |set| mag elk element ten hoogste één keer voorkomen.
 In het onderstaande voorbeeldprogramma \proglink{set.cpp} wordt het gebruik van een |set| gedemonstreerd.
@@ -4512,7 +4599,7 @@ Er is 1 Ron.
 De set bevat: Daniël Elles Ron Roy
 \end{coutput}
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::multiset}}{std::multiset} (bag)}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::multiset}}{std::multiset} (bag)}
 Vergelijk het onderstaande programma \proglink{multiset.cpp} met het vorige en let op de verschillen tussen een |set| en een |multiset|.
 Een |mutiset| heeft dezelfde memberfuncties als een |set|.
 De memberfunctie |insert| geeft echter alleen een iterator als returnwaarde in plaats van een |pair| van een iterator en een |bool|.
@@ -4533,7 +4620,7 @@ De bag bevat: Daniël Ron Roy
 De bag bevat: Daniël
 \end{coutput}
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::unordered_set}}{std::unordered\_set}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::unordered_set}}{std::unordered\_set}}
 Vergelijk het onderstaande programma \proglink{unordered\_set.cpp} met het programma uit \csecref{sec:set} en let op de verschillen tussen een |set| en een \hcode{un\\-ordered_\\-set}.
 
 \cpplstinputfragment[linerange={1-31}]{unordered_set.cpp}
@@ -4557,7 +4644,7 @@ De hash table heeft 41 buckets.
 Elke bucket bevat gemiddeld 0.878049 elementen.
 \end{cpplstfragment}
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::map}}{std::map}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::map}}{std::map}}
 \label{sec:vbmap}
 Het onderstaande voorbeeldprogramma \proglink{count_words.cpp} gebruikt een |map| om de woordfrequentie te tellen.
 Van een aantal belangrijke C/\Cpp{} \USE{keywords} wordt het aantal maal dat ze voorkomen afgedrukt.
@@ -4566,7 +4653,7 @@ Je kunt daarnaast ook gebruik maken van indexering waarbij de sleutel als index 
 
 \cpplstinputfragment[linerange={1-27}]{count_words.cpp}
 
-\section{Iteratoren}
+\chapter{Iteratoren}
 \label{sec:iteratoren}
 In \cref{fig:stl} heb je gezien dat iteratoren de verbinding vormen tussen containers en algoritmen.
 In het ideale geval zou je op deze manier elk algoritme op elke container kunnen toepassen.
@@ -4703,7 +4790,7 @@ Op deze manier kun je dus zien op welke containers een bepaald algoritme uitgevo
 We kunnen nu begrijpen waarom de code die aan het begin van deze paragraaf is gegeven een compilerfout oplevert.
 Het |sort| algoritme heeft een \USE{random access} iterator nodig maar de container |list| levert slechts een (minder krachtige) \USE{bidirectional} iterator.
 
-\subsection{Voorbeeldprogramma's met verschillende iterator soorten}
+\section{Voorbeeldprogramma's met verschillende iterator soorten}
 \label{sec:vbverschillendeiteratorsoorten}
 De implementatie van een algoritme kan afhankelijk zijn van de soort iterator die beschikbaar is.
 Als voorbeeld bekijken we een functie die een iterator teruggeeft die refereert naar het middelste element in een als argument meegegeven range [begin, end).
@@ -4750,10 +4837,10 @@ Het zou natuurlijk mooi zijn als we de compiler zelf de meeste efficiënte versi
 Dit blijkt inderdaad mogelijk door gebruik te maken van zogenoemde iterator \USE{tags}.
 Dit wordt later behandeld in \csecref{sec:iteratortag}.
 
-\subsection{Reverse\hyp{}iteratoren}
+\section{Reverse\hyp{}iteratoren}
 \label{sec:revitr}
 Alle containers hebben de memberfuncties |begin()| en |end()| waarmee een iterator naar het eerste respectievelijk één voorbij het laatste element opgevraagd kan worden.
-Deze iteratoren kunnen gebruikt worden om alle elementen van een container van voor naar achter te doorlopen, zie \csecref{sec:string}.
+Deze iteratoren kunnen gebruikt worden om alle elementen van een container van voor naar achter te doorlopen, zie \csecref{sec:vbstring}.
 De functies |cbegin()| en |cend()| zijn vergelijkbaar maar geven in plaats van een |iterator| een |const_iterator| terug die alleen gebruikt kan worden om elementen uit de container te lezen.
 Als je bijvoorbeeld de eerste 5 in een vector met integers wilt vervangen door een 7 dan kan dit als volgt:
 
@@ -4772,7 +4859,7 @@ Als je bijvoorbeeld de laatste 5 in een vector met integers wilt vervangen door 
 
 Het volledige voorbeeldprogramma \proglink{reverse\_iterator.cpp} kun je online vinden.
 
-\subsection{Insert\hyp{}iteratoren}
+\section{Insert\hyp{}iteratoren}
 \label{sec:insitr}
 Als een iterator |itr| refereert naar een element en je schrijft met behulp van de \USE{dereference} operator |*itr = ...|, dan wordt het betreffende element overschreven.
 Soms wil je vóór een bepaalde plaats in een container die wordt aangewezen met een iterator elementen toevoegen.
@@ -4798,7 +4885,7 @@ Er zijn drie functietemplates beschikbaar waarmee zulke \USE{insert}\hyp{}iterat
 	In dit geval moet je |i| opvatten als een \enquote{hint}.
 \end{itemize}
 
-\subsection{\USE{Stream}\hyp{}iteratoren}
+\section{\USE{Stream}\hyp{}iteratoren}
 \label{sec:stmitr}
 Met behulp van \USE{stream}\hyp{}iteratoren kunnen \Cpp{} streams worden gelezen of geschreven met behulp van algoritmen uit de \Cpp{} standaard \USE{library}.
 Er zijn twee \USE{stream}\hyp{}iteratoren beschikbaar:
@@ -4813,7 +4900,7 @@ Er zijn twee \USE{stream}\hyp{}iteratoren beschikbaar:
 	Als tweede argument kan een C-string worden meegegeven die na elk element wordt afgedrukt.
 \end{itemize}
 
-\subsection{Voorbeeldprogramma's met iteratoren}
+\section{Voorbeeldprogramma's met iteratoren}
 \label{sec:vbiteratoren}
 In het onderstaande voorbeeldprogramma \proglink{stream_iterator.cpp} wordt het gebruik van \USE{stream}\hyp{} en \USE{insert}\hyp{}iteratoren gedemonstreerd:  
 
@@ -4829,7 +4916,8 @@ De strings uit het bestand |namen.txt| worden ingelezen in de |set| genaamd |nam
 Vervolgens wordt de inhoud van deze |set| van achter naar voor op het scherm afgedrukt, één string per regel.
 In tegenstelling tot het vorige programma worden in dit programma geen variabelen van het type \hcode{istream_\\-iter\\-ator} en \hcode{ostream_\\-iter\\-ator} aangemaakt maar worden de \USE{constructors} van deze classes aangeroepen op de plaats waar deze objecten nodig zijn (als argumenten van de functie |copy|).
 
-\section{Algoritmen}
+\chapter{Algoritmen}
+\label{sec:algoritmen}
 De \Cpp{}\hyp{}standaard bevat vele generiek algoritmen.
 Een generiek algoritme werkt op één of meer ranges, zie \cref{fig:stl}.
 Een range wordt aangegeven door twee iteratoren i1 en i2.
@@ -4867,7 +4955,7 @@ Er zijn heel veel algoritmen beschikbaar in de \Cpp{} \USE{library}.
 In dit dictaat worden ze niet allemaal behandeld, kijk voor een volledig overzicht op \url{http://en.cppreference.com/w/cpp/algorithm}.
 Alle algoritmen uit de standaard \Cpp{} \USE{library} gebruiken ranges als parameters zodat ze ook op een deel van een container uitgevoerd kunnen worden.
 
-\subsection{Zoeken, tellen, testen, bewerken en vergelijken}
+\section{Zoeken, tellen, testen, bewerken en vergelijken}
 \label{sec:algo1}
 De volgende algoritmen kun je gebruiken om een bepaald element te zoeken in een range:
 \begin{itemize}
@@ -4931,7 +5019,7 @@ De executietijd van |search| is namelijk $O(n\times{}m)$, waarbij $n$ het aantal
 De executietijd van |find_end| is $O(m\times{}(n-m))$.
 %TODO hoe kan find_end sneller zijn dan search?
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::find}}{std::find}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::find}}{std::find}}
 \label{sec:find}
 In het onderstaande voorbeeldprogramma \proglink{find.cpp} wordt het |find| algoritme gebruikt om het bekende spelletje galgje te implementeren.
 %TODO: dit niet de handigste manier om galgje te implementeren. Beter voorbeeld zoeken.
@@ -5003,7 +5091,7 @@ Je hebt het woord "galgje" geraden.
 
 Dit is zeker niet de meest efficiënte en meest eenvoudige implementatie van het spelletje galgje. Een eenvoudigere en efficiëntere versie vind je in \proglink{galgje_strings.cpp}.
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::find_if}}{std::find\_if}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::find_if}}{std::find\_if}}
 \label{sec:findif}
 Het onderstaande voorbeeldprogramma \proglink{find\_if.cpp} laat zien hoe je het standaard algoritme |find_if| kunt gebruiken om positieve getallen te zoeken.
 De zoekvoorwaarde (condition) wordt op drie verschillende manieren opgegeven:
@@ -5037,20 +5125,20 @@ Nu je gezien hebt hoe, met behulp van een lambda expressie, een bepaalde voorwaa
 De regel:
 \cpplstinputfragment[linerange={25-25}]{find.cpp}
 kan vervangen worden door (zie \proglink{galgje\_find.cpp}):
-\cpplstinputfragment[linerange={26-28}]{galgje_find.cpp}
+\cpplstinputfragment[linerange={25-27}]{galgje_find.cpp}
 
 Het |any_of| algoritme is sneller dan het |count| algoritme omdat het niet altijd alle elementen hoeft af te gaan.
 Om te testen of één of meer elementen in de |vector| |gevonden| de waarde |false| hebben werden de elementen die |false| zijn geteld, met |count| en vervolgens werd gekeken of dit een waarde ongelijk aan nul opleverde.
 De |count| moet echter altijd alle elementen van de |vector| doorlopen maar een |any_of| kan meteen stoppen, en |true| teruggeven, zodra een element gevonden wordt dat |false| is en hoeft bovendien geen teller bij te houden.
 Beiden algoritmen zijn O(n) maar de |any_of| zal altijd sneller zijn.
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::find_first_of}}{std::find\_first\_of}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::find_first_of}}{std::find\_first\_of}}
 \label{sec:findfirstof}
 Het onderstaande voorbeeldprogramma \proglink{find\_first\_of} laat zien hoe je het standaard algoritme |find_first_of| kunt gebruiken om het eerste priemgetal kleiner dan honderd in een bestand gevuld met integers te zoeken.
 
 \cpplstinputfragment[linerange={1-17}]{find_first_of.cpp}
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::for_each}}{std::for\_each}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::for_each}}{std::for\_each}}
 \label{sec:foreach}
 Het onderstaande voorbeeldprogramma \proglink{for\_each.cpp} laat zien hoe je het standaard algoritme |for_each| kunt gebruiken om elk element van een |vector| dubbel af te drukken.
 De bewerking die voor elk element uitgevoerd moet worden, wordt op twee verschillende manieren opgegeven:
@@ -5076,13 +5164,23 @@ De syntax van de \USE{range\hyp{}based for} is echter eenvoudiger.
 De \USE{range\hyp{}based for} kan echter alleen gebruikt worden als de hele container moet worden doorlopen.
 Met een |for_each| kan ook een deel van een container doorlopen worden.
 
-\subsection{Lambda\hyp{}functies}
+\section{Lambda\hyp{}functies}
 \label{sec:lambda}
 In \csecref{sec:findif} heb je gezien dat een lambda\hyp{}functie gebruikt kan worden om de voorwaarde van een |find_if| te specificeren.
 In paragraaf \csecref{sec:foreach} heb je gezien dat een lambda\hyp{}functie gebruikt kan worden om de bewerking van een |for_each| te specificeren.
 Een lambda\hyp{}functie is een anoniem functie\hyp{}object dat wordt gedefinieerd op de plaats waar dit functie\hyp{}object nodig is.
 
-\subsubsection{Closure}
+In \csecref{sec:findif} is de volgende lambda\hyp{}functie gebruikt:
+\cpplstinputfragment[linerange={42-44}]{find_if.cpp}
+
+Je kunt het type van de parameter van de lambda\hyp{}functie ook als |auto| declareren en door de compiler laten bepalen:
+\cpplstinputfragment[linerange={51-53}]{find_if.cpp}
+
+Het voordeel hiervan is dat je deze code niet aan hoeft te passen als het type van de variabel |l| van |list<int>| wordt gewijzigd in |list<double>|.
+
+Een lambda met een |auto| parameter lijkt op een template functie, zie \csecref{sec:templatefunctie} en wordt een \emph{generieke lambda} genoemd.
+
+\subsection{Closure}
 \label{sec:closure}
 Soms wil je bij het definiëren van een lambda\hyp{}functie in de code van deze functie gebruik maken van variabelen die buiten de lambda\hyp{}functie gedefinieerd zijn.
 Het object dat door een lambda functie wordt aangemaakt en waarin waarden van of verwijzingen naar variabelen van buiten de functie kunnen worden opgenomen wordt een \emph{\USE{closure}} genoemd (Nederlands: insluiting).
@@ -5109,7 +5207,7 @@ Het onderstaande programma \proglink{closure.cpp} laat zien hoe je met behulp va
 In plaats van |[&som_even]| kan ook |[&]| gebruikt worden.
 Het expliciet specificeren dat de variabele |som_even| ingesloten moet worden in de \USE{closure} heeft als voordeel dat de compiler een foutmelding geeft als je per ongeluk een andere variabele in de code van de lambda-functie gebruikt.
 
-\subsubsection{Returntype van een lambda\hyp{}functie}
+\subsection{Returntype van een lambda\hyp{}functie}
 \label{sec:returntypelambda}
 Bij alle tot nu toe gebruikte lambda\hyp{}functies kan de compiler zelf het returntype van de functie bepalen.
 Er zijn situaties waarbij dit niet mogelijk is.
@@ -5129,7 +5227,7 @@ De compiler is niet in staat om zelf het returntype te bepalen omdat de |round| 
 Het returntype van de lambda\hyp{}functie zou dus |int| of |double| kunnen zijn en alleen de programmeur weet wat de bedoeling is.
 Als je het returntype niet specificeert krijg je de volgende foutmelding: \error{error: inconsistent types 'int' and 'double' deduced for lambda return type}.
 
-\subsubsection{Lambda\hyp{}functieparametertype met \texorpdfstring{\code{auto}}{auto}}
+\subsection{Lambda\hyp{}functieparametertype met \texorpdfstring{\code{auto}}{auto}}
 \label{sec:autolambdapar}
 Het is ook mogelijk om het parametertype van een lambda\hyp{}function als |auto| te definiëren.%
 De compiler bepaalt dan zelf het juiste type.
@@ -5141,7 +5239,7 @@ De compiler bepaalt nu zelf dat het parametertype van de lambda functie |int| mo
 
 Je ziet dat de code door het gebruik van |auto| om het parametertype van de lambda\hyp{}functie te definiëren beter aanpasbaar wordt.
 
-\subsection{Kopiëren, bewerken, vervangen, roteren, schudden, verwisselen, verwijderen en vullen}
+\section{Kopiëren, bewerken, vervangen, roteren, schudden, verwisselen, verwijderen en vullen}
 \label{sec:algo2}
 In \csecref{sec:algo1} heb je al kennis gemaakt met een aantal algoritmen uit de standaard \Cpp{} \USE{library}.
 In dit dictaat worden echter niet alle algoritmen behandeld, kijk voor een volledig overzicht op \url{http://en.cppreference.com/w/cpp/algorithm}.
@@ -5221,7 +5319,7 @@ De volgende algoritmen kun je gebruiken om elementen in een range te overschrijv
 
 De executietijd van de in deze paragraaf genoemde algoritmen is $O(n)$.
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::transform}}{std::transform}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::transform}}{std::transform}}
 \label{sec:transform}
 Het onderstaande voorbeeldprogramma \proglink{transform.cpp} laat zien hoe je het standaard algoritme |transform| kunt gebruiken om een vector bij een andere vector op te tellen.
 De transformatie (bewerking) wordt op twee\footnote{%
@@ -5252,7 +5350,7 @@ Het type van parameter |i2| moet, toevallig ook, |int| zijn omdat de elementen v
 
 In het programma \proglink{galgje\_strings\_transform.cpp} kun je zien dat het standaard algoritme |transform| ook kunt gebruiken om het bekende spelletje galgje te implementeren.
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::remove}}{std::remove}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::remove}}{std::remove}}
 \label{sec:remove}
 Na |remove| is nog een |erase| nodig om de elementen echt te verwijderen.
 Het is namelijk niet mogelijk om vanuit een generiek algoritme elementen daadwerkelijk uit een range te verwijderen omdat het algoritme niet weet wat het type van de container is.
@@ -5277,7 +5375,7 @@ Na remove binnen erase:
 1 9 25 49 81
 \end{coutput}
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::generate_n}}{std::generate\_n}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::generate_n}}{std::generate\_n}}
 \label{sec:generate}
 In \csecref{sec:remove} werd de |vector| |v| gevuld met kwadraten door een |for|\hyp{}lus te gebruiken.
 Als alternatief kunnen we ook gebruik maken van het algoritme |generate_n|, een \USE{insert}\hyp{}iterator (zie \csecref{sec:insitr}) en een \USE{closure} (zie \csecref{sec:closure}.
@@ -5285,7 +5383,7 @@ Al kun je jezelf in dit geval natuurlijk wel afvragen of de |for|\hyp{}lus niet 
 
 \cpplstinputfragment[linerange={1-15}]{generate_n.cpp}
 
-\subsection{Sorteren en bewerkingen op gesorteerde ranges}
+\section{Sorteren en bewerkingen op gesorteerde ranges}
 \label{sec:algo3}
 In \csecref{sec:algo1} en \csecref{sec:algo2} heb je al kennis gemaakt met een aantal algoritmen uit de standaard \Cpp{} \USE{library}.
 In dit dictaat worden echter niet alle algoritmen behandeld, kijk voor een volledig overzicht op \url{http://en.cppreference.com/w/cpp/algorithm}.
@@ -5316,7 +5414,7 @@ De volgende algoritmen kun je gebruiken om bewerkingen op verzamelingen\footnote
 Je kunt deze bewerkingen niet alleen uitvoeren op containers van het type |set| maar op alle gesorteerde ranges.
 De executietijd van deze algoritmen is $O(n1+n2)$, waarbij $n1$ staat voor het aantal elementen in verzameling $S1$ en $n2$ staat voor het aantal elementen in verzameling $S2$
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::sort}}{std::sort}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::sort}}{std::sort}}
 \label{sec:sort}
 In \csecref{sec:vbiteratoren} heb je al gezien hoe het |sort| algoritme gebruikt kan worden om een |vector| met integers te sorteren.
 Het |sort| algoritme maakt default gebruik van de |operator<| om de elementen met elkaar te vergelijken.
@@ -5352,7 +5450,7 @@ De uitvoer van dit programma:
 50 Marie-Louise
 \end{coutput}
 
-\subsubsection{Voorbeeldprogramma met \texorpdfstring{\code{std::includes}}{std::includes}}
+\subsection{Voorbeeldprogramma met \texorpdfstring{\code{std::includes}}{std::includes}}
 \label{sec:includes}
 In \csecref{sec:find} is het |find| algoritme gebruikt om het bekende spelletje galgje te implementeren.
 Dit spel kan ook geïmplementeerd worden door gebruik te maken van verzamelingen, zie \proglink{galgje\_sets.cpp}.
@@ -5403,112 +5501,6 @@ Raad een letter: \cinput{l}
 De letter 'l' komt 1 keer voor in het te raden woord.
 Je hebt het woord galgje geraden.
 \end{coutput}
-
-\subsubsection{Voorbeeldprogramma dat generiek en objectgeoriënteerd programmeren combineert}
-De standaard functie |mem_fn| vormt de koppeling tussen generiek programmeren en objectgeoriënteerd programmeren omdat hiermee een memberfunctie kan worden omgezet in een functie\hyp{}object, zie \proglink{mem\_fn.cpp}.
-
-\cpplstinputfragment[linerange={1-33,54-54}]{mem_fn.cpp}
-
-De uitvoer van dit programma:
-\begin{coutput}
-Kef kef Woef woef Kef kef
-\end{coutput}
-
-Je kunt alle honden in de kennel ook laten blaffen met behulp van lambda-functie:
-\cpplstinputfragment[linerange={36-39}]{mem_fn.cpp}
-
-Je kunt alle honden in de kennel ook laten blaffen met behulp van een \USE{range\hyp{}based for}:
-\cpplstinputfragment[linerange={46-49}]{mem_fn.cpp}
-
-Het gebruik van een \USE{range\hyp{}based for} is eenvoudiger dan het gebruik van een |for_each|.
-De \USE{range\hyp{}based for} kan echter alleen gebruikt worden als de hele container moet worden doorlopen.
-Met een |for_each| kan ook een deel van een container doorlopen worden.
-
-\subsection{Automatisch de meest efficiënte implementatie kiezen afhankelijk van de beschikbare iterator soort}
-\label{sec:iteratortag}
-In \csecref{sec:vbverschillendeiteratorsoorten} heb je gezien dat de implementatie van een algoritme afhankelijk kan zijn van de soort iterator die beschikbaar is.
-Er zijn 3 functies gedefinieerd waarmee het upper middle element van een range bepaald kan worden.
-Als er \USE{random access} iteratoren beschikbaar zijn, kan de functie \hcode{find_\\-upper_\\-middle_\\-random_\\-access} gebruikt worden.
-Als \USE{bidirectional} iteratoren beschikbaar zijn, kan de functie \hcode{find_\\-upper_\\-middle_\\-bi\\-di\\-rec\\-tional} gebruikt worden.
-Als slechts \USE{forward} iteratoren beschikbaar zijn, moet de functie \hcode{find_\\-upper_\\-middle_\\-fow\\-ward} gebruikt worden.
-
-Het zou natuurlijk mooi zijn als je de compiler zelf de meeste efficiënte versie van \hcode{find_\\-upper_\\-middle} zou kunnen laten kiezen afhankelijk van het gebruikte iterator soort.
-Dit blijkt inderdaad mogelijk door gebruik te maken van zogenoemde iterator tags.
-In de standaard \Cpp{} \USE{library} is voor elke iteratorsoort een zogenoemd \hcode{iterator_\\-tag} type gedefinieerd.
-Er is dus een \hcode{random_\\-access_\\-iterator_\\-tag} type, een \hcode{bi\\-di\\-rec\\-tional_\\-iterator_\\-tag} en een \hcode{forward_\\-iterator_\\-tag}.
-We definiëren nu drie overloaded\footnote{%
-	Zie \csecref{sec:functionoverloading}.
-} template functies die allemaal \hcode{find_\\-upper_\\-middle} heten en behalve de twee parameters |begin| en |end| nog een derde parameter hebben genaamd |dummy|.
-Deze |dummy| parameter is van het type van de betreffende \hcode{iterator_\\-tag}.
-Deze parameter wordt verder in de implementatie van de functie niet gebruikt.
-Vervolgens wordt er nog een vierde (\USE{overloaded}) \hcode{find_\\-upper_\\-middle} template functie gedefinieerd die slechts twee parameters heeft: |begin| en |end|.
-Deze functie roept vervolgens één van de andere drie \hcode{find_\\-upper_\\-middle} template functies aan met als derde argument een bij de iteratoren |begin| en |end| behorende \hcode{iterator_\\-tag} object.
-We kunnen de bij een iterator horende \hcode{iterator_\\-tag} opvragen met behulp van de standaard \hcode{iterator_\\-traits}\footnote{%
-	Zie eventueel \url{http://en.cppreference.com/w/cpp/iterator/iterator_traits}.
-} template class.
-Het iterator type moet als template argument aan deze template class worden doorgegeven.
-In deze class is een |typedef| gedefinieerd genaamd \hcode{iterator_\\-category} die overeenkomt met het betreffende \hcode{iterator_\\-tag} type.
-Deze |typedef| kunnen we gebruiken om een (dummy) object aan te maken.
-Het type van dit object (het \hcode{iterator_\\-tag} type) wordt vervolgens door de compiler gebruikt om de juiste \hcode{find_\\-upper_\\-middle} te selecteren.
-Zie \proglink{find\_upper\_middle.cpp}:
-
-\cpplstinputfragment[linerange={10-68}]{find_upper_middle.cpp}
-
-Het \USE{keyword} |typename| is nodig om de compiler duidelijk te maken dat \hcode{iterator_\\-traits<I>::\\-iterator_\\-category} een typenaam is.
-Zie eventueel \url{http://en.cppreference.com/w/cpp/keyword/typename}.
-
-\subsection{Standaard functie\hyp{}objecten}
-\label{sec:stdfunctieobjecten}
-Je hebt gezien dat je een bepaalde voorwaarde of een bepaalde bewerking kunt doorgeven aan een algoritme door middel van een functie\hyp{}pointer, een zelfgemaakt functie\hyp{}object of een lambda\hyp{}functie, zie \csecref{sec:findif} en \csecref{sec:transform}.
-Je kunt echter ook gebruik maken van een zogenoemd standaard functie\hyp{}object.
-De classes waarmee deze objecten gemaakt kunnen worden zijn gedefiniëerd in de headerfile |functional|.
-Voor alle rekenkundige en logische operaties zijn template classes beschikbaar.
-Zo wordt, bijvoorbeeld, door een object van de class |plus<T>| een |operator+| uitgevoerd op twee objecten van het type |T| en wordt door een object van de class |greater<T>| een |operator>| uitgevoerd op twee objecten van het type |T|.
-Zie voor een compleet overzicht \url{http://en.cppreference.com/w/cpp/utility/functional}.
-
-Het gebruik van standaard functie\hyp{}objecten is vooral handig als de operatie die door het algoritme uitgevoerd moet worden uit één enkele operator bestaat.
-
-Zo kun je bijvoorbeeld de |vector| |w| bij de |vector| |v| optellen door middel van een |transfer| algoritme met een standaard functie\hyp{}object |plus|, zie \proglink{transfer\_plus}.
-
-\cpplstinputfragment[linerange={1-22}]{transform_plus.cpp}
-
-Als je dit vergelijkt met het gebruik van een functie of lambda\hyp{}functie zoals in \csecref{sec:transform}, dan zie je dat het gebruik van een standaard functie\hyp{}object in dit geval eenvoudiger is.
-
-De code die in \csecref{sec:sort} gegeven is om een |vector| met integers van hoog naar laag te sorteren (zie \proglink{sort\_lambda.cpp}):
-\cpplstinputfragment[linerange={15-17}]{sort_lambda.cpp}
-kan sterk vereenvoudigd worden door het gebruik van een standaard functie\hyp{}object (zie \proglink{sort\_greater.cpp}):
-\cpplstinputfragment[linerange={16-16}]{sort_greater.cpp}
-
-Het gebruik van een standaard functie\hyp{}object om een voorwaarde door te geven aan één van de |_if| algoritmen is minder eenvoudig.
-In \csecref{sec:findif} heb je gezien dat het eerste getal $\ge{}0$ in een |list| met integers opgezocht kan worden door deze voorwaarde aan |find_if| door te geven met behulp van een functie of een lambda\hyp{}functie.
-Er is in dit geval een functie\hyp{}object nodig dat één |int| als parameter heeft en een |bool| teruggeeft die aangeeft of het meegegeven argument $\ge{}0$ is.
-Het is dus \emph{niet} mogelijk om rechtstreeks gebruik te maken van de standaard class |greater_equal<T>| omdat een functie\hyp{}object van die class twee parameters heeft.
-Met een omweg is dit echter wel mogelijk.
-Er moet dan gebruik gemaakt worden van de standaard functie |bind| waarmee een functie\hyp{}object omgezet kan worden in een ander functie\hyp{}object waarbij bepaalde parameters uit het oorspronkelijke functie\hyp{}object gebonden kunnen worden aan bepaalde waarden.
-Het standaard functie\hyp{}object |greater_equal<int>()| heeft twee parameters en bepaalt bij aanroep of het eerste argument $\ge{}$ aan het tweede argument is.
-Met behulp van |bind| kan hiervan een functie\hyp{}object gemaakt worden met slechts één parameter die bij aanroep bepaald of het argument $\ge{}0$ is, door de tweede parameter van |greater_equal<int>()| te binden aan de waarde $0$.
-De aanroep van |bind| ziet er dan als volgt uit: 
-\begin{cpplstfragment}
-bind(greater_equal<int>(), _1, 0)
-\end{cpplstfragment}
-De |_1| is een zogenoemde \USE{placeholder}\footnote{%
-	De \USE{placeholders} zijn gedefinieerd in een aparte \code{namespace} genaamd \hcode{std::\\-place\\-holders}.
-} en geeft aan dat de eerste (en enige) parameter van het door |bind| teruggegeven functie\hyp{}object ingevuld moet worden als eerste argument van |greater_equal<int>()|.
-De |0| geeft aan dat de constante waarde $0$ ingevuld moet worden als tweede argument van |greater_equal<int>()|.
-Het door |bind| teruggegeven functie\hyp{}object kan  vervolgens aan het |find_if| algoritme worden doorgegeven om de eerste integer $\ge{}0$ in de |vector| |rij| te vinden, zie \proglink{find\_if\_bind.cpp}:
-
-\cpplstinputfragment[linerange={1-14}]{find_if_bind.cpp}
-
-Persoonlijk vind ik het gebruik van een lambda\hyp{}functie in dit geval eenvoudiger, zie \csecref{sec:findif}.
-
-In \csecref{sec:remove} heb je gezien hoe de even getallen uit een |vector| met integers verwijderd kunnen worden met behulp van een lambda\hyp{}functie, zie \proglink{remove.cpp}:
-\cpplstinputfragment[linerange={31-33}]{remove.cpp}
-
-Dit zou ook met behulp van standaard functie\hyp{}objecten kunnen, zie \proglink{remove\_bind.cpp}:
-
-\cpplstinputfragment[linerange={18-18}]{remove_bind.cpp}
-
-Ook in dit geval vind ik het gebruik van een lambda\hyp{}functie eenvoudiger.
 
 \chapter{Toepassingen van datastructuren}
 \label{sec:Toepassingen}
@@ -6005,7 +5997,6 @@ Een \USE{edge} met een richting wordt aangegeven met een pijl in plaats van met 
 Je kunt dan alleen van de ene naar de andere \USE{vertex} reizen in de richting van de \USE{arc}.
 Je ziet dat \cref{fig:steden} een \USE{directed} \USE{graph} is.
 Blijkbaar kun je in die \USE{graph} wel vanuit Amsterdam Berlijn bereiken maar is het niet mogelijk om vanuit Berlijn Amsterdam te bereiken.
-{cpplstShortInline}
 
 Een rijtje \USE{vertices} die afgelopen kunnen worden door één of meer \USE{edges} (achtereenvolgens) te volgen wordt een wandeling (Engels: walk) genoemd.
 In \cref{fig:steden} is de rij \USE{vertices} (Parijs, Genève, Grenoble, Milaan) een walk van Parijs naar Milaan.
@@ -6094,24 +6085,25 @@ In het programma \proglink{Paths.cpp} worden vier verschillende algoritmen geïm
 Als we dit programma gebruiken om het kortste pad van Amsterdam naar Florence in de \USE{graph} die gegeven in \cref{fig:steden} te berekenen dan ziet de uitvoer er als volgt uit:
 
 \begin{coutput}
-	p = positive (\url{http://bd.eduweb.hhs.nl/algods/graph_positive.png}),
-	n = negative (\url{http://bd.eduweb.hhs.nl/algods/graph_negative.png}),
-	a = acyclic  (\url{http://bd.eduweb.hhs.nl/algods/graph_acyclic.png}),
-	s = steden   (\url{http://bd.eduweb.hhs.nl/algods/graph_steden.png}) or
-	q = quit.
-	Choose graph: \cinput{s}
-	Show graph? (y/n): \cinput{n}
-	Reading file ...............
-	Enter start node: \cinput{Amsterdam}
-	Enter destination node: \cinput{Florence}
-	Enter algorithm u = unweighted, d = dijkstra, n = negative or 
-	a = acyclic: \cinput{a}
-	(Costs are: 1705) Amsterdam to Brussel to Parijs to Genève to Milaan
-	to Florence
+p = positive (\href{https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_positive.png}{graph_positive.png}),
+n = negative (\href{https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_negative.png}{graph_negative.png}),
+a = acyclic  (\href{https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_acyclic.png}{graph_acyclic.png}),
+s = steden   (\href{https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_steden.png}{graph_steden.png}) or
+q = quit.
+Choose graph: \cinput{s}
+Show graph? (y/n): \cinput{n}
+Reading file ...............
+Enter start node: \cinput{Amsterdam}
+Enter destination node: \cinput{Florence}
+Enter algorithm u = unweighted, d = dijkstra, n = negative or 
+a = acyclic: \cinput{a}
+(Costs are: 1705) Amsterdam to Brussel to Parijs to Genève to Milaan
+to Florence
 \end{coutput}
 
-De algoritmen waarnaar in deze paragraaf wordt verwezen, worden in de les verder besproken.
-Zie eventueel de PowerPoint presentatie van week 6: \url{http://bd.eduweb.hhs.nl/algods/ppsx/ALGODS.pptm}.
+%De algoritmen waarnaar in deze paragraaf wordt verwezen, worden in de les verder besproken.
+%Zie eventueel de PowerPoint presentatie van week 6: \url{http://bd.eduweb.hhs.nl/algods/ppsx/ALGODS.pptm}.
+%TODO: verhaal uit presentatie toevoegen.
 
 \begin{cpplstShortInline}
 \chapter{Van C naar C++ (de details)}
@@ -6420,7 +6412,7 @@ wijzen. Let op: je kunt |i| zelf wel wijzigen!
 //  $\color{hrred}\textbf{error:}$ assignment of read-only variable 'r'
 \end{cpplstfragment}
 
-\subsection{Casting}
+\section{Casting}
 \label{sec:casting}
 Door middel van \emph{casting}%
 \footnote{%
@@ -6434,7 +6426,7 @@ Stel dat we het adres van een C string in een integer willen opslaan%
 \footnote{%
     Er is geen enkele reden te bedenken waarom je dit zou willen. 
     Het adres van een C string moet je natuurlijk in een \cppcode{char*} opslaan!
-} dan kun je dit als volgt proberen (\proglink{Casting1.cpp}):
+} dan kun je dit als volgt proberen (\proglink{casting1.cpp}):
 \begin{cpplstfragment}
     int i;
     i = "Hallo";
@@ -6443,12 +6435,11 @@ Stel dat we het adres van een C string in een integer willen opslaan%
 Als je dit probeert te compileren, krijg je de volgende foutmelding:
 \begin{cpplstfragment}[mathescape=true]
     i = "Hallo";
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ '=' : cannot convert from 'const char [6]' to 'int'
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ invalid conversion from 'const char*' to 'int'
+//  $\color{hrred}\textbf{error:}$ invalid conversion from 'const char*' to 'int'
 \end{cpplstfragment}
 %
 Het is namelijk helemaal niet zeker dat een |char*| in een |int| variabele past.
-Stel dat je zeker weet dat het past (omdat je het programma alleen maar onder Win32 wilt gebruiken) dan kun je de compiler \enquote{dwingen} met behulp van een zogenoemde \emph{\USE{cast}}:
+Stel dat je zeker weet dat het past (omdat je het programma alleen maar op een 32-bits microcontroller wilt gebruiken) dan kun je de compiler \enquote{dwingen} met behulp van een zogenoemde \emph{\USE{cast}}:
 \begin{cpplstfragment}
     i = (int)"Hallo";
 \end{cpplstfragment}
@@ -6478,32 +6469,37 @@ Dit kun je in \Cpp{} als volgt doen:
 
 \footnotetext{%
     Zie voor uitleg over het gebruik van \cppcode{volatile} \url{http://bd.eduweb.hhs.nl/micprg/volatile.htm}.
+    %TODO: link aanpassen naar C-dictaat.
 }
 Als we een \USE{cast} willen doen die wel portable is, kan dat met |static_cast|.
 
 \subsection*{Vraag:}
-Wat is de uitvoer van het volgende programmadeel (\proglink{Casting2.cpp})?
-\cpplstinputfragment[linerange={5-8}]{Casting2.cpp}
+Wat is de uitvoer van het volgende programmadeel (\proglink{casting2.cpp})?
+\cpplstinputfragment[linerange={5-7}]{casting2.cpp}
 
 \needspace{3\baselineskip}
 \subsection*{Antwoord:}
 \begin{coutput}
-d = 0
+1/2 = 0
 \end{coutput}
 
 Dit is niet wat de meeste mensen verwachten.
 De computer gebruikt bij het berekenen van |i1 / i2| echter een integer deling omdat |i1| en |i2| beiden van het type |int| zijn.
 Het antwoord van deze integer deling is de integer waarde 0.
-Vervolgens wordt deze waarde omgezet naar het type |double|.
 
-Als we willen dat het bovenstaande programma |0.5| als antwoord geeft, moeten we ervoor zorgen dat in plaats van een integer deling een \USE{floating point} deling wordt gebruikt.
+Als je wilt dat het bovenstaande programma |0.5| afdrukt, dan moet je ervoor zorgen dat in plaats van een integer deling een \USE{floating point} deling wordt gebruikt.
 De computer gebruikt een \USE{floating point} deling als één van de twee argumenten een \USE{floating point} getal is.
-De juiste deling is dus:
-\cpplstinputfragment[linerange={9-9}]{Casting2.cpp}
+Door het gebruik van een |static_cast| kun je een van de twee getallen omzetten naar een |double|:
+\cpplstinputfragment[linerange={8-8}]{casting2.cpp}
+
+De output van deze regel is:
+\begin{coutput}
+1/2 = 0.5
+\end{coutput}
 
 Er bestaat ook een speciale \USE{cast} om een |const| weg te casten de zogenoemde |const_cast|\label{sec:const_cast}.
-Voorbeeld (\proglink{Casting3.cpp}):
-\cpplstinputfragment[linerange={5-14}]{Casting3.cpp}
+Voorbeeld (\proglink{casting3.cpp}):
+\cpplstinputfragment[linerange={5-14}]{casting3.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -6514,6 +6510,45 @@ s = Hallo
 
 Het zal duidelijk zijn dat je het gebruik van |const_cast| zoveel mogelijk moet beperken.
 Als de \USE{reference} |a| in het bovenstaande programma naar een |const string| verwijst, is het resultaat onbepaald omdat een compiler |const| objecten in het ROM geheugen kan plaatsen (dit gebeurt veel bij embedded systems).
+
+\section{\texorpdfstring{\cppcode{static_assert}}{static_assert}}
+In \csecref{sec:assert} heb je al kennis gemaakt met de standaard functie |assert|.
+Met deze functie wordt tijdens het uitvoeren van het programma gecheckt of aan een bepaalde voorwaarde wordt voldaan.
+In \Cpp{} kun je ook tijdens het compileren van je programma al checken of aan een bepaalde voorwaarde is voldaan.
+Dit doe je met behulp van de standaard functie |static_assert|.
+De code |static_assert(test, melding)| zal de compiler-error |melding| geven als de |test| |false| oplevert.
+
+Stel bijvoorbeeld dat je een stuk code hebt geschreven waarbij gebruik gemaakt wordt van het type |int| dat alleen maar werkt als dit type 32~bits bevat.
+Het aantal bits in een |int| is, zoals je waarschijnlijk wel weet, afhankelijk van de compiler. Je kunt nu de volgende code in je programma opnemen om te checken of een |int| 32~bits (oftewel 4~bytes) breed is:
+
+\begin{cpplstfragment}
+	static_assert(sizeof(int) == 4, "int to small");	
+\end{cpplstfragment}
+
+Als we deze code compileren voor een processor die 16-bit integers heeft\footnote{%
+	De meeste 8- of 16-bit microprocessoren, zoals de MSP430, gebruiken 16-bit \ccode{int}s.
+}, dan geeft de compiler op deze regel een errormelding: \error{static assertion failed: int to small}.
+
+In dit geval had je natuurlijk in plaats van het type |int| ook het type |int32_t| kunnen gebruiken dat altijd 32~bits breed is.
+
+\section{Structured binding}
+\label{sec:structuredbinding}
+In \Cpp{} kun je zogenoemde \squote{\USE{structured binding}} toepassen.
+Hiermee kun je de waarden van een samengesteld type (bijvoorbeeld een |struct|) in één statement toekennen aan meerdere variabelen.
+Bijvoorbeeld, stel dat je de volgende |struct| hebt gedefinieerd:
+\cpplstinputfragment[linerange={5-9}]{structured_binding.cpp}
+Als de functie |adreslocatie_HR| dan het adres van een locatie van de Hogeschool Rotterdam teruggeeft, dan kan dit adres met behulp van \USE{structured binding} toegekend worden aan drie variabelen:
+\cpplstinputfragment[linerange={26-28}]{structured_binding.cpp}
+Het gebruik hiervan is soms handig, maar vaak is het duidelijker om de waarden van het samengestelde type één voor één te gebruiken:
+\cpplstinputfragment[linerange={21-23}]{structured_binding.cpp}
+
+Vooral bij gebruik van sommige standaard library types zoals |set| en |map| is het gebruik van \USE{structured binding} handig.
+In \csecref{sec:set} heb je gezien dat de memberfunctie |insert| van |set| het returntype  |pair<iterator, bool>| heeft.
+De |iterator| geeft de plek aan waar ingevoegd is en de |bool| geeft aan of het invoegen gelukt is.
+In het voorbeeldprogramma werd de volgende code gebruikt om te kijken of het invoegen van |"Harry"| in de set |docenten| gelukt was:
+\cpplstinputfragment[linerange={14-14,17-19}]{set.cpp}
+Dit zou je nu ook met behulp van structured binding als volgt kunnen coderen:
+\cpplstinputfragment[linerange={14-14,17-19}]{set_structured_binding.cpp}
 
 \chapter{Objects and classes (de details)}
 \label{sec:objectsandclassesdetails}
@@ -6959,43 +6994,63 @@ inline int Breuk::noemer() const {
 }
 \end{cpplstfragment}
 
-\section{Casting en run time type information}
-\subsection{Casting en overerving}
+\section{User-defined literals}
+\label{user-definedliterals}
+%TODO toevoegen aan meeste uitgebeide versie van Breuk.
+Voor de ingebouwde types in \Cpp{} kun je zogenoemde literals definiëren.
+Een literal is een constante waarde.
+Voorbeelden van literals van het type |int| zijn |42|, |0b0101010| en |0x2A|.
+|true| is een voorbeeld van een literal van het type |bool|.
+|'a'| en |'\n'| zijn voorbeelden van literals van het type |char|.
+|1.2| en |-3.234e-17| zijn voorbeelden van literals van het type |double|.
+|"Hallo daar"| is een voorbeeld van een C-string literal van het type |const char[11]|.
+Het is ook mogelijk om literals (constante getallen) te definiëren voor user-defined datatypes (UDT's) zoals |Breuk|.
+Zie \proglink{user_defined_literals.cpp}.
+
+Dit is bijvoorbeeld ook gebruikt in de volgende standaard library classes:
+\begin{itemize}
+	\item |string|\\
+	|"Hallo daar"s| is een literal van het type |string|.
+	\item |complex|\\
+	|2i| is een literal van het type |complex<double>|.
+	\item |chrono::duration|\\
+	|2ms| is een literal van het type |chrono::duration|.
+\end{itemize}   
+
+\section{Casting en overerving}
 Als we een pointer naar een |Base| class hebben, mogen we een pointer naar een |Derived| (van |Base| afgeleide) class toekennen aan deze |Base| class pointer, maar niet vice versa. Bijvoorbeeld:
 \begin{cpplstfragment}[mathescape=true]
 class Hond { /* ... */ };
-class SintBernard: public Hond { /* ... */ };
+class Sint_bernard: public Hond { /* ... */ };
 //  ...
-    Hond* hp = new SintBernard; // OK: een SintBernard is een Hond
-    SintBernard* sbp = new Hond; // $\color{hrred}\textbf{ERROR:}$ een Hond is geen SintBernard
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'initializing' : cannot convert from 'Hond *' to 'SintBernard *'
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ invalid conversion from 'Hond*' to 'SintBernard*'
+    Hond* hp = new Sint_bernard; // OK: een Sint_bernard is een Hond
+    Sint_bernard* sbp = new Hond; // $\color{hrred}\textbf{NOT OK:}$ een Hond is geen Sint_bernard
+//  $\color{hrred}\textbf{error:}$ invalid conversion from 'Hond*' to 'Sint_bernard*'
 \end{cpplstfragment}
 
-Het omzetten van een |Hond*| naar een |SintBernard*| kan soms toch nodig zijn.
+Het omzetten van een |Hond*| naar een |Sint_bernard*| kan soms toch nodig zijn.
 We noemen dit een \emph{\USE{downcast}} omdat we afdalen in de class hiërarchie.
 \needspace{2\baselineskip}
-Voorbeeld (\proglink{Casting4.cpp}):
-\cpplstinputfragment[linerange={4-30}]{Casting4.cpp}
+Voorbeeld (\proglink{casting4.cpp}):
+\cpplstinputfragment[linerange={4-30}]{casting4.cpp}
 \begin{cpplstfragment}[mathescape=true]
-void geefHulp(Hond* hp) { 
+void geef_hulp(Hond* hp) { 
     hp->blaf();
-//  cout << hp->geefDrank() << " liter.\n";
-//  $\color{hrred}\textbf{Error: (Microsoft)}$ 'geefDrank' : is not a member of 'Hond'
-//  $\color{hrred}\textbf{Error: (GCC)\ \ \ \ \ \ }$ 'class Hond' has no member named 'geefDrank'
-//  We kunnen een cast gebruiken maar dat geeft foutieve uitvoer als hp niet naar een SintBernard wijst.
-    cout << static_cast<SintBernard*>(hp)->geefDrank() << " liter.\n";
+//  cout << hp->geef_drank() << " liter.\n";
+//  $\color{hrred}\textbf{error:}$ 'class Hond' has no member named 'geef_drank'
+//  We kunnen een cast gebruiken maar dat geeft foutieve uitvoer als hp niet naar een Sint_bernard wijst.
+    cout << static_cast<Sint_bernard*>(hp)->geef_drank() << " liter.\n";
 }
 \end{cpplstfragment}
 
 In dit geval is een |static_cast| gebruikt om een \USE{downcast} te maken.
-Als je de functie |geefHulp| aanroept met een |Hond*| als argument die wijst naar een |SintBernard|, gaat alles goed.%
+Als je de functie |geef_hulp| aanroept met een |Hond*| als argument die wijst naar een |Sint_bernard|, gaat alles goed.%
 \footnote{%
-    Als de functie \cppcode{geefHulp} alleen maar aangeroepen wordt met een \cppcode{SintBernard*} als argument, is het natuurlijk veel slimmer om deze functie te definiëren als: \cppcode{void geefHulp(SintBernard* sbp)}. 
+    Als de functie \cppcode{geef_hulp} alleen maar aangeroepen wordt met een \cppcode{Sint_bernard*} als argument, is het natuurlijk veel slimmer om deze functie te definiëren als: \cppcode{void geef_hulp(Sint_bernard* sbp)}. 
     De \USE{downcast} is dan niet meer nodig!
 }
 
-\cpplstinputfragment[linerange={42-44}]{Casting4.cpp}
+\cpplstinputfragment[linerange={40-42}]{casting4.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -7005,25 +7060,25 @@ Geeft drank.
 10 liter.
 \end{coutput}
 
-Als je de functie |geefHulp| echter aanroept met een |Hond*| als argument die niet wijst naar een |SintBernard|, dan geeft het programma onvoorspelbare resultaten (en/of loopt het vast):
-\cpplstinputfragment[linerange={46-48}]{Casting4.cpp}
+Als je de functie |geef_hulp| echter aanroept met een |Hond*| als argument die niet wijst naar een |Sint_bernard|, dan geeft het programma onvoorspelbare resultaten (en/of loopt het vast):
+\cpplstinputfragment[linerange={44-46}]{casting4.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
 Blaf.
 Geeft drank.
--33686019 liter.
+-2144382840 liter.
 \end{coutput}
 
 Een |static_cast| is dus alleen maar geschikt als \USE{downcast} als je zeker weet dat de \USE{cast} geldig is. 
 In het bovenstaande programma zou je de mogelijkheid willen hebben om te kijken of een \USE{downcast} mogelijk is.
-Dit kan met een zogenoemde |dynamic_cast|. Zie \proglink{Casting5.cpp}:
-\cpplstinputfragment[linerange={32-37}]{Casting5.cpp}
+Dit kan met een zogenoemde |dynamic_cast|. Zie \proglink{casting5.cpp}:
+\cpplstinputfragment[linerange={31-36}]{casting5.cpp}
 
-Je kunt de functie |geefHulp| nu veilig aanroepen zowel met een |SintBernard*| als met een |Hond*| als argument.
+Je kunt de functie |geef_hulp| nu veilig aanroepen zowel met een |Sint_bernard*| als met een |Hond*| als argument.
 
-\cpplstinputfragment[linerange={40-45}]{Casting5.cpp}
+\cpplstinputfragment[linerange={39-45}]{casting5.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -7035,16 +7090,16 @@ Blaf.
 \end{coutput}
 
 Een |dynamic_cast| is alleen mogelijk met polymorfe pointers en polymorfe \USE{references}.
-Als een |dynamic_cast| van een pointer mislukt, geeft de \USE{cast} een nul pointer terug.
+Als een |dynamic_cast| van een pointer mislukt, geeft de \USE{cast} een |nullptr| terug.
 Bij een |dynamic_cast| van een \USE{reference} is dit niet mogelijk (omdat een nul \USE{reference} niet bestaat).
 Als een |dynamic_cast| van een \USE{reference} mislukt, wordt de standaard \USE{exception} |bad_cast| gegooid.
 
-Een versie van |geefHulp| die werkt met een |Hond&| in plaats van met een |Hond*| kun je dus als volgt implementeren (\proglink{Casting6.cpp}):
-\cpplstinputfragment[linerange={2-2,12-12,33-41}]{Casting6.cpp}
+Een versie van |geef_hulp| die werkt met een |Hond&| in plaats van met een |Hond*| kun je dus als volgt implementeren (\proglink{casting6.cpp}):
+\cpplstinputfragment[linerange={2-2,11-11,32-40}]{casting6.cpp}
 
 \needspace{2\baselineskip}
 Deze functie kun je als volgt aanroepen:
-\cpplstinputfragment[linerange={44-47}]{Casting6.cpp}
+\cpplstinputfragment[linerange={43-46}]{casting6.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -7055,7 +7110,7 @@ Geeft drank.
 Blaf.
 \end{coutput}
 
-\subsection{Dynamic casting en RTTI}
+\section{Dynamic casting en RTTI}
 Om tijdens \USE{run time} te kunnen controleren of een |dynamic_cast| mogelijk is moet informatie over het type tijdens \USE{run time} beschikbaar zijn.
 Dit wordt \emph{RTTI} = \emph{R}un \emph{T}ime \emph{T}ype \emph{I}nformation genoemd.
 In \Cpp{} hebben alleen classes met één of meer virtuele functies RTTI.
@@ -7064,34 +7119,34 @@ RTTI maakt dus het gebruik van |dynamic_cast| mogelijk.
 Je kunt ook de RTTI gegevens behorende bij een object rechtstreeks opvragen.
 Deze gegevens zijn opgeslagen in een object van de class |type_info|.
 Deze class heeft een vraagfunctie |name()| waarmee de naam van de class opgevraagd kan worden.
-Om het |type_info| object van een (ander) object op te vragen moet je het \Cpp{} \USE{keyword} |typeid| gebruiken. Zie \proglink{Rtti.cpp}:
+Om het |type_info| object van een (ander) object op te vragen moet je het \Cpp{} \USE{keyword} |typeid| gebruiken. Zie \proglink{rtti.cpp}:
 
-\cpplstinputfragment[linerange={3-3,22-25}]{Rtti.cpp}
+\cpplstinputfragment[linerange={22-24}]{rtti.cpp}
 
 \needspace{2\baselineskip}
 Deze functie kun je als volgt aanroepen:
-\cpplstinputfragment[linerange={28-31}]{Rtti.cpp}
+\cpplstinputfragment[linerange={27-30}]{rtti.cpp}
 
 \needspace{2\baselineskip}
-Uitvoer:
+De uitvoer is compiler afhankelijk. De GCC \Cpp{}-compiler produceert de volgende uitvoer:
 \begin{coutput}
-class SintBernard
-class Hond
+12Sint_bernard
+4Hond
 \end{coutput}
 
-\subsection{Maak geen misbruik van RTTI en \texorpdfstring{\cppcode{dynamic_cast}}{dynamic cast}}
-Het verkeerd gebruik van |dynamic_cast| en RTTI kan leiden tot code die \emph{niet} uitbreidbaar en aanpasbaar is! Je zou bijvoorbeeld op het idee kunnen komen om een functie |blaf()| als volgt te implementeren (\proglink{Casting7.cpp}):
+\section{Maak geen misbruik van RTTI en \texorpdfstring{\cppcode{dynamic_cast}}{dynamic cast}}
+Het verkeerd gebruik van |dynamic_cast| en RTTI kan leiden tot code die \emph{niet} uitbreidbaar en aanpasbaar is! Je zou bijvoorbeeld op het idee kunnen komen om een functie |blaf()| als volgt te implementeren (\proglink{casting7.cpp}):
 \begin{cpplstfragment}[mathescape=true]
 class Hond {
 public:
-    virtual ~Hond();
+    virtual ~Hond() = default;
 //  ...
 };
 
 Hond::~Hond() {
 }
 
-class SintBernard: public Hond {
+class Sint_bernard: public Hond {
 //  ...
 };
 
@@ -7104,7 +7159,7 @@ class Tekkel: public Hond {
 //  blaf moet als virtual memberfunctie geimplementeerd worden!
 
 void blaf(const Hond* hp) {
-    if (dynamic_cast<const SintBernard*>(hp) != 0)
+    if (dynamic_cast<const Sint_bernard*>(hp) != 0)
         cout << "Woef!\n";
     else if (dynamic_cast<const Tekkel*>(hp) != 0)
         cout << "Kef kef!\n";
@@ -7113,11 +7168,12 @@ void blaf(const Hond* hp) {
 }
 \end{cpplstfragment}
 
-Bedenk zelf wat er moet gebeuren als je de class |DuitseHerder| wilt toevoegen. 
+Bedenk zelf wat er moet gebeuren als je de class |Duitse_herder| wilt toevoegen. 
 In plaats van een losse functie die expliciet gebruikt maakt van \USE{dynamic binding} (|dynamic_cast|) met behulp van RTTI moet je een |virtual| memberfunctie gebruiken. 
 Deze |virtual| memberfunctie maakt impliciet gebruik van \USE{dynamic binding}. Alleen in uitzonderingsgevallen (er is maar één soort hond die whisky bij zich heeft) moet je |dynamic_cast| gebruiken. 
 Alle honden kunnen blaffen (alleen niet allemaal op dezelfde manier) dus is het gebruik van |dynamic_cast| om blaf te implementeren niet juist. 
 In dit geval moet je een |virtual| memberfunctie gebruiken.
+%TODO: verwijzing naar hondenvoorbeeld toevoegen.
 
 \section{\texorpdfstring{\cppcode{enum class}}{enum class}}
 \label{sec:enumclass}
@@ -7169,7 +7225,6 @@ Omdat het gebruik van |enum class| geen onverwachtse verrassingen op kan leveren
 \label{sec:inheritancedetails}
 \section{Overloading en overriding van memberfuncties}
 \label{override versus overload}
-\label{virtual}
 Het onderscheid tussen memberfunctie \emph{\USE{overloading}} en memberfunctie \emph{\USE{overriding}} is van groot belang.
 In \csecref{sec:functionoverloading} heb je gezien dat een functienaam meerdere keren gebruikt (\USE{overloaded}) kan worden.
 De compiler zal aan de hand van de gebruikte argumenten de juiste functie selecteren.
@@ -7882,6 +7937,7 @@ Array& Array::operator=(Array r) {
 Ja! De \USE{copy constructor} wordt nu impliciet aangeroepen bij het doorgeven van het bij aanroep gebruikte argument aan de parameter |r| (\USE{call by value}).
 
 \section{Wanneer moet je zelf een destructor, copy constructor en \texorpdfstring{\cppcode{operator=}}{operator=} definiëren?}
+\label{sec:ruleofthree}
 Een class moet een \emph{zelf} gedefinieerde \USE{copy constructor}, |operator=| en \USE{destructor} bevatten als:
 \begin{itemize}
     \item die class een pointer bevat en;
@@ -7966,16 +8022,10 @@ De in \csecref{sec:class template array} gegeven class template Array kan niet m
     //  $\color{hrred}\textbf{error:}$  'end' was not declared in this scope; did you mean 'std::end'?
 \end{cpplstfragment}
 
-% verwijzingen naar ALGODS dictaat
-\newcommand{\urlalgodsdictaat}{http://bd.eduweb.hhs.nl/algods/pdf/dictaat_ALGODS\iftoggle{ebook}{_ebook}{}.pdf}
-\newcommand{\algodsdictaatchapref}[1]{\pdfchapref{\urlalgodsdictaat}{#1}}
-\newcommand{\algodsdictaatchapcite}[1]{\cite[{\algodsdictaatchapref{#1}}]{Broeders2015}}
-
 Als we dit willen laten werken moeten we de functies |begin|, |cbegin|, |end| en |cend| voor de class template |Array| definiëren. De functies |begin| en |end| moet \USE{overloaded} worden voor \USE{read-only} (|const|) objecten van de class |Array| en voor non-|const| objecten van de class |Array|. De functies |cbegin| en |cend| moeten enkel gedefinieerd worden voor \USE{read-only} (|const|) objecten van de class |Array|. De functies |begin| en |cbegin| moeten een pointer
-%TODO: Fix this!
-%\footnote{%
-%    In het algemeen moeten deze functies een zogenoemde iterator teruggeven, zie voor meer informatie het dictaat \citetitle{Broeders2015}\algodsdictaatchapcite{6}.
-%}
+\footnote{%
+    In het algemeen moeten deze functies een zogenoemde iterator teruggeven, zie \csecref{sec:iteratoren}.
+}
 teruggeven naar het eerste element van de |Array|. De functies |end| en |cend| moeten een pointer\addtocounter{footnote}{-1}\addtocounter{Hfootnote}{-1}\footnotemark{}  teruggeven net na het laatste element van de |Array|.
 
 Zie \proglink{Array\_template\_rbf.cpp}:
@@ -7992,6 +8042,7 @@ Zie \proglink{Array\_template\_rbf.cpp}:
 \cpplstinputfragment[linerange={91-113}]{Array_template_rbf.cpp}
 
 \section{Ondersteuning initialisatielijst voor class template \texorpdfstring{\cppcode{Array}}{Array}}
+\label{sec:Arraymetinitlist}
 De in \csecref{sec:class template array} gegeven class template Array kan niet met behulp van een initialisatielijst geïnitialiseerd worden. Als je dit toch probeert, dan krijg je een foutmelding:
 
 \begin{cpplstfragment}[mathescape=true]
@@ -8020,699 +8071,534 @@ Of nog eenvoudiger:
 In dit geval heb ik gebruik gemaakt van de functie |copy| uit de standaard library.
 %TODO: verwijzing toevoegen.
 
-\chapter{Notes from A Tour if C++, Second Edition}
-Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second Edition} van Bjarne Stroustrup. Deze aantekeningen moeten nog (op de juiste plaats) verwerkt worden in dit dictaat.
-\section{The Basics}
+\section{Return value optimization}
+\label{sec:rvo}
+De \Cpp{}\hyp{}compiler doet zijn best om het onnodig kopiëren van data te voorkomen.
+Deze compiler optimalisatie techniek wordt \squote{\USE{copy elision}}\footnote{%
+	Het Engelse woord \squote{\USE{elision}} betekent \squote{weglating}.
+} genoemd.
+Een speciaal geval van copy elision is de zogenoemde \squote{\USE{return value optimization (RVO)}}\label{RVO}.
+Deze optimalisatie voorkomt dat de returnwaarde van een functie eerst in een tijdelijke variabele wordt gekopieerd maar kopieert deze waarde meteen naar zijn uiteindelijke bestemming.
+
+Je kunt kijken of deze optimalisatie wel of niet wordt toegepast door een class met een copy constructor, zie \csecref{copy constructor}, te definiëren en te kijken wat er gebeurt als je een object van deze class teruggeeft vanuit een functie.
+
+Bijvoorbeeld, zie \proglink{RVO.cpp}:
+\cpplstinputfragment[linerange={5-31}]{RVO.cpp}
+Het enige doel van dit programma is om te kijken of de compiler de return value optimization toepast.
+Als dit programma gecompileerd wordt met gcc 9.1\footnote{%
+	\code{g++ -std=c++17 -pedantic-errors -Wall -g3 -O0 RVO.cpp}
+}, dan geeft dit programma de volgende uitvoer:
+\begin{coutput}
+Int met waarde 42 wordt aangemaakt.
+De waarde van local is 42
+Int met waarde 42 wordt verwijderd.
+\end{coutput}  
+Blijkbaar is de GCC \Cpp{}\hyp{}compiler zo slim om alle benodigde kopieeracties weg te optimaliseren\footnote{%
+	Ondanks het feit dat we de optie \code{-O0} hebben meegegeven. Volgens de documentatie van gcc\footnotemark{} disabled de optie \code{-O0} de meeste optimalisaties (maar de RVO blijkbaar niet.) 
+}.
+\footnotetext{Zie: \url{ https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html}.}
+
+De GCC \Cpp{}\hyp{}compiler heeft een optie waarmee de RVO uitgezet kan worden.
+Als we deze optie gebruiken\footnote{%
+	\code{g++ -std=c++17 -pedantic-errors -Wall -g3 -O0 -fno-elide-constructors RVO.cpp}
+}, dan geeft dit programma de volgende uitvoer:
+\begin{coutput}
+Int met waarde 42 wordt aangemaakt.
+Int met waarde 42 wordt gekopieerd.
+Int met waarde 42 wordt verwijderd.
+Int met waarde 42 wordt gekopieerd.
+Int met waarde 42 wordt verwijderd.
+De waarde van local is 42
+Int met waarde 42 wordt verwijderd.
+\end{coutput}  
+Je ziet dat de RVO het maken van twee kopietjes heeft voorkomen.
+Door het programma zonder RVO te compileren en vervolgens stap voor stap uit te voeren in de debugger, kun je zien waar deze kopietjes aangemaakt en weer verwijderd worden\footnote{%
+	Ik raad je sterk aan om dit zelf te doen!
+}:
 \begin{itemize}
-	
-	\item
-	Reference variabele kan ook geïntroduceerd worden naar aanleiding van de range-based |for|, zie \cref{sec:range-basedfor}.
-	\begin{cpplstfragment}
-		array<int, 5> {0, 1, 2, 3, 4};
-		for (auto& i) {
-			i = i * i;
-		}		
-	\end{cpplstfragment}  
 	\item 
-	Gebruik |nullptr| in plaats van |0| of |NULL|\footnote{%
-		De constante NULL mag wel toegekend worden aan een \cppcode{int} (al geeft GCC wel een warning: \cppcode{converting to non-pointer type 'int' from NULL}).
+	Vanuit |main| wordt als eerste de functie |maak_Int| aangeroepen met de waarde |42| als argument. 
+	\item 
+	In de functie |maak_Int| krijgt de parameter |i| de waarde |42|. 
+	\item 
+	De variabele |result| wordt aangemaakt door de constructor van |Int| aan te roepen met de waarde van |i| als argument.
+	\item 
+	De constructor slaat de waarde van |i| op in de private datamember |value|.
+	\item 
+	Bij het uitvoeren van het |return|-statement wordt de waarde van |result| gekopieerd naar een naamloze tijdelijke variabele in |main| door de copy constructor van |Int| aan te roepen met |result| als argument.
+	\item 
+	Bij het beëindigen van de functie |maak_Int| wordt de destructor van |Int| aangeroepen om de lokale variabele |result| te verwijderen.
+	\item 
+	Vervolgens wordt de copy constructor van |Int| nogmaals aangeroepen om de variabele |local| in |main| aan te maken.
+	De naamloze tijdelijke variabele wordt als argument meegegeven.
+	\item 
+	Nadat de variabele |local| is aangemaakt wordt de destructor van |Int| aangeroepen, om de naamloze tijdelijke variabele te verwijderen.
+	\item 
+	Dan wordt de |cout|-statement uitgevoerd.
+	\item 
+	Tot slot wordt de destructor van |Int| aangeroepen om de variabele |local| te verwijderen.
+\end{itemize}
+Als dit zelfde programma met RVO gecompileerd wordt en wordt uitgevoerd, dan gebeurt het volgende:
+\begin{itemize}
+	\item 
+	Vanuit |main| wordt als eerste de functie |maak_Int| aangeroepen met de waarde |42| als argument. 
+	\item 
+	In de functie |maak_Int| krijgt de parameter |i| de waarde |42|. 
+	\item 
+	De variabele |result| wordt aangemaakt door de constructor van |Int| aan te roepen met de waarde van |i| als argument.
+	\item 
+	De constructor slaat de waarde van |i| op in de private datamember |value|.
+	\item 
+	Bij het uitvoeren van het |return|-statement wordt de variabele |result|, als het ware hernoemd, tot |local|.
+	Er wordt niets gekopieerd en ook niets verwijderd.
+	\item 
+	Dan wordt de |cout|-statement uitgevoerd.
+	\item 
+	Tot slot wordt de destructor van |Int| aangeroepen om de variabele |local| (die bij het aanmaken nog |result| heette) te verwijderen.
+\end{itemize}
+Als we bovenstaand programma compileren\footnote{%
+	De gebruikte versie van de TI \Cpp{}\hyp{}compiler is 18.12.4.
+} en uitvoeren op een CC3220 Launchpad met de compiler optimalisatie op \squote{off}, dan geeft het de volgende uitvoer:
+\begin{coutput}
+[Cortex_M4_0] Int met waarde 42 wordt aangemaakt.
+Int met waarde 42 wordt gekopieerd.
+Int met waarde 42 wordt verwijderd.
+Int met waarde 42 wordt gekopieerd.
+Int met waarde 42 wordt verwijderd.
+De waarde van local is 42
+Int met waarde 42 wordt verwijderd.
+\end{coutput}
+We zien dat deze compiler in dit geval geen RVO toepast.
+Ook als de optimalisatie op het maximale level (4) wordt gezet, veranderd de uitvoer niet.
+%TODO testen met MSP430
+
+\section{Rvalue reference}
+\label{sec:rvaluereference}
+Soms, zie voor een voorbeeld de \hyperref[sec:move]{volgende paragraaf}, is het handig om te weten of een functie met een reference parameter is aangeroepen met een argument dat later nog gebruikt kan worden of met een argument dat na afloop van de functie wordt verwijderd.
+
+Om dit mogelijk te maken is in \Cpp{} naast de gewone variabele, de pointer en de reference variabele nog een vierde soort variabele de zogenoemde \emph{\USE{rvalue reference}} gedefinieerd.
+Een rvalue reference is net zoals een gewone reference, zie \csecref{reference}, niets anders dan een alias (andere naam) voor het gene waarnaar hij verwijst (of anders gezegd: refereert). 
+Een gewone reference wordt, om verwarring met een rvalue reference te voorkomen, ook wel een lvalue reference genoemd.
+
+Een lvalue reference kun je alleen laten refereren naar een expressie die ook aan de linkerkant van een toekenning gebruikt zou kunnen worden (vandaar de naam). 
+
+\begin{cpplstfragment}[mathescape=true]
+    int a {1};
+    int b {2};
+    int& r1 {a}; // r1 is een andere naam voor a
+    int& r2 {a + b}; // $\color{hrred}\textbf{error}:$ cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'
+\end{cpplstfragment}
+
+Een |const| lvalue reference kun je wel laten refereren naar een expressie die alleen aan de rechterkant van een toekenning gebruikt zou kunnen worden.
+Maar deze |const| lvalue reference kun je vanzelfsprekend, niet wijzigen.
+
+\begin{cpplstfragment}[mathescape=true]
+	int a {1};
+    int b {2};
+    const int& r3 {a + b};
+    r3 = 5; // $\color{hrred}\textbf{error}:$ assignment of read-only reference 'r3'
+\end{cpplstfragment}
+
+Een rvalue reference kun je wel laten refereren naar een expressie die alleen aan de rechterkant van een toekenning gebruikt zou kunnen worden (vandaar de naam).
+Deze rvalue reference kun je daarna ook nog wijzigen.
+
+\begin{cpplstfragment}[mathescape=true]
+	int a {1};
+    int b {2};
+    int&& r5 {a + b}; // r5 is een andere naam voor het resultaat van a + b
+	r5 = 5; // $\color{darkgreen}\textbf{OK}:$ de tijdelijke variabele waar r5 naar refereert wordt 5
+\end{cpplstfragment}
+
+Als je nu wilt weten of de functie |f| met een lvalue of met een rvalue wordt aangeroepen, dan kun je deze functie als volgt overloaden, zie \csecref{sec:functionoverloading}:
+
+\cpplstinputfragment[linerange={6-8,10-12}]{rvalue_reference.cpp}
+
+De code gegeven in \proglink{rvalue_reference.cpp}:
+
+\cpplstinputfragment[linerange={15-16,33-35}]{rvalue_reference.cpp}
+
+Geeft nu de volgende uitvoer:
+\begin{coutput}
+f(int&& irr) is aangeroepen met irr = 0
+f(int& ilr) is aangeroepen met ilr = 1
+f(int&& irr) is aangeroepen met irr = 3
+\end{coutput}  
+
+Je ziet dat de functie |f| met de lvalue reference |int&| wordt aangeroepen als het argument een lvalue is (een waarde die ook aan de linkerkant van een toekenning gebruikt zou kunnen worden).
+Je ziet dat de functie |f| met de rvalue reference |int&&| wordt aangeroepen als het argument een rvalue is (een waarde die ook aan de rechterkant van een toekenning gebruikt zou kunnen worden).
+
+Het nuttige toepassing van een rvalue reference wordt in de volgende paragraaf behandeld.
+
+\section{Move constructor en move assignment operator}
+\label{sec:move}
+Als een class data bevat die dynamisch is aangemaakt, dan is het belangrijk dat het onnodig kopiëren van deze data wordt voorkomen.
+Om dit te bereiken moet een \emph{\USE{move constructor}} en \emph{\USE{move assignment operator}} gedefinieerd worden.
+De parameters van deze \USE{move} functies zijn een zogenoemde \USE{rvalue reference}, zie \csecref{sec:rvaluereference}.
+Een \USE{rvalue reference} refereert naar een \emph{tijdelijke} variabele die aangepast mag worden omdat deze variabele niet meer nodig is en de bijbehorende geheugenruimte binnenkort vrijgegeven zal worden.
+
+De waarde waar zo'n rvalue reference naar refereert wordt na afloop van de move constructor of move assignment operator niet meer gebruikt.
+We kunnen de dynamische data van zo'n rvalue dus stelen oftewel verplaatsen zonder dat we deze data hoeven te kopiëren.
+%Zie \proglink{ArrayMove.cpp}.
+%Zie ook \proglink{Dozijn_move.cpp}.
+In een aantal gevallen kan de compiler zelf bepalen dat een \USE{move constructor} in plaats van een \USE{copy constructor} gebruikt kan worden.
+Ook kan de compiler in een aantal gevallen zelf bepalen dat een \USE{move assignment operator} in plaats van een \USE{copy assignment operator} gebruikt kan worden.
+Als voorbeeld bekijken we een eenvoudige class genaamd |Dozijn| die 12 integers beheert die opgeslagen zijn op de heap\footnote{%
+	Zie eventueel \cpageref{heap}.
+}.
+\cpplstinputfragment[linerange={7-10,12-12,14-14,16-19,21-21}]{Dozijn_move.cpp}
+De implementatie van de memberfuncties kun je vinden in \proglink{Dozijn_move.cpp}.
+
+Voor deze class kan een |operator+| worden gedefinieerd waarmee twee dozijnen opgeteld kunnen worden:
+\cpplstinputfragment[linerange={77-83}]{Dozijn_move.cpp}
+Deze operator kun je als volgt gebruiken om twee dozijnen |b| en |c| bij elkaar op te tellen:
+\cpplstinputfragment[linerange={96-96}]{Dozijn_move.cpp}
+De werking is\footnote{%
+	Er van uitgaande dat het programma gecompileerd is met gcc 9.1.
+}, stap voor stap, als volgt\footnote{%
+	Gebruik een debugger met een single step functie om dit zelf na te gaan.
+}: 
+\begin{itemize}
+	\item 
+	De |operator+| wordt aangeroepen waarbij de parameter |left| een referentie is naar |b| en |right| een referentie is naar |c|\footnote{%
+		Door hier const reference parameters te gebruiken zorgen we ervoor dat \code{b} en \code{c} niet gekopieerd hoeven te worden en niet veranderd kunnen worden. Zie \csecref{sec:constreferenceparameter}. 
 	}.
-	%TODO: spatie na 'int' valt weg! 
-	Dit om verwarring tussen integers en pointers te voorkomen.\footnote{%
-		Het toekennen van een \cppcode{nullptr} aan een {int} geeft in GCC de volgende error: \cppcode{cannot convert 'std::nullptr_t' to 'int' in assignment}.
-	}
-	De waarde |nullptr| is gedefinieerd in de include file |<cstddef>|.
+	\item 
+	De constructor |Dozijn()| wordt aangeroepen om de variabele |result| aan te maken.
+	\item 
+	De inhoud van elke element in |result| wordt gelijk gemaakt aan de som van de corresponderende elementen uit |left| (een andere naam voor |b|) en |right| (een andere naam voor |c|).
 	\item
-	Gebruik |unsigned| alleen voor bit manipulaties.
-	%Niet relevant: gebruik Variant i.p.v. union
+	Door het toepassen van return value optimization, zie \csecref{sec:rvo}, wordt de variabele |result| niet gekopieerd of verwijderd maar meteen gebruikt als \emph{rvalue} van de |operator=|.
+	Met andere woorden: de instructie |a = b + c| wordt als het ware vervangen door |a = result|.
+	\item 
+	De |operator=| van |Dozijn| wordt aangeroepen. De parameter |r| refereert naar de variabele |result| het resultaat van de optelling.
+	Deze operator is als volgt gedefinieerd:
+	\cpplstinputfragment[linerange={39-45}]{Dozijn_move.cpp}
+	\item 
+	De inhoud van elke element in de receiver van de |operator=|, dat is |a|, wordt gelijk gemaakt aan het corresponderende element uit |r| (een andere naam voor |result|).
+	De variabele |a| is na afloop van de |operator=| dus een kopietje van |result| en bevat de som van |b| en |c|.
+	\item 
+	Nu |a| de juiste waarde heeft gekregen wordt de destructor |~Dozijn()| aangeroepen voor de variabele |result|.
+	\item 
+	De destructor |~Dozijn()| zal de bij |result| behorende data (die inmiddels is gekopieerd naar |a|) weer vrijgegeven door |delete[] data| aan te roepen.
 \end{itemize}
-\section{User-Defined Types}
-\section{Modularity}
+Het kopiëren van het resultaat van de optelling (in de variabele |result|) naar de variabele |a| kan voorkomen worden door een move assignment operator te definiëren.
+\cpplstinputfragment[linerange={7-10,12-14,16-19,21-21}]{Dozijn_move.cpp}
+De parameter |r| van deze |operator=| is van het type |Dozijn&&|.
+Dit is een zogenoemde \USE{rvalue reference}.
+Een \USE{rvalue reference} refereert naar een \emph{tijdelijke} variabele die aangepast mag worden omdat deze variabele niet meer nodig is en de bijbehorende geheugenruimte binnenkort vrijgegeven zal worden.  
+De werking van dit programma is\footnote{%
+	Er van uitgaande dat het programma gecompileerd is met gcc 9.1.
+}, stap voor stap, nu als volgt\footnote{%
+	Gebruik een debugger met een single step functie om dit zelf na te gaan.
+}: 
 \begin{itemize}
 	\item 
-	\Cpp{}20 heeft |module|s. Zie \url{https://en.cppreference.com/w/cpp/language/modules}.
+	De |operator+| wordt aangeroepen waarbij de parameter |left| een referentie is naar |b| en |right| een referentie is naar |c|.
 	\item 
-	Een function die geen exception mag gooien kun je met |noexcept| definiëren. Toevoegen aan \cref{exceptions}.
-	\begin{cpplstfragment}
-		void f() noexcept {
-			//...
-		}	
-	\end{cpplstfragment}
-	Als zo'n functie toch een exception gooit, dan wordt |std::terminate| aangeroepen om het programma meteen te beëindigen.
+	De constructor |Dozijn()| wordt aangeroepen om de variabele |result| aan te maken.
 	\item 
-	Er was een voorstel voor \Cpp{}20 voor een mechanisme om contracten vast te leggen (invarianten, pre- en postcondities).
-	Zie \url{http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2015/n4415.pdf}. Maar dit voorstel heeft het niet gehaald.
-	\item 
-	Toevoeging op gebruik van |assert|s: |static_assert(test, melding)| zal de compiler error |melding| geven als de |test| |false| oplevert.
-	Bijvoorbeeld:
-	\begin{cpplstfragment}
-		static_assert(sizeof(int)==4, "int to small");	
-	\end{cpplstfragment}
-	Als we deze code compileren voor een processor die 16-bit integers heeft\footnote{%
-		De meeste 8- of 16-bit microprocessoren, zoals de MSP430, gebruiken 16-bit \ccode{int}s.
-	}, dan geeft de compiler op deze regel een errormelding: \error{static assertion failed: int to small}.
-	\item 
-	Het returntype van een functie kan afgeleid worden uit zijn |return|-statement.
-	Bijvoorbeeld:
-	\begin{cpplstfragment}
-		auto increment(int i) {
-			return i + 1;
-		}	
-	\end{cpplstfragment}
-	%TODO verwijzingen toevoegen
-	Dit kan soms handig zijn (bij templates en lambda's) maar wordt voor gewone functies afgeraden omdat de interface dan instabiel wordt. De interface van de functie verandert dan namelijk als de implementatie wordt aangepast.
-	\item 
-	Vanaf \Cpp{}17 kunnen we zogenoemde \squote{\USE{structured binding}} toepassen.
-	Hiermee kunnen we de waarden van een samengesteld type (bijvoorbeeld een |struct|) in één statement toekennen aan meerdere variabelen.
-	Bijvoorbeeld, stel dat je de volgende |struct| hebt gedefinieerd:
-	\cpplstinputfragment[linerange={5-9}]{StructuredBinding.cpp}
-	Als de functie |adreslocatieHR| dan het adres van een locatie van de Hogeschool Rotterdam teruggeeft, dan kan dit adres met behulp van \USE{structured binding} toegekend worden aan drie variabelen:
-	\cpplstinputfragment[linerange={26-28}]{StructuredBinding.cpp}
-	Het gebruik hiervan is soms handig, maar vaak is het duidelijker om de waarden van het samengestelde type één voor één te gebruiken:
-	\cpplstinputfragment[linerange={21-23}]{StructuredBinding.cpp}
-	
-	Vooral bij gebruik van het standaard library type |map| is het gebruik van \USE{structured binding} handig.
-	%TODO: verwijzing toevoegen.
-\end{itemize}
-\section{Classes}
-\begin{itemize}
-	\item 
-	Een \emph{concrete} class gedraagt zich zoveel mogelijk als een \squote{\USE{built-in}} type. De implementatie van de class is zichtbaar in de definitie van de class (als |private| datamembers). Dit zorgt ervoor dat compiler een object van een concrete class efficiënt (zowel in ruimte als in tijd) kan implementeren en bewerken.
-	Het nadeel is echter dat een concrete class opnieuw gecompileerd moet worden als de implementatie wijzigt.
-	%TODO: Breuk is een concrete class
-	\item 
-	Eenvoudige versie van |Breuk| maken die gebruik maakt van copy by value in plaats van references.
-	Zie |Breuk4.cpp|.
+	De inhoud van elke element in |result| wordt gelijk gemaakt aan de som van de corresponderende elementen uit |left| (een andere naam voor |b|) en |right| (een andere naam voor |c|).
 	\item
-	Een \emph{abstracte} class is een class die zijn implementatie details verbergt voor de gebruiker.
-	Omdat ook de compiler niets weet van de implementatie van een abstracte class, ook de benodigde geheugenruimte niet, kan een object van een abstracte class alleen dynamisch worden aangemaakt met behulp van |new|, zie \csecref{sec:new}.
-	Je hebt dus altijd een pointer of een reference, zie \csecref{reference}, nodig om te verwijzen naar een object van een abstracte class.
-	Een abstracte class heeft minstens één virtuele functie, zie \csecref{virtual}.
-	De abstracte class vormt de interface tot de concrete class die deze interface implementeert.
-	Een abstracte class die de interface verzorgt voor een aantal verwante classes noemen we een \emph{\USE{polymorphic type}}.
-	\item
-	Het resultaat van |new| toekennen aan een \squote{naakte} pointer is vragen om problemen.
-	Een eenvoudige oplossing is het gebruik van het standaard library type |unique_ptr|.
-	Als deze pointer ophoud te bestaan, dan wordt automatisch de operator |delete| aangeroepen op de pointer.
-	Zie \proglink{unique_ptr.cpp}.
+	Door het toepassen van return value optimization, zie \csecref{sec:rvo}, wordt de variabele |result| niet gekopieerd of verwijderd maar meteen gebruikt als \emph{rvalue} van de |operator=|.
+	Met andere woorden: de instructie |a = b + c| wordt als het ware vervangen door |a = result|.
+	\item 
+	De move assignment operator van |Dozijn| wordt nu aangeroepen.
+	Deze operator is als volgt gedefinieerd:
+	\cpplstinputfragment[linerange={47-51}]{Dozijn_move.cpp}
+	\item  
+	De rvalue reference parameter |r| refereert naar de variabele |result| het resultaat van de optelling.
+	\item 
+	De |data| van de receiver wordt verwisseld met de |data| van de parameter |r| (een andere naam voor |result|).
+	Let er op dat niet de data zelf maar de pointer naar de data wordt verwisseld.
+	Om deze pointers te verwisselen gebruiken we de standaard |swap|-functie.
+	De standaard functie |swap| is gedefinieerd in de de header file |<utility>|.
+	\item 
+	Nu |a| de juiste waarde heeft gekregen wordt de destructor |~Dozijn()| aangeroepen voor de variabele |result|.
+	De variabele |result| bevat de oude waarden van |a| die nu worden vrijgegeven. 
 \end{itemize}
-\section{Essential Operations}
+Doordat nu de move assignment operator gebruikt is in plaats van de copy assignment operator is voorkomen dat de gehele inhoud van |result| (twaalf integers) naar |a| gekopieerd is. In plaats daarvan zijn slechts twee pointers verwisseld.
+De besparing is in dit geval nog gering, maar je begrijpt dat het gebruik van een move assignment bij classes die veel data beheren een behoorlijke besparing kan opleveren. 
+
+Als we een |Dozijn| aanmaken en initialiseren met een ander |Dozijn| dan wordt, uiteraard, de copy constructor aangeroepen, zie \csecref{copy constructor}.
+De code:   
+\begin{cpplstfragment}
+	Dozijn d {a};
+\end{cpplstfragment}
+Zal de copy constructor aanroepen.
+
+Als je deze copy constructor aanroept met een rvalue als argument, bijvoorbeeld:
+\begin{cpplstfragment}
+	Dozijn e {a + b};
+\end{cpplstfragment}
+
+Dan kun je het maken van een extra kopie voorkomen door een move constructor te definiëren:
+\cpplstinputfragment[linerange={7-14,16-19,21-21}]{Dozijn_move.cpp}
+De parameter |r| van deze move constructor is van het type |Dozijn&&|.
+Deze move constructor kan als volgt gedefinieerd worden:
+\cpplstinputfragment[linerange={34-37}]{Dozijn_move.cpp}
+Je ziet dat deze constructor simpelweg de data van de parameter overneemt.
+Niet door de data zelf te kopiëren maar door de pointer naar de data te kopiëren.
+De pointer naar de data van de parameter wordt gelijk gemaakt aan de |nullptr| zodat de variabele waar deze parameter naar refereert later veilig opgeruimd kan worden.
+Volgens de \Cpp{}-standaard mag |delete[]| worden aangeroepen op de |nullptr|, zie \cite[paragraaf 8.3.5]{ISO2017}.
+
+Als je zeker weet dat een lvalue die je als argument van een constructor of assignment operator gebruikt na afloop niet meer nodig is, dan kun je de standaard |move|-functie gebruiken om de lvalue om te zetten in een rvalue reference.
+Hierdoor wordt dan de move constructor of de move assignment operator aangeroepen.   
+Bijvoorbeeld:
+\begin{cpplstfragment}
+	Dozijn d {move(a)};
+\end{cpplstfragment}
+De standaard functie \label{std::move}|move| is gedefinieerd in de de header file |<utility>|.
+De functie |move| verplaatst zelf niets\footnote{%
+	De functie levert een rvalue reference die refereert naar zijn argument. Het is dus eigenlijk een soort cast, zie \csecref{sec:casting}.
+}, maar geeft een rvalue reference die refereert naar |a| terug, waardoor de move constructor aangeroepen wordt.
+Pas wel goed op. Na deze instructie kun je |a| niet meer uitlezen!\footnote{%
+	Het gebruik van de functie \code{move} is in dit geval dus erg discutabel. Waarom zou je een kopie van \code{a} maken, genaamd \code{d}, als je \code{a} daarna niet meer kan uitlezen? Je kunt dan net zo goed geen kopie maken en \code{a} gebruiken in plaats van \code{d}.
+} 
+
+Een meer realistische toepassing van de standaard functie |move| is als volgt.
+Stel dat je regelmatig twee objecten van de hierboven gedefinieerde class |Dozijn| moet verwisselen.
+Je schrijft vervolgens een functie genaamd |swap| die twee als argumenten meegegeven dozijnen als volgt verwisselt:
+\cpplstinputfragment[linerange={77-81}]{swap_move.cpp}
+Deze functie roep je vervolgens als volgt aan:
+\cpplstinputfragment[linerange={98-98}]{swap_move.cpp}
+
+Het uitvoeren van deze regel blijkt echter behoorlijk wat tijd in beslag te nemen. 
+In de eerste regel wordt de copy constructor van |Dozijn| aangeroepen om de lokale variabele |hulp| aan te maken.
+Deze copy constructor reserveert geheugenruimte voor twaalf integers (door het aanroepen van |new int[12]|) en kopieert vervolgens de gehele inhoud van |d1| (twaalf integers) naar deze geheugenruimte.
+Vervolgens wordt de assignment operator van |Dozijn| aangeroepen die de gehele inhoud (twaalf integers) van |d2| kopieert naar |d1|. Tot slot wordt de assignment operator van |Dozijn| nogmaals aangeroepen die gehele inhoud (twaalf integers) van |hulp| kopieert naar |d2|.
+Tot slot wordt de destructor |~Dozijn| aangeroepen om de lokale variabele |hulp| te verwijderen.
+In deze destructor wordt de geheugenruimte die in de copy constructor is gereserveerd weer vrijgegeven. 
+Dus er worden bij het uitvoeren van de functie |swap| $12$ integers gereserveerd en ook weer vrijgegeven en er worden $3 \times{} 12 = 36$ integers gekopieerd.
+
+Je kunt echter bedenken dat het helemaal niet nodig is om geheugenruimte te reserveren en weer vrij te geven. 
+Ook is het niet nodig om integers te kopiëren.
+Het enige dat moet gebeuren is het verwisselen van de twee private pointers |data|.
+Je kunt dit eenvoudig voor elkaar krijgen door gebruik te maken van de move constructor en de move assignment van |Dozijn|.
+De waarde van |d1| hoeft namelijk niet meer uitgelezen te worden nadat |hulp| is aangemaakt.
+De waarde van |d2| hoeft niet meer uitgelezen te worden nadat deze is toegekend aan |d1| en hetzelfde geldt voor de waarde van |hulp| nadat die is toegekend aan |d2|.
+Je kunt de |swap_move| dus als volgt definiëren:
+\cpplstinputfragment[linerange={83-87}]{swap_move.cpp}
+Deze functie roep je vervolgens als volgt aan:
+\cpplstinputfragment[linerange={103-103}]{swap_move.cpp}
+
+De code is nu sneller\footnote{%
+	Op een CC3220S Launchpad gecompileerd met optimization off duurt de \code{swap} 12306 clockcycles en de \code{swap_move} en \code{std::swap} duren elk 10965 clockcycles.
+	Dit is slechts \SI{11}{\percent} sneller. 
+	De besparing is in dit geval nog gering, maar je begrijpt dat het gebruik van een move assignment en move assignment operator bij classes die veel data beheren een behoorlijke besparing kan opleveren.  
+} omdat er slechts 8 pointers gekopieerd hoeven te worden.
+Ook wordt de destructor |~Dozijn| één maal aangeroepen om de lokale variabele |hulp| op te ruimen.
+Er hoeft echter geen geheugen vrijgegeven te worden omdat de pointer |data| van |hulp| op dat moment gelijk is aan de |nullptr|.
+
+In plaats van zelf een swap functie te definiëren, hadden we natuurlijk ook de standaard template functie |swap| aan kunnen roepen:
+\cpplstinputfragment[linerange={108-108}]{swap_move.cpp}
+
+Het zal je waarschijnlijk niet verbazen dat deze standaard template functie ook gebruikt maakt van de move constructor en de move assignment operator.
+Dat kan natuurlijk alleen maar als deze gedefinieerd zijn voor de betreffende class, in dit geval |Dozijn|.
+
+Het is dus belangrijk om voor een class die een zelfgedefinieerde copy constructor en assingment operator nodig heeft, zie \csecref{sec:ruleofthree}, ook een move constructor en een move assignment operator te definiëren.
+
+\chapter[De standaard C++ \USE{library} (de details)]{De standaard \Cpp{} \USE{library} (de details)}
+\label{sec:stdlibdetails}
+
+\section{Template parameters automatisch bepalen}
+In sommige gevallen kunnen template parameters automatisch door de \Cpp{}-compiler bepaald worden\footnote{%
+	Dit is mogelijk vanaf \Cpp{}17.
+}.
+Bijvoorbeeld het standaard type |vector| kan als volgt gebruikt worden:
+\begin{cpplstfragment}
+	vector v1 {1, 2, 3}; // v1 is van het type vector<int>
+	vector v2 {v1}; // v2 is ook van het type vector<int>
+\end{cpplstfragment}
+
+Een zogenoemde \emph{deduction guide} kan gespecificeerd worden om de compiler hierbij te helpen.
+Voor de in \csecref{sec:Arraymetinitlist} gedefinieerde class |Array| kun je bijvoorbeeld de volgende deduction guide specificeren, zie \proglink{Array_template_deduction_guide}:
+\begin{cpplstfragment}
+template<typename Iter> Array(Iter, Iter) -> Array<typename iterator_traits<Iter>::value_type>;
+\end{cpplstfragment}
+Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald kan worden.
+\begin{cpplstfragment}
+	Array a1 {1, 2, 3, 4, 5}; // a1 is van het type Array<int> 
+    Array w (v.cbegin() + 1, v.cend() - 1); // a2 is van het type Array<int>
+\end{cpplstfragment}
+
+\section{Unordered container met UDT's}
+Als je een user-defined datatype, bijvoorbeeld |Breuk| als key in een ongeordende container, bijvoorbeeld |unordered_set|, wilt gebruiken, dan moet
 \begin{itemize}
-	\item 
-	De \Cpp{}\hyp{}compiler doet zijn best om het onnodig kopiëren van data te voorkomen.
-	Deze compiler optimalisatie techniek wordt \squote{\USE{copy elision}}\footnote{%
-		Het Engelse woord \squote{\USE{elision}} betekent \squote{weglating}.
-	} genoemd.
-	Een speciaal geval van copy elision is de zogenoemde \squote{\USE{return value optimization (RVO)}}\label{RVO}.
-	Deze optimalisatie voorkomt dat de returnwaarde van een functie eerst in een tijdelijke variabele wordt gekopieerd maar kopieert deze waarde meteen naar zijn uiteindelijke bestemming.
-	
-	Je kunt kijken of deze optimalisatie wel of niet wordt toegepast door een class met een copy constructor, zie \csecref{copy constructor}, te definiëren en te kijken wat er gebeurt als je een object van deze class teruggeeft vanuit een functie.
-	
-	Bijvoorbeeld, zie \proglink{RVO.cpp}:
-	\cpplstinputfragment[linerange={5-31}]{RVO.cpp}
-	Het enige doel van dit programma is om te kijken of de compiler de return value optimization toepast.
-	Als dit programma gecompileerd wordt met gcc 9.1\footnote{%
-		\code{g++ -std=c++14 -pedantic-errors -Wall -g3 -O0 RVO.cpp}
-	}, dan geeft dit programma de volgende uitvoer:
-	\begin{coutput}
-		Int met waarde 42 wordt aangemaakt.
-		De waarde van local is 42
-		Int met waarde 42 wordt verwijderd.
-	\end{coutput}  
-	Blijkbaar is de GCC \Cpp{}\hyp{}compiler zo slim om alle benodigde kopieeracties weg te optimaliseren\footnote{%
-		Ondanks het feit dat we de optie \code{-O0} hebben meegegeven. Volgens de documentatie van gcc\footnotemark{} disabled de optie \code{-O0} de meeste optimalisaties (maar de RVO blijkbaar niet.) 
-	}.
-	\footnotetext{Zie: \url{ https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html}.}
-	
-	De GCC \Cpp{}\hyp{}compiler heeft een optie waarmee de RVO uitgezet kan worden.
-	Als we deze optie gebruiken\footnote{%
-		\code{g++ -std=c++14 -pedantic-errors -Wall -g3 -O0 -fno-elide-constructors RVO.cpp}
-	}, dan geeft dit programma de volgende uitvoer:
-	\begin{coutput}
-		Int met waarde 42 wordt aangemaakt.
-		Int met waarde 42 wordt gekopieerd.
-		Int met waarde 42 wordt verwijderd.
-		Int met waarde 42 wordt gekopieerd.
-		Int met waarde 42 wordt verwijderd.
-		De waarde van local is 42
-		Int met waarde 42 wordt verwijderd.
-	\end{coutput}  
-	Je ziet dat de RVO het maken van twee kopietjes heeft voorkomen.
-	Door het programma zonder RVO te compileren en vervolgens stap voor stap uit te voeren in de debugger, kun je zien waar deze kopietjes aangemaakt en weer verwijderd worden\footnote{%
-		Ik raad je sterk aan om dit zelf te doen!
-	}:
-	\begin{itemize}
-		\item 
-		Vanuit |main| wordt als eerste de functie |maakInt| aangeroepen met de waarde |42| als argument. 
-		\item 
-		In de functie |maakInt| krijgt de parameter |i| de waarde |42|. 
-		\item 
-		De variabele |result| wordt aangemaakt door de constructor van |Int| aan te roepen met de waarde van |i| als argument.
-		\item 
-		De constructor slaat de waarde van |i| op in de private datamember |value|.
-		\item 
-		Bij het uitvoeren van het |return|-statement wordt de waarde van |result| gekopieerd naar een naamloze tijdelijke variabele in |main| door de copy constructor van |Int| aan te roepen met |result| als argument.
-		\item 
-		Bij het beëindigen van de functie |maakInt| wordt de destructor van |Int| aangeroepen om de lokale variabele |result| te verwijderen.
-		\item 
-		Vervolgens wordt de copy constructor van |Int| nogmaals aangeroepen om de variabele |local| in |main| aan te maken.
-		De naamloze tijdelijke variabele wordt als argument meegegeven.
-		\item 
-		Nadat de variabele |local| is aangemaakt wordt de destructor van |Int| aangeroepen, om de naamloze tijdelijke variabele te verwijderen.
-		\item 
-		Dan wordt de |cout|-statement uitgevoerd.
-		\item 
-		Tot slot wordt de destructor van |Int| aangeroepen om de variabele |local| te verwijderen.
-	\end{itemize}
-	Als dit zelfde programma met RVO gecompileerd wordt en wordt uitgevoerd, dan gebeurt het volgende:
-	\begin{itemize}
-		\item 
-		Vanuit |main| wordt als eerste de functie |maakInt| aangeroepen met de waarde |42| als argument. 
-		\item 
-		In de functie |maakInt| krijgt de parameter |i| de waarde |42|. 
-		\item 
-		De variabele |result| wordt aangemaakt door de constructor van |Int| aan te roepen met de waarde van |i| als argument.
-		\item 
-		De constructor slaat de waarde van |i| op in de private datamember |value|.
-		\item 
-		Bij het uitvoeren van het |return|-statement wordt de variabele |result|, als het ware hernoemd, tot |local|.
-		Er wordt niets gekopieerd en ook niets verwijderd.
-		\item 
-		Dan wordt de |cout|-statement uitgevoerd.
-		\item 
-		Tot slot wordt de destructor van |Int| aangeroepen om de variabele |local| (die bij het aanmaken nog |result| heette) te verwijderen.
-	\end{itemize}
-	Als we bovenstaand programma compileren\footnote{%
-		De gebruikte versie van de TI \Cpp{}\hyp{}compiler is 18.12.4.
-	} en uitvoeren op een CC3220 Launchpad met de compiler optimalisatie op \squote{off}, dan geeft het de volgende uitvoer:
-	\begin{coutput}
-		[Cortex_M4_0] Int met waarde 42 wordt aangemaakt.
-		Int met waarde 42 wordt gekopieerd.
-		Int met waarde 42 wordt verwijderd.
-		Int met waarde 42 wordt gekopieerd.
-		Int met waarde 42 wordt verwijderd.
-		De waarde van local is 42
-		Int met waarde 42 wordt verwijderd.
-	\end{coutput}
-	We zien dat deze compiler in dit geval geen RVO toepast.
-	Ook als de optimalisatie op het maximale level (4) wordt gezet, veranderd de uitvoer niet.
-	%TODO testen met MSP430
-	\item 
-	\label{sec:move}
-	Als een class data bevat die dynamisch is aangemaakt, dan is het belangrijk dat het onnodig kopiëren van deze data wordt voorkomen.
-	Om dit te bereiken moet een \emph{\USE{move constructor}} en \emph{\USE{move assignment operator}} gedefinieerd worden.
-	De parameters van deze \USE{move} functies zijn een zogenoemde \emph{\USE{rvalue reference}}.
-	Een \USE{rvalue reference} van type |T| wordt gedefinieerd als |T&&|.
-	Een \emph{rvalue} is een value die \emph{alleen} aan de rechterkant van een assignment gebruikt kan worden.
-	Een \emph{rvalue reference} refereert naar een \emph{tijdelijke} variabele die aangepast mag worden omdat deze variabele niet meer nodig is en de bijbehorende geheugenruimte binnenkort vrijgegeven zal worden.
-	
-	Zo'n waarde wordt na de operatie niet meer gebruikt.
-	We kunnen de dynamische data van zo'n rvalue dus stelen oftewel verplaatsen zonder dat we deze data hoeven te kopiëren.
-	%Zie \proglink{ArrayMove.cpp}.
-	%Zie ook \proglink{rvalue_reference.cpp}.
-	In een aantal gevallen kan de compiler zelf bepalen dat een \USE{move constructor} in plaats van een \USE{copy constructor} gebruikt kan worden.
-	Ook kan de compiler in een aantal gevallen zelf bepalen dat een \USE{move assignment operator} in plaats van een \USE{copy assignment operator} gebruikt kan worden.
-	Als voorbeeld bekijken we een eenvoudige class genaamd |Dozijn| die 12 integers beheerd die opgeslagen zijn op de heap\footnote{%
-		Zie eventueel \cpageref{heap}.
-	}.
-	\cpplstinputfragment[linerange={7-10,12-12,14-14,16-19,21-21}]{rvalue_reference.cpp}
-	De implementatie van de memberfuncties kun je vinden in \proglink{rvalue_reference.cpp}.
-	
-	Voor deze class kan een |operator+| worden gedefinieerd waarmee twee dozijnen opgeteld kunnen worden:
-	\cpplstinputfragment[linerange={77-83}]{rvalue_reference.cpp}
-	Deze operator kun je als volgt gebruiken om twee dozijnen |b| en |c| bij elkaar op te tellen:
-	\cpplstinputfragment[linerange={96-96}]{rvalue_reference.cpp}
-	De werking is\footnote{%
-		Er van uitgaande dat het programma gecompileerd is met gcc 9.1.
-	}, stap voor stap, als volgt\footnote{%
-		Gebruik een debugger met een single step functie om dit zelf na te gaan.
-	}: 
-	\begin{itemize}
-		\item 
-		De |operator+| wordt aangeroepen waarbij de parameter |left| een referentie is naar |b| en |right| een referentie is naar |c|\footnote{%
-			Door hier const reference parameters te gebruiken zorgen we ervoor dat \code{b} en \code{c} niet gekopieerd hoeven te worden en niet veranderd kunnen worden. Zie \csecref{sec:constreferenceparameter}. 
-		}.
-		\item 
-		De constructor |Dozijn()| wordt aangeroepen om de variabele |result| aan te maken.
-		\item 
-		De inhoud van elke element in |result| wordt gelijk gemaakt aan de som van de corresponderende elementen uit |left| (een andere naam voor |b|) en |right| (een andere naam voor |c|).
-		\item
-		Door het toepassen van return value optimization, zie \cpageref{RVO}, wordt de variabele |result| niet gekopieerd of verwijderd maar meteen gebruikt als \emph{rvalue} van de |operator=|.
-		Met andere woorden: de instructie |a = b + c| wordt als het ware vervangen door |a = result|.
-		\item 
-		De |operator=| van |Dozijn| wordt aangeroepen. De parameter |r| refereert naar de variabele |result| het resultaat van de optelling.
-		Deze operator is als volgt gedefinieerd:
-		\cpplstinputfragment[linerange={39-45}]{rvalue_reference.cpp}
-		\item 
-		De inhoud van elke element in de receiver van de |operator=|, dat is |a| wordt gelijk gemaakt aan het corresponderende element uit |r| (een andere naam voor |result|).
-		De variabele |a| is na afloop van de |operator=| dus een kopietje van |result| en bevat de som van |b| en |c|.
-		\item 
-		Nu |a| de juiste waarde heeft gekregen wordt de destructor |~Dozijn()| aangeroepen voor de variabele |result|.
-		\item 
-		De destructor |~Dozijn()| zal de bij |result| behorende data (die inmiddels is gekopieerd naar |a|) weer vrijgegeven door |delete[] data| aan te roepen.
-	\end{itemize}
-	Het kopiëren van het resultaat van de optelling (in de variabele |result|) naar de variabele |a| kan voorkomen worden door een move assignment operator te definiëren.
-	\cpplstinputfragment[linerange={7-10,12-14,16-19,21-21}]{rvalue_reference.cpp}
-	De parameter |r| van deze |operator=| is van het type |Dozijn &&|.
-	Dit is een zogenoemde \emph{rvalue reference}.
-	Een \emph{rvalue reference} refereert naar een \emph{tijdelijke} variabele die aangepast mag worden omdat deze variabele niet meer nodig is en de bijbehorende geheugenruimte binnenkort vrijgegeven zal worden.  
-	De werking van dit programma is\footnote{%
-		Er van uitgaande dat het programma gecompileerd is met gcc 9.1.
-	}, stap voor stap, nu als volgt\footnote{%
-		Gebruik een debugger met een single step functie om dit zelf na te gaan.
-	}: 
-	\begin{itemize}
-		\item 
-		De |operator+| wordt aangeroepen waarbij de parameter |left| een referentie is naar |b| en |right| een referentie is naar |c|.
-		\item 
-		De constructor |Dozijn()| wordt aangeroepen om de variabele |result| aan te maken.
-		\item 
-		De inhoud van elke element in |result| wordt gelijk gemaakt aan de som van de corresponderende elementen uit |left| (een andere naam voor |b|) en |right| (een andere naam voor |c|).
-		\item
-		Door het toepassen van return value optimization, zie \cpageref{RVO}, wordt de variabele |result| niet gekopieerd of verwijderd maar meteen gebruikt als \emph{rvalue} van de |operator=|.
-		Met andere woorden: de instructie |a = b + c| wordt als het ware vervangen door |a = result|.
-		\item 
-		De move assignment operator van |Dozijn| wordt nu aangeroepen.
-		Deze operator is als volgt gedefinieerd:
-		\cpplstinputfragment[linerange={47-51}]{rvalue_reference.cpp}
-		\item  
-		De rvalue reference parameter |r| refereert naar de variabele |result| het resultaat van de optelling.
-		\item 
-		De |data| van de receiver wordt verwisseld met de |data| van de parameter |r| (een andere naam voor |result|).
-		Let er op dat niet de data zelf maar de pointer naar de data wordt verwisseld.
-		Om deze pointers te verwisselen gebruiken we de standaard |swap|-functie.
-		De standaard functie |swap| is gedefinieerd in de de header file |<utility>|.
-		\item 
-		Nu |a| de juiste waarde heeft gekregen wordt de destructor |~Dozijn()| aangeroepen voor de variabele |result|.
-		De variabele |result| bevat de oude waarden van |a| die nu worden vrijgegeven. 
-	\end{itemize}
-	Doordat nu de move assignment operator gebruikt is in plaats van de copy assignment operator is voorkomen dat de gehele inhoud van |result| (twaalf integers) naar |a| gekopieerd is. In plaats daarvan zijn slechts twee pointers verwisseld.
-	De besparing is in dit geval nog gering, maar je begrijpt dat het gebruik van een move assignment bij classes die veel data beheren een behoorlijke besparing kan opleveren. 
-	\item
-	Als we een |Dozijn| aanmaken en initialiseren met een ander |Dozijn| dan wordt, uiteraard, de copy constructor aangeroepen, zie \csecref{copy constructor}.
-	De code:   
-	\begin{cpplstfragment}
-		Dozijn d{a};
-	\end{cpplstfragment}
-	Zal de copy constructor aanroepen.
-	Als je echter zeker weet dat die variabele die je gebruikt als argument van een copy constructor niet uitgelezen hoeft te worden, dan kun je een move constructor definiëren:
-	\cpplstinputfragment[linerange={7-14,16-19,21-21}]{rvalue_reference.cpp}
-	De parameter |r| van deze move constructor is van het type |Dozijn &&|.
-	Deze move constructor kan als volgt gedefinieerd worden:
-	\cpplstinputfragment[linerange={34-37}]{rvalue_reference.cpp}
-	Je ziet dat deze constructor simpelweg de data van de parameter overneemt.
-	Niet door de data zelf te kopiëren maar door de pointer naar de data te kopiëren.
-	De pointer naar de data van de parameter wordt gelijk gemaakt aan de |nullptr| zodat de variabele waar deze parameter naar refereert later veilig opgeruimd kan worden.
-	Volgens de \Cpp{}-standaard mag |delete[]| worden aangeroepen op de |nullptr|, zie \cite[paragraaf 8.3.5]{ISO2017}.
-	Om er zeker van te zijn dat de move constructor wordt aangeroepen, kun je de standaard |move|-functie gebruiken.
-	Bijvoorbeeld:
-	\begin{cpplstfragment}
-		Dozijn d{move(a)};
-	\end{cpplstfragment}
-	De standaard functie |move| is gedefinieerd in de de header file |<utility>|.
-	De functie |move| verplaatst zelf niets, maar geeft een rvalue reference die refereert naar |a| terug, waardoor de move constructor aangeroepen wordt.
-	Pas wel goed op. Na deze instructie kun je |a| niet meer uitlezen!\footnote{%
-		Het gebruik van de functie \code{move} is in dit geval dus erg discutabel. Waarom zou je een kopie van \code{a} maken, genaamd \code{d}, als je \code{a} daarna niet meer kan uitlezen? Je kunt dan net zo goed geen kopie maken en \code{a} gebruiken in plaats van \code{d}.
-	} 
-	\item 
-	Een meer realistische toepassing van de standaard functie |move| is als volgt.
-	Stel dat je regelmatig twee objecten van de hierboven gedefinieerde class |Dozijn| moet verwisselen.
-	Je schrijft vervolgens een functie genaamd |swap| die twee als argumenten meegegeven dozijnen als volgt verwisselt:
-	\cpplstinputfragment[linerange={77-81}]{swap_move.cpp}
-	Deze functie roep je vervolgens als volgt aan:
-	\cpplstinputfragment[linerange={98-98}]{swap_move.cpp}
-	
-	Het uitvoeren van deze regel blijkt echter behoorlijk wat tijd in beslag te nemen. 
-	In de eerste regel wordt de copy constructor van |Dozijn| aangeroepen om de lokale variabele |hulp| aan te maken.
-	Deze copy constructor reserveert geheugenruimte voor twaalf integers (door het aanroepen van |new int[12]|) en kopieert vervolgens de gehele inhoud van |d1| (twaalf integers) naar deze geheugenruimte.
-	Vervolgens wordt de assignment operator van |Dozijn| aangeroepen die de gehele inhoud (twaalf integers) van |d2| kopieert naar |d1|. Tot slot wordt de assignment operator van |Dozijn| nogmaals aangeroepen die gehele inhoud (twaalf integers) van |hulp| kopieert naar |d2|.
-	Tot slot wordt de destructor |~Dozijn| aangeroepen om de lokale variabele |hulp| te verwijderen.
-	In deze destructor wordt de geheugenruimte die in de copy constructor is gereserveerd weer vrijgegeven. 
-	Dus er worden bij het uitvoeren van de functie |swap| $12$ integers gereserveerd en ook weer vrijgegeven en er worden $3 \times{} 12 = 36$ integers gekopieerd.
-	
-	Je kunt echter bedenken dat het helemaal niet nodig is om geheugenruimte te reserveren en weer vrij te geven. 
-	Ook is het niet nodig om integers te kopiëren.
-	Het enige dat moet gebeuren is het verwisselen van de twee private pointers |data|.
-	Je kunt dit eenvoudig voor elkaar krijgen door gebruik te maken van de move constructor en de move assignment van |Dozijn|.
-	De waarde van |d1| hoeft namelijk niet meer uitgelezen te worden nadat |hulp| is aangemaakt.
-	De waarde van |d2| hoeft niet meer uitgelezen te worden nadat deze is toegekend aan |d1| en hetzelfde geldt voor de waarde van |hulp| nadat die is toegekend aan |d2|.
-	Je kunt de |swap_move| dus als volgt definiëren:
-	\cpplstinputfragment[linerange={83-87}]{swap_move.cpp}
-	Deze functie roep je vervolgens als volgt aan:
-	\cpplstinputfragment[linerange={103-103}]{swap_move.cpp}
-	
-	De code is nu sneller\footnote{%
-		Op een CC3220S Launchpad gecompileerd met optimization off duurt de \code{swap} 12306 clockcycles en de \code{swap_move} en \code{std::swap} duren elk 10965 clockcycles.
-		Dit is slechts \SI{11}{\percent} sneller. 
-		De besparing is in dit geval nog gering, maar je begrijpt dat het gebruik van een move assignment en move assignment operator bij classes die veel data beheren een behoorlijke besparing kan opleveren.  
-	} omdat er slechts 8 pointers gekopieerd hoeven te worden.
-	Ook wordt de destructor |~Dozijn| één maal aangeroepen om de lokale variabele |hulp| op te ruimen.
-	Er hoeft echter geen geheugen vrijgegeven te worden omdat de pointer |data| van |hulp| op dat moment gelijk is aan de |nullptr|.
-	
-	In plaats van zelf een swap functie te definiëren, hadden we natuurlijk ook de standaard template functie |swap| aan kunnen roepen:
-	\cpplstinputfragment[linerange={108-108}]{swap_move.cpp}
-	
-	Het zal je waarschijnlijk niet verbazen dat deze standaard template functie ook gebruikt maakt van de move constructor en de move assignment operator.
-	Dat kan natuurlijk alleen maar als deze gedefinieerd zijn voor de betreffende class, in dit geval |Dozijn|.
-	
-	Het is dus belangrijk om voor een class die een zelfgedefinieerde copy constructor en assingment operator nodig heeft, ook een move constructor en een move assignment operator te definiëren.
-	\item %TODO toevoegen aan meeste uitgebeide versie van Breuk.
-	Voor de ingebouwde types in \Cpp{} kun je zogenoemde literals definiëren.
-	Een literal is een constante waarde.
-	Voorbeelden van literals van het type |int| zijn |42|, |0b0101010| en |0x2A|.
-	|true| is een voorbeeld van een literal van het type |bool|.
-	|'a'| en |'\n'| zijn voorbeelden van literals van het type |char|.
-	|1.2| en |-3.234e-17| zijn voorbeelden van literals van het type |char|.
-	|"Hallo daar"| is een voorbeeld van een C-string literal van het type |const char[11]|.
-	Het is ook mogelijk om literals (constante getallen) te definiëren voor zelfgedefinieerde types zoals |Breuk|.
-	Zie \proglink{user_defined_literals.cpp}.
-	Dit is bijvoorbeeld ook gebruikt in de volgende standaard library classes:
-	\begin{itemize}
-		\item |string|\\
-		|"Hallo daar"s| is een literal van het type |string|.
-		\item |complex|\\
-		|2i| is een literal van het type |complex<double>|.
-		\item |chrono::duration|\\
-		|2ms| is een literal van het type |chrono::duration|.
-	\end{itemize}   
-	\item 
-	Als je een zelfgedefinieerd type |T| als key in een ongeordende container, bijvoorbeeld |unordered_map|, wilt gebruiken dan moet je 
-	een functie-object gebruiken.
-	Zie \proglink{unordered_map1.cpp}.
-	Als een object meerdere datamembers heeft, dan kun je de hashes van deze datamembers het best met elkaar exor-en om de hash van dit object te bepalen.
-	Als alternatief kun je ook een template specialisation voor hash<T> definiëren in namespace |std|.
-	Het is dan niet meer nodig om de hash operatie mee te geven aan de ongeordende container
-	Zie \proglink{unordered_map2.cpp}.
+	\item bepaald kunnen worden of twee objecten van dit type gelijk zijn;
+	\item een object van dit type omgezet kunnen worden naar een hashwaarde.
 \end{itemize}
 
-\section{Templates}
-\begin{itemize}
-	\item 
-	In \Cpp{}20 worden zogenoemde \emph{Concepts} geïntroduceerd.
-	Een concept is een predicate voor een type.
-	Een predicate is een bewerking die waar of onwaar is.
-	Met behulp van concepts kunnen je template argumenten beperken tot verschillende types.
-	Bijvoorbeeld: |template<Elem T>| kan gebruikt worden voor types |T| waarvoor geldt dat |Elem<T>| waar is.
-	Je kunt een concept dus ook zien als een soort van type van een type (dit wordt ook wel een metatype genoemd).
-	\item 
-	Een class template value argument kan als |constexpr| opvraagbaar gemaakt worden buiten de class.
-	\begin{cpplstfragment}
-		template<typename T, size_t N>
-		class Buffer {
-			public:
-			using value_type = T;
-			using size_type = size_t;
-			constexpr size() {
-				return N;
-			}
-			private:
-			T[N];
-		}
-	\end{cpplstfragment}
-	
-	\item 
-	Sinds \Cpp{}17 kunnen template parameters automatisch door de compiler bepaald worden.
-	\begin{cpplstfragment}
-		pair p{1, 0.5}; // p is van het type pair<int, double>
-		vector v1{1, 2, 3}; // v1 is van het type vector<int>
-		vector v2{v1}; //  // v2 is van het type vector<int>
-	\end{cpplstfragment}
-	%TODO toevoegen aan meest complexe Array template.
-	Een zogenoemde \emph{deduction guide} kan toegevoegd worden aan een class om compiler hierbij te helpen.
-	\begin{cpplstfragment}
-		template<typename Iter>
-		Array(Iter, Iter) -> Array<typename Iter::value_type>;
-	\end{cpplstfragment}
-	Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald kan worden.
-	\begin{cpplstfragment}
-		Array a1{1, 2, 3, 4, 5}; // a1 is van het type Array<int> 
-		Array a2{v1.begin()+1, v1.end()-1}; // a2 is van het type Array<int>
-	\end{cpplstfragment}
-	
-	\item 
-	%TODO spelling consequent maken
-	Een member-functie kan een functie-template zijn maar dat geldt niet voor een virtual functie.		
-	
-	\item 
-	Een functieobject wordt ook wel een \emph{policy object} genoemd.
-	
-	\item 
-	Een lambda met een |auto| parameter is een soort template en wordt een \emph{generic lambda} genoemd.
-	\begin{cpplstfragment}
-		template<typename T> void increment(vector<T>& v) {
-			for_all(v, [](auto& t){ ++t; });
-		} 
-	\end{cpplstfragment}
-	
-	\item 
-	Een lambda kan handig gebruikt worden om een groep statements te veranderen in een expressie.
-	%TODO: kan dit gebruikt worden om een Breuk in te lezen in operator<<?
-	Bijvoorbeeld bij een ingewikkelde initialisatie:
-	\begin{cpplstfragment}
-		vector<int> v = [&] {
-			switch (m) {
-				case 0:
-				return {0, 2, 4, 6, 8};
-				case 1:
-				return {1, 3, 5, 7, 9};
-				default:
-				return {};
-			}
-		};
-	\end{cpplstfragment}
-	
-	\item 
-	Ook een variabele kan een template zijn zodat je ook variabelen en constanten als template kunt definiëren.
-	%TODO: duidelijk use case ontbreekt.
-	\begin{cpplstfragment}
-		template<typename T> constexpr T pi = atan(static_cast<T>(1))*4;
-	\end{cpplstfragment}
-	Je kunt nu de constante pi als volgt gebruiken:
-	\begin{cpplstfragment}
-		auto d{pi<double>}; // d is double
-		auto f{pi<float>}; // f is float
-	\end{cpplstfragment}
-	Zie \proglink{pi.cpp}.
-	
-	\item 
-	Met |using| kun je een parametertype van een template \squote{invullen}.
-	In het Engels wordt dit \emph{argument binding} genoemd. 
-	\begin{cpplstfragment}
-		template<typename Value>
-		using String_map = map<string, Value>;
-		
-		String_map<int> m; // m is van het type map<string, int>
-	\end{cpplstfragment}
-	
-	\item 
-	Sinds \Cpp{}17 kun je een compile time |if| gebruiken.
-	%TODO: kan ik dit gebruiken voor het kiezen van een iterator.
-	
-\end{itemize}
+Aan de eerste voorwaarde kun je simpel voldoen door de |operator=| voor het user-defined datatype te overloaden, zie \csecref{sec:assignmentoperator}.
 
-\section{Concepts and Generic Programming}
-Kan pas vanaf \Cpp{}20. Te gedetailleerd voor dit dictaat.
+Om aan de tweede voorwaarde te voldoen, heb je twee opties.
+Als eerste kun je een type definiëren met een overloaded |operator()|, waarmee een zogenoemd \emph{functie-object}, aangemaakt kan worden.
+Dit functie-object moet dan de hash waarde voor het betreffende object produceren.
+ 
+Zie \proglink{unordered_set1.cpp}.
+Het type dat het functie-object moet aanmaken is |Breuk_hash|:
 
-\section{Strings and Regular Expressions}
-\begin{itemize}
-	\item 
-	Sinds \Cpp{}17 is een |string_view| beschikbaar.
-	Een |string_view| is een pointer, lengte paar dat een deel van een sting aanwijst.
-	\item 
-	Bij het gebruik van regular expressions is het handig om een raw string literal te gebruiken |R("Hier heeft \ en " geen speciale betekenis")|.
-	\item 
-	Tip: gebruik |string| als returntype.
-	Vertrouw op move semantics.
-\end{itemize}
+\cpplstinputfragment[linerange={9-11}]{unordered_set1.cpp}
 
-\section{Input and Output}
-Sinds \Cpp{}17 include file <filesystem>
+De overloaded |operator()| moet de als argument meegegeven |Breuk| omzetten in een hash-waarde van het type |size_t|.
+Het keyword |noexcept| geeft aan dat deze functie geen exception kan gooien.
+Daardoor kan de compiler code verder optimaliseren.
+De implementatie van deze overloaded |operator()| is als volgt:
 
-\section{Containers}
-\begin{itemize}
-	\item 
-	|vector<int> v1{10}| is een vector met één element met de waarde 10.
-	\item 
-	|vector<int> v1(10)| is een vector met tien elementen met de waarde 0.
-	\item 
-	Als een |vector| groeit kunnen de elementen van plaats veranderen. 
-	Pointers en iteratoren naar deze elementen staan dan naar verkeerde adressen te wijzen.
-	Dit kun je voorkomen door met behulp van de functie |reserve|, van tevoren, voldoende elementen te reserveren.
-	Zie \proglink{vector_reserve.cpp}.
-	\item 
-	|Save_vector| is een mooi voorbeeld van overerving.
-	Zie \proglink{Save_vector.cpp}.
-	Werkt niet polymorf omdat operator[] niet |virtual| gedefinieerd is.
-	\item 
-	Range checking kan soms ook aangezet worden als compiler optie.
-	In gcc is dat de optie |-D_GLIBCXX_DEBUG|.
-	\item 
-	|count| bij |list| is $O(1)$ maar |count| bij |forward_list| is $O(n)$.	 
-	\item 
-	De standaardcontainer hebben zogenoemde \emph{emplace}-operaties.
-	Een |vector| heeft naast de bekende |push_back|-operatie ook een |emplace_back|-operatie.
-	De |emplace_back| combineert het toevoegen van een element in de vector met het aanroepen van de constructor van dit element.
-	Dit voorkomt het maken van een kopietje.
-	In het programmafragment:
-	\begin{cpplstfragment}
-		vector<Breuk> v;
-		v.push_back(Breuk{1, 2});
-	\end{cpplstfragment}
-	Kan de laatste regel efficiënter gecodeerd worden als:
-	\begin{cpplstfragment}
-		v.emplace_back(1, 2);
-	\end{cpplstfragment}
-	Zie \proglink{vector_emplace}.	
-\end{itemize}
-\section{Algorithms}
-\begin{itemize}
-	\item 
-	Werken op een half-open sequence.
-	\item 
-	In \Cpp{}-20 kun je met behulp van Concepts zogenoemde Ranges definiëren waardoor het mogelijk wordt om een container-object aan een algoritme mee te geven. 
-	\item 
-	Sinds \Cpp{}-17 bestaan er ook parallelle versies van de standaard algoritmen.
-	%TODO kan ik niet compileren.
-	Zie \proglink{sort_par.cpp}.
-\end{itemize}
-\section{Utilities}
-\begin{itemize}
-	\item 
-	Sinds \Cpp{}11 bevat de standaard library zogenoemde \emph{smart pointers}.
-	Een |unique_ptr| is een verwijzing naar een object.
-	Deze pointer beheert de levensduur van dit object en heeft een move constructor \csecref{sec:move} waarmee het beheer overgedragen kan worden aan een andere |unique_pointer|.
-	Een |unique_pointer| kan, zoals de naam al suggereert, \emph{niet} gekopieerd worden.
-	Hierdoor kun je een |unique_pointer| teruggeven vanuit een functie.
-	Het object wordt verwijderd als de |unique_pointer| die het object beheerd wordt verwijderd.
-	Zie \proglink{unique_pointer.cpp}.
-	\item 
-	Een |shared_ptr| is ook een verwijzing naar een object.
-	Deze pointer beheert ook de levensduur van het betreffende object.
-	Een |shared_pointer| kan in tegenstelling tot een |unique_pointer| wel gekopieerde worden.
-	Het object wordt pas verwijderd, als de laatste |shared_pointer| die naar dit object verwijst, wordt verwijderd.
-	De standaard library bevat in de include file |memory| de functies |make_shared()| en |make_unique| waarmee objecten dynamisch aangemaakt kunnen worden zonder dat |new| expliciet wordt aangeroepen.
-	Smart pointers zijn te verkiezen boven gewone pointers omdat ze de kans op memory leaks sterk verkleinen.
-	Maar smart pointers blijven een soort pointer, dus gebruik ze alleen als er geen eenvoudigere oplossing mogelijk is.
-	Vaak kan het gebruik van een standaard container het gebruik van pointers voorkomen.
-	Als je polymorfisme gebruikt dan moet je een pointer gebruiken.
-	Het gebruik van een |unique_pointer| ligt dan voor de hand.
-	Als het polymorfe object gedeeld moet worden, heb je een |shared_pointer| nodig.
-	%TODO: plaatsen opzoeken waar new gebuikt wordt en verwijzen naar gebruik smart pointers.
-	\item 
-	De standaard functie |forward| lijkt op de eenvoudigere |move| en kan gebruikt worden om een verzameling argumenten exact door te geven.
-	Deze functie wordt onder andere gebruikt om |make_unique| te implementeren:
-	\begin{cpplstfragment}
-		template<typename T, typename ... Args>
-		unique_ptr<T> make_unique(Args&&... args) {
-			return unique_ptr<T>{new T(std::forward<Args>(args)...)}
-		}
-	\end{cpplstfragment}
-	\item 
-	Sinds Cpp{}20 bevat de standaard library de class |span|.
-	Dit is de combinatie van een pointer en een offset.
-	\item 
-	De |valarray<T>| is een speciale container waarbij T een numeriek type moet zijn.
-	Er kunnen rekenkundige bewerkingen op dit type uitgevoerd worden.
-	Een |valarray| lijkt dus meer op een vector zoals we die kennen uit de wiskunde dan een |vector|.
-	Zie \proglink{valarray.cpp}. 
-	Deze rekenkundige bewerkingen kunnen efficiënt geïmplementeerd worden.
-	Zo kan de bewerking:
-	|v3 = 2*v1 + v2| door de compiler vertaald worden in één loop waarin voor elke element van |v| de volgende code wordt uitgevoerd: |v3[i] = 2*v1[i] + v2[i];|.
-	\item 
-	Andere utility classes: |bitset|, |pair|, |tuple|, |variant|, |optional| en |any|.
-	|pair| en |tuple| zijn heterogeen alle andere containers zijn homogeen.
-	|bitset| bevat een vast aantal bits.
-	|variant| is een beter alternatief voor |union|.
-	|optional| is een object dat mogelijk leeg is.
-	|any| is een object dat elk willekeurig type kan bevatten.
-	\item 
-	Type deduction heeft de functie |make_pair| sinds \Cpp{}17 min of meer overbodig gemaakt.
-	%TODO zoek waar |make_pair| gebruikt wordt.
-	Zie \proglink{make_pair.cpp}.
-	Hetzelfde geldt voor |make_tuple|.  
-	\item 
-	De \Cpp{}17 standaard library bevat een pool allocator.
-	Deze allocator is sneller dan de standaard allocator, als je veel objecten van dezelfde grootte nodig hebt.
-	Alle standaard containers hebben een extra template argument waarmee je de allocator kunt opgeven.
-	\item 
-	De include file |<chrono>| bevat utilities om met tijd om te gaan.
-	Er zijn user defined suffixes gedefinieerd die je kunt gebruiken om je code leesbaarder te maken.
-	Bijvoorbeeld:
-	\begin{cpplstfragment}
-		this_thread::sleep(10ms+500us);
-	\end{cpplstfragment}
-	Ook kun je eenvoudig een timer maken om de executietijd van een stuk code te meten.
-	\begin{cpplstfragment}
-		auto start{chrono::high_resolution_clock::now()};
-		// code die je wilt timen
-		auto stop{chrono::high_resolution_clock::now()};
-		auto duration{chrono::duration_cast<std::chrono::microseconds>(stop - start).count()};
-		cout << "Executietijd = " << duration << " us\n";
-	\end{cpplstfragment}
-	\item 
-	Het kiezen van een implementatie afhankelijk van het type van de iterator zal in \Cpp{}20 veel eenvoudiger worden door het gebruik van concepts.
-\end{itemize}
+\cpplstinputfragment[linerange={54-56}]{unordered_set1.cpp}
 
-\section{Numerics}
-\begin{itemize}
-	\item 
-	Als er een fout optreedt in een functie uit |<cmath>|, dan wordt dit gerapporteerd door de globale variabele |errno| te vullen met een foutcode.
-	\begin{cpplstfragment}
-		errno = 0;
-		double d{sqrt(-1)};
-		if (errno == EDOM) {
-			cerr << "Domain error for sqrt(-1)\n";
-		}
-	\end{cpplstfragment}
-	\item 
-	De include file |<numeric>| definieert een aantal rekenkundige functies.
-	Onder andere |inner_product|, |gcd| en |lcm|.
-	%TODO: gcd gebruiken in Breuk. Nog en versimpeling t.o.v. C.
-	Helaas is |gcd| pas toegevoegd in \Cpp{}17.
-	Er zijn ook diverse parallelle algoritmen beschikbaar.
-	\item 
-	\Cpp{} heeft veel mogelijkheden om random getallen te genereren.
-	Zie \proglink{Dobbelsteen.cpp}. 
-	\item 
-	De minimale en maximale waardes van de ingebouwde types kunnen opgevraagd worden met functies die gedeclareerd zijn in |<limits>|.
-	Bijvoorbeeld de maximale waarde voor een |int| is |numeric_limits<int>::max()|.
-\end{itemize}
-\section{Concurrency}
-Kan eventueel nog aan dictaat worden toegevoegd.
-Zie ook oude informatie uit RTSYST, zie \url{bd.eduweb.hhs.nl/rtsyst/studiew.htm}.
-\section{History and Compatibility}
-\begin{itemize}
-	\item 
-	Attributes zijn een gestandaardiseerde manier om taaluitbreidingen te implementeren in \Cpp{}.
-	Een attribute heeft de volgende syntax |[[naam]]|.
-	Er zijn ook een aantal standaard attributes gedefinieerd.
-	Zie \url{https://en.cppreference.com/w/cpp/language/attributes}.
-	Hier volgen enkele voorbeelden:
-	\begin{itemize}
-		\item 
-		De hoofdfunctie in veel embedded systemen bevat een |while(1)|-loop omdat deze functie \squote{altijd} moet blijven draaien.
-		Sommige compilers geven in dit geval een warning.   
-		Je kunt aangeven dat het juist de bedoeling is dat de functie nooit terugkeert door de functie te voorzien van het attribuut |[[noreturn]]|.
-		\item 
-		In |\switch|-statements gebruik je meestal aan het einde van elke |case| een |break|-statement.
-		Soms wil je echter dat het programma na uit uitvoeren van de |case| verdergaat met het uitvoeren van de volgende |case|.
-		In dit geval eindigt de |case| niet met een |break|.
-		Veel compilers geven in dit geval een warning.
-		Je kunt aangeven dat je bewust de |break| hebt weggelaten door het attribuut |[[fallthrough]]| te gebruiken.
-		Zie \proglink{attributes.cpp}.
-	\end{itemize}
-	\item 
-	De standaard library bevat ook de |ratio| voor \emph{compile-time rational arithmetic}.
-	De teller en de noemer zijn template parameters.
-	Een duidelijk use case ontbreekt.
-\end{itemize}
+De hashwaarde wordt bepaald door de hashwaarde van de twee datamembers van |Breuk|, |boven| en |onder|, met elkaar te exoren (met de operator |^|).
+Omdat de datamembers van |Breuk||private| zijn, moet deze |operator()| als |friend| in |Breuk| gedeclareerd worden:
+
+\cpplstinputfragment[linerange={22-22}]{unordered_set1.cpp}
+
+Het type |Breuk_hash| moet nu als tweede argument aan de template |unordered_set| worden meegegeven:
+
+\cpplstinputfragment[linerange={59-59}]{unordered_set1.cpp}
+
+Als alternatief kun je ook een template specialisation voor hash<T> definiëren in namespace |std|.
+
+Zie \proglink{unordered_set2.cpp}:
+
+\cpplstinputfragment[linerange={9-14}]{unordered_set2.cpp}
+
+De overloaded |operator()| moet de als argument meegegeven |Breuk| omzetten in een hash-waarde van het type |size_t|.
+De implementatie van deze overloaded |operator()| is als volgt:
+
+\cpplstinputfragment[linerange={57-62}]{unordered_set2.cpp}
+
+De hashwaarde wordt bepaald door de hashwaarde van de twee datamembers van |Breuk|, |boven| en |onder|, met elkaar te exoren (met de operator |^|).
+Omdat de datamembers van |Breuk||private| zijn, moet deze |operator()| als |friend| in |Breuk| gedeclareerd worden:
+
+\cpplstinputfragment[linerange={25-25}]{unordered_set2.cpp}
+
+Er hoeft nu geen tweede argument aan de template |unordered_set| te worden meegegeven:
+
+\cpplstinputfragment[linerange={65-65}]{unordered_set2.cpp}
+
+De volgende code:
+
+\cpplstinputfragment[linerange={60-68}]{unordered_set1.cpp}
+
+Levert nu, in beide gevallen, de volgende uitvoer op:
+\begin{coutput}
+1/4
+2/3
+1/2
+3/4
+1/3
+\end{coutput}
+
+Omdat breuken genormaliseerd worden, wordt de |Breuk {2,4}| niet in de set opgenomen omdat de |Breuk {1,2}| er al inzit.
+
+\section{Voorbeeldprogramma dat generiek en objectgeoriënteerd programmeren combineert}
+De standaard functie |mem_fn| vormt de koppeling tussen generiek programmeren en objectgeoriënteerd programmeren omdat hiermee een memberfunctie kan worden omgezet in een functie\hyp{}object, zie \proglink{mem\_fn.cpp}.
+
+\cpplstinputfragment[linerange={1-33,54-54}]{mem_fn.cpp}
+
+De uitvoer van dit programma:
+\begin{coutput}
+Kef kef Woef woef Kef kef
+\end{coutput}
+
+Je kunt alle honden in de kennel ook laten blaffen met behulp van lambda-functie:
+\cpplstinputfragment[linerange={36-39}]{mem_fn.cpp}
+
+Je kunt alle honden in de kennel ook laten blaffen met behulp van een \USE{range\hyp{}based for}:
+\cpplstinputfragment[linerange={46-49}]{mem_fn.cpp}
+
+Het gebruik van een \USE{range\hyp{}based for} is eenvoudiger dan het gebruik van een |for_each|.
+De \USE{range\hyp{}based for} kan echter alleen gebruikt worden als de hele container moet worden doorlopen.
+Met een |for_each| kan ook een deel van een container doorlopen worden.
+
+\section{Automatisch de meest efficiënte implementatie kiezen afhankelijk van de beschikbare iterator soort}
+\label{sec:iteratortag}
+In \csecref{sec:vbverschillendeiteratorsoorten} heb je gezien dat de implementatie van een algoritme afhankelijk kan zijn van de soort iterator die beschikbaar is.
+Er zijn 3 functies gedefinieerd waarmee het upper middle element van een range bepaald kan worden.
+Als er \USE{random access} iteratoren beschikbaar zijn, kan de functie \hcode{find_\\-upper_\\-middle_\\-random_\\-access} gebruikt worden.
+Als \USE{bidirectional} iteratoren beschikbaar zijn, kan de functie \hcode{find_\\-upper_\\-middle_\\-bi\\-di\\-rec\\-tional} gebruikt worden.
+Als slechts \USE{forward} iteratoren beschikbaar zijn, moet de functie \hcode{find_\\-upper_\\-middle_\\-fow\\-ward} gebruikt worden.
+
+Het zou natuurlijk mooi zijn als je de compiler zelf de meeste efficiënte versie van \hcode{find_\\-upper_\\-middle} zou kunnen laten kiezen afhankelijk van het gebruikte iterator soort.
+Dit blijkt inderdaad mogelijk door gebruik te maken van zogenoemde iterator tags.
+In de standaard \Cpp{} \USE{library} is voor elke iteratorsoort een zogenoemd \hcode{iterator_\\-tag} type gedefinieerd.
+Er is dus een \hcode{random_\\-access_\\-iterator_\\-tag} type, een \hcode{bi\\-di\\-rec\\-tional_\\-iterator_\\-tag} en een \hcode{forward_\\-iterator_\\-tag}.
+We definiëren nu drie overloaded\footnote{%
+	Zie \csecref{sec:functionoverloading}.
+} template functies die allemaal \hcode{find_\\-upper_\\-middle} heten en behalve de twee parameters |begin| en |end| nog een derde parameter hebben genaamd |dummy|.
+Deze |dummy| parameter is van het type van de betreffende \hcode{iterator_\\-tag}.
+Deze parameter wordt verder in de implementatie van de functie niet gebruikt.
+Vervolgens wordt er nog een vierde (\USE{overloaded}) \hcode{find_\\-upper_\\-middle} template functie gedefinieerd die slechts twee parameters heeft: |begin| en |end|.
+Deze functie roept vervolgens één van de andere drie \hcode{find_\\-upper_\\-middle} template functies aan met als derde argument een bij de iteratoren |begin| en |end| behorende \hcode{iterator_\\-tag} object.
+We kunnen de bij een iterator horende \hcode{iterator_\\-tag} opvragen met behulp van de standaard \hcode{iterator_\\-traits}\footnote{%
+	Zie eventueel \url{http://en.cppreference.com/w/cpp/iterator/iterator_traits}.
+} template class.
+Het iterator type moet als template argument aan deze template class worden doorgegeven.
+In deze class is een |typedef| gedefinieerd genaamd \hcode{iterator_\\-category} die overeenkomt met het betreffende \hcode{iterator_\\-tag} type.
+Deze |typedef| kunnen we gebruiken om een (dummy) object aan te maken.
+Het type van dit object (het \hcode{iterator_\\-tag} type) wordt vervolgens door de compiler gebruikt om de juiste \hcode{find_\\-upper_\\-middle} te selecteren.
+Zie \proglink{find\_upper\_middle.cpp}:
+
+\cpplstinputfragment[linerange={10-68}]{find_upper_middle.cpp}
+
+Het \USE{keyword} |typename| is nodig om de compiler duidelijk te maken dat \hcode{iterator_\\-traits<I>::\\-iterator_\\-category} een typenaam is.
+Zie eventueel \url{http://en.cppreference.com/w/cpp/keyword/typename}.
+
+\section{Standaard functie\hyp{}objecten}
+\label{sec:stdfunctieobjecten}
+Je hebt gezien dat je een bepaalde voorwaarde of een bepaalde bewerking kunt doorgeven aan een algoritme door middel van een functie\hyp{}pointer, een zelfgemaakt functie\hyp{}object of een lambda\hyp{}functie, zie \csecref{sec:findif} en \csecref{sec:transform}.
+Je kunt echter ook gebruik maken van een zogenoemd standaard functie\hyp{}object.
+De classes waarmee deze objecten gemaakt kunnen worden zijn gedefiniëerd in de headerfile |functional|.
+Voor alle rekenkundige en logische operaties zijn template classes beschikbaar.
+Zo wordt, bijvoorbeeld, door een object van de class |plus<T>| een |operator+| uitgevoerd op twee objecten van het type |T| en wordt door een object van de class |greater<T>| een |operator>| uitgevoerd op twee objecten van het type |T|.
+Zie voor een compleet overzicht \url{http://en.cppreference.com/w/cpp/utility/functional}.
+
+Het gebruik van standaard functie\hyp{}objecten is vooral handig als de operatie die door het algoritme uitgevoerd moet worden uit één enkele operator bestaat.
+
+Zo kun je bijvoorbeeld de |vector| |w| bij de |vector| |v| optellen door middel van een |transfer| algoritme met een standaard functie\hyp{}object |plus|, zie \proglink{transfer\_plus}.
+
+\cpplstinputfragment[linerange={1-22}]{transform_plus.cpp}
+
+Als je dit vergelijkt met het gebruik van een functie of lambda\hyp{}functie zoals in \csecref{sec:transform}, dan zie je dat het gebruik van een standaard functie\hyp{}object in dit geval eenvoudiger is.
+
+De code die in \csecref{sec:sort} gegeven is om een |vector| met integers van hoog naar laag te sorteren (zie \proglink{sort\_lambda.cpp}):
+\cpplstinputfragment[linerange={15-17}]{sort_lambda.cpp}
+kan sterk vereenvoudigd worden door het gebruik van een standaard functie\hyp{}object (zie \proglink{sort\_greater.cpp}):
+\cpplstinputfragment[linerange={16-16}]{sort_greater.cpp}
+
+Het gebruik van een standaard functie\hyp{}object om een voorwaarde door te geven aan één van de |_if| algoritmen is minder eenvoudig.
+In \csecref{sec:findif} heb je gezien dat het eerste getal $\ge{}0$ in een |list| met integers opgezocht kan worden door deze voorwaarde aan |find_if| door te geven met behulp van een functie of een lambda\hyp{}functie.
+Er is in dit geval een functie\hyp{}object nodig dat één |int| als parameter heeft en een |bool| teruggeeft die aangeeft of het meegegeven argument $\ge{}0$ is.
+Het is dus \emph{niet} mogelijk om rechtstreeks gebruik te maken van de standaard class |greater_equal<T>| omdat een functie\hyp{}object van die class twee parameters heeft.
+Met een omweg is dit echter wel mogelijk.
+Er moet dan gebruik gemaakt worden van de standaard functie |bind| waarmee een functie\hyp{}object omgezet kan worden in een ander functie\hyp{}object waarbij bepaalde parameters uit het oorspronkelijke functie\hyp{}object gebonden kunnen worden aan bepaalde waarden.
+Het standaard functie\hyp{}object |greater_equal<int>()| heeft twee parameters en bepaalt bij aanroep of het eerste argument $\ge{}$ aan het tweede argument is.
+Met behulp van |bind| kan hiervan een functie\hyp{}object gemaakt worden met slechts één parameter die bij aanroep bepaald of het argument $\ge{}0$ is, door de tweede parameter van |greater_equal<int>()| te binden aan de waarde $0$.
+De aanroep van |bind| ziet er dan als volgt uit: 
+\begin{cpplstfragment}
+bind(greater_equal<int>(), _1, 0)
+\end{cpplstfragment}
+De |_1| is een zogenoemde \USE{placeholder}\footnote{%
+	De \USE{placeholders} zijn gedefinieerd in een aparte \code{namespace} genaamd \hcode{std::\\-place\\-holders}.
+} en geeft aan dat de eerste (en enige) parameter van het door |bind| teruggegeven functie\hyp{}object ingevuld moet worden als eerste argument van |greater_equal<int>()|.
+De |0| geeft aan dat de constante waarde $0$ ingevuld moet worden als tweede argument van |greater_equal<int>()|.
+Het door |bind| teruggegeven functie\hyp{}object kan  vervolgens aan het |find_if| algoritme worden doorgegeven om de eerste integer $\ge{}0$ in de |vector| |rij| te vinden, zie \proglink{find\_if\_bind.cpp}:
+
+\cpplstinputfragment[linerange={1-14}]{find_if_bind.cpp}
+
+Persoonlijk vind ik het gebruik van een lambda\hyp{}functie in dit geval eenvoudiger, zie \csecref{sec:findif}.
+
+In \csecref{sec:remove} heb je gezien hoe de even getallen uit een |vector| met integers verwijderd kunnen worden met behulp van een lambda\hyp{}functie, zie \proglink{remove.cpp}:
+\cpplstinputfragment[linerange={31-33}]{remove.cpp}
+
+Dit zou ook met behulp van standaard functie\hyp{}objecten kunnen, zie \proglink{remove\_bind.cpp}:
+
+\cpplstinputfragment[linerange={18-18}]{remove_bind.cpp}
+
+Ook in dit geval vind ik het gebruik van een lambda\hyp{}functie eenvoudiger.
 
 \end{cpplstShortInline}
 
 \printbibliography[heading=bibintoc]{}
-\else
-\end{cpplstShortInline}
-\fi
 
 \backmatter
 \appendix
@@ -8720,4 +8606,3 @@ Zie ook oude informatie uit RTSYST, zie \url{bd.eduweb.hhs.nl/rtsyst/studiew.htm
 %\cleardoublepage
 %\addcontentsline{toc}{chapter}{\indexname}
 \end{document}
-|do|\hyp{}|while|

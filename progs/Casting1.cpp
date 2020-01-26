@@ -7,7 +7,6 @@ using namespace std;
 // door middel van een zogenaamde type cast
 
 int main() {
-    
     int64_t i;
 //  i = "Hallo";
 //  Error: invalid conversion from ‘const char*’ to ‘int64_t’
@@ -20,7 +19,7 @@ int main() {
 }
 
 /* Output:
-4299173889
-4299173895
-4299173901
-*/
+4299173888
+4299173894
+4299173900*
+/
