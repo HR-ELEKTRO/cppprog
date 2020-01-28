@@ -2040,8 +2040,8 @@ De template maakt het mogelijk om functies of classes te schrijven die werken me
 We noemen dit \emph{generiek} programmeren.
 Pas tijdens het (her)gebruik van de functie of class moeten we specificeren welk type gebruikt moet worden.
 
-\section{Template functies}
-\label{sec:templatefunctie}
+\section{Functietemplates}
+\label{sec:functietemplate}
 Op \cpageref{code:swap_ints} heb ik de functie |swapInts| besproken waarmee twee |int| variabelen verwisseld kunnen worden:
 \begin{cpplstfragment}
 void swap_nts(int& p, int& q) {
@@ -2156,7 +2156,7 @@ Door gebruik te maken van een functietemplate in plaats van \enquote{met de hand
 
 De functietemplate |swap| is hier als voorbeeld zelf gedefinieerd, maar in de praktijk is dit niet nodig omdat deze functietemplate al in de standaard \Cpp{}\hyp{}library is opgenomen.
 
-\section{Class Templates}
+\section{Class templates}
 In de vorige paragraaf hebben we gezien dat je een template van een functie kunt maken waardoor de functie generiek wordt.
 Een generieke functie kun je voor verschillende datatypes gebruiken.
 Als je de generieke functie aanroept, zal de compiler zelf afhankelijk van het type van de gebruikte argumenten de benodigde \enquote{versie} van de generieke functie genereren door voor de template\hyp{}parameter het betreffende type in te vullen.
@@ -2302,20 +2302,7 @@ alfabet = A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X
 
 Je ziet dat je de class template |Rij| kunt gebruiken om 10 elementen van het type |int| in op te slaan maar ook om 26 elementen van het type |char| in op te slaan.
 
-\section{Template details}
-Over \USE{templates} valt nog veel meer te vertellen, onder andere:
-\begin{itemize}
-    \item \USE{Template specialisation};\\
-    Een speciale versie van een template die alleen voor een bepaald type (bijvoorbeeld |int|) of voor bepaalde types (bijvoorbeeld |T*|) wordt gebruikt.
-    De laatste vorm wordt \emph{\USE{partial}} \USE{specialisation} genoemd.
-    \item Template memberfuncties;\\
-    Een class (die zelf geen template hoeft te zijn) kan memberfuncties hebben die als template gedefinieerd zijn.
-    \item Default waarden voor template\hyp{}parameters.\\
-    Net zoals voor gewone functie parameters kun je voor template\hyp{}parameters ook default waarden (of types) specificeren.
-\end{itemize}
-Voor al deze details verwijs ik je naar \cite[hoofdstuk \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{22}, \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{23} en \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{24}]{Brokken2019},  \cite[hoofdstuk 23 t/m 29]{Stroustrup2013} en \cite{Vandevoorde2017}.
-
-\section{Standaard Templates}
+\section{Standaard templates}
 \label{STL}
 In de \Cpp{}-standaard \cite{ISO2014} is een groot aantal standaard \USE{templates} voor datastructuren en algoritmen opgenomen. 
 In \csecref{STL} komen we hier nog uitgebreid op terug.
@@ -2795,7 +2782,7 @@ private:
     Derived d2 {3, 4};
 \end{cpplstfragment}
 
-\section{protected members}
+\section{\texorpdfstring{\cppcode{protected}}{protected} members}
 Het is in \Cpp{} ook mogelijk om in een \USE{base class} datavelden en memberfuncties te definiëren die niet toegankelijk zijn voor gebruikers van objecten van deze class, maar die wel vanuit de van deze \USE{base class} afgeleide classes bereikbaar zijn.
 Dit wordt in de classdeclaratie aangegeven door het \USE{keyword} |protected| te gebruiken.
 
@@ -5176,9 +5163,9 @@ In \csecref{sec:findif} is de volgende lambda\hyp{}functie gebruikt:
 Je kunt het type van de parameter van de lambda\hyp{}functie ook als |auto| declareren en door de compiler laten bepalen:
 \cpplstinputfragment[linerange={51-53}]{find_if.cpp}
 
-Het voordeel hiervan is dat je deze code niet aan hoeft te passen als het type van de variabel |l| van |list<int>| wordt gewijzigd in |list<double>|.
+Het voordeel hiervan is dat je deze code niet aan hoeft te passen als het type van de variabele |l| van |list<int>| wordt gewijzigd in |list<double>|.
 
-Een lambda met een |auto| parameter lijkt op een template functie, zie \csecref{sec:templatefunctie} en wordt een \emph{generieke lambda} genoemd.
+Een lambda met een |auto| parameter lijkt op een template functie, zie \csecref{sec:functietemplate} en wordt een \emph{generieke lambda} genoemd.
 
 \subsection{Closure}
 \label{sec:closure}
@@ -7221,6 +7208,71 @@ Omdat het gebruik van |enum class| geen onverwachtse verrassingen op kan leveren
 	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#enum3-prefer-class-enums-over-plain-enums}{Enum.3}. 
 }.
 
+\chapter{Templates (de details)}
+\label{sec:templatesdetails}
+\section{Variable-template}
+Ook variabelen en constanten kun je als template definiëren.
+
+Je kunt bijvoorbeeld de constante |pi| definiëren als template zodat je naar keuze een |float| of |double| met de waarde $\pi$ kunt aanmaken:
+
+\begin{cpplstfragment}
+template<typename T> constexpr T pi = atan(static_cast<T>(1)) * 4;
+\end{cpplstfragment}
+Je kunt nu de constante |pi| als volgt gebruiken:
+\begin{cpplstfragment}[mathescape=true]
+auto d {pi<double>}; // d is een double met de waarde $\color{lstturquoisegreen}\pi$
+auto f {pi<float>}; // f is een float met de waarde $\color{lstturquoisegreen}\pi$
+\end{cpplstfragment}
+Zie \proglink{pi.cpp}.
+
+\section{Template argument binding}
+Met |using| kun je een parametertype van een template \squote{invullen}.
+In het Engels wordt dit \emph{\USE{argument binding}} genoemd. 
+\begin{cpplstfragment}
+template<typename Value> using String_map = map<string, Value>;
+\end{cpplstfragment}
+
+Je kunt nu de template |String_map| als volgt gebruiken:
+	
+\begin{cpplstfragment}
+String_map<int> m1; // m1 is van het type map<string, int>
+String_map<Breuk> m2; // m2 is van het type map<string, Breuk>
+\end{cpplstfragment}
+
+\section{Template parameters automatisch bepalen}
+In sommige gevallen kunnen template parameters automatisch door de \Cpp{}-compiler bepaald worden\footnote{%
+	Dit is mogelijk vanaf \Cpp{}17.
+}.
+Bijvoorbeeld het standaard type |vector| kan als volgt gebruikt worden:
+\begin{cpplstfragment}
+	vector v1 {1, 2, 3}; // v1 is van het type vector<int>
+	vector v2 {v1}; // v2 is ook van het type vector<int>
+\end{cpplstfragment}
+
+Een zogenoemde \emph{deduction guide} kan gespecificeerd worden om de compiler hierbij te helpen.
+Voor de in \csecref{sec:Arraymetinitlist} gedefinieerde class |Array| kun je bijvoorbeeld de volgende deduction guide specificeren, zie \proglink{Array_template_deduction_guide}:
+\begin{cpplstfragment}
+template<typename Iter> Array(Iter, Iter) -> Array<typename iterator_traits<Iter>::value_type>;
+\end{cpplstfragment}
+Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald kan worden.
+\begin{cpplstfragment}
+	Array a1 {1, 2, 3, 4, 5}; // a1 is van het type Array<int> 
+	Array w (v.cbegin() + 1, v.cend() - 1); // a2 is van het type Array<int>
+\end{cpplstfragment}
+
+\section{Nog meer template details}
+Over \USE{templates} valt nog veel meer te vertellen, onder andere:
+\begin{itemize}
+	\item \USE{Template specialisation};\\
+	Een speciale versie van een template die alleen voor een bepaald type (bijvoorbeeld |int|) of voor bepaalde types (bijvoorbeeld |T*|) wordt gebruikt.
+	De laatste vorm wordt \emph{\USE{partial}} \USE{specialisation} genoemd.
+	\item Template memberfuncties;\\
+	Een class (die zelf geen template hoeft te zijn) kan memberfuncties hebben die als template gedefinieerd zijn.
+	\item Default waarden voor template\hyp{}parameters.\\
+	Net zoals voor gewone functie parameters kun je voor template\hyp{}parameters ook default waarden (of types) specificeren.
+\end{itemize}
+Voor al deze details verwijs ik je naar \cite[hoofdstuk \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{22}, \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{23} en \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{24}]{Brokken2019},  \cite[hoofdstuk 23 t/m 29]{Stroustrup2013} en \cite{Vandevoorde2017}.
+
 \chapter{Inheritance (de details)}
 \label{sec:inheritancedetails}
 \section{Overloading en overriding van memberfuncties}
@@ -8399,27 +8451,6 @@ Het is dus belangrijk om voor een class die een zelfgedefinieerde copy construct
 
 \chapter[De standaard C++ \USE{library} (de details)]{De standaard \Cpp{} \USE{library} (de details)}
 \label{sec:stdlibdetails}
-
-\section{Template parameters automatisch bepalen}
-In sommige gevallen kunnen template parameters automatisch door de \Cpp{}-compiler bepaald worden\footnote{%
-	Dit is mogelijk vanaf \Cpp{}17.
-}.
-Bijvoorbeeld het standaard type |vector| kan als volgt gebruikt worden:
-\begin{cpplstfragment}
-	vector v1 {1, 2, 3}; // v1 is van het type vector<int>
-	vector v2 {v1}; // v2 is ook van het type vector<int>
-\end{cpplstfragment}
-
-Een zogenoemde \emph{deduction guide} kan gespecificeerd worden om de compiler hierbij te helpen.
-Voor de in \csecref{sec:Arraymetinitlist} gedefinieerde class |Array| kun je bijvoorbeeld de volgende deduction guide specificeren, zie \proglink{Array_template_deduction_guide}:
-\begin{cpplstfragment}
-template<typename Iter> Array(Iter, Iter) -> Array<typename iterator_traits<Iter>::value_type>;
-\end{cpplstfragment}
-Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald kan worden.
-\begin{cpplstfragment}
-	Array a1 {1, 2, 3, 4, 5}; // a1 is van het type Array<int> 
-    Array w (v.cbegin() + 1, v.cend() - 1); // a2 is van het type Array<int>
-\end{cpplstfragment}
 
 \section{Unordered container met UDT's}
 Als je een user-defined datatype, bijvoorbeeld |Breuk| als key in een ongeordende container, bijvoorbeeld |unordered_set|, wilt gebruiken, dan moet

@@ -119,29 +119,6 @@ void f() noexcept {
 	\end{cpplstfragment}
 	
 	\item 
-	Ook een variabele kan een template zijn zodat je ook variabelen en constanten als template kunt definiëren.
-	%TODO: duidelijk use case ontbreekt.
-	\begin{cpplstfragment}
-	template<typename T> constexpr T pi = atan(static_cast<T>(1))*4;
-	\end{cpplstfragment}
-	Je kunt nu de constante pi als volgt gebruiken:
-	\begin{cpplstfragment}
-	auto d{pi<double>}; // d is double
-	auto f{pi<float>}; // f is float
-	\end{cpplstfragment}
-	Zie \proglink{pi.cpp}.
-	
-	\item 
-	Met |using| kun je een parametertype van een template \squote{invullen}.
-	In het Engels wordt dit \emph{argument binding} genoemd. 
-	\begin{cpplstfragment}
-	template<typename Value>
-	using String_map = map<string, Value>;
-	
-	String_map<int> m; // m is van het type map<string, int>
-	\end{cpplstfragment}
-	
-	\item 
 	Sinds \Cpp{}17 kun je een compile time |if| gebruiken.
 	%TODO: kan ik dit gebruiken voor het kiezen van een iterator.
 	

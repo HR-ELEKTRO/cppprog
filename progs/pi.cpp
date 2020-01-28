@@ -3,7 +3,7 @@
 #include <cmath>
 using namespace std;
 
-template <typename T> constexpr T pi = atan(static_cast<T>(1))*4;
+template <typename T> constexpr T pi = atan(static_cast<T>(1)) * 4;
 
 int main() {
     auto f{pi<float>}; // f is float
