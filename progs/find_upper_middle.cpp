@@ -16,6 +16,7 @@ using namespace std;
 
 template <typename I>
 I find_upper_middle(I begin, I end, forward_iterator_tag /*dummy*/) {
+    cout << "forward iterator used\n";
     I i {begin};
     while (begin != end) {
         ++begin;
@@ -29,6 +30,7 @@ I find_upper_middle(I begin, I end, forward_iterator_tag /*dummy*/) {
 
 template <typename I>
 I find_upper_middle(I begin, I end, bidirectional_iterator_tag /*dummy*/) {
+    cout << "bidirectional iterator used\n";
     while (begin != end) {
         --end;
         if (begin != end) {
@@ -40,6 +42,7 @@ I find_upper_middle(I begin, I end, bidirectional_iterator_tag /*dummy*/) {
 
 template <typename I>
 I find_upper_middle(I begin, I end, random_access_iterator_tag /*dummy*/) {
+    cout << "random access iterator used\n";
     return begin + (end - begin)/2;
 }
 
@@ -50,16 +53,19 @@ I find_upper_middle(I begin, I end) {
 
 int main() {
     forward_list<int> fl {1, 2};
+    cout << "find_upper_middle called on forward_list\n";
     if (*find_upper_middle(fl.begin(), fl.end()) != 2) {
         cerr << "Test 1 failed!\n";
         return 1;
     }
     list<int> l {1, 2, 3};
+    cout << "find_upper_middle called on list\n";
     if (*find_upper_middle(l.begin(), l.end()) != 2) {
         cerr << "Test 2 failed!\n";
         return 2;
     }
     vector<int> v {1, 2, 3, 4};
+    cout << "find_upper_middle called on vector\n";
     if (*find_upper_middle(v.begin(), v.end()) != 3) {
         cerr << "Test 3 failed!\n";
         return 3;

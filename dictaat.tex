@@ -6319,6 +6319,20 @@ Het is dus aan te bevelen om een functie die nuttig zou kunnen zijn bij het bere
 	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#f4-if-a-function-may-have-to-be-evaluated-at-compile-time-declare-it-constexpr}{F.4}.
 }.
 
+\section{Compile time \texorpdfstring{\cppcode{if}}{if}}
+\label{compiletimeif}
+Vanaf \Cpp{}17 kun je gebruik maken van een zogenoemde \emph{\USE{compile time if}}. 
+Dit is een |if|-instructie die niet tijdens het uitvoeren van het programma (tijdens \USE{run time}), maar tijdens het vertalen van het programma (\USE{compile time}) wordt uitgevoerd.
+De syntax van deze \USE{compile time if} is: |if constexpr (conditie) ...|.
+De expressie die als conditie gebruikt wordt moet uiteraard tijdens compile time uit te voeren zijn en kan dus bijvoorbeeld geen variabelen bevatten.
+
+%Een heel eenvoudige toepassing van een \USE{compile time if} zou de volgende code kunnen zijn:
+%TODO voorbeeld bedenken!
+
+In \csecref{sec:iteratortag} wordt een 
+%meer zinvolle 
+toepassing van een \USE{compile time if} gegeven. 
+
 \section{Read-only pointers met \texorpdfstring{\cppcode{const}}{const}}
 \label{sec:constpointers}
 Je hebt in \csecref{sec:const} gezien hoe je in \Cpp{} de |const| \USE{qualifier} kunt gebruiken om \USE{read-only} variabelen (met een constante waarde) te definiëren.
@@ -7723,7 +7737,7 @@ Voor al deze details verwijs ik je naar \cite[hoofdstuk \href{http://www.icce.ru
 
 \chapter{\USE{Dynamic memory allocation} en \USE{destructors} (de details)}
 \label{sec:dynamicmemoryallocationendestructorsdetails}
-In \csecref{sec:dynamicmemoryallocationendestructors} heb je geleerd hoe je dynamisch (tijdens run-time) geheugen kan aanvragen en weer vrij kan geven.
+In \csecref{sec:dynamicmemoryallocationendestructors} heb je geleerd hoe je dynamisch (tijdens run time) geheugen kan aanvragen en weer vrij kan geven.
 In \Cpp{} doe je dit als programmeur meestal niet zelf, maar maak je gebruik van classes uit de standaard library die dit voor je doen.
 %TODO: verwijzing toevoegen
 sec:dynamicmemoryallocationendestructorsIn dit hoofdstuk wordt bespreken hoe je zelf een class kunt ontwikkelen die gebruikt maakt van \USE{dynamic memory allocation} waarbij je dit kunt verbergen voor de programmeur die gebruik zal maken van deze class. 
@@ -8547,7 +8561,7 @@ In \csecref{sec:vbverschillendeiteratorsoorten} heb je gezien dat de implementat
 Er zijn 3 functies gedefinieerd waarmee het upper middle element van een range bepaald kan worden.
 Als er \USE{random access} iteratoren beschikbaar zijn, kan de functie \hcode{find_\\-upper_\\-middle_\\-random_\\-access} gebruikt worden.
 Als \USE{bidirectional} iteratoren beschikbaar zijn, kan de functie \hcode{find_\\-upper_\\-middle_\\-bi\\-di\\-rec\\-tional} gebruikt worden.
-Als slechts \USE{forward} iteratoren beschikbaar zijn, moet de functie \hcode{find_\\-upper_\\-middle_\\-fow\\-ward} gebruikt worden.
+Als slechts \USE{forward} iteratoren beschikbaar zijn, moet de functie \hcode{find_\\-upper_\\-middle_\\-for\\-ward} gebruikt worden.
 
 Het zou natuurlijk mooi zijn als je de compiler zelf de meeste efficiënte versie van \hcode{find_\\-upper_\\-middle} zou kunnen laten kiezen afhankelijk van het gebruikte iterator soort.
 Dit blijkt inderdaad mogelijk door gebruik te maken van zogenoemde iterator tags.
@@ -8569,10 +8583,49 @@ Deze |typedef| kunnen we gebruiken om een (dummy) object aan te maken.
 Het type van dit object (het \hcode{iterator_\\-tag} type) wordt vervolgens door de compiler gebruikt om de juiste \hcode{find_\\-upper_\\-middle} te selecteren.
 Zie \proglink{find\_upper\_middle.cpp}:
 
-\cpplstinputfragment[linerange={10-68}]{find_upper_middle.cpp}
+\cpplstinputfragment[linerange={10-74}]{find_upper_middle.cpp}
 
 Het \USE{keyword} |typename| is nodig om de compiler duidelijk te maken dat \hcode{iterator_\\-traits<I>::\\-iterator_\\-category} een typenaam is.
 Zie eventueel \url{http://en.cppreference.com/w/cpp/keyword/typename}.
+
+De uitvoer van het bovenstaande programma is:
+\begin{coutput}
+find_upper_middle called on forward_list
+forward iterator used
+find_upper_middle called on list
+bidirectional iterator used
+find_upper_middle called on vector
+random access iterator used
+All tests passed!
+\end{coutput}
+
+Je ziet dat de compiler de meest effectieve variant van |find_upper_middle| aanroept, afhankelijk van het bij de container beschikbare iterator soort.
+
+Vanaf \Cpp{}17 kun je dit eenvoudiger coderen door gebruik te maken van een zogenoemde \emph{\USE{compile time if}}, zie \csecref{compiletimeif}.
+
+De functie |find_upper_middle| kan met behulp van een compile time if als volgt gecodeerd worden (zie \proglink{compile_time_if.cpp}):
+
+\cpplstinputfragment[linerange={17-45}]{compile_time_if.cpp}
+
+De template |is_same<T1, T2>| maakt de member constante genaamd |value| gelijk aan |true| als type |T1| hetzelfde is als type |T2| en |false| als dit niet zo is.
+In dit geval wordt deze template gebruikt in de conditie van de compile time if om het type van |iterator_traits<I>::iterator_category|, waarbij |I| het als argument meegegeven iteratortype is, te vergelijken met het type |random_access_iterator_tag|.
+Hiermee wordt dus bepaald of de iterator |I| een random access iterator is.
+Dit kan tijdens compile time gebeuren omdat de compiler alle (als argument van de templates) gebruikte types kent.
+Als de iterator |I| geen random access iterator is, dan wordt in de |else| van de eerste compile time if een tweede compile time if uitgevoerd om te bepalen of |I| een bidirectional iterator is. 
+Als dit niet zo is, dan wordt ervan uitgegaan dat |I| een forward iterator is.
+
+Als je het programma \proglink{compile_time_if.cpp} uitvoert, zul je zien dat dit programma de volgende uitvoer geeft:
+\begin{coutput}
+	find_upper_middle called on forward_list
+	forward iterator used
+	find_upper_middle called on list
+	bidirectional iterator used
+	find_upper_middle called on vector
+	random access iterator used
+	All tests passed!
+\end{coutput}
+
+Je ziet dat de compiler (ook nu) de meest effectieve variant van |find_upper_middle| aanroept, afhankelijk van het bij de container beschikbare iterator soort. 
 
 \section{Standaard functie\hyp{}objecten}
 \label{sec:stdfunctieobjecten}
