@@ -23,7 +23,7 @@ int main() {
     vector<Breuk> v;
     v.reserve(2);
     cout << "1/2 toevoegen met push_back:\n";
-    v.push_back(Breuk{1, 2});
+    v.push_back(Breuk {1, 2});
     cout << "3/4 toevoegen met emplace_back:\n";
     v.emplace_back(3, 4);
     cout << "Einde van het programma:\n";

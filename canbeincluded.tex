@@ -117,11 +117,6 @@ void f() noexcept {
 		}
 	};
 	\end{cpplstfragment}
-	
-	\item 
-	Sinds \Cpp{}17 kun je een compile time |if| gebruiken.
-	%TODO: kan ik dit gebruiken voor het kiezen van een iterator.
-	
 \end{itemize}
 
 \subsection{Concepts and Generic Programming}
@@ -145,15 +140,6 @@ Sinds \Cpp{}17 include file <filesystem>
 \subsection{Containers}
 \begin{itemize}
 	\item 
-	|vector<int> v1{10}| is een vector met één element met de waarde 10.
-	\item 
-	|vector<int> v1(10)| is een vector met tien elementen met de waarde 0.
-	\item 
-	Als een |vector| groeit kunnen de elementen van plaats veranderen. 
-	Pointers en iteratoren naar deze elementen staan dan naar verkeerde adressen te wijzen.
-	Dit kun je voorkomen door met behulp van de functie |reserve|, van tevoren, voldoende elementen te reserveren.
-	Zie \proglink{vector_reserve.cpp}.
-	\item 
 	|Save_vector| is een mooi voorbeeld van overerving.
 	Zie \proglink{Save_vector.cpp}.
 	Werkt niet polymorf omdat operator[] niet |virtual| gedefinieerd is.
@@ -162,21 +148,6 @@ Sinds \Cpp{}17 include file <filesystem>
 	In gcc is dat de optie |-D_GLIBCXX_DEBUG|.
 	\item 
 	|count| bij |list| is $O(1)$ maar |count| bij |forward_list| is $O(n)$.	 
-	\item 
-	De standaardcontainer hebben zogenoemde \emph{emplace}-operaties.
-	Een |vector| heeft naast de bekende |push_back|-operatie ook een |emplace_back|-operatie.
-	De |emplace_back| combineert het toevoegen van een element in de vector met het aanroepen van de constructor van dit element.
-	Dit voorkomt het maken van een kopietje.
-	In het programmafragment:
-	\begin{cpplstfragment}
-	vector<Breuk> v;
-	v.push_back(Breuk{1, 2});
-	\end{cpplstfragment}
-	Kan de laatste regel efficiënter gecodeerd worden als:
-	\begin{cpplstfragment}
-	v.emplace_back(1, 2);
-	\end{cpplstfragment}
-	Zie \proglink{vector_emplace}.	
 \end{itemize}
 \subsection{Algorithms}
 \begin{itemize}
@@ -192,27 +163,6 @@ Sinds \Cpp{}17 include file <filesystem>
 \subsection{Utilities}
 \begin{itemize}
 	\item 
-	Sinds \Cpp{}11 bevat de standaard library zogenoemde \emph{smart pointers}.
-	Een |unique_ptr| is een verwijzing naar een object.
-	Deze pointer beheert de levensduur van dit object en heeft een move constructor \csecref{sec:move} waarmee het beheer overgedragen kan worden aan een andere |unique_pointer|.
-	Een |unique_pointer| kan, zoals de naam al suggereert, \emph{niet} gekopieerd worden.
-	Hierdoor kun je een |unique_pointer| teruggeven vanuit een functie.
-	Het object wordt verwijderd als de |unique_pointer| die het object beheerd wordt verwijderd.
-	Zie \proglink{unique_pointer.cpp}.
-	\item 
-	Een |shared_ptr| is ook een verwijzing naar een object.
-	Deze pointer beheert ook de levensduur van het betreffende object.
-	Een |shared_pointer| kan in tegenstelling tot een |unique_pointer| wel gekopieerde worden.
-	Het object wordt pas verwijderd, als de laatste |shared_pointer| die naar dit object verwijst, wordt verwijderd.
-	De standaard library bevat in de include file |memory| de functies |make_shared()| en |make_unique| waarmee objecten dynamisch aangemaakt kunnen worden zonder dat |new| expliciet wordt aangeroepen.
-	Smart pointers zijn te verkiezen boven gewone pointers omdat ze de kans op memory leaks sterk verkleinen.
-	Maar smart pointers blijven een soort pointer, dus gebruik ze alleen als er geen eenvoudigere oplossing mogelijk is.
-	Vaak kan het gebruik van een standaard container het gebruik van pointers voorkomen.
-	Als je polymorfisme gebruikt dan moet je een pointer gebruiken.
-	Het gebruik van een |unique_pointer| ligt dan voor de hand.
-	Als het polymorfe object gedeeld moet worden, heb je een |shared_pointer| nodig.
-	%TODO: plaatsen opzoeken waar new gebuikt wordt en verwijzen naar gebruik smart pointers.
-	\item 
 	De standaard functie |forward| lijkt op de eenvoudigere |move| en kan gebruikt worden om een verzameling argumenten exact door te geven.
 	Deze functie wordt onder andere gebruikt om |make_unique| te implementeren:
 	\begin{cpplstfragment}
@@ -225,14 +175,6 @@ unique_ptr<T> make_unique(Args&&... args) {
 	Sinds Cpp{}20 bevat de standaard library de class |span|.
 	Dit is de combinatie van een pointer en een offset.
 	\item 
-	De |valarray<T>| is een speciale container waarbij T een numeriek type moet zijn.
-	Er kunnen rekenkundige bewerkingen op dit type uitgevoerd worden.
-	Een |valarray| lijkt dus meer op een vector zoals we die kennen uit de wiskunde dan een |vector|.
-	Zie \proglink{valarray.cpp}. 
-	Deze rekenkundige bewerkingen kunnen efficiënt geïmplementeerd worden.
-	Zo kan de bewerking:
-	|v3 = 2*v1 + v2| door de compiler vertaald worden in één loop waarin voor elke element van |v| de volgende code wordt uitgevoerd: |v3[i] = 2*v1[i] + v2[i];|.
-	\item 
 	Andere utility classes: |bitset|, |pair|, |tuple|, |variant|, |optional| en |any|.
 	|pair| en |tuple| zijn heterogeen alle andere containers zijn homogeen.
 	|bitset| bevat een vast aantal bits.
@@ -241,7 +183,6 @@ unique_ptr<T> make_unique(Args&&... args) {
 	|any| is een object dat elk willekeurig type kan bevatten.
 	\item 
 	Type deduction heeft de functie |make_pair| sinds \Cpp{}17 min of meer overbodig gemaakt.
-	%TODO zoek waar |make_pair| gebruikt wordt.
 	Zie \proglink{make_pair.cpp}.
 	Hetzelfde geldt voor |make_tuple|.  
 	\item 
@@ -255,14 +196,6 @@ unique_ptr<T> make_unique(Args&&... args) {
 	\begin{cpplstfragment}
 	this_thread::sleep(10ms+500us);
 	\end{cpplstfragment}
-	Ook kun je eenvoudig een timer maken om de executietijd van een stuk code te meten.
-	\begin{cpplstfragment}
-	auto start {chrono::high_resolution_clock::now()};
-	// code die je wilt timen
-	auto stop {chrono::high_resolution_clock::now()};
-	auto duration {chrono::duration_cast<std::chrono::microseconds>(stop - start).count()};
-	cout << "Executietijd = " << duration << " us\n";
-	\end{cpplstfragment}
 	\item 
 	Het kiezen van een implementatie afhankelijk van het type van de iterator zal in \Cpp{}20 veel eenvoudiger worden door het gebruik van concepts.
 \end{itemize}
@@ -273,7 +206,7 @@ unique_ptr<T> make_unique(Args&&... args) {
 	Als er een fout optreedt in een functie uit |<cmath>|, dan wordt dit gerapporteerd door de globale variabele |errno| te vullen met een foutcode.
 	\begin{cpplstfragment}
 	errno = 0;
-	double d{sqrt(-1)};
+	double d {sqrt(-1)};
 	if (errno == EDOM) {
 		cerr << "Domain error for sqrt(-1)\n";
 	}
@@ -281,12 +214,7 @@ unique_ptr<T> make_unique(Args&&... args) {
 	\item 
 	De include file |<numeric>| definieert een aantal rekenkundige functies.
 	Onder andere |inner_product|, |gcd| en |lcm|.
-	%TODO: gcd gebruiken in Breuk. Nog en versimpeling t.o.v. C.
-	Helaas is |gcd| pas toegevoegd in \Cpp{}17.
-	Er zijn ook diverse parallelle algoritmen beschikbaar.
-	\item 
-	\Cpp{} heeft veel mogelijkheden om random getallen te genereren.
-	Zie \proglink{Dobbelsteen.cpp}. 
+	|gcd| en |lcm| zijn toegevoegd in \Cpp{}17.
 	\item 
 	De minimale en maximale waardes van de ingebouwde types kunnen opgevraagd worden met functies die gedeclareerd zijn in |<limits>|.
 	Bijvoorbeeld de maximale waarde voor een |int| is |numeric_limits<int>::max()|.

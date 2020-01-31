@@ -6,11 +6,8 @@
 %TODO: index maken.
 %TODO: gebruik Engelse woorden nogeens overwegen.
 %TODO: memberfunctie template.
-%TODO: C++11 nullptr. Waarom gebruik je nullptr in plaats van 0? Overloading int en * (te gedetailleerd?). 
 %TODO: C++11 using in plaats van typedef (te gedetailleerd, want typedef wordt in dictaat niet gebruikt?)
 
-%TODO: Lambda functie werkt sneller dan gewone functie in algoritmen omdat er betere optimalisatie mogelijk is.
-%TODO: emplace als alternatief voor insert nog toevoegen. Je kunt met emplace een expliciete of impliciete aanroep naar de constructor omzeilen. Dus vector<Breuk> vb; vb.emplace(3,4); in plaats van vb.insert(Breuk(3,4));
 %TODO: Voorwaarde voor operator< !(a<b) && !(b<a) && !(a<c) && !(c <a) -> !(b<c) && !(c<b)
 
 % In de makefile kunnen argumenten worden meegegeven:
@@ -23,7 +20,7 @@
 \newcommand{\modulecode}{\Cpp}
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
-\newcommand{\huidigeversie}{0.3}
+\newcommand{\huidigeversie}{0.4}
 % start a new line by using \\ 
 \newcommand{\auteurs}{
 	J.Z.M. Broeders
@@ -129,7 +126,9 @@
 
 \chapter*{Voorwoord}
 %TODO Check URL's
-Dit dictaat is lang geleden begonnen als een korte introductie van \Cpp{} geschreven in WordPerfect en inmiddels uitgegroeid tot dit met \LaTeX{} opgemaakte document. In de tussentijd hebben veel studenten en collega's mij feedback gegeven. De opbouwende kritiek van Harm Jongsma, Cor Diependaal, Henk van den Bosch, Dave Stikkelorum, John Visser, Gerard Tuk, Fidelis Theinert, Ben Kuiper, René Theil en vele anderen hebben dit dictaat ontegenzeggelijk beter gemaakt. Desondanks heb ik niet de illusie dat dit dictaat foutvrij is. Op- en aanmerkingen zijn dus nog altijd welkom, mail me op  \href{mailto:J.Z.M.Broeders@hr.nl}{J.Z.M.Broeders@hr.nl}, of maak een \href{https://www.bitbucket.com/ems30/issue}{issue}\iftoggle{ebook}{}{\footnote{%
+Dit dictaat is lang geleden begonnen als een korte introductie van \Cpp{} geschreven in WordPerfect en inmiddels uitgegroeid tot dit met \LaTeX{} opgemaakte document\footnote{%
+	De \LaTeX{} code is beschikbaar op \url{https://bitbucket.org/HR_ELEKTRO/cppprog/src/master/}.
+}. In de tussentijd hebben veel studenten en collega's mij feedback gegeven. De opbouwende kritiek van Harm Jongsma, Cor Diependaal, Henk van den Bosch, Dave Stikkelorum, John Visser, Gerard Tuk, Fidelis Theinert, Ben Kuiper, René Theil en vele anderen hebben dit dictaat ontegenzeggelijk beter gemaakt. Desondanks heb ik niet de illusie dat dit dictaat foutvrij is. Op- en aanmerkingen zijn dus nog altijd welkom, mail me op  \href{mailto:J.Z.M.Broeders@hr.nl}{J.Z.M.Broeders@hr.nl}, of maak een \href{https://www.bitbucket.com/ems30/issue}{issue}\iftoggle{ebook}{}{\footnote{%
 	Je kunt een issue aanmaken op: \url{https://www.bitbucket.com/ems30/issue}.
 }} aan. 
 
@@ -1372,7 +1371,7 @@ Deze \USE{constructor} |Breuk(int t, int n);| heb ik als volgt gedefinieerd:
 
 Het is ook mogelijk om vanuit een \USE{constructor} een andere \USE{constructor} van dezelfde class aan te roepen in de \USE{initialization list}. 
 De \USE{constructor} zonder parameters kan dus ook als volgt worden geïmplementeerd
-(\proglink{Breuk1_constructor_calls_constructor.cpp}):
+(\proglink{Breuk1_\\-con\\-struc\\-tor_\\-calls_\\-con\\-struc\\-tor.cpp}):
 \cpplstinputfragment[linerange=23-24]{Breuk1_constructor_calls_constructor.cpp}
 
 Door het definiëren van \USE{constructors} kun je er dus voor zorgen dat elk object bij het aanmaken geïnitialiseerd wordt. 
@@ -2066,7 +2065,7 @@ Deze vorm van hergebruik heeft de volgende nadelen:
 Door middel van een functietemplate kun je de handelingen (knippen, plakken, zoeken en vervangen) die nodig zijn om een functie geschikt te maken voor een ander datatype automatiseren.
 Je definieert dan een zogenoemde \emph{generieke} functie, een functie die je als het ware voor verschillende datatypes kunt gebruiken.
 
-De definitie van de functietemplate voor |swap| ziet er als volgt uit (\proglink{swap_template.cpp}):
+De definitie van de functietemplate voor |swap| ziet er als volgt uit (\proglink{swap_\\-tem\\-plate.\\-cpp}):
 \cpplstinputfragment[linerange={6-10}]{swap_template.cpp}
 
 Na het \USE{keyword} |template| volgt een lijst van template\hyp{}parameters tussen |<| en |>|.
@@ -2305,7 +2304,7 @@ Je ziet dat je de class template |Rij| kunt gebruiken om 10 elementen van het ty
 \section{Standaard templates}
 \label{STL}
 In de \Cpp{}-standaard \cite{ISO2014} is een groot aantal standaard \USE{templates} voor datastructuren en algoritmen opgenomen. 
-In \csecref{STL} komen we hier nog uitgebreid op terug.
+In \csecref{sec:stdlib} komen we hier nog uitgebreid op terug.
 De basis voor deze verzameling \USE{templates} is in de jaren '90 gelegd door Alex Stepanov en Meng Lee in de zogenoemde STL (\USE{Standard Template Library}).
 In de standaard \USE{library} zijn ook een generiek type |array| en een generiek type |vector| opgenomen.
 
@@ -2353,6 +2352,13 @@ Deze vector ondersteunt ook net zoals de C\hyp{}array de |operator[]|.
 De voordelen van |vector| in vergelijking met een C\hyp{}array:
 \begin{itemize}
     \item Een |vector| is in tegenstelling tot een C\hyp{}array een \enquote{echt} object.
+	\item Een |vector| kan op twee manieren geïnitialiseerd worden:
+	\begin{itemize}
+		\item 
+		|vector<int> v1 {10}| is een vector met één integer element met de waarde 10.
+		\item 
+		|vector<int> v1(10)| is een vector met tien integer elementen met de waarde 0.
+	\end{itemize}
     \item Je kunt een |vector| \enquote{gewoon} vergelijken, toekennen en kopiëren.
     \item Een |vector| kan groeien en krimpen.
     \item Een |vector| heeft memberfuncties:
@@ -2404,6 +2410,17 @@ Voer een willekeurig aantal integers in, sluit af met een letter:
 \cinput{1 2 3 4 Hoedje van papier}
 1 2 3 4
 \end{coutput}
+
+De naam |vector| is misschien niet zo handig gekozen omdat het niet overeenkomt met het wiskundige begrip \emph{vector}.
+De standaard library bevat ook de template |valarray<T>|. 
+Dit is een speciale container waarbij |T| een numeriek type moet zijn.
+Er kunnen rekenkundige bewerkingen op dit type uitgevoerd worden.
+Een |valarray| lijkt dus meer op een vector zoals we die kennen uit de wiskunde dan een |vector|.
+Zie \proglink{valarray.cpp}. 
+
+Deze rekenkundige bewerkingen kunnen efficiënt geïmplementeerd worden.
+Zo kan de bewerking:
+|v3 = 2 * v1 + v2| door de compiler vertaald worden in één loop waarin voor elke element van |v1|, |v2| en |v3| de volgende code wordt uitgevoerd: |v3[i] = 2 * v1[i] + v2[i];|.
 
 \chapter{Inheritance}
 \label{sec:inheritance}
@@ -3200,7 +3217,7 @@ De |std::vector| is geïmplementeerd met behulp van van dynamische geheugenalloc
 
 \section{Smart pointers}
 Het resultaat van |new| toekennen aan een \squote{naakte} pointer is vragen om problemen.
-Voordat je het weet vergeet je om |delete| aan te roepen en heb je een geheugenlek veroorzaakt. 
+Voordat je het weet, vergeet je om |delete| aan te roepen en heb je een geheugenlek veroorzaakt. 
 
 Een eenvoudige oplossing is het gebruik van zogenoemde \emph{smart pointers} die in de standaard library zijn opgenomen.
 Er zijn twee soorten smart pointers die veel gebruikt worden.
@@ -3229,15 +3246,29 @@ Deze functie kan dus \emph{geen} geheugenlek veroorzaken.
 
 \cpplstinputfragment[linerange={40-47}]{unique_ptr.cpp}
 
-Je kunt ook gebruik maken van de standaard functie |make_unique| om een dynamisch object aan te maken.
-Het is nu ook niet meer nodig om zelf |new| aan te roepen:
+Je kunt gebruik maken van de standaard functie |make_unique| om een dynamisch object aan te maken en het beheer over te dragen aan een |unique_ptr|\footnote{%
+	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#r23-use-make_unique-to-make-unique_ptrs}{R.23}.
+}.
+Het is dan ook niet meer nodig om zelf |new| aan te roepen:
 
 \cpplstinputfragment[linerange={50-50}]{unique_ptr.cpp}
 
-Als een |unique_ptr| wordt gekopieerd naar een andere |unique_ptr|, bijvoorbeeld bij aanroep of return van een functie, dan wordt de verantwoordelijkheid om de data vrij te geven overgedragen van de eerste naar de tweede pointer.
+Als een |unique_ptr| wordt gekopieerd naar een andere |unique_ptr|, bijvoorbeeld bij aanroep of return van een functie, dan wordt de verantwoordelijkheid om de data vrij te geven overgedragen van de eerste naar de tweede pointer. Dit gebeurt door het aanroepen van de move constructor, zie eventueel \csecref{sec:move}.
 
 Een |shared_ptr| gebruik je als het eigenaarschap van de data waar de pointer naar wijst moet worden gedeeld door meerdere pointers.
 Als een |shared_ptr| wordt gekopieerd, dan wordt de data waar de pointer naar wijst pas vrijgegeven als alle |shared_ptr|s naar deze data zijn verwijderd.
+
+Een |shared_ptr| kan het beste geïnitialiseerd worden met de standaard library functie |make_shared| zodat je |new| niet zelf expliciet hoeft aan te roepen\footnote{%
+	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#r22-use-make_shared-to-make-shared_ptrs}{R.22}.
+}.
+
+Smart pointers zijn te verkiezen boven gewone pointers omdat ze de kans op memory leaks sterk verkleinen.
+Maar smart pointers blijven een soort pointers, dus gebruik ze alleen als er geen eenvoudigere oplossing mogelijk is.
+Vaak kan het gebruik van een standaard container, zie \csecref{sec:containers}, het gebruik van pointers voorkomen.
+%Maar als je polymorfisme gebruikt, zie \csecref{sec:polymorfisme} ,dan moet je een pointer gebruiken.
+%Het gebruik van een |unique_pointer| ligt dan voor de hand.
+%Als het polymorfe object gedeeld moet worden, heb je een |shared_pointer| nodig.
+%TODO: plaatsen opzoeken waar new gebuikt wordt en verwijzen naar gebruik smart pointers.
 
 %TODO: Tilde is niet correct (maar wel acceptabel)
 \section{Destructor \texorpdfstring{\textasciitilde{}\cppcode{Breuk}}{\textasciitilde{}Breuk}}
@@ -3386,7 +3417,7 @@ In elke class die nu of in de toekomst als \USE{base class} gebruikt wordt moete
 	Zie ook de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#c127-a-class-with-a-virtual-function-should-have-a-virtual-or-protected-destructor}{C.127}.
 }. Achter de declaratie kan de code |= default| gebruikt worden om aan te geven dat de default implementatie van de \USE{destructor}, zie \cpageref{default destructor} gebruikt moet worden. 
 
-\section{Toepassing van \texorpdfstring{\cppcode{unique_ptr}}{unique_ptr}}
+\section{Toepassing van \texorpdfstring{\cppcode{unique_ptr}}{unique\_ptr}}
 \label{sec:toepassingunique_ptr}
 In de voorgaande paragraaf is de class |Fruitmand| als volgt gedefinieerd:
 
@@ -4202,6 +4233,7 @@ Je kunt ook het \USE{keyword} |auto| gebruiken om de compiler zelf het type van 
 \cpplstinputfragment[linerange={40-43}]{std_string.cpp}
 
 \section{Overzicht van de standaard library}
+\label{sec:stdliboverview}
 De standaard \Cpp{} \USE{library} \cite{ISO2017} is zeer uitgebreid. 
 In het vervolg van dit dictaat kijken we naar \USE{containers} (zie \csecref{sec:containers}), iteratoren (zie \csecref{sec:iteratoren}) en algoritmen (zie \csecref{sec:algoritmen}).
 De \USE{library} bevat daarnaast ook faciliteiten voor: \USE{strings}, \USE{localization}, \USE{containers}, \USE{iterators}, \USE{algorithms}, \USE{numerics}, \USE{input/output}, \USE{regular expressions}, \USE{threads} en nog veel meer.
@@ -4399,7 +4431,8 @@ In dit geval vond ik dit niet zinvol omdat de expressie in een herhalingslus wor
 De volgende twee implementaties |print3| en |print4| gebruiken een iterator om de elementen in de vector te benaderen.
 De laatste implementatie |print5| gebruikt een \USE{range\hyp{}based for} om de elementen in de vector te benaderen en is het eenvoudigst.
 
-Geïnspireerd door dit voorbeeld zou je een generieke |print| functie kunnen bedenken waarmee elk willekeurige container afgedrukt kan worden.
+\section{Generieke print voor containers}
+Geïnspireerd door het bovenstaande voorbeeld zou je een generieke |print| functie kunnen bedenken waarmee elk willekeurige container afgedrukt kan worden.
 We kunnen voor deze generieke functie geen indexering gebruiken omdat indexering niet bij alle containers gebruikt kan worden.
 We zouden wel, als volgt, gebruik kunnen maken van een iterator, zie \proglink{generieke_print-iterator.cpp}:
 
@@ -5156,16 +5189,7 @@ Met een |for_each| kan ook een deel van een container doorlopen worden.
 In \csecref{sec:findif} heb je gezien dat een lambda\hyp{}functie gebruikt kan worden om de voorwaarde van een |find_if| te specificeren.
 In paragraaf \csecref{sec:foreach} heb je gezien dat een lambda\hyp{}functie gebruikt kan worden om de bewerking van een |for_each| te specificeren.
 Een lambda\hyp{}functie is een anoniem functie\hyp{}object dat wordt gedefinieerd op de plaats waar dit functie\hyp{}object nodig is.
-
-In \csecref{sec:findif} is de volgende lambda\hyp{}functie gebruikt:
-\cpplstinputfragment[linerange={42-44}]{find_if.cpp}
-
-Je kunt het type van de parameter van de lambda\hyp{}functie ook als |auto| declareren en door de compiler laten bepalen:
-\cpplstinputfragment[linerange={51-53}]{find_if.cpp}
-
-Het voordeel hiervan is dat je deze code niet aan hoeft te passen als het type van de variabele |l| van |list<int>| wordt gewijzigd in |list<double>|.
-
-Een lambda met een |auto| parameter lijkt op een template functie, zie \csecref{sec:functietemplate} en wordt een \emph{generieke lambda} genoemd.
+%TODO: Lambda functie werkt sneller dan gewone functie in algoritmen omdat er betere optimalisatie mogelijk is.
 
 \subsection{Closure}
 \label{sec:closure}
@@ -5218,13 +5242,18 @@ Als je het returntype niet specificeert krijg je de volgende foutmelding: \error
 \label{sec:autolambdapar}
 Het is ook mogelijk om het parametertype van een lambda\hyp{}function als |auto| te definiëren.%
 De compiler bepaalt dan zelf het juiste type.
-Zo kan in de |find_if| uit \csecref{sec:findif} de zoekvoorwaarde ook als volgt gedefinieerd worden:
 
-\cpplstinputfragment[linerange={7-16}]{find_if_auto.cpp}
+In \csecref{sec:findif} is de volgende lambda\hyp{}functie gebruikt:
+\cpplstinputfragment[linerange={42-44}]{find_if.cpp}
+
+Je kunt het type van de parameter van de lambda\hyp{}functie ook als |auto| declareren en door de compiler laten bepalen:
+\cpplstinputfragment[linerange={51-53}]{find_if.cpp}
 
 De compiler bepaalt nu zelf dat het parametertype van de lambda functie |int| moet zijn omdat de elementen van de |list| |l| van het type |int| zijn.
-
+Het voordeel hiervan is dat je deze code niet aan hoeft te passen als het type van de variabele |l| van |list<int>| wordt gewijzigd in |list<double>|.
 Je ziet dat de code door het gebruik van |auto| om het parametertype van de lambda\hyp{}functie te definiëren beter aanpasbaar wordt.
+
+Een lambda met een |auto| parameter lijkt op een template functie, zie \csecref{sec:functietemplate} en wordt een \emph{generieke lambda} genoemd.
 
 \section{Kopiëren, bewerken, vervangen, roteren, schudden, verwisselen, verwijderen en vullen}
 \label{sec:algo2}
@@ -5551,18 +5580,18 @@ De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen om te bepalen
 Deze functie moet dus het \emph{maximum} bepalen van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
 In deze binaire boom zijn dat de posities: |2 * pos + 1| en |2 * pos + 2|.
 Bij binnenkomst van de functie \hcode{choose_\\-com\\-puter_\\-move} wordt eerst de functie |value| aangeroepen.
-De returnwaarde van deze functie wordt opgeslagen in de lokale variabele \hcode{best_\\value}.
-Als de waarde van \hcode{best_\\value} ongelijk is aan \hcode{UN\\-DE\\-CIDED}, kan de functie \hcode{choose_\\-com\\-puter_\\-move} deze waarde meteen teruggeven.
+De returnwaarde van deze functie wordt opgeslagen in de lokale variabele \hcode{best_\\-value}.
+Als de waarde van \hcode{best_\\-value} ongelijk is aan \hcode{UN\\-DE\\-CIDED}, kan de functie \hcode{choose_\\-com\\-puter_\\-move} deze waarde meteen teruggeven.
 De positie |pos| bevindt zich in dat geval in de onderste laag van de boom.
-Als de positie |pos| waarmee de functie \hcode{choose_\\-com\\-puter_\\-move} is aangeroepen zich niet in de onderste laag van de boom bevindt, geeft de functie |value| de waarde \hcode{UN\\-DE\\-CIDED} terug en wordt de waarde van de variabele \hcode{best_\\value} gelijk gemaakt aan het \emph{absolute minimum} (in dit geval |0|).
+Als de positie |pos| waarmee de functie \hcode{choose_\\-com\\-puter_\\-move} is aangeroepen zich niet in de onderste laag van de boom bevindt, geeft de functie |value| de waarde \hcode{UN\\-DE\\-CIDED} terug en wordt de waarde van de variabele \hcode{best_\\-value} gelijk gemaakt aan het \emph{absolute minimum} (in dit geval |0|).
 Het is logisch dat een functie die het maximum moet bepalen begint met het (tot dan toe gevonden) maximum gelijk te maken aan het absolute minimum.
 Vervolgens wordt in de |for|\hyp{}lus de waarde van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden bepaald.
 Dit gebeurt door het aanroepen van de functie \hcode{choose_\\-hu\\-man_\\-move} met als argument |2 * pos + i| waarbij |i| achtereenvolgens de waarde |1| en |2| heeft.
 We moeten hier de functie \hcode{choose_\\-hu\\-man_\\-move} aanroepen omdat als in positie |pos| de computer aan de beurt is, in de posities die vanuit de positie |pos| bereikt kunnen worden de tegenstander (mens) aan de beurt zal zijn.
 De returnwaarde van deze functie wordt opgeslagen in de lokale variabele |value|.
-Als de waarde van |value| groter is dan het tot nu toe gevonden maximum (opgeslagen in de variabele \hcode{best_\\value}), dan wordt het tot nu toe gevonden maximum gelijk gemaakt aan |value|.
-Aan het einde van de |for|\hyp{}lus zal de variabele \hcode{best_\\value} dus het maximum bevatten van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
-De waarde van \hcode{best_\\value} wordt teruggegeven aan de aanroepende functie.
+Als de waarde van |value| groter is dan het tot nu toe gevonden maximum (opgeslagen in de variabele \hcode{best_\\-value}), dan wordt het tot nu toe gevonden maximum gelijk gemaakt aan |value|.
+Aan het einde van de |for|\hyp{}lus zal de variabele \hcode{best_\\-value} dus het maximum bevatten van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
+De waarde van \hcode{best_\\-value} wordt teruggegeven aan de aanroepende functie.
 
 De functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen als de mens aan de beurt is en lijkt erg veel op de functie \hcode{choose_\\-com\\-puter_\\-move}, in plaats van het maximum wordt echter het minimum bepaald.
 
@@ -5570,18 +5599,18 @@ De functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen om te bepalen wa
 Deze functie moet dus het \emph{minimum} bepalen van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
 In deze binaire boom zijn dat de posities: |2 * pos + 1| en |2 * pos + 2|.
 Bij binnenkomst van de functie \hcode{choose_\\-hu\\-man_\\-move} wordt eerst de functie |value| aangeroepen.
-De returnwaarde van deze functie wordt opgeslagen in de lokale variabele \hcode{best_\\value}.
-Als de waarde van \hcode{best_\\value} ongelijk is aan \hcode{UN\\-DE\\-CIDED}, kan de functie \hcode{choose_\\-hu\\-man_\\-move} deze waarde meteen teruggeven.
+De returnwaarde van deze functie wordt opgeslagen in de lokale variabele \hcode{best_\\-value}.
+Als de waarde van \hcode{best_\\-value} ongelijk is aan \hcode{UN\\-DE\\-CIDED}, kan de functie \hcode{choose_\\-hu\\-man_\\-move} deze waarde meteen teruggeven.
 De positie |pos| bevindt zich in dat geval in de onderste laag van de boom.
-Als de positie |pos| waarmee de functie \hcode{choose_\\-hu\\-man_\\-move} is aangeroepen zich niet in de onderste laag van de boom bevindt, geeft de functie |value| de waarde \hcode{UN\\-DE\\-CIDED} terug en wordt de waarde van de variabele \hcode{best_\\value} gelijk gemaakt aan het \emph{absolute maximum} (in dit geval |15|).
+Als de positie |pos| waarmee de functie \hcode{choose_\\-hu\\-man_\\-move} is aangeroepen zich niet in de onderste laag van de boom bevindt, geeft de functie |value| de waarde \hcode{UN\\-DE\\-CIDED} terug en wordt de waarde van de variabele \hcode{best_\\-value} gelijk gemaakt aan het \emph{absolute maximum} (in dit geval |15|).
 Het is logisch dat een functie die het minimum moet bepalen begint met het (tot dan toe gevonden) minimum gelijk te maken aan het absolute maximum.
 Vervolgens wordt in de |for|\hyp{}lus de waarde van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden bepaald.
 Dit gebeurt door het aanroepen van de functie \hcode{choose_\\-com\\-puter_\\-move} met als argument |2 * pos + i| waarbij |i| achtereenvolgens de waarde |1| en |2| heeft.
 We moeten hier de functie \hcode{choose_\\-com\\-puter_\\-move} aanroepen omdat als in positie |pos| de mens aan de beurt is, in de posities die vanuit de positie |pos| bereikt kunnen worden de computer aan de beurt zal zijn.
 De returnwaarde van deze functie wordt opgeslagen in de lokale variabele |value|.
-Als de waarde van |value| kleiner is dan het tot nu toe gevonden minimum (opgeslagen in de variabele \hcode{best_\\value}), dan wordt het tot nu toe gevonden minimum gelijk gemaakt aan |value|.
-Aan het einde van de |for|\hyp{}lus zal de variabele \hcode{best_\\value} dus het minimum bevatten van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
-De waarde van \hcode{best_\\value} wordt teruggegeven aan de aanroepende functie.
+Als de waarde van |value| kleiner is dan het tot nu toe gevonden minimum (opgeslagen in de variabele \hcode{best_\\-value}), dan wordt het tot nu toe gevonden minimum gelijk gemaakt aan |value|.
+Aan het einde van de |for|\hyp{}lus zal de variabele \hcode{best_\\-value} dus het minimum bevatten van de (in dit geval twee) posities die vanuit de positie |pos| bereikt kunnen worden.
+De waarde van \hcode{best_\\-value} wordt teruggegeven aan de aanroepende functie.
 
 In de functie |main| wordt ervan uitgegaan dat de computer in positie |0| aan de beurt is.
 
@@ -5596,50 +5625,50 @@ Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinv
 	De parameter |pos| krijgt dus de waarde |0|.
 	Vervolgens wordt de \functievalue{0} aangeroepen.
 	De parameter |pos| van de functie |value| krijgt dus de waarde |0| en deze functie geeft \hcode{UN\\-DE\\-CIDED} terug.
-	Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
+	Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\-value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
 	De voorwaarde van de |if| is dus |true| en de code binnen de |if| wordt uitgevoerd.
-	De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
+	De lokale variabele \hcode{best_\\-value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
 	De variabele |i| krijgt de waarde |1| en de functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 0 + 1| is |1| als argument.
 	\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 		\item Vanuit de functie \chooseComputerMove{0} wordt dus de functie \chooseHumanMove{1} aangeroepen.
 		Vervolgens wordt de \functievalue{1} aangeroepen en deze functie geeft \hcode{UN\\-DE\\-CIDED} terug.
-		Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-hu\\-man_\\-move}.
+		Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\-value} van de functie \hcode{choose_\\-hu\\-man_\\-move}.
 		De voorwaarde van de |if| is dus |true| en de code binnen de |if| wordt uitgevoerd.
-		De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
+		De lokale variabele \hcode{best_\\-value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
 		De variabele |i| krijgt de waarde |1| en de functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 1 + 1| is |3| als argument.
 		\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 			\item Vanuit de functie \chooseHumanMove{1}wordt dus de functie \chooseComputerMove{3} aangeroepen.
 			Vervolgens wordt de \functievalue{3} aangeroepen en
 			deze functie geeft \hcode{UN\\-DE\\-CIDED} terug.
-			Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
+			Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\-value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
 			De code binnen de |if| wordt uitgevoerd.
-			De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
+			De lokale variabele \hcode{best_\\-value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
 			De variabele |i| krijgt de waarde |1| en de functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 3 + 1| is |7| als argument.
 			\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 				\item Vanuit de functie \chooseComputerMove{3} wordt dus de functie \chooseHumanMove{7} aangeroepen.
 				Vervolgens wordt de \functievalue{7} aangeroepen en deze functie geeft \hcode{UN\\-DE\\-CIDED} terug.
-				Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-hu\\-man_\\-move}.
+				Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\-value} van de functie \hcode{choose_\\-hu\\-man_\\-move}.
 				De code binnen de |if| wordt uitgevoerd.
-				De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
+				De lokale variabele \hcode{best_\\-value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
 				De variabele |i| krijgt de waarde |1| en de functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 7 + 1| is |15| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{7} wordt dus de functie \chooseComputerMove{15} aangeroepen.
 					Vervolgens wordt de \functievalue{15} aangeroepen en deze functie geeft array-element \valueelement{pos $\ \mbox{-}\ $ 15} is \valueelement{0} is |4| terug.
-					Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
+					Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\-value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
 					De voorwaarde van de |if| is nu |false| en de waarde |4| wordt teruggegeven.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{7}.
-				De lokale variabele |value| krijgt de waarde |4| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best_\\value} (|4| is kleiner dan |15|) krijgt \hcode{best_\\value} de waarde |4|.
+				De lokale variabele |value| krijgt de waarde |4| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best_\\-value} (|4| is kleiner dan |15|) krijgt \hcode{best_\\-value} de waarde |4|.
 				De |for|-lus wordt vervolgd.
 				De variabele |i| krijgt de waarde |2| en de functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 7 + 2| is |16| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{7} wordt dus de functie \chooseComputerMove{16} aangeroepen.
 					Vervolgens wordt de \functievalue{16} aangeroepen en deze functie geeft array-element \valueelement{pos $\ \mbox{-}\ $ 15} is \valueelement{1} is |5| terug.
-					Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
+					Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\-value} van de functie \hcode{choose_\\-com\\-puter_\\-move}.
 					De voorwaarde van de |if| is nu |false| en de waarde |5| wordt teruggegeven.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{7}.
-				De lokale variabele |value| krijgt de waarde |5| en omdat de waarde van |value| niet kleiner is dan de waarde van \hcode{best_\\value} (|5| is niet kleiner dan |4|) behoudt \hcode{best_\\value} de waarde |4|.
+				De lokale variabele |value| krijgt de waarde |5| en omdat de waarde van |value| niet kleiner is dan de waarde van \hcode{best_\\-value} (|5| is niet kleiner dan |4|) behoudt \hcode{best_\\-value} de waarde |4|.
 				De |for|-lus is nu voltooid.
 				Deze situatie is weergegeven in \cref{fig:gameTree2}.
 				De functie \chooseHumanMove{7} geeft de waarde |4| terug.
@@ -5648,14 +5677,14 @@ Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinv
 				
 			\end{enumerate}
 			\item We keren terug naar de functie \chooseComputerMove{3}.
-			De lokale variabele |value| krijgt de waarde |4| en omdat de waarde van |value| groter is dan de waarde van \hcode{best_\\value} (|4| is groter dan |0|) krijgt \hcode{best_\\value} de waarde |4|.
+			De lokale variabele |value| krijgt de waarde |4| en omdat de waarde van |value| groter is dan de waarde van \hcode{best_\\-value} (|4| is groter dan |0|) krijgt \hcode{best_\\-value} de waarde |4|.
 			De |for|-lus wordt vervolgd.
 			De variabele |i| krijgt de waarde |2| en de functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 3 + 2| is |8| als argument.
 			\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 				\item Vanuit de functie \chooseComputerMove{3} wordt dus de functie \chooseHumanMove{8} aangeroepen.
 				Vervolgens geeft de \functievalue{8} \hcode{UN\\-DE\\-CIDED} terug.
-				Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\value} van de functie \hcode{choose_\\-hu\\-man_\\-move} en de code binnen de |if| wordt uitgevoerd.
-				De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
+				Deze waarde wordt toegekend aan de lokale variabel \hcode{best_\\-value} van de functie \hcode{choose_\\-hu\\-man_\\-move} en de code binnen de |if| wordt uitgevoerd.
+				De lokale variabele \hcode{best_\\-value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
 				De variabele |i| krijgt de waarde |1| en de functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 8 + 1| is |17| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{8} wordt dus de functie \chooseComputerMove{17} aangeroepen.
@@ -5663,7 +5692,7 @@ Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinv
 					Deze waarde wordt teruggegeven vanuit de functie \hcode{choose_\\-com\\-puter_\\-move}.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{8}.
-				De lokale variabele |value| krijgt de waarde |3| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best_\\value} (|3| is kleiner dan |15|) krijgt \hcode{best_\\value} de waarde |4|.
+				De lokale variabele |value| krijgt de waarde |3| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best_\\-value} (|3| is kleiner dan |15|) krijgt \hcode{best_\\-value} de waarde |4|.
 				De |for|-lus wordt vervolgd.
 				De variabele |i| krijgt de waarde |2| en de functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 8 + 2| is |18| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
@@ -5672,13 +5701,13 @@ Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinv
 					Deze waarde wordt teruggegeven vanuit de functie \hcode{choose_\\-com\\-puter_\\-move}.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{8}.
-				De lokale variabele |value| krijgt de waarde |2| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best_\\value} (|2| is kleiner dan |3|) krijgt \hcode{best_\\value} de waarde |2|.
+				De lokale variabele |value| krijgt de waarde |2| en omdat de waarde van |value| kleiner is dan de waarde van \hcode{best_\\-value} (|2| is kleiner dan |3|) krijgt \hcode{best_\\-value} de waarde |2|.
 				De |for|-lus is nu voltooid.
 				De functie \chooseHumanMove{8} geeft de waarde |2| terug.
 			\end{enumerate}
 			\item
 			We keren terug naar de functie \chooseComputerMove{3}.
-			De lokale variabele |value| krijgt de waar\-de |2| en omdat de waarde van |value| niet groter is dan de waarde van \hcode{best_\\value} (|2| is niet groter dan |2|) behoudt \hcode{best_\\value} de waarde |4|.
+			De lokale variabele |value| krijgt de waar\-de |2| en omdat de waarde van |value| niet groter is dan de waarde van \hcode{best_\\-value} (|2| is niet groter dan |2|) behoudt \hcode{best_\\-value} de waarde |4|.
 			De |for|-lus is nu voltooid.
 			Deze situatie is weergegeven in \cref{fig:gameTree3}.
 			De functie \chooseComputerMove{3} geeft de waarde |4| terug.
@@ -5688,59 +5717,59 @@ Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinv
 		\end{enumerate}
 		\item
 		We keren terug naar de functie \chooseHumanMove{1}.
-		Omdat de geretourneerde waarde (|4|) kleiner is dan de waarde van \hcode{best_\\value} (|15|) krijgt \hcode{best_\\value} de waarde |4|.
+		Omdat de geretourneerde waarde (|4|) kleiner is dan de waarde van \hcode{best_\\-value} (|15|) krijgt \hcode{best_\\-value} de waarde |4|.
 		De |for|-lus wordt vervolgd.
 		De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 1 + 2| is |4| als argument.
 		\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 			\item Vanuit de functie \chooseHumanMove{1}wordt dus de functie \chooseComputerMove{4} aangeroepen.
-			De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
+			De lokale variabele \hcode{best_\\-value} wordt gelijk gemaakt aan |0| en de |for|-lus wordt uitgevoerd.
 			De functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 4 + 1| is |9| als argument.
 			\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 				\item Vanuit de functie \chooseComputerMove{4} wordt dus de functie \chooseHumanMove{9} aangeroepen.
-				De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
+				De lokale variabele \hcode{best_\\-value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
 				De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 9 + 1| is |19| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{9} wordt dus de functie \chooseComputerMove{19} aangeroepen die de waarde |6| teruggeeft.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{9}.
-				Omdat de geretourneerde waar\-de (|6|) kleiner is dan de waarde van \hcode{best_\\value} (|15|) krijgt \hcode{best_\\value} de waarde |6|.
+				Omdat de geretourneerde waar\-de (|6|) kleiner is dan de waarde van \hcode{best_\\-value} (|15|) krijgt \hcode{best_\\-value} de waarde |6|.
 				De |for|-lus wordt vervolgd.
 				De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 9 + 2| is |20| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item Vanuit de functie \chooseHumanMove{9} wordt dus de functie \chooseComputerMove{20} aangeroepen die de waarde |7| teruggeeft.
 				\end{enumerate}
 				\item We keren terug naar de functie \chooseHumanMove{9}.
-				Omdat de geretourneerde waar\-de (|7|) niet kleiner is dan de waarde van \hcode{best_\\value} (|6|) geeft de functie \chooseHumanMove{9} de waarde |6| terug.
+				Omdat de geretourneerde waar\-de (|7|) niet kleiner is dan de waarde van \hcode{best_\\-value} (|6|) geeft de functie \chooseHumanMove{9} de waarde |6| terug.
 			\end{enumerate}
 			\item
 			We keren terug naar de functie \chooseComputerMove{4}.
-			Omdat de geretourneerde waarde (|6|) groter is dan de waarde van \hcode{best_\\value} (|0|) krijgt \hcode{best_\\value} de waarde |6|.
+			Omdat de geretourneerde waarde (|6|) groter is dan de waarde van \hcode{best_\\-value} (|0|) krijgt \hcode{best_\\-value} de waarde |6|.
 			De |for|-lus wordt vervolgd.
 			De functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 4 +| |2| is |10| als argument.
 			\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 				\item Vanuit de functie \chooseComputerMove{4} wordt dus de functie \chooseHumanMove{10} aangeroepen.
-				De lokale variabele \hcode{best_\\value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
+				De lokale variabele \hcode{best_\\-value} wordt gelijk gemaakt aan |15| en de |for|-lus wordt uitgevoerd.
 				De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 10 + 1| is |21| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item De functie \chooseComputerMove{21} geeft de waarde |8| terug.
 				\end{enumerate}
-				\item Omdat de geretourneerde waarde (|8|) kleiner is dan de waarde van \hcode{best_\\value} (|15|) krijgt \hcode{best_\\value} de waarde |8|.
+				\item Omdat de geretourneerde waarde (|8|) kleiner is dan de waarde van \hcode{best_\\-value} (|15|) krijgt \hcode{best_\\-value} de waarde |8|.
 				De |for|-lus wordt vervolgd.
 				De functie \hcode{choose_\\-com\\-puter_\\-move} wordt aangeroepen met |2 * 10 + 2| is |22| als argument.
 				\begin{enumerate}[label*=\arabic*.,leftmargin=1.4em]
 					\item De functie \chooseComputerMove{22} geeft de waarde |9| terug.
 				\end{enumerate}
-				\item Omdat de geretourneerde waarde (|9|) niet kleiner is dan de waarde van \hcode{best_\\value} (|8|) geeft de functie \chooseHumanMove{9} de waarde |8| terug.
+				\item Omdat de geretourneerde waarde (|9|) niet kleiner is dan de waarde van \hcode{best_\\-value} (|8|) geeft de functie \chooseHumanMove{9} de waarde |8| terug.
 			\end{enumerate}
 			\item
 			We keren terug naar de functie \chooseComputerMove{4}.
-			Omdat de geretourneerde waarde (|8|) groter is dan de waarde van \hcode{best_\\value} (|6|) geeft de functie \chooseComputerMove{3} geeft de waarde |8| terug.
+			Omdat de geretourneerde waarde (|8|) groter is dan de waarde van \hcode{best_\\-value} (|6|) geeft de functie \chooseComputerMove{3} geeft de waarde |8| terug.
 		\end{enumerate}
 		\item We keren terug naar de functie \chooseHumanMove{1}.
-		Omdat de geretourneerde waarde (|8|) niet kleiner is dan de waarde van \hcode{best_\\value} (|4|) geeft de functie \chooseHumanMove{1} de waarde |4| terug.
+		Omdat de geretourneerde waarde (|8|) niet kleiner is dan de waarde van \hcode{best_\\-value} (|4|) geeft de functie \chooseHumanMove{1} de waarde |4| terug.
 	\end{enumerate}
 	\item We keren terug naar de functie \chooseComputerMove{0}.
-	Omdat de geretourneerde waarde (|4|) groter is dan de waarde van \hcode{best_\\value} (|0|) krijgt \hcode{best_\\value} de waarde |4|.
+	Omdat de geretourneerde waarde (|4|) groter is dan de waarde van \hcode{best_\\-value} (|0|) krijgt \hcode{best_\\-value} de waarde |4|.
 	De |for|-lus wordt vervolgd.
 	De functie \hcode{choose_\\-hu\\-man_\\-move} wordt aangeroepen met |2 * 0 + 2| is |2| als argument.
 	\begin{enumerate}[label*=\arabic*,leftmargin=1em]
@@ -5749,7 +5778,7 @@ Om de werking van dit minimax algoritme helemaal te doorgronden is het heel zinv
 		\item $\cdots$ De functie \chooseHumanMove{2} geeft de waarde |2| terug.
 	\end{enumerate}
 	\item We keren terug naar de functie \chooseComputerMove{0}.
-	Omdat de geretourneerde waarde (|2|) niet groter is dan de waarde van \hcode{best_\\value} (|4|) geeft de functie \chooseComputerMove{0} de waarde |4| terug.
+	Omdat de geretourneerde waarde (|2|) niet groter is dan de waarde van \hcode{best_\\-value} (|4|) geeft de functie \chooseComputerMove{0} de waarde |4| terug.
 	Deze situatie is weergegeven in \cref{fig:gameTree4}.
 	
 	\figuur{scale=0.5}{gameTree4}{Spelboom net voor het einde van het uitvoeren van \chooseComputerMove{0}.}
@@ -5881,18 +5910,18 @@ In \cref{fig:gameTree10} is te zien welke takken het \USE{alpha\hyp{}beta} algor
 Bij de eerste aanroep van de functie |value_move_computer| moet voor |alpha| het absolute minimum (in dit geval 0) en voor |beta| het absolute maximum (in dit geval 15) worden ingevuld.
 Dit is logisch want |alpha| is het tot nu toe gevonden maximum in de bovenliggende posities (we hebben in dit geval geen bovenliggende posities dus het tot nu toe gevonden maximum is het absolute minimum) en |beta| is het tot nu toe gevonden minimum in de bovenliggende posities (we hebben in dit geval geen bovenliggende posities dus het tot nu toe gevonden minimum is het absolute maximum).
 
-Je ziet dat bij het bepalen van de maximale waarde in een positie de waarde van \hcode{best_\\value} wordt geïnitialiseerd met |alpha| en niet met het absolute minimum (|0|).
+Je ziet dat bij het bepalen van de maximale waarde in een positie de waarde van \hcode{best_\\-value} wordt geïnitialiseerd met |alpha| en niet met het absolute minimum (|0|).
 Een, in een bovenliggende positie gevonden, tijdelijk maximum mag namelijk \emph{niet} in een (2 lagen dieper) onderliggende positie op een \emph{lagere} waarde worden gezet!
-Als je \hcode{best_\\value} initialiseert met |0|, wordt de positie 26 \emph{niet} gesnoeid!
+Als je \hcode{best_\\-value} initialiseert met |0|, wordt de positie 26 \emph{niet} gesnoeid!
 Probeer maar.
 
-Om dezelfde reden moet bij het bepalen van de minimale waarde in een positie de waarde van \hcode{best_\\value} worden geïnitialiseerd met |beta| en niet met het absolute maximum (|15|).
+Om dezelfde reden moet bij het bepalen van de minimale waarde in een positie de waarde van \hcode{best_\\-value} worden geïnitialiseerd met |beta| en niet met het absolute maximum (|15|).
 Een, in een bovenliggende positie gevonden, tijdelijk minimum mag namelijk \emph{niet} in een (2 lagen dieper) onderliggende positie op een \emph{hogere} waarde worden gezet!
 
-Merk op dat in de functie \hcode{choose_\\-com\\-puter_\\-move} de expressie |best_value < beta| vervangen kan worden door |alpha < beta| omdat \hcode{best_\\value} en |alpha| in de |for|\hyp{}lus altijd dezelfde waarde hebben.
-In de |for|\hyp{}lus is het gebruik van \hcode{best_\\value} dus overbodig.
-Merk op dat in de functie \hcode{choose_\\-hu\\-man_\\-move} de expressie |best_value > alpha| vervangen kan worden door |beta > alpha| omdat \hcode{best_\\value} en |beta| in de |for|\hyp{}lus altijd dezelfde waarde hebben.
-In de |for|\hyp{}lus is het gebruik van \hcode{best_\\value} dus overbodig.
+Merk op dat in de functie \hcode{choose_\\-com\\-puter_\\-move} de expressie |best_value < beta| vervangen kan worden door |alpha < beta| omdat \hcode{best_\\-value} en |alpha| in de |for|\hyp{}lus altijd dezelfde waarde hebben.
+In de |for|\hyp{}lus is het gebruik van \hcode{best_\\-value} dus overbodig.
+Merk op dat in de functie \hcode{choose_\\-hu\\-man_\\-move} de expressie |best_value > alpha| vervangen kan worden door |beta > alpha| omdat \hcode{best_\\-value} en |beta| in de |for|\hyp{}lus altijd dezelfde waarde hebben.
+In de |for|\hyp{}lus is het gebruik van \hcode{best_\\-value} dus overbodig.
 De expressie |beta > alpha| kan vervangen worden door |alpha < beta| die exact hetzelfde betekent.
 In het onderstaande programma \proglink{alpha_beta1.cpp} zijn deze wijzigingen doorgevoerd:
 
@@ -8466,6 +8495,55 @@ Het is dus belangrijk om voor een class die een zelfgedefinieerde copy construct
 \chapter[De standaard C++ \USE{library} (de details)]{De standaard \Cpp{} \USE{library} (de details)}
 \label{sec:stdlibdetails}
 
+Dit hoofdstuk bevat een aantal handige wetenswaardigheden die van pas kunnen komen bij het gebruik van de \Cpp{} standaard library, zie \csecref{sec:stdliboverview}.
+%TODO: eenvoudig voorbeeld met regex toevoegen
+%TODO: eenvoudig voorbeeld met filesystem toevoegen
+%TODO: iets zeggen over threads?
+\section{Het meten van de executietijd van een stukje code}
+In \Cpp{} kun je een probleem vaak op vele verschillende manieren oplossen.
+Soms wil je bepalen welk van deze oplossingen sneller is op een bepaald platform.
+De enige goede manier om dit vast te stellen is om te \emph{meten} hoe lang het uitvoeren van elke oplossing duurt.
+
+Met behulp van de standaard library opgenomen |high_resolution_clock| kun je eenvoudig de executietijd van een stuk code meten.
+\begin{cpplstfragment}
+	auto start {chrono::high_resolution_clock::now()};
+	// code die je wilt timen
+	auto stop {chrono::high_resolution_clock::now()};
+	auto duration {chrono::duration_cast<std::chrono::microseconds>(stop - start).count()};
+	cout << "Executietijd = " << duration << " us\n";
+\end{cpplstfragment}
+
+\section{Random getallen}
+Soms is het handig om random getallen te gebruiken in een programma.
+De \Cpp{} standaard library bevat hier uitgebreide faciliteiten voor.
+In \proglink{Dobbelsteen.cpp} is de class |Dobbelsteen| gedefinieerd waarmee eenvoudig een random getal tussen 1 en 6 gegenereerd kan worden:
+\begin{cpplstfragment}
+	Dobbelsteen d;
+	int i {d.rol()};
+\end{cpplstfragment}
+
+\section{\texorpdfstring{\cppcode{vector::reserve}}{vector::reserve}}
+Als een |vector| groeit kunnen de elementen van plaats veranderen. 
+Pointers en iteratoren naar deze elementen staan dan naar verkeerde adressen te wijzen.
+Dit kun je voorkomen door met behulp van de functie |reserve|, van tevoren, voldoende elementen te reserveren.
+Zie \proglink{vector_reserve.cpp}.
+
+\section{\texorpdfstring{\cppcode{emplace}}{emplace}}
+De standaardcontainer hebben zogenoemde \emph{emplace}-operaties.
+Zo heeft bijvoorbeeld een |vector| naast de bekende |push_back|-operatie ook een |emplace_back|-operatie.
+De |emplace_back| combineert het toevoegen van een element in de vector met het aanroepen van de constructor van dit element.
+Dit voorkomt het maken van een onnodig kopietje.
+In het programmafragment:
+\begin{cpplstfragment}
+	vector<Breuk> v;
+	v.push_back(Breuk {1, 2});
+\end{cpplstfragment}
+Kan de laatste regel efficiënter gecodeerd worden als:
+\begin{cpplstfragment}
+	v.emplace_back(1, 2);
+\end{cpplstfragment}
+Zie \proglink{vector_emplace}.	
+
 \section{Unordered container met UDT's}
 Als je een user-defined datatype, bijvoorbeeld |Breuk| als key in een ongeordende container, bijvoorbeeld |unordered_set|, wilt gebruiken, dan moet
 \begin{itemize}
@@ -8578,8 +8656,8 @@ We kunnen de bij een iterator horende \hcode{iterator_\\-tag} opvragen met behul
 	Zie eventueel \url{http://en.cppreference.com/w/cpp/iterator/iterator_traits}.
 } template class.
 Het iterator type moet als template argument aan deze template class worden doorgegeven.
-In deze class is een |typedef| gedefinieerd genaamd \hcode{iterator_\\-category} die overeenkomt met het betreffende \hcode{iterator_\\-tag} type.
-Deze |typedef| kunnen we gebruiken om een (dummy) object aan te maken.
+In deze class is een type gedefinieerd genaamd \hcode{iterator_\\-category} die overeenkomt met het betreffende \hcode{iterator_\\-tag} type.
+Dit type kunnen we gebruiken om een (dummy) object aan te maken.
 Het type van dit object (het \hcode{iterator_\\-tag} type) wordt vervolgens door de compiler gebruikt om de juiste \hcode{find_\\-upper_\\-middle} te selecteren.
 Zie \proglink{find\_upper\_middle.cpp}:
 
@@ -8616,13 +8694,13 @@ Als dit niet zo is, dan wordt ervan uitgegaan dat |I| een forward iterator is.
 
 Als je het programma \proglink{compile_time_if.cpp} uitvoert, zul je zien dat dit programma de volgende uitvoer geeft:
 \begin{coutput}
-	find_upper_middle called on forward_list
-	forward iterator used
-	find_upper_middle called on list
-	bidirectional iterator used
-	find_upper_middle called on vector
-	random access iterator used
-	All tests passed!
+find_upper_middle called on forward_list
+forward iterator used
+find_upper_middle called on list
+bidirectional iterator used
+find_upper_middle called on vector
+random access iterator used
+All tests passed!
 \end{coutput}
 
 Je ziet dat de compiler (ook nu) de meest effectieve variant van |find_upper_middle| aanroept, afhankelijk van het bij de container beschikbare iterator soort. 
@@ -8674,7 +8752,7 @@ Persoonlijk vind ik het gebruik van een lambda\hyp{}functie in dit geval eenvoud
 In \csecref{sec:remove} heb je gezien hoe de even getallen uit een |vector| met integers verwijderd kunnen worden met behulp van een lambda\hyp{}functie, zie \proglink{remove.cpp}:
 \cpplstinputfragment[linerange={31-33}]{remove.cpp}
 
-Dit zou ook met behulp van standaard functie\hyp{}objecten kunnen, zie \proglink{remove\_bind.cpp}:
+Dit zou ook met behulp van standaard functie\hyp{}objecten kunnen, zie \proglink{remove\_bind\\-.cpp}:
 
 \cpplstinputfragment[linerange={18-18}]{remove_bind.cpp}
 

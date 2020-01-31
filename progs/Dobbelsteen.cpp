@@ -29,9 +29,9 @@ int main() {
     cout << d << '\n';
     
     // bepaal verdeling
-    vector<int> verdeling(6);
-    for (int i {0}; i < 10000000; ++i)
-        ++verdeling[d.rol()-1];
+    vector<int> verdeling (6);
+    for (int i {0}; i < 10'000'000; ++i)
+        ++verdeling[d.rol() - 1];
     for (int i {0}; i < 6; ++i) 
         cout << i+1 << ": " << verdeling[i] << '\n';
 }
