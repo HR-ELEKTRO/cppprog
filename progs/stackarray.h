@@ -1,8 +1,7 @@
 #ifndef _HR_BROJZ_Stack_with_array_
 #define _HR_BROJZ_Stack_with_array_
 
-#include <iostream>
-#include <cstdlib>
+#include <exception>
 #include "stack.h"
 
 template <typename T> class Stack_with_array: public Stack<T> {
@@ -21,13 +20,9 @@ private:
 };
 
 template <typename T> Stack_with_array<T>::Stack_with_array(size_t size): a{0}, s{size}, i{0} {
-    if (s == 0) {
-        std::cerr << "Stack size should be >0\n";
-        s = 0;
-    }
-    else {
-        a = new T[s];
-    }
+    if (s == 0) 
+        throw std::domain_error {"Stack size should be >0\n"};
+    a = new T[s];
 }
 
 template <typename T> Stack_with_array<T>::~Stack_with_array() {
@@ -35,29 +30,20 @@ template <typename T> Stack_with_array<T>::~Stack_with_array() {
 }
 
 template <typename T> void Stack_with_array<T>::push(const T& t) {
-    if (full()) {
-        std::cerr << "Can't push on an full stack\n";
-    }
-    else {
-        a[i++] = t;
-    }
+    if (full()) 
+        throw std::overflow_error {"Can't push on an full stack\n"};
+    a[i++] = t;
 }
 
 template <typename T> void Stack_with_array<T>::pop() {
-    if (empty()) {
-        std::cerr << "Can't pop from an empty stack\n";
-    }
-    else {
-        --i;
-    }
+    if (empty())
+        throw std::underflow_error {"Can't pop from an empty stack\n"};
+    --i;
 }
 
 template <typename T> const T& Stack_with_array<T>::top() const {
-    if (empty()) {
-        std::cerr << "Can't top from an empty stack\n";
-        std::exit(-1);
-        // no valid return possible
-    }
+    if (empty())
+        throw std::underflow_error {"Can't top from an empty stack\n"};
     return a[i - 1];
 }
 

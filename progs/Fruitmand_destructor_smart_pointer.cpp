@@ -37,7 +37,7 @@ public:
 // ...
 };
 
-class Fruit_mand {
+class Fruitmand {
 public:
     void voeg_toe(unique_ptr<Fruit> p) {
         fp.push_back(move(p));
@@ -52,10 +52,10 @@ private:
 };
 
 int main() {
-    Fruit_mand m;
+    Fruitmand m;
+    m.voeg_toe(make_unique<Appel>());
     m.voeg_toe(make_unique<Appel>());
     m.voeg_toe(make_unique<Peer>());
-    m.voeg_toe(make_unique<Appel>());
     m.print_inhoud();
     // hier wordt de Fruitmand m verwijderd!
 }
@@ -63,13 +63,13 @@ int main() {
 /* Uitvoer:
 De fruitmand bevat:
 Appel
-Peer
 Appel
+Peer
+Er is een Appel verwijderd.
+Er is een stuk Fruit verwijderd.
 Er is een Appel verwijderd.
 Er is een stuk Fruit verwijderd.
 Er is een Peer verwijderd.
-Er is een stuk Fruit verwijderd.
-Er is een Appel verwijderd.
 Er is een stuk Fruit verwijderd.
 */
 
@@ -77,8 +77,8 @@ Er is een stuk Fruit verwijderd.
 /* Uitvoer:
 De fruitmand bevat:
 Appel
-Peer
 Appel
+Peer
 Er is een stuk Fruit verwijderd.
 Er is een stuk Fruit verwijderd.
 Er is een stuk Fruit verwijderd.

@@ -14,7 +14,7 @@ complex<double> impedance_C(double c, double f) {
         throw Capacity_error {};
     if (f == 0.0)
         throw Frequency_error {};
-    return complex<double>{0, -1 / (2 * PI * f * c)};
+    return complex<double> {0, -1 / (2 * PI * f * c)};
 }
 
 int main() {

@@ -9,7 +9,7 @@ constexpr double PI {atan(1.0) * 4};
 
 complex<double> impedance_C(double c, double f) {
     assert(c != 0.0 && f != 0.0);
-    return complex<double>{0, -1 / (2 * PI * f * c)};
+    return complex<double> {0, -1 / (2 * PI * f * c)};
 }
 
 int main() {

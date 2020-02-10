@@ -67,7 +67,7 @@ public:
     L(double l): l{l} {
     }
     complex<double> Z(double f) const override {
-        return complex<double>(0, 2 * PI * f * l);
+        return complex<double> {0, 2 * PI * f * l};
     }
     void print(ostream& o) const override {
         o << "L(" << l << ")";
@@ -81,7 +81,7 @@ public:
     C(double c): c{c} {
     }
     complex<double> Z(double f) const override {
-        return complex<double>(0, -1 / (2 * PI * f * c));
+        return complex<double> {0, -1 / (2 * PI * f * c)};
     }
     void print(ostream& o) const override {
         o << "C(" << c << ")";

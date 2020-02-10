@@ -14,19 +14,19 @@ int main() {
     }
     {
         vector<int> rij {1, 7, 2, 5, 8, 3};
-        sort(seq, rij.begin(), rij.end());
+        sort(execution::seq, rij.begin(), rij.end());
         ostream_iterator<int> iout {cout, " "};
         copy(rij.begin(), rij.end(), iout);
     }
     {
         vector<int> rij {1, 7, 2, 5, 8, 3};
-        sort(par, rij.begin(), rij.end());
+        sort(execution::par, rij.begin(), rij.end());
         ostream_iterator<int> iout {cout, " "};
         copy(rij.begin(), rij.end(), iout);
     }
     {
         vector<int> rij {1, 7, 2, 5, 8, 3};
-        sort(par_unseq, rij.begin(), rij.end());
+        sort(execution::par_unseq, rij.begin(), rij.end());
         ostream_iterator<int> iout {cout, " "};
         copy(rij.begin(), rij.end(), iout);
     }

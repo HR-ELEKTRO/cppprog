@@ -18,13 +18,13 @@ int main() {
             s.push(i);
         }
         else if (c == '+') {
-            int op2 = s.top(); s.pop();
-            int op1 = s.top(); s.pop();
+            int op2 {s.top(); s.pop()};
+            int op1 {s.top(); s.pop()};
             s.push(op1 + op2);
         }
         else if (c == '*') {
-            int op2 = s.top(); s.pop();
-            int op1 = s.top(); s.pop();
+            int op2 {s.top(); s.pop()};
+            int op1 {s.top(); s.pop()};
             s.push(op1 * op2);
         }
         else {

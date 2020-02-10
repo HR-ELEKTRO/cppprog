@@ -5,7 +5,7 @@
 using namespace std;
 
 complex<double> impedance_C(double c, double f) {
-    return complex<double>{0, -1 / (2 * numbers::pi * f * c)};
+    return complex<double> {0, -1 / (2 * numbers::pi * f * c)};
 }
 
 int main() {

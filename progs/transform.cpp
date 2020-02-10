@@ -26,7 +26,7 @@ int main() {
 //  Bewerking opgeven met een lambda functie.
 //  Voordeel: meest handige oplossing als zoekvoorwaarde uniek is.
 //  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
-    transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), [](auto i1, auto i2) {
+    transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), [](int i1, int i2) {
         return i1 + i2;
     });
     copy(v.cbegin(), v.cend(), iout);
@@ -35,7 +35,7 @@ int main() {
 //  Bewerking opgeven met een opgeslagen lambda functie.
 //  Voordeel: meest handige oplossing als bewerking vaker voorkomt.
 //  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
-    auto add {[](auto i1, auto i2) {
+    auto add {[](int i1, int i2) {
         return i1 + i2;
     }};
     transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), add);

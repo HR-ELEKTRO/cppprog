@@ -23,8 +23,8 @@ int main() {
     cout << "De hash table heeft " << mensen.bucket_count() << " buckets.";
     cout << "\nElke bucket bevat gemiddeld " << mensen.load_factor() << " elementen.";
     cout << "\nDe maximale load_factor is " << mensen.max_load_factor() << ".";
-    cout << "\nWe voegen nu nog 34 namen toe.\n";
-    mensen.insert({"Sebastiaan", "Patrick", "Bas", "Ivan", "Eric", "Ralf", "Leo", "Rens", "Mark", "Jaap", "Pascal", "Arend", "Patrick", "Daniël", "Tom", "Jelle", "Raymond", "Rick", "Miguel", "Niels", "Chesron", "Bart", "David", "Remko", "Thijs", "Richard", "Robin", "Remy", "Nakib", "René", "Tako", "Maikel", "Jory", "Willem-Pieter"});
+    cout << "\nWe voegen nu nog 24 namen toe.\n";
+    mensen.insert({"Abdel", "Alia", "Amer", "Corjan", "Daan", "Daniël", "Diederik", "Erwin", "Gabriël", "Jarl", "Jasper", "Jennifer", "Jorg", "Juul", "Koen", "Mathijs", "Matthijs", "Mustafa", "Nick", "Remco", "Robin", "Soufiane", "Tim", "Umit"});
     print(mensen);
     cout << "De hash table heeft " << mensen.bucket_count() << " buckets.";
     cout << "\nElke bucket bevat gemiddeld " << mensen.load_factor() << " elementen.";

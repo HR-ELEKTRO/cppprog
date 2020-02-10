@@ -36,9 +36,9 @@ public:
 // ...
 };
 
-class Fruit_mand {
+class Fruitmand {
 public:
-    ~Fruit_mand() {
+    ~Fruitmand() {
         for (const Fruit* e: fp)
             delete e;
             // Als we de constructor in de class Fruit *NIET* virtual maken en *NIET* overridden voor Appel en Peer, dan geeft de GCC C++ compiler een warning:: deleting object of abstract class type 'Fruit' which has non-virtual destructor will cause undefined behavior
@@ -56,10 +56,10 @@ private:
 };
 
 int main() {
-    Fruit_mand m;
+    Fruitmand m;
+    m.voeg_toe(new Appel);
     m.voeg_toe(new Appel);
     m.voeg_toe(new Peer);
-    m.voeg_toe(new Appel);
     m.print_inhoud();
     // hier wordt de Fruitmand m verwijderd!
 }
@@ -67,13 +67,13 @@ int main() {
 /* Uitvoer:
 De fruitmand bevat:
 Appel
-Peer
 Appel
+Peer
+Er is een Appel verwijderd.
+Er is een stuk Fruit verwijderd.
 Er is een Appel verwijderd.
 Er is een stuk Fruit verwijderd.
 Er is een Peer verwijderd.
-Er is een stuk Fruit verwijderd.
-Er is een Appel verwijderd.
 Er is een stuk Fruit verwijderd.
 */
 
@@ -81,8 +81,8 @@ Er is een stuk Fruit verwijderd.
 /* Uitvoer:
 De fruitmand bevat:
 Appel
-Peer
 Appel
+Peer
 Er is een stuk Fruit verwijderd.
 Er is een stuk Fruit verwijderd.
 Er is een stuk Fruit verwijderd.

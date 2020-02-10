@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <exception>
 #include "stack.h"
 //#define VERBOSE
 #ifdef VERBOSE
@@ -45,22 +46,15 @@ template <typename T> void Stack_with_list<T>::push(const T& t) {
 
 template <typename T> void Stack_with_list<T>::pop() {
     if (empty())
-        std::cerr << "Can't pop from an empty stack\n";
-    else {
-        Node* old(p);
-        p = p->next;
-        delete old;
-    }
+        throw std::underflow_error {"Can't pop from an empty stack\n"};
+    Node* old(p);
+    p = p->next;
+    delete old;
 }
 
 template <typename T> const T& Stack_with_list<T>::top() const {
-    if (empty()) {
-        std::cerr << "Can't top from an empty stack\n";
-        std::cin.get();
-        std::cin.get();
-        std::exit(-1);
-        // no valid return possible
-    }
+    if (empty())
+        throw std::underflow_error {"Can't top from an empty stack\n"};
     return p->data;
 }
 

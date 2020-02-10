@@ -13,7 +13,7 @@ complex<double> impedance_C(double c, double f) throw(domain_error) {
         throw domain_error {"Capaciteit == 0"};
     if (f == 0.0)
         throw domain_error {"Frequentie == 0"};
-    return complex<double>{0, -1 / (2 * PI * f * c)};
+    return complex<double> {0, -1 / (2 * PI * f * c)};
 }
 
 int main() {

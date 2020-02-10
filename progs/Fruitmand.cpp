@@ -27,7 +27,7 @@ public:
 // ...
 };
 
-class Fruit_mand {
+class Fruitmand {
 public:
     void voeg_toe(Fruit& p) {
         fp.push_back(&p);
@@ -42,19 +42,19 @@ private:
 };
 
 int main() {
-    Fruit_mand m;
+    Fruitmand m;
     Appel a1, a2;
     Peer p1;
     m.voeg_toe(a1);
-    m.voeg_toe(p1);
     m.voeg_toe(a2);
+    m.voeg_toe(p1);
     m.print_inhoud();
 }
 
 /* Uitvoer:
 De fruitmand bevat:
 Appel
-Peer
 Appel
+Peer
 */
 

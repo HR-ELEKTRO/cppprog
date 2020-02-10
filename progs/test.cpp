@@ -2,10 +2,18 @@
 #include <list>
 #include <algorithm>
 #include <vector>
+#include <stack>
 using namespace std;
 
 class Hond { /* ... */ };
 class Sint_bernard: public Hond { /* ... */ };
+
+class test {
+public:
+    enum {tien = 10, elf};
+};
+
+int a[test::tien]; // werkt dit? Ja natuurlijk.
 
 int main() {
     int a, b, c;

@@ -5,16 +5,20 @@
 using namespace std;
 
 int main() {
-    Stack_with_array<char> s {32};
-    char c;
-    cout << "Type een tekst en sluit af met .\n";
-    cin.get(c);
-    while (c != '.') {
-        s.push(c);
+    try {
+        Stack_with_array<char> s {32};
+        char c;
+        cout << "Type een tekst en sluit af met .\n";
         cin.get(c);
-    }
-    while (!s.empty()) {
-        cout << s.top();
-        s.pop();
+        while (c != '.') {
+            s.push(c);
+            cin.get(c);
+        }
+        while (!s.empty()) {
+            cout << s.top();
+            s.pop();
+        }
+    } catch (const exception& e) {
+        cerr << e.what();
     }
 }

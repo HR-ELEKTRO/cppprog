@@ -8,7 +8,7 @@ constexpr double PI {atan(1.0) * 4};
 
 pair<bool, complex<double>> impedance_C(double c, double f) {
     if (c != 0.0 && f != 0.0) 
-        return {true, complex<double>{0, -1 / (2 * PI * f * c)}};
+        return {true, complex<double> {0, -1 / (2 * PI * f * c)}};
     else
         return {false, 0};
 }

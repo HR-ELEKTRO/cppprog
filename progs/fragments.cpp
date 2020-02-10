@@ -168,7 +168,7 @@ void dummy() {
 {
 //>som_in_C
     int rij[] {12, 2, 17, 32, 1, 18};
-    size_t aantal {sizeof array / sizeof array[0]};
+    size_t aantal {sizeof rij / sizeof rij[0]};
     int som {0};
     for (size_t i {0}; i < aantal; i++) {
         som += rij[i];
@@ -188,7 +188,7 @@ void dummy() {
 //>use_abs_overloaded
     double in;
     cin >> in; // lees in
-    cout << abs(in) << '\n'; // druk de absolute waarde van in af
+    cout << ::abs(in) << '\n'; // druk de absolute waarde van in af
 //<use_abs_overloaded
 }
 {
@@ -227,9 +227,9 @@ typedef struct Tijdsduur TTijdsduur;
 }    
 {
 //>new
-    double* dp{new double}; // reserveer een double
+    double* dp {new double}; // reserveer een double
     int i; cin >> i;
-    double* drij{new double[i]}; // reserveer een array met i doubles
+    double* drij {new double[i]}; // reserveer een array met i doubles
     // ...
     delete dp; // geef de door dp aangewezen geheugenruimte vrij
     delete[] drij; // idem voor de door drij aangewezen array
