@@ -318,6 +318,7 @@ Verdere kleine verbeteringen, die ook best handig kunnen zijn bij het programmer
 
 \section{\texorpdfstring{\cppcode{main}}{main} zonder \texorpdfstring{\cppcode{return}}{return}}
 \markright{}
+%Problemen met non-ebook versie. Extra }, or forgotten \endgroup. Dit probleem wordt veroorzaakt door gebruik van \rightmark in \fancyhead[OR]. Lijkt iets te maken te hebben met gebruik van \texorpdfstring in section titel. Oplossingen lege \markright{} toevoegen na sectie. Wat is hier het effect van? Toevoegen van \needspace{4cm} voor een pagebreak net voor een \lstinputfragment heeft er iets mee te maken?
 \label{sec:mainzonderreturn}
 In \Cpp{} hoeft de functie |main| geen |return|-statement meer te bevatten. 
 Als niet expliciet een waarde teruggegeven wordt, dan zal het operating systeem de waarde ontvangen die hoort bij een succesvolle afronding van het programma (de waarde~|0|).
@@ -1399,7 +1400,7 @@ Het is dus verstandig om voor elke class één of meer \USE{constructors} te def
     \cppcode{Breuk::Breuk(int t = 0, int n = 1);}.
 }.
 
-Als (ondanks het zo juist gegeven advies) geen enkele \USE{constructor} gedefinieerd is, dan wordt door de compiler een \label{default constructor}\emph{\USE{default constructor}} (= \USE{constructor} zonder parameters) aangemaakt. Deze default \USE{constructor} roept voor elk dataveld de \USE{default constructor} van dit veld aan (Engels: \emph{\USE{memberwise construction}}).
+Als (ondanks het zo juist gegeven advies) geen enkele \USE{constructor} gedefinieerd is, dan wordt door de compiler een \label{defaultconstructor}\emph{\USE{default constructor}} (= \USE{constructor} zonder parameters) aangemaakt. Deze default \USE{constructor} roept voor elk dataveld de \USE{default constructor} van dit veld aan (Engels: \emph{\USE{memberwise construction}}).
 %TODO: je kunt dit ook expliciet aangeven met =default 
 
 \section{Initialization list van de constructor}
@@ -1490,7 +1491,7 @@ private:
 
 De \USE{default copy constructor} van de class |Rechthoek| zal nu de private variabelen |lengte| en |breedte| kopiëren, die ieder voor zich weer uit private variabelen |boven| en |onder| bestaan, die ook automatisch gekopieerd worden.
 
-Als er in de class |Rechthoek| geen enkele \USE{constructor} gedefinieerd is dan wordt door de compiler een \USE{default constructor} gedefinieerd, zie \cpageref{default constructor}. Deze \USE{default constructor} zal de \USE{default constructor} van de class |Breuk| aanroepen om de private variabelen |lengte| en |breedte| te initialiseren. Als we dus een object van de class |Rechthoek| aanmaken dan zorgt de \USE{default constructor} ervoor dat beide private variabelen de waarde \sfrac{0}{1} krijgen.
+Als er in de class |Rechthoek| geen enkele \USE{constructor} gedefinieerd is dan wordt door de compiler een \USE{default constructor} gedefinieerd, zie \cpageref{defaultconstructor}. Deze \USE{default constructor} zal de \USE{default constructor} van de class |Breuk| aanroepen om de private variabelen |lengte| en |breedte| te initialiseren. Als we dus een object van de class |Rechthoek| aanmaken dan zorgt de \USE{default constructor} ervoor dat beide private variabelen de waarde \sfrac{0}{1} krijgen.
 
 \section{Default assignment operator}
 \label{sec:defaultassignmentoperator}
@@ -2433,7 +2434,7 @@ Segmentation fault (core dumped)
 
 %TODO: uitvoer nog uitleggen.
 
-Voorbeeldprogramma om een onbekend aantal elementen in een |vector| in te lezen (\proglink{std_vector2.cpp}):
+Voorbeeldprogramma om een onbekend aantal elementen in een |vector| in te lezen (\proglink{std_\\-vec\\-tor2.cpp}):
 \cpplstinputfragment[linerange={1-37}]{std_vector2.cpp}
 
 Mogelijke invoer\footnote{%
@@ -3713,7 +3714,7 @@ Frequentie == 0
 The END.
 \end{coutput}
 
-Als je nu bijvoorbeeld alleen de |Capacity_error| \USE{exception} wilt opvangen maar de \hcode{Frequency_\\-error} \USE{exception} niet, dan kan dat eenvoudig door in de bovenstaande catch het type \hcode{Impe\\-dance_\\-error} te vervangen door |Capacity_error|.
+Als je nu bijvoorbeeld alleen de |Capacity_error| \USE{exception} wilt opvangen maar de \hcode{Fre\\-quen\\-cy_\\-error} \USE{exception} niet, dan kan dat eenvoudig door in de bovenstaande catch het type \hcode{Impe\\-dance_\\-error} te vervangen door |Capacity_error|.
 
 \section{De volgorde van \texorpdfstring{\cppcode{catch}}{catch} blokken}
 \markright{}
@@ -4001,7 +4002,8 @@ Je ziet dat de ABC |Stack| bestaat uit 2 doe\hyp{}functies (|push| en |pop|) en 
 Het van de \USE{stack} afhalen van een element gaat bij deze interface in twee stappen.
 Met de vraag\hyp{}functie |top| kan eerst het bovenste element van de \USE{stack} \enquote{gelezen} worden waarna het met de doe\hyp{}functie |pop| van de \USE{stack} verwijderd kan worden.
 
-Sinds \Cpp{} kun je automatisch gegenereerde memberfuncties, zie \cpageref{default constructor,sec:defaultcopyconstructor,sec:defaultassignmentoperator} verwijderen door er |= delete| achter te plaatsen.
+%cpageref{defaultconstructor,sec:defaultcopyconstructor,sec:defaultassignmentoperator} werkt niet
+Sinds \Cpp{} kun je automatisch gegenereerde memberfuncties, zie pagina's \pageref{defaultconstructor}, \pageref{sec:defaultcopyconstructor} en \pageref{sec:defaultassignmentoperator} verwijderen door er |= delete| achter te plaatsen.
 De |operator=| en de \USE{copy constructor} van de class |Stack| zijn met |= delete| gedeclareerd waardoor ze niet gebruikt kunnen worden.
 Het toekennen van de ene \USE{stack} aan de andere en het kopiëren van een \USE{stack} hebben beide een executietijd $O(n)$ en om die reden hebben we deze operaties verwijderd.
 Bijvoorbeeld om te voorkomen dat een \USE{stack} per ongeluk als \USE{call by value} argument aan een functie wordt doorgegeven.
@@ -6080,7 +6082,7 @@ Dit is bij \USE{Tic-Tac-Toe} geen probleem omdat de computer niet kan verliezen 
 
 Bij het gebruik van een transpositietabel kun je de diepte waarop de tabel gebruik wordt limiteren, zie \proglink{Tic-Tac_map_restricted_depth.cpp}.
 Daarbij moet de optimale waarde van \hcode{MAX_\\-TABLE_\\-DEPTH} worden bepaald.
-Dit kun je doen met het programma \proglink{Tic-Tac_determine_MAX_TABLE_DEPTH.cpp}.
+Dit kun je doen met het programma \proglink{Tic-Tac_\\-de\\-ter\\-mine_\\-MAX_\\-TABLE_\\-DEPTH.cpp}.
 
 %De programma's waarnaar in deze paragraaf wordt verwezen, worden in de les verder besproken.
 %Zie eventueel de PowerPoint presentatie van week 5: \url{http://bd.eduweb.hhs.nl/algods/ppsx/ALGODS.pptm}.
@@ -7692,7 +7694,7 @@ Maar dit wist je natuurlijk allemaal al lang (lees \csecref{inleidingOODOOP} en 
 In een \USE{constructor} en in een \USE{destructor} werkt \USE{dynamic binding} echter niet! 
 Op het eerste gezicht is dit vreemd maar als je er goed over nadenkt dan blijkt het toch logisch te zijn.
 Dit wordt uitgelegd aan de hand van het volgende voorbeeld.
-Als we in het bovenstaande programma de class |Fruit| als volgt wijzigen (\proglink{DynamicBindingInConstructorEnDestructor.cpp}):
+Als we in het bovenstaande programma de class |Fruit| als volgt wijzigen (\proglink{Dynamic\\-Binding\\-In\\-Constructor\\-En\\-De\\-struc\\-tor.cpp}):
 \cpplstinputfragment[linerange={7-22}]{DynamicBindingInConstructorEnDestructor.cpp}
 
 \needspace{2\baselineskip}
@@ -8680,7 +8682,7 @@ Zie \proglink{vector_reserve.cpp}.
 \markright{}
 De standaardcontainer hebben zogenoemde \emph{emplace}-operaties.
 Zo heeft bijvoorbeeld een |vector| naast de bekende |push_back|-operatie ook een |emplace_back|-operatie.
-De |emplace_back| combineert het toevoegen van een element in de vector met het aanroepen van de constructor van dit element.
+De \hcode{emplace_\\-back} combineert het toevoegen van een element in de vector met het aanroepen van de constructor van dit element.
 Dit voorkomt het maken van een onnodig kopietje.
 In het programmafragment:
 \begin{cpplstfragment}
@@ -8836,7 +8838,7 @@ De functie |find_upper_middle| kan met behulp van een compile time if als volgt 
 \cpplstinputfragment[linerange={17-45}]{compile_time_if.cpp}
 
 De template |is_same<T1, T2>| maakt de member constante genaamd |value| gelijk aan |true| als type |T1| hetzelfde is als type |T2| en |false| als dit niet zo is.
-In dit geval wordt deze template gebruikt in de conditie van de compile time if om het type van |iterator_traits<I>::iterator_category|, waarbij |I| het als argument meegegeven iteratortype is, te vergelijken met het type |random_access_iterator_tag|.
+In dit geval wordt deze template gebruikt in de conditie van de compile time if om het type van \hcode{iterator_\\-traits<I>::\\-iter\\-ator_\\-cate\\-gory}, waarbij |I| het als argument meegegeven iteratortype is, te vergelijken met het type \hcode{ran\\-dom_\\-access_\\-iter\\-ator_\\-tag}.
 Hiermee wordt dus bepaald of de iterator |I| een random access iterator is.
 Dit kan tijdens compile time gebeuren omdat de compiler alle (als argument van de templates) gebruikte types kent.
 Als de iterator |I| geen random access iterator is, dan wordt in de |else| van de eerste compile time if een tweede compile time if uitgevoerd om te bepalen of |I| een bidirectional iterator is. 
