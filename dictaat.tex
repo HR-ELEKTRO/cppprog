@@ -474,8 +474,8 @@ Bijvoorbeeld, in het onderstaande programma wordt een array \hcode{kam\\-pi\\-oe
 	int eerste {kampioensjarenFeyenoord[0]};
 \end{cpplstfragment}
 
+\needspace{4cm}
 We kunnen het type van de variabele |eerste| in dit geval ook door de compiler laten bepalen (Engels: type deduction), zie \proglink{auto.cpp}: 
-
 \cpplstinputfragment[linerange={5-7}]{auto.cpp}
 
 Dit komt de onderhoudbaarheid van het programma ten goede want als het type van de array nu veranderd wordt van |int| naar |uint16_t| dan wordt het type van de variabele |eerste| automatisch aangepast.
@@ -644,6 +644,7 @@ Deze manier van het opslaan van \USE{character} strings heeft vele nadelen (waar
 In de standaard \Cpp{} \USE{library} is een nieuw type |string| opgenomen waarin \USE{character} strings op een veilige manier opgeslagen kunnen worden.
 Het bewerken van deze |string|s is ook veel eenvoudiger dan strings opgeslagen in \USE{character} array's.
 
+\needspace{4cm}
 Bijvoorbeeld het vergelijken van \USE{character} strings in C:
 \begin{cpplstfragment}
 #include <stdio.h>
@@ -1354,7 +1355,8 @@ b3.plus(5) = 2/5
 \section{Constructor \texorpdfstring{\cppcode{Breuk}}{Breuk}}
 \markright{}
 De \label{constructor}\USE{constructors} definiëren hoe een object gemaakt kan worden.
-De \USE{constructors} hebben dezelfde naam als de class. 
+De \USE{constructors} hebben dezelfde naam als de class.%
+\needspace{4cm}
 Voor de class |Breuk| heb ik de volgende drie \USE{constructors} gedeclareerd:
 \cpplstinputfragment[linerange=16-18]{Breuk1.cpp}
 
@@ -1379,6 +1381,7 @@ Na afloop van de onderstaande code zal het object |b2| de waarde \sfrac{1}{2} be
     Breuk b2 {3, 6}; // roep constructor met twee int parameters aan
 \end{cpplstfragment}
 
+\needspace{4cm}
 Deze \USE{constructor} |Breuk(int t, int n);| heb ik als volgt gedefinieerd:
 \cpplstinputfragment[linerange=45-47]{Breuk1.cpp}
 
@@ -1407,6 +1410,7 @@ Het initialiseren van datavelden vanuit de \USE{constructor} kan op twee maniere
 \end{itemize}
 De eerste methode heeft de voorkeur, omdat dit altijd werkt. Een constante dataveld kan bijvoorbeeld niet met een \USE{assignment} geïnitialiseerd worden.
 
+\needspace{4cm}
 Dus gebruik:
 \cpplstinputfragment[linerange=39-40]{Breuk1.cpp}
 in plaats van:
@@ -1417,6 +1421,7 @@ Breuk::Breuk() {
 }
 \end{cpplstfragment}
 
+\needspace{6cm}
 \section{Constructors en type conversies}
 \label{sec:conversieconstructor}
 In het bovenstaande programma wordt, aan het einde van de functie |main|, de memberfunctie |plus| als volgt aangeroepen:
@@ -1540,9 +1545,11 @@ De compiler kan niet (altijd%
 }) controleren of het aanroepen van een memberfunctie een verandering in het object tot gevolg heeft. 
 Daarom mag je een memberfunctie alleen aanroepen voor een |const| object als je expliciet aanduidt dat deze memberfunctie het object niet verandert. 
 Dit doe je door het \USE{keyword} |const| achter de memberfunctie te plaatsten. 
+\needspace{4cm}
 Bijvoorbeeld:
 \cpplstinputfragment[linerange=19-19]{Breuk1.cpp}
 
+\needspace{4cm}
 Met deze |const| memberfunctie kun je de |teller| van een |Breuk| opvragen. De implementatie is erg eenvoudig:
 \cpplstinputfragment[linerange=49-51]{Breuk1.cpp}
 
@@ -1729,9 +1736,9 @@ Ik zal nu eerst bespreken hoe je de \USE{receiver} (|DIT_OBJECT|) kunt benaderen
 \section{\texorpdfstring{\cppcode{this}}{this} pointer}
 \markright{}
 Elke memberfunctie kan beschikken over een impliciete parameter genaamd \label{this}|this| die het adres bevat van het object waarop de memberfunctie wordt uitgevoerd. 
-Met deze pointer kun je bijvoorbeeld het object waarop een memberfunctie wordt uitgevoerd als return waarde van deze memberfunctie teruggeven.
+Met deze pointer kun je bijvoorbeeld het object waarop een memberfunctie wordt uitgevoerd als return waarde van deze memberfunctie teruggeven.%
+\needspace{4cm}
 Bijvoorbeeld:
-
 \label{operator+= nog niet correct}
 \begin{cpplstfragment}[mathescape=true]
 Breuk Breuk::operator+=(Breuk right) { $\color{hrred}\textbf{// Let op: deze code is niet correct!}$; 
