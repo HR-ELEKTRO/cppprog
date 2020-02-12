@@ -936,9 +936,9 @@
     }{
 		\expandafter\ifstrequal\expandafter{\myClass}{article}{
 	        \fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}}
-	        \fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\rightmark}\rease@header{}}        
-		}{
-        	\fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}}
+	        \fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\rightmark}\rease@header{}}
+		}{%
+			\fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}}
         	\fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\leftmark}\rease@header{}}
 		}
         \fancyfoot[OR]{\headerfont{}Hogeschool Rotterdam\hspace{1em}\page@number@box{}}
