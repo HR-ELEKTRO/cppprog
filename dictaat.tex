@@ -518,13 +518,12 @@ Deze |for|\hyp{}lus is speciaal bedoeld om de elementen van een array%
     De standaard \Cpp{} \USE{library} bevat nog vele andere datastructuren die ook met een \USE{range-based} \cppcode{for} doorlopen kunnen worden zie \csecref{std::array} en \csecref{std::vector}.
 } één voor één te benaderen.
 
-\needspace{2\baselineskip}
+\needspace{4cm}
 Het volgende C programmafragment bepaalt de som van alle elementen in een array:
-
 \cpplstinputfragment[linerange={som_in_C-som_in_C}]{fragments.cpp}
 
+\needspace{4cm}
 Je kunt in \Cpp hetzelfde bereiken met behulp van een \USE{range-based} |for|:
-
 \cpplstinputfragment[linerange={som_in_Cpp_zonder_auto-som_in_Cpp_zonder_auto}]{fragments.cpp}
 
 Je ziet dat de syntax van de \USE{range-based} |for| heel eenvoudig is.
@@ -697,9 +696,11 @@ Dit is vergelijkbaar met het gebruik van ingebouwde operator |+| die zowel gebru
 \needspace{4cm}
 Voorbeeld zonder \USE{function name overloading}:
 \cpplstinputfragment[linerange={abs_not_overloaded-abs_not_overloaded}]{fragments.cpp}
+\needspace{4cm}
 Hetzelfde voorbeeld met \USE{function name overloading}:
 \cpplstinputfragment[linerange={abs_overloaded-abs_overloaded}]{fragments.cpp}
 
+\needspace{4cm}
 Als je één van deze \USE{overloaded} functies wilt gebruiken om bijvoorbeeld de absolute waarde van een variabele van het type |double| te berekenen, dan kun je dit als volgt doen:
 \cpplstinputfragment[linerange={use_abs_overloaded-use_abs_overloaded}]{fragments.cpp}
 
@@ -725,6 +726,7 @@ Als we de waarde 5 in het decimale (tientallig) stelsel willen afdrukken, dan ka
 In dit geval is het handig om bij de laatste parameter een default argument op te geven (in het prototype) zodat we niet steeds het talstelsel 10 als tweede argument hoeven op te geven als we een variabele in het decimale stelsel willen afdrukken.
 \cpplstinputfragment[linerange={def_par-def_par}]{fragments.cpp}
 Als de functie nu met maar één argument wordt aangeroepen, wordt als tweede argument |10| gebruikt zodat het getal in het decimale talstelsel wordt afgedrukt.
+\needspace{4cm}
 Deze functie kan als volgt worden gebruikt, zie \proglink{default_argument.cpp}:
 \cpplstinputfragment[linerange={use_def_par-use_def_par}]{fragments.cpp}
 
@@ -1546,6 +1548,7 @@ Bijvoorbeeld:
 Met deze |const| memberfunctie kun je de |teller| van een |Breuk| opvragen. De implementatie is erg eenvoudig:
 \cpplstinputfragment[linerange=49-51]{Breuk1.cpp}
 
+\needspace{4cm}
 Je kunt de memberfunctie |teller| nu dus ook aanroepen voor \USE{read-only} breuken:
 \begin{cpplstfragment}
     const Breuk halve {1, 2}; // constante halve met waarde 1/2
@@ -1599,7 +1602,7 @@ Als je ervoor zorgt dat de class invariant aan het einde van elke public memberf
 }
 Dit vermindert de kans op het maken van fouten.
 
-\section{Voorbeeld class \texorpdfstring{\cppcode{Breuk}}{Breuk} (tweede versie)}
+\section[Voorbeeld class Breuk (tweede versie)]{Voorbeeld class \texorpdfstring{\cppcode{Breuk}}{Breuk} (tweede versie)}
 \markright{}
 \label{breuk2}
 Dit voorbeeld is een uitbreiding van de in \csecref{breuk1} gegeven class |Breuk| (versie 1). 
@@ -1726,7 +1729,7 @@ Breuk Breuk::operator+=(Breuk right) {
 
 Ik zal nu eerst bespreken hoe je de \USE{receiver} (|DIT_OBJECT|) kunt benaderen en daarna zal ik weer op de definitie van de |operator+=| terugkomen.
 
-\section{\texorpdfstring{\cppcode{this}}{this} pointer}
+\section[this pointer]{\texorpdfstring{\cppcode{this}}{this} pointer}
 \markright{}
 Elke memberfunctie kan beschikken over een impliciete parameter genaamd \label{this}|this| die het adres bevat van het object waarop de memberfunctie wordt uitgevoerd. 
 Met deze pointer kun je bijvoorbeeld het object waarop een memberfunctie wordt uitgevoerd als return waarde van deze memberfunctie teruggeven.
@@ -8122,7 +8125,7 @@ De \USE{copy constructor} kan eenvoudig als volgt gedefinieerd worden:
 De parameter van de \USE{copy constructor} moet een |Array&| zijn en kan geen |Array| zijn.
 Als je namelijk een |Array| als (\USE{call by value}) parameter gebruikt, moet een kopietje worden gemaakt bij aanroep van de \USE{copy constructor}, maar daarvoor moet de \USE{copy constructor} worden aangeroepen, waarvoor een kopietje moet worden gemaakt, maar daarvoor moet de \USE{copy constructor} \ldots enz.
 
-\section{Overloading \texorpdfstring{\cppcode{operator=}}{operator=}}
+\section[Overloading operator=]{Overloading \texorpdfstring{\cppcode{operator=}}{operator=}}
 \markright{}
 \label{sec:assignmentoperator}
 Voor de door de compiler gegenereerde \USE{assignment operator} geldt ongeveer hetzelfde verhaal als voor de door de compiler gegenereerde \USE{copy constructor}.
