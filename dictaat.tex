@@ -141,7 +141,7 @@ versie 19.6.0.STS voor ARM en MSP430%
 	Zie: \url{http://www.ti.com/ccs}
 }. Op \url{https://www.bitbucket.com/cppprog/wiki} vind je de source code van alle in dit dictaat besproken programma's. Als je dit dictaat leest op een device met internettoegang, dan kun je op de bestandsnamen in dit dictaat klikken om de programma's te downloaden.
 
-Veel literatuur over \Cpp{} en objectgeoriënteerd programmeren is geschreven in het Engels. Om er voor te zorgen dat je deze literatuur na (of tijdens) het lezen van dit dictaat eenvoudig kunt gebruiken heb ik veel van het jargon dat in deze literatuur wordt gebruikt niet vertaald naar het Nederlands. De keuze om een term wel of niet te vertalen is arbitraal. Zo heb ik bijvoorbeeld het Engelse begrip \enquote{return type} niet vertaal in het Nederlandse \enquote{terugkeertype} of \enquote{retourtype}, maar heb ik het Engelse begrip \enquote{parameter type} wel vertaald naar het Nederlandse \enquote{parametertype}. De Engelse begrippen \enquote{class} en \enquote{class template} zijn niet vertaald in \enquote{klasse} en \enquote{klassetemplate} maar de Engelse begrippen \enquote{function} en \enquote{function template} zijn wel vertaald in \enquote{functie} en \enquote{functietemplate}. 
+Veel literatuur over \Cpp{} en objectgeoriënteerd programmeren is geschreven in het Engels. Om er voor te zorgen dat je deze literatuur na (of tijdens) het lezen van dit dictaat eenvoudig kunt gebruiken heb ik veel van het jargon dat in deze literatuur wordt gebruikt niet vertaald naar het Nederlands. De keuze om een term wel of niet te vertalen is arbitraal. Zo heb ik bijvoorbeeld het Engelse begrip \squote{return type} niet vertaal in het Nederlandse \squote{terugkeertype} of \squote{retourtype}, maar heb ik het Engelse begrip \squote{parameter type} wel vertaald naar het Nederlandse \squote{parametertype}. De Engelse begrippen \squote{class} en \squote{class template} zijn niet vertaald in \squote{klasse} en \squote{klassetemplate} maar de Engelse begrippen \squote{function} en \squote{function template} zijn wel vertaald in \squote{functie} en \squote{functietemplate}. 
 
 %Dit dictaat wordt onder andere gebruikt bij de lessen Embedded Systems 3 (EMS30) van de opleiding Elektrotechniek aan de Hogeschool Rotterdam. Af en toe wordt in dit dictaat verwezen naar deze lessen. Als je dit dictaat leest zonder de lessen EMS30 te volgen, dan kun je deze verwijzingen negeren.
 
@@ -297,7 +297,7 @@ Het bestuderen van dit dictaat zonder voldoende kennis en begrip van C is vergel
 \begin{cpplstShortInline}
 \chapter[Van C naar C++]{Van C naar \Cpp{}}
 \label{sec:vancnaarcpp}
-De ontwerper van \Cpp{} Bjarne Stroustrup gaf op de vraag: \squote{Wat is \Cpp{}?} een aantal jaren geleden het volgende antwoord \cite{Stroustrup2000}:
+De ontwerper van \Cpp{} Bjarne Stroustrup gaf op de vraag: \dquote{Wat is \Cpp{}?} een aantal jaren geleden het volgende antwoord \cite{Stroustrup2000}:
 %\begin{quotation} % ziet er niet mooi uit omdat de quote maar uit 1 paragraaf bestaat
 \begin{quote}
     \begin{otherlanguage}{usenglish}
@@ -889,13 +889,13 @@ Ondanks dat het gebruik van softwarecomponenten, die we kunnen kopen en waarmee 
 Dit heeft volgens mij verschillende redenen:
 \begin{itemize}
     \item Voor een softwarecomponent moet je net als voor een hardwarecomponent betalen. Bij veel hardwarecomponenten komt het niet in je op om ze zelf te maken (een videokaart bijvoorbeeld), maar een softwarecomponent kun je ook altijd zelf (proberen te) maken.
-Zo hoor je bijvoorbeeld soms zeggen: \enquote{Maar dat algoritme staat toch gewoon in het boek van \ldots dus dat kunnen we toch zelf wel implementeren}.
+Zo hoor je bijvoorbeeld soms zeggen: \dquote{Maar dat algoritme staat toch gewoon in het boek van \ldots dus dat kunnen we toch zelf wel implementeren}.
     \item Als je van een bepaalde hardwarecomponent 1000 stuks gebruikt, moet je er ook 1000 maal voor betalen.
 Bij een softwarecomponent vindt men dit minder normaal en er valt eenvoudiger mee te sjoemelen.
     \item Programmeurs denken vaak: maar dat kan ik zelf toch veel eenvoudiger en sneller programmeren. Daarbij overschatten ze vaak hun eigen kunnen en onderschatten ze de tijd die nodig is om een component grondig te testen.
     \item De omgeving (taal, \USE{operating system}, hardware enz.) van software is divers.
 Dit maakt het produceren van softwarecomponenten niet eenvoudig.
-\enquote{Heeft u deze component ook in \Cpp{} voor Linux in plaats van in C\# voor Windows?}%
+\dquote{Heeft u deze component ook in \Cpp{} voor Linux in plaats van in C\# voor Windows?}%
 \footnote{%
     Er zijn diverse alternatieven ontwikkeld voor het maken van taalonafhankelijke componenten.
 Microsoft heeft voor dit doel de .NET architectuur ontwikkeld.
@@ -949,14 +949,14 @@ Als een object een \USE{message} ontvangt, wordt de bijbehorende \USE{method} al
 
 Een \USE{method} in een \USE{base class} kan dus worden geherdefinieerd (Engels: \emph{\USE{overridden}}) door een \USE{method} in de \USE{derived class}.
 Naast de hierboven beschreven vorm van hergebruik (\USE{inheritance}) kunnen objecten ook als onderdeel van een groter object gebruikt worden (compositie = Engels: \emph{\USE{composition}}).
-\USE{Inheritance} wordt ook wel generalisatie (Engels: \emph{\USE{generalization}}) genoemd en leidt tot een zogenoemde \enquote{\emph{is een}} relatie.
+\USE{Inheritance} wordt ook wel generalisatie (Engels: \emph{\USE{generalization}}) genoemd en leidt tot een zogenoemde \squote{\emph{is een}}-relatie.
 Je kunt een class |Bakker| bijvoorbeeld afleiden door middel van overerving van een class |Winkelier|.
 Dit betekent dan dat de class |Bakker| minimaal dezelfde \USE{messages} ondersteunt als de class |Winkelier| (maar de class |Bakker| kan er wel zijn eigen \USE{methods} aan koppelen!).
-We zeggen: \enquote{Een \cppcode{Bakker} is een \cppcode{Winkelier}} of \enquote{Een \cppcode{Bakker} erft over van \cppcode{Winkelier}} of \enquote{Een \cppcode{Winkelier} is een generalisatie van \cppcode{Bakker}}.
-Composition wordt ook wel \emph{\USE{containment}} of \emph{\USE{aggregation}} genoemd en leidt tot een zogenoemde \enquote{\emph{heeft een}} relatie.
+We zeggen: \dquote{Een \cppcode{Bakker} is een \cppcode{Winkelier}} of \dquote{Een \cppcode{Bakker} erft over van \cppcode{Winkelier}} of \dquote{Een \cppcode{Winkelier} is een generalisatie van \cppcode{Bakker}}.
+Composition wordt ook wel \emph{\USE{containment}} of \emph{\USE{aggregation}} genoemd en leidt tot een zogenoemde \squote{\emph{heeft een}}-relatie.
 Je kunt in de definitie van een class |Auto| vier objecten van de class |Wiel| opnemen.
 De |Auto| kan deze |Wiel|en dan gebruiken om de aan |Auto| gestuurde \USE{messages} uit te voeren.
-We zeggen: \enquote{een \cppcode{Auto} heeft \cppcode{Wiel}en}.
+We zeggen: \dquote{een \cppcode{Auto} heeft \cppcode{Wiel}en}.
 Welke relatie in een bepaald geval nodig is, is niet altijd eenvoudig te bepalen.
 We komen daar later nog uitgebreid op terug.
 
@@ -1057,7 +1057,7 @@ Deze manier van werken heeft de volgende nadelen:
 Het is in C niet te voorkomen dat het dataveld |onder| op nul gezet wordt. 
 Als een programmeur het dataveld |onder| van een |Breuk| op nul zet, kan dit een fout veroorzaken in code van een andere programmeur die een |Breuk| naar een |double| converteert.
 Als deze fout geconstateerd wordt, kunnen alle functies waarin breuken gebruikt worden de boosdoeners zijn.
-    \item Iedere programmeur die gebruikt maakt van het type |Breuk| kan er voor kiezen om zelf de code voor het optellen van breuken \enquote{uit te vinden} in plaats van gebruik te maken van de functie |som|.
+    \item Iedere programmeur die gebruikt maakt van het type |Breuk| kan er voor kiezen om zelf de code voor het optellen van breuken \squote{uit te vinden} in plaats van gebruik te maken van de functie |som|.
 Er valt dus niet te garanderen dat alle optellingen van breuken correct en genormaliseerd zullen zijn.
 Ook niet als we wel kunnen garanderen dat de functies |som| en |normaliseer| correct zijn.
 Iedere programmeur die breuken gebruikt kan ze namelijk op zijn eigen manier optellen.
@@ -1121,7 +1121,7 @@ Functies en variabelen die private zijn kunnen alleen door functies van de class
 \footnote{%
     Variabelen die private zijn kunnen door het gebruik van een pointer en bepaalde type-conversies toch door andere functies benaderd worden. 
     Ze staan namelijk gewoon in het werkgeheugen en ze zijn dus altijd via software toegankelijk. 
-    Het gebruik van private variabelen is alleen bedoeld om \enquote{onbewust} verkeerd gebruik tegen te gaan.
+    Het gebruik van private variabelen is alleen bedoeld om \squote{onbewust} verkeerd gebruik tegen te gaan.
 }
 Deze private functies en variabelen zitten ingekapseld in de class |Breuk|.
 De implementatie van de class is zichtbaar in de definitie van de class (als |private| datamembers). 
@@ -1142,13 +1142,13 @@ Je kunt objecten (variabelen) van de class (het zelfgedefinieerde type) |Breuk| 
 Een object heeft drie kenmerken:
 \begin{itemize}
     \item \textbf{Geheugen} (Engels: \emph{\USE{state}});\\
-Een object kan \enquote{iets} onthouden.
+Een object kan \squote{iets} onthouden.
 Wat een object kan onthouden blijkt uit de classdeclaratie.
 Het object |a| is een instantie van de class |Breuk| en kan, zoals uit de classdeclaratie van |Breuk| blijkt, twee integers onthouden.
 Elk object heeft (vanzelfsprekend) zijn \emph{eigen} geheugen.
 Zodat de |Breuk| |a| een andere waarde kan hebben dan de |Breuk| |b|.    
     \item \textbf{Gedrag} (Engels: \emph{\USE{behaviour}});\\
-Een object kan \enquote{iets} doen.
+Een object kan \squote{iets} doen.
 Wat een object kan doen blijkt uit de classdeclaratie.
 Het object |a| is een instantie van de class |Breuk| en kan, zoals uit de declaratie van |Breuk| blijkt, 4 dingen doen: zichzelf inlezen, zichzelf afdrukken, een |Breuk| bij zichzelf optellen en zichzelf normaliseren.
 Alle objecten van de class |Breuk| hebben hetzelfde gedrag.
@@ -1173,7 +1173,7 @@ Alleen de memberfuncties |leesin|, |drukaf|, |plus| en |normaliseer| kunnen een 
 Als ergens een fout ontstaat omdat het dataveld |onder| van een |Breuk| op nul is gezet, kunnen alleen de memberfuncties van |Breuk| de boosdoeners zijn.
 %Wagenwiel plaatje hier invoegen.
 %Interface hier bespreken eventueel met plaatje.
-    \item Een programmeur die gebruik maakt van de class |Breuk| kan er \emph{niet} voor kiezen om zelf de code voor het optellen van breuken \enquote{uit te vinden} in plaats van gebruik te maken van de memberfunctie |plus|.
+    \item Een programmeur die gebruik maakt van de class |Breuk| kan er \emph{niet} voor kiezen om zelf de code voor het optellen van breuken \squote{uit te vinden} in plaats van gebruik te maken van de memberfunctie |plus|.
 Als we kunnen garanderen dat de functies |plus| en |normaliseer| correct zijn, dan kunnen we dus garanderen dat alle optellingen van breuken correct en genormaliseerd zullen zijn.
 Iedere programmeur die breuken gebruikt kan ze namelijk alleen optellen door gebruik te maken van de memberfunctie |plus|.
     \item Iedere programmeur die gebruikt maakt van de class |Breuk| zal \emph{niet} zelf nieuwe bewerkingen (zoals bijvoorbeeld het vermenigvuldigen van breuken) definiëren.
@@ -1183,7 +1183,7 @@ Alleen de programmeur die verantwoordelijk is voor het onderhouden van de class 
 Bij het ontwikkelen van kleine programma's zijn deze voordelen niet zo belangrijk maar bij het ontwikkelen van grote programma's zijn deze voordelen wel erg belangrijk.
 Door gebruik te maken van de |class| |Breuk| met bijbehorende memberfuncties in \Cpp{} in plaats van de |typedef struct| |Breuk| met de bijbehorende functies in C wordt het programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
 
-De hierboven gedefinieerde class |Breuk| is erg beperkt. In de inleiding van dit hoofdstuk heb ik geschreven: \enquote{Een UDT is een user-defined type dat voor een gebruiker niet te onderscheiden is van ingebouwde types (zoals \cppcode{int})}.%
+De hierboven gedefinieerde class |Breuk| is erg beperkt. In de inleiding van dit hoofdstuk heb ik geschreven: \dquote{Een UDT is een user-defined type dat voor een gebruiker niet te onderscheiden is van ingebouwde types (zoals \cppcode{int})}.%
 \needspace{4cm}
 Een UDT |Breuk| zal dus als volgt gebruikt moeten kunnen worden:
 %Waarom deze splitsing?
@@ -1196,7 +1196,7 @@ Een UDT |Breuk| zal dus als volgt gebruikt moeten kunnen worden:
 Je ziet dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als het ingebouwde type |int| te gebruiken is.
 Dit maakt het voor programmeurs die het type |Breuk| gebruiken erg eenvoudig.
 In het vervolg zal ik bespreken hoe de class |Breuk| stap voor stap uitgebreid en aangepast kan worden zodat uiteindelijk een UDT |Breuk| ontstaat.
-Dit blijkt nog behoorlijk lastig te zijn en je zou jezelf af kunnen vragen: \enquote{Is het al die inspanningen wel waard om een \cppcode{Breuk} zo te maken dat je hem net zoals een \cppcode{int} kan gebruiken?}
+Dit blijkt nog behoorlijk lastig te zijn en je zou jezelf af kunnen vragen: \dquote{Is het al die inspanningen wel waard om een \cppcode{Breuk} zo te maken dat je hem net zoals een \cppcode{int} kan gebruiken?}
 Bedenk dan het volgende: het maken van de class |Breuk| is dan wel een hele inspanning maar iedere programmeur kan vervolgens dit zelfgedefinieerde type, als hij of zij de naam |Breuk| maar kent, als vanzelf (intuïtief) gebruiken.
 Er is daarbij geen handleiding of helpfunctie nodig, omdat het type |Breuk| zich net zo gedraagt als het ingebouwde type |int|.
 De class |Breuk| hoeft maar één keer gemaakt te worden, maar zal talloze malen gebruikt worden.
@@ -1338,7 +1338,7 @@ int main() {$\label{breuk1::main}$
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
     \label{assert}De standaard functie \cppcode{assert} doet niets als de, als argument meegegeven, expressie \cppcode{true} oplevert maar breekt het programma met een passende foutmelding af als dit niet zo is.
-    Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan bepaalde voorwaarden (waarvan je \enquote{zeker} weet dat ze geldig zijn) wordt voldaan.
+    Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan bepaalde voorwaarden (waarvan je \squote{zeker} weet dat ze geldig zijn) wordt voldaan.
     Zie \csecref{sec:assert}.
 }
 
@@ -1428,17 +1428,17 @@ Breuk::Breuk() {
 In het bovenstaande programma wordt, aan het einde van de functie |main|, de memberfunctie |plus| als volgt aangeroepen:
 \cpplstinputfragment[linerange=92-92]{Breuk1.cpp}
 
-Uit de uitvoer blijkt dat dit \enquote{gewoon} werkt: |b3| wordt verhoogd met \sfrac{5}{1}. 
+Uit de uitvoer blijkt dat dit \squote{gewoon} werkt: |b3| wordt verhoogd met \sfrac{5}{1}. 
 Op zich is dit vreemd want de memberfunctie |plus| is gedefinieerd met een |Breuk| als parameter en niet met een |int| als parameter.
-Als je de memberfunctie |plus| aanroept op een |Breuk| met een |int| als argument, gebeurt het volgende: eerst \enquote{kijkt} de compiler of in de class |Breuk| de memberfunctie |plus(int)| gedefinieerd is. 
+Als je de memberfunctie |plus| aanroept op een |Breuk| met een |int| als argument, gebeurt het volgende: eerst \squote{kijkt} de compiler of in de class |Breuk| de memberfunctie |plus(int)| gedefinieerd is. 
 Als dit het geval is, wordt deze memberfunctie aangeroepen. 
-Als dit niet het geval is, \enquote{kijkt} de compiler of er in de class |Breuk| een memberfunctie is met een parameter van een ander type waarnaar het type |int| omgezet kan worden%
+Als dit niet het geval is, \squote{kijkt} de compiler of er in de class |Breuk| een memberfunctie is met een parameter van een ander type waarnaar het type |int| omgezet kan worden%
 \footnote{%
     Als dit er meerdere zijn, zijn er allerlei regels in de \Cpp{} standaard opgenomen om te bepalen welke conversie gekozen wordt. 
     Ik zal dat hier niet bespreken. 
     Een conversie naar een ingebouwd type gaat altijd voor ten opzichte van een conversie naar een zelfgedefinieerd type.
 }. 
-In dit geval \enquote{ziet} de compiler de memberfunctie |Breuk::plus(Breuk)|. De compiler \enquote{vraagt zich nu dus af} hoe een variabele van het type |int| omgezet kan worden naar het type |Breuk|. Of met andere woorden hoe een |Breuk| gemaakt kan worden en geïnitialiseerd
+In dit geval \squote{ziet} de compiler de memberfunctie |Breuk::plus(Breuk)|. De compiler \squote{vraagt zich nu dus af} hoe een variabele van het type |int| omgezet kan worden naar het type |Breuk|. Of met andere woorden hoe een |Breuk| gemaakt kan worden en geïnitialiseerd
 kan worden met een |int|.
 Of met andere woorden of de \USE{constructor} |Breuk(int)| bestaat. 
 Deze \USE{constructor} bestaat in dit geval. 
@@ -1670,7 +1670,7 @@ b1 += b2 = -11/10
 \section{Operator overloading}
 In de taal \Cpp{} kun je de betekenis van operatoren (zoals bijvoorbeeld |+=|) definiëren voor zelfgedefinieerde types. Als het statement:
 \cpplstinputfragment[linerange=65-65]{Breuk2.cpp}
-vertaald moet worden, waarbij |b1| en |b2| objecten zijn van de class |Breuk|, zal de compiler \enquote{kijken} of in de class |Breuk| de |operator+=| memberfunctie gedefinieerd is. 
+vertaald moet worden, waarbij |b1| en |b2| objecten zijn van de class |Breuk|, zal de compiler \squote{kijken} of in de class |Breuk| de |operator+=| memberfunctie gedefinieerd is. 
 Als dit niet het geval is, levert het bovenstaande statement de volgende foutmelding op:
 \begin{cpplstfragment}[mathescape=true]
     b1 += b2;
@@ -1856,7 +1856,7 @@ Zie \proglink{param.cpp} voor een compleet voorbeeldprogramma.
 \section{\texorpdfstring{\cppcode{const}}{const} reference parameters}
 \markright{}
 \label{sec:constreferenceparameter}
-Er is nog een andere reden om een \USE{reference} parameter in plaats van een \enquote{normale} \USE{value} parameter te gebruiken. 
+Er is nog een andere reden om een \USE{reference} parameter in plaats van een normale \USE{value} parameter te gebruiken. 
 Bij een \USE{reference} parameter wordt zoals we hebben gezien een adres (een vast aantal bytes\footnote{Op een MSP430 microcontroller bestaat een adres uit 2 bytes, op een CC3220 microcontroller uit 4 bytes en op 64-bits pc uit 8 bytes.}) gekopieerd terwijl bij een \USE{value} parameter de waarde (een variabel aantal bytes, afhankelijk van het type) gekopieerd wordt. 
 Als de waarde veel geheugenruimte in beslag neemt, is het om performance redenen beter om een \USE{reference} parameter te gebruiken.\footnote{Later zullen we zien dat er nog een veel belangrijke reden is om een \USE{reference} parameter in plaats van een \USE{value} parameter te gebruiken, zie \csecref{sec:polymorfisme}.}
 Om er voor te zorgen dat deze functie toch aangeroepen kan worden met een constante kan deze parameter dan het beste als |const| \USE{reference} parameter gedefinieerd worden. Het wordt dan ook onmogelijk om in de functie een waarde aan de formele parameter toe te kennen.
@@ -1905,7 +1905,7 @@ In alle voorafgaande code waarin een |Breuk| als parameter is gebruikt kan dus b
 \qa{
     Wanneer gebruik je een \cppcode{T*} parameter in plaats van een \cppcode{T&} parameter?
 }{
-    Gebruik een \cppcode{T*} als je ook \enquote{niets} door wilt kunnen geven. Een \USE{reference} \emph{moet} namelijk altijd ergens naar verwijzen. 
+    Gebruik een \cppcode{T*} als je ook niets door wilt kunnen geven. Een \USE{reference} \emph{moet} namelijk altijd ergens naar verwijzen. 
     Een pointer kan ook nergens naar wijzen (de waarde van de pointer is dan \cppcode{nullptr}).
 }
 
@@ -1980,7 +1980,7 @@ Je moet er dan voor oppassen dat de pointer niet naar een variabele wijst die na
     De GCC \Cpp{}-geeft de \USE{warning}: \error{address of local variable 's' returned}.
 }.
 
-Een goede manier om de waarde van een lokale variabele terug te geven vanuit een functie is door een \enquote{gewoon} type (geen \USE{reference} en ook geen pointer) als return type te gebruiken.  
+Een goede manier om de waarde van een lokale variabele terug te geven vanuit een functie is door een gewoon type (geen \USE{reference} en ook geen pointer) als return type te gebruiken.  
 \begin{cpplstfragment}[mathescape=true]
 int som(int i1, int i2) {
     int s {i1 + i2};
@@ -2012,9 +2012,9 @@ Hoe je andere operatoren kunt overloaden bij het type |Breuk| kun je vinden in \
 \markright{}
 \label{separaat compileren}
 Je kunt de \emph{declaratie} en \emph{definitie} (implementatie) van een class splitsen in een |.h| en een |.cpp| file. 
-Dit heeft als voordeel dat je de implementatie afzonderlijk kunt compileren tot een zogenoemde object file\footnote{Een object file bevat machine code en heeft onder Microsoft Windows de extensie \cppcode{.obj} en onder Linux de extensie \cppcode{.o}}. 
+Dit heeft als voordeel dat je de implementatie afzonderlijk kunt compileren tot een zogenoemde object file\footnote{Een object file bevat machine code en heeft afhankelijk van de gebruikte compiler de extensie \cppcode{.o} of \cppcode{.obj}}. 
 De gebruiker van de class kan dan de |.h| file gebruiken in zijn eigen programma en vervolgens de object file met zijn eigen programma
-mee \enquote{linken}. Zie \cref{fig:separate_compilation}.
+mee \squote{linken}. Zie \cref{fig:separate_compilation}.
 De gebruiker hoeft dan dus niet te beschikken over de implementatie.
 
 \iftoggle{ebook}{
@@ -2053,7 +2053,7 @@ private:
 \footnotetext{%
     Door middel van de \USE{preprocessor directives} \cppcode{#ifndef} enz.\ worden compilatiefouten voorkomen als de gebruiker de file \cppcode{Memcell.h} per ongeluk meerdere malen geïnclude heeft. 
     De eerste keer dat de file geïnclude wordt, wordt het symbool \cppcode{_Memcell_} gedefinieerd. 
-    Als de file daarna opnieuw geïnclude wordt, wordt in de \cppcode{#ifndef} \enquote{gezien} dat het symbool \cppcode{_Memcell_} al bestaat en wordt pas bij de \cppcode{#endif} weer verder gegaan met vertalen.
+    Als de file daarna opnieuw geïnclude wordt, wordt in de \cppcode{#ifndef} \squote{gezien} dat het symbool \cppcode{_Memcell_} al bestaat en wordt pas bij de \cppcode{#endif} weer verder gegaan met vertalen.
 }
 \cpplstinputfragment[linerange={2-11}]{Memappl.cpp}
 
@@ -2079,10 +2079,10 @@ void swap_nts(int& p, int& q) {
 \end{cpplstfragment}
 
 Als je twee |double| variabelen wilt verwisselen, kun je deze functie niet rechtstreeks gebruiken.
-Waarschijnlijk ben je op dit moment gewend om de functie |swap_ints| op de volgende wijze te \enquote{hergebruiken}:
+Waarschijnlijk ben je op dit moment gewend om de functie |swap_ints| op de volgende wijze te \squote{hergebruiken}:
 \begin{itemize}
-    \item Maak een kopie van de functie met behulp van de editor functies \enquote{knippen} en \enquote{plakken}.
-    \item Vervang het type |int| door het type |double| met behulp van de editor functie \enquote{zoek en vervang}.
+    \item Maak een kopie van de functie met behulp van de editor functies \squote{knippen} en \squote{plakken}.
+    \item Vervang het type |int| door het type |double| met behulp van de editor functie \squote{zoek en vervang}.
 \end{itemize}
 Deze vorm van hergebruik heeft de volgende nadelen:
 \begin{itemize}
@@ -2099,13 +2099,13 @@ De definitie van de functietemplate voor |swap| ziet er als volgt uit (\proglink
 Na het \USE{keyword} |template| volgt een lijst van template\hyp{}parameters tussen |<| en |>|.
 Een template\hyp{}parameter zal meestal een type zijn%
 \footnote{%
-    Een template kan ook \enquote{normale} parameters hebben.
+    Een template kan ook normale parameters hebben.
     Zie \csecref{Rij}.
 }.
 Dit wordt aangegeven door het \USE{keyword} |typename|%
 \footnote{%
     In plaats van \cppcode{typename} mag ook \cppcode{class} gebruikt worden.
-    Omdat het \USE{keyword} \cppcode{typename} in een eerdere versie van \Cpp{} nog niet aanwezig was, gebruiken veel \Cpp{} programmeurs en \Cpp{} boeken in plaats van \cppcode{typename} nog steeds het \enquote{verouderde} \cppcode{class}.
+    Omdat het \USE{keyword} \cppcode{typename} in een eerdere versie van \Cpp{} nog niet aanwezig was, gebruiken veel \Cpp{} programmeurs en \Cpp{} boeken in plaats van \cppcode{typename} nog steeds het verouderde \cppcode{class}.
     Het gebruik van \cppcode{typename} is op zich duidelijker omdat bij het gebruik van de template zowel zelfgedefinieerde types (classes) als ingebouwde types (zoals \cppcode{int}) gebruikt kunnen worden.
 } gevolgd door een naam voor de parameter.
 Ik heb hier de naam |T| gebruikt maar ik had net zo goed de naam |VulMaarIn| kunnen gebruiken.
@@ -2115,9 +2115,9 @@ De template\hyp{}parameter moet%
     Zie de volgende voetnoot.
 } in de parameterlijst van de functie gebruikt worden.
 De definitie van deze functietemplate genereert nog geen enkele machinecode instructie. 
-Het is alleen een \enquote{mal} waarmee (automatisch) functies aangemaakt kunnen worden.
+Het is alleen een \squote{mal} waarmee (automatisch) functies aangemaakt kunnen worden.
 
-Als je nu de functie |swap| aanroept, zal de compiler zelf afhankelijk van het type van de gebruikte argumenten de benodigde \enquote{versie} van |swap| genereren%
+Als je nu de functie |swap| aanroept, zal de compiler zelf afhankelijk van het type van de gebruikte argumenten de benodigde \squote{versie} van |swap| genereren%
 \footnote{%
     Zo'n gegenereerde functie wordt een \emph{\USE{template instantiation}} genoemd.
     Je ziet nu ook waarom de template\hyp{}parameter in de parameterlijst van de functiedefinitie gebruikt moet worden.
@@ -2175,18 +2175,18 @@ Het gebruik van een functietemplate heeft de volgende voordelen:
 Het gebruik van een functietemplate heeft echter ook het volgende nadeel:
 \begin{itemize}
     \item Doordat de compiler de volledige functietemplate definitie nodig heeft om een functie aanroep te kunnen vertalen moet de definitie van de functietemplate in een \USE{headerfile} (|.h| file) opgenomen worden en geïnclude worden in elke |.cpp| file waarin de functietemplate gebruikt wordt.
-    Het is niet mogelijk om de functietemplate afzonderlijk te compileren tot een object file en deze later aan de rest van de code te \enquote{linken} zoals dit met een \enquote{gewone} functie wel kan.
+    Het is niet mogelijk om de functietemplate afzonderlijk te compileren tot een object file en deze later aan de rest van de code te \squote{linken} zoals dit met een gewone functie wel kan.
 \end{itemize}
 %TODO: voetnoot toevoegen over \Cpp20 oplossing voor dit probleem
 Bij het ontwikkelen van kleine programma's zijn deze voordelen misschien niet zo belangrijk maar bij het ontwikkelen van grote programma's zijn deze voordelen wel erg belangrijk.
-Door gebruik te maken van een functietemplate in plaats van \enquote{met de hand} verschillende versies van een functie aan te maken wordt een programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
+Door gebruik te maken van een functietemplate in plaats van \squote{met de hand} verschillende versies van een functie aan te maken wordt een programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
 
 De functietemplate |swap| is hier als voorbeeld zelf gedefinieerd, maar in de praktijk is dit niet nodig omdat deze functietemplate al in de standaard \Cpp{}\hyp{}library is opgenomen.
 
 \section{Class templates}
 In de vorige paragraaf hebben we gezien dat je een template van een functie kunt maken waardoor de functie generiek wordt.
 Een generieke functie kun je voor verschillende datatypes gebruiken.
-Als je de generieke functie aanroept, zal de compiler zelf afhankelijk van het type van de gebruikte argumenten de benodigde \enquote{versie} van de generieke functie genereren door, voor de template\hyp{}parameter, het betreffende type in te vullen.
+Als je de generieke functie aanroept, zal de compiler zelf afhankelijk van het type van de gebruikte argumenten de benodigde \squote{versie} van de generieke functie genereren door, voor de template\hyp{}parameter, het betreffende type in te vullen.
 Natuurlijk is het ook mogelijk om een memberfunctie als template te definiëren, waarmee je dus generieke memberfuncties kunt maken.
 Het is in \Cpp{} zelfs mogelijk een hele class generiek te maken door deze class als template te definiëren.
 Om te laten zien hoe dit werkt maken we eerste een class |Dozijn| waarin je twaalf integers kunt opslaan.
@@ -2196,8 +2196,8 @@ De class |Dozijn| waarin twaalf integers kunnen worden opgeslagen kan als volgt 
 \cpplstinputfragment[linerange={6-12}]{Dozijn.cpp}
 
 In een |Dozijn| kunnen dus twaalf integers worden opgeslagen in de private array genaamd |data|.
-De programmeur die een object van de class |Dozijn| gebruikt kan een integer in dit object \enquote{zetten} door de boodschap |zetIn| naar dit object te sturen.
-De plaats waar de integer moet worden \enquote{weggezet} wordt als argument aan dit bericht meegegeven.
+De programmeur die een object van de class |Dozijn| gebruikt kan een integer in dit object \squote{zetten} door de boodschap |zetIn| naar dit object te sturen.
+De plaats waar de integer moet worden \squote{weggezet} wordt als argument aan dit bericht meegegeven.
 De plaatsen zijn genummerd van |0| t/m |11|. 
 De waarde |13| kan, bijvoorbeeld, als volgt op plaats nummer |3| worden weggezet.
 \begin{cpplstfragment}
@@ -2205,7 +2205,7 @@ De waarde |13| kan, bijvoorbeeld, als volgt op plaats nummer |3| worden weggezet
     d.zetIn(3,13);
 \end{cpplstfragment}
 
-Deze waarde kan uit het object worden \enquote{gelezen} door de boodschap |leesUit| naar het object te sturen.
+Deze waarde kan uit het object worden \squote{gelezen} door de boodschap |leesUit| naar het object te sturen.
 Bijvoorbeeld:
 \begin{cpplstfragment}
     cout << "De plaats nummer 3 in d bevat de waarde: " << d.leesUit(3) << '\n';
@@ -2246,7 +2246,7 @@ kwadraten = 0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121
 
 In objecten van de class |Dozijn| kunnen twaalf elementen van het type |int| worden opgeslagen.
 Als je een |Dozijn| met elementen van het type |double| nodig hebt, kun je natuurlijk gaan kopiëren, plakken, zoeken en vervangen maar daar zitten weer de in de vorige paragraaf besproken nadelen aan.
-Als je verschillende versies van |Dozijn| \enquote{met de hand} genereert, moet je bovendien elke versie een andere naam geven omdat een class naam uniek moet zijn. 
+Als je verschillende versies van |Dozijn| \squote{met de hand} genereert, moet je bovendien elke versie een andere naam geven omdat een class naam uniek moet zijn. 
 In plaats daarvan kun je ook het template mechanisme gebruiken om een |Dozijn| met elementen van het type |T| te definiëren, waarbij het type |T| pas bij het gebruik van de class template |Dozijn| wordt bepaald.
 Bij het gebruik van de class template |Dozijn| kan de compiler niet zelf bepalen wat het type |T| moet zijn.
 Vandaar dat je dit bij het gebruik van de class template |Dozijn| zelf moet specificeren.
@@ -2262,7 +2262,7 @@ De \emph{class template} |Dozijn| kan als volgt worden gedeclareerd (\proglink{D
 \cpplstinputfragment[linerange={7-13}]{Dozijn_template.cpp}
 
 Merk op dat de parameter |index| nog steeds van het type |int| is.
-De \enquote{plaatsen} in het |Dozijn| zijn altijd genummerd van |0| t/m |11| onafhankelijk van het type van de elementen die in het |Dozijn| opgeslagen worden.
+De plaatsen in het |Dozijn| zijn altijd genummerd van |0| t/m |11| onafhankelijk van het type van de elementen die in het |Dozijn| opgeslagen worden.
 Het type van de private array |data| is nu van het type |T| en dit type is een parameter van de template.
 De tweede parameter van de memberfunctie |zetIn| en het return type van |leesUit| zijn van het type |const T&| in plaats van het type |T| om onnodige kopietjes te voorkomen.
 Alle memberfuncties van de \emph{template} class zijn vanzelfsprekend ook \emph{\USE{templates}}.
@@ -2347,8 +2347,8 @@ De class template |array| uit de standaard \Cpp{} \USE{library} vervangt de C\hy
 Deze |array| ondersteunt net zoals de C\hyp{}array de |operator[]|.
 De voordelen van |array| in vergelijking met een C\hyp{}array:
 \begin{itemize}
-    \item Een |array| is in tegenstelling tot een C\hyp{}array een \enquote{echt} object.
-    \item Je kunt een |array| \enquote{gewoon} vergelijken, toekennen en kopiëren.
+    \item Een |array| is in tegenstelling tot een C\hyp{}array een echt object.
+    \item Je kunt een |array| gewoon vergelijken, toekennen en kopiëren.
     \item Het aantal elementen van een |array| moet bij het compileren bekend zijn (net zoals bij een C\hyp{}array) maar kan wel tijdens het uitvoeren van het programma opgevraagd worden. 
     Met andere woorden: een |array| weet zelf hoe groot hij is.
     \item Een |array| heeft memberfuncties:
@@ -2387,7 +2387,7 @@ Een |vector| kan tijdens het uitvoeren van het programma \emph{groeien} en \emph
 Deze vector ondersteunt ook net zoals de C\hyp{}array de |operator[]|.
 De voordelen van |vector| in vergelijking met een C\hyp{}array:
 \begin{itemize}
-    \item Een |vector| is in tegenstelling tot een C\hyp{}array een \enquote{echt} object.
+    \item Een |vector| is in tegenstelling tot een C\hyp{}array een echt object.
 	\item Een |vector| kan op twee manieren geïnitialiseerd worden:
 	\begin{itemize}
 		\item 
@@ -2395,7 +2395,7 @@ De voordelen van |vector| in vergelijking met een C\hyp{}array:
 		\item 
 		|vector<int> v1(10)| is een vector met tien integer elementen met de waarde 0.
 	\end{itemize}
-    \item Je kunt een |vector| \enquote{gewoon} vergelijken, toekennen en kopiëren.
+    \item Je kunt een |vector| gewoon vergelijken, toekennen en kopiëren.
     \item Een |vector| kan groeien en krimpen.
     \item Een |vector| heeft memberfuncties:
     \begin{itemize}
@@ -2515,7 +2515,7 @@ In dit hoofdstuk kun je de informatie over inheritance vinden die je moet weten 
 \section{De syntax van inheritance}
 %TODO: Dit hele gedeelte minder abstract maken
 %(Zie eventueel TICPP Chapter14.html\#Heading406.)
-Door middel van \emph{overerving} (Engels: \emph{\USE{inheritance}}) kun je een \enquote{nieuwe variant} van een bestaande class definiëren zonder dat je de bestaande class hoeft te wijzigen en zonder dat er code gekopieerd wordt.
+Door middel van \emph{overerving} (Engels: \emph{\USE{inheritance}}) kun je een \squote{nieuwe variant} van een bestaande class definiëren zonder dat je de bestaande class hoeft te wijzigen en zonder dat er code gekopieerd wordt.
 De class die als uitgangspunt gebruikt wordt, wordt de \emph{base} class genoemd (of ook wel parent class of superclass).
 %Waarom gebruik ik deze benaming niet?
 De class die hiervan afgeleid (derived) wordt, wordt de \emph{derived} class genoemd (of ook wel \USE{child class} of \USE{subclass}).
@@ -2566,7 +2566,7 @@ Een \USE{base class} IS-NOT-A \USE{derived class}.
 De \USE{derived class} erft alle datavelden van de \USE{base class} over.
 Dit wil zeggen dat een object van een \USE{derived class} (minimaal) dezelfde datavelden heeft als een object van de \USE{base class}.
 Private datavelden uit de \USE{base class} zijn in objecten van de \USE{derived class} wel aanwezig maar kunnen vanuit memberfuncties van de \USE{derived class} \emph{niet} rechtstreeks bereikt worden.
-In de \USE{derived class} kun je bovendien \enquote{extra} datavelden toevoegen.
+In de \USE{derived class} kun je bovendien extra datavelden toevoegen.
 Als de objecten |b| en |d| op onderstaande wijze gedefinieerd zijn, kan de structuur van deze objecten in UML weergegeven worden zoals getekend is in \cref{fig:inheritance2}. Een UML diagram waarin de structuur en inhoud van objecten wordt weergegeven wordt een UML \emph{object diagram} genoemd. 
 Het object |b| bevat alleen een dataveld |v| en een object |d| bevat zowel een dataveld |v| als een dataveld |w|.
 Het dataveld |v| is alleen toegankelijk vanuit de memberfuncties van de class |Base| en het dataveld |w| is alleen toegankelijk vanuit de memberfuncties van de class |Derived|.
@@ -2603,7 +2603,7 @@ private:
 Ook erft de \USE{derived class} alle memberfuncties van de \USE{base class} over.
 Dit wil zeggen dat op een object van een \USE{derived class} (minimaal) dezelfde memberfuncties uitgevoerd kunnen worden als op een object van de \USE{base class}.
 Private memberfuncties uit de \USE{base class} zijn in de \USE{derived class} wel aanwezig maar kunnen vanuit de \USE{derived class} \emph{niet} rechtstreeks aangeroepen worden.
-In de \USE{derived class} kun je bovendien \enquote{extra} memberfuncties toevoegen.
+In de \USE{derived class} kun je bovendien extra memberfuncties toevoegen.
 
 Als de objecten |b| en |d| op onderstaande wijze gedefinieerd zijn, kan de memberfunctie |getV| zowel op het object |b| als op het object |d| uitgevoerd worden.
 De memberfunctie |getW| is vanzelfsprekend alleen op het object |d| uit te voeren.
@@ -2776,10 +2776,10 @@ Ik ben een Derived en Ik ben een Base.
 \end{coutput}
 
 Aan het herdefiniëren van memberfuncties moeten bepaalde voorwaarden gesteld worden, zoals geformuleerd door Liskov\cite{Liskov1994} in het zogenoemde Liskov \USE{Substitution Principle} (LSP), om er voor te zorgen dat er geen problemen ontstaan bij polymorf gebruik van de class.
-Simpel gesteld luidt het LSP: \enquote{Een object van de \USE{derived class} moet op alle plaatsen waar een object van de \USE{base class} verwacht wordt gebruikt kunnen worden.}.
+Simpel gesteld luidt het LSP: \dquote{Een object van de \USE{derived class} moet op alle plaatsen waar een object van de \USE{base class} verwacht wordt gebruikt kunnen worden.}.
 Het is belangrijk om goed te begrijpen wanneer \USE{inheritance} wel/niet gebruikt moet worden.
 Bedenk dat overerving altijd een \emph{type-relatie}\ oplevert.
-Als class |Derived| overerft van class |Base|, geldt \enquote{\cppcode{Derived} is een \cppcode{Base}}. 
+Als class |Derived| overerft van class |Base|, geldt: \dquote{\cppcode{Derived} is een \cppcode{Base}}. 
 Dat wil zeggen dat elke bewerking die op een object (variabele) van class (type) |Base| uitgevoerd kan worden ook op een object (variabele) van class (type) |Derived| uitgevoerd moet kunnen worden.
 In de class |Derived| moet je alleen datavelden en memberfuncties toevoegen en/of virtual memberfuncties \USE{overridden}, maar nooit memberfuncties van de class |Base| \USE{overloaden}.
 Het verkeerd gebruik van \USE{inheritance} is een van de meest voorkomende fouten bij OOP\@.
@@ -2794,7 +2794,7 @@ Het is mogelijk om een virtual memberfunctie in een \USE{base class} alleen maar
 Dit wordt dan een \label{pure virtual}\emph{pure virtual} memberfunctie genoemd en de betreffende \USE{base class} wordt een \emph{\USE{Abstract Base Class} (ABC)} genoemd.
 Een virtual memberfunctie kan pure virtual gemaakt worden door de declaratie af te sluiten met |= 0;|.
 Er kunnen geen objecten (variabelen) van een ABC gedefinieerd worden.
-Elke concrete \USE{derived class} die van de ABC overerft is \enquote{verplicht} om alle pure virtual memberfuncties uit de \USE{base class} te \USE{overridden}.
+Elke concrete \USE{derived class} die van de ABC overerft is \squote{verplicht} om alle pure virtual memberfuncties uit de \USE{base class} te \USE{overridden}.
 
 Een base class wordt vaak als ABC gedefinieerd omdat de implementatie van een virtual functie pas in de derived classes ingevuld kan worden. 
 Verderop in dit hoofdstuk zullen we een base class definiëren voor een passieve elektrische component.
@@ -2890,11 +2890,11 @@ In een programma om een machine te besturen moeten bepaalde signalen via een ADC
 Het programma moet met 2 verschillende types ADC kaarten kunnen werken.
 Deze kaarten hebben de typenamen AD178 en NI323.
 Deze kaarten zijn functioneel gelijk en hebben beide een 8 kanaals 16 bits ADC met instelbare voorversterker.
-Het initialiseren van de kaarten, het selecteren van een kanaal, het uitlezen van de \enquote{sampled} waarde en het instellen van de versterkingsfactor moet echter bij elke kaart op een andere wijze gebeuren (andere adressen, andere bits en/of andere procedures).
+Het initialiseren van de kaarten, het selecteren van een kanaal, het uitlezen van de \squote{sampled} waarde en het instellen van de versterkingsfactor moet echter bij elke kaart op een andere wijze gebeuren (andere adressen, andere bits en/of andere procedures).
 In de applicatie moeten meerdere ADC kaarten van verschillende types gebruikt kunnen worden.
 In de applicatie is alleen de spanning in volts van de verschillende signalen van belang.
 Voor beide 16 bits ADC kaarten geldt dat deze spanning $U$ als volgt berekend kan worden: $U=S*F/6553.5 [V]$.
-$S$ is de \enquote{sampled} 16 bits waarde (\USE{two's complement}) en $F$ is de ingestelde versterkingsfactor.
+$S$ is de \squote{sampled} 16 bits waarde (\USE{two's complement}) en $F$ is de ingestelde versterkingsfactor.
 Hoe kun je in het programma nu het beste met de verschillen tussen de kaarten omgaan?
 
 \subsection{Een gestructureerde oplossing}
@@ -2924,7 +2924,7 @@ Hopelijk heb je allang zelf de nadelen van deze aanpak bedacht:
     \item Iedere programmeur die gebruikt maakt van het type |struct| |ADCCard| kan een waarde toekennen aan de datavelden.
     Zo zou een programmeur die de struct |ADCCard| gebruikt in plaats van de functie |selectChannel| het statement |++c1.selected_channel;| kunnen bedenken om het geselecteerde kanaal met 1 te verhogen.
     Dit werkt natuurlijk niet omdat dan alleen het in de struct opgeslagen kanaalnummer verhoogd wordt terwijl in werkelijkheid geen ander kanaal geselecteerd wordt.
-    \item Iedere programmeur die gebruikt maakt van het type |struct| |ADCCard| kan er voor kiezen om zelf de code voor het inlezen van een spanning in volts \enquote{uit te vinden} in plaats van gebruik te maken van de functie |readCard|.
+    \item Iedere programmeur die gebruikt maakt van het type |struct| |ADCCard| kan er voor kiezen om zelf de code voor het inlezen van een spanning in volts \squote{uit te vinden} in plaats van gebruik te maken van de functie |readCard|.
     Er valt dus niet te garanderen dat altijd de juiste formule wordt gebruikt.
     Ook niet als we wel kunnen garanderen dat de functies |readCard| en |sampleCard| correct zijn.
     \item Iedere programmeur die gebruikt maakt van het type |struct| |ADCCard| zal zelf nieuwe bewerkingen (zoals bijvoorbeeld het opvragen van de ingestelde versterkingsfactor) definiëren.
@@ -3015,9 +3015,9 @@ private:
 De memberfuncties |selectChannel|, |setAmplifier| en |sample| heb ik \emph{pure virtual} (zie \csecref{pure virtual}) gedeclareerd omdat de implementatie per kaarttype verschillend is.
 Dit maakt de class |ADCCard| abstract.
 Je kunt dus geen objecten van dit type definiëren, alleen \USE{references} en pointers.
-Elke afgeleide concrete class (elk kaarttype) moet deze functies \enquote{\USE{overridden}}.
+Elke afgeleide concrete class (elk kaarttype) moet deze functies \squote{\USE{overridden}}.
 De memberfuncties |getChannel| en |read| heb ik non-virtual gedeclareerd omdat het niet mijn bedoeling is dat een \USE{derived class} deze
-functies \enquote{\USE{override}}.
+functies \squote{\USE{override}}.
 Wat er gebeurt als je dit toch probeert zal ik in \csecref{override versus overload} bespreken.
 De memberfuncties |rememberChannel| en |rememberAmplifier| heb ik \USE{protected} gedeclareerd om er voor te zorgen dat ze vanuit de \USE{derived classes} bereikbaar zijn. 
 De memberfunctie |sample| heb ik private gedefinieerd omdat deze functie alleen vanuit de memberfunctie |read| gebruikt hoeft te kunnen worden.
@@ -3114,9 +3114,9 @@ Als we componenten ook met behulp van de |operator<<| willen afdrukken, moeten w
 De classes |R|, |L| en |C| kunnen dan als volgt gebruikt worden:
 \cpplstinputfragment[linerange={84-99}]{netwerk0.cpp}
 
-Merk op dat de functie |print_impedance_table| niet \enquote{weet} welke |Component| gebruikt wordt.
-Dit betekent dat deze polymorfe functie voor alle huidige \enquote{soorten} componenten te gebruiken is.
-De functie is zelfs ook voor toekomstige \enquote{soorten} componenten bruikbaar.
+Merk op dat de functie |print_impedance_table| niet \squote{weet} welke |Component| gebruikt wordt.
+Dit betekent dat deze polymorfe functie voor alle huidige soorten componenten te gebruiken is.
+De functie is zelfs ook voor toekomstige soorten componenten bruikbaar.
 Dit maakt het programma eenvoudig uitbreidbaar.
 
 De uitvoer van het bovenstaande programma is:
@@ -3171,7 +3171,7 @@ Je moet jezelf dan de volgende vragen stellen:
 
 Dat een serieschakeling \emph{bestaat uit} componenten zal voor iedereen duidelijk zijn.
 Het antwoord op de eerste vraag is misschien moeilijker.
-De ABC |Component| is gedefinieerd als \enquote{iets} dat een impedantie heeft en dat geprint kan worden.
+De ABC |Component| is gedefinieerd als \squote{iets} dat een impedantie heeft en dat geprint kan worden.
 Als je bedenkt dat een serieschakeling ook een impedantie heeft en ook geprint kan worden, zal duidelijk zijn dat een serieschakeling een soort component \emph{is}.
 De class |S| (serieschakeling) moet dus van de class |Component| afgeleid worden maar bestaat ook uit andere componenten. Zie \cref{fig:component2}.
 Dit heeft als bijkomend voordeel dat je het aantal componenten waaruit een serieschakeling bestaat tot 2 kunt beperken.
@@ -3422,7 +3422,7 @@ Snap je waarom?%
 \section{Virtual destructor}
 \label{sec:virtualdestructor} 
 %(Zie eventueel TICPP Chapter15.html\#Heading456.)
-Als een class nu of in de toekomst als \USE{base class} gebruikt wordt, moet de \USE{destructor} virtual zijn zodat objecten van deze class afgeleide classes via een polymorfe pointer \enquote{deleted} kunnen worden.
+Als een class nu of in de toekomst als \USE{base class} gebruikt wordt, moet de \USE{destructor} virtual zijn zodat objecten van deze class afgeleide classes via een polymorfe pointer \squote{deleted} kunnen worden.
 
 Hier volgt een voorbeeld van het gebruik van een ABC en polymorfisme
 % harde return in printed versie om overfull hbox te voorkomen
@@ -3549,7 +3549,7 @@ Het zal voor iedereen duidelijk zijn dat zulke vreemde uitvoer tijdens het uitvo
 \label{sec:assert}
 In \csecref{assert} heb je al kennis gemaakt met de standaard functie |assert|.
 Deze functie doet niets als de, als argument meegegeven, expressie |true| oplevert maar breekt het programma met een passende foutmelding af als dit niet zo is.
-Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan een bepaalde voorwaarden (waarvan je \enquote{zeker} weet dat ze geldig zijn) wordt voldaan.
+Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan een bepaalde voorwaarden (waarvan je \squote{zeker} weet dat ze geldig zijn) wordt voldaan.
 Je kunt de functie |impedance_C| voorzien van een \USE{assertion} (\proglink{impedance_C2.cpp}):
 
 \cpplstinputfragment[linerange={10-13}]{impedance_C2.cpp}
@@ -3596,7 +3596,7 @@ Het gebruik van een return waarde om aan te geven of een functie gelukt is heeft
 \begin{itemize}
     \item Bij \emph{elke} aanroep moet de returnwaarde getest worden.
     \item Op de plaats waar de fout ontdekt wordt kan hij meestal niet opgelost worden.
-    \item Het \enquote{echte} resultaat van de functie moet nu via een call by \USE{reference} parameter worden teruggegeven.
+    \item Het echte resultaat van de functie moet nu via een call by \USE{reference} parameter worden teruggegeven.
     Dit betekent dat je om de functie aan te roepen altijd een variabele aan moet maken (om het resultaat in op te slaan) ook als je het resultaat alleen maar wilt doorgeven aan een andere functie of operator.
 \end{itemize}
 De C \USE{library} stdio werkt bijvoorbeeld met returnwaarden van functies die aangeven of de functie gelukt is.
@@ -3609,7 +3609,7 @@ Een goed geschreven programma moet dus bij elke aanroep naar |printf| de returnw
     Hoe werd daar met de returnwaarde van \cppcode{printf} omgegaan?}
 \section{Het gebruik van standaard exceptions}
 \Cpp{} heeft \emph{\USE{exceptions}} ingevoerd voor het afhandelen van uitzonderlijke fouten.
-Een \USE{exception} is een \emph{object} dat in de functie waar de fout ontstaat \enquote{gegooid} kan worden en dat door de aanroepende functie (of door zijn aanroepende  functie enz...) \enquote{opgevangen} kan worden.
+Een \USE{exception} is een \emph{object} dat in de functie waar de fout ontstaat \squote{gegooid} kan worden en dat door de aanroepende functie (of door zijn aanroepende  functie enz...) \squote{opgevangen} kan worden.
 In de standaard \USE{library} zijn ook een aantal standaard \USE{exceptions} opgenomen.
 De class van de \USE{exception} die bedoeld is om te gooien als een parameter van een functie een ongeldige waarde heeft is de naam |domain_error|%
 \footnote{%
@@ -3719,7 +3719,7 @@ Als je nu bijvoorbeeld alleen de |Capacity_error| \USE{exception} wilt opvangen 
 \section{De volgorde van \texorpdfstring{\cppcode{catch}}{catch} blokken}
 \markright{}
 Als je meerdere catch blokken gebruikt om \USE{exceptions} af te vangen, moet je er op letten dat de meest specifieke \USE{exceptions} vóór de generieke \USE{exceptions} komen.
-Omdat de catch blokken van boven naar beneden worden \enquote{geprobeerd} als er een \USE{exception} gevangen wordt.
+Omdat de catch blokken van boven naar beneden worden geprobeerd als er een \USE{exception} gevangen wordt.
 Dus:
 \begin{cpplstfragment}
     try {
@@ -3882,7 +3882,7 @@ Een stamboom kan bijvoorbeeld als volgt gedefinieerd worden:
 \right.
 \]
 Het standaardwerk waarin de meest gebruikte datastructuren helemaal worden uitgekauwd is \emph{\USE{The Art of Computer Programming}} van Knuth \cite{Knuth1997,Knuth1997a,Knuth1998}.
-Er zijn in de loop der jaren duizenden boeken over deze langzamerhand \enquote{klassieke} datastructuren verschenen in allerlei verschillende talen (zowel programmeertalen als landstalen).
+Er zijn in de loop der jaren duizenden boeken over deze langzamerhand \squote{klassieke} datastructuren verschenen in allerlei verschillende talen (zowel programmeertalen als landstalen).
 Het was dus al heel snel duidelijk dat niet alleen het algoritme, waarmee de data bewerkt moet worden, belangrijk is bij het ontwerpen van programma's maar dat ook de structuur, waarin de data wordt opgeslagen, erg belangrijk is.
 Het zal je duidelijk zijn dat het algoritme en de datastructuur van een programma niet los van elkaar ontwikkeld kunnen worden, maar dat ze sterk met elkaar verweven zijn.
 De titel van een bekend boek op dit terrein luidt dan ook niet voor niets: \emph\USE{{Algorithms + Data Structures = Programs}} \cite{Wirth1978}.
@@ -3900,7 +3900,7 @@ Ook worden in dit dictaat een aantal applicaties besproken waarin gebruik gemaak
 \label{sec:analysevanalgoritmen}
 Bij het bespreken van algoritmen is het belangrijk om een maat te hebben om de executietijd (Engels: \USE{run time}) van algoritmen met elkaar te kunnen vergelijken.
 We zullen bijvoorbeeld spreken over een algoritme met een executietijd $O(n^2)$.
-De $O(\ldots)$ notatie wordt \emph{Big\hyp{}O\hyp{}notatie} genoemd en uitgesproken als \enquote{van de orde \ldots}.
+De $O(\ldots)$ notatie wordt \emph{Big\hyp{}O\hyp{}notatie} genoemd en uitgesproken als \dquote{van de orde \ldots}.
 $O(n^2)$ betekent dat de executietijd van het algoritme rechtevenredig toeneemt met het kwadraat van het aantal data\hyp{}elementen ($n$).
 %TODO Eventueel nog theorie + voorbeelden toevoegen. Zie sheets.
 In \cref{tab:orde} kun je zien hoe een algoritme van een bepaalde orde zich gedraagt voor grote waarden van $n$.
@@ -3926,7 +3926,7 @@ In elk boek over algoritmen en datastructuren kun je een implementatie van dit a
 Maar op zich is dat niet zo interessant want de standaard \Cpp{} \USE{library} heeft een efficiënte sorteermethode met een executietijd $O(n\cdot\log{n})$.
 Wat geldt voor sorteeralgoritmen geldt voor de meeste standaard bewerkingen.
 De voor de hand liggende manier om het aan te pakken is meestal niet de meest efficiënte manier.
-Trek hieruit de volgende les: \enquote{ga nooit zelf standaard algoritmen ontwerpen maar gebruik een implementatie waarvan de efficiëntie bewezen is}.
+Trek hieruit de volgende les: ga nooit zelf standaard algoritmen ontwerpen maar gebruik een implementatie waarvan de efficiëntie bewezen is.
 In de standaard \Cpp{} \USE{library} die we later in dit dictaat leren kennen zijn vele algoritmen en datastructuren op een zeer efficiënte manier geïmplementeerd.
 Raadpleeg in geval van twijfel altijd een goed boek over algoritmen en datastructuren.
 Het standaardwerk op het gebied van sorteer- en zoekalgoritmen is \citetitle{Knuth1998} \cite{Knuth1998} van \citeauthor{Knuth1998}.
@@ -3937,7 +3937,7 @@ Ook hiervoor verwijs ik je naar de vakliteratuur op dit gebied.
 \section{Datastructuren}
 \label{sec:Datastructuren}
 Elke professionele programmeur met enkele jaren praktijkervaring kent de feiten uit dit hoofdstuk uit zijn of haar hoofd.
-De hier beschreven datastructuren zijn \enquote{verzamelingen} van andere datastructuren en worden ook wel \emph{containers} genoemd.
+De hier beschreven datastructuren zijn verzamelingen van andere datastructuren en worden ook wel \emph{containers} genoemd.
 Een voorbeeld van een datastructuur die je waarschijnlijk al kent is de \USE{stack}.
 Een \USE{stack} van integers is een verzameling integers waarbij het toevoegen aan en verwijderen uit de verzameling volgens het LIFO (Last In First Out) protocol gaat.
 De \USE{stack} is maar één van de vele al lang bekende (klassieke) datastructuren.
@@ -4000,7 +4000,7 @@ Dit kan bijvoorbeeld als volgt, zie \proglink{stack.h}\footnote{In de ISO/ANSI \
 
 Je ziet dat de ABC |Stack| bestaat uit 2 doe\hyp{}functies (|push| en |pop|) en 3 vraag\hyp{}functies (|top|, |empty| en |full|).
 Het van de \USE{stack} afhalen van een element gaat bij deze interface in twee stappen.
-Met de vraag\hyp{}functie |top| kan eerst het bovenste element van de \USE{stack} \enquote{gelezen} worden waarna het met de doe\hyp{}functie |pop| van de \USE{stack} verwijderd kan worden.
+Met de vraag\hyp{}functie |top| kan eerst het bovenste element van de \USE{stack} gelezen worden waarna het met de doe\hyp{}functie |pop| van de \USE{stack} verwijderd kan worden.
 
 %cpageref{defaultconstructor,sec:defaultcopyconstructor,sec:defaultassignmentoperator} werkt niet
 Sinds \Cpp{} kun je automatisch gegenereerde memberfuncties, zie pagina's \pageref{defaultconstructor}, \pageref{sec:defaultcopyconstructor} en \pageref{sec:defaultassignmentoperator} verwijderen door er |= delete| achter te plaatsen.
@@ -4039,11 +4039,11 @@ De bovenstaande expressie wordt dan als volgt in postfix genoteerd:
 12 34 23 2 + * 2 * +
 \end{coutput}
 
-Postfix-notatie wordt ook vaak \enquote{RPN} genoemd.
+Postfix-notatie wordt ook vaak \dquote{RPN} genoemd.
 Dit staat voor \USE{Reverse Polish Notation}.
 Prefix-notatie is namelijk bedacht door een Poolse wiskundige met een moeilijke achternaam (Jan Lukasiewicz) waardoor
-prefix ook wel \enquote{\USE{polish notation}} wordt genoemd.
-Omdat postfix de omgekeerde volgorde gebruikt ten opzichte van prefix wordt postfix dus \enquote{omgekeerde Poolse-notatie} genoemd.
+prefix ook wel \dquote{\USE{polish notation}} wordt genoemd.
+Omdat postfix de omgekeerde volgorde gebruikt ten opzichte van prefix wordt postfix dus \dquote{omgekeerde Poolse-notatie} genoemd.
 
 In de infix-notatie hebben we zogenaamde prioriteitsregels nodig (Meneer Van Dale Wacht Op Antwoord) die de volgorde bepalen waarin de expressie geëvalueerd moet worden (Machtsverheffen Vermenigvuldigen, Delen, Worteltrekken, Optellen, Aftrekken).
 We moeten haakjes gebruiken om een andere evaluatievolgorde aan te geven.
@@ -4275,7 +4275,7 @@ In het vervolg van dit dictaat kijken we naar \emph{containers}, \emph{iteratore
 De in \csecref{sec:Datastructuren} geïntroduceerde datastructuren worden in de standaard \Cpp{} \USE{library} \emph{containers} genoemd.
 Een \emph{iterator} kan gebruikt worden om de elementen in een container te benaderen.
 Je kunt in \Cpp{} met een iterator door een container heenlopen zoals je in C met een pointer door een array kunt lopen.
-Een iterator kan \enquote{wijzen} naar een element uit een container op dezelfde wijze als een pointer kan wijzen naar een element uit een array.
+Een iterator kan \squote{wijzen} naar een element uit een container op dezelfde wijze als een pointer kan wijzen naar een element uit een array.
 De algoritmen uit de standaard \USE{library} werken op de data die door twee iteratoren wordt aangegeven.
 Deze twee iteratoren wijzen samen een opeenvolgende hoeveelheid elementen (\emph{range}) aan waar het betreffende algoritme op wordt uitgevoerd.
 Een iterator wijst naar het eerste data\hyp{}element van de range en de andere iterator wijst naar de locatie net voorbij het laatste element van de range.
@@ -4674,7 +4674,7 @@ Een |set| heeft, onder andere, de volgende memberfuncties:
 \begin{itemize}
 	\item |insert|; 
 	Deze memberfunctie kan gebruikt worden om een sleutel aan de |set| toe te voegen.
-	De sleutels worden automatisch op de \enquote{goede} plaats ingevoegd.
+	De sleutels worden automatisch op de goede plaats ingevoegd.
 	Het returntype van deze memberfunctie is |pair<iterator, bool>|.
 	De |iterator| geeft de plek aan waar ingevoegd is en de |bool| geeft aan of het invoegen gelukt is.
 	Het invoegen mislukt als de sleutel die ingevoegd moet worden al in de |set| aanwezig is.
@@ -4780,7 +4780,7 @@ sort(l.begin(), l.end()); // $\color{hrred}\textbf{error:}$ no match for 'operat
 
 Om deze reden zijn er meerder soorten iteratoren in de \Cpp{} standaard gedefinieerd.
 Elke soort ondersteund bepaalde bewerkingen.
-Een container \enquote{levert} (Engels: \USE{provides}) een specifieke iteratorsoort en elk algoritme heeft bepaalde iteratorsoorten nodig (Engels: \USE{requires}).
+Een container levert (Engels: \USE{provides}) een specifieke iteratorsoort en elk algoritme heeft bepaalde iteratorsoorten nodig (Engels: \USE{requires}).
 Op deze manier kun je een algoritme op elke container toepassen die een iterator levert die de door het algoritme benodigde bewerkingen ondersteund.
 Elk object dat de operaties van een bepaalde soort iterator ondersteund is te gebruiken als zo'n soort iterator.
 Een iteratorsoort is dus niets anders dan een afspraak (of concept).
@@ -4993,7 +4993,7 @@ Er zijn drie functietemplates beschikbaar waarmee zulke \USE{insert}\hyp{}iterat
 	De container |c| moet een container zijn die beschikt over een  memberfunctie |insert|.
 	Dus |c| kan elke, tot nu toe besproken, container zijn behalve een |array|.
 	Als |c| een associatieve container is dan is het gek dat je, door middel van de parameter |i|, aan moet geven waar de elementen toegevoegd moeten worden omdat een associatieve container zelf bepaalt waar de elementen geplaatst worden.
-	In dit geval moet je |i| opvatten als een \enquote{hint}.
+	In dit geval moet je |i| opvatten als een hint.
 \end{itemize}
 
 \section{\USE{Stream}\hyp{}iteratoren}
@@ -5051,7 +5051,7 @@ l.sort(); // $\color{darkgreen}\textbf{Ok}$
 \end{cpplstfragment}
 
 Het |find| algoritme voert een lineaire zoekactie uit en de executietijd is dus $O(n)$.
-Je hebt in \csecref{sec:asscon} gezien dat de \enquote{gewone} associatieve containers een zoekactie kunnen uitvoeren met executietijd $O(\log{n})$ en de \enquote{ongesorteerde} associatieve containers een zoekactie kunnen uitvoeren met executietijd $O(1)$, als ze niet te vol zijn en als een goede hashfunctie gebruikt wordt.
+Je hebt in \csecref{sec:asscon} gezien dat de gewone associatieve containers een zoekactie kunnen uitvoeren met executietijd $O(\log{n})$ en de ongesorteerde associatieve containers een zoekactie kunnen uitvoeren met executietijd $O(1)$, als ze niet te vol zijn en als een goede hashfunctie gebruikt wordt.
 Om deze reden hebben alle associatieve containers de memberfunctie |find| waarmee snel in de container gezocht kan worden.
 
 \begin{cpplstfragment}[mathescape=true]
@@ -5295,16 +5295,16 @@ Deze ingesloten variabelen kunnen in de code van de \USE{closure} gebruikt worde
 Enkele voorbeelden:
 
 \begin{tabu}{X[-1]X}
-	\hspace{1em}\labelitemi{} \code{[a, \&b]} & \code{a} wordt \enquote{by value} en \code{b} wordt \enquote{by reference} ingesloten.\\
-	\hspace{1em}\labelitemi{} \code{[\&]} & elke in de lambda-functie gebruikte variabele wordt \enquote{by reference} ingesloten.\\
-	\hspace{1em}\labelitemi{} \code{[=]} & elke in de lambda-functie gebruikte variabele wordt \enquote{by value} ingesloten.\\
-	\hspace{1em}\labelitemi{} \code{[=, \&c]} & \code{c} wordt \enquote{by reference} ingesloten en alle andere in de lambda-functie gebruikte variabelen worden \enquote{by value} ingesloten.\\
+	\hspace{1em}\labelitemi{} \code{[a, \&b]} & \code{a} wordt \squote{by value} en \code{b} wordt \squote{by reference} ingesloten.\\
+	\hspace{1em}\labelitemi{} \code{[\&]} & elke in de lambda-functie gebruikte variabele wordt \squote{by reference} ingesloten.\\
+	\hspace{1em}\labelitemi{} \code{[=]} & elke in de lambda-functie gebruikte variabele wordt \squote{by value} ingesloten.\\
+	\hspace{1em}\labelitemi{} \code{[=, \&c]} & \code{c} wordt \squote{by reference} ingesloten en alle andere in de lambda-functie gebruikte variabelen worden \squote{by value} ingesloten.\\
 	\hspace{1em}\labelitemi{} \code{[]} & er worden géén variabelen ingesloten.
 
 \end{tabu}
 
 Het onderstaande programma \proglink{closure.cpp} laat zien hoe je met behulp van een |for_each| algoritme en een \USE{closure} de som van alle even getallen in een range kunt bepalen.\footnote{%
-	Als alternatief zou je ook een \code{accumulate} algoritme met een \enquote{gewone} lambda\hyp{}functie kunnen gebruiken.
+	Als alternatief zou je ook een \code{accumulate} algoritme met een gewone lambda\hyp{}functie kunnen gebruiken.
 	Zie online: \proglink{accumulate.cpp}.
 }
 
@@ -5546,9 +5546,9 @@ vervangen door (zie \proglink{sort\_lambda.cpp})\footnote{%
 }:
 \cpplstinputfragment[linerange={15-17}]{sort_lambda.cpp}
 
-Een |stable_sort| is nodig als een range \enquote{dubbel} gesorteerd moet worden.
+Een |stable_sort| is nodig als een range dubbel gesorteerd moet worden.
 Stel dat bij een spelletje, na afloop van elk spel, de naam van de speler en het behaalde aantal punten opgeslagen worden in een |vector| met objecten van de class |Score|.
-Dan kun je een alfabetische \enquote{high score list} maken door de |vector| eerst van laag naar hoog te sorteren op naam en daarna van hoog naar laag te sorteren op het behaalde aantal punten.
+Dan kun je een alfabetische \squote{high score list} maken door de |vector| eerst van laag naar hoog te sorteren op naam en daarna van hoog naar laag te sorteren op het behaalde aantal punten.
 Bij de tweede sorteeroperatie mogen scores met een gelijk aantal punten niet in volgorde verwisseld worden zodat spelers met hetzelfde aantal punten op naam gesorteerd blijven.
 Voor de tweede sorteeroperatie moet dus een |stable_sort| gebruikt worden.
 Zie \proglink{sort\_deelnemers.cpp}.
@@ -5907,7 +5907,7 @@ Er zijn echter twee redenen om dit \emph{niet} te doen:\begin{itemize}
 In het bovenstaande programma wordt alleen de waarde van de positie bepaald.
 Dit is uiteraard niet voldoende.
 We moeten ook weten welke zet we moeten doen om deze waarde te bereiken!
-Dit kan \enquote{eenvoudig} worden bereikt door bij het zoeken naar de maximale of minimale waarde de beste positie op te slaan in de uitvoerparameter |best_next_pos|.
+Dit kan eenvoudig worden bereikt door bij het zoeken naar de maximale of minimale waarde de beste positie op te slaan in de uitvoerparameter |best_next_pos|.
 De functies \hcode{choose_\\-com\\-puter_\\-move} en \hcode{choose_\\-hu\\-man_\\-move} moeten dan als volgt worden aangepast:
 
 \cpplstinputfragment[linerange={18-48}]{minimax2.cpp}
@@ -5934,7 +5934,7 @@ Behaalde waarde = 9
 De bijbehorende weg door de spelboom is weergegeven in \cref{fig:gameTree5}.
 De computer behaald in dit geval de waarde |9|.
 Deze waarde is hoger dan de minimaal te behalen maximale waarde van |4|.
-Dit komt omdat de mens, ondanks de tips die hij/zij krijgt, steeds de \enquote{zwakste} keuze maakt.
+Dit komt omdat de mens, ondanks de tips die hij/zij krijgt, steeds de zwakste keuze maakt.
 
 \figuur{scale=0.5}{gameTree5}{Mogelijke weg door de spelboom bij het uitvoeren van minimax2.cpp.}
 
@@ -5958,7 +5958,7 @@ Echter in de bovenliggende positie (positie 3) wordt toch voor de maximale waard
 Als de waarde van positie 18 $>$3 (b.v.\ 15) is, dan wordt de waarde 3 (van positie 17) gekozen als minimale waarde.
 Echter in de bovenliggende positie (positie 3) wordt toch voor de maximum waarde 4 gekozen.
 De waarde van positie 18 hoeft dus helemaal niet bepaald te worden.
-Dit deel van de boom hoeft niet \enquote{doorzocht} te worden en we kunnen als het ware de spelboom snoeien (Engels: to prune), zie \cref{fig:gameTree7}
+Dit deel van de boom hoeft niet doorzocht te worden en we kunnen als het ware de spelboom snoeien (Engels: to prune), zie \cref{fig:gameTree7}
 
 \figuur{scale=0.5}{gameTree7}{De tak naar positie 18 kan worden gesnoeid uit de boom.}
 
@@ -5983,7 +5983,7 @@ Echter in de bovenliggende positie (positie 1) wordt toch als minimale waarde 4 
 Als de waarde van positie 10 $<$6 (b.v.\ 0) is, dan wordt de waarde 6 (van positie 9) gekozen als maximale waarde.
 Echter in de bovenliggende positie (positie 1) wordt toch als minimale waarde 4 gekozen.
 De waarden van posities 10, 21 en 22 hoeven dus helemaal niet bepaald te worden.
-Dit deel van de boom hoeft niet \enquote{doorzocht} te worden en we kunnen de spelboom weer snoeien, zie \cref{fig:gameTree7}
+Dit deel van de boom hoeft niet doorzocht te worden en we kunnen de spelboom weer snoeien, zie \cref{fig:gameTree7}
 
 \figuur{scale=0.5}{gameTree9}{De tak naar positie 10 kan worden gesnoeid uit de boom.}
 
@@ -6256,7 +6256,7 @@ Om lange getallen beter leesbaar te maken mag een enkel aanhalingsteken (\code{'
 
 \section{Namespaces}
 \label{sec:namespaces}
-Bij grote programma's kunnen verschillende classes \enquote{per ongeluk} dezelfde naam krijgen.
+Bij grote programma's kunnen verschillende classes \squote{per ongeluk} dezelfde naam krijgen.
 In \Cpp{} kun je classes (en functies etc.) groeperen in zogenoemde \emph{\USE{namespaces}}:
 \begin{cpplstfragment}
 namespace BroJZ {
@@ -6575,7 +6575,7 @@ Door middel van \emph{casting}%
     Het Engelse woord casting betekent onder andere in een mal gieten.
     Als je een variabele \USE{cast} naar een ander type, giet je die variabele als het ware in een andere mal.
 } kun je variabelen van het ene type omzetten naar een ander type en kun je objecten van de ene class omzetten naar een andere class.
-Dit zijn \enquote{gevaarlijke} bewerkingen die alleen moeten worden gebruikt als het echt niet anders kan.
+Dit zijn \squote{gevaarlijke} bewerkingen die alleen moeten worden gebruikt als het echt niet anders kan.
 
 In C kun je met een eenvoudige vorm van casting typeconversies doen.
 Stel dat je het adres van een C string in een integer wilt opslaan%
@@ -6595,7 +6595,7 @@ Als je dit probeert te compileren, krijg je de volgende foutmelding:
 \end{cpplstfragment}
 %
 Het is namelijk helemaal niet zeker dat een |char*| in een |int| variabele past.
-Stel dat je zeker weet dat het past (omdat je het programma alleen maar op een 32-bits microcontroller wilt gebruiken) dan kun je de compiler \enquote{dwingen} met behulp van een zogenoemde \emph{\USE{cast}}:
+Stel dat je zeker weet dat het past (omdat je het programma alleen maar op een 32-bits microcontroller wilt gebruiken) dan kun je de compiler \squote{dwingen} met behulp van een zogenoemde \emph{\USE{cast}}:
 \begin{cpplstfragment}
     i = (int)"Hallo";
 \end{cpplstfragment}
@@ -6776,8 +6776,8 @@ Zie \proglink{operator+_member.cpp} voor een compleet voorbeeldprogramma.
 	\cppcode{Breuk b {a + 1}}
 }{
 	Ja. 
-	De expressie \cppcode{a + 1} wordt geïnterpreteerd als \cppcode{a.operator+(1)}. De compiler zal dan \enquote{kijken} of de memberfunctie \cppcode{Breuk::operator+(int)} gedefinieerd is. 
-	Dit is hier niet het geval. De compiler \enquote{ziet} dat er wel een memberfunctie \cppcode{Breuk::operator+(const Breuk&)} gedefinieerd is en zal vervolgens \enquote{kijken} of de \cppcode{int} omgezet kan worden naar een \cppcode{Breuk}. 
+	De expressie \cppcode{a + 1} wordt geïnterpreteerd als \cppcode{a.operator+(1)}. De compiler zal dan \squote{kijken} of de memberfunctie \cppcode{Breuk::operator+(int)} gedefinieerd is. 
+	Dit is hier niet het geval. De compiler \squote{ziet} dat er wel een memberfunctie \cppcode{Breuk::operator+(const Breuk&)} gedefinieerd is en zal vervolgens \squote{kijken} of de \cppcode{int} omgezet kan worden naar een \cppcode{Breuk}. 
 	Dit is in dit geval mogelijk door gebruik te maken van de \USE{constructor} \cppcode{Breuk(int)}. 
 	De compiler maakt dan met deze \USE{constructor} een tijdelijke variabele van het type \cppcode{Breuk} aan en initialiseert deze variabele met \cppcode{1}.
 	Vervolgens wordt een \USE{reference} naar deze tijdelijke variabele als argument aan de \cppcode{operator+} memberfunctie meegegeven. De tijdelijke variabele wordt na het uitvoeren van de \cppcode{operator+} memberfunctie weer opgeruimd.
@@ -6788,9 +6788,9 @@ Zie \proglink{operator+_member.cpp} voor een compleet voorbeeldprogramma.
 	\cppcode{Breuk b {1 + a};}    
 }{
 	Nee, nu niet. De expressie \cppcode{1 + a} wordt geïnterpreteerd als \cppcode{1.operator+(a)}. 
-	De compiler zal dan \enquote{kijken} of de het ingebouwde type \cppcode{int} het optellen met een \cppcode{Breuk} heeft gedefinieerd. 
+	De compiler zal dan \squote{kijken} of de het ingebouwde type \cppcode{int} het optellen met een \cppcode{Breuk} heeft gedefinieerd. 
 	Dit is vanzelfsprekend niet het geval. 
-	De compiler \enquote{ziet} dat wel gedefinieerd is hoe een \cppcode{int} bij een \cppcode{int} opgeteld moet worden en zal vervolgens \enquote{kijken} of de \cppcode{Breuk} omgezet kan worden naar een \cppcode{int}. 
+	De compiler \squote{ziet} dat wel gedefinieerd is hoe een \cppcode{int} bij een \cppcode{int} opgeteld moet worden en zal vervolgens \squote{kijken} of de \cppcode{Breuk} omgezet kan worden naar een \cppcode{int}. 
 	Dit is in dit geval ook niet mogelijk\footnote{In \csecref{sec:conversionoperator} zal ik bespreken hoe je deze type conversie indien gewenst zelf kunt definiëren.}. De GCC \Cpp{}\hyp{}compiler genereert de volgende foutmelding: \error{no match for 'operator+' (operand types are 'int' and 'Breuk')}. 
 	Als je echter de \cppcode{operator+} niet als memberfunctie definieert maar in plaats daarvan de globale \cppcode{operator+} overloadt, dan wordt het wel mogelijk om een \cppcode{int} bij een \cppcode{Breuk} op te tellen.
 }
@@ -6836,7 +6836,7 @@ Voor de fijnproever: de implementatie van |operator+| kan ook in 1 regel:
 Voor de connaisseur (echte kenner): De implementatie kan ook zo:
 \cpplstinputfragment[linerange={90-92}]{Breuk3.cpp}
 
-Doordat de eerste parameter |left| hier als \USE{call by value} (zie \cpageref{call by value}) is gedeclareerd wordt bij aanroep \enquote{van zelf} een kopietje van het linker argument van de |operator+| gemaakt.
+Doordat de eerste parameter |left| hier als \USE{call by value} (zie \cpageref{call by value}) is gedeclareerd wordt bij aanroep \squote{van zelf} een kopietje van het linker argument van de |operator+| gemaakt.
 
 Zie \proglink{Breuk3.cpp} voor een compleet voorbeeldprogramma.
 
@@ -6873,7 +6873,7 @@ Het gebruik van het return type |const Breuk| in plaats van |Breuk| bij de postf
 Een \USE{constructor} van class |Breuk| met één parameter van het type |T| wordt door de compiler gebruikt als een variabele van het type |T| moet worden geconverteerd naar het type |Breuk| (zie \csecref{sec:conversieconstructor}).  
 \label{type conversie}%
 Door het definiëren van een conversie operator voor het type |T| kan de programmeur ervoor zorgen dat objecten van de class |Breuk| door de compiler (indien nodig) omgezet kunnen worden naar het type |T|.
-Stel dat je wilt dat een |Breuk| die op een plaats wordt gebruikt waar de compiler een |int| verwacht, door de compiler omgezet wordt naar het \enquote{gehele deel} van de |Breuk| dan kun je dit als volgt implementeren:
+Stel dat je wilt dat een |Breuk| die op een plaats wordt gebruikt waar de compiler een |int| verwacht, door de compiler omgezet wordt naar het gehele deel van de |Breuk| dan kun je dit als volgt implementeren:
 
 \begin{cpplstfragment}
 	class Breuk {
@@ -6983,7 +6983,7 @@ Deze globale operator gebruikt de private velden van de class |Breuk| en moet da
 Als eerste parameter is een |ostream&| gebruikt omdat de operator het als argument meegegeven object (in ons geval |cout|) moet kunnen aanpassen. 
 Als return type is het type |ostream&| gebruikt. 
 De als parameter meegegeven |ostream&| wordt ook weer teruggegeven. 
-Dit heeft tot gevolg dat je verschillende |<<| operatoren achter elkaar kunt \enquote{rijgen}. 
+Dit heeft tot gevolg dat je verschillende |<<| operatoren achter elkaar kunt \squote{rijgen}. 
 Bijvoorbeeld:
 \begin{cpplstfragment}
 	cout << "De breuk a = " << a << " en de breuk b = " << b << '\n';
@@ -7000,7 +7000,7 @@ Voor het type van de eerste parameter en het return type moet je in dit geval |i
 Als je deze laatste versie van |Breuk| vergelijkt met versie 0 op \cpageref{breuk0}, dan is eigenlijk het enige belangrijke verschil dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als de ingebouwde types te gebruiken is. 
 Je hebt er heel wat pagina's gedetailleerde informatie voor door moeten worstelen om dit te bereiken. 
 Dat dit toch de moeite waard is heb ik op een van de eerste van die pagina's al een keer benadrukt, maar het zou kunnen zijn dat je door alle tussenliggende details het uiteindelijke nut van alle inspanning vergeten bent. 
-Dus zal ik hier nogmaals antwoord geven op de vraag: \enquote{Is het al die inspanningen wel waard om een \cppcode{Breuk} zo te maken dat je hem net zoals een ingebouwd type kan gebruiken?} 
+Dus zal ik hier nogmaals antwoord geven op de vraag: \dquote{Is het al die inspanningen wel waard om een \cppcode{Breuk} zo te maken dat je hem net zoals een ingebouwd type kan gebruiken?} 
 Ja! 
 Het maken van de class |Breuk| is dan wel een hele inspanning maar iedere programmeur kan vervolgens dit zelfgedefinieerde type, als hij of  zij de naam |Breuk| maar kent, als vanzelf (intuïtief) gebruiken. 
 Er is daarbij geen handleiding of helpfunctie nodig is, omdat het type |Breuk| zich net zo gedraagt als een ingebouwd type. 
@@ -7016,12 +7016,12 @@ In de praktijk moet je deze kennis alleen toepassen om een UDT mee te definiëre
 \markright{}
 \label{sec:staticclassmembers}
 Je hebt geleerd dat elk object zijn eigen datavelden heeft terwijl de memberfuncties door alle objecten van een bepaalde class gedeeld worden.
-Stel nu dat je wilt tellen hoeveel objecten van een bepaalde class \enquote{levend} zijn.
+Stel nu dat je wilt tellen hoeveel objecten van een bepaalde class \squote{levend} zijn.
 Dit zou kunnen door een globale teller te definiëren die in de \USE{constructor} van de class met 1 wordt verhoogd en in de \USE{destructor} weer met 1 wordt verlaagd.
 Het gebruik van een globale variabele maakt het programma echter slecht onderhoudbaar.
 
 Een |static| dataveld is een onderdeel van de class en wordt door alle objecten van de class gedeeld.
-Z'n |static| dataveld kan bijvoorbeeld gebruikt worden om het aantal \enquote{levende} objecten van een class te tellen.
+Z'n |static| dataveld kan bijvoorbeeld gebruikt worden om het aantal \squote{levende} objecten van een class te tellen.
 In UML worden |static| datavelden en |static| memberfuncties \underline{onderstreept} weergegeven zoals in \cref{fig:hond} te zien is. Zie \proglink{Honden_teller.cpp}:
 
 \begin{minipage}{\textwidth}
@@ -7053,11 +7053,11 @@ Je kunt een |static| memberfunctie op twee manieren aanroepen:
 \end{itemize}
 De laatste methode heeft de voorkeur omdat die ook gebruikt kan worden als er nog geen objecten zijn.
 
-Een |static| memberfunctie heeft ten opzichte van een \enquote{normale} memberfunctie de volgende beperkingen:
+Een |static| memberfunctie heeft ten opzichte van een normale memberfunctie de volgende beperkingen:
 \begin{itemize}
     \item Een |static| memberfunctie heeft geen \USE{receiver} (ook niet als hij via een object aangeroepen wordt).
     \item Een |static| memberfunctie heeft dus geen |this| pointer.
-    \item Een |static| memberfunctie kan dus geen \enquote{gewone} memberfuncties aanroepen en ook geen \enquote{gewone} datavelden gebruiken. 
+    \item Een |static| memberfunctie kan dus geen gewone memberfuncties aanroepen en ook geen gewone datavelden gebruiken. 
 \end{itemize}
 
 \section{Initialiseren van datavelden}
@@ -7120,10 +7120,10 @@ c = 0000ff
 Sommige programmeurs denken dat het gebruik van eenvoudige memberfuncties, zoals de memberfuncties |teller| en |noemer| van de class Breuk, zie \csecref{breuk1}, te veel vertraging opleveren in hun applicatie.
 Dit is meestal ten onrechte!
 Maar voor die gevallen waar het echt nodig is biedt \Cpp{} de mogelijkheid om functies (ook memberfuncties) als \emph{inline} te definiëren.
-Dit betekent dat de compiler een aanroep naar deze functie niet vertaalt naar een \enquote{jump to subroutine} machinecode maar probeert om de machinecode waaruit de functie bestaat rechtstreeks op de plaats van aanroep in te vullen.
+Dit betekent dat de compiler een aanroep naar deze functie niet vertaalt naar een \squote{jump to subroutine} machinecode maar probeert om de machinecode waaruit de functie bestaat rechtstreeks op de plaats van aanroep in te vullen.
 Dit heeft (mogelijk) wel tot gevolg dat de code omvangrijker wordt.
 Memberfuncties mogen ook in de classdeclaratie gedefinieerd worden.
-Ze zijn dan \enquote{vanzelf} inline.
+Ze zijn dan vanzelf inline.
 Als de memberfunctie in de classdeclaratie alleen maar gedeclareerd is, kan de definitie van die functie voorafgegaan worden door het \USE{keyword} |inline| om de functie inline te maken.
 Veel compilers zullen als je aangeeft het programma voor snelheid te willen optimaliseren korte functies automatisch inline plaatsen.
 
@@ -7346,7 +7346,7 @@ In dit geval moet je een |virtual| memberfunctie gebruiken.
 In C heb je de |enum| leren kennen, zie eventueel \cite[paragraaf 5.6.2]{Gustedt2019} of \url{https://en.cppreference.com/w/c/language/enum}.
 In \Cpp{} is een verbeterde versie, zogenoemde |enum class|, toegevoegd.
 
-In C en \Cpp{} kun je een \squote{gewoon} enumeratie-type als volgt definiëren en gebruiken\footnote{%
+In C en \Cpp{} kun je een gewoon enumeratie-type als volgt definiëren en gebruiken\footnote{%
 	In C heb je een \ccode{typedef} nodig om hetzelfde te bereiken: \ccode{typedef enum { groen, oranje, rood } Stoplicht;}. In \Cpp{} is de naam van een enumeratie automatisch een type. 
 }:
 \begin{cpplstfragment}
@@ -7623,7 +7623,7 @@ Een memberfunctie die in een \USE{derived class} een memberfunctie uit de \USE{b
 \footnote{%
     Als de virtual memberfunctie in de \USE{base class} \cppcode{const} is, moet de memberfunctie in de \USE{derived class} die deze memberfunctie uit de \USE{base class} \USE{override} ook \cppcode{const} zijn.
 }.
-Alleen memberfuncties van een \enquote{ouder} of \enquote{voorouder} class kunnen \USE{overridden} worden in de \enquote{kind} class.
+Alleen memberfuncties van een \squote{ouder} of \squote{voorouder} class kunnen \USE{overridden} worden in de \squote{kind} class.
 Als een \USE{overridden} memberfunctie via een polymorfe pointer of \USE{reference} (zie \csecref{sec:polymorfepointer}) aangeroepen wordt, dan wordt tijdens het uitvoeren van het programma bepaald naar welk type object de pointer wijst (of de \USE{reference} verwijst).
 Pas daarna wordt de in deze class gedefinieerde memberfunctie aangeroepen.
 
@@ -7682,7 +7682,7 @@ Er wordt dus in de class van de \USE{receiver} (de class |Appel|) gekeken of er 
 Dit is het geval. 
 De \USE{method} |Appel::soort| wordt dus uitgevoerd en de string |"Appel"| wordt teruggegeven.
 Deze string wordt vervolgens in de \USE{method} |Fruit::print| afgedrukt.
-De \USE{method} die wordt uitgevoerd bij de ontvangst van een \USE{message} is dus afhankelijk van de \USE{receiver} en wordt tijdens \USE{run time} \enquote{opgezocht}%
+De \USE{method} die wordt uitgevoerd bij de ontvangst van een \USE{message} is dus afhankelijk van de \USE{receiver} en wordt tijdens \USE{run time} opgezocht%
 \footnote{%
     De \USE{method} wordt niet echt opgezocht tijdens \USE{run time}. 
     Late binding wordt in \Cpp{} geïmplementeerd door middel van een zogenoemde virtuele functietabel die uit pointers naar memberfuncties bestaat.
@@ -7736,7 +7736,7 @@ Dat wil zeggen dat de memberfunctie die in dezelfde class zelf is gedefinieerd w
 \section{Expliciet overridden van memberfuncties}
 \label{sec:explicitoverride}
 In \csecref{sec:memberfunctieoverriding} hebben we je aangeraden om \emph{expliciet} aan te geven dat je een memberfunctie wilt \USE{overridden}.
-Dit voorkomt dat je een functie \enquote{per ongeluk} overloadt.
+Dit voorkomt dat je een functie \squote{per ongeluk} overloadt.
 Omdat het \USE{keyword} |override| pas in \Cpp{}11 is toegevoegd, is het niet verplicht om het \USE{keyword} |override| te gebruiken.
 In deze paragraaf zul je zien wat er fout kan gaan als je het \USE{keyword} |override| \emph{niet} gebruikt.
 
@@ -7896,7 +7896,7 @@ De abstract base class |Fruit| moet eigenlijk een |virtual| destructor hebben, z
 Over \USE{inheritance} valt nog veel meer te vertellen:
 \begin{itemize}
     \item Private en \USE{protected inheritance}.
-    Een manier van overerven waarbij de \emph{is-een} relatie niet geldt.
+    Een manier van overerven waarbij de \emph{is-een}-relatie niet geldt.
     Kan meestal vervangen worden door \USE{composition} (\emph{heeft-een}).
     \item Multiple \USE{inheritance}.
     Overerven van meerdere classes tegelijk.
@@ -7922,7 +7922,7 @@ De belangrijkste daarvan zijn:
     \item De grootte van de array moet bij het compileren van het programma bekend zijn.
     In de praktijk komt het vaak voor dat pas bij het uitvoeren van het programma bepaald kan worden hoe groot de array moet zijn.
     \item Er vindt bij het gebruiken van de array geen controle plaats op de gebruikte index.
-    Als je element $N$ benadert uit een array die $N-1$ elementen heeft, krijg je geen foutmelding maar wordt de geheugenplaats \enquote{achter} het einde van de array benaderd.
+    Als je element $N$ benadert uit een array die $N-1$ elementen heeft, krijg je geen foutmelding maar wordt de geheugenplaats achter het einde van de array benaderd.
     Dit is vaak de oorzaak van fouten die lang onopgemerkt kunnen blijven en dan (volgens de wet van Murphy op het moment dat het het slechtst uitkomt) plotseling voor de dag kunnen komen.
     Deze fouten zijn vaak heel moeilijk te vinden omdat de oorzaak van de fout niets met het gevolg van de fout te maken heeft.
 \end{itemize}
@@ -8146,7 +8146,7 @@ Deze memberfunctie kun je dan als volgt implementeren:
 \cpplstinputfragment[linerange={34-39}]{Array.cpp}
 
 Voor het return type van |operator=| heb ik |Array&| gebruikt.
-Dit zorgt ervoor dat \USE{assignment} operatoren achter elkaar \enquote{geregen} kunnen worden, bijvoorbeeld: |c = b = a| zie \csecref{refreturn}.
+Dit zorgt ervoor dat \USE{assignment} operatoren achter elkaar \squote{geregen} kunnen worden, bijvoorbeeld: |c = b = a| zie \csecref{refreturn}.
 De implementatie van de| operator=| moet de |Array| |r| toekennen aan de \USE{receiver}.
 In de implementatie van de |operator=| is gebruik gemaakt van de standaard functie |swap| die de inhoud van de twee meegegeven argumenten verwisseld\footnote{%
 	Zie eventueel \url{https://en.cppreference.com/w/cpp/algorithm/swap}.
