@@ -23,7 +23,7 @@ void drukaf_rij(const Tijdsduur rij[], size_t aantal) {
         drukaf(rij[teller]);
 }
 
-// Deze functie berekent de totaal Tijdsduur van een rij met een aantal Tijdsduren
+// Deze functie berekent de totale Tijdsduur van een rij met een aantal Tijdsduren
 Tijdsduur som(const Tijdsduur rij[], size_t aantal) {
     Tijdsduur s = {0, 0};
     for (size_t teller = 0; teller < aantal; teller++) {
@@ -48,7 +48,7 @@ int main(void) {
     while (aantal_gelezen_variabelen == 2 && ++aantal < MAX_TIJDSDUREN);
     printf("\n");
     drukaf_rij(tijdsduren, aantal);
-    printf("De totaal tijdsduur is:\n");
+    printf("De totale tijdsduur is:\n");
     drukaf(som(tijdsduren, aantal));
     return 0;
 }

@@ -127,7 +127,7 @@ int main() {
     cout << (b1 + b2) << '\n';      // optellen met +
     Breuk b3(18, -9);               // definiëren en initialiseren
     if (b1 != b3) {                 // vergelijken met !=
-        b3++;                       // verhogen met ++
+        ++b3;                       // verhogen met ++
     }
     cout << b3 << '\n';             // afdrukken met <<
     b3 += 5;                        // verhogen met +=

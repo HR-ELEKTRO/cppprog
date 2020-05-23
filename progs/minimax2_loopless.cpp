@@ -57,9 +57,9 @@ int main() {
         cout << "Minimaal te behalen Maximale waarde = " << res.value() << '\n';
         pos = res.next_pos();
         cout << "Computer kiest positie: " << pos << '\n';
-        int pos_l {2 * pos + 1};
-        int pos_r {2 * pos + 2};
         if (pos < 15) {
+            int pos_l {2 * pos + 1};
+            int pos_r {2 * pos + 2};
             cout << "Je kunt kiezen voor positie " << pos_l << " of positie " << pos_r << '\n';
             cout << "Pssst, " << value_move_human(pos).next_pos() << " is de beste keuze\n";
             do {

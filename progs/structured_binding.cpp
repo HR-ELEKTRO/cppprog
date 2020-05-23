@@ -8,7 +8,7 @@ struct Adres {
     string plaatsnaam;
 };
 
-Adres adreslocatie_HR(string locatie) {
+Adres adreslocatie_HR(const string& locatie) {
     if (locatie == "AP")
         return {"G.J. de Jonghweg", 4, "Rotterdam"};
     else if (locatie == "MP")

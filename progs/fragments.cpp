@@ -3,19 +3,19 @@
 using namespace std;
 
 //>abs_not_overloaded
-int abs_int(int i) {
+int modules_int(int i) {
     if (i < 0) return -i; else return i;
 }
-double abs_double(double f) {
+double modules_double(double f) {
     if (f < 0) return -f; else return f;
 }
 //<abs_not_overloaded
 
 //>abs_overloaded
-int abs(int i) {
+int modules(int i) {
     if (i < 0) return -i; else return i;
 }
-double abs(double f) {
+double modules(double f) {
     if (f < 0) return -f; else return f;
 }
 //<abs_overloaded
@@ -148,7 +148,7 @@ int main() {
          << (b1 + b2) << '\n'; // optellen met +
     Breuk b3 {18, -9};         // definiëren en initialiseren
     if (b1 != b3) {            // vergelijken met !=
-        b3++;                  // verhogen met ++
+        ++b3;                  // verhogen met ++
     }
     cout << b3 << '\n';        // afdrukken met <<
     b3 += 5;                   // verhogen met +=
@@ -186,9 +186,9 @@ void dummy() {
 }
 {
 //>use_abs_overloaded
-    double in;
-    cin >> in; // lees in
-    cout << ::abs(in) << '\n'; // druk de absolute waarde van in af
+    double d;
+    cin >> d; // lees d in
+    cout << modules(d) << '\n'; // druk de absolute waarde van d af
 //<use_abs_overloaded
 }
 {
@@ -207,10 +207,10 @@ void dummy() {
 }
 {
 //>struct_typedef
-typedef struct Tijdsduur TTijdsduur;
+typedef struct Tijdsduur Tijdsduur_t;
 //<struct_typedef
 //>use_struct_typedef
-    TTijdsduur td2;
+    Tijdsduur_t td2;
 //<use_struct_typedef
 }
 {

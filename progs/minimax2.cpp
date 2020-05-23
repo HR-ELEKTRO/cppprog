@@ -48,15 +48,15 @@ int choose_human_move(int pos, int& best_next_pos) {
 }
 
 int main() {
-    int pos {0}, best_next_pos, best_value;
+    int pos {0}, best_next_pos;
     while (pos < 15) {
-        best_value = choose_computer_move(pos, best_next_pos);
+        int best_value {choose_computer_move(pos, best_next_pos)};
         cout << "Minimaal te behalen Maximale waarde = " << best_value << '\n';
         pos = best_next_pos;
         cout << "Computer kiest positie: " << pos << '\n';
-        int pos_l {2 * pos + 1};
-        int pos_r {2 * pos + 2};
         if (pos < 15) {
+            int pos_l {2 * pos + 1};
+            int pos_r {2 * pos + 2};
             cout << "Je kunt kiezen voor positie " << pos_l << " of positie " << pos_r << '\n';
             choose_human_move(pos, best_next_pos);
             cout << "Pssst, " << best_next_pos << " is de beste keuze.\n";

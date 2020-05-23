@@ -14,7 +14,7 @@ public:
     using size_type = size_t;
     explicit Array(size_type s);
 // Support for initializer list
-    Array(initializer_list<T> list);
+    explicit Array(initializer_list<T> list);
     Array(const Array<T>& v);
     Array<T>& operator=(const Array<T>& r);
     ~Array();

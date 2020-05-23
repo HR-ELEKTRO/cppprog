@@ -3,7 +3,7 @@
 using namespace std;
 
 template<typename T>
-void print_vector(const vector<T> v) {
+void print_vector(const vector<T>& v) {
     for (const auto& e: v) 
         cout << e << ' ';
     cout << '\n';

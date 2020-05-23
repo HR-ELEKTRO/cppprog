@@ -5,7 +5,7 @@ using namespace std;
 
 class Hond {
 public:
-    Hond(string n): _naam{n} {
+    Hond(const string& n): _naam{n} {
     }
     void blaf() const {
         cout << _naam << " zegt: Woef woef!\n";
