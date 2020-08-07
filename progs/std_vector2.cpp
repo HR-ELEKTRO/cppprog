@@ -7,7 +7,7 @@ void lees_ints(vector<int>& vec) {
     // gooi huidige inhoud vec weg
     vec.resize(0);
     cout << "Voer een willekeurig aantal integers in, ";
-    cout << "sluit af met een letter:\n";
+    cout << "sluit af met een tekst:\n";
     int i;
     while (cin >> i) {
         vec.push_back(i);

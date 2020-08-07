@@ -1,8 +1,17 @@
 // Werken met breuken in C++ ... een eerste stap naar een UDT
 
 #include <iostream>
+#include <cstdlib>
 #include <cassert>
 using namespace std;
+
+int gcd_r(int n, int m) {
+    return m == 0 ? n: gcd_r(m, n % m); 
+}
+
+int gcd(int n, int m) {
+    return gcd_r(abs(m), abs(n)); 
+}
 
 class Breuk {                  // Op een object van de class Breuk
 public:                        // kun je de volgende bewerkingen uitvoeren:
@@ -32,16 +41,12 @@ void Breuk::plus(const Breuk& b) {
     normaliseer();
 }
 
-int gcd(int n, int m) {
-    return m == 0 ? n: gcd(m, n % m); 
-}
-
 void Breuk::normaliseer() {
     if (onder < 0) {
         onder =- onder;
         boven =- boven;
     }
-    int d = gcd(boven < 0 ? -boven : boven, onder);
+    int d {gcd(boven, onder)};
     boven /= d;
     onder /= d;
 }

@@ -25,11 +25,11 @@ template<typename T> const T& Dozijn<T>::lees_uit(int index) const {
     return data[index];
 }
 
-template<typename T> ostream& operator<<(ostream& o, const Dozijn<T>& d) {
-    o << d.lees_uit(0);
+template<typename T> ostream& operator<<(ostream& out, const Dozijn<T>& d) {
+    out << d.lees_uit(0);
     for (int i {1}; i < 12; ++i)
-        o << ", " << d.lees_uit(i);
-    return o;
+        out << ", " << d.lees_uit(i);
+    return out;
 }
 
 int main() {

@@ -7,6 +7,6 @@ using namespace std;
 int main() {
     Memory_cell m;
     m.write(5);
-    cout << "Cell contents are " << m.read() << '\n';
+    cout << "Cell content is " << m.read() << '\n';
 //  ...
 }

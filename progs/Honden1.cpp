@@ -4,7 +4,7 @@ using namespace std;
 
 class Hond {
 public:
-    Hond(const string& n);
+    explicit Hond(const string& n);
     ~Hond();
     void set_naam(const string& n);
     void blaf() const;
@@ -25,7 +25,7 @@ void Hond::set_naam(const string& n) {
 }
 
 void Hond::blaf() const {
-    cout << naam << " zegt: Blaf blaf\n";
+    cout << "Blaf blaf\n";
 }
 
 int main() {
@@ -41,10 +41,10 @@ int main() {
 
 /* Uitvoer:
 Hoera, Fikkie is geboren!
-Fikkie zegt: Blaf blaf
-Kees zegt: Blaf blaf
+Blaf blaf
+Blaf blaf
 Hoera, Leika is geboren!
-Leika zegt: Blaf blaf
+Blaf blaf
 Helaas, Leika is gestorven.
 Helaas, Kees is gestorven.
 */

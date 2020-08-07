@@ -29,11 +29,11 @@ template<typename T, size_t N> constexpr size_t Rij<T, N>::aantal_plaatsen() {
 }
 
 template<typename T, size_t N>  
-ostream& operator<<(ostream& o, const Rij<T, N>& r) {
-    o << r.lees_uit(0);
+ostream& operator<<(ostream& out, const Rij<T, N>& r) {
+    out << r.lees_uit(0);
     for (size_t i {1}; i < N; ++i)
-        o << ", " << r.lees_uit(i);
-    return o;
+        out << ", " << r.lees_uit(i);
+    return out;
 }
 
 int main() {

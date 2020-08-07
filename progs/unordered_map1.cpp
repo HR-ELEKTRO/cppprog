@@ -22,8 +22,8 @@ struct Breuk {
     int onder;
 };
 
-bool operator==(const Hond& left, const Hond& right) {
-    return left.naam() == right.naam();
+bool operator==(const Hond& links, const Hond& rechts) {
+    return links.naam() == rechts.naam();
 }
 
 struct Hond_hash {
@@ -33,8 +33,8 @@ struct Hond_hash {
     }
 };
 
-bool operator==(const Breuk& left, const Breuk& right) {
-    return left.boven == right.boven && left.onder == right.onder;
+bool operator==(const Breuk& links, const Breuk& rechts) {
+    return links.boven == rechts.boven && links.onder == rechts.onder;
 }
 
 struct Breuk_hash {

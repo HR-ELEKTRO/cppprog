@@ -15,8 +15,8 @@ void print_valarray(const valarray<T> v) {
 class Breuk {
 public:
     Breuk(int t = 0, int n = 1);
-    Breuk& operator+=(const Breuk& right);
-    Breuk& operator*=(const Breuk& right);
+    Breuk& operator+=(const Breuk& rechts);
+    Breuk& operator*=(const Breuk& rechts);
 private:
     int boven;
     int onder;
@@ -24,23 +24,23 @@ private:
 friend ostream& operator<<(ostream& out, const Breuk& b);
 };
 
-const Breuk operator+(const Breuk& left, const Breuk& right);
-const Breuk operator*(const Breuk& left, const Breuk& right);
+const Breuk operator+(const Breuk& links, const Breuk& rechts);
+const Breuk operator*(const Breuk& links, const Breuk& rechts);
 
 Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
-Breuk& Breuk::operator+=(const Breuk& right) {
-    boven = boven * right.onder + onder * right.boven;
-    onder *= right.onder;
+Breuk& Breuk::operator+=(const Breuk& rechts) {
+    boven = boven * rechts.onder + onder * rechts.boven;
+    onder *= rechts.onder;
     normaliseer();
     return *this;
 }
 
-Breuk& Breuk::operator*=(const Breuk& right) {
-    boven *= right.boven;
-    onder *= right.onder;
+Breuk& Breuk::operator*=(const Breuk& rechts) {
+    boven *= rechts.boven;
+    onder *= rechts.onder;
     normaliseer();
     return *this;
 }
@@ -56,20 +56,20 @@ void Breuk::normaliseer() {
     onder /= d;
 }
 
-const Breuk operator+(const Breuk& left, const Breuk& right) {
-    Breuk copy_left {left};
-    copy_left += right;
-    return copy_left;
+const Breuk operator+(const Breuk& links, const Breuk& rechts) {
+    Breuk copy_links {links};
+    copy_links += rechts;
+    return copy_links;
 }
 
-const Breuk operator*(const Breuk& left, const Breuk& right) {
-    Breuk copy_left {left};
-    copy_left *= right;
-    return copy_left;
+const Breuk operator*(const Breuk& links, const Breuk& rechts) {
+    Breuk copy_links {links};
+    copy_links *= rechts;
+    return copy_links;
 }
 
-ostream& operator<<(ostream& left, const Breuk& right) {
-    return left << right.boven << '/' << right.onder;
+ostream& operator<<(ostream& out, const Breuk& b) {
+    return out << b.boven << '/' << b.onder;
 }
 
 int main() {

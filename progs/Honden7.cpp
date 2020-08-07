@@ -5,7 +5,7 @@ using namespace std;
 
 class Hond {
 public:
-    Hond(const string& n);
+    explicit Hond(const string& n);
     virtual ~Hond();
     void set_naam(const string& n);
     virtual void blaf() const =0;
@@ -13,37 +13,37 @@ private:
     string naam;
 };
 
-class Tekkel: public Hond {
+class Teckel: public Hond {
 public:
-    Tekkel(const string& n);
-    ~Tekkel() override;
+    explicit Teckel(const string& n);
+    ~Teckel() override;
     void blaf() const override;
 };
 
-class Whiskey_vat {
+class Whisky_vat {
 public:
-    Whiskey_vat(int b);
-    ~Whiskey_vat();
+    explicit Whisky_vat(int b);
+    ~Whisky_vat();
     bool geef_borrel();
 private:
     int aantal_borrels;
 };
 
-Whiskey_vat::Whiskey_vat(int b): aantal_borrels{b} {
+Whisky_vat::Whisky_vat(int b): aantal_borrels{b} {
     cout << "Vat met " << aantal_borrels << " borrels aangemaakt.\n";
 }
 
-Whiskey_vat::~Whiskey_vat() {
+Whisky_vat::~Whisky_vat() {
     cout << "Vat met " << aantal_borrels << " borrels opgeruimd.\n";
 }
 
-bool Whiskey_vat::geef_borrel() {
+bool Whisky_vat::geef_borrel() {
     if (aantal_borrels > 0) {
         --aantal_borrels;
         cout << "Ik kom je helpen, drink deze borrel maar op!\n";
         return true;
     }
-    cout << "Ik kan je niet helpen, mijn whiskey is op.\n";
+    cout << "Ik kan je niet helpen, mijn Whisky is op.\n";
     return false;
 }
 
@@ -54,7 +54,7 @@ public:
     void blaf() const override;
     void help();
 private:
-    Whiskey_vat vat;
+    Whisky_vat vat;
 };
 
 class Roedel {
@@ -65,7 +65,7 @@ private:
     vector<Hond*> honden;
 };
 
-Hond::Hond(const string& n): naam(n) {
+Hond::Hond(const string& n): naam{n} {
     cout << "Hoera, " << naam << " is geboren!\n";
 }
 
@@ -77,15 +77,15 @@ void Hond::set_naam(const string& n) {
     naam = n;
 }
 
-Tekkel::Tekkel(const string& n): Hond{n} {
-    cout << "Er is een Tekkel geboren!\n";
+Teckel::Teckel(const string& n): Hond{n} {
+    cout << "Er is een Teckel geboren!\n";
 }
 
-Tekkel::~Tekkel() {
-    cout << "Er is een Tekkel gestorven.\n";
+Teckel::~Teckel() {
+    cout << "Er is een Teckel gestorven.\n";
 }
 
-void Tekkel::blaf() const {
+void Teckel::blaf() const {
     cout << "Kef kef\n";
 }
 
@@ -118,8 +118,8 @@ void Roedel::blaf_allemaal() const {
 
 int main() {
     Sint_bernard h1{"Boris", 10};
-    Tekkel h2{"Fikkie"};
-    Tekkel h3{"Harry"};
+    Teckel h2{"Fikkie"};
+    Teckel h3{"Harry"};
 
     Roedel r;
     r.voeg_toe(h1);
@@ -134,15 +134,15 @@ Hoera, Boris is geboren!
 Vat met 10 borrels aangemaakt.
 Er is een Sint_bernard geboren!
 Hoera, Fikkie is geboren!
-Er is een Tekkel geboren!
+Er is een Teckel geboren!
 Hoera, Harry is geboren!
-Er is een Tekkel geboren!
+Er is een Teckel geboren!
 WOEF, WOEF
 Kef kef
 Kef kef
-Er is een Tekkel gestorven.
+Er is een Teckel gestorven.
 Helaas, Harry is gestorven.
-Er is een Tekkel gestorven.
+Er is een Teckel gestorven.
 Helaas, Fikkie is gestorven.
 Er is een Sint_bernard gestorven.
 Vat met 10 borrels opgeruimd.

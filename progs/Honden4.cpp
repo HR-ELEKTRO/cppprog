@@ -4,7 +4,7 @@ using namespace std;
 
 class Hond {
 public:
-    Hond(const string& n);
+    explicit Hond(const string& n);
     virtual ~Hond();
     void set_naam(const string& n);
     virtual void blaf() const;
@@ -12,13 +12,13 @@ private:
     string naam;
 };
 
-class Tekkel: public Hond {
+class Teckel: public Hond {
 public:
-    Tekkel(const string& n);
-    ~Tekkel() override;
+    explicit Teckel(const string& n);
+    ~Teckel() override;
     void blaft() const override; // OOPS foutje
 //  foutje wordt door de compiler gemeld:
-//  Error: 'void Tekkel::blaft() const' marked override, but does not override
+//  Error: 'void Teckel::blaft() const' marked override, but does not override
 };
 
 Hond::Hond(const string& n): naam{n} {
@@ -37,27 +37,27 @@ void Hond::blaf() const {
     cout << "Blaf blaf\n";
 }
 
-Tekkel::Tekkel(const string& n): Hond{n} {
-    cout << "Er is een Tekkel geboren!\n";
+Teckel::Teckel(const string& n): Hond{n} {
+    cout << "Er is een Teckel geboren!\n";
 }
 
-Tekkel::~Tekkel() {
-    cout << "Er is een Tekkel gestorven.\n";
+Teckel::~Teckel() {
+    cout << "Er is een Teckel gestorven.\n";
 }
 
-void Tekkel::blaft() const {
+void Teckel::blaft() const {
     cout << "Kef kef\n";
 }
 
 int main() {
-    Tekkel h1{"Biefie"};
+    Teckel h1{"Biefie"};
     h1.blaf();
 }
 
 /* Uitvoer: 
 Hoera, Biefie is geboren!
-Er is een Tekkel geboren!
+Er is een Teckel geboren!
 Blaf blaf
-Er is een Tekkel gestorven.
+Er is een Teckel gestorven.
 Helaas, Biefie is gestorven.
 */

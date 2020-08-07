@@ -40,12 +40,12 @@ class Component {
 public:
     virtual ~Component() = default;
     virtual complex<double> Z(double f) const = 0; // bereken de impedantie Z (een complex getal) bij de frequentie f
-    virtual void print(ostream& o) const = 0; // print
+    virtual void print(ostream& out) const = 0; // print
 };
 
-ostream& operator<<(ostream& o, const Component& c) {
-    c.print(o);
-    return o;
+ostream& operator<<(ostream& out, const Component& c) {
+    c.print(out);
+    return out;
 }
 
 class R: public Component { // R = Weerstand

@@ -12,7 +12,7 @@ public:
     Breuk(int t, int n);
     int teller() const;
     int noemer() const;
-    void operator+=(Breuk right);
+    void operator+=(Breuk rechts);
 //  ...
 //  Er zijn nog veel uitbreidingen mogelijk
 //  ...
@@ -36,9 +36,9 @@ int Breuk::noemer() const {
     return onder;
 }
 
-void Breuk::operator+=(Breuk right) {
-    boven = boven * right.onder + onder * right.boven;
-    onder *= right.onder;
+void Breuk::operator+=(Breuk rechts) {
+    boven = boven * rechts.onder + onder * rechts.boven;
+    onder *= rechts.onder;
     normaliseer();
 }
 
@@ -48,7 +48,7 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d {gcd(boven < 0 ? -boven : boven, onder)};
+    int d {gcd(boven, onder)};
     boven /= d;
     onder /= d;
     // controle of nog steeds aan de invariant van de class wordt voldaan:

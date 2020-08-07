@@ -18,7 +18,7 @@
 \newcommand{\modulecode}{\Cpp}
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
-\newcommand{\huidigeversie}{1.1}
+\newcommand{\huidigeversie}{1.2}
 % start a new line by using \\ 
 \newcommand{\auteurs}{
 	J.Z.M. Broeders
@@ -148,8 +148,8 @@
 %TODO Check URL's
 Dit dictaat is lang geleden begonnen als een korte introductie in \Cpp{} en inmiddels uitgegroeid tot dit met \LaTeX{} opgemaakte document\footnote{%
 	De \LaTeX{} code is beschikbaar op \url{https://bitbucket.org/HR_ELEKTRO/cppprog/src/master/}.
-}. In de tussentijd hebben veel studenten en collega's mij feedback gegeven. De opbouwende kritiek van Harm Jongsma, Cor Diependaal, Henk van den Bosch, Dave Stikkelorum, John Visser, Gerard Tuk, Fidelis Theinert, Ben Kuiper, René Theil, René Boeije en vele anderen hebben dit dictaat ontegenzeggelijk beter gemaakt. Desondanks heb ik niet de illusie dat dit dictaat foutvrij is. Op- en aanmerkingen zijn dus nog altijd welkom, mail me op  \href{mailto:J.Z.M.Broeders@hr.nl}{J.Z.M.Broeders@hr.nl}, of maak een \href{https://www.bitbucket.com/ems30/issue}{issue}\iftoggle{ebook}{}{\footnote{%
-	Je kunt een issue aanmaken op: \url{https://www.bitbucket.com/ems30/issue}.
+}. In de tussentijd hebben veel studenten en collega's mij feedback gegeven. De opbouwende kritiek van Harm Jongsma, Cor Diependaal, Henk van den Bosch, Dave Stikkelorum, John Visser, Gerard Tuk, Fidelis Theinert, Ben Kuiper, René Theil, René Boeije en vele anderen hebben dit dictaat ontegenzeggelijk beter gemaakt. Desondanks heb ik niet de illusie dat dit dictaat foutvrij is. Op- en aanmerkingen zijn dus nog altijd welkom, mail me op  \href{mailto:J.Z.M.Broeders@hr.nl}{J.Z.M.Broeders@hr.nl}, of maak een \href{https://bitbucket.org/HR_ELEKTRO/cppprog/issues}{issue}\iftoggle{ebook}{}{\footnote{%
+	Je kunt een issue aanmaken op: \url{https://bitbucket.org/HR_ELEKTRO/cppprog/issues}.
 }} aan. 
 
 Alle programmacode in dit dictaat is getest met GCC%
@@ -160,8 +160,8 @@ Texas Instruments Optimizing C/C++ Compiler
 versie 19.6.0.STS voor ARM en MSP430%
 \footnote{%
 	\USE{Deze compiler is onderdeel van de gratis te gebruiken Integrated Development Environment (IDE) Code Composer Studio (CCS)}.
-	Zie: \url{http://www.ti.com/ccs}
-}. Op \url{https://www.bitbucket.com/cppprog/wiki} vind je de source code van alle in dit dictaat besproken programma's. Als je dit dictaat leest op een device met internettoegang, dan kun je op de bestandsnamen in dit dictaat klikken om de programma's te downloaden.
+	Zie: \url{https://www.ti.com/tool/CCSTUDIO}
+}. Op \url{https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/Home} vind je de source code van alle in dit dictaat besproken programma's. Als je dit dictaat leest op een device met internettoegang, dan kun je op de bestandsnamen in dit dictaat klikken om de programma's te downloaden.
 
 Veel literatuur over \Cpp{} en objectgeoriënteerd programmeren is geschreven in het Engels. Om er voor te zorgen dat je deze literatuur na (of tijdens) het lezen van dit dictaat eenvoudig kunt gebruiken heb ik veel van het jargon dat in deze literatuur wordt gebruikt niet vertaald naar het Nederlands. De keuze om een term wel of niet te vertalen is arbitraal. Zo heb ik bijvoorbeeld het Engelse begrip \squote{return type} niet vertaal in het Nederlandse \squote{terugkeertype} of \squote{retourtype}, maar heb ik het Engelse begrip \squote{parameter type} wel vertaald naar het Nederlandse \squote{parametertype}. De Engelse begrippen \squote{class} en \squote{class template} zijn niet vertaald in \squote{klasse} en \squote{klassetemplate} maar de Engelse begrippen \squote{function} en \squote{function template} zijn wel vertaald in \squote{functie} en \squote{functietemplate}. 
 
@@ -206,12 +206,13 @@ Gedetailleerde gratis informatie kun je ook vinden in \citetitle{Brokken2019} \c
 \section*{Een terugblik op C}
 \label{sec:terugblikC}
 We starten dit dictaat met de overgang van gestructureerd programmeren in C naar gestructureerd programmeren in \Cpp{}.
-\emph{Ik ga er van uit dat je de taal C\footnote{%
+\emph{Ik ga ervan uit dat je de taal C\footnote{%
 	We gaan in dit dictaat uit van de C11 standaard\cite{ISO2011}.
-	De laatste versie van de C-standaard is C18\footnote{%
-		De \USE{draft version} is beschikbaar op \url{http://www2.open-std.org/JTC1/SC22/WG14/www/abq/c17_updated_proposed_fdis.pdf}. Grappig genoeg werd het toen nog C17 genoemd, maar de standaard is uiteindelijk pas in juni 2018 gepubliceerd, zie \url{https://www.iso.org/standard/74528.html}.
-	}, maar die verbetert alleen een aantal fouten in de C11 standaard en voegt geen nieuwe taal- of libraryelementen toe. 	
-} redelijk goed beheerst.} Misschien is het nodig om deze kennis op te frissen.
+	De laatste versie van de C-standaard is C18\footnotemark{}, maar die verbetert alleen een aantal fouten in de C11 standaard en voegt geen nieuwe taal- of libraryelementen toe.% 	
+} redelijk goed beheerst.}%
+\footnotetext{%
+	De \USE{draft version} is beschikbaar op \url{http://www2.open-std.org/JTC1/SC22/WG14/www/abq/c17_updated_proposed_fdis.pdf}. Grappig genoeg werd het toen nog C17 genoemd, maar de standaard is uiteindelijk pas in juni 2018 gepubliceerd, zie \url{https://www.iso.org/standard/74528.html}.%
+} Misschien is het nodig om deze kennis op te frissen.
 Vandaar dat dit dictaat begint met een terugblik op C.
 We doen dit aan de hand van het voorbeeldprogramma \proglink{C.c} dat een lijst met tijdsduren (in uren en minuten) inleest vanaf het toetsenbord en de totale tijdsduur (in uren en minuten) bepaalt en afdrukt.
 Dit programma kun je bijvoorbeeld gebruiken om, van een aantal gewerkte tijden, de totale gewerkte tijd te bepalen.
@@ -937,13 +938,13 @@ In dit dictaat maak je kennis met deze objectgeoriënteerde benadering.
 Wij hebben daarbij gekozen voor de taal \Cpp{} omdat dit de meest gebruikte objectgeoriënteerde programmeertaal is voor embedded systems\footnote{%
     Bron: \href{https://www.embedded.com/wp-content/uploads/2019/11/EETimes_Embedded_2019_Embedded_Markets_Study.pdf\#page=32}{AspenCore 2019 Embedded Market Study}.
 }.
-Het is echter niet de bedoeling dat je na het bestuderen van dit dictaat op de hoogte bent van alle aspecten en details van \Cpp{}.
+Het is echter niet zo dat je na het bestuderen van dit dictaat op de hoogte bent van alle aspecten en details van \Cpp{}.
 Wel begrijp je na het bestuderen van dit dictaat de algemene ideeën achter OOP en kun je die toepassen in \Cpp{}.
 De objectgeoriënteerde benadering is een (voor jou) nieuwe manier van denken over hoe je informatie in een computer kunt structureren.
 
-De manier waarop we problemen oplossen met objectgeoriënteerde technieken lijkt op de manier van probleem oplossen die we in het dagelijks leven gebruiken.
+De manier waarop we problemen oplossen met objectgeoriënteerde technieken lijkt op de manier van problemen oplossen die we in het dagelijks leven gebruiken.
 Een objectgeoriënteerde applicatie is opgebouwd uit deeltjes die we \emph{objecten} noemen.
-Elk object heeft zijn eigen taak.
+Elk object is verantwoordelijk voor een bepaald deel van de functionaliteit van de applicatie.
 Een object kan aan een ander object vragen of dit object wat voor hem wil doen, dit gebeurt door het zenden van een boodschap (Engels: \emph{\USE{message}}) naar dat object.
 Aan deze \USE{message} kunnen indien nodig \emph{argumenten} worden meegegeven.
 Het is de verantwoordelijkheid van het ontvangende object (Engels: the \emph{\USE{receiver}}) hoe het de \USE{message} afhandelt.
@@ -996,7 +997,7 @@ Sinds de introductie van de computer zijn programmeertalen steeds \emph{abstract
 
 \needspace{2\baselineskip}
 }{}
-De volgende abstractie technieken zijn achtereenvolgens ontstaan:
+De volgende abstractietechnieken zijn achtereenvolgens ontstaan:
 \begin{itemize}
     \item \textbf{Functies en procedures.}\\
 In de eerste hogere programmeertalen zoals Algol, Basic, Fortran, C, Pascal, Cobol enz.
@@ -1006,7 +1007,6 @@ Deze lokale variabelen zitten ingekapseld in de functie of procedure, dit wordt 
 Als de specificatie van de functie bekend is, kun je de functie gebruiken zonder dat je de implementatie details hoeft te kennen of te begrijpen.
 Dit is dus een vorm van \USE{information hiding}.
 Tevens voorkomt het gebruik van functies en procedures het dupliceren van code, waardoor het wijzigen en testen van programma's eenvoudiger wordt.
-De programmacode wordt korter, maar dit gaat ten koste van de executietijd.
     \item \textbf{Modules.}\\
 In latere programmeertalen zoals Modula 2 (en zeer primitief ook in C) kunnen een aantal logisch bij elkaar behorende functies, procedures en variabelen geabstraheerd worden tot een module.
 Deze functies, procedures en variabelen kunnen voor de gebruikers van de module zichtbaar (=public) of onzichtbaar (=private) gemaakt worden.
@@ -1035,8 +1035,8 @@ Op generieke functies en datatypes komen we nog uitgebreid terug.
     \item \textbf{Classes.}\\
 In moderne programmeertalen zoals Java, C$\sharp$, Python, PHP, Ruby, Perl, Smalltalk en ook in \Cpp{} kunnen een aantal logisch bij elkaar behorende UDT's van elkaar worden afgeleid door middel van \USE{inheritance}.
 Door nu programma's te schrijven in termen van \USE{base classes} (basisklassen) en de in deze \USE{base classes} gedefinieerde \USE{messages} in \USE{derived classes} (afgeleide klassen) te implementeren kan je deze \USE{base classes} gebruiken zonder dat je de implementatie van deze classes hoeft te kennen of te begrijpen en kun je eenvoudig van implementatie wisselen.
-Zo'n \USE{base class} wordt dan ook wel een ADT \USE{Abstract Data Type} genoemd omdat zo'n class geen implementatie bevat en dus niet geïnstantieerd kan worden. 
-De \USE{derived classes} die dit ADT implementeren worden ook wel CDTs \USE{Concrete Data Types} genoemd.
+Zo'n \USE{base class} wordt dan ook wel een \USE{Abstract Data Type} (ADT) genoemd omdat zo'n class geen implementatie bevat en dus niet geïnstantieerd kan worden. 
+De \USE{derived classes} die dit ADT implementeren worden ook wel  \USE{Concrete Data Types} (CDT's) genoemd.
 
 Tevens kun je code die alleen \USE{messages} aanroept van de \USE{base class} zonder opnieuw te compileren hergebruiken voor alle direct of indirect van deze \USE{base class} afgeleide classes. Dit wordt veelvormige of met een moeilijk woord polymorf (Engels: \emph{\USE{polymorph}}) genoemd.
 Dit laatste wordt mogelijk gemaakt door de \USE{message} pas tijdens \USE{run time} aan een bepaalde \USE{method} te verbinden en wordt late binding (Engels: \emph{\USE{late binding}}) genoemd.
@@ -1067,7 +1067,7 @@ De private functies en variabelen zitten ingekapseld in het UDT.
 Als de specificatie van het UDT bekend is, kun je dit type op dezelfde wijze gebruiken als de ingebouwde types van de programmeertaal (zoals |char|, |int| en |double|) zonder dat je de implementatie details van dit type hoeft te kennen of te begrijpen.
 Dit is een vorm van \USE{information hiding}.
 
-De programmeertaal C biedt geen direct support om UDT's te definiëren\footnote{%
+De programmeertaal C biedt geen directe ondersteuning om UDT's te definiëren\footnote{%
 	Het is erg omslachtig om UDT's te definiëren in C, in \Cpp{} is dit veel eenvoudiger.
 }.
 Als je in C een programma wilt schrijven waarbij je met breuken in plaats van met \USE{floating-point} getallen wilt werken%
@@ -1089,10 +1089,10 @@ Dit zorgt ervoor dat een overflow minder snel optreedt als met het resultaat wee
 Deze manier van werken heeft de volgende nadelen:
 \begin{itemize}
     \item Iedere programmeur die gebruikt maakt van het type |Breuk| kan een waarde toekennen aan de datavelden |boven| en |onder|.
-Het is in C niet te voorkomen dat het dataveld |onder| op nul gezet wordt. 
-Als een programmeur het dataveld |onder| van een |Breuk| op nul zet, kan dit een fout veroorzaken in code van een andere programmeur die een |Breuk| naar een |double| converteert.
+Het is in C niet te voorkomen dat een programmeur het dataveld |onder| van een variabele van het type |Breuk| per ongeluk op nul zet. 
+Als een programmeur het dataveld |onder| van een variabele van het type  |Breuk| op nul zet, kan dit een fout veroorzaken in code van een andere programmeur die bijvoorbeeld deze variabele van het type |Breuk| naar het type |double| converteert.
 Als deze fout geconstateerd wordt, kunnen alle functies waarin breuken gebruikt worden de boosdoeners zijn.
-    \item Iedere programmeur die gebruikt maakt van het type |Breuk| kan er voor kiezen om zelf de code voor het optellen van breuken \squote{uit te vinden} in plaats van gebruik te maken van de functie |som|.
+    \item Iedere programmeur die gebruik maakt van het type |Breuk| kan er voor kiezen om zelf de code voor het optellen van breuken \squote{uit te vinden} in plaats van gebruik te maken van de functie |som|.
 Er valt dus niet te garanderen dat alle optellingen van breuken correct en genormaliseerd zijn.
 Ook niet als we wel kunnen garanderen dat de functies |som| en |normaliseer| correct zijn.
 Iedere programmeur die breuken gebruikt kan ze namelijk op zijn eigen manier optellen.
@@ -1219,8 +1219,8 @@ Bij het ontwikkelen van kleine programma's zijn deze voordelen niet zo belangrij
 Door gebruik te maken van de |class| |Breuk| met bijbehorende memberfuncties in \Cpp{} in plaats van de |typedef struct| |Breuk| met de bijbehorende functies in C wordt het programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
 
 De hierboven gedefinieerde class |Breuk| is erg beperkt. In de inleiding van dit hoofdstuk heb ik geschreven: \dquote{Een UDT is een user-defined type dat voor een gebruiker niet te onderscheiden is van ingebouwde types (zoals \cppcode{int})}.%
-\needspace{2\baselineskip}
-Een UDT |Breuk| moet dus als volgt gebruikt kunnen worden:
+%\needspace{2\baselineskip}
+Een UDT |Breuk| moet dus uiteindelijk als volgt gebruikt kunnen worden:
 %Waarom deze splitsing?
 \iftoggle{ebook}{
 \cpplstinputfragment[linerange={Breuk3_main-Breuk3_main,Breuk3_main2-Breuk3_main2}]{fragments.cpp}
@@ -1228,19 +1228,19 @@ Een UDT |Breuk| moet dus als volgt gebruikt kunnen worden:
 \cpplstinputfragment[linerange=124-145]{Breuk3.cpp}
 }
 
-Je ziet dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als het ingebouwde type |int| te gebruiken is.
+Je ziet dat het zelfgedefinieerde type |Breuk| uiteindelijk op precies dezelfde wijze als het ingebouwde type |int| te gebruiken is.
 Dit maakt het voor programmeurs die het type |Breuk| gebruiken erg eenvoudig.
 In het vervolg bespreek ik hoe de class |Breuk| stap voor stap uitgebreid en aangepast kan worden zodat uiteindelijk een UDT |Breuk| ontstaat.
 Dit blijkt nog behoorlijk lastig te zijn en je zou jezelf af kunnen vragen: \dquote{Is het al die inspanningen wel waard om een \cppcode{Breuk} zo te maken dat je hem net zoals een \cppcode{int} kan gebruiken?}
 Bedenk dan het volgende: het maken van de class |Breuk| is dan wel een hele inspanning maar iedere programmeur kan vervolgens dit zelfgedefinieerde type, als hij of zij de naam |Breuk| maar kent, als vanzelf (intuïtief) gebruiken.
-Er is daarbij geen handleiding of helpfunctie nodig, omdat het type |Breuk| zich net zo gedraagt als het ingebouwde type |int|.
+Er is daarbij geen handleiding of helpfunctie nodig, omdat het type |Breuk| op dezelfde wijze als het ingebouwde type |int| te gebruiken is.
 De class |Breuk| hoeft maar één keer gemaakt te worden, maar kan talloze malen gebruikt worden.
 Met een beetje geluk ben je als ontwerper van de class |Breuk| later zelf ook gebruiker van de class |Breuk|, zodat je zelf de vruchten van je inspanningen kunt plukken.
 
-\sectionTextCodeText{Voorbeeld class}{Breuk}{(eerste versie)}
+\sectionTextCodeText{Voorbeeld class}{Breuk}{(tweede versie)}
 %\markright{}
 \label{breuk1}
-Dit voorbeeld is een eerste uitbreiding van de op \cpageref{breuk0} gegeven class |Breuk| (versie 0). In deze versie leer je:
+Dit voorbeeld is een eerste uitbreiding van de op \cpageref{breuk0} gegeven class |Breuk| (eerste versie). In deze versie leer je:
 \begin{itemize}
     \item hoe je een object van de class |Breuk| kunt initialiseren (door middel van \emph{\USE{constructors}});
     \item hoe je memberfuncties kunt definiëren die ook voor constante objecten van de class |Breuk| gebruikt kunnen worden;
@@ -1380,9 +1380,9 @@ int main() {$\label{breuk1::main}$
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
-b1 {4} = 4/1
-b2 {23, -5} = -23/5
-b3 {b2} = -23/5
+b1 \{4\} = 4/1
+b2 \{23, -5\} = -23/5
+b3 \{b2\} = -23/5
 b3.abs() = 23/5
 b3 = b2 = -23/5
 b3.plus(5) = 2/5
@@ -1418,7 +1418,7 @@ Na afloop van de onderstaande code bevat het object |b2| de waarde \sfrac{1}{2} 
 \end{cpplstfragment}
 
 \needspace{2\baselineskip}
-Deze \USE{constructor} |Breuk(int t, int n);| heb ik als volgt gedefinieerd:
+Deze \USE{constructor} |Breuk(int t, int n);| is als volgt gedefinieerd:
 \cpplstinputfragment[linerange=45-47]{Breuk1.cpp}
 
 Het is ook mogelijk om vanuit een \USE{constructor} een andere \USE{constructor} van dezelfde class aan te roepen in de \USE{initialization list}. 
@@ -1435,7 +1435,7 @@ Het is dus verstandig om voor elke class één of meer \USE{constructors} te def
     \cppcode{Breuk::Breuk(int t = 0, int n = 1);}.
 }.
 
-Als (ondanks het zo juist gegeven advies) geen enkele \USE{constructor} gedefinieerd is, dan wordt door de compiler een \label{defaultconstructor}\emph{\USE{default constructor}} (= \USE{constructor} zonder parameters) aangemaakt. Deze default \USE{constructor} roept voor elk dataveld de \USE{default constructor} van dit veld aan (Engels: \emph{\USE{memberwise construction}}).
+Als (ondanks het zojuist gegeven advies) geen enkele \USE{constructor} gedefinieerd is, dan wordt door de compiler een \label{defaultconstructor}\emph{\USE{default constructor}} (= \USE{constructor} zonder parameters) aangemaakt. Deze default \USE{constructor} roept voor elk dataveld de \USE{default constructor} van dit veld aan (Engels: \emph{\USE{memberwise construction}}).
 %TODO: je kunt dit ook expliciet aangeven met =default 
 
 \section{Initialization list van de constructor}
@@ -1613,7 +1613,7 @@ int Breuk::teller() const {
 Door het toepassen van \USE{function name overloading} is het mogelijk om 2 functies te definiëren met dezelfde naam en met dezelfde parameters waarbij de ene |const| is en de andere niet, maar dit is erg gedetailleerd en behandel ik hier niet%
 \footnote{%
     Voor degene die echt alles wil weten: als een memberfunctie zowel const als non-const gedefinieerd is dan wordt bij aanroep op een \USE{read-only} object de const memberfunctie aangeroepen en wordt bij aanroep op een variabel object de non-const memberfunctie aangeroepen. 
-    (Logisch nietwaar!)
+    (Dat is ook wel logisch, nietwaar?)
 }.
 
 We kunnen nu de memberfuncties van een class in twee groepen opdelen:
@@ -1642,10 +1642,10 @@ Als je ervoor zorgt dat de class invariant aan het einde van elke public memberf
 }
 Dit vermindert de kans op het maken van fouten.
 
-\sectionTextCodeText{Voorbeeld class}{Breuk}{(tweede versie)}
+\sectionTextCodeText{Voorbeeld class}{Breuk}{(derde versie)}
 %\markright{}
 \label{breuk2}
-Dit voorbeeld is een uitbreiding van de in \csecref{breuk1} gegeven class |Breuk| (versie 1). 
+Dit voorbeeld is een uitbreiding van de in \csecref{breuk1} gegeven class |Breuk| (tweede versie). 
 Met behulp van dit voorbeeld leer je, hoe je een object van de class |Breuk| kunt optellen bij een ander object van de class |Breuk| met
 de operator |+=|, in plaats van met de memberfunctie |plus| (door middel van \emph{\USE{operator overloading}}).
 Het optellen van een |Breuk| bij een |Breuk| gaat nu op precies dezelfde wijze als het optellen van een |int| bij een |int|. 
@@ -1697,8 +1697,8 @@ int main() {
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
-b1 {14, 4} = 7/2
-b2 {23, -5} = -23/5
+b1 \{14, 4\} = 7/2
+b2 \{23, -5\} = -23/5
 b1 += b2 = -11/10
 \end{coutput}
 
@@ -1717,7 +1717,7 @@ Als de |Breuk::operator+=| memberfunctie wel gedefinieerd is, wordt het bovensta
     b1.operator+=(b2);
 \end{cpplstfragment}
 
-De memberfunctie |operator+=| in deze tweede versie van |Breuk| heeft dezelfde implementatie als de memberfunctie |plus| in de eerste versie van |Breuk| (zie \cpageref{Breuk::plus}).
+De memberfunctie |operator+=| in deze derde versie van |Breuk| heeft dezelfde implementatie als de memberfunctie |plus| in de tweede versie van |Breuk| (zie \cpageref{Breuk::plus}).
 
 Je kunt voor een zelfgedefinieerd type alle operatoren zelf definiëren behalve de operator |.| waarmee een \USE{member} geselecteerd wordt en de operator |?:|%
 \footnote{%
@@ -1801,8 +1801,8 @@ De bedenker van \Cpp{}, Bjarne Stroustrup, heeft om dit probleem op te lossen ee
 Een \label{reference}\emph{\USE{reference}} is niets anders dan een alias (andere naam) voor de variabele waarnaar hij verwijst (of anders gezegd: refereert). 
 Alle operaties die op een variabele zijn toegestaan zijn ook toegestaan op een \USE{reference} die naar die variabele verwijst.
 
-\begin{cpplstfragment}[mathescape=true]
-    int i {3}$\footnotemark$;
+\begin{cpplstfragment}
+    int i {3};
     int& j {i}; // een reference moet geïnitialiseerd worden
                 // er bestaat nu 1 variabele met 2 namen (i en j)
     j = 4;      // i is nu gelijk aan 4
@@ -1822,7 +1822,7 @@ Een \USE{reference} lijkt een beetje op een pointer maar er zijn toch belangrijk
 
 \section{Reference parameters}
 \label{sec:referenceparameters}
-In C worden bij het aanroepen van een functie de waarden van de argumenten gekopieerd naar de parameters van de functie. 
+Bij het aanroepen van een functie, in C en ook in \Cpp{}, worden de waarden van de argumenten gekopieerd naar de parameters van de functie. 
 Dit wordt \label{call by value}\emph{\USE{call by value}} (aanroep met waarden) genoemd. 
 Dit betekent dat de argumenten die in een functieaanroep zijn gebruikt na afloop van de functie \emph{niet} veranderd kunnen zijn. 
 Je kunt de parameters in de functiedefinitie dus gewoon als een lokale variabele gebruiken. 
@@ -1838,7 +1838,7 @@ Het is dus geen probleem als de actuele parameter een constante is.
 void sla_regels_over(int aantal) {
     while (aantal > 0) {
         cout << '\n';
-        aantal = aantal - 1;
+        --aantal;
     }
 }
 //  ...
@@ -1914,7 +1914,7 @@ void drukaf(const Tijdsduur& td) {
 
 In alle voorafgaande code waarin een |Breuk| als parameter is gebruikt kan dus beter%
 \footnote{%
-    Een breuk bestaat uit 2 \cppcode{int}s. 
+    Een {Breuk} bestaat uit 2 \cppcode{int}s. 
     Op een AVR microcontroller bestaat elke \cppcode{int} uit 2 bytes en een \cppcode{Breuk} dus uit $2 \times 2 = 4$ bytes. 
     Een adres bestaat op een MSP430 uit 2 bytes en kan dus sneller gekopieerd worden dan een \cppcode{Breuk}. 
     Op een CC3220 microcontroller bestaat een \cppcode{int} uit 4 bytes en een \cppcode{Breuk} dus uit $2 \times 4 = 8$ bytes. 
@@ -1964,7 +1964,7 @@ De \USE{reference} |element| is nu één voor één een alias voor een element u
 
 \section{Reference return type}
 \label{refreturn}
-Als een functie een waarde teruggeeft door middel van een |return| statement, wordt de waarde van de expressie achter het |return| statement gekopieerd naar de plaats waar de functie aangeroepen is.
+Als een functie een waarde teruggeeft door middel van een |return| statement, dan wordt de waarde van de expressie achter het |return| statement, als het ware, ingevuld op de plaats waar de functie aangeroepen is.
 Door nu een \USE{reference} als return type te gebruiken kun je een alias in plaats van een waarde teruggeven. Deze alias kun je dan gebruiken om een waarde aan toe te kennen. Zie voorbeeldprogramma \proglink{ref_ret.cpp}: 
 \cpplstinputfragment[linerange={6-9,32-34,36-36,38-38}]{ref_ret.cpp}
 
@@ -2166,7 +2166,12 @@ Dus de aanroep:
 	int m {3};
 	swap(n, m);$\footnotemark$
 \end{cpplstfragment}
-\footnotetext{In het bestand \proglink{swap_template.cpp} zie je dat hier \cppcode{::swap(n, m)} staat. De extra \cppcode{::} is nodig om aan te geven dat de door ons gedefinieerde \cppcode{swap} en niet de standaard gedefinieerde \cppcode{std::swap} gebruikt moet worden.}
+\footnotetext{%
+	In het bestand \proglink{swap_template.cpp} zie je dat hier \cppcode{::swap(n, m)} staat. 
+	In dit bestand is namelijk de regel \cppcode{using namespace std;} opgenomen. 
+	De extra \cppcode{::} is dan nodig, omdat de compiler anders niet kan kiezen tussen de door ons gedefinieerde functietemplate \cppcode{swap} en de in de standaard gedefinieerde functietemplate \cppcode{std::swap}.
+	Als alternatief kun je ook de regel \cppcode{using namespace std;} niet gebruiken, zie \proglink{swap_template_zonder_using_std.cpp}.
+}
 heeft tot gevolg dat de volgende functie gegenereerd wordt%
 \footnote{%
     Als je zelf deze functie al gedefinieerd hebt, genereert de compiler geen nieuwe functie maar wordt de al gedefinieerde functie gebruikt.
@@ -2213,7 +2218,7 @@ Het gebruik van een functietemplate heeft echter ook het volgende nadeel:
     Het is niet mogelijk om de functietemplate afzonderlijk te compileren tot een object file en deze later aan de rest van de code te \squote{linken} zoals dit met een gewone functie wel kan.
 \end{itemize}
 %TODO: voetnoot toevoegen over \Cpp20 oplossing voor dit probleem
-Bij het ontwikkelen van kleine programma's zijn deze voordelen misschien niet zo belangrijk maar bij het ontwikkelen van grote programma's zijn deze voordelen wel erg belangrijk.
+Bij het ontwikkelen van kleine programma's zijn de voordelen misschien niet zo belangrijk maar bij het ontwikkelen van grote programma's zijn deze voordelen wel erg belangrijk.
 Door gebruik te maken van een functietemplate in plaats van \squote{met de hand} verschillende versies van een functie aan te maken wordt een programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
 
 De functietemplate |swap| is hier als voorbeeld zelf gedefinieerd, maar in de praktijk is dit niet nodig omdat deze functietemplate al in de standaard \Cpp{}\hyp{}library is opgenomen.
@@ -2388,11 +2393,15 @@ De voordelen van |array| in vergelijking met een C\hyp{}array:
 \begin{itemize}
     \item Een |array| is in tegenstelling tot een C\hyp{}array een echt object.
     \item Je kunt een |array| gewoon vergelijken, toekennen en kopiëren.
-    \item Het aantal elementen van een |array| moet bij het compileren bekend zijn (net zoals bij een C\hyp{}array) maar kan wel tijdens het uitvoeren van het programma opgevraagd worden. 
+    \item Het aantal elementen van een |array| moet bij het compileren bekend zijn (net zoals bij een C\hyp{}array) en kan (anders dan bij een C\hyp{}array) ook opgevraagd worden\footnote{%
+    	Bij een C\hyp{}array genaamd \ccode{a} kan het aantal elementen bepaald worden met de enigszins cryptische code: \ccode{sizeof a / sizeof a[0]}.
+	}. 
     Met andere woorden: een |array| weet zelf hoe groot hij is.
     \item Een |array| heeft memberfuncties:
     \begin{itemize}
-        \item |size()|: geef het aantal elementen in de |array|.
+        \item |size()|: geef het aantal elementen in de |array|\footnote{%
+        	Niet te verwarren met de \cppcode{sizeof} operator die het aantal bytes bepaalt dat een variabele of type in beslag neemt. 
+    	}.
         \item |at(...)|: geef element op de opgegeven positie.
         Bijna gelijk aan \hcode[style=cppstyle]{op\\-era\\-tor[]} maar |at| controleert of de index geldig is en gooit een \USE{exception}%
         \footnote{%
@@ -2447,7 +2456,7 @@ De voordelen van |vector| in vergelijking met een C\hyp{}array:
         } als dit niet zo is.
         \item |capacity()|: geef het aantal elementen waarvoor geheugen gereserveerd is.
         Als de |vector| groter groeit, worden automatisch meer elementen gereserveerd.
-        De capaciteit wordt dan telkens verdubbeld.
+        De capaciteit wordt dan telkens verdubbeld zodra het aantal elementen groter wordt dan de capaciteit.
         % Hierdoor blijft de gemiddelde tijd voor het toevoegen van een element van de orde O(1).
         \item |push_back(...)|: voeg een element toe aan de |vector|.
         Na afloop is de |size| van de |vector| dus met 1 toegenomen.
@@ -2480,10 +2489,10 @@ Mogelijke invoer\footnote{%
 	De invoer is groen en onderstreept weergegeven.
 } en uitvoer van dit programma:
 \begin{coutput}
-Voer een willekeurig aantal integers in, sluit af met een letter:
+Voer een willekeurig aantal integers in, sluit af met een tekst:
 \cinput{1 2 3 4 5 6 7 8 9 10 stop}
 1 2 3 4 5 6 7 8 9 10
-Voer een willekeurig aantal integers in, sluit af met een letter:
+Voer een willekeurig aantal integers in, sluit af met een tekst:
 \cinput{1 2 3 4 Hoedje van papier}
 1 2 3 4
 \end{coutput}
@@ -3401,9 +3410,9 @@ Het hoofdprogramma om deze versie van |Breuk| te testen is (zie \cpageref{breuk1
 \needspace{3\baselineskip}
 De uitvoer van dit programma (\proglink{Breuk1\_destructor.cpp}) is nu:
 \begin{coutput}
-b1 {4} = 4/1
-b2 {23, -5} = -23/5
-b3 {b2} = -23/5
+b1 \{4\} = 4/1
+b2 \{23, -5\} = -23/5
+b3 \{b2\} = -23/5
 b3.abs() = 23/5
 b3 = b2 = -23/5
 Een breuk met de waarde 5/1 is verwijderd uit het geheugen.
@@ -6661,7 +6670,7 @@ Dit kun je in \Cpp{} als volgt doen:
 \end{cpplstfragment}
 
 \footnotetext{%
-    Zie voor uitleg over het gebruik van \cppcode{volatile} \url{http://bd.eduweb.hhs.nl/micprg/volatile.htm}.
+    Zie voor uitleg over het gebruik van \cppcode{volatile} \url{https://harrybroeders.bitbucket.io/KOF01/volatile.htm}.
     %TODO: link aanpassen naar C-dictaat.
 }
 Als we een \USE{cast} willen doen die wel portable is, kan dat met |static_cast|.
@@ -6931,9 +6940,9 @@ Is het dan wel verstandig om een |Breuk| automatisch te laten converteren naar e
 	Nee! Het is overigens ook niet verstandig om een \cppcode{Breuk} automatisch te laten converteren naar een \cppcode{double}, want ook daarbij gaat informatie verloren (de zogenoemde afrondfout).
 }
 
-\sectionTextCodeText{Voorbeeld class}{Breuk}{(derde versie)}
+\sectionTextCodeText{Voorbeeld class}{Breuk}{(vierde versie)}
 %\markright{}
-Dit voorbeeld is een uitbreiding van de in \csecref{breuk2} gegeven class |Breuk| (versie 2). 
+Dit voorbeeld is een uitbreiding van de in \csecref{breuk2} gegeven class |Breuk| (derde versie). 
 In deze versie zijn de operator |==| en de operator |!=| toegevoegd. 
 We leren een nieuwe vriend (\emph{\USE{friend}}) kennen die ons helpt bij het implementeren van deze operatoren. 
 Ook leer je hoe je een object van de class |Breuk| kunt wegschrijven en inlezen door middel van de |iostream| \USE{library}, zodat de operator |<<| voor wegschrijven en de operator |>>| voor inlezen gebruikt kan worden (door middel van \USE{operator overloading}).
@@ -7033,7 +7042,7 @@ Op vergelijkbare wijze kun je de globale |operator>>| \USE{overloaden} zodat de 
 
 Voor het type van de eerste parameter en het return type moet je in dit geval |istream| gebruiken.
 
-Als je deze laatste versie van |Breuk| vergelijkt met versie 0 op \cpageref{breuk0}, dan is eigenlijk het enige belangrijke verschil dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als de ingebouwde types te gebruiken is. 
+Als je deze laatste versie van |Breuk| vergelijkt met de eerste versie op \cpageref{breuk0}, dan is eigenlijk het enige belangrijke verschil dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als de ingebouwde types te gebruiken is. 
 Je hebt er heel wat pagina's gedetailleerde informatie voor door moeten worstelen om dit te bereiken. 
 Dat dit toch de moeite waard is heb ik op een van de eerste van die pagina's al een keer benadrukt, maar het zou kunnen zijn dat je door alle tussenliggende details het uiteindelijke nut van alle inspanning vergeten bent. 
 Dus geef ik hier nogmaals antwoord op de vraag: \dquote{Is het al die inspanningen wel waard om een \cppcode{Breuk} zo te maken dat je hem net zoals een ingebouwd type kan gebruiken?} 
@@ -8536,7 +8545,7 @@ Voor deze class kan een |operator+| worden gedefinieerd waarmee twee dozijnen op
 Deze operator kun je als volgt gebruiken om twee dozijnen |b| en |c| bij elkaar op te tellen:
 \cpplstinputfragment[linerange={96-96}]{Dozijn_move.cpp}
 De werking is\footnote{%
-	Er van uitgaande dat het programma gecompileerd is met gcc 9.1.
+	Ervan uitgaande dat het programma gecompileerd is met gcc 9.1.
 }, stap voor stap, als volgt\footnote{%
 	Gebruik een debugger met een single step functie om dit zelf na te gaan.
 }: 
@@ -8570,7 +8579,7 @@ De parameter |r| van deze |operator=| is van het type |Dozijn&&|.
 Dit is een zogenoemde \USE{rvalue reference}.
 Een \USE{rvalue reference} refereert naar een \emph{tijdelijke} variabele die aangepast mag worden omdat deze variabele niet meer nodig is en de bijbehorende geheugenruimte binnenkort vrijgegeven wordt.  
 De werking van dit programma is\footnote{%
-	Er van uitgaande dat het programma gecompileerd is met gcc 9.1.
+	Ervan uitgaande dat het programma gecompileerd is met gcc 9.1.
 }, stap voor stap, nu als volgt\footnote{%
 	Gebruik een debugger met een single step functie om dit zelf na te gaan.
 }: 

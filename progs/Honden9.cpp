@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <memory>
 using namespace std;
 
 class Hond {
@@ -57,7 +58,7 @@ public:
     void blaf() const override;
     void help();
 private:
-    Whisky_vat* vat_ptr;
+    unique_ptr<Whisky_vat> vat_ptr;
 };
 
 Hond::Hond(const string& n): naam{n} {
@@ -88,13 +89,13 @@ Sint_bernard::Sint_bernard(const string& n): Hond{n}, vat_ptr{nullptr} {
     cout << "Er is een Sint_bernard geboren!\n";
 }
 
-Sint_bernard::Sint_bernard(const string& n, int b): Hond{n}, vat_ptr{new Whisky_vat(b)} {
+Sint_bernard::Sint_bernard(const string& n, int b): Hond{n}, vat_ptr{make_unique<Whisky_vat>(b)} {
     cout << "Er is een Sint_bernard geboren!\n";
 }
 
 Sint_bernard::Sint_bernard(const Sint_bernard& s): Hond{s}, vat_ptr{nullptr} {
     if (s.vat_ptr != nullptr) {
-        vat_ptr = new Whisky_vat(*(s.vat_ptr));
+        vat_ptr = make_unique<Whisky_vat>(*(s.vat_ptr));
     }
     cout << "Er is een Sint_bernard gekopieerd!\n";
 }
@@ -105,7 +106,6 @@ Sint_bernard::~Sint_bernard() {
         while (vat_ptr->geef_borrel()) 
             /* drink alle borrels op */;
     }
-    delete vat_ptr;
     cout << "Er is een Sint_bernard gestorven.\n";
 }
 

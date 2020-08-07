@@ -13,7 +13,7 @@ private:
     Array_type a;
 public:
     matrix() = default;
-    matrix(const initializer_list<Object>& init) {
+    matrix(const std::initializer_list<Object>& init) {
         if (init.size() > a.size()) throw std::out_of_range {"To much elements in initializer list for class matrix."};
         std::copy(init.begin(), init.end(), a.begin());
     }
@@ -89,7 +89,7 @@ public:
         return a.cbegin() + (r + 1) * Num_cols;
     }
     
-    class column_iterator: public std::iterator<forward_iterator_tag, Object> {
+    class column_iterator: public std::iterator<std::forward_iterator_tag, Object> {
     public:
         column_iterator(iterator i): i{i} {
         }
@@ -127,7 +127,7 @@ public:
         return column_iterator {begin() + c + Num_rows * Num_cols};
     }
 
-    class const_column_iterator: public std::iterator<forward_iterator_tag, Object> {
+    class const_column_iterator: public std::iterator<std::forward_iterator_tag, Object> {
     public:
         const_column_iterator(const_iterator i): i{i} {
         }

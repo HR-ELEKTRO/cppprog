@@ -24,8 +24,8 @@ const string& Score::naam() const {
     return nm;
 }
 
-ostream& operator<<(ostream& left, const Score& d) {
-    return left << setw(5) << d.punten() << " " << d.naam();
+ostream& operator<<(ostream& out, const Score& d) {
+    return out << setw(5) << d.punten() << " " << d.naam();
 }
 
 int main() {

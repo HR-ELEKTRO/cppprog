@@ -14,10 +14,10 @@ public:
     Breuk();
     Breuk(int t);
     Breuk(int t, int n);
-    Breuk& operator+=(const Breuk& right);
-    const Breuk operator+(const Breuk& right) const;
-    Breuk& operator-=(const Breuk& right);
-    const Breuk operator-(const Breuk& right) const;
+    Breuk& operator+=(const Breuk& rechts);
+    const Breuk operator+(const Breuk& rechts) const;
+    Breuk& operator-=(const Breuk& rechts);
+    const Breuk operator-(const Breuk& rechts) const;
     // ...
     // Er zijn nog veel uitbreidingen mogelijk
     // ...
@@ -28,8 +28,8 @@ private:
 friend ostream& operator<<(ostream& out, const Breuk& b);
 };
 
-const Breuk operator+(int left, const Breuk& right);
-const Breuk operator-(int left, const Breuk& right);
+const Breuk operator+(int links, const Breuk& rechts);
+const Breuk operator-(int links, const Breuk& rechts);
 // ...
 // Er zijn nog veel uitbreidingen mogelijk
 // ...
@@ -46,30 +46,30 @@ Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
-Breuk& Breuk::operator+=(const Breuk& right) {
-    boven = boven * right.onder + onder * right.boven;
-    onder *= right.onder;
+Breuk& Breuk::operator+=(const Breuk& rechts) {
+    boven = boven * rechts.onder + onder * rechts.boven;
+    onder *= rechts.onder;
     normaliseer();
     return *this;
 }
 
-const Breuk Breuk::operator+(const Breuk& right) const {
-    Breuk copy_left{*this};
-    copy_left += right;
-    return copy_left;
+const Breuk Breuk::operator+(const Breuk& rechts) const {
+    Breuk copy_links{*this};
+    copy_links += rechts;
+    return copy_links;
 }
 
-Breuk& Breuk::operator-=(const Breuk& right) {
-    boven = boven * right.onder - onder * right.boven;
-    onder *= right.onder;
+Breuk& Breuk::operator-=(const Breuk& rechts) {
+    boven = boven * rechts.onder - onder * rechts.boven;
+    onder *= rechts.onder;
     normaliseer();
     return *this;
 }
 
-const Breuk Breuk::operator-(const Breuk& right) const {
-    Breuk copy_left {*this};
-    copy_left -= right;
-    return copy_left;
+const Breuk Breuk::operator-(const Breuk& rechts) const {
+    Breuk copy_links {*this};
+    copy_links -= rechts;
+    return copy_links;
 }
 
 void Breuk::normaliseer() {
@@ -83,20 +83,20 @@ void Breuk::normaliseer() {
     onder /= d;
 }
 
-ostream& operator<<(ostream& left, const Breuk& right) {
-    return left << right.boven << '/' << right.onder;
+ostream& operator<<(ostream& out, const Breuk& b) {
+    return out << b.boven << '/' << b.onder;
 }
 
-const Breuk operator+(int left, const Breuk& right) {
-    // optellen is commutatief dus left + right is gelijk aan right + left
-    return right + left;
+const Breuk operator+(int links, const Breuk& rechts) {
+    // optellen is commutatief dus links + rechts is gelijk aan rechts + links
+    return rechts + links;
 }
 
-const Breuk operator-(int left, const Breuk& right) {
+const Breuk operator-(int links, const Breuk& rechts) {
     // aftrekken is niet commutatief!
-    Breuk copy_left {left};
-    copy_left -= right;
-    return copy_left;
+    Breuk copy_links {links};
+    copy_links -= rechts;
+    return copy_links;
 }
 
 // Hoofdprogramma:
@@ -120,10 +120,10 @@ int main() {
 //  kun je bij een int een Breuk optellen?
     b3 = 5 + b2;
     cout << "5 + " << b2 << " = " << b3 << '\n';
-//  Ja, de globale operator+(int left, const Breuk& right) wordt aangeroepen.
+//  Ja, de globale operator+(int links, const Breuk& rechts) wordt aangeroepen.
 //  b3.operator+(5, b2);
 
 //  kun je van een int een Breuk aftrekken?
     cout << "5 - " << b2 << " = " << 5 - b2 << '\n';
-//  Ja, de globale operator-(int left, const Breuk& right) wordt aangeroepen.
+//  Ja, de globale operator-(int links, const Breuk& rechts) wordt aangeroepen.
 }

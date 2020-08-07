@@ -20,7 +20,7 @@ public:
 private:
     size_type size;
     int* data;
-friend ostream& operator<<(ostream& o, const Array& a);
+friend ostream& operator<<(ostream& out, const Array& a);
 };
 
 Array::Array(size_type s): size{s}, data{new int[s]} {
@@ -69,13 +69,13 @@ bool Array::operator!=(const Array& r) const {
     return !(*this == r);
 }
 
-ostream& operator<<(ostream& o, const Array& a) {
+ostream& operator<<(ostream& out, const Array& a) {
     for (Array::size_type i {0}; i < a.size; ++i) {
-        o << a.data[i];
+        out << a.data[i];
         if (i != a.size - 1)
-            o << ',';
+            out << ',';
     }
-    return o;
+    return out;
 }
 
 int main() {

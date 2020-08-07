@@ -39,7 +39,7 @@ public:
     Breuk();
     Breuk(int t);
     Breuk(int t, int n);
-    Breuk& operator+=(const Breuk& right);
+    Breuk& operator+=(const Breuk& rechts);
     Breuk& operator++();         // prefix
     const Breuk operator++(int); // postfix
 private:
@@ -47,12 +47,12 @@ private:
     int onder;
     void normaliseer();
 friend ostream& operator<<(ostream& out, const Breuk& b);
-friend bool operator==(const Breuk& left, const Breuk& right);
+friend bool operator==(const Breuk& links, const Breuk& rechts);
 };
 
 istream& operator>>(istream& in, Breuk& b);
-bool operator!=(const Breuk& left, const Breuk& right);
-const Breuk operator+(const Breuk& left, const Breuk& right);
+bool operator!=(const Breuk& links, const Breuk& rechts);
+const Breuk operator+(const Breuk& links, const Breuk& rechts);
 
 int ggd(int n, int m) {
     if (n == 0) return m;
@@ -75,9 +75,9 @@ Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
-Breuk& Breuk::operator+=(const Breuk& right) {
-    boven = boven * right.onder + onder * right.boven;
-    onder *= right.onder;
+Breuk& Breuk::operator+=(const Breuk& rechts) {
+    boven = boven * rechts.onder + onder * rechts.boven;
+    onder *= rechts.onder;
     normaliseer();
     return *this;
 }
@@ -104,36 +104,36 @@ void Breuk::normaliseer() {
     onder /= d;
 }
 
-const Breuk operator+(const Breuk& left, const Breuk& right) {
-    Breuk copy_left{left};
-    copy_left += right;
-    return copy_left;
+const Breuk operator+(const Breuk& links, const Breuk& rechts) {
+    Breuk copy_links{links};
+    copy_links += rechts;
+    return copy_links;
 }
 
-ostream& operator<<(ostream& left, const Breuk& right) {
-    return left << right.boven << '/' << right.onder;
+ostream& operator<<(ostream& out, const Breuk& b) {
+    return out << b.boven << '/' << b.onder;
 }
 
-istream& operator>>(istream& left, Breuk& right) {
+istream& operator>>(istream& in, Breuk& b) {
     int teller;
-    if (left >> teller)
-        if (left.peek() == '/') {
-            left.get();
+    if (in >> teller)
+        if (in.peek() == '/') {
+            in.get();
             int noemer;
-            if (left >> noemer) right = Breuk(teller, noemer);
-            else right = Breuk{teller};
+            if (in >> noemer) b = Breuk(teller, noemer);
+            else b = Breuk{teller};
         }
-        else right = Breuk{teller};
-    else right = Breuk{};
-    return left;
+        else b = Breuk{teller};
+    else b = Breuk{};
+    return in;
 }
 
-bool operator==(const Breuk& left, const Breuk& right) {
-    return left.boven == right.boven && left.onder == right.onder;
+bool operator==(const Breuk& links, const Breuk& rechts) {
+    return links.boven == rechts.boven && links.onder == rechts.onder;
 }
 
-bool operator!=(const Breuk& left, const Breuk& right) {
-    return !(left == right);
+bool operator!=(const Breuk& links, const Breuk& rechts) {
+    return !(links == rechts);
 }
 
 //>Breuk3_main

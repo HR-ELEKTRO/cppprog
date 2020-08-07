@@ -1,6 +1,7 @@
 // Werken met breuken in C++ ... zoals met ints!! een echt UDT
 
 #include <iostream>
+#include <numeric>
 #include <cassert>
 using namespace std;
 
@@ -11,7 +12,7 @@ public:
     Breuk();
     Breuk(int t);
     Breuk(int t, int n);
-    Breuk& operator+=(Breuk right);
+    Breuk& operator+=(Breuk rechts);
     Breuk& operator++();         // prefix
     const Breuk operator++(int); // postfix
     // ...
@@ -22,28 +23,15 @@ private:
     int onder;
     void normaliseer();
 friend ostream& operator<<(ostream& out, Breuk b);
-friend bool operator==(Breuk left, Breuk right);
+friend bool operator==(Breuk links, Breuk rechts);
 };
 
 istream& operator>>(istream& in, Breuk& b);
-bool operator!=(Breuk left, Breuk right);
-const Breuk operator+(Breuk left, Breuk right);
+bool operator!=(Breuk links, Breuk rechts);
+const Breuk operator+(Breuk links, Breuk rechts);
 // ...
 // Er zijn nog veel uitbreidingen mogelijk
 // ...
-
-// Hulpfunctie: bepaald de grootste gemene deler.
-
-int ggd(int n, int m) {
-    if (n == 0) return m;
-    if (m == 0) return n;
-    if (n < 0) n = -n;
-    if (m < 0) m = -m;
-    while (m != n)
-        if (n > m) n -= m;
-        else m -= n;
-    return n;
-}
 
 // UDT-definitie:
 
@@ -57,9 +45,9 @@ Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
-Breuk& Breuk::operator+=(Breuk right) {
-    boven = boven * right.onder + onder * right.boven;
-    onder *= right.onder;
+Breuk& Breuk::operator+=(Breuk rechts) {
+    boven = boven * rechts.onder + onder * rechts.boven;
+    onder *= rechts.onder;
     normaliseer();
     return *this;
 }
@@ -81,47 +69,47 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d { ggd(boven, onder) };
+    int d {gcd(boven, onder)};
     boven /= d;
     onder /= d;
 }
 
-const Breuk operator+(Breuk left, Breuk right) {
-    return left += right;
+const Breuk operator+(Breuk links, Breuk rechts) {
+    return links += rechts;
 }
-ostream& operator<<(ostream& left, Breuk right) {
-    return left << right.boven << '/' << right.onder;
+ostream& operator<<(ostream& out, Breuk b) {
+    return out << b.boven << '/' << b.onder;
 }
 
-istream& operator>>(istream& left, Breuk& right) {
+istream& operator>>(istream& in, Breuk& b) {
     int teller;
-    if (left >> teller)
-        if (left.peek() == '/') {
-            left.get();
+    if (in >> teller)
+        if (in.peek() == '/') {
+            in.get();
             int noemer;
-            if (left >> noemer) right = Breuk(teller, noemer);
-            else right = Breuk(teller);
+            if (in >> noemer) b = Breuk(teller, noemer);
+            else b = Breuk(teller);
         }
-        else right = Breuk(teller);
-    else right = Breuk();
-    return left;
+        else b = Breuk(teller);
+    else b = Breuk();
+    return in;
 }
 
-bool operator==(Breuk left, Breuk right) {
-    return left.boven == right.boven && left.onder == right.onder;
+bool operator==(Breuk links, Breuk rechts) {
+    return links.boven == rechts.boven && links.onder == rechts.onder;
 }
 
-bool operator!=(Breuk left, Breuk right) {
-    return !(left == right);
+bool operator!=(Breuk links, Breuk rechts) {
+    return !(links == rechts);
 }
 
 // Hoofdprogramma:
 
 int main() {
     Breuk b1, b2;                   // definiëren van variabelen
-    cout << "Geef Breuk: ";
+    cout << "Geef Breuk (a/b): ";
     cin >> b1;                      // inlezen met >>
-    cout << "Geef nog een Breuk: ";
+    cout << "Geef nog een Breuk (c/d): ";
     cin >> b2;                      // inlezen met >>
     cout << b1 << "+" << b2 << "=";  // afdrukken met <<
     cout << (b1 + b2) << '\n';      // optellen met +

@@ -17,7 +17,7 @@ public:
     const int& operator[](int index) const;
 private:
     int* data;
-friend ostream& operator<<(ostream& o, const Dozijn& a);
+friend ostream& operator<<(ostream& out, const Dozijn& a);
 };
 
 Dozijn::Dozijn(): data{new int[12]} {
@@ -65,13 +65,13 @@ const int& Dozijn::operator[](int index) const {
     return data[index];
 }
 
-ostream& operator<<(ostream& o, const Dozijn& a) {
+ostream& operator<<(ostream& out, const Dozijn& a) {
     for (int i {0}; i < 12; ++i) {
-        o << a.data[i];
+        out << a.data[i];
         if (i != 11)
-            o << ',';
+            out << ',';
     }
-    return o;
+    return out;
 }
 
 void swap(Dozijn& d1, Dozijn& d2) {

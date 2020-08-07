@@ -17,8 +17,8 @@ private:
     string _naam;
 };
 
-bool operator==(const Hond& left, const Hond& right) {
-    return left.naam() == right.naam();
+bool operator==(const Hond& links, const Hond& rechts) {
+    return links.naam() == rechts.naam();
 }
 
 namespace std

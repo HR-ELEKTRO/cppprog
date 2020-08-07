@@ -4,19 +4,19 @@ using namespace std;
 
 enum class Stoplicht {groen, oranje, rood};
 
-ostream& operator<<(ostream& os, Stoplicht s) {
+ostream& operator<<(ostream& out, Stoplicht s) {
     switch (s) {
     case Stoplicht::groen:
-        os<<"groen";
+        out<<"groen";
         break;
     case Stoplicht::oranje:
-        os<<"oranje";
+        out<<"oranje";
         break;
     case Stoplicht::rood:
-        os<<"rood";
+        out<<"rood";
         break;
     }
-    return os;
+    return out;
 }
 
 int main()

@@ -68,13 +68,13 @@ template <typename T> bool Array<T>::operator!=(const Array<T>& r) const {
     return !(*this == r);
 }
 
-template <typename T> ostream& operator<<(ostream& o, const Array<T>& v) {
+template <typename T> ostream& operator<<(ostream& out, const Array<T>& v) {
     for (typename Array<T>::size_type i {0}; i < v.size; ++i) {
-        o << v.data[i];
+        out << v.data[i];
         if (i != v.size-1)
-            o << ',';
+            out << ',';
     }
-    return o;
+    return out;
 }
 
 int main() {

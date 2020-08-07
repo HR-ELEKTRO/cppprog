@@ -18,11 +18,11 @@ private:
     int onder;
     void normaliseer();
 friend ostream& operator<<(ostream& out, const Breuk& b);
-friend bool operator==(const Breuk& left, const Breuk& right);
+friend bool operator==(const Breuk& links, const Breuk& rechts);
 friend size_t Breuk_hash::operator()(Breuk const& b) const noexcept;
 };
 
-bool operator!=(const Breuk& left, const Breuk& right);
+bool operator!=(const Breuk& links, const Breuk& rechts);
 
 Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
@@ -39,16 +39,16 @@ void Breuk::normaliseer() {
     onder /= d;
 }
 
-ostream& operator<<(ostream& left, const Breuk& right) {
-    return left << right.boven << '/' << right.onder;
+ostream& operator<<(ostream& out, const Breuk& b) {
+    return out << b.boven << '/' << b.onder;
 }
 
-bool operator==(const Breuk& left, const Breuk& right) {
-    return left.boven == right.boven && left.onder == right.onder;
+bool operator==(const Breuk& links, const Breuk& rechts) {
+    return links.boven == rechts.boven && links.onder == rechts.onder;
 }
 
-bool operator!=(const Breuk& left, const Breuk& right) {
-    return !(left == right);
+bool operator!=(const Breuk& links, const Breuk& rechts) {
+    return !(links == rechts);
 }
 
 size_t Breuk_hash::operator()(Breuk const& b) const noexcept {

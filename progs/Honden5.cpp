@@ -4,7 +4,7 @@ using namespace std;
 
 class Hond {
 public:
-    Hond(const string& n);
+    explicit Hond(const string& n);
     virtual ~Hond();
     void set_naam(const string& n);
     virtual void blaf() const;
@@ -12,37 +12,37 @@ private:
     string naam;
 };
 
-class Tekkel: public Hond {
+class Teckel: public Hond {
 public:
-    Tekkel(const string& n);
-    ~Tekkel() override;
+    explicit Teckel(const string& n);
+    ~Teckel() override;
     void blaf() const override;
 };
 
-class Whiskey_vat {
+class Whisky_vat {
 public:
-    Whiskey_vat(int b);
-    ~Whiskey_vat();
+    explicit Whisky_vat(int b);
+    ~Whisky_vat();
     bool geef_borrel();
 private:
     int aantal_borrels;
 };
 
-Whiskey_vat::Whiskey_vat(int b): aantal_borrels(b) {
+Whisky_vat::Whisky_vat(int b): aantal_borrels{b} {
     cout << "Vat met " << aantal_borrels << " borrels aangemaakt.\n";
 }
 
-Whiskey_vat::~Whiskey_vat() {
+Whisky_vat::~Whisky_vat() {
     cout << "Vat met " << aantal_borrels << " borrels opgeruimd.\n";
 }
 
-bool Whiskey_vat::geef_borrel() {
+bool Whisky_vat::geef_borrel() {
     if (aantal_borrels > 0) {
         --aantal_borrels;
         cout << "Ik kom je helpen, drink deze borrel maar op!\n";
         return true;
     }
-    cout << "Ik kan je niet helpen, mijn whiskey is op.\n";
+    cout << "Ik kan je niet helpen, mijn Whisky is op.\n";
     return false;
 }
 
@@ -53,7 +53,7 @@ public:
     void blaf() const override;
     void help();
 private:
-    Whiskey_vat vat;
+    Whisky_vat vat;
 };
 
 Hond::Hond(const string& n): naam{n} {
@@ -72,15 +72,15 @@ void Hond::blaf() const {
     cout << "Blaf blaf\n";
 }
 
-Tekkel::Tekkel(const string& n): Hond{n} {
-    cout << "Er is een Tekkel geboren!\n";
+Teckel::Teckel(const string& n): Hond{n} {
+    cout << "Er is een Teckel geboren!\n";
 }
 
-Tekkel::~Tekkel() {
-    cout << "Er is een Tekkel gestorven.\n";
+Teckel::~Teckel() {
+    cout << "Er is een Teckel gestorven.\n";
 }
 
-void Tekkel::blaf() const {
+void Teckel::blaf() const {
     cout << "Kef kef\n";
 }
 

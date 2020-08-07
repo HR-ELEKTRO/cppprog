@@ -11,7 +11,7 @@ private:
     int data[12];
 };
 
-ostream& operator<<(ostream& o, const Dozijn& v);
+ostream& operator<<(ostream& out, const Dozijn& v);
 
 void Dozijn::zet_in(int index, int waarde) {
     if (index >= 0 && index < 12) 
@@ -24,11 +24,11 @@ int Dozijn::lees_uit(int index) const {
     return 0; /* ik weet niets beters */
 }
 
-ostream& operator<<(ostream& o, const Dozijn& d) {
-    o << d.lees_uit(0);
+ostream& operator<<(ostream& out, const Dozijn& d) {
+    out << d.lees_uit(0);
     for (int i {1}; i < 12; ++i)
-        o << ", " << d.lees_uit(i);
-    return o;
+        out << ", " << d.lees_uit(i);
+    return out;
 }
 
 int main() {

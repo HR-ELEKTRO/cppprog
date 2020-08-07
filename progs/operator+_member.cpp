@@ -13,8 +13,8 @@ public:
     Breuk();
     Breuk(int t);
     Breuk(int t, int n);
-    Breuk& operator+=(const Breuk& right);
-    const Breuk operator+(const Breuk& right) const;
+    Breuk& operator+=(const Breuk& rechts);
+    const Breuk operator+(const Breuk& rechts) const;
     // ...
     // Er zijn nog veel uitbreidingen mogelijk
     // ...
@@ -37,22 +37,22 @@ Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
 
-Breuk& Breuk::operator+=(const Breuk& right) {
-    boven = boven * right.onder + onder * right.boven;
-    onder *= right.onder;
+Breuk& Breuk::operator+=(const Breuk& rechts) {
+    boven = boven * rechts.onder + onder * rechts.boven;
+    onder *= rechts.onder;
     normaliseer();
     return *this;
 }
 
-const Breuk Breuk::operator+(const Breuk& right) const {
-    Breuk copy_left {*this}; // maak een kopietje van de receiver
-    copy_left += right;     // tel daar het object right bij op
-    return copy_left;       // geef deze waarde terug
+const Breuk Breuk::operator+(const Breuk& rechts) const {
+    Breuk copy_links {*this}; // maak een kopietje van de receiver
+    copy_links += rechts;     // tel daar het object rechts bij op
+    return copy_links;       // geef deze waarde terug
 }
 
 /* verkorte notatie:
-const Breuk Breuk::operator+(const Breuk& right) const {
-    return copy_left {*this} += right;
+const Breuk Breuk::operator+(const Breuk& rechts) const {
+    return copy_links {*this} += rechts;
 }
 */
 
@@ -68,8 +68,8 @@ void Breuk::normaliseer() {
 }
 
 
-ostream& operator<<(ostream& left, const Breuk& right) {
-    return left << right.boven << '/' << right.onder;
+ostream& operator<<(ostream& out, const Breuk& b) {
+    return out << b.boven << '/' << b.onder;
 }
 
 // Hoofdprogramma:

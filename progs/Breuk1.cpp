@@ -71,7 +71,7 @@ void Breuk::normaliseer() {
         onder = -onder;
         boven = -boven;
     }
-    int d {gcd(boven < 0 ? -boven : boven, onder)};
+    int d {gcd(boven, onder)};
     boven /= d;
     onder /= d;
 }

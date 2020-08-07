@@ -31,8 +31,8 @@ private:
     int value;
 };
 
-ostream& operator<<(ostream& o, Color c) {
-    return o << setw(6) << setfill('0') << hex << c.get_value();
+ostream& operator<<(ostream& out, Color c) {
+    return out << setw(6) << setfill('0') << hex << c.get_value();
 }
 
 Color::Color(): value{BLACK} {
@@ -72,8 +72,8 @@ private:
     int value;
 };
 
-ostream& operator<<(ostream& o, Color c) {
-    return o << setw(6) << setfill('0') << hex << c.get_value();
+ostream& operator<<(ostream& out, Color c) {
+    return out << setw(6) << setfill('0') << hex << c.get_value();
 }
 
 Color::Color(): value{BLACK} {
@@ -111,8 +111,8 @@ private:
     int value;
 };
 
-ostream& operator<<(ostream& o, Color c) {
-    return o << setw(6) << setfill('0') << hex << c.get_value();
+ostream& operator<<(ostream& out, Color c) {
+    return out << setw(6) << setfill('0') << hex << c.get_value();
 }
 
 Color::Color(): value{BLACK} {

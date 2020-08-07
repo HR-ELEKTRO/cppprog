@@ -18,8 +18,8 @@ private:
     default_random_engine eng;
 };
 
-ostream& operator<<(ostream& o, Dobbelsteen& d) {
-    return o<<d.rol();
+ostream& operator<<(ostream& out, Dobbelsteen& d) {
+    return out<<d.rol();
 }
 
 int main() {

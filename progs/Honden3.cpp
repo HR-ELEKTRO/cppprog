@@ -4,7 +4,7 @@ using namespace std;
 
 class Hond {
 public:
-    Hond(const string& n);
+    explicit Hond(const string& n);
     virtual ~Hond();
     void set_naam(const string& n);
     virtual void blaf() const;
@@ -12,10 +12,10 @@ private:
     string naam;
 };
 
-class Tekkel: public Hond {
+class Teckel: public Hond {
 public:
-    Tekkel(const string& n);
-    ~Tekkel() override;
+    explicit Teckel(const string& n);
+    ~Teckel() override;
     void blaf() const override;
 };
 
@@ -35,24 +35,24 @@ void Hond::blaf() const {
     cout << "Blaf blaf\n";
 }
 
-Tekkel::Tekkel(const string& n): Hond{n} {
-    cout << "Er is een Tekkel geboren!\n";
+Teckel::Teckel(const string& n): Hond{n} {
+    cout << "Er is een Teckel geboren!\n";
 }
 
-Tekkel::~Tekkel() {
-    cout << "Er is een Tekkel gestorven.\n";
+Teckel::~Teckel() {
+    cout << "Er is een Teckel gestorven.\n";
 }
 
-void Tekkel::blaf() const {
+void Teckel::blaf() const {
     cout << "Kef kef\n";
 }
 
 int main() {
     Hond h1{"Fikkie"};
     h1.blaf();
-    Tekkel h2{"Biefie"};
+    Teckel h2{"Biefie"};
     h2.blaf();
-    Hond* hp{new Tekkel("Harry")};
+    Hond* hp{new Teckel("Harry")};
     hp->blaf();
     delete hp;
 }
@@ -61,14 +61,14 @@ int main() {
 Hoera, Fikkie is geboren!
 Blaf blaf
 Hoera, Biefie is geboren!
-Er is een Tekkel geboren!
+Er is een Teckel geboren!
 Kef kef
 Hoera, Harry is geboren!
-Er is een Tekkel geboren!
+Er is een Teckel geboren!
 Kef kef
-Er is een Tekkel gestorven.
+Er is een Teckel gestorven.
 Helaas, Harry is gestorven.
-Er is een Tekkel gestorven.
+Er is een Teckel gestorven.
 Helaas, Biefie is gestorven.
 Helaas, Fikkie is gestorven.
 */

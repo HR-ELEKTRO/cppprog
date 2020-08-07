@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <array>
 using namespace std;
 
 // Classdeclaratie:
@@ -91,39 +92,15 @@ constexpr void Breuk::normaliseer() {
 // Hoofdprogramma:
 
 int main() {
-    Breuk b1{4};
+    constexpr Breuk b1{4};
     cout << "b1{4} = " << b1.teller() << '/' << b1.noemer() << '\n';
-    Breuk b2{23, -5};
-    cout << "b2{23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
-    Breuk b3{b2};
-    cout << "b3{b2} = " << b3.teller() << '/' << b3.noemer() << '\n';
-    b3.abs();
-    cout << "b3.abs() = " << b3.teller() << '/' << b3.noemer() << '\n';
-    b3 = b2;
-    cout << "b3 = b2 = " << b3.teller() << '/' << b3.noemer() << '\n';
-    b3.plus(5);
-    cout << "b3.plus(5) = " << b3.teller() << '/' << b3.noemer() << '\n';
-
-    constexpr Breuk halve{1, 2};
-    cout << "halve = " << halve.teller() << '/' << halve.noemer() << '\n';
-
-//  halve = b3;
-//  Error: passing ‘const Breuk’ as ‘this’ argument discards qualifiers
-
-//  halve.plus(b3);
-//  Error: passing ‘const Breuk’ as ‘this’ argument discards qualifiers
-
-    b3 = halve;
-    cout << "b3 = halve = " << b3.teller() << '/' << b3.noemer() << '\n';
+    // dit werkt alleen als b1.teller() een compile-time constante is
+    int a1[b1.teller()];
+    array<int, b1.teller()> a2;
+    cout << "a2.size() = " << a2.size() << '\n';
 }
 
 /* Output:
 b1{4} = 4/1
-b2{23, -5} = -23/5
-b3{b2} = -23/5
-b3.abs() = 23/5
-b3 = b2 = -23/5
-b3.plus(5) = 2/5
-halve = 1/2
-b3 = halve = 1/2
+a2.size() = 4
 */
