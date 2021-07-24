@@ -18,7 +18,7 @@
 \newcommand{\modulecode}{\Cpp}
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
-\newcommand{\huidigeversie}{1.2}
+\newcommand{\huidigeversie}{1.2a}
 % start a new line by using \\ 
 \newcommand{\auteurs}{
 	J.Z.M. Broeders
@@ -131,8 +131,57 @@
 	\href{#1\#nameddest=chapter.#2}{hoofdstuk~#2}}
 %<pdfchapref
 
-\usepackage[tocindentauto]{tocstyle}
-\usetocstyle{KOMAlike}
+\ExplSyntaxOn
+
+\cs_new_protected:Nn \hr_tabelkopmulticolumn:n
+{
+	\seq_set_split:Nnn \l_tmpb_seq {&} {#1}
+}
+
+\NewDocumentCommand \tabelmulticolumn {O{!htbp}mmmmm} 
+{
+	\begin{myTable}[#1]
+		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
+		\centering%
+		\caption{#2}
+		\label{tab:#3}
+		\hr_tabelkopmulticolumn:n{#5}
+		\begin{tabular}{|#4|}
+			\arrayrulecolor{hrred} \hline
+			\rowcolor{hrred}
+			\seq_use:Nn \l_tmpb_seq {&} \\
+			#6 \\\hline
+		\end{tabular}%
+	\end{myTable}
+}
+
+\NewDocumentCommand \tabelmaxpaginabreedgeschaaldmulticolumn {O{!htbp}mmmmm}
+{ 
+	\begin{myTable}[#1]
+		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
+		\centering%
+		\caption{#2}
+		\label{tab:#3}
+		\hr_tabelkopmulticolumn:n{#5}
+		\begin{adjustbox}{max~width=\textwidth}%
+			\begin{tabular}{|#4|}
+				\arrayrulecolor{hrred} \hline
+				\rowcolor{hrred}
+				\seq_use:Nn \l_tmpb_seq {&} \\
+				#6\\ \hline
+			\end{tabular}%
+		\end{adjustbox}%
+	\end{myTable}
+}
+
+\ExplSyntaxOff
+
+%voorkom dat er te weinig ruimte is voor 10.10
+%https://tex.stackexchange.com/questions/33841/how-to-modify-the-space-between-the-numbers-and-text-of-sectioning-titles-in-the
+% default:
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.8em}{3.0em}}
+\makeatother
 
 \begin{document}
 \frontmatter
@@ -348,11 +397,11 @@ Als niet expliciet een waarde teruggegeven wordt, dan ontvangt het operating sys
 \needspace{2\baselineskip}
 \section{Standaard include files}
 \label{sec:standaardincludefiles}
-De standaard include files hebben in \Cpp{} \emph{geen} extensie (|.h|).
+De standaard \USE{include files} hebben in \Cpp{} \emph{geen} extensie (|.h|).
 De standaard \Cpp{} \USE{library} is zeer uitgebreid en in \csecref{sec:stdlib} komen we hier uitgebreid op terug.
 De standaard \Cpp{} \USE{library} bevat ook alle functies, types enz.\ uit de standaard C \USE{library}.
 De \USE{headerfiles} die afkomstig zijn uit de C \USE{library} beginnen in de \Cpp{} \USE{library} allemaal met de letter |c|.
-Dus in \Cpp{} gebruik je |#include <cmath>| in plaats van |#include <math.h>|.
+Dus in \Cpp{} gebruik je |#include <cmath>| in plaats van \ccode{#include <math.h>}.
 
 Om het mogelijk te maken dat de standaard \USE{library} met andere (oude en nieuwe) \USE{libraries} in één programma kan worden gebruikt zijn in \Cpp{} \USE{namespaces} \label{namespace} opgenomen\footnote{%
 	Namespaces worden verder besproken in \csecref{sec:namespaces}. 
@@ -365,7 +414,7 @@ Als je bijvoorbeeld de som van de sinus en de cosinus van de variabele |x| wilt 
 //  ...
 	y = std::sin(x) + std::cos(x);
 \end{cpplstfragment}
-In plaats van elk symbool uit de \Cpp{} standaard \USE{library} vooraf te laten gaan door |std::| kun je ook na het inlcuden de volgende regel in het programma opnemen\footnote{%
+In plaats van elk symbool uit de \Cpp{} standaard \USE{library} vooraf te laten gaan door |std::| kun je ook na de |#include| \USE{preprocessor directive} de volgende regel in het programma opnemen\footnote{%
 	Omdat in dit dictaat uitsluitend gebruik maken van de standaard \USE{library} en niet van andere \USE{libraries} wordt deze regel in elk programma, dat in dit dictaat worden besproken, opgenomen.
 	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#sf6-use-using-namespace-directives-for-transition-for-foundation-libraries-such-as-std-or-within-a-local-scope-only}{SF.6}. 
 }:
@@ -385,7 +434,7 @@ using namespace std;
 \label{sec:iostream}
 Je bent gewend om in C programma's de functies uit de |stdio| bibliotheek te gebruiken voor input en output.
 De meest gebruikte functies zijn |printf| en |scanf|.
-Deze functies zijn echter niet type veilig (\emph{type-save}) omdat de inhoud van het, als eerste argument meegegeven, format (bijvoorbeeld |"%d"|) pas tijdens het uitvoeren van het programma verwerkt wordt.
+Deze functies zijn echter niet type veilig (\emph{type-safe}) omdat de inhoud van het, als eerste argument meegegeven, format (bijvoorbeeld |"%d"|) pas tijdens het uitvoeren van het programma verwerkt wordt.
 De compiler merkt het dus niet als de type aanduidingen (zoals bijvoorbeeld |%d|) die in het format gebruikt zijn niet overeenkomen met de types van de volgende argumenten.
 Tevens is het niet mogelijk om een eigen format type aanduiding aan de bestaande toe te voegen.
 Om deze redenen is in de \Cpp{} standaard \cite{ISO2017} naast de oude |stdio| bibliotheek (om compatibel te blijven) ook een nieuwe I/O \USE{library} |iostream| opgenomen.
@@ -429,7 +478,7 @@ In \Cpp{} kan deze syntax nog steeds gebruikt worden.
 Het is in \Cpp{}, om redenen die verderop in dit dictaat duidelijk worden, belangrijk om onderscheid te maken tussen het aanmaken en initialiseren van een variabele en het toekennen van een waarde aan een bestaande variabele (met |=|)\footnote{%
 	Dat het belangrijk is om het verschil te weten tussen een initialisatie en een toekenning (Engels: \USE{assignment}) wordt duidelijk in \csecref{constructor,sec:defaultcopyconstructor,sec:defaultassignmentoperator}.
 }.
-De bovenstaande syntax kan dan verwarrende zijn. 
+De bovenstaande syntax kan dan verwarrend zijn. 
 In \Cpp{} kan een variabele ook geïnitialiseerd worden via een zogenoemde \emph{universele initialisatie}.
 De waarde waarmee de variabele geïnitialiseerd moet worden, wordt dan tussen accolades achter de variabelenaam geplaatst.
 Bijvoorbeeld:
@@ -863,7 +912,7 @@ Het is niet nodig om alles al helemaal te begrijpen, we komen er in \cref{sec:te
 \subsection*{Verklaring van de verschillen:}
 \begin{itemize}
 	\item 
-	Hier is gebruik gemaakt van de standaard include file |vector|, zodat het type |vector| gebruikt kan worden.
+	Hier is gebruik gemaakt van de standaard \USE{include file} |vector|, zodat het type |vector| gebruikt kan worden.
 	Een |vector<T>|\footnote{%
 		De \code{<} en \code{>} worden hier gebruikt als een soort van haakjes, zie eventueel \cref{sec:templates}
 	} is een datastructuur waarin een onbepaald aantal elementen van het type |T| kan worden opgeslagen. 
@@ -1815,7 +1864,7 @@ Een \USE{reference} lijkt een beetje op een pointer maar er zijn toch belangrijk
     \item Een pointer die naar de variabele |v| wijst kun je later naar een andere variabele laten wijzen maar een \USE{reference} die naar de variabele |v| verwijst kun je later niet naar een andere variabele laten verwijzen.
     \item Een pointer kan ook naar geen enkele variabele wijzen (de waarde is dan gelijk aan |nullptr|\footnote{%
     	In de programmeertaal C gebruikte je \cppcode{NULL} als waarde voor een pointer die nergens naar wees.
-    	Deze constante is in een aantal include file gedefinieerd, onder andere in \cppcode{<stdio.h>}.
+    	Deze constante is in een aantal \USE{include file} gedefinieerd, onder andere in \cppcode{<stdio.h>}.
     	In \Cpp{} wordt de waarde \cppcode{nullptr} gebruikt, die in de taal zelf is gedefinieerd.
 	}) maar een \USE{reference} verwijst altijd naar een variabele.
 \end{itemize}
@@ -4001,17 +4050,16 @@ In 1998 is de zogenaamde STL (\USE{Standard Template Library}) officieel in de \
 Doordat nu een standaard implementatie van de klassieke datastructuren en algoritmen in elke standaard \Cpp{} \USE{library} is opgenomen, is het minder belangrijk om zelf te weten hoe z'n datastructuur geïmplementeerd moet worden.
 Het belangrijkste is dat je weet wanneer je welke datastructuur kunt toepassen en hoe je dat dan moet doen.
 
-\langetabel{%
-	De meest bekende datastructuren.}{datastructuren}{>{\bfseries}X[13,l]X[14,l]X[14,l]X[16,l]X[34,l]X[41,l]}{
+\langetabelX{%
+	De meest bekende datastructuren.}{datastructuren}{>{\bfseries\hsize=0.492\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.530\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.530\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=0.606\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.288\hsize\linewidth=\hsize\raggedright\arraybackslash}X>{\hsize=1.553\hsize\linewidth=\hsize\raggedright\arraybackslash}X}{
 	naam & \USE{insert} & \USE{erase} & \USE{find} & applicaties & implementaties
 }{
-	\USE{stack} & push $O(1)$ & pull \par $O(1)$ \par LIFO & top \par $O(1)$ \par LIFO & \small{dingen omdraaien, is \ldots{} gebalanceerd?, evaluatie van expressies} & \small{array (statisch + snel), linked list (dynamisch)} \\
+	\USE{stack} & push $O(1)$ & pull $O(1)$ LIFO & top $O(1)$ LIFO & \small{dingen omdraaien, is \ldots{} gebalanceerd?, evaluatie van expressies} & \small{array (statisch + snel), linked list (dynamisch)} \\
 	queue & enqueue $O(1)$ & dequeue $O(1)$ FIFO & front $O(1)$ FIFO & \small{printer queue, wachtrij} & \small{array (statisch + snel)}, \small{linked list (dynamisch)} \\
-	vector & $O(1)$ & $O(n)$ zoeken & $O(n)$ \par op inhoud \par $O(1)$ \par op index & \small{vaste lijst, code conversie} & \small{array (statisch%
-		%TODO door gebruik \footnote in table werkt \cref naar DEZE tabel niet meer goed!
-		\footnotemark\addtocounter{footnote}{-1}\addtocounter{Hfootnote}{-1}
+	vector & $O(1)$ & $O(n)$ zoeken & $O(n)$ op inhoud $O(1)$ op index & \small{vaste lijst, code conversie} & \small{array (statisch%
+		\footnotemark\addtocounter{footnote}{-1}\addtocounter{Hfootnote}{-1}%
 		, \USE{random access} via operator[])} \\ 
-	sorted vector & $O(n)$ zoeken + schuiven & $O(n)$ & $O(\log{n})$ \par op  inhoud \par $O(1)$ \par op index & \small{lijst waarin je veel zoekt en weinig muteert} & \small{array (statisch%
+	sorted vector & $O(n)$ zoeken + schuiven & $O(n)$ & $O(\log{n})$ op inhoud $O(1)$ op index & \small{lijst waarin je veel zoekt en weinig muteert} & \small{array (statisch%
 		\footnotemark{}%
 		) + binary search algoritme} \\ 
 	linked list & $O(1)$ & $O(n)$ & $O(n)$ & \small{dynamische lijst waarin je weinig zoekt en verwijdert} & \small{linked list (dynamisch, sequential access via pointer)} \\
@@ -4473,17 +4521,18 @@ De |list| kan op elke willekeurige plek groeien en krimpen met behulp van de mem
 \newcommand{\nietTwo}{\parbox{\boxWidthTwo}{\centering --}}
 \newcommand{\nietThree}{\parbox{\boxWidthThree}{\centering --}}
 \newcommand{\nietFour}{\parbox{\boxWidthFour}{\centering --}}
+\newcommand{\boxHeight}{12mm}
 
 %TODO: hackwerk in kop netjes maken
-\tabelmaxpaginabreedgeschaald{Overzicht van de belangrijkste sequentiële containers.}{seqcon}{ll>{$}l<{$}l>{$}l<{$}l>{$}l<{$}l>{$}l<{$}}{
-	& \multicolumn{2}{c}{} & \multicolumn{6}{c}{element toevoegen en verwijderen} \\ \cline{4-9}
+\tabelmaxpaginabreedgeschaaldmulticolumn{Overzicht van de belangrijkste sequentiële containers.}{seqcon}{ll>{$}l<{$}l>{$}l<{$}l>{$}l<{$}l>{$}l<{$}}{
+	& \multicolumn{2}{c}{} & \multicolumn{6}{c}{\color{white}\textbf{element toevoegen en verwijderen}} \\ \cline{4-9}
 	\rowcolor{hrred} \multirow{-2}{*}{\color{white}\textbf{\hspace{1em}container}} & \multicolumn{2}{c}{\multirow{-2}{*}{\color{white}\textbf{random access}}} & \multicolumn{2}{c}{\color{white}\textbf{front}} & \multicolumn{2}{c}{\color{white}\textbf{back}} & \multicolumn{2}{c}{\color{white}\textbf{random}} 
 }{
-	\code{array} & \parbox{\boxWidthOne}{\code{operator[]}\par\code{at()}} & O(1) & \nietTwo & & \nietThree & & \nietFour & \\
-	\code{vector} & \parbox{\boxWidthOne}{\code{operator[]}\par\code{at()}} & O(1) & \nietTwo & & \parbox{\boxWidthThree}{\code{push_back}\par\code{pop_back}} & O(1) & \parbox{\boxWidthFour}{\code{insert}\par\code{erase}} & O(n) \\ 
-	\code{deque} & \parbox{\boxWidthOne}{\code{operator[]}\par\code{at()}} & O(1) & \parbox{\boxWidthTwo}{\code{push_front}\par\code{pop_front}} & O(1) & \parbox{\boxWidthThree}{\code{push_back}\par\code{pop_back}} & O(1) & \parbox{\boxWidthFour}{\code{insert}\par\code{erase}} & O(n) \\ 
-	\code{forward_list} & \nietOne & & \parbox{\boxWidthTwo}{\code{push_front}\par\code{pop_front}} & O(1) & \nietThree & & \parbox{\boxWidthFour}{\code{insert_after}\par\code{erase_after}} & O(1) \\ 
-	\code{list} & \nietOne & & \parbox{\boxWidthTwo}{\code{push_front}\par\code{pop_front}} & O(1) & \parbox{\boxWidthThree}{\code{push_back}\par\code{pop_back}} & O(1) & \parbox{\boxWidthFour}{\code{insert}\par\code{erase}} & O(1)  
+	\code{array} & \parbox[c][\boxHeight]{\boxWidthOne}{\code{operator[]}\newline\code{at()}} & O(1) & \nietTwo & & \nietThree & & \nietFour & \\
+	\code{vector} & \parbox[c][\boxHeight]{\boxWidthOne}{\code{operator[]}\newline\code{at()}} & O(1) & \nietTwo & & \parbox[c][\boxHeight]{\boxWidthThree}{\code{push_back}\newline\code{pop_back}} & O(1) & \parbox[c][\boxHeight]{\boxWidthFour}{\code{insert}\newline\code{erase}} & O(n) \\ 
+	\code{deque} & \parbox[c][\boxHeight]{\boxWidthOne}{\code{operator[]}\newline\code{at()}} & O(1) & \parbox[c][\boxHeight]{\boxWidthTwo}{\code{push_front}\newline\code{pop_front}} & O(1) & \parbox[c][\boxHeight]{\boxWidthThree}{\code{push_back}\newline\code{pop_back}} & O(1) & \parbox[c][\boxHeight]{\boxWidthFour}{\code{insert}\newline\code{erase}} & O(n) \\ 
+	\code{forward_list} & \nietOne & & \parbox[c][\boxHeight]{\boxWidthTwo}{\code{push_front}\newline\code{pop_front}} & O(1) & \nietThree & & \parbox[c][\boxHeight]{\boxWidthFour}{\code{insert_after}\newline\code{erase_after}} & O(1) \\ 
+	\code{list} & \nietOne & & \parbox[c][\boxHeight]{\boxWidthTwo}{\code{push_front}\newline\code{pop_front}} & O(1) & \parbox[c][\boxHeight]{\boxWidthThree}{\code{push_back}\newline\code{pop_back}} & O(1) & \parbox[c][\boxHeight]{\boxWidthFour}{\code{insert}\newline\code{erase}} & O(1)  
 }
 
 In \cref{tab:seqcon} staat gegeven welke memberfuncties beschikbaar zijn voor de verschillende sequentiële containers en van welke orde hun executietijd is.
@@ -4906,9 +4955,13 @@ Er zijn in de \Cpp{} standaard vijf iteratorsoorten gedefinieerd:
 
 In \cref{tab:iteratorsoorten} is aangegeven welke bewerkingen door de verschillende iteratorsoorten ondersteund worden.
 
-%TODO m verwijderd omdat het niet meer werkt
-\tabel{Standaard iteratorsoorten en de bewerkingen die ze leveren.}{iteratorsoorten}{lX[3,c]X[3,c]cX[2,c]cX[7,c]}{%
-	iteratorsoort & \code{*} \footnotesize{(lezen)} & \code{*} \footnotesize{(schrijven)} & \code{++} & \code{==} \footnotesize{en} \code{!=} & \code{--} & \code{+=}, \code{-=}, \code{+}, \code{-}, \code{>}, \code{>=}, \code{<}, \code{<=} \footnotesize{en} \code{[]}
+\settowidth{\boxWidthOne}{\footnotesize{(lezen)}}
+\settowidth{\boxWidthTwo}{\footnotesize{(schrijven)}}
+\settowidth{\boxWidthThree}{\code{+=}, \code{-=}, \code{+}, \code{-}, \code{>}, \code{>=},}
+\renewcommand{\boxHeight}{10mm}
+
+\tabel{Standaard iteratorsoorten en de bewerkingen die ze leveren.}{iteratorsoorten}{lcccccc}{%
+	iteratorsoort & \parbox[c][\boxHeight]{\boxWidthOne}{\centering\code{*}\newline\footnotesize{(lezen)}} & \parbox[c][\boxHeight]{\boxWidthTwo}{\centering\code{*}\newline\footnotesize{(schrijven)}} & \code{++} & \code{==} \footnotesize{en} \code{!=} & \code{--} & \parbox[c][\boxHeight]{\boxWidthThree}{\code{+=}, \code{-=}, \code{+}, \code{-}, \code{>}, \code{>=},\centering\newline\code{<}, \code{<=} \footnotesize{en} \code{[]}}
 }{%
 	input \footnotesize{(single pass)} & \vtje & \xje & \vtje & \vtje & \xje & \xje \\
 	output \footnotesize{(single pass)} & \xje & \vtje & \vtje & \xje & \xje & \xje \\
@@ -5340,14 +5393,13 @@ De variabelen die ingesloten moeten worden in de \USE{closure} worden tussen [ e
 Deze ingesloten variabelen kunnen in de code van de \USE{closure} gebruikt worden.
 Enkele voorbeelden:
 
-\begin{tabu}{X[-1]X}
+\begin{tabularx}{\textwidth}{lX}
 	\hspace{1em}\labelitemi{} \code{[a, \&b]} & \code{a} wordt \squote{by value} en \code{b} wordt \squote{by reference} ingesloten.\\
 	\hspace{1em}\labelitemi{} \code{[\&]} & elke in de lambda-functie gebruikte variabele wordt \squote{by reference} ingesloten.\\
 	\hspace{1em}\labelitemi{} \code{[=]} & elke in de lambda-functie gebruikte variabele wordt \squote{by value} ingesloten.\\
 	\hspace{1em}\labelitemi{} \code{[=, \&c]} & \code{c} wordt \squote{by reference} ingesloten en alle andere in de lambda-functie gebruikte variabelen worden \squote{by value} ingesloten.\\
 	\hspace{1em}\labelitemi{} \code{[]} & er worden géén variabelen ingesloten.
-
-\end{tabu}
+\end{tabularx}
 
 Het onderstaande programma \proglink{closure.cpp} laat zien hoe je met behulp van een |for_each| algoritme en een \USE{closure} de som van alle even getallen in een range kunt bepalen.\footnote{%
 	Als alternatief zou je ook een \code{accumulate} algoritme met een gewone lambda\hyp{}functie kunnen gebruiken.
@@ -6287,9 +6339,9 @@ Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} 
 
 \sectionTextCode{Het type}{bool}
 %\markright{}
-Als je in een C-programma een variabele van het type |bool| wilt definiëren, dan moet je de file |stdbool.h| includen.
-In \Cpp{} is het niet nodig om een file te includen als je het type |bool| wilt gebruiken.
-In \Cpp{} is \cppcode{bool} een \USE{keyword} en hoef je dus niets te includen.
+Als je in een C-programma een variabele van het type |bool| wilt definiëren, dan moet je de \USE{preprocessor directive} \ccode{#include stdbool.h} gebruiken.
+In \Cpp{} is een \USE{preprocessor directive} niet nodig, als je het type |bool| wilt gebruiken.
+In \Cpp{} is \cppcode{bool} een \USE{keyword} en hoef je dus geen |#include| te gebruiken.
 Met dit \USE{keyword} kun je booleaanse variabelen definiëren van het type |bool|.
 Een variabele van dit type heeft slechts twee mogelijke waarden: |true| en |false|.
 
@@ -6439,7 +6491,7 @@ De GCC \Cpp{}\hyp{}compiler geeft de volgende foutmelding:
 $\color{hrred}\textbf{error:}$ cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'
 \end{lstfragment}
 In de standaard \Cpp{} library zijn een aantal functietemplates opgenomen die gebruikt kunnen worden om types te manipuleren. 
-Deze functietemplates zijn gedefinieerd in de standaard include file \href{https://en.cppreference.com/w/cpp/header/type_traits}{\cppcode{<type_traits>}}\footnote{%
+Deze functietemplates zijn gedefinieerd in de standaard \USE{include file} \href{https://en.cppreference.com/w/cpp/header/type_traits}{\cppcode{<type_traits>}}\footnote{%
 	Zie: \url{https://en.cppreference.com/w/cpp/header/type_traits}.
 }.
 Je kunt de functietemplate \href{https://en.cppreference.com/w/cpp/types/remove_reference}{\cppcode{remove_reference_t}} gebruiken om van een reference type een gewoon type te maken.
