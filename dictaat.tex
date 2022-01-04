@@ -495,18 +495,18 @@ Het gebruik van universele initialisatie ten opzichte van de andere mogelijke ma
 \begin{itemize}
 	\item Deze vorm kan gebruikt worden op alle plaatsen waar een initialisatie gebruikt kan worden. 
 	Dus bijvoorbeeld ook om een |struct| te initialiseren:
-	\begin{cpplstfragment}
+\begin{cpplstfragment}
 	struct Breuk {
 		int teller;
 		int noemer;
 	} half {1, 2};
-	\end{cpplstfragment}
+\end{cpplstfragment}
 	\item Bij deze vorm van initialisatie vindt geen type-conversie plaats.
 	Bijvoorbeeld:
-	\begin{cpplstfragment}[mathescape=true]
+\begin{cpplstfragment}[mathescape=true]
 	int i = 4.6; // i wordt 4. Vreemd!
 	int j {4.6} // $\color{hrred}\textbf{error:}$ narrowing conversion of '4.6' from 'double' to 'int'
-	\end{cpplstfragment}
+\end{cpplstfragment}
 \end{itemize}
 Om deze redenen is er voor gekozen om in dit dictaat altijd gebruik te maken van universele initialisatie\footnote{%
 	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es23-prefer-the--initializer-syntax}{ES.23}.

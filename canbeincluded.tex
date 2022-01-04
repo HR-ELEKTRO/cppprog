@@ -62,11 +62,11 @@ Wat overblijft vind je hier.
 	\Cpp{}20 heeft |module|s. Zie \url{https://en.cppreference.com/w/cpp/language/modules}.
 	\item 
 	Een function die geen exception mag gooien kun je met |noexcept| definiëren.
-	\begin{cpplstfragment}
+\begin{cpplstfragment}
 void f() noexcept {
 	//...
 }	
-	\end{cpplstfragment}
+\end{cpplstfragment}
 	Als zo'n functie toch een exception gooit, dan wordt |std::terminate| aangeroepen om het programma meteen te beëindigen.
 	\item 
 	Er was een voorstel voor \Cpp{}20 voor een mechanisme om contracten vast te leggen (invarianten, pre- en postcondities).
@@ -105,7 +105,7 @@ void f() noexcept {
 	Een lambda kan handig gebruikt worden om een groep statements te veranderen in een expressie.
 	%TODO: kan dit gebruikt worden om een Breuk in te lezen in operator<<?
 	Bijvoorbeeld bij een ingewikkelde initialisatie:
-	\begin{cpplstfragment}
+\begin{cpplstfragment}
 	vector<int> v = [&] {
 		switch (m) {
 			case 0:
@@ -116,7 +116,7 @@ void f() noexcept {
 			return {};
 		}
 	};
-	\end{cpplstfragment}
+\end{cpplstfragment}
 \end{itemize}
 
 \subsection{Concepts and Generic Programming}
@@ -165,12 +165,12 @@ Sinds \Cpp{}17 include file <filesystem>
 	\item 
 	De standaard functie |forward| lijkt op de eenvoudigere |move| en kan gebruikt worden om een verzameling argumenten exact door te geven.
 	Deze functie wordt onder andere gebruikt om |make_unique| te implementeren:
-	\begin{cpplstfragment}
+\begin{cpplstfragment}
 template<typename T, typename ... Args>
 unique_ptr<T> make_unique(Args&&... args) {
 	return unique_ptr<T>{new T(std::forward<Args>(args)...)}
 }
-	\end{cpplstfragment}
+\end{cpplstfragment}
 	\item 
 	Sinds Cpp{}20 bevat de standaard library de class |span|.
 	Dit is de combinatie van een pointer en een offset.
@@ -193,9 +193,9 @@ unique_ptr<T> make_unique(Args&&... args) {
 	De include file |<chrono>| bevat utilities om met tijd om te gaan.
 	Er zijn user defined suffixes gedefinieerd die je kunt gebruiken om je code leesbaarder te maken.
 	Bijvoorbeeld:
-	\begin{cpplstfragment}
+\begin{cpplstfragment}
 	this_thread::sleep(10ms+500us);
-	\end{cpplstfragment}
+\end{cpplstfragment}
 	\item 
 	Het kiezen van een implementatie afhankelijk van het type van de iterator zal in \Cpp{}20 veel eenvoudiger worden door het gebruik van concepts.
 \end{itemize}
@@ -204,13 +204,13 @@ unique_ptr<T> make_unique(Args&&... args) {
 \begin{itemize}
 	\item 
 	Als er een fout optreedt in een functie uit |<cmath>|, dan wordt dit gerapporteerd door de globale variabele |errno| te vullen met een foutcode.
-	\begin{cpplstfragment}
+\begin{cpplstfragment}
 	errno = 0;
 	double d {sqrt(-1)};
 	if (errno == EDOM) {
 		cerr << "Domain error for sqrt(-1)\n";
 	}
-	\end{cpplstfragment}
+\end{cpplstfragment}
 	\item 
 	De include file |<numeric>| definieert een aantal rekenkundige functies.
 	Onder andere |inner_product|, |gcd| en |lcm|.
