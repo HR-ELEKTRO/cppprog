@@ -715,7 +715,7 @@ De afspraak is dan dat het einde van de \USE{character} string aangegeven wordt 
 In C wordt zo'n variabele aan een functie doorgegeven door middel van een \USE{character} pointer (|char*|).
 Deze manier van het opslaan van \USE{character} strings heeft vele nadelen (waarschijnlijk heb je zelf meerdere malen programma's zien vastlopen door het verkeerd gebruik van deze \USE{character} strings).
 In de standaard \Cpp{} \USE{library} is een nieuw type |string| opgenomen waarin \USE{character} strings op een veilige manier opgeslagen kunnen worden.
-Het bewerken van deze |string|s is ook veel eenvoudiger dan strings opgeslagen in \USE{character} array's.
+Het bewerken van deze |string|s is ook veel eenvoudiger dan strings opgeslagen in \USE{character} arrays.
 
 \needspace{2\baselineskip}
 Bijvoorbeeld het vergelijken van \USE{character} strings in C:
@@ -888,7 +888,7 @@ De reden is simpel: het werkt niet.
 De parameter |rij| is namelijk geen echte array maar een referentie naar het beginadres van de array |tijdsduren| die als argument wordt meegegeven bij aanroep.
 In de functie is het aantal elementen van |tijdsduren| dus niet bekend.
 Dat is ook de reden dat we dit aantal zelf als tweede parameter |aantal| mee moeten geven aan de functie.
-Het is dus niet zo handig om in \Cpp{} de ingebouwde array's, die overgenomen zijn uit C, te gebruiken.
+Het is dus niet zo handig om in \Cpp{} de ingebouwde arrays, die overgenomen zijn uit C, te gebruiken.
 Het is beter om gebruik te maken van de nieuwe types uit de standaard \Cpp{} \USE{library} zoals |array| en |vector|, zie \csecref{sec:introarryvector} en het onderstaande programma.
 
 \needspace{3\baselineskip}
@@ -1076,10 +1076,10 @@ In moderne programmeertalen zoals Java, C$\sharp$, Python, Ada en ook in \Cpp{} 
 Een generieke functie is een functie die gebruikt kan worden voor meerdere parametertypes.
 In C kan om een array met |int|'s te sorteren een functie geschreven worden.
 Als we vervolgens een array met |double|'s willen sorteren, moeten we een nieuwe functie definiëren.
-In \Cpp{} kunnen we met behulp van \USE{templates} een \emph{generieke functie} definiëren waarmee array's van elk willekeurig type gesorteerd kunnen worden.
+In \Cpp{} kunnen we met behulp van \USE{templates} een \emph{generieke functie} definiëren waarmee arrays van elk willekeurig type gesorteerd kunnen worden.
 Een generiek type is een UDT dat met verschillende andere types gecombineerd kan worden.
 In \Cpp{} kunnen we bijvoorbeeld een UDT array definiëren waarin we variabelen van het type |int| kunnen opslaan.
-Door het gebruik van een template kunnen we een generiek UDT array definiëren waarmee we dan array's van elk willekeurig type kunnen gebruiken.
+Door het gebruik van een template kunnen we een generiek UDT array definiëren waarmee we dan arrays van elk willekeurig type kunnen gebruiken.
 Op generieke functies en datatypes komen we nog uitgebreid terug.
     \item \textbf{Classes.}\\
 In moderne programmeertalen zoals Java, C$\sharp$, Python, PHP, Ruby, Perl, Smalltalk en ook in \Cpp{} kunnen een aantal logisch bij elkaar behorende UDT's van elkaar worden afgeleid door middel van \USE{inheritance}.
@@ -3343,7 +3343,7 @@ Deze variabele kan weer worden vrijgegeven zodra de gebruiker dit window sluit.
 Het geheugen dat bij het openen van het window was gereserveerd kan dan (her)gebruikt worden bij het openen van een (ander) window.
 
 Dit kan in \Cpp{} met de operatoren |new| en |delete|.
-Voor het dynamisch aanmaken en verwijderen van array's (waarvan de grootte dus tijdens het uitvoeren van het programma bepaald kan worden) beschikt \Cpp{} over de operatoren |new[]| en |delete[]|. 
+Voor het dynamisch aanmaken en verwijderen van arrays (waarvan de grootte dus tijdens het uitvoeren van het programma bepaald kan worden) beschikt \Cpp{} over de operatoren |new[]| en |delete[]|. 
 De operatoren |new| en |new[]| geven een pointer naar het nieuw gereserveerde geheugen terug.
 Deze pointer kan dan gebruikt worden om dit geheugen te gebruiken.
 Als dit geheugen niet meer nodig is, kan dit worden vrijgegeven door de operator |delete| of |delete[]| uit te voeren op de pointer die bij |new| of respectievelijk |new[]| is teruggegeven.
@@ -3892,7 +3892,7 @@ Stand s;
 
 De nadelen van het gebruik van de ingebouwde datastructuren \USE{struct} en array blijken uit dit voorbeeld:
 \begin{itemize}
-	\item De groottes van de array's |lijst| en |naam| moeten bij het vertalen van het programma bekend zijn en kunnen niet aangepast worden (zijn statisch).
+	\item De groottes van de arrays |lijst| en |naam| moeten bij het vertalen van het programma bekend zijn en kunnen niet aangepast worden (zijn statisch).
 	\item Elke |Deelnemer| neemt hierdoor evenveel ruimte in onafhankelijk van de lengte van zijn |naam| (is statisch).
 	\item Elke |Stand| neemt hierdoor evenveel ruimte in onafhankelijk van de waarde van \hcode{aan\\-tal_\\-deel\\-ne\\-mers} (is statisch).
 	\item Het verwijderen van een |Deelnemer| uit de |Stand| is een heel bewerkelijke operatie.\footnote{%
@@ -4733,8 +4733,8 @@ Het telefoonnummer van |Sonja| kan nu, wederom met behulp van indexering, als vo
 	cout << "Sonja : " << telefoonnummer["Sonja"] << '\n';
 \end{cpplstfragment}
 Je ziet dat een |map| gebruikt kan worden alsof het een soort array (of |vector|) is waarbij de index geen integer hoeft te zijn.
-Dit soort array's worden in veel andere programmeertalen (waaronder JavaScript en PHP) \emph{associatieve array's} genoemd.
-In Python worden dit soort array's \emph{\USE{dictionaries}} genoemd.
+Dit soort arrays worden in veel andere programmeertalen (waaronder JavaScript en PHP) \emph{associatieve arrays} genoemd.
+In Python worden dit soort arrays \emph{\USE{dictionaries}} genoemd.
 
 In een |multimap| mag een sleutel wel meerdere keren voorkomen.
 In de |multimap| in \cref{fig:asscon} komt de sleutel |Sonja| twee keer voor.

@@ -23,7 +23,7 @@ int main() {
         cout << e << " ";
     }
     cout << '\n';
-    // vergelijken van array's
+    // vergelijken van arrays
     if (a != b)
         cout << "Dit kan niet waar zijn!\n";
 
