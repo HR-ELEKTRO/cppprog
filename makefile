@@ -1,14 +1,15 @@
 # Define target and source file here:
-TARGET       := Dictaat_OPinCpp
-SOURCE       := dictaat
+TARGET := Dictaat_OPinCpp
+SOURCE := dictaat
 DEPENDENCIES := style_nl_NL.tex styleCode.tex
+PUBLIC := ../cppprog_wiki/
 
 # Define font here:
-#FONT         := "\timestrue"
-FONT         := "\chartertrue"
-#FONT         := "\opensanstrue"
+#FONT := "\timestrue"
+FONT := "\chartertrue"
+#FONT := "\opensanstrue"
 # For standard latex fonts use:
-#FONT         := 
+#FONT := 
 
 # Options:
 PDFLATEXOPT := -shell-escape -interaction=batchmode -file-line-error
@@ -17,6 +18,7 @@ BIBEROPT := --quiet
 PDFLATEX := pdflatex
 BIBER := biber
 RM := rm
+CP := cp
 MAKE := make
 MV := mv
 ECHO := echo
@@ -37,6 +39,11 @@ cleanall :
 build :
 	$(MAKE) cleanall
 	$(MAKE)
+
+.PHONY : public
+public :
+	$(CP) -v $(TARGET).pdf $(PUBLIC)
+	$(CP) -v $(TARGET)_ebook.pdf $(PUBLIC)
 
 $(TARGET)_ebook.pdf : $(SOURCE).tex $(DEPENDENCIES)
 	$(RM) -f args.tex
