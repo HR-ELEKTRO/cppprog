@@ -1,3 +1,5 @@
+% !TEX root = dictaat.tex
+% LTeX: language = nl
 % !TeX spellcheck = nl_NL
 % dictaat Objectgeoriënteerd Programmeren in C++
 % Harry Broeders
@@ -18,7 +20,7 @@
 \newcommand{\modulecode}{\Cpp}
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
-\newcommand{\huidigeversie}{1.2b}
+\newcommand{\huidigeversie}{1.2c}
 % start a new line by using \\ 
 \newcommand{\auteurs}{
 	J.Z.M. Broeders
@@ -468,6 +470,7 @@ De |iostream| \USE{library} is zeer uitgebreid.
 In dit dictaat gaan we daar niet verder op in.
 Zie eventueel voor verdere informatie \cite[hoofdstuk 6: \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus06.html}{IOStreams}]{Brokken2019} of \url{http://en.cppreference.com/w/cpp/io}.
 
+\needspace{5\baselineskip}
 \section{Universele initialisatie}
 \label{sec:universeleinitialisatie}	
 In C ben je gewend om een variabele te initialiseren met de volgende syntax:
@@ -542,11 +545,12 @@ Het gebruik van |auto| kan ook de aanpasbaarheid van je programma vergroten.
 Bijvoorbeeld, in het onderstaande programma wordt een array \hcode{kam\\-pi\\-oens\\-jaren\\-Feye\\-noord} met integers aangemaakt en verderop in het programma wordt de variabele |eerste| gelijk gemaakt aan het eerste getal uit deze array. 
 
 \begin{cpplstfragment}
-	int kampioensjaren_feyenoord[] {1924, 1928, 1936, 1938, 1940, 1961, 1962, 1965, 1969, 1971, 1974, 1984, 1993, 1999, 2017};
+3	int kampioensjaren_feyenoord[] {1924, 1928, 1936, 1938, 1940, 1961, 1962, 1965, 1969, 1971, 1974, 1984, 1993, 1999, 2017, 2023};
 
 	int eerste {kampioensjaren_feyenoord[0]};
 \end{cpplstfragment}
 
+\needspace{4\baselineskip}
 We kunnen het type van de variabele |eerste| in dit geval ook door de compiler laten bepalen (Engels: type deduction), zie \proglink{auto.cpp}: 
 \cpplstinputfragment[linerange={5-7}]{auto.cpp}
 
@@ -819,6 +823,7 @@ Stel dat de |struct Tijdsduur| bijvoorbeeld als volgt gedefinieerd is:
 Variabelen van het type |struct Tijdsduur| kunnen dan als volgt gedefinieerd worden:
 \cpplstinputfragment[linerange={use_struct_C-use_struct_C}]{fragments.cpp}
 
+\needspace{4\baselineskip}
 Het is in C gebruikelijk om met de volgende typedefinitie een typenaam (in dit geval \hcode{Tijds\\-duur_t}) te declareren voor het type |struct Tijdsduur|:
 \cpplstinputfragment[linerange={struct_typedef-struct_typedef}]{fragments.cpp}
 
@@ -976,8 +981,8 @@ Dit maakt het produceren van softwarecomponenten niet eenvoudig.
 \dquote{Heeft u deze component ook in \Cpp{} voor Linux in plaats van in C\# voor Windows?}%
 \footnote{%
     Er zijn diverse alternatieven ontwikkeld voor het maken van taalonafhankelijke componenten.
-Microsoft heeft voor dit doel de .NET architectuur ontwikkeld.
-    Deze .NET componenten kunnen in diverse talen gebruikt worden maar zijn wel gebonden aan het Windows platform.
+Microsoft heeft voor dit doel de .NET-architectuur ontwikkeld.
+    Deze .NET-componenten kunnen in diverse talen gebruikt worden, maar zijn wel gebonden aan het Windows platform.
     De CORBA (\USE{Common Object Request Broker Architecture}) standaard van de OMG (\USE{Object Management Group}) maakt het ontwikkelen van taal en platform onafhankelijke componenten mogelijk.
 }
 \end{itemize}
@@ -1123,11 +1128,12 @@ Als je in C een programma wilt schrijven waarbij je met breuken in plaats van me
 \footnote{%
     Een belangrijke reden om te werken met breuken in plaats van \USE{floating-point} getallen is het voorkomen van afrondingsproblemen. 
     Een breuk zoals \sfrac{1}{3} moet als \USE{floating-point} getal afgerond worden tot bijvoorbeeld: 0.333333333. 
-    Deze afronding kan ervoor zorgen dat een berekening zoals 3 $\times$ \sfrac{1}{3} niet zoals verwacht de waarde 1 maar de waarde 0.999999999 oplevert. 
+    Deze afronding kan ervoor zorgen dat een berekening zoals 3 $\times$ \sfrac{1}{3} niet zoals verwacht de waarde 1, maar de waarde 0.999999999 oplevert. 
     Ook breuken zoals \sfrac{1}{10} moeten afgerond worden  als ze als binair \USE{floating-point} getal worden weergegeven.
 }, dan kun je dit (niet in C opgenomen) type |Breuk| op de volgende manier zelf definiëren (\proglink{Breukc.c}):
 \cpplstinputfragment[language=C,linerange=5-8]{Breukc.c}
 
+\needspace{2\baselineskip}
 Een C functie om twee breuken op te tellen kan dan als volgt gedefinieerd worden:
 \cpplstinputfragment[language=C,linerange=33-38]{Breukc.c}
 
@@ -1153,29 +1159,26 @@ Tevens is het niet eenvoudig mogelijk om bepaalde datavelden en/of bewerkingen o
 
 In \Cpp{} kunnen we door gebruik te maken van een {\it class\/}, een eigen type |Breuk| als volgt declareren (\proglink{Breuk0.cpp}):
 \begin{cpplstfragment}[mathescape=true]
-$\label{breuk0}$class Breuk {             // Op een object van de class Breuk
-public:                   // kun je de volgende bewerkingen 
-                          // uitvoeren:
-    void leesin();        // -  inlezen vanuit het toetsen-
-                          //    bord;
+$\label{breuk0}$class Breuk {           // Op een object van de class Breuk
+public:                 // kun je de volgende bewerkingen uitvoeren:
+    void leesin();      // -  inlezen vanuit het toetsenbord;
     void drukaf() const$%
         \footnotemark%
         \makeatletter%
         \global\let\saved@Href@A\Hy@footnote@currentHref%
         \makeatother%
-        $; // -   afdrukken op het scherm;
+        $;//-  afdrukken op het scherm;
     void plus(Breuk$%
         \label{better used const reference 1}%
         \footnotemark%
         \makeatletter%
         \global\let\saved@Href@B\Hy@footnote@currentHref%
         \makeatother%
-        $ b);   // -  een Breuk erbij optellen.
-private:                  // Een object van de class Breuk
-                          // heeft privé:
-    int boven;            // -  een teller;
-    int onder;            // -  een noemer;
-    void normaliseer();   // -  een functie normaliseer.
+        $ b);// -  een Breuk erbij optellen.
+private:                // Een object van de class Breuk heeft privé:
+    int boven;          // -  een teller;
+    int onder;          // -  een noemer;
+    void normaliseer(); // -  een functie normaliseer.
 };
 \end{cpplstfragment}
 
@@ -1213,6 +1216,7 @@ Dit zorgt ervoor dat compiler een object van een UDT, ook wel een \emph{concrete
 Het nadeel is echter dat een concrete class opnieuw gecompileerd moet worden als de implementatie wijzigt.
 Verderop in dit dictaat kun je leren hoe je door een zogenoemde \emph{abstracte} class te gebruiken ervoor kunt zorgen dat niet alles opnieuw gecompileerd hoeft te worden bij een wijziging of uitbreiding, zie \csecref{sec:adcoo}. 
 
+\needspace{4\baselineskip}
 Functies die opgenomen zijn in een class worden \emph{memberfuncties} genoemd.
 De \label{Breuk::plus}memberfunctie |plus| kan als volgt gedefinieerd worden%
 \footnote{%
@@ -1941,7 +1945,7 @@ Zie \proglink{param.cpp} voor een compleet voorbeeldprogramma.
 %\markright{}
 \label{sec:constreferenceparameter}
 Er is nog een andere reden om een \USE{reference} parameter in plaats van een normale \USE{value} parameter te gebruiken. 
-Bij een \USE{reference} parameter wordt zoals we hebben gezien een adres (een vast aantal bytes\footnote{Op een MSP430 microcontroller bestaat een adres uit 2 bytes, op een CC3220 microcontroller uit 4 bytes en op 64-bits pc uit 8 bytes.}) gekopieerd terwijl bij een \USE{value} parameter de waarde (een variabel aantal bytes, afhankelijk van het type) gekopieerd wordt. 
+Bij een \USE{reference} parameter wordt zoals we hebben gezien een adres (een vast aantal bytes\footnote{Op een MSP430-microcontroller bestaat een adres uit 2 bytes, op een CC3220-microcontroller uit 4 bytes en op een 64-bit pc uit 8 bytes.}) gekopieerd terwijl bij een \USE{value} parameter de waarde (een variabel aantal bytes, afhankelijk van het type) gekopieerd wordt. 
 Als de waarde veel geheugenruimte in beslag neemt, is het om performance redenen beter om een \USE{reference} parameter te gebruiken.\footnote{Later gaan we zien dat er nog een veel belangrijke reden is om een \USE{reference} parameter in plaats van een \USE{value} parameter te gebruiken, zie \csecref{sec:polymorfisme}.}
 Om er voor te zorgen dat deze functie toch aangeroepen kan worden met een constante kan deze parameter dan het beste als |const| \USE{reference} parameter gedefinieerd worden. Het wordt dan ook onmogelijk om in de functie een waarde aan de formele parameter toe te kennen.
 
@@ -1964,12 +1968,12 @@ void drukaf(const Tijdsduur& td) {
 In alle voorafgaande code waarin een |Breuk| als parameter is gebruikt kan dus beter%
 \footnote{%
     Een {Breuk} bestaat uit 2 \cppcode{int}s. 
-    Op een AVR microcontroller bestaat elke \cppcode{int} uit 2 bytes en een \cppcode{Breuk} dus uit $2 \times 2 = 4$ bytes. 
+    Op een AVR-microcontroller bestaat elke \cppcode{int} uit 2 bytes en een \cppcode{Breuk} dus uit $2 \times 2 = 4$ bytes. 
     Een adres bestaat op een MSP430 uit 2 bytes en kan dus sneller gekopieerd worden dan een \cppcode{Breuk}. 
-    Op een CC3220 microcontroller bestaat een \cppcode{int} uit 4 bytes en een \cppcode{Breuk} dus uit $2 \times 4 = 8$ bytes. 
-    Een adres bestaat op een CC3220 microcontroller uit 4 bytes en kan dus sneller gekopieerd worden dan een \cppcode{Breuk}.
-    Op een 64-bits pc bestaat een \cppcode{int} uit 4 bytes en een \cppcode{Breuk} dus uit $2 \times 4 = 8$ bytes. 
-    Een adres bestaat op een 64-bits pc uit 8 bytes en kan dus net zo snel gekopieerd worden als een \cppcode{Breuk}.
+    Op een CC3220-microcontroller bestaat een \cppcode{int} uit 4 bytes en een \cppcode{Breuk} dus uit $2 \times 4 = 8$ bytes. 
+    Een adres bestaat op een CC3220-microcontroller uit 4 bytes en kan dus sneller gekopieerd worden dan een \cppcode{Breuk}.
+    Op een 64-bit pc bestaat een \cppcode{int} uit 4 bytes en een \cppcode{Breuk} dus uit $2 \times 4 = 8$ bytes. 
+    Een adres bestaat op een 64-bit pc uit 8 bytes en kan dus net zo snel gekopieerd worden als een \cppcode{Breuk}.
 } een |const Breuk&| als parameter worden gebruikt (Bijvoorbeeld op \cpageref{better used const reference 1},  \pageref{better used const reference 2} en \pageref{better used const reference 3}.)
 
 \section[Parameter FAQ]{Parameter FAQ\protect\footnote{FAQ = Frequently Asked Questions (veelgestelde vragen).}}
@@ -2223,7 +2227,7 @@ Dus de aanroep:
 }
 heeft tot gevolg dat de volgende functie gegenereerd wordt%
 \footnote{%
-    Als je zelf deze functie al gedefinieerd hebt, genereert de compiler geen nieuwe functie maar wordt de al gedefinieerde functie gebruikt.
+    Als je zelf deze functie al gedefinieerd hebt, genereert de compiler geen nieuwe functie, maar wordt de al gedefinieerde functie gebruikt.
 }:
 \begin{cpplstfragment}
 void swap(int& p, int& q) {
@@ -2531,6 +2535,7 @@ Segmentation fault (core dumped)
 
 %TODO: uitvoer nog uitleggen.
 
+\needspace{5\baselineskip}
 Voorbeeldprogramma om een onbekend aantal elementen in een |vector| in te lezen (\proglink{std_\\-vec\\-tor2.cpp}):
 \cpplstinputfragment[linerange={1-37}]{std_vector2.cpp}
 
@@ -3665,6 +3670,7 @@ Bij het testen van het programma (gecompileerd met debug informatie) zorgt de |a
 Als na het testen duidelijk is dat iedereen zich aan de afspraak houdt, is het niet meer nodig om de |assert| uit te voeren.
 Het programma wordt gecompileerd zonder debug informatie en alle |assert| aanroepen worden verwijderd.
 
+\needspace{2\baselineskip}
 Het gebruik van |assert| heeft de volgende nadelen:
 \begin{itemize}
     \item Het programma wordt abrupt afgebroken als niet aan de \USE{assertion} wordt voldaan. 
@@ -3859,9 +3865,7 @@ Over \USE{exceptions} valt nog veel meer te vertellen:
     Speciaal keyword |noexcept| om in het prototype van een functie aan te geven
     dat deze functie geen \USE{exceptions} kan veroorzaken.
     \item \textbf{\USE{Exceptions} in de std \USE{library}.}\\
-    Een overzicht van alle \USE{exceptions} die in de standaard \USE{library} gedefinieerd zijn%
-    % om overfull hbox te voorkomen...
-    \iftoggle{ebook}{ en gebruikt worden}{}, is te vinden op: \url{http://en.cppreference.com/w/cpp/error/exception}.
+    Een overzicht van alle \USE{exceptions} die in de standaard \USE{library} gedefinieerd zijn, is te vinden op: \url{http://en.cppreference.com/w/cpp/error/exception}.
 \end{itemize}
 Voor al deze details verwijs ik je naar \cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus10.html}{hoofdstuk 10}]{Brokken2019} en \cite[hoofdstuk 10]{Stroustrup2013}.
 
@@ -5023,7 +5027,7 @@ Als er \USE{bidirectional} iteratoren beschikbaar zijn, dan kan de functie als v
 \cpplstinputfragment[linerange={12-21}]{find_upper_middle_bidirectional.cpp}
 
 Door een template te gebruiken kan deze functie aangeroepen worden voor elke container die bidirectional iteratoren levert\footnote{%
-	Deze functie kan ook aanroepen worden voor elke container die \USE{random access} iteratoren levert maar in dat geval kan beter de functie \code{find_upper_middle_random_access} aangeroepen worden want die is sneller.
+	Deze functie kan ook aanroepen worden voor elke container die \USE{random access} iteratoren levert, maar in dat geval kan beter de functie \code{find_upper_middle_random_access} aangeroepen worden want die is sneller.
 }, bijvoorbeeld een |list|.
 De executietijd van deze functie is $O(n)$.
 Als deze functie echter aangeroepen wordt om het midden van een |forward_list| te vinden dan geeft de compiler een foutmelding:
@@ -5038,7 +5042,7 @@ Als er \USE{forward} iteratoren beschikbaar zijn, dan kan de functie als volgt g
 \cpplstinputfragment[linerange={12-23}]{find_upper_middle_forward.cpp}
 
 Door een template te gebruiken kan deze functie aangeroepen worden voor elke container die \USE{forward} iteratoren levert\footnote{%
-	Deze functie kan ook aanroepen worden voor elke container die \USE{bidirectional} of \USE{random access} iteratoren levert maar in dat geval kan beter de functie \code{find_upper_middle_bidirectional} respectievelijk \code{find_upper_middle_random_access} aangeroepen worden want die zijn sneller.
+	Deze functie kan ook aanroepen worden voor elke container die \USE{bidirectional} of \USE{random access} iteratoren levert, maar in dat geval kan beter de functie \code{find_upper_middle_bidirectional} respectievelijk \code{find_upper_middle_random_access} aangeroepen worden want die zijn sneller.
 }, bijvoorbeeld een |forward_list|.
 De executietijd van deze functie is $O(n)$.
 
@@ -5051,6 +5055,7 @@ Dit wordt later behandeld in \csecref{sec:iteratortag}.
 Alle containers hebben de memberfuncties |begin()| en |end()| waarmee een iterator naar het eerste respectievelijk één voorbij het laatste element opgevraagd kan worden.
 Deze iteratoren kunnen gebruikt worden om alle elementen van een container van voor naar achter te doorlopen, zie \csecref{sec:vbstring}.
 De functies |cbegin()| en |cend()| zijn vergelijkbaar maar geven in plaats van een |iterator| een |const_iterator| terug die alleen gebruikt kan worden om elementen uit de container te lezen.
+\needspace{3\baselineskip}
 Als je bijvoorbeeld de eerste 5 in een vector met integers wilt vervangen door een 7 dan kan dit als volgt:
 
 \cpplstinputfragment[linerange={19-22}]{reverse_iterator.cpp}
@@ -5074,6 +5079,7 @@ Als een iterator |itr| refereert naar een element en je schrijft met behulp van 
 Soms wil je vóór een bepaalde plaats in een container die wordt aangewezen met een iterator elementen toevoegen.
 Dit kan met behulp van zogenoemde \USE{insert}\hyp{}iteratoren.
 
+\needspace{3\baselineskip}
 Er zijn drie functietemplates beschikbaar waarmee zulke \USE{insert}\hyp{}iteratoren eenvoudig aangemaakt kunnen worden:
 \begin{itemize}
 	\item |back_inserter(c)|; Deze functie levert een zogenoemde \hcode{back_\\-insert_\\-iter\\-ator} waarmee elementen toegevoegd kunnen worden aan het einde van de container |c| door te schrijven via deze iterator met behulp van de |*| operator.
@@ -5239,7 +5245,7 @@ De string |w| bevat het woord dat geraden moet worden.
 De |vector<bool>| genaamd |gevonden| wordt gevuld met $n$ maal de waarde |false|, waarbij $n$ het aantal karakters in het te raden woord is.\footnote{%
 	Je ziet dat hier \emph{geen} gebruik gemaakt wordt van een universele initialisatie, zie \csecref{sec:universeleinitialisatie}.
 	Als je bij een container een universele initialisatie gebruikt dan worden de elementen in de initialisatielijst in de container geplaatst.
-	Als je een van de andere constructors van een container wilt gebruiken, zoals de contructor \cppcode{vector(size_type count, const T& value)}, zie \url{https://en.cppreference.com/w/cpp/container/vector/vector}, dan moet je ronde haakjes gebruiken in plaats van accolades bij het aanroepen van de constructor. 
+	Als je een van de andere constructors van een container wilt gebruiken, zoals de constructor \cppcode{vector(size_type count, const T& value)}, zie \url{https://en.cppreference.com/w/cpp/container/vector/vector}, dan moet je ronde haakjes gebruiken in plaats van accolades bij het aanroepen van de constructor. 
 }
 In de |for|\hyp{}loop worden alle tot dusver gevonden letters van het te raden woord afgedrukt.
 Voor elke nog niet gevonden letter wordt een punt afgedrukt.
@@ -6334,7 +6340,7 @@ In een \Cpp{} programma kun je constante getallen niet alleen meer in het decima
 	Hexadecimale getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0x} of \cppcode{0X}. Dus de code \cppcode{int x = 0x23;} initialiseert de variabele \cppcode{i} met de waarde 35 want $23_{16}$ is $35_{10}$.  
 } talstelsel invoeren maar ook in het binaire talstelsel.
 Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} of \cppcode{0B}\footnote{%
-	Hoewel deze notatie \emph{niet} toegestaan is volgens de C-standaard \cite{ISO2018} ondersteunen veel C\hyp{}compilers zoals de GCC C\hyp{}compiler en de Texas Instruments Optimizing C Compiler deze notatie ook. 
+	Hoewel deze notatie \emph{niet} toegestaan is volgens de C-standaard \cite{ISO2018} ondersteunen veel C\hyp{}compilers zoals de GCC C\hyp{}compiler en de Texas Instruments Optimizing C\hyp{}Compiler deze notatie ook. 
 }. Dus de code \cppcode{int x = 0b10111101;} initialiseert de variabele \cppcode{i} met de waarde 189 want $10111101_2$ is $189_{10}$.
 
 \sectionTextCode{Het type}{bool}
@@ -6415,6 +6421,7 @@ De functie |sin| die wordt aangeroepen is nu de in de \USE{namespace} |BroJZ| ge
 De \USE{using directive} blijft net zolang geldig als een gewone variabeledeclaratie.
 Tot de bijbehorende accolade sluiten dus.
 
+\needspace{6\baselineskip}
 \section[\texttt{using} in plaats van \texttt{typedef}]{\texorpdfstring{\cppcode{using}}{using} in plaats van \texorpdfstring{\cppcode{typedef}}{typedef}}
 %\markright{}
 In C en \Cpp{} kun je met behulp van een |typedef| een alias (andere naam) voor een bestaand type definiëren, bijvoorbeeld:
@@ -6460,6 +6467,7 @@ Dit kan met de volgende code:
 \end{cpplstfragment}
 De type van de variabele |ri2| is gedefieerd als hetzelfde type als |ri1|, dus |ri2| is ook een reference naar |i|.
 De naam |ri1| komt nu twee keer voor in deze code, wat ook weer niet zo elegant is.
+\needspace{3\baselineskip}
 De mooiste manier om aan te geven dat |ri2| van hetzelfde type moet zijn als |ri1| is:
 \begin{cpplstfragment}
 	int i {42};
@@ -6693,7 +6701,7 @@ Als je dit probeert te compileren, krijg je de volgende foutmelding:
 //  $\color{hrred}\textbf{error:}$ invalid conversion from 'const char*' to 'int'
 \end{cpplstfragment}
 Het is namelijk helemaal niet zeker dat een |char*| in een |int| variabele past.
-Stel dat je zeker weet dat het past (omdat je het programma alleen maar op een 32-bits microcontroller wilt gebruiken) dan kun je de compiler \squote{dwingen} met behulp van een zogenoemde \emph{\USE{cast}}:
+Stel dat je zeker weet dat het past (omdat je het programma alleen maar op een 32-bit microcontroller wilt gebruiken) dan kun je de compiler \squote{dwingen} met behulp van een zogenoemde \emph{\USE{cast}}:
 \begin{cpplstfragment}
     i = (int)"Hallo";
 \end{cpplstfragment}
@@ -6713,7 +6721,7 @@ In de \Cpp{} standaard is om deze reden een nieuwe syntax voor casting gedefinie
 
 In dit geval moeten we een |reinterpret_cast| gebruiken omdat de \USE{cast} niet portable is.
 
-Stel dat je een \Cpp{} programma schrijft dat moet draaien op een MSP430 microcontroller.
+Stel dat je een \Cpp{} programma schrijft dat moet draaien op een MSP430-microcontroller.
 Als je de output poort B van deze controller wilt aansturen, kan dat via adres 0x38.
 Dit kun je in \Cpp{} als volgt doen:
 \begin{cpplstfragment}[mathescape=true]
@@ -7224,6 +7232,7 @@ Ze zijn dan vanzelf inline.
 Als de memberfunctie in de classdeclaratie alleen maar gedeclareerd is, kan de definitie van die functie voorafgegaan worden door het \USE{keyword} |inline| om de functie inline te maken.
 Veel compilers plaatsen, als je aangeeft het programma voor snelheid te willen optimaliseren, korte functies automatisch inline.
 
+\needspace{3\baselineskip}
 Eerste manier om de memberfuncties |teller| en |noemer| inline te maken:
 \begin{cpplstfragment}
 class Breuk {
@@ -7268,6 +7277,7 @@ Voorbeelden van literals van het type |int| zijn |42|, |0b0101010| en |0x2A|.
 Het is ook mogelijk om literals (constante getallen) te definiëren voor user-defined datatypes (UDT's) zoals |Breuk|.
 Zie \proglink{user_defined_literals.cpp}.
 
+\needspace{4\baselineskip}
 Dit is bijvoorbeeld ook gebruikt in de volgende standaard library classes:
 \begin{itemize}
 	\item |string|\\
@@ -7796,6 +7806,7 @@ Dit probleem wordt het \emph{\USE{slicing problem}} genoemd.
 Het is dus aan te raden om nooit een object van een \USE{derived class} toe te kennen aan een object van de \USE{base class}.
 %Nog een stap verder is .... NIET afleiden van concrete classes (\USE{assignment problem}) etc
  
+\needspace{4\baselineskip}
 Voorbeeld van slicing (\proglink{slice.cpp}):
 \cpplstinputfragment[linerange={7-50,54-60}]{slice.cpp}
 
@@ -8024,7 +8035,9 @@ De belangrijkste daarvan zijn:
     In de praktijk komt het vaak voor dat pas bij het uitvoeren van het programma bepaald kan worden hoe groot de array moet zijn.
     \item Er vindt bij het gebruiken van de array geen controle plaats op de gebruikte index.
     Als je element $N$ benadert uit een array die $N-1$ elementen heeft, krijg je geen foutmelding maar wordt de geheugenplaats achter het einde van de array benaderd.
-    Dit is vaak de oorzaak van fouten die lang onopgemerkt kunnen blijven en dan (volgens de wet van Murphy op het moment dat het het slechtst uitkomt) plotseling voor de dag kunnen komen.
+    Dit is vaak de oorzaak van fouten die lang onopgemerkt kunnen blijven en dan (volgens de wet van bedrog\footnote{%
+		\url{https://nl.wikipedia.org/wiki/Wet_van_bedrog}.
+	} op het moment dat het het slechtst uitkomt) plotseling voor de dag kunnen komen.
     Deze fouten zijn vaak heel moeilijk te vinden omdat de oorzaak van de fout niets met het gevolg van de fout te maken heeft.
 \end{itemize}
 
@@ -8033,8 +8046,8 @@ In dit voorbeeld ga je zien hoe ik zelf een eigen array type genaamd |Array| heb
     In de standaard \Cpp{} \USE{library} is ook een type \cppcode{std::array} opgenomen, zie \csecref{std::array}.
     Dit type is enigszins vergelijkbaar met mijn zelfgemaakte type \cppcode{Array}.
     Het grootste verschil is dat de size van de array bij de \cppcode{std::array} als template argument wordt meegegeven en bij mijn \cppcode{Array} als \USE{constructor argument} wordt meegegeven.
-    De grootte (Engels: \USE{size}) van een \cppcode{std::array} moet dus tijdens het compileren van het programma (\USE{compile time}) bekend zijn maar de \USE{size} van een \cppcode{Array} kan tijdens het uitvoeren van het programma (\USE{run time}) bepaald worden.
-    Wat dat betreft lijkt mijn \cppcode{Array} dus meer op een \cppcode{std::vector} die in \csecref{std::vector} is behandeld.
+    De grootte (Engels: \USE{size}) van een \cppcode{std::array} moet dus tijdens het compileren van het programma (\USE{compile time}) bekend zijn, maar de \USE{size} van een \cppcode{Array} kan tijdens het uitvoeren van het programma (\USE{run time}) bepaald worden.
+    Wat dat betreft, lijkt mijn \cppcode{Array} dus meer op een \cppcode{std::vector} die in \csecref{std::vector} is behandeld.
     Het verschil tussen een \cppcode{std::vector} en mijn \cppcode{Array} is dat een \cppcode{std::vector} nadat hij is aangemaakt nog kan groeien en krimpen.
     Mijn \cppcode{Array} kan dat niet.
 } waarbij:
@@ -8300,6 +8313,7 @@ In plaats daarvan kun je ook het template mechanisme gebruiken om een |Array| me
 Bij het gebruik van de class template |Array| kan de compiler niet zelf bepalen wat het type |T| moet zijn.
 Vandaar dat je dit bij het gebruik van de class template |Array| zelf moet specificeren. 
 
+\needspace{2\baselineskip}		
 Bijvoorbeeld:
 \begin{cpplstfragment}
 //  ...
@@ -8348,7 +8362,7 @@ Er zijn grote verschillen tussen deze class template |Fixed_array| en de eerder 
     Telkens als je een |Fixed_array| met een andere |size| definieert, wordt er weer een nieuw type met bijbehorende machinecode voor alle memberfuncties gegenereerd%
     \footnote{%
         Dit is niet de waarheid. 
-        Een memberfunctie van een class template wordt niet gegenereerd als de template geïnstantieerd wordt maar pas als de compiler daadwerkelijk een aanroep naar de betreffende memberfunctie moet vertalen.
+        Een memberfunctie van een class template wordt niet gegenereerd als de template geïnstantieerd wordt, maar pas als de compiler daadwerkelijk een aanroep naar de betreffende memberfunctie moet vertalen.
         Dit is hier echter niet van belang.
     }.
     Bij de class template |Array| wordt maar één versie aangemaakt als de variabelen |Array<int> a(3)| en |Array<int> b(4)| gedefinieerd worden.
@@ -8842,7 +8856,7 @@ De implementatie van deze overloaded |operator()| is als volgt:
 \cpplstinputfragment[linerange={57-62}]{unordered_set2.cpp}
 
 De hashwaarde wordt bepaald door de hashwaarde van de twee datamembers van |Breuk|, |boven| en |onder|, met elkaar te exoren (met de operator |^|).
-Omdat de datamembers van |Breuk||private| zijn, moet deze |operator()| als |friend| in |Breuk| gedeclareerd worden:
+Omdat de datamembers van |Breuk| |private| zijn, moet deze |operator()| als |friend| in |Breuk| gedeclareerd worden:
 
 \cpplstinputfragment[linerange={25-25}]{unordered_set2.cpp}
 

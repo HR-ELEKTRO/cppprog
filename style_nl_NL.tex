@@ -11,7 +11,8 @@
 \IfFileExists{args.tex}{
     \input{args}
 }{
-    \ebooktrue
+    % 20223012 aangepast zodat A4 versie default is.
+    \ebookfalse
     \chartertrue
 }
 
@@ -58,9 +59,10 @@
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/geometry/geometry.pdf
 % iPad screen size 147mm x 197mm.
+% iPad 2019 screen size 156mm x 208mm.
 \iftoggle{ebook} {
     \usepackage[
-        papersize={150mm,200mm},
+        papersize={166.5mm,222mm}, %trail on error zodat er net zoveel tekst op een regel past als bij A4 versie
         top=14mm,
         head=10mm,
         headsep=5mm,
@@ -301,23 +303,23 @@
 	\arrayrulecolor{hrred}\hline
 	\rowcolor{hrred} 
 	\multicolumn{1}{c}{\textcolor{white}{\textbf{Datum}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Versie}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Omschrijving}}} & \multicolumn{1}{c}{\textcolor{white}{\textbf{Auteur}}}
-    \\ \hline
+	\\ \hline
 }
 \newcommand{\versiehistorie}[1]{
-    \section*{Versiehistorie}
+	\section*{Versiehistorie}
 	{\renewcommand{\arraystretch}{1.24}%
 	\vspace*{.1\baselineskip}%
 	\begin{xltabular}{\textwidth}{|cc>{\raggedright\arraybackslash}Xc|}
 		\versiehistorieheader
-        \endfirsthead
+		\endfirsthead
 		\multicolumn{4}{l}{\hspace*{-\tabcolsep}\sffamily\small\ Vervolg~van~de~vorige~pagina.}\\ \hline
 		\versiehistorieheader
-        \endhead
+		\endhead
 		\multicolumn{4}{r}{\sffamily\small Wordt~vervolgd~op~de~volgende~pagina.\hspace*{-\tabcolsep}}\\
-        \endfoot
-        \hline
-        \endlastfoot
-        #1
+		\endfoot
+		\hline
+		\endlastfoot
+		#1%
 	\end{xltabular}
 	\addtocounter{table}{-1}%
 	}\vspace{-.45\baselineskip}%
@@ -651,40 +653,40 @@
 \NewDocumentCommand \tabel {O{!htbp}mmmmm} 
 {
 	\IfSubStr{#4}{X}{\errmessage{Kolomspecificatie~X~wordt~niet~langer~ondersteund~door~het~commando~\noexpand\tabel~gebruik~\noexpand\tabelX}}{}%	
-    \begin{myTable}[#1]
+	\begin{myTable}[#1]
 		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
-        \centering%
-        \caption{#2}
-        \label{tab:#3}
+		\centering%
+		\caption{#2}
+		\label{tab:#3}
 		\hr_tabelkop:n{#5}
 		\begin{tabular}{|#4|}
 			\arrayrulecolor{hrred} \hline
 			\rowcolor{hrred}
 			\seq_use:Nn \l_tmpb_seq {&} \\
-            #6\\ \hline
+			#6 \\\hline
 		\end{tabular}%
-    \end{myTable}
+	\end{myTable}
 }
 
 % variant voor brede tabel
 % tabel wordt geschaald zodat hij past op tekstbreedte pagina
 \NewDocumentCommand \tabelmaxpaginabreedgeschaald {O{!htbp}mmmmm}
 { 
-    \begin{myTable}[#1]
+	\begin{myTable}[#1]
 		\IfSubStr{#1}{H}{\renewcommand{\arraystretch}{1.24}}{\renewcommand{\arraystretch}{1.36}}%
-        \centering%
-        \caption{#2}
-        \label{tab:#3}
+		\centering%
+		\caption{#2}
+		\label{tab:#3}
 		\hr_tabelkop:n{#5}
 		\begin{adjustbox}{max~width=\textwidth}%
 			\begin{tabular}{|#4|}
 				\arrayrulecolor{hrred} \hline
 				\rowcolor{hrred}
 				\seq_use:Nn \l_tmpb_seq {&} \\
-                #6\\ \hline
+				#6 \\\hline
 			\end{tabular}%
-        \end{adjustbox}%
-    \end{myTable}
+		\end{adjustbox}%
+	\end{myTable}
 }
 
 % variant voor lange tabel
@@ -768,27 +770,27 @@
 % #7 = aantal kolommen
 \NewDocumentCommand \langetabelX {O{\textwidth}mmmmmm} 
 {
-    {\centering%
+	{\centering%
 		\renewcommand{\arraystretch}{1.24}%
-    \vspace*{.1\baselineskip}%
+		\vspace*{.1\baselineskip}%
 		\hr_tabelkop:n{#5}
 		\begin{xltabular}{#1}{|#4|}
 			\caption{#2}\label{tab:#3} \\
 			\arrayrulecolor{hrred} \hline
-            \hline
+			\hline
 			\rowcolor{hrred}
 			\seq_use:Nn \l_tmpb_seq {&} \\\hline
-            \endfirsthead
+			\endfirsthead
 			\caption[]{(Vervolg)~#2} \\
-            \hline
+			\hline
 			\rowcolor{hrred}
 			\seq_use:Nn \l_tmpb_seq {&} \\\hline
-            \endhead
+			\endhead
 			\multicolumn{#7}{r}{\sffamily\small Deze~tabel~wordt~vervolgd~op~de~volgende~pagina.\hspace*{-\tabcolsep}}\\
-            \endfoot
-            \hline
-            \endlastfoot
-            #6 
+			\endfoot
+			\hline
+			\endlastfoot
+			#6
 		\end{xltabular}%
 	}\vspace{-.45\baselineskip}%
 }
@@ -1071,9 +1073,9 @@
     }{
 		\expandafter\ifstrequal\expandafter{\myClass}{article}{
 	        \fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}}
-	        \fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\rightmark}\rease@header{}}
+	        \fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\rightmark}\rease@header{}}        
 		}{
-			\fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}}
+        	\fancyhead[OR]{\headerfont\nouppercase{\rightmark}\hspace{1em}\module@code@box{}\rease@header{}}
         	\fancyhead[EL]{\headerfont\module@code@box{}\hspace{1em}\nouppercase{\leftmark}\rease@header{}}
 		}
         \fancyfoot[OR]{\headerfont{}Hogeschool Rotterdam\hspace{1em}\page@number@box{}}
@@ -1216,11 +1218,13 @@
 }{
     \hypersetup{
         colorlinks=true,
-		breaklinks=true,
-		linkcolor=black,
-        citecolor=black,
-		urlcolor=black,
-        filecolor=black,
+        breaklinks=true,
+        % 20221230 aangepast omdat steeds meer collega's en studenten print versie online gebruiken.
+        anchorcolor=blue, 
+        citecolor=blue,
+        filecolor=blue,
+        linkcolor=blue,
+        urlcolor=blue,
         %LET OP! Specifiek voor dit document vanwege \Cpp in \titel
         pdftitle={Objectgeoriënteerd Programmeren in C++},
         pdfauthor={Hogeschool Rotterdam},
@@ -1233,6 +1237,18 @@
 
 %http://ctan.triasinformatica.nl/systems/doc/pdftex/manual/pdftex-a.pdf#page=24
 \pdfsuppressptexinfo=1
+
+% url met mogelijkheid tot afbreken:
+\newcommand{\urlhyp}[1]{%
+	\StrSubstitute{#1}{\\-}{}[\nakedurl]%
+	\href{\nakedurl}{\hcode{#1}}%
+}
+
+% href met voetnoot met daarin de URL:
+\newcommand{\hreffn}[3][]{%
+	\StrSubstitute{#2}{\\-}{}[\nakedurl]%
+	\href[#1]{#2}{#3}\footnote{\href{\nakedurl}{\hcode{#2}}}%
+}
 
 % http://ctan.cs.uu.nl/macros/latex/contrib/cleveref/cleveref.pdf
 \usepackage[dutch, noabbrev, nameinlink]{cleveref}
