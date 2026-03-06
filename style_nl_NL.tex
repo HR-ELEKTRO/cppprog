@@ -82,7 +82,7 @@
         footskip=1.25cm,
         inner=2.2cm,
         outer=2.2cm,
-        bindingoffset=.6cm,
+        bindingoffset=\iftoggle{onesided}{0cm}{.6cm},
         twoside=\iftoggle{onesided}{false}{true}
     ]{geometry}
 }
@@ -181,7 +181,18 @@
 % xcolor is nodig om tabellen te kunnen kleuren
 \usepackage[table]{xcolor}
 % alle rood moet Rotterdam's rood zijn ;-)
-\definecolor{hrred}{HTML}{cc0033}
+% Nieuwe huisstijl 2024? https://onsmerk.hr.nl/modules/product/DigitalStyleGuide/default/index.aspx?ItemId=6744
+% De primaire kleur is rood.
+\definecolor{hrred}{HTML}{d3104c}
+% De secundaire hoofdkleuren zijn juist niet te fel, zodat uitingen kwalitatief zijn en het rood goed tot zijn recht komt zonder  overweldigend te worden.  De donkerrood is geschikt om ton-sur-ton te kunnen werken. 
+\definecolor{hrdarkblue}{HTML}{003340}
+\definecolor{hrcream}{HTML}{f7efe3}
+\definecolor{hrwhite}{HTML}{ffffff}
+\definecolor{hrdarkred}{HTML}{b41e4b}
+% Accentkleuren. Te gebruiken om aandacht te geven aan een knop, URL of in grafieken en illustraties. Niet gebruiken voor vlakken.
+\definecolor{hryellow}{HTML}{fcc200}
+\definecolor{hrgreen}{HTML}{3ab7b0}
+\definecolor{hrblue}{HTML}{00b0eb}
 
 % Zie: http://ctan.cs.uu.nl/graphics/pgf/base/doc/pgfmanual.pdf
 \usepackage{tikz}
@@ -1005,9 +1016,26 @@
 %https://tex.stackexchange.com/questions/96570/automatically-determine-which-texlive-version-is-being-used
 \makeatletter
 \begingroup
-\edef\get@@version{\def\noexpand\get@version##1\detokenize{TeX Live}##220##3##4##5)##6\noexpand\@nil}
-\get@@version{\gdef\TeXLiveVersion{20#3#4}}
-\expandafter\get@version\pdftexbanner\@nil
+\newif\ifmiktex
+\def\MiKTeX{MiKTeX}
+\@onelevel@sanitize\MiKTeX
+% Scans for 'MiKTeX' string with catcode 12 (other)
+\expandafter\def\expandafter\testmiktex\expandafter#\expandafter1\MiKTeX#2\relax{%
+    \ifx\empty#2\empty
+        \miktexfalse
+    \else
+        \miktextrue
+    \fi
+}
+\expandafter\expandafter
+\expandafter\testmiktex\expandafter\pdftexbanner\MiKTeX\relax\relax
+\ifmiktex
+    \gdef\TeXLiveVersion{0}
+\else
+    \edef\get@@version{\def\noexpand\get@version##1\detokenize{TeX Live}##220##3##4##5)##6\noexpand\@nil}
+    \get@@version{\gdef\TeXLiveVersion{20#3#4}}
+    \expandafter\get@version\pdftexbanner\@nil
+\fi
 \endgroup
 \makeatother
 
@@ -1130,7 +1158,7 @@
 \usepackage{siunitx}
 \sisetup{
     per-mode = symbol,
-    binary-units = true,
+% binary-units = true,
     range-units = single,
 % dutch localisation
     range-phrase = { tot en met },
@@ -1194,7 +1222,11 @@
 \makeatother
 
 %http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/microtype/microtype.pdf
+\iftoggle{opensans}{
+% Werkt niet goed met OpenSans
+}{
 \usepackage{microtype}
+}
 
 % http://archive.cs.uu.nl/mirror/CTAN/macros/latex/contrib/hyperref/doc/manual.pdf
 \usepackage{hyperref}
