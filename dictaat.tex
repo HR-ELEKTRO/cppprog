@@ -4274,21 +4274,21 @@ omgezet wordt in de postfix expressie:
 12 34 23 2 + * 2 * + =
 \end{coutput}
 
-\tabel{Voorbeeld van een conversie van in- naar postfix.}{VoorbeeldConversie}{>{\ttfamily}l>{\ttfamily}l>{\ttfamily}l}{
+\tabel{Voorbeeld van een conversie van in- naar postfix.}{VoorbeeldConversie}{lll}{
 	gelezen karakter(s) & \USE{stack} & uitvoer
 }{
-	12 &  & 12 \\
-	+ & + & 12 \\
-	34 & + & 12 34 \\
-	* & + * & 12 34 \\
-	( & + * ( & 12 34 \\
-	23 & + * ( & 12 34 23 \\
-	+ & + * ( + & 12 34 23 \\
-	2 & + * ( + & 12 34 23 2 \\
-	) & + * & 12 34 23 2 + \\
-	* & + * & 12 34 23 2 + * \\
-	2 & + * & 12 34 23 2 + * 2 \\
-	= &  & 12 34 23 2 + * 2 * +
+	\code{12} &  & \code{12} \\
+	\code{+} & \code{+} & \code{12} \\
+	\code{34} & \code{+} & \code{12 34} \\
+	\code{*} & \code{+ *} & \code{12 34} \\
+	\code{(} & \code{+ * (} & \code{12 34} \\
+	\code{23} & \code{+ * (} & \code{12 34 23} \\
+	\code{+} & \code{+ * ( +} & \code{12 34 23} \\
+	\code{2} & \code{+ * ( +} & \code{12 34 23 2} \\
+	\code{)} & \code{+ *} & \code{12 34 23 2 +} \\
+	\code{*} & \code{+ *} & \code{12 34 23 2 + *} \\
+	\code{2} & \code{+ *} & \code{12 34 23 2 + * 2} \\
+	\code{=} &  & \code{12 34 23 2 + * 2 * +}
 }
 
 \subsection*{Vraag:}
