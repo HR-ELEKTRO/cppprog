@@ -1,0 +1,52 @@
+% !TEX root = test.tex
+% LTeX: language = nl
+% !TeX spellcheck = nl_NL
+\newcommand{\myClass}{article}
+\newcommand{\cursuscode}{\Cpp}
+\newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
+\newcommand{\documenttype}{Test}
+\newcommand{\huidigeversie}{1.0}
+\newcommand{\auteurs}{
+	J.Z.M. Broeders
+}
+\include{style_nl_NL}
+
+\usepackage{needspace}
+
+\newcommand{\progs}{progs}
+\newcommand{\progsurl}{https://bitbucket.org/HR_ELEKTRO/cppprog/src/master/progs}
+\include{styleCode}
+
+% Commando \cpplstinputfragment leest code uit (een deel van) een bestand en plaatst dit in een codefragment.
+% #1 = (optional) extra key=value paren voor lstinputlisting b.v.
+%      style = linenumbers
+%      linerange={1-6, 13-27}
+% #2 = filenaam (moet in het directory ./progs staan)
+\newcommand{\cpplstinputfragment}[2][]{%
+	\lstinputfragment[%
+	style=cppstyle,%  
+	#1%
+	]{#2}%
+}
+
+% De code in de environments cpplstfragment wordt in een codefragment geplaatst.
+% #1 = (optional) extra key=value paren voor lstset
+\lstnewenvironment{cpplstfragment}[1][]{%
+	\lstset{
+		style=cppstyle,%  
+		aboveskip=.6\baselineskip,%
+		#1%
+	}%
+}{%
+}
+
+% gebruik voor opmaak van warnings en error meldingen van de C++ compiler
+\newcommand{\error}{\texttt}
+
+\begin{document}
+\begin{cpplstShortInline}
+
+Hier komt de testcode!
+
+\end{cpplstShortInline}
+\end{document}
