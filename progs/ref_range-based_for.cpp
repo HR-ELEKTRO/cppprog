@@ -1,4 +1,4 @@
-#include <iostream>
+import std;
 using namespace std;
 
 int main() {
@@ -7,7 +7,7 @@ int main() {
     for (auto element: rij) {
         som += element;
     }
-    cout << "som = " << som << '\n';
+    println("som = {}", som);
 
     for (auto& element: rij) {
         element = 0;
@@ -17,5 +17,5 @@ int main() {
     for (auto element: rij) {
         som += element;
     }
-    cout << "som = " << som << '\n';
+    println("som = {}", som);
 }

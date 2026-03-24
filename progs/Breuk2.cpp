@@ -1,7 +1,6 @@
 // Werken met breuken in C++ ... operator overloading
 
-#include <iostream>
-#include <numeric>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -59,11 +58,11 @@ void Breuk::normaliseer() {
 
 int main() {
     Breuk b1 {14, 4};
-    cout << "b1 {14, 4} = " << b1.teller() << '/' << b1.noemer() << '\n';
+    println("b1 {{14, 4}} = {}/{}", b1.teller(), b1.noemer());
     Breuk b2 {23, -5};
-    cout << "b2 {23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
+    println("b2 {{23, -5}} = {}/{}", b2.teller(), b2.noemer());
     b1 += b2;
-    cout << "b1 += b2 = " << b1.teller() << '/' << b1.noemer() << '\n';
+    println("b1 += b2 = {}/{}", b1.teller(), b1.noemer());
 
 //  "Rijgen" van de operator += is nu niet mogelijk
 //  b1 += b1 += b2;

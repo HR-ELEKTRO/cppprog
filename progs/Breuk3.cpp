@@ -1,7 +1,6 @@
 // Werken met breuken in C++ ... zoals met ints!! een echt UDT
 
-#include <iostream>
-#include <numeric>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -27,7 +26,6 @@ friend bool operator==(const Breuk& links, const Breuk& rechts);
 };
 
 istream& operator>>(istream& in, Breuk& b);
-bool operator!=(const Breuk& links, const Breuk& rechts);
 const Breuk operator+(const Breuk& links, const Breuk& rechts);
 // ...
 // Er zijn nog veel uitbreidingen mogelijk
@@ -110,37 +108,40 @@ istream& operator>>(istream& in, Breuk& b) {
     return in;
 }
 
+template<>
+struct std::formatter<Breuk>: public formatter<string> {
+    auto format(const Breuk& breuk, format_context& context) const {
+        ostringstream ss;
+        ss << breuk;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
 bool operator==(const Breuk& links, const Breuk& rechts) {
     return links.boven == rechts.boven && links.onder == rechts.onder;
-}
-
-bool operator!=(const Breuk& links, const Breuk& rechts) {
-    return !(links == rechts);
 }
 
 // Hoofdprogramma:
 
 int main() {
     Breuk b1, b2;              // definiëren van variabelen
-    cout << "Geef Breuk (a/b): ";
+    print("Geef Breuk (a/b): ");
     cin >> b1;                 // inlezen met >>
-    cout << "Geef nog een Breuk (c/d): ";
+    print("Geef nog een Breuk (c/d): ");
     cin >> b2;                 // inlezen met >>
-    cout << b1 << " + " 
-         << b2 << " = "        // afdrukken met <<
-         << (b1 + b2) << '\n'; // optellen met +
+    println("{} + {} = {}", b1, b2, b1 + b2); // afdrukken met println en optellen met +
     Breuk b3{18, -12};         // definiëren en initialiseren
     if (b1 != b3) {            // vergelijken met !=
         ++b3;                  // verhogen met ++
     }
-    cout << b3 << '\n';        // afdrukken met <<
+    println("{}", b3);         // afdrukken met println
     b3 += {-5, 2};             // verhogen met +=
-    cout << b3 << '\n';        // afdrukken met <<
+    println("{}", b3);         // afdrukken met println
     if (-3 == b3) {            // vergelijken met een int met ==
-        cout << "Ok.\n";
+        println("Ok.");
     } 
     else {
-        cout << "Error.\n";
+        println("Error.");
     }
 }
 

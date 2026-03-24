@@ -1,4 +1,4 @@
-// Werken met breuken in C++ ... constructor, const memberfuncties
+// Werken met breuken in C++ ... constructor, const memberfuncties pre C++17
 
 #include <iostream>
 #include <cstdlib>

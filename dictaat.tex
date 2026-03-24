@@ -31,9 +31,9 @@
 \newcommand{\opleiding}{Elektrotechniek}
 
 % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/l3packages/xfrac.pdf
-% met xfrac kun je breuken in de tekst opnemen zoals 3/4 
-% PLEASE NOTE the package l3packages moet geupate worden voor TexLive 2018 om dit te laten werken!
+% met xfrac kun je breuken in de tekst opnemen zoals 3/4 met het commando \sfrac{3}{4}
 \usepackage{xfrac}
+\newcommand{\myfrac}[2]{\raisebox{0.35ex}{\sfrac{#1}{#2}}}
 
 %http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/needspace/needspace.pdf
 \usepackage{needspace}
@@ -204,8 +204,8 @@ Dit dictaat is lang geleden begonnen als een korte introductie in \Cpp{} en inmi
 }} aan.
 
 In dit dictaat is zoveel mogelijk gebruik gemaakt van de \Cpp{}23 standaard.
-Zo wordt bijvoorbeeld gebruik gemaakt van |print| in plaats van |cout|, van modules in plaats van include files, van concepts en van ranges.
-Veel code die je op het internet vind is geschreven in oudere versies van \Cpp{}.
+Zo wordt bijvoorbeeld gebruik gemaakt van \code{print} in plaats van \code{cout}, van modules in plaats van include files, van concepts en van ranges.
+Veel code die je op het internet vindt, is geschreven in oudere versies van \Cpp{}.
 Taalconstructies die veelvuldig in oudere versies van \Cpp{} gebruikt werden, worden in dit dictaat kort besproken en er wordt uitgelegd waarom ze vervangen zijn door modernere alternatieven.
 
 Alle programmacode in dit dictaat is getest met GCC%
@@ -1002,9 +1002,9 @@ Als we de verbeteringen die in C zijn doorgevoerd bij de definitie van \Cpp{} to
 \subsection*{Verklaring van de verschillen:}
 \begin{itemize}
     \item
-    Hier is gebruik gemaakt van de standaard \USE{library} van \Cpp{}, zie \cref{sec::print, sec:iostream} in plaats van de standaard C \USE{library}.
-	In de eerste regel wordt de module |std| geïmporteerd.
-	Dit is nodig om gebruik te kunnen maken van functies, objecten en types die in de standaard \Cpp{} I/O \USE{library} zijn opgenomen.
+    Hier is gebruik gemaakt van de standaard \USE{library} van \Cpp{}, zie \cref{sec:print,sec:iostream} in plaats van de standaard C \USE{library}.
+	In de eerste regel wordt de module |std| geïmporteerd, \cref{sec:module}.
+	Dit is nodig om gebruik te kunnen maken van functies, objecten en types die in de standaard \Cpp{} \USE{library} zijn opgenomen.
 	In dit programma maak ik gebruik van |print| en |println| (om te schrijven naar het scherm) en |cin| (om te lezen vanaf het toetsenbord).
 	\item
 	In de derde regel wordt aangegeven dat de \USE{namespace} |std| wordt gebuikt, zie \cref{sec:modules}.
@@ -1144,7 +1144,7 @@ Microsoft heeft voor dit doel de .NET-architectuur ontwikkeld.
 De objectgeoriënteerde benadering is vooral bedoeld om het ontwikkelen van herbruikbare softwarecomponenten mogelijk te maken.
 In dit dictaat maak je kennis met deze objectgeoriënteerde benadering.
 Wij hebben daarbij gekozen voor de taal \Cpp{} omdat dit de meest gebruikte objectgeoriënteerde programmeertaal is voor embedded systems\footnote{%
-    Bron: \href{https://www.embedded.com/wp-content/uploads/2019/11/EETimes_Embedded_2019_Embedded_Markets_Study.pdf\#page=32}{AspenCore 2019 Embedded Market Study}.
+    Bron: \href{https://bitbucket.org/HR_ELEKTRO/ems31/wiki/Documenten/Aspencore_2025_Embedded_Markets_Study.pdf\#page=9}{AspenCore 2025 Embedded Market Study}.
 }.
 Het is echter niet zo dat je na het bestuderen van dit dictaat op de hoogte bent van alle aspecten en details van \Cpp{}.
 Wel begrijp je na het bestuderen van dit dictaat de algemene ideeën achter OOP en kun je die toepassen in \Cpp{}.
@@ -1281,9 +1281,9 @@ De programmeertaal C biedt geen directe ondersteuning om UDT's te definiëren\fo
 Als je in C een programma wilt schrijven waarbij je met breuken in plaats van met \USE{floating-point} getallen wilt werken%
 \footnote{%
     Een belangrijke reden om te werken met breuken in plaats van \USE{floating-point} getallen is het voorkomen van afrondingsproblemen. 
-    Een breuk zoals \sfrac{1}{3} moet als \USE{floating-point} getal afgerond worden tot bijvoorbeeld: 0.333333333. 
-    Deze afronding kan ervoor zorgen dat een berekening zoals 3 $\times$ \sfrac{1}{3} niet zoals verwacht de waarde 1, maar de waarde 0.999999999 oplevert. 
-    Ook breuken zoals \sfrac{1}{10} moeten afgerond worden  als ze als binair \USE{floating-point} getal worden weergegeven.
+    Een breuk zoals \myfrac{1}{3} moet als \USE{floating-point} getal afgerond worden tot bijvoorbeeld: 0.333333333. 
+    Deze afronding kan ervoor zorgen dat een berekening zoals 3 $\times$ \myfrac{1}{3} niet zoals verwacht de waarde 1, maar de waarde 0.999999999 oplevert. 
+    Ook breuken zoals \myfrac{1}{10} moeten afgerond worden  als ze als binair \USE{floating-point} getal worden weergegeven.
 }, dan kun je dit (niet in C opgenomen) type |Breuk| op de volgende manier zelf definiëren (\proglink{Breukc.c}):
 \cpplstinputfragment[language=C,linerange=5-8]{Breukc.c}
 
@@ -1291,7 +1291,7 @@ Als je in C een programma wilt schrijven waarbij je met breuken in plaats van me
 Een C functie om twee breuken op te tellen kan dan als volgt gedefinieerd worden:
 \cpplstinputfragment[language=C,linerange=33-38]{Breukc.c}
 
-Het normaliseren\footnote{Het algoritme voor het normaliseren van een breuk wordt verderop in dit dictaat besproken.} van de breuk zorgt ervoor dat \sfrac{3}{8} $+$ \sfrac{1}{8} als resultaat \sfrac{1}{2} in plaats van \sfrac{4}{8} heeft.
+Het normaliseren\footnote{Het algoritme voor het normaliseren van een breuk wordt verderop in dit dictaat besproken.} van de breuk zorgt ervoor dat \myfrac{3}{8} $+$ \myfrac{1}{8} als resultaat \myfrac{1}{2} in plaats van \myfrac{4}{8} heeft.
 Dit zorgt ervoor dat een overflow minder snel optreedt als met het resultaat weer verder wordt gerekend.
 
 \needspace{2\baselineskip}
@@ -1376,10 +1376,10 @@ De \label{Breuk::plus}memberfunctie |plus| kan als volgt gedefinieerd worden%
 \footnote{%
     De definitie van de memberfuncties \cppcode{leesin}, \cppcode{drukaf} en \cppcode{normaliseer} zijn te vinden in \proglink{Breuk0.cpp}.
 }:
-\cpplstinputfragment[linerange=30-34]{Breuk0.cpp}
+\cpplstinputfragment[linerange=29-33]{Breuk0.cpp}
 
 Je kunt objecten (variabelen) van de class (het zelfgedefinieerde type) |Breuk| nu als volgt gebruiken:
-\cpplstinputfragment[linerange=47-56]{Breuk0.cpp}
+\cpplstinputfragment[linerange=46-55]{Breuk0.cpp}
 
 Een object heeft drie kenmerken:
 \begin{itemize}
@@ -1425,14 +1425,14 @@ Alleen de programmeur die verantwoordelijk is voor het onderhouden van de class 
 Bij het ontwikkelen van kleine programma's zijn deze voordelen niet zo belangrijk maar bij het ontwikkelen van grote programma's zijn deze voordelen wel erg belangrijk.
 Door gebruik te maken van de |class| |Breuk| met bijbehorende memberfuncties in \Cpp{} in plaats van de |typedef struct| |Breuk| met de bijbehorende functies in C wordt het programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
 
-De hierboven gedefinieerde class |Breuk| is erg beperkt. In de inleiding van dit hoofdstuk heb ik geschreven: \dquote{Een UDT is een user-defined type dat voor een gebruiker niet te onderscheiden is van ingebouwde types (zoals \cppcode{int})}.%
-%\needspace{2\baselineskip}
+De hierboven gedefinieerde class |Breuk| is erg beperkt. In de inleiding van dit hoofdstuk heb ik geschreven: \dquote{Een UDT is een user-defined type dat voor een gebruiker niet te onderscheiden is van ingebouwde types (zoals \cppcode{int})}.
+\needspace{2\baselineskip}
 Een UDT |Breuk| moet dus uiteindelijk als volgt gebruikt kunnen worden:
-%Waarom deze splitsing?
+%Waarom deze splitsing? Misschien omdat regels in Breuk3 breder zijn?
 \iftoggle{ebook}{
 \cpplstinputfragment[linerange={Breuk3_main-Breuk3_main,Breuk3_main2-Breuk3_main2}]{fragments.cpp}
 }{
-\cpplstinputfragment[linerange=124-145]{Breuk3.cpp}
+\cpplstinputfragment[linerange=126-146]{Breuk3.cpp}
 }
 
 Je ziet dat het zelfgedefinieerde type |Breuk| uiteindelijk op precies dezelfde wijze als het ingebouwde type |int| te gebruiken is.
@@ -1460,8 +1460,7 @@ Ik presenteer nu eerst de complete broncode van het programma \proglink{Breuk1.c
 Meteen daarna ga ik, één voor één, in op de bovengenoemde punten.
 
 \begin{cpplstfragment}[mathescape=true]
-#include <iostream>
-#include <numeric>
+#import std;
 #include <cassert>
 using namespace std;
 
@@ -1553,23 +1552,28 @@ void Breuk::normaliseer() {
 
 int main() {$\label{breuk1::main}$
     Breuk b1 {4};
-    cout << "b1 {4} = " << b1.teller() << '/' << b1.noemer() << '\n';
+    println("b1 {{4}}$%
+        \footnotemark%
+        \makeatletter%
+        \global\let\saved@Href@D\Hy@footnote@currentHref%
+        \makeatother%
+        $ = {}/{}", b1.teller(), b1.noemer());
     Breuk b2 {23, -5};
-    cout << "b2 {23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
+    println("b2 {{23, -5}} = {}/{}", b2.teller(), b2.noemer());
     Breuk b3 {b2}; // kan dit zomaar? Zie $\texttt{\cref{sec:defaultcopyconstructor}}$.
-    cout << "b3 {b2} = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3 {{b2}} = {}/{}", b3.teller(), b3.noemer());
     b3.abs();
-    cout << "b3.abs() = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3.abs() = {}/{}", b3.teller(), b3.noemer());
     b3 = b2; // kan dit zomaar? Zie $\texttt{\cref{sec:defaultassignmentoperator}}$.
-    cout << "b3 = b2 = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3 = b2 = {}/{}", b3.teller(), b3.noemer());
     b3.plus(5);
-    cout << "b3.plus(5) = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3.plus(5) = {}/{}", b3.teller(), b3.noemer());
 }
 \end{cpplstfragment}
 
-\addtocounter{footnote}{-1}
+\addtocounter{footnote}{-2}
 \makeatletter\let\Hy@footnote@currentHref\saved@Href@C\makeatother 
-\addtocounter{BackrefHyperFootnoteCounter}{-1}
+\addtocounter{BackrefHyperFootnoteCounter}{-2}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
     Het is beter om hier een \cppcode{const} \USE{reference} parameter te gebruiken. Dit wordt pas behandeld in \cref{sec:constreferenceparameter}.
@@ -1579,9 +1583,17 @@ int main() {$\label{breuk1::main}$
 \stepcounter{BackrefHyperFootnoteCounter}
 \xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
 \footnotetext{%
-    \label{assert}De standaard functie \cppcode{assert} doet niets als de, als argument meegegeven, expressie \cppcode{true} oplevert maar breekt het programma met een passende foutmelding af als dit niet zo is.
+    \label{assert}De standaard macro \cppcode{assert} doet niets als de, als argument meegegeven, expressie \cppcode{true} oplevert maar breekt het programma met een passende foutmelding af als dit niet zo is.
     Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan bepaalde voorwaarden (waarvan je \squote{zeker} weet dat ze geldig zijn) wordt voldaan.
+	De header \code{cassert} moet geïnclude worden om deze macro te kunnen gebruiken.
     Zie \cref{sec:assert}.
+}
+\stepcounter{footnote}
+\makeatletter\let\Hy@footnote@currentHref\saved@Href@D\makeatother
+\stepcounter{BackrefHyperFootnoteCounter}
+\xdef\BackrefFootnoteTag{bhfn:\theBackrefHyperFootnoteCounter}
+\footnotetext{%
+	In de format string van een \code{print} of \code{println} functie kun je \code{\"\{\{\"} of \code{\"\}\}\"} gebruiken om respectievelijk een \code{\"\{\"} of \code{\"\}\"} af te drukken.
 }
 
 \needspace{2\baselineskip}
@@ -1601,37 +1613,37 @@ De \label{constructor}\USE{constructors} definiëren hoe een object gemaakt kan 
 De \USE{constructors} hebben dezelfde naam als de class.%
 \needspace{2\baselineskip}
 Voor de class |Breuk| heb ik de volgende drie \USE{constructors} gedeclareerd:
-\cpplstinputfragment[linerange=16-18]{Breuk1.cpp}
+\cpplstinputfragment[linerange=15-17]{Breuk1.cpp}
 
 Als een |Breuk| bij het aanmaken niet geïnitialiseerd wordt, dan wordt de \USE{constructor} zonder parameters aangeroepen. 
 In de definitie van deze \USE{constructor} worden dan de datavelden |boven| met |0| en |onder| met |1| geïnitialiseerd. 
 Dit gebeurt in een zogenoemde \label{initialization list}\emph{\USE{initialization list}}. 
 Na het prototype van de \USE{constructor} volgt een |:| waarna de datavelden één voor één geïnitialiseerd worden door middel van een universele initialisatie, zie \cref{sec:universeleinitialisatie}.
-\cpplstinputfragment[linerange=39-40]{Breuk1.cpp}
+\cpplstinputfragment[linerange=38-39]{Breuk1.cpp}
 
-In dit geval wordt het dataveld |boven| geïnitialiseerd met de waarde |0| en wordt het dataveld |onder| geïnitialiseerd met de waarde |1|, verder is er geen code in de \USE{constructor} opgenomen. 
+In dit geval wordt het dataveld |boven| geïnitialiseerd met de waarde |0| en wordt het dataveld |onder| geïnitialiseerd met de waarde |1|, verder is er geen code in de \USE{constructor} opgenomen.
 Door in de \USE{constructor} een output opdracht op te nemen zou je een melding op het scherm kunnen geven telkens als een |Breuk|
-aangemaakt wordt. 
-Deze \USE{constructor} wordt dus aangeroepen als je een |Breuk| aanmaakt zonder deze te initialiseren. 
-Na het uitvoeren van de onderstaande code heeft de breuk |b1| de waarde \sfrac{0}{1}.
+aangemaakt wordt.
+Deze \USE{constructor} wordt dus aangeroepen als je een |Breuk| aanmaakt zonder deze te initialiseren.
+Na het uitvoeren van de onderstaande code heeft de breuk |b1| de waarde \myfrac{0}{1}.
 \begin{cpplstfragment}
     Breuk b1; // roep constructor zonder parameters aan
 \end{cpplstfragment}
 
 De overige \USE{constructors} worden gebruikt als je een |Breuk| bij het aanmaken met één of met twee integers initialiseert.
-Na afloop van de onderstaande code bevat het object |b2| de waarde \sfrac{1}{2} (\sfrac{3}{6} wordt namelijk in de \USE{constructor} genormaliseerd tot \sfrac{1}{2}). 
+Na afloop van de onderstaande code bevat het object |b2| de waarde \myfrac{1}{2} (\myfrac{3}{6} wordt namelijk in de \USE{constructor} genormaliseerd tot \myfrac{1}{2}). 
 \begin{cpplstfragment}
     Breuk b2 {3, 6}; // roep constructor met twee int parameters aan
 \end{cpplstfragment}
 
 \needspace{2\baselineskip}
 Deze \USE{constructor} |Breuk(int t, int n);| is als volgt gedefinieerd:
-\cpplstinputfragment[linerange=45-47]{Breuk1.cpp}
+\cpplstinputfragment[linerange=44-46]{Breuk1.cpp}
 
 Het is ook mogelijk om vanuit een \USE{constructor} een andere \USE{constructor} van dezelfde class aan te roepen in de \USE{initialization list}. 
 De \USE{constructor} zonder parameters kan dus ook als volgt worden geïmplementeerd
 (\proglink{Breuk1_\\-con\\-struc\\-tor_\\-calls_\\-con\\-struc\\-tor.cpp}):
-\cpplstinputfragment[linerange=23-24]{Breuk1_constructor_calls_constructor.cpp}
+\cpplstinputfragment[linerange=22-23]{Breuk1_constructor_calls_constructor.cpp}
 
 Door het definiëren van \USE{constructors} kun je er dus voor zorgen dat elk object bij het aanmaken geïnitialiseerd wordt. 
 Fouten die voortkomen uit het gebruik van een niet geïnitialiseerde variabele worden hiermee voorkomen. 
@@ -1655,7 +1667,7 @@ De eerste methode heeft de voorkeur, omdat dit altijd werkt. Een constante datav
 
 \needspace{2\baselineskip}
 Dus gebruik:
-\cpplstinputfragment[linerange=39-40]{Breuk1.cpp}
+\cpplstinputfragment[linerange=38-39]{Breuk1.cpp}
 in plaats van:
 \begin{cpplstfragment}[mathescape=true]
 Breuk::Breuk() {
@@ -1668,9 +1680,9 @@ Breuk::Breuk() {
 \section{Constructors en type conversies}
 \label{sec:conversieconstructor}
 In het bovenstaande programma wordt, aan het einde van de functie |main|, de memberfunctie |plus| als volgt aangeroepen:
-\cpplstinputfragment[linerange=92-92]{Breuk1.cpp}
+\cpplstinputfragment[linerange=91-91]{Breuk1.cpp}
 
-Uit de uitvoer blijkt dat dit \squote{gewoon} werkt: |b3| wordt verhoogd met \sfrac{5}{1}. 
+Uit de uitvoer blijkt dat dit \squote{gewoon} werkt: |b3| wordt verhoogd met \myfrac{5}{1}. 
 Op zich is dit vreemd want de memberfunctie |plus| is gedefinieerd met een |Breuk| als parameter en niet met een |int| als parameter.
 Als je de memberfunctie |plus| aanroept op een |Breuk| met een |int| als argument, gebeurt het volgende: eerst \squote{kijkt} de compiler of in de class |Breuk| de memberfunctie |plus(int)| gedefinieerd is. 
 Als dit het geval is, wordt deze memberfunctie aangeroepen. 
@@ -1733,7 +1745,7 @@ private:
 
 De \USE{default copy constructor} van de class |Rechthoek| kopieert nu de private variabelen |lengte| en |breedte|, die ieder voor zich weer uit private variabelen |boven| en |onder| bestaan, die ook automatisch gekopieerd worden.
 
-Als er in de class |Rechthoek| geen enkele \USE{constructor} gedefinieerd is dan wordt door de compiler een \USE{default constructor} gedefinieerd, zie \cpageref{defaultconstructor}. Deze \USE{default constructor} roept de \USE{default constructor} van de class |Breuk| aan om de private variabelen |lengte| en |breedte| te initialiseren. Als we dus een object van de class |Rechthoek| aanmaken dan zorgt de \USE{default constructor} ervoor dat beide private variabelen de waarde \sfrac{0}{1} krijgen.
+Als er in de class |Rechthoek| geen enkele \USE{constructor} gedefinieerd is dan wordt door de compiler een \USE{default constructor} gedefinieerd, zie \cpageref{defaultconstructor}. Deze \USE{default constructor} roept de \USE{default constructor} van de class |Breuk| aan om de private variabelen |lengte| en |breedte| te initialiseren. Als we dus een object van de class |Rechthoek| aanmaken dan zorgt de \USE{default constructor} ervoor dat beide private variabelen de waarde \myfrac{0}{1} krijgen.
 
 \section{Default assignment operator}
 \label{sec:defaultassignmentoperator}
@@ -1790,11 +1802,11 @@ Daarom mag je een memberfunctie alleen aanroepen voor een |const| object als je 
 Dit doe je door het \USE{keyword} |const| achter de memberfunctie te plaatsten. 
 \needspace{2\baselineskip}
 Bijvoorbeeld:
-\cpplstinputfragment[linerange=19-19]{Breuk1.cpp}
+\cpplstinputfragment[linerange=18-18]{Breuk1.cpp}
 
-\needspace{2\baselineskip}
+\needspace{3\baselineskip}
 Met deze |const| memberfunctie kun je de |teller| van een |Breuk| opvragen. De implementatie is erg eenvoudig:
-\cpplstinputfragment[linerange=49-51]{Breuk1.cpp}
+\cpplstinputfragment[linerange=48-50]{Breuk1.cpp}
 
 Je kunt de memberfunctie |teller| nu dus ook aanroepen voor \USE{read-only} breuken:
 \begin{cpplstfragment}
@@ -1836,9 +1848,9 @@ We kunnen nu de memberfuncties van een class in twee groepen opdelen:
 \section{Class invariant}
 In de memberfuncties van de class |Breuk| wordt ervoor gezorgd dat elk object van de class |Breuk| een noemer $>0$ heeft en de grootste gemene deler van de teller en noemer 1 is\footnote{%
 	Dit wordt gedaan door de teller en noemer te delen door de grootste gemene deler van teller en noemer.
-	Deze waarde wordt berekend met behulp van de standaardfunctie \cppcode{gcd} die gedeclareerd is in de header file \cppcode{<numeric>}.
-	Deze functie is pas beschikbaar sinds \Cpp{}17.
-	Als je nog gebruik maakt van \Cpp{}14, dan moet je de functie \cppcode{gcd} zelf definiëren, zie \proglink{Breuk1_met_eigen_gcd.cpp}.
+	Deze waarde wordt berekend met behulp van de standaardfunctie \code{gcd}.
+	Deze functie is beschikbaar sinds \Cpp{}17.
+	Als je nog gebruik maakt van een oudere versie van \Cpp{}, dan moet je de functie \cppcode{gcd} zelf definiëren, zie \proglink{Breuk1_met_eigen_gcd.cpp}.
 }.
 Door de noemer altijd $>0$ te maken kan het teken van de |Breuk| eenvoudig bepaald worden (= teken van teller). 
 Door de |Breuk| altijd te normaliseren wordt onnodige overflow van de datavelden |boven| en |onder| voorkomen. 
@@ -1889,11 +1901,11 @@ void Breuk::operator+=(Breuk right) {
 
 int main() {
     Breuk b1 {14, 4};
-	cout << "b1 {14, 4} = " << b1.teller() << '/' << b1.noemer() << '\n';
-	Breuk b2 {23, -5};
-	cout << "b2 {23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
-	b1 += b2;
-	cout << "b1 += b2 = " << b1.teller() << '/' << b1.noemer() << '\n';
+    println("b1 {{14, 4}} = {}/{}", b1.teller(), b1.noemer());
+    Breuk b2 {23, -5};
+    println("b2 {{23, -5}} = {}/{}", b2.teller(), b2.noemer());
+    b1 += b2;
+    println("b1 += b2 = {}/{}", b1.teller(), b1.noemer());
 }
 \end{cpplstfragment}
 
@@ -1911,7 +1923,7 @@ b1 += b2 = -11/10
 
 \section{Operator overloading}
 In de taal \Cpp{} kun je de betekenis van operatoren (zoals bijvoorbeeld |+=|) definiëren voor zelfgedefinieerde types. Als het statement:
-\cpplstinputfragment[linerange=65-65]{Breuk2.cpp}
+\cpplstinputfragment[linerange=64-64]{Breuk2.cpp}
 vertaald moet worden, waarbij |b1| en |b2| objecten zijn van de class |Breuk|, \squote{kijkt} de compiler of in de class |Breuk| de |operator+=| memberfunctie gedefinieerd is. 
 Als dit niet het geval is, levert het bovenstaande statement de volgende foutmelding op:
 \begin{cpplstfragment}[mathescape=true]
@@ -2023,7 +2035,8 @@ Een \USE{reference} lijkt een beetje op een pointer maar er zijn toch belangrijk
     \item Een pointer kan ook naar geen enkele variabele wijzen (de waarde is dan gelijk aan |nullptr|\footnote{%
     	In de programmeertaal C gebruikte je \cppcode{NULL} als waarde voor een pointer die nergens naar wees.
     	Deze constante is in een aantal \USE{include file} gedefinieerd, onder andere in \cppcode{<stdio.h>}.
-    	In \Cpp{} wordt de waarde \cppcode{nullptr} gebruikt, die in de taal zelf is gedefinieerd.
+    	In \Cpp{} wordt de waarde \cppcode{nullptr} gebruikt, die in de taal zelf is gedefinieerd
+		In de C23 standaard is de waarde \cppcode{nullptr} ook gedefinieerd.
 	}) maar een \USE{reference} verwijst altijd naar een variabele.
 \end{itemize}
 
@@ -2044,14 +2057,14 @@ Het is dus geen probleem als de actuele parameter een constante is.
 \begin{cpplstfragment}
 void sla_regels_over(int aantal) {
     while (aantal > 0) {
-        cout << '\n';
+        println();
         --aantal;
     }
 }
 //  ...
     int n {7};
     sla_regels_over(n); // waarde van n wordt gekopieerd naar aantal
-    cout << "n = " << n << '\n'; // uitvoer: n = 7
+    println("n = {}", n); // uitvoer: n = 7
     sla_regels_over(3); // waarde 3 wordt gekopieerd naar aantal
 \end{cpplstfragment}
 
@@ -2068,7 +2081,7 @@ void swap_ints(int* p, int* q) {
     swap_ints(&i, &j);
 \end{lstfragment}
 
-In \Cpp{} kun je als alternatief ook een \USE{reference} als formele parameter gebruiken. 
+In \Cpp{} kun je als alternatief ook een \USE{reference} als formele parameter gebruiken. 		
 Dit maakt het mogelijk om het bij aanroep meegegeven argument (de actuele parameter) vanuit de functie aan te passen. 
 De formele parameter is dan namelijk een pseudoniem (andere naam) voor het aan de functie meegegeven argument.
 \label{code:swap_ints}
@@ -2173,39 +2186,20 @@ De \USE{reference} |element| is nu één voor één een alias voor een element u
 \label{refreturn}
 Als een functie een waarde teruggeeft door middel van een |return| statement, dan wordt de waarde van de expressie achter het |return| statement, als het ware, ingevuld op de plaats waar de functie aangeroepen is.
 Door nu een \USE{reference} als return type te gebruiken kun je een alias in plaats van een waarde teruggeven. Deze alias kun je dan gebruiken om een waarde aan toe te kennen. Zie voorbeeldprogramma \proglink{ref_ret.cpp}: 
-\cpplstinputfragment[linerange={6-9,32-34,36-36,38-38}]{ref_ret.cpp}
+\cpplstinputfragment[linerange={6-9,33-35,37-37,39-39}]{ref_ret.cpp}
 
-Pas op dat je geen \USE{reference} naar een lokale variabele teruggeeft. Na afloop van een functie worden de lokale variabelen uit het geheugen verwijderd. 
-De referentie verwijst dan naar een niet meer bestaande variabele.
+Als je probeert om een \USE{reference} naar een lokale variabele terug te geven, 
+geeft de compiler de volgende foutmelding: \cppcode{error: cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'}.
+De compiler geeft deze foutmelding omdat een lokale variabele alleen binnen de functie bestaat. 
+Je kunt dus geen \USE{reference} teruggeven naar een lokale variabele omdat deze variabele na afloop van de functie niet meer bestaat.
+De referentie zou dan verwijzen naar een niet meer bestaande variabele.
+Dit wordt een \emph{\USE{dangling reference}} genoemd.
 \begin{cpplstfragment}[mathescape=true]
 int& som(int i1, int i2) {
     int s {i1 + i2};
-    return s; // $\color{hrred}\textbf{Een gemene fout!}$
+    return s; // $\color{hrred}\textbf{Error!}$
 }
-//  ...
-    c = som(a, b);
 \end{cpplstfragment}
-
-Deze fout (het zogenoemde \label{dangling reference}\emph{\USE{dangling reference problem}}) is erg gemeen omdat de lokale variabele |s| natuurlijk niet echt uit het geheugen verwijderd wordt. 
-De geheugenplaats wordt alleen vrijgegeven voor hergebruik. 
-Dit heeft tot gevolg dat de bovenstaande aanroep van |som| meestal gewoon werkt%
-\footnote{%
-    De GCC \Cpp{}\hyp{}compiler geeft de \USE{warning}: \error{reference to local variable 's' returned}.
-}.
-De fout in de definitie van de functie |som| komt pas aan het licht als we de functie bijvoorbeeld als volgt aanroepen:
-
-\begin{cpplstfragment}
-    int& s1 {som(1, 2)};
-    int& s2 {som(3, 4)};
-    cout << "1 + 2 = " << s1 << '\n';
-    cout << "3 + 4 = " << s2 << '\n';
-\end{cpplstfragment}
-
-De uitvoer van dit programma is\footnote{Het programma is gecompileerd met GCC versie 9.1.0.}:
-
-\begin{coutput}
-Segmentation fault (core dumped)
-\end{coutput}
 
 Hetzelfde gevaar is trouwens ook aanwezig als je een pointer (bijvoorbeeld |int*|) als return type kiest (het zogenoemde \emph{\USE{dangling pointer problem}}). 
 \begin{cpplstfragment}[mathescape=true]
@@ -2217,10 +2211,27 @@ int* som(int i1, int i2) {
     c = *som(a, b);
 \end{cpplstfragment}
 
-Je moet er dan voor oppassen dat de pointer niet naar een variabele wijst die na afloop van de functie niet meer bestaat%
+De compiler geeft in dit geval geen foutmelding, maar allen de waarschuwing \cppcode{warning: address of local variable 's' returned}.
+Deze fout (het zogenoemde \label{dangling reference}\emph{\USE{dangling pointer problem}}) is erg gemeen omdat de lokale variabele |s| natuurlijk niet echt uit het geheugen verwijderd wordt. 
+De geheugenplaats wordt alleen vrijgegeven voor hergebruik. 
+Dit heeft tot gevolg dat de bovenstaande aanroep van |som| meestal gewoon werkt%
 \footnote{%
-    De GCC \Cpp{}-geeft de \USE{warning}: \error{address of local variable 's' returned}.
+    De GCC \Cpp{}\hyp{}compiler geeft de \USE{warning}: \error{reference to local variable 's' returned}.
 }.
+De fout in de definitie van de functie |som| komt pas aan het licht als we de functie bijvoorbeeld als volgt aanroepen:
+
+\begin{cpplstfragment}
+    int* p1 {som2(1, 2)};
+    int* p2 {som2(3, 4)};
+    println("1 + 2 = {}", *p1);
+    println("3 + 4 = {}", *p2);
+\end{cpplstfragment}
+
+\needspace{2\baselineskip}
+De uitvoer van dit programma is:
+\begin{coutput}
+Segmentation fault
+\end{coutput}
 
 Een goede manier om de waarde van een lokale variabele terug te geven vanuit een functie is door een gewoon type (geen \USE{reference} en ook geen pointer) als return type te gebruiken.  
 \begin{cpplstfragment}[mathescape=true]
@@ -2243,7 +2254,7 @@ Dit is natuurlijk niet de bedoeling, het is de bedoeling dat |c| bij |a| wordt o
 Hiermee zorgen we er meteen voor dat de expressie \hbox{\cppcode{(a += b) += c}} gewoon goed (zoals bij integers) werkt. 
 De |operator+=| memberfunctie kan dan als volgt gedeclareerd worden:
 \label{operator+= correct}
-\cpplstinputfragment[linerange=48-53]{Breuk3.cpp}
+\cpplstinputfragment[linerange=46-51]{Breuk3.cpp}
 
 Behalve de operator |+=| kun je ook andere operatoren \USE{overloaden}. 
 Deze kennis heb je echter niet nodig om de rest van dit dictaat te begrijpen.

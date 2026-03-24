@@ -1,7 +1,6 @@
 // Werken met breuken in C++ ... constructor, const memberfuncties
 
-#include <iostream>
-#include <numeric>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -80,20 +79,20 @@ void Breuk::normaliseer() {
 
 int main() {
     Breuk b1 {4};
-    cout << "b1 {4} = " << b1.teller() << '/' << b1.noemer() << '\n';
+    println("b1 {{4}} = {}/{}", b1.teller(), b1.noemer());
     Breuk b2 {23, -5};
-    cout << "b2 {23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
+    println("b2 {{23, -5}} = {}/{}", b2.teller(), b2.noemer());
     Breuk b3 {b2};
-    cout << "b3 {b2} = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3 {{b2}} = {}/{}", b3.teller(), b3.noemer());
     b3.abs();
-    cout << "b3.abs() = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3.abs() = {}/{}", b3.teller(), b3.noemer());
     b3 = b2;
-    cout << "b3 = b2 = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3 = b2 = {}/{}", b3.teller(), b3.noemer());
     b3.plus(5);
-    cout << "b3.plus(5) = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3.plus(5) = {}/{}", b3.teller(), b3.noemer());
 
     const Breuk halve{1, 2};
-    cout << "halve = " << halve.teller() << '/' << halve.noemer() << '\n';
+    println("halve = {}/{}", halve.teller(), halve.noemer());
 
 //  halve = b3;
 //  Error: passing ‘const Breuk’ as ‘this’ argument discards qualifiers
@@ -102,7 +101,7 @@ int main() {
 //  Error: passing ‘const Breuk’ as ‘this’ argument discards qualifiers
 
     b3 = halve;
-    cout << "b3 = halve = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3 = halve = {}/{}", b3.teller(), b3.noemer());
 }
 
 /* Output:

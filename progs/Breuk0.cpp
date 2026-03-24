@@ -1,7 +1,6 @@
 // Werken met breuken in C++ ... een eerste stap naar een UDT
 
-#include <iostream>
-#include <numeric>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -17,14 +16,14 @@ private:                 // Een object van de class Breuk heeft privé:
 };
 
 void Breuk::leesin() {
-    cout << "Type een breuk (2 getallen gescheiden door een spatie): ";
+    print("Type een breuk (2 getallen gescheiden door een spatie): ");
     cin >> boven >> onder;
     assert(onder != 0);
     normaliseer();
 }
 
 void Breuk::drukaf() const {
-    cout << boven << "/" << onder;
+    print("{}/{}", boven, onder);
 }
 
 void Breuk::plus(Breuk b) {
@@ -48,10 +47,10 @@ int main() {
     a.leesin(); // lees a in
     b.leesin(); // lees b in
     a.drukaf();
-    cout << " + ";
+    print(" + ");
     b.drukaf();
-    cout << " = ";
+    print(" = ");
     a.plus(b);  // tel b bij a op
     a.drukaf(); // druk a af
-    cout << '\n';
+    println();
 }

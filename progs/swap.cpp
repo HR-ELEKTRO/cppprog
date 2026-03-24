@@ -1,5 +1,5 @@
 // Voorbeeld van het gebruik van reference parameters
-#include <iostream>
+import std;
 using namespace std;
 
 // swap_ints in C-style:
@@ -22,18 +22,18 @@ int main() {
     int i {3};
     int j {4};
 
-    cout << "i = " << i << '\n';
-    cout << "j = " << j << '\n';
+    println("i = {}", i);
+    println("j = {}", j);
 
     swap_ints_ptr(&i, &j);
 
-    cout << "i = " << i << '\n';
-    cout << "j = " << j << '\n';
+    println("i = {}", i);
+    println("j = {}", j);
 
    swap_ints_ref(i, j);
  
-    cout << "i = " << i << '\n';
-    cout << "j = " << j << '\n';
+    println("i = {}", i);
+    println("j = {}", j);
 
 //  swap_ints_ref(i, 5);
 //  Error: cannot bind non-const lvalue reference of type ‘int&’ to an rvalue of type ‘int’
