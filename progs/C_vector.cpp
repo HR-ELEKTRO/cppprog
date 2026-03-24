@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <iomanip>
+import std;
 using namespace std;
 
 struct Tijdsduur { // Een Tijdsduur bestaat uit:
@@ -11,10 +9,9 @@ struct Tijdsduur { // Een Tijdsduur bestaat uit:
 // Deze functie drukt een Tijdsduur af
 void drukaf(Tijdsduur td) {
     if (td.uur == 0)
-        cout<<"           ";
+        println("{:13} minuten", td.minuten);
     else
-        cout << setw(3) << td.uur << " uur en ";
-    cout << setw(2) << td.minuten << " minuten" << '\n';
+        println("{:3} uur en {:2} minuten", td.uur, td.minuten);
 }
 
 // Deze functie drukt een rij met Tijdsduren af
@@ -39,14 +36,14 @@ int main() {
     vector<Tijdsduur> tijdsduren;
     do {
         Tijdsduur t;
-        cout << "Type uren en minuten in: ";
+        print("Type uren en minuten in: ");
         cin >> t.uur >> t.minuten;
         if (cin)
             tijdsduren.push_back(t);
     }
     while (cin);
-    cout << '\n';
+    println();
     drukaf(tijdsduren);
-    cout << "De totale tijdsduur is:\n";
+    println("De totale tijdsduur is:");
     drukaf(som(tijdsduren));
 }

@@ -12,7 +12,7 @@ typedef struct { // Een Tijdsduur bestaat uit:
 // Deze functie drukt een Tijdsduur af
 void drukaf(Tijdsduur td) {
     if (td.uur == 0)
-        printf("           %2d minuten\n", td.minuten);
+        printf("%13d minuten\n", td.minuten);
     else
         printf("%3d uur en %2d minuten\n", td.uur, td.minuten);
 }

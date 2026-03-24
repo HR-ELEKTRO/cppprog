@@ -1,30 +1,30 @@
-#include <iostream>
+import std;
 #include <cassert>
 using namespace std;
 
 //>abs_not_overloaded
-int modules_int(int i) {
+int absolute_waarde_int(int i) {
     if (i < 0) return -i; else return i;
 }
-double modules_double(double f) {
+double absolute_waarde_double(double f) {
     if (f < 0) return -f; else return f;
 }
 //<abs_not_overloaded
 
 //>abs_overloaded
-int modules(int i) {
+int absolute_waarde(int i) {
     if (i < 0) return -i; else return i;
 }
-double modules(double f) {
+double absolute_waarde(double f) {
     if (f < 0) return -f; else return f;
 }
 //<abs_overloaded
 
 //>def_par
-void print(int i, int talstelsel = 10);
+void print_int(int i, int talstelsel = 10);
 //<def_par
 
-void print(int i, int talstelsel) {
+void print_int(int i, int talstelsel) {
 }
 
 //>struct_Tijdsduur
@@ -51,7 +51,6 @@ friend bool operator==(const Breuk& links, const Breuk& rechts);
 };
 
 istream& operator>>(istream& in, Breuk& b);
-bool operator!=(const Breuk& links, const Breuk& rechts);
 const Breuk operator+(const Breuk& links, const Breuk& rechts);
 
 int ggd(int n, int m) {
@@ -128,38 +127,41 @@ istream& operator>>(istream& in, Breuk& b) {
     return in;
 }
 
+template<>
+struct std::formatter<Breuk>: public formatter<string> {
+    auto format(const Breuk& breuk, format_context& context) const {
+        ostringstream ss;
+        ss << breuk;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
 bool operator==(const Breuk& links, const Breuk& rechts) {
     return links.boven == rechts.boven && links.onder == rechts.onder;
-}
-
-bool operator!=(const Breuk& links, const Breuk& rechts) {
-    return !(links == rechts);
 }
 
 //>Breuk3_main
 int main() {
     Breuk b1, b2;              // definiëren van variabelen
-    cout << "Geef Breuk: ";
+    print("Geef Breuk: ");
     cin >> b1;                 // inlezen met >>
-    cout << "Geef nog een Breuk: ";
+    print("Geef nog een Breuk: ");
     cin >> b2;                 // inlezen met >>
-    cout << b1 << "+"          // afdrukken met <<
-         << b2 << "="
-         << (b1 + b2) << '\n'; // optellen met +
+    println("{} + {} = {}", b1, b2, b1 + b2); // afdrukken met println en optellen met +
     Breuk b3 {18, -9};         // definiëren en initialiseren
     if (b1 != b3) {            // vergelijken met !=
         ++b3;                  // verhogen met ++
     }
-    cout << b3 << '\n';        // afdrukken met <<
+    println("{}", b3);         // afdrukken met println
     b3 += 5;                   // verhogen met +=
-    cout << b3 << '\n';        // afdrukken met <<
+    println("{}", b3);         // afdrukken met println
     if (-2 == b3) {            // vergelijken met een int
-        cout << "OK\n";
+        println("OK");
     } 
 //<Breuk3_main
 //>Breuk3_main2
     else {
-        cout << "Error.\n";
+        println("Error.");
     }
 }
 //<Breuk3_main2
@@ -188,16 +190,16 @@ void dummy() {
 //>use_abs_overloaded
     double d;
     cin >> d; // lees d in
-    cout << modules(d) << '\n'; // druk de absolute waarde van d af
+    println("{}", absolute_waarde(d)); // druk de absolute waarde van d af
 //<use_abs_overloaded
 }
 {
     
 //>use_def_par
-    print(12, 2);  // uitvoer: 1100
-    print(12);     // uitvoer: 12
-    print(12, 10); // uitvoer: 12
-    print(12, 7);  // uitvoer: 15
+    print_int(12, 2);  // uitvoer: 1100
+    print_int(12);     // uitvoer: 12
+    print_int(12, 10); // uitvoer: 12
+    print_int(12, 7);  // uitvoer: 15
 //<use_def_par
 }
 {
@@ -221,7 +223,7 @@ typedef struct Tijdsduur Tijdsduur_t;
 {
     int a, b = 1;
     a = ++++b;
-    std::cout << "a = " << '\n';
+    println("a = {}", a);
     // a = b++++;
     // Error: lvalue required as increment operand
 }    

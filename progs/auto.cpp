@@ -1,4 +1,4 @@
-#include <iostream>
+import std;
 using namespace std;
 
 int main() {
@@ -6,5 +6,5 @@ int main() {
 
     auto eerste {kampioensjaren_feyenoord[0]};
 
-    cout << "Feyenoord was voor het eerst landskampioen in: " << eerste;
+    println("Feyenoord was voor het eerst landskampioen in: {}", eerste);
 }
