@@ -1,6 +1,6 @@
 // Een dozijn integers
 
-#include <iostream>
+import std;
 using namespace std;
 
 class Dozijn {
@@ -31,9 +31,28 @@ ostream& operator<<(ostream& out, const Dozijn& d) {
     return out;
 }
 
+template<>
+struct std::formatter<Dozijn>: public formatter<string> {
+    auto format(const Dozijn& d, auto& context) const {
+        ostringstream ss;
+        ss << d;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
+template<>
+struct std::formatter<Dozijn>: public formatter<string> {
+    auto format(const Dozijn& d, auto& context) const {
+        context.advance_to(format_to(context.out(), "{}", d.lees_uit(0)));
+        for (int i {1}; i < 12; ++i)
+            context.advance_to(format_to(context.out(), ", {}", d.lees_uit(i)));
+        return context.out();
+    }
+};
+
 int main() {
     Dozijn kwadraten;
     for (int j {0}; j < 12; ++j)
         kwadraten.zet_in(j, j * j);
-    cout << "kwadraten = " << kwadraten << '\n';
+    println("kwadraten = {}", kwadraten);
 }

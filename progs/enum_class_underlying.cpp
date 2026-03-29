@@ -1,17 +1,18 @@
 import std;
 using namespace std;
 
-enum class Stoplicht {groen, oranje, rood};
+enum class Stoplicht: int8_t {groen, oranje, rood};
 
 ostream& operator<<(ostream& out, Stoplicht s) {
+    using enum Stoplicht;
     switch (s) {
-    case Stoplicht::groen:
+    case groen:
         out<<"groen";
         break;
-    case Stoplicht::oranje:
+    case oranje:
         out<<"oranje";
         break;
-    case Stoplicht::rood:
+    case rood:
         out<<"rood";
         break;
     }
@@ -23,13 +24,18 @@ struct std::formatter<Stoplicht>: public formatter<string> {
     auto format(Stoplicht s, auto& context) const {
         ostringstream ss;
         ss << s;
-        return formatter<string>::format(ss.str(), context);
+        return formatter<string>::format(ss.str(), context);;
     }
 };
 
 int main()
 {
-    Stoplicht s {Stoplicht::rood};
+    using enum Stoplicht;
+    println("sizeof(Stoplicht) = {}", sizeof(Stoplicht));
+    Stoplicht s {rood};
+    println("sizeof s = {}", sizeof s);
     cout << "s = " << s << '\n';
     println("s = {}", s);
+    println("s = {:>10}", s);
+    println("Underlying value for red = {}", to_underlying(rood));
 }

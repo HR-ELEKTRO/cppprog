@@ -38,6 +38,9 @@
 %http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/needspace/needspace.pdf
 \usepackage{needspace}
 
+\usepackage{hwemoji}
+%https://mirror.lyrahosting.com/CTAN/macros/latex/contrib/hwemoji/hwemoji.pdf
+
 \newcommand{\progs}{progs}
 \newcommand{\progsurl}{https://bitbucket.org/HR_ELEKTRO/cppprog/src/master/progs}
 \input{styleCode.tex}
@@ -182,7 +185,9 @@
 %https://tex.stackexchange.com/questions/33841/how-to-modify-the-space-between-the-numbers-and-text-of-sectioning-titles-in-the
 % default:
 \makeatletter
-\renewcommand*\l@section{\@dottedtocline{1}{1.8em}{3.0em}}
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.0em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{2.9em}{3.0em}}
+\renewcommand*\l@subsection{\@dottedtocline{3}{2.9em}{4.0em}}
 \makeatother
 
 \begin{document}
@@ -431,6 +436,7 @@ De voordelen van modules ten opzichte van include files zijn onder andere:
 	\item Als je een header file include, dan worden alle includes in die header file ook geinclude. Bij modules is dat niet het geval, omdat modules alleen de symbolen exporteren die expliciet worden geëxporteerd.
 \end{itemize}
 Modules zijn dus beter voor de onderhoudbaarheid van de code, omdat ze minder afhankelijkheden hebben ze verminderen bovendien de compilatie-tijd.
+Je kunt ook zelf modules definiëren, zie \cref{sec:zelf-gedefinieerde modules}.
 
 Om het mogelijk te maken dat de standaard \USE{library} met andere (oude en nieuwe) \USE{libraries} in één programma kan worden gebruikt zijn in \Cpp{} \USE{namespaces} \label{namespace} opgenomen\footnote{%
 	Namespaces worden verder besproken in \cref{sec:namespaces}. 
@@ -556,7 +562,7 @@ i = 0042
 j = 0666
 \end{coutput}
 \needspace{3\baselineskip}
-Je kunt en argument ook meerdere keren gebruiken:
+Je kunt een argument ook meerdere keren gebruiken:
 \cpplstinputfragment[linerange={16-16}]{println_formatted.cpp}
 \needspace{3\baselineskip}
 De uitvoer van deze regel is:
@@ -564,6 +570,27 @@ De uitvoer van deze regel is:
 decimaal 42 is gelijk aan hexadecimaal 2A
 \end{coutput}
 Er zijn nog veel meer formatting mogelijkheden, zie \url{https://en.cppreference.com/w/cpp/utility/format/spec.html}.
+
+Sinds \Cpp{}23 moeten compilers UTF-8\footnote{%
+	Met UTF-8 encoding kunnen alle mogelijke tekens uit de Unicode-standaard worden weergegeven, zie \url{https://nl.wikipedia.org/wiki/UTF-8}.
+} als standaard encoding van source files ondersteunen.
+Je kunt dus een hello world programma schrijven met emoji's\footnote{%
+	Zie \url{https://unicode.org/emoji/charts/emoji-list.html} voor een lijst van alle beschikbare emoji's.
+} (\proglink{hello_world_emoji.cpp}):
+\begin{cpplstfragment}[escapeinside={(*}{*)}]
+import std;
+using namespace std;
+
+int main() {
+	println((*"🙋🌍❗"*));
+}
+\end{cpplstfragment}
+
+\needspace{3\baselineskip}
+Je kunt ook printen naar een bestand in plaats van naar het beeldscherm (\proglink{hello_world_file.cpp}):
+\cpplstinputfragment{hello_world_file.cpp}
+Dit programma maakt een bestand genaamd |output.txt| aan en schrijft de string |Hello, World!| in dit bestand.
+Als het bestand al bestaat, dan wordt de inhoud van dit bestand overschreven.
 
 \section[Input en output met \texttt{>>} en \texttt{<<}]{Input en output met \texorpdfstring{\cppcode{>>}}{>>} en \texorpdfstring{\cppcode{<<}}{<<}}
 %\markright{}
@@ -1608,6 +1635,7 @@ b3.plus(5) = 2/5
 \end{coutput}
 
 \sectionTextCode{Constructor}{Breuk}
+\label{sec:constructor}
 %\markright{}
 De \label{constructor}\USE{constructors} definiëren hoe een object gemaakt kan worden.
 De \USE{constructors} hebben dezelfde naam als de class.%
@@ -1615,7 +1643,7 @@ De \USE{constructors} hebben dezelfde naam als de class.%
 Voor de class |Breuk| heb ik de volgende drie \USE{constructors} gedeclareerd:
 \cpplstinputfragment[linerange=15-17]{Breuk1.cpp}
 
-Als een |Breuk| bij het aanmaken niet geïnitialiseerd wordt, dan wordt de \USE{constructor} zonder parameters aangeroepen. 
+Als een |Breuk| bij het aanmaken niet geïnitialiseerd wordt, dan wordt de \USE{constructor} zonder parameters aangeroepen.
 In de definitie van deze \USE{constructor} worden dan de datavelden |boven| met |0| en |onder| met |1| geïnitialiseerd. 
 Dit gebeurt in een zogenoemde \label{initialization list}\emph{\USE{initialization list}}. 
 Na het prototype van de \USE{constructor} volgt een |:| waarna de datavelden één voor één geïnitialiseerd worden door middel van een universele initialisatie, zie \cref{sec:universeleinitialisatie}.
@@ -1872,8 +1900,7 @@ Dit maakt het type |Breuk| voor programmeurs erg eenvoudig te gebruiken.
 Ik presenteer nu eerst de complete broncode van het programma \proglink{Breuk2.cpp} waarin het type |Breuk| gedeclareerd, geïmplementeerd en gebruikt wordt. Meteen daarna ga ik op het bovengenoemde punt in.
 
 \begin{cpplstfragment}[mathescape=true]
-#include <iostream>
-#include <numeric>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -2033,6 +2060,7 @@ Een \USE{reference} lijkt een beetje op een pointer maar er zijn toch belangrijk
     \item Als je de variabele waar een pointer |p| naar wijst wilt benaderen, moet je de notatie |*p| gebruiken maar als je de variabele waar een \USE{reference} |r| naar verwijst wilt benaderen kun je gewoon |r| gebruiken.
     \item Een pointer die naar de variabele |v| wijst kun je later naar een andere variabele laten wijzen maar een \USE{reference} die naar de variabele |v| verwijst kun je later niet naar een andere variabele laten verwijzen.
     \item Een pointer kan ook naar geen enkele variabele wijzen (de waarde is dan gelijk aan |nullptr|\footnote{%
+		\label{nullptr}
     	In de programmeertaal C gebruikte je \cppcode{NULL} als waarde voor een pointer die nergens naar wees.
     	Deze constante is in een aantal \USE{include file} gedefinieerd, onder andere in \cppcode{<stdio.h>}.
     	In \Cpp{} wordt de waarde \cppcode{nullptr} gebruikt, die in de taal zelf is gedefinieerd
@@ -2260,55 +2288,37 @@ Behalve de operator |+=| kun je ook andere operatoren \USE{overloaden}.
 Deze kennis heb je echter niet nodig om de rest van dit dictaat te begrijpen.
 Hoe je andere operatoren kunt overloaden bij het type |Breuk| kun je vinden in \cref{sec:objectsandclassesdetails}.
 
-%TODO: Herschrijven naar het type Breuk.
-\section[Voorbeeld separate compilation van class \texttt{Memory\_cell}]{Voorbeeld separate compilation van class \texorpdfstring{\hcode{Me\\-mo\\-ry_\\-cell}}{Memory\_cell}}
+\section[Voorbeeld module \texttt{breuk}]{Voorbeeld module  \texorpdfstring{\hcode{breuk}}{breuk}}
 %\markright{}
 \label{separaat compileren}
-Je kunt de \emph{declaratie} en \emph{definitie} (implementatie) van een class splitsen in een |.h| en een |.cpp| file. 
+Je kunt de \emph{declaratie} en \emph{definitie} (implementatie) van een class splitsen in een |.cppm| (module interface) en een |.cpp| (module implementatie) file, \cref{sec:zelfgedefinieerdemodule}.
 Dit heeft als voordeel dat je de implementatie afzonderlijk kunt compileren tot een zogenoemde object file\footnote{Een object file bevat machine code en heeft afhankelijk van de gebruikte compiler de extensie \cppcode{.o} of \cppcode{.obj}}. 
-De gebruiker van de class kan dan de |.h| file gebruiken in zijn eigen programma en vervolgens de object file met zijn eigen programma
-mee \squote{linken}. Zie \cref{fig:separate_compilation}.
+De gebruiker van de class kan dan de module importeren in zijn eigen programma en vervolgens de object file met zijn eigen programma mee \squote{linken}. 
+Zie \cref{fig:breuk_module}.
 De gebruiker hoeft dan dus niet te beschikken over de implementatie.
 
-\iftoggle{ebook}{
-\figuur{width=.55\textwidth}{separate_compilation}{Separate compilation.}
-}{}
+\figuur{width=.55\textwidth}{breuk_module}{Afzonderlijk compileren van de module \code{breuk}.}
 
-Voor de class |Memory_cell| zien de files \proglink{Memcell.h}, \proglink{Memcell.cpp} en \proglink{Memappl.cpp} er als volgt uit:
+Om de voorbeeldcode compact te houden wordt hieronder uitgelegd hoe de zeer eenvoudige en volledig nutteloze class |Memory_cell| opgesplitst kan worden in een module interface en een module implementatie.
+In een object van de class |Memory_cell| kun je een waarde van het type |int| opslaan en deze waarde later weer opvragen\footnote{%
+	Dat kan natuurlijk ook gewoon in een variabele van het type \ccode{int} maar het gaat hier alleen om een voorbeeld van het gebruik van een zelfgedefinieerde module.
+}.
 
-\iftoggle{ebook}{}{%
-    \begin{minipage}{\textwidth}%
-    \begin{minipage}[t]{.5\textwidth}%
-}
-\begin{cpplstfragment}[mathescape=true]
-// Dit is file Memcell.h
-// Prevent multiple inclusion.$\footnotemark{}$
-#ifndef _Memcell_
-#define _Memcell_ 
-class Memory_cell {
-public:
-    int read() const;
-    void write(int x);
-private:
-    int stored_value;
-};
-#endif
-\end{cpplstfragment}
-\cpplstinputfragment[linerange={2-11}]{Memcell.cpp}
-\iftoggle{ebook}{}{
-    \end{minipage}
-    \hfill
-    \begin{minipage}[t]{.5\textwidth}
-    \figuur[H]{width=\textwidth}{separate_compilation}{Separate compilation.}
-    \end{minipage}
-    \end{minipage}
-}
-\footnotetext{%
-    Door middel van de \USE{preprocessor directives} \cppcode{#ifndef} enz.\ worden compilatiefouten voorkomen als de gebruiker de file \cppcode{Memcell.h} per ongeluk meerdere malen geïnclude heeft. 
-    De eerste keer dat de file geïnclude wordt, wordt het symbool \cppcode{_Memcell_} gedefinieerd. 
-    Als de file daarna opnieuw geïnclude wordt, wordt in de \cppcode{#ifndef} \squote{gezien} dat het symbool \cppcode{_Memcell_} al bestaat en wordt pas bij de \cppcode{#endif} weer verder gegaan met vertalen.
-}
-\cpplstinputfragment[linerange={2-11}]{Memappl.cpp}
+Voor de class |Memory_cell| zien de files \proglink{memory_cell.cppm}, \proglink{memory_cell.cpp} en \proglink{memory_appl.cpp} er als volgt uit:
+
+\cpplstinputfragment{memory_cell.cppm}
+\cpplstinputfragment{memory_cell.cpp}
+\cpplstinputfragment{memory_appl.cpp}
+
+De verschillende commando's voor de compiler en linker zoals aangegeven in \cref{fig:memory_cell} zijn:
+\begin{enumerate}
+	\item \code{g++ -std=c++23 -fmodules -fmodule-only -c memory_cell.cppm}
+	\item \code{g++ -std=c++23 -fmodules -c memory_cell.cpp}
+	\item \code{g++ -std=c++23 -fmodules -c memory_appl.cpp}
+	\item \code{g++ -std=c++23 -fmodules memory_cell.o memory_appl.o -o appl}
+\end{enumerate} 
+
+\figuur{width=.55\textwidth}{memory_cell}{Afzonderlijk compileren van de module \code{memory_cell}.}
 
 %TODO: verhaaltje toevoegen over statische libraries.
 
@@ -2432,10 +2442,10 @@ Het gebruik van een functietemplate heeft de volgende voordelen:
 \needspace{2\baselineskip}
 Het gebruik van een functietemplate heeft echter ook het volgende nadeel:
 \begin{itemize}
-    \item Doordat de compiler de volledige functietemplate definitie nodig heeft om een functie aanroep te kunnen vertalen moet de definitie van de functietemplate in een \USE{headerfile} (|.h| file) opgenomen worden en geïnclude worden in elke |.cpp| file waarin de functietemplate gebruikt wordt.
+    \item Doordat de compiler de volledige functietemplate definitie nodig heeft om een functie aanroep te kunnen vertalen moet de definitie van de functietemplate in een \USE{module interface} (|.cppm| file) opgenomen worden en geïmporteerd worden in elke |.cpp| file waarin de functietemplate gebruikt wordt.
     Het is niet mogelijk om de functietemplate afzonderlijk te compileren tot een object file en deze later aan de rest van de code te \squote{linken} zoals dit met een gewone functie wel kan.
 \end{itemize}
-%TODO: voetnoot toevoegen over \Cpp20 oplossing voor dit probleem
+
 Bij het ontwikkelen van kleine programma's zijn de voordelen misschien niet zo belangrijk maar bij het ontwikkelen van grote programma's zijn deze voordelen wel erg belangrijk.
 Door gebruik te maken van een functietemplate in plaats van \squote{met de hand} verschillende versies van een functie aan te maken wordt een programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
 
@@ -2466,7 +2476,7 @@ De waarde |13| kan, bijvoorbeeld, als volgt op plaats nummer |3| worden weggezet
 Deze waarde kan uit het object worden \squote{gelezen} door de boodschap |lees_uit| naar het object te sturen.
 Bijvoorbeeld:
 \begin{cpplstfragment}
-    cout << "De plaats nummer 3 in d bevat de waarde: " << d.lees_uit(3) << '\n';
+    println("De plaats nummer 3 in d bevat de waarde: {}", d.lees_uit(3));
 \end{cpplstfragment}
 
 De implementatie van memberfuncties van de class |Dozijn| is als volgt:
@@ -3808,8 +3818,12 @@ Het zal voor iedereen duidelijk zijn dat zulke vreemde uitvoer tijdens het uitvo
 \sectionTextCode{Het gebruik van}{assert}
 %\markright{}
 \label{sec:assert}
-In \cref{assert} heb je al kennis gemaakt met de standaard functie |assert|.
-Deze functie doet niets als de, als argument meegegeven, expressie |true| oplevert maar breekt het programma met een passende foutmelding af als dit niet zo is.
+In \cref{assert} heb je al kennis gemaakt met de standaard macro |assert|.
+Deze macro doet niets als de, als argument meegegeven, expressie |true| oplevert maar breekt het programma met een passende foutmelding af als dit niet zo is.
+Omdat macro's niet vanuit modules geexporteerd kunnen worden, moet de file |cassert| worden geïnclude om gebruik te kunnen maken van de |assert| macro\footnote{%
+	Waarschijnlijk zijn \dquote{Contracts} de vervanging voor de assert macro in \Cpp{}26.
+	Maar die worden helaas nog niet ondersteund in \href{https://gcc.gnu.org/projects/cxx-status.html}{gcc 15}. 
+}.
 Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan een bepaalde voorwaarden (waarvan je \squote{zeker} weet dat ze geldig zijn) wordt voldaan.
 Je kunt de functie |impedance_C| voorzien van een \USE{assertion} (\proglink{impedance_C2.cpp}):
 
@@ -6516,12 +6530,107 @@ In \Cpp{} is \cppcode{bool} een \USE{keyword} en hoef je dus geen |#include| te 
 Met dit \USE{keyword} kun je booleaanse variabelen definiëren van het type |bool|.
 Een variabele van dit type heeft slechts twee mogelijke waarden: |true| en |false|.
 
+\sectionTextCode{Het type}{byte}
+Type |byte| is bedoeld voor het opslaan van een byte (8 bits data). Deze data wordt in tegenstelling tot een |int8_t| of een |char| niet geïnterpreteerd als een getal of een karakter maar als een ongestructureerde verzameling van bits.
+Alleen de bitwise logische operatoren en de schuifoperatoren kunnen gebruikt worden bij dit type.
+\needspace{3\baselineskip}
+Bijvoorbeeld (\proglink{byte.cpp})
+\begin{cpplstfragment}[mathescape=true]
+	byte b1 {234};
+	println("b1 = {}", to_integer<unsigned int>(b1));
+	byte b2 {b1 >> 3};
+	println("b2 = {}", to_integer<uint8_t>(b2));
+	byte b3 {b1 + b2}; // $\color{hrred}\textbf{error:}$: no match for 'operator+' (operand types are 'std::byte' and 'std::byte)'
+\end{cpplstfragment}
+Dit datatype komt vooral van pas als je met \squote{ruwe} data werkt, bijvoorbeeld bij het samenstellen van een I\textsuperscript{2}C bericht.
+In het verleden werd hier meestal het type |char| of |uint8_t| voor gebruikt maar dat is niet ideaal omdat deze types worden geïnterpreteerd als karakters respectievelijk getallen.
+Met behulp van de template functie |to_integer<T>| kan een |byte| worden omgezet naar een getal van het type |T|, bijvoorbeeld |int| of |uint8_t|.
+
 \section{Digit separators}
+\label{sec:digitseparators}
 Om lange getallen beter leesbaar te maken mag een enkel aanhalingsteken (\code{'}) gebruikt worden om groepjes cijfers te onderscheiden.
 \begin{lstfragment}
 	uint16_t uart_settings = 0b1011'1001'000'1011;
 	int32_t miljard = 1'000'000'000; 
 \end{lstfragment}
+
+\section{Zero-initialisatie}
+\label{sec:zeroinitialisatie}
+Zero-initialisatie van een variabele kan worden gedaan met behulp van de syntax |T t {};|. Deze syntax werkt voor alle types. De variabele |t| krijgt de nul-waarde van het type |T|. Voor |int| is dit |0|, voor |double| is dit |0.0|, voor pointers is dit |nullptr|, zie \cref{nullptr}, enz. Voor user-defined types is dit de waarde die wordt verkregen door het aanroepen van de constructor zonder argumenten van het type |T| (de \USE{default constructor}), zie \cref{sec:constructor}.
+
+\section{Zelf gedefinieerde module}
+\label{sec:zelfgedefinieerdemodule}
+Je kunt ook zelf een module definiëren.
+De functies, classes, templates, enz. die in deze module gedefinieerd worden en geëxporteerd worden kunnen dan in meerdere programma's of in andere modules gebruikt (geïmporteerd) worden.
+
+In het onderstaande voorbeeld wordt een module aangemaakt die een functie genaamd |hello()| exporteerd.
+
+\needspace{3\baselineskip}
+De interface van deze module is gedefinieerd in \proglink{hello_world_module_interface.cppm}\footnote{%
+	Er is geen standaard extensie voor module interface bestanden, maar de extensie \code{.cppm} wordt ondersteund door de gcc en clang compilers. De Microsoft \Cpp{} compiler gebruikt de extensie \code{.ixx}.
+}:
+\cpplstinputfragment{hello_world_module_interface.cppm}
+
+\needspace{3\baselineskip}
+De implementatie van deze module is gedefinieerd in \proglink{hello_world_module_implemen\\-ta\\-tion.cpp}:
+\cpplstinputfragment{hello_world_module_implementation.cpp}
+
+\needspace{3\baselineskip}
+Het programma dat gebruik maakt van deze module is gedefinieerd in \proglink{hello_world_mo\\-dule_\\-main.cpp}:
+\cpplstinputfragment{hello_world_module_main.cpp}
+
+\needspace{3\baselineskip}
+Je kunt de module interface compileren met het commando:
+\begin{coutput}
+g++ -std=c++23 -fmodules -fmodule-only -c hello_world_module_interface.cppm
+\end{coutput}
+Dit genereerd een een precompiled module interface file genaamd |helloworld.gcm| in het directory |gcm.cache|.
+
+\needspace{3\baselineskip}
+Je kunt de module implementatie compileren met het commando:
+\begin{coutput}
+g++ -std=c++23 -fmodules -c hello_world_module_implementation.cpp
+\end{coutput}
+Dit genereerd een een object file genaamd |helloworld.o|.
+
+\needspace{3\baselineskip}
+Je kunt het programma dat gebruik maakt van deze module compileren met het commando:
+\begin{coutput}
+g++ -std=c++23 -fmodules -c hello_world_module_main.cpp
+\end{coutput}
+Dit genereerd een een object file genaamd |hello_world_module_main.o|.
+
+\needspace{3\baselineskip}
+Beide object files kunnen vervolgens gelinkt worden tot een uitvoerbaar programma met het commando:
+\begin{coutput}
+g++ hello_world_module_implementation.o hello_world_module_main.o -o hello
+\end{coutput}
+
+\needspace{3\baselineskip}
+Dit programma kan ten slotte uitgevoerd worden met het commando\footnote{%
+	Onder Windows moet je het commando \code{hello.exe} gebruiken in plaats van \code{hello}.}:
+\begin{coutput}
+./hello
+\end{coutput}
+
+\needspace{3\baselineskip}
+Het is ook mogelijk om de interface en implementatie van de module beide in één file te plaatsen (\proglink{hello_world_module.cppm}):
+\cpplstinputfragment{hello_world_module.cppm}
+
+\needspace{3\baselineskip}
+Deze module kan vervolgens gecompileerd worden met het commando:
+\begin{coutput}
+g++ -std=c++23 -fmodules -c hello_world_module_interface.cppm
+\end{coutput}
+Dit commando maakt dan zowel het bestand |helloworld.gcm| in het directory |gcm.cache| als het object file |hello_world_module.o| aan.
+\needspace{3\baselineskip}
+De object file kan gelinkt worden met de al eerder aangemaakte |hello_world_main.o| met het commando:
+\begin{coutput}
+g++ hello_world_module.o hello_world_module_main.o -o hello
+\end{coutput}
+
+Hoewel het dus mogelijk is om de interface en implementatie te combineren in één bestand, is het overzichtelijker om ze te splitsen in twee apparte bestanden.
+%TODO: module partitions
 
 \section{Namespaces}
 \label{sec:namespaces}
@@ -6550,7 +6659,7 @@ namespace VersD {
 
 Je ziet dat in de \USE{namespace} |BroJZ| een functie |sin| is opgenomen die ook in de standaard \USE{library} is opgenomen.
 De in de \USE{namespace} |BroJZ| gedefinieerde class |string| is ook in de \USE{namespace} |VersD| en ook in de standaard library gedefinieerd.
-Je hebt in \cref{namespace} gezien dat alle functies en classes uit de standaard library in de \USE{namespace} |std| zijn opgenomen.
+Je hebt op \cpageref{namespace} gezien dat alle functies en classes uit de standaard library in de \USE{namespace} |std| zijn opgenomen.
 Je kunt met de \emph{\USE{scope-resolution}} operator |::| aangeven uit welke \USE{namespace} je een class of functie wilt gebruiken:
 \begin{cpplstfragment}
 	BroJZ::string s1 {"Harry"};
@@ -6692,10 +6801,12 @@ unsigned int power(unsigned int n, unsigned int m) {
 }
 \end{cpplstfragment}
 
+\needspace{3\baselineskip}
 Deze functie kun je bijvoorbeeld als volgt aanroepen:
 
-\cpplstinputfragment[linerange={14-14}]{constexpr_functie.cpp}
+\cpplstinputfragment[linerange={13-13}]{constexpr_functie.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van deze regel is dan:
 
 \begin{coutput}
@@ -6723,13 +6834,16 @@ Het zou natuurlijk veel beter zijn voor de onderhoudbaarheid als de compiler dez
 In \Cpp{} is dat inderdaad mogelijk door de functie vooraf te laten gaan door het \USE{keyword} |constexpr|. 
 Zo'n functie wordt een \USE{compile time} functie genoemd\footnote{%
 	Een \USE{compile time} functie is vergelijkbaar met een met \cppcode{#define} gedefinieerde macro voor het berekenen van een constante waarde in de programmeertaal C.
-} omdat een aanroep naar deze functie niet alleen tijdens het uitvoeren van het programma maar ook tijdens het vertalen van het programma kan worden uitgevoerd. 
+} omdat een aanroep naar deze functie niet alleen tijdens het uitvoeren van het programma maar ook tijdens het vertalen van het programma kan worden uitgevoerd\footnote{%
+	Zo zijn bijvoorbeeld de functies en operatoren van het standaard type \ccode{complex} zijn als \ccode{constexpr} gedeclareerd, zodat je tijdens het compileren complexe rekenkundige bewerkingen kunt uitvoeren.
+}. 
 
-\cpplstinputfragment[linerange={5-11}]{constexpr_functie.cpp}
+\cpplstinputfragment[linerange={4-10}]{constexpr_functie.cpp}
 
+\needspace{3\baselineskip}
 De |array| met $3^5$ integers kan nu als volgt gedefinieerd worden (\proglink{const\\-expr_\\-func\\-tie.cpp}):
 
-\cpplstinputfragment[linerange={16-16}]{constexpr_functie.cpp}
+\cpplstinputfragment[linerange={15-15}]{constexpr_functie.cpp}
 
 De aanroep van een \USE{compile time} functie levert echter alleen een \USE{compile time} constante op als de parameters waarmee de functie wordt aangeroepen ook \USE{compile time} constanten zijn.
 Dit betekent dat een \USE{compile time} functie toch tijdens \USE{run time} uitgevoerd wordt, als de functie wordt aangeroepen met variabelen.
@@ -6738,8 +6852,12 @@ Dit voorkomt dat er twee identieke functies gedefinieerd moeten worden: één me
 Dit is handig omdat het nu dus niet nodig is om een tweede |power|-functie te schrijven (die gedefinieerd is zonder |constexpr|).
 
 Het is dus aan te bevelen om een functie die nuttig zou kunnen zijn bij het berekenen van een \USE{run time} constante met |constexpr| te definiëren\footnote{%
-	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#f4-if-a-function-may-have-to-be-evaluated-at-compile-time-declare-it-constexpr}{F.4}.
+	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#f4-if-a-function-might-have-to-be-evaluated-at-compile-time-declare-it-constexpr}{F.4}.
 }.
+
+Het is ook mogelijk om een functie te definiëren die \emph{alleen} maar tijdens compile time uitgevoerd kan worden.
+Dit doe je door de functie te laten voorafgaan door het \USE{keyword} |consteval| (in plaats van |constexpr|).
+Zie \proglink{consteval\\-func\\-tie.cpp}.
 
 \sectionTextCode{Compile time}{if}
 %\markright{}
@@ -7482,11 +7600,12 @@ De naam |rood| wordt, zoals je ziet automatisch omgezet naar een integer.
 De naam |rood| kun je overal waar de |enum Stoplicht| zichtbaar is gebruiken.
 Omdat een |enum| vaak globaal gedefinieerd wordt, leidt dit bij grotere programma's tot problemen als er ook een |enum Kleur| is gedefinieerd die ook de naam |rood| definieert.
 Als je in plaats van een |enum| een |enum class| gebruikt dan wordt zogenoemde \squote{\USE{strong typing}} gebruikt en zijn de namen \squote{\USE{scoped}}.
+\needspace{3\baselineskip}
 Bijvoorbeeld:
 \begin{cpplstfragment}
 	enum class Stoplicht {groen, oranje, rood};
 	Stoplicht s = Stoplicht::rood;
-	if (s == Stoplicht::rood) cout << "s = rood\n";
+	if (s == Stoplicht::rood) println("s = rood");
 \end{cpplstfragment}
 Het gebruik van \squote{\USE{strong typing}} zorgt ervoor dat een variabele van het type |Stoplicht| \emph{niet} meer automatisch omgezet wordt naar een integer.
 Je kunt zo'n variabele dus niet zonder meer printen\footnote{%
@@ -7499,6 +7618,30 @@ Bijvoorbeeld ook voor |Kleur::rood|.
 Omdat het gebruik van |enum class| geen onverwachtse verrassingen op kan leveren gebruiken we in dit dictaat |enum class| in plaats van |enum|\footnote{%
 	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#enum3-prefer-class-enums-over-plain-enums}{Enum.3}. 
 }.
+
+Als je de |enum class| in een beperkte scope gebruikt, dan kun je ook gebruik maken van |using| om de namen van de enumeratie-waarden in die scope beschikbaar te maken.
+\needspace{3\baselineskip}
+Bijvoorbeeld (\proglink{enum_class_using.cpp}):
+\begin{cpplstfragment}
+	enum class Stoplicht {groen, oranje, rood};
+	using enum Stoplicht;
+	Stoplicht s = rood;
+	if (s == rood) println("s = rood");
+\end{cpplstfragment}
+
+Het onderliggende type van |enum class| is standaard |int|, maar kan worden aangepast (\proglink{enum_class_underlying.cpp}):
+\cpplstinputfragment[linerange={4-4}]{enum_class_underlying.cpp}
+
+\needspace{3\baselineskip}
+Je kunt ook de onderliggende waarde van een enum class constante opvragen:
+\begin{cpplstfragment}
+	println("rood = {}", to_underlying(Stoplicht::rood));
+\end{cpplstfragment}
+\needspace{3\baselineskip}
+Geeft als uitvoer:
+\begin{coutput}
+rood = 2
+\end{coutput}
 
 \chapter{Templates (de details)}
 \label{sec:templatesdetails}

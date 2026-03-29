@@ -129,7 +129,7 @@ istream& operator>>(istream& in, Breuk& b) {
 
 template<>
 struct std::formatter<Breuk>: public formatter<string> {
-    auto format(const Breuk& breuk, format_context& context) const {
+    auto format(const Breuk& breuk, auto& context) const {
         ostringstream ss;
         ss << breuk;
         return formatter<string>::format(ss.str(), context);

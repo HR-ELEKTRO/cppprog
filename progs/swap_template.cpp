@@ -1,6 +1,6 @@
 // Template functie swap
 
-#include <iostream>
+import std;
 using namespace std;
 
 template <typename T> void swap(T& p, T& q) {
@@ -12,12 +12,18 @@ template <typename T> void swap(T& p, T& q) {
 int main() {
     int n {2};
     int m {3};
-    cout << "n = " << n << " m = " << m << '\n';
+    println("n = {} m = {}", n, m);
     ::swap(n, m);
-    cout << "n = " << n << " m = " << m << '\n';
+    println("n = {} m = {}", n, m);
+
     double x {2.2};
     double y {3.3};
-    cout << "x = " << x << " y = " << y << '\n';
+    println("x = {} y = {}", x, y);
     ::swap(x, y);
-    cout << "x = " << x << " y = " << y << '\n';
+    println("x = {} y = {}", x, y);
+
+    // ::swap(n, "hallo"); // error: no matching function for call to 'swap(int&, const char [6])'
+
+    // ::swap(n, x); // error: no matching function for call to 'swap(int&, double&)'
+    // println("n = {} x = {}", n, x);
 }

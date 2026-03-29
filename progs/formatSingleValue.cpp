@@ -21,7 +21,7 @@ struct std::formatter<SingleValue> {
   constexpr auto parse(format_parse_context& context) {
     return context.begin();
   }
-  auto format(const SingleValue& sVal, format_context& context) const {
+  auto format(const SingleValue& sVal, auto& context) const {
     return std::format_to(context.out(), "{}", sVal.getValue());
   }
 };

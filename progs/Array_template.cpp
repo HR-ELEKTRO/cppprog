@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cmath>
 #include <cassert>
+#include <thread>
 using namespace std;
 
 template <typename T> class Array {
@@ -96,5 +97,16 @@ int main() {
     //     cout << e << ' ';
     // }
     // Array<int> w {1, 2, 3};
-    // error: no matching function for call to ‘Array<int>::Array(<brace-enclosed initializer list>)’
+    // error: no matching function for call to 'Array<int>::Array(<brace-enclosed initializer list>)'
+        // ...
+    Array<thread> t {2};
+    t[0] = thread {[]() { cout << "Thread 1\n"; }};
+    t[1] = thread {[]() { cout << "Thread 2\n"; }};
+    // Array<thread> c {2};
+    // c = t;
+    // error: use of deleted function 'std::thread& std::thread::operator=(const std::thread&)'
+
+    for (size_t i {0}; i < t.length(); ++i)
+        t[i].join();
+    // terminate called without an active exception
 }
