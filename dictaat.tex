@@ -3470,21 +3470,22 @@ Met dit programma kun je dan van elk passief elektrisch netwerk de impedantie be
 \figuur{scale=1}{component2}{\cppcode{S} is afgeleid van \cppcode{Component} en \cppcode{S} heeft 2 \cppcode{Component}s.}
 
 De classes |S| en |P| kunnen dan als volgt gebruikt worden (\proglink{netwerk1.cpp}):
-\cpplstinputfragment[linerange={131-139}]{netwerk1.cpp}
+\cpplstinputfragment[linerange={140-148}]{netwerk1.cpp}
 
 Je ziet dat je de al bestaande polymorfe functie |print_impedance_table| ook voor objecten van de nieuwe classes |S| en |P| kunt gebruiken!
 
 De uitvoer van het bovenstaande programma is:
 \begin{coutput}
-Impedantie tabel voor: ((R(100)+C(1e-006))//(R(100)+L(0.03)))
+Impedantie tabel voor: ((R(100)+C(1e-06))//(R(100)+L(0.03)))
 
-      freq                   Z
-        10   (100.016,1.25659)
-       100   (101.591,12.5146)
-      1000  (197.893,-14.3612)
-     10000  (101.132,-10.5795)
-    100000    (100.011,-1.061)
-    1e+006     (100,-0.106103)
+   freq | Z
+-------------------------
+     10 | 100.016+1.257j
+    100 | 101.591+12.515j
+   1000 | 197.893-14.361j
+  10000 | 101.132-10.580j
+ 100000 | 100.011-1.061j
+1000000 | 100.000-0.106j
 \end{coutput}
 
 \needspace{2\baselineskip}
@@ -3493,7 +3494,7 @@ Implementeer nu zelf de classes |S| en |P|.
 
 \subsection*{Antwoord:}
 \vspace{-.4\baselineskip}
-\cpplstinputfragment[linerange={93-121}]{netwerk1.cpp}
+\cpplstinputfragment[linerange={101-129}]{netwerk1.cpp}
 
 %TODO: omzetten naar Qt
 %\subsection{Een grafische impedantie calculator}
