@@ -1,5 +1,4 @@
-#include <iostream>
-#include <array>
+import std;
 using namespace std;
 
 int main() {
@@ -12,36 +11,29 @@ int main() {
         ++i;
     }
     // druk af
-    for (auto e: a) {
-        cout << e << " ";
-    }
-    cout << '\n';
+    println("{}", a);
 
     // kopiëren van de een array
     auto b {a};
-    for (auto e: b) {
-        cout << e << " ";
-    }
-    cout << '\n';
+    println("{}", b);
     // vergelijken van arrays
-    if (a != b)
-        cout << "Dit kan niet waar zijn!\n";
-
-    a[100] = 12;
-    // ongeldige index ==> crash (als je geluk hebt!)
+    if (a != b) {
+        println("Dit kan niet waar zijn!");
+    }
     try {
         a.at(100) = 12;
         // ongeldige index ==> foutmelding (exception)
     } catch(const out_of_range& e) {
-        cerr << "Error: " << e.what() << '\n';
+        println(cerr, "Error: {}", e.what());
     }
-    a[10000] = 12;
-    // ongeldige index ==> crash (als je geluk hebt!)
+    a[i] = 12;
+    // ongeldige index ==> Abort in debug mode, ongedefinieerd gedrag in release mode
 }
 
 /* Uitvoer:
-0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
-0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196]
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196]
 Error: array::at: __n (which is 100) >= _Nm (which is 15)
-Segmentation fault (core dumped)
+/usr/lib/gcc/x86_64-pc-cygwin/15.2.0/include/c++/array:210: constexpr std::array<_Tp, _Nm>::value_type& std::array<_Tp, _Nm>::operator[](size_type) [with _Tp = int; long unsigned int _Nm = 15; reference = int&; size_type = long unsigned int]: Assertion '__n < this->size()' failed.
+Aborted
 */

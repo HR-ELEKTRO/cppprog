@@ -1,11 +1,9 @@
-#include <iostream>
-#include <iomanip>
+module hr.brojz.adc.do_measurement;
+import std;
 using namespace std;
-
-#include "do_measurement.h"
 
 void do_measurement(ADCCard& card, double factor, int channel) {
     card.set_amplifier(factor);
     card.select_channel(channel);
-    cout << "Kanaal " << card.get_channel() << " = " << card.read() << " V.\n";
+    println("Kanaal {} = {:.2f} V.", card.get_channel(), card.read());
 }

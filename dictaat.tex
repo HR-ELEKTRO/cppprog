@@ -2500,8 +2500,10 @@ int Dozijn::lees_uit(int index) const {
 
 De als argument meegegeven |index| wordt bij beide memberfuncties gecontroleerd.
 
-Om de inhoud van een object van de class |Dozijn| eenvoudig te kunnen afdrukken is de |operator<<| als volgt \USE{overloaded}, zie \cref{sec:overloadoutput}:
+\needspace{3\baselineskip}
+Om de inhoud van een object van de class |Dozijn| eenvoudig om te kunnen zetten naar een |string| is de functie |naar_string| gedefinieerd:
 \cpplstinputfragment[linerange={27-32}]{Dozijn.cpp}
+In deze functie wordt gebruik gemmaakt van de standaard functie |format| die op dezelfde manier werkt als de standaard functie |print| alleen wordt het resultaat niet weergegeven op het scherm, maar opgeslagen in een string.
 
 Je kunt de class |Dozijn| bijvoorbeeld als volgt gebruiken:
 \cpplstinputfragment[linerange={34-39}]{Dozijn.cpp}
@@ -2527,7 +2529,7 @@ Dozijn<Breuk> db; // een dozijn breuken
 \sectionTextCode{Voorbeeld class template}{Dozijn}
 %\markright{}
 De \emph{class template} |Dozijn| kan als volgt worden gedeclareerd (\proglink{Dozijn_template.cpp}):
-\cpplstinputfragment[linerange={7-13}]{Dozijn_template.cpp}
+\cpplstinputfragment[linerange={6-12}]{Dozijn_template.cpp}
 
 Merk op dat de parameter |index| nog steeds van het type |int| is.
 De plaatsen in het |Dozijn| zijn altijd genummerd van |0| t/m |11| onafhankelijk van het type van de elementen die in het |Dozijn| opgeslagen worden.
@@ -2535,16 +2537,17 @@ Het type van de private array |data| is nu van het type |T| en dit type is een p
 De tweede parameter van de memberfunctie |zet_in| en het return type van |lees_uit| zijn van het type |const T&| in plaats van het type |T| om onnodige kopietjes te voorkomen.
 Alle memberfuncties van de \emph{template} class zijn vanzelfsprekend ook \emph{\USE{templates}}.
 De memberfuncties van de tempate class |Dozijn| kunnen als volgt gedefinieerd worden:
-\cpplstinputfragment[linerange={15-26}]{Dozijn_template.cpp}
+\cpplstinputfragment[linerange={14-25}]{Dozijn_template.cpp}
 
 De memberfunctie |lees_uit| geeft nu de waarde van plaats |0| terug als de |index <= 0| is en geeft de waarde van plaats |11| terug als de |index >= 11| is.
 Je kunt in dit geval namelijk niet de waarde |0| teruggeven zoals we bij het |Dozijn| met integers (op \cpageref{return Dozijn::lees_uit}) gedaan hebben omdat we niet weten of het type |T| wel een waarde |0| kan hebben.
 
-Om de inhoud van een |Dozijn| van een willekeurig type eenvoudig te kunnen afdrukken is de |operator<<| met behulp van een template als volgt \USE{overloaded}:
-\cpplstinputfragment[linerange={28-33}]{Dozijn_template.cpp}
+\needspace{3\baselineskip}
+Om de inhoud van een |Dozijn| van een willekeurig type eenvoudig om te kunnen zetten naar een |string| is de template functie |naar_string| gedefinieerd:
+\cpplstinputfragment[linerange={27-32}]{Dozijn_template.cpp}
 
 Deze class template |Dozijn| kan nu als volgt gebruikt worden:
-\cpplstinputfragment[linerange={35-54}]{Dozijn_template.cpp}
+\cpplstinputfragment[linerange={34-53}]{Dozijn_template.cpp}
 
 Bij het gebruik van de class template |Dozijn| kan de compiler niet zelf bepalen wat het type |T| moet zijn.
 Vandaar dat je dit bij het gebruik van de class template |Dozijn| zelf moet specificeren.
@@ -2573,7 +2576,7 @@ Je kunt beter een class template |Rij| definiëren waarbij je het gewenste aanta
 	\needspace{4cm}
 }%
 De class template |Rij| kan als volgt worden gedeclareerd (\proglink{Rij.cpp}):
-\cpplstinputfragment[linerange={7-14}]{Rij.cpp}
+\cpplstinputfragment[linerange={6-13}]{Rij.cpp}
 
 Je ziet dat het standaard type |size_t| gebruikt is als type van de tweede template\hyp{}parameter |N|.
 Het type |size_t| wordt in C en \Cpp{} gebruikt om de grootte van een object mee aan te geven en een variabele van dit type kan alleen positief zijn.
@@ -2585,16 +2588,16 @@ De returnwaarde van deze functie is dus te gebruiken op plaatsen waar een compil
 Je kunt bijvoorbeeld een rij definiëren die evenveel plaatsen bevat als een al eerder gedefinieerde rij\footnote{%
 	Het argument dat wordt meegegeven aan een non-type template-parameter moet een compile time constante zijn, zie \url{https://en.cppreference.com/w/cpp/language/constant_expression}.
 }:
-\cpplstinputfragment[linerange={40-40,51-51}]{Rij.cpp}
+\cpplstinputfragment[linerange={38-38,49-49}]{Rij.cpp}
 
 De memberfuncties van de tempate class |Rij| kunnen als volgt gedefinieerd worden:
-\cpplstinputfragment[linerange={16-25}]{Rij.cpp}
+\cpplstinputfragment[linerange={15-28}]{Rij.cpp}
 
-Om de inhoud van een |Rij| eenvoudig te kunnen afdrukken is de |operator<<| met behulp van een template als volgt \USE{overloaded}:
-\cpplstinputfragment[linerange={31-37}]{Rij.cpp}
+Om de inhoud van een |Rij| eenvoudig om te kunnen zetten naar een |string| is de template functie |naar_string| gedefinieerd:
+\cpplstinputfragment[linerange={30-35}]{Rij.cpp}
 
 Deze class template |Rij| kan nu als volgt gebruikt worden:
-\cpplstinputfragment[linerange={39-48,55-55}]{Rij.cpp}
+\cpplstinputfragment[linerange={37-46,53-53}]{Rij.cpp}
 
 De uitvoer van het bovenstaande programma is:
 % cpplstfragment gebruikt in plaats van coutput zodat regel netjes afgebroken wordt.
@@ -2642,15 +2645,19 @@ De voordelen van |array| in vergelijking met een C\hyp{}array:
 De elementen van een |array| kunnen, net zoals de elementen van een C\hyp{}array, één voor één gelezen of bewerkt worden met behulp van een \USE{range-based} |for| (zie \cref{sec:range-basedfor} en \cref{sec:referenceinrange-basedfor}).
 
 Voorbeeld van een programma met een |array| (\proglink{std_array.cpp}):
-\cpplstinputfragment[linerange={1-40}]{std_array.cpp}
+\cpplstinputfragment[linerange={1-31}]{std_array.cpp}
+
+%TODO iets zeggen over print en format van een vector
+%TODO cerr uitleggen (of is dat al gedaan?)
 
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
-0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
-0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
-Error: array::at: \_\_n (which is 100) >= \_Nm (which is 15)
-Segmentation fault (core dumped)
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196]
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196]
+Error: array::at: __n (which is 100) >= _Nm (which is 15)
+Assertion '__n < this->size()' failed.
+Aborted
 \end{coutput}
 
 %TODO: uitvoer nog uitleggen.
@@ -2696,23 +2703,24 @@ De voordelen van |vector| in vergelijking met een C\hyp{}array:
 De elementen van een |vector| kunnen, net zoals de elementen van een C\hyp{}array, één voor één gelezen of bewerkt worden met behulp van een \USE{range-based} |for| (zie \cref{sec:range-basedfor} en \cref{sec:referenceinrange-basedfor}).
 
 Voorbeeld van een programma met een |vector| (\proglink{std_vector1.cpp}):
-\cpplstinputfragment[linerange={1-38}]{std_vector1.cpp}
+\cpplstinputfragment[linerange={1-29}]{std_vector1.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
 % cpplstfragment gebruikt in plaats van coutput zodat regel netjes afgebroken wordt.
 \begin{cpplstfragment}[language=]
-0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
-0 1 4 9 16 25 36 49 64 81 100 121 144 169 196
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196]
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196]
 Error: vector::_M_range_check: __n (which is 100) >= this->size() (which is 15)
-Segmentation fault (core dumped)
+Assertion '__n < this->size()' failed.
+Aborted
 \end{cpplstfragment}
 
 %TODO: uitvoer nog uitleggen.
 
 \needspace{5\baselineskip}
 Voorbeeldprogramma om een onbekend aantal elementen in een |vector| in te lezen (\proglink{std_\\-vec\\-tor2.cpp}):
-\cpplstinputfragment[linerange={1-37}]{std_vector2.cpp}
+\cpplstinputfragment[linerange={1-29}]{std_vector2.cpp}
 
 Mogelijke invoer\footnote{%
 	De invoer is groen en onderstreept weergegeven.
@@ -2720,10 +2728,10 @@ Mogelijke invoer\footnote{%
 \begin{coutput}
 Voer een willekeurig aantal integers in, sluit af met een tekst:
 \cinput{1 2 3 4 5 6 7 8 9 10 stop}
-1 2 3 4 5 6 7 8 9 10
+[1 2 3 4 5 6 7 8 9 10]
 Voer een willekeurig aantal integers in, sluit af met een tekst:
 \cinput{1 2 3 4 Hoedje van papier}
-1 2 3 4
+[1 2 3 4]
 \end{coutput}
 
 De naam |vector| is misschien niet zo handig gekozen omdat het niet overeenkomt met het wiskundige begrip \emph{vector}.
@@ -2731,7 +2739,7 @@ De standaard library bevat ook de template |valarray<T>|.
 Dit is een speciale container waarbij |T| een numeriek type moet zijn.
 Er kunnen rekenkundige bewerkingen op dit type uitgevoerd worden.
 Een |valarray| lijkt dus meer op een vector zoals we die kennen uit de wiskunde dan een |vector|.
-Zie \proglink{valarray.cpp}. 
+Zie \proglink{valarray.cpp}.
 
 Deze rekenkundige bewerkingen kunnen efficiënt geïmplementeerd worden.
 Zo kan de bewerking:
@@ -2953,7 +2961,7 @@ Dit kan alleen als de \USE{base class} de memberfunctie \emph{virtual}\label{vir
 class Base {
 public:
     virtual void print_name() const {
-        cout << "Ik ben een Base.\n";
+        println("Ik ben een Base.");
     }
 };
 class Derived: public Base {
@@ -2965,7 +2973,7 @@ public:
         \makeatletter%
         \global\let\saved@Href@F\Hy@footnote@currentHref%
         \makeatother$ {
-        cout << "Ik ben een Derived.\n";
+        println("Ik ben een Derived.");
     }
 };
 \end{cpplstfragment}%
@@ -3190,7 +3198,7 @@ Om deze gegevens per kaart netjes bij elkaar te houden heb ik de struct |ADCCard
 Voor elke kaart die in het programma gebruikt wordt, wordt dan een variabele van dit struct type aangemaakt.
 Aan elk van de eerder genoemde functies wordt de te gebruiken kaart dan als parameter van het type |ADCCard| doorgegeven. Zie \proglink{kaart0.cpp}:
 
-\cpplstinputfragment[linerange={7-22,24-26,28-37,39-41,43-56,58-60,62-71,73-75,77-86,91-102}]{kaart0.cpp}
+\cpplstinputfragment[linerange={6-21,23-25,27-36,38-40,42-55,57-59,61-70,72-74,76-97}]{kaart0.cpp}
 
 %Het |switch| statement uit |init_card| wordt in de functies |select_channel|, |set_amplifier| en |sample_card| op soortgelijke wijze gebruikt.
 
@@ -3217,7 +3225,7 @@ Deze problemen kunnen voorkomen worden als een UDT gebruikt wordt, waarin zowel 
     We kunnen dus niet voorkomen dat een programmeur in plaats van de UDT \cppcode{ADCCard} te gebruiken rechtstreeks de kaart aanspreekt.
 }. Zie \proglink{kaart1.cpp}:
 
-\cpplstinputfragment[linerange={7-27,29-31,33-42,44-46,48-61,63-65,67-76,78-80,82-91,96-105}]{kaart1.cpp}
+\cpplstinputfragment[linerange={6-26,28-30,32-41,43-45,47-60,62-64,66-75,77-79,81-100}]{kaart1.cpp}
 
 %Het |switch| statement uit |init_card| wordt in de functies |select_channel|, |set_amplifier| en |sample_card| op soortgelijke wijze gebruikt.
 Aan deze oplossingsmethode zit echter nog steeds het volgende nadeel:
@@ -3301,30 +3309,30 @@ Ook gebruikers van deze \USE{derived classes} hebben mijn inziens de memberfunct
 Ze worden dus door mij verplicht de memberfunctie |read| te gebruiken zodat de returnwaarde altijd in volts is (ik hoop hiermee fouten bij het gebruik te voorkomen).
 
 Van de abstracte \USE{base class} |ADCCard| heb ik vervolgens de concrete classes |AD178| en |NI323| afgeleid. Zie \proglink{kaart2.cpp}:
-\cpplstinputfragment[linerange={24-40}]{kaart2.cpp}
+\cpplstinputfragment[linerange={23-39}]{kaart2.cpp}
 
 De diverse classes heb ik als volgt geïmplementeerd:
-\cpplstinputfragment[linerange={42-43,45-60,62-65,67-70,72-74,76-79,81-84,86-89,91-93,95-95}]{kaart2.cpp}
+\cpplstinputfragment[linerange={41-42,44-59,61-64,66-69,71-73,75-78,80-83,85-88,90-92,94-94}]{kaart2.cpp}
 
 De onderstaande functie heb ik een polymorfe parameter gegeven zodat hij met elk type ADC kaart gebruikt kan worden.
-\cpplstinputfragment[linerange={97-101}]{kaart2.cpp}
+\cpplstinputfragment[linerange={96-100}]{kaart2.cpp}
 
 Deze functie kan ik dan als volgt gebruiken:
-\cpplstinputfragment[linerange={103-103,108-112}]{kaart2.cpp}
+\cpplstinputfragment[linerange={102-107}]{kaart2.cpp}
 
 Merk op dat de functie |do_measurement| de in de \USE{base class} |ADCCard| gedefinieerde memberfunctie |read| aanroept die op zijn beurt de in de \emph{derived} class gedefinieerde memberfunctie |sample| aanroept.
 
 \subsection{Een kaart toevoegen}
 Als het programma nu aangepast moet worden zodat een nieuwe kaart (typenaam BB647) ook gebruikt kan worden, dan kan dit heel eenvoudig door de volgende class te declareren (\proglink{Bb647.h}):
-\cpplstinputfragment[linerange={6-13}]{Bb647.h}
+\cpplstinputfragment[linerange={5-12}]{Bb647.cppm}
 
-Met de volgende implementatie (\proglink{Bb647.cpp}):
-\cpplstinputfragment[linerange={7-8,10-13,15-18,20-22,24-24}]{Bb647.cpp}
+Met de volgende implementatie (\proglink{Bb647_impl.cpp}):
+\cpplstinputfragment[linerange={5-6,8-11,13-16,18-20,22-22}]{Bb647_impl.cpp}
 
 Het programma |main| kan nu als volgt aangepast worden (\proglink{Kaart4.cpp}):
-\cpplstinputfragment[linerange={12-12,17-23}]{kaart4.cpp}
+\cpplstinputfragment[linerange={11-18}]{kaart4.cpp}
 
-Als alle functie- en classdeclaraties in aparte |.h| en alle functie- en classdefinities in aparte |.cpp| files opgenomen zijn, dan hoeft alleen de nieuwe class en de nieuwe |main| functie opnieuw vertaald te worden.
+Als alle functie- en classdeclaraties in aparte module interfaces (.cppm) en alle functie- en classdefinities in aparte |.cpp| files opgenomen zijn, dan hoeft alleen de nieuwe class en de nieuwe |main| functie opnieuw vertaald te worden.
 De rest van het programma kan dan eenvoudig (zonder hercompilatie) meegelinkt worden.
 Dit voordeel komt voort uit het feit dat de functie |do_measurement| polymorf is.
 Aan de parameter die gedefinieerd is als een \hbox{\cppcode{ADCCard&}} kun je objecten van elke van deze class afgeleide classes (|AD178|, |NI323| of |BB647|) gebruiken.
@@ -3365,7 +3373,7 @@ class Component {
 public:
     virtual ~Component() = default;$\footnotemark$
     virtual complex<double> Z(double f) const = 0;
-    virtual void print(ostream& o) const = 0;
+    virtual string naar_string() const = 0;
 };
 \end{cpplstfragment}
 
@@ -3380,51 +3388,56 @@ Het type |complex| is opgenomen in de standaard \Cpp{} \USE{library}\footnote{%
 	Zie eventueel \url{https://en.cppreference.com/w/cpp/numeric/complex}.
 }. 
 De functie |Z| moet in een van |Component| afgeleide class de impedantie berekenen (een complex getal) bij de als parameter gegeven frequentie |f|.
-De functie |print| moet in een van |Component| afgeleide class het type en de waarde afdrukken op de als parameter gegeven \USE{output stream} |o|.
-Bijvoorbeeld: |L(1E-3)| voor een spoel van \SI{1}{\milli\henry}.
+De functie |naar_string| moet in een van |Component| afgeleide class het type en de waarde opslaan in een string en deze retourneren.
+Bijvoorbeeld: |"L(1E-3)"| voor een spoel van \SI{1}{\milli\henry}.
 
-Als we componenten ook met behulp van de |operator<<| willen afdrukken, moeten we deze operator als volgt \USE{overloaden} (\proglink{netwerk0.cpp}), zie \cref{sec:overloadoutput}:
-\cpplstinputfragment[linerange={37-40}]{netwerk0.cpp}
+Om componenten met behulp van de |print| en |println| af te kunnen drukken, is de template |std::formatter| gespecialiseerd voor |Component| (\proglink{netwerk0.cpp}), zie \csecref{sec:template specialisation}:
+\cpplstinputfragment[linerange={43-48}]{netwerk0.cpp}
 
 De classes |R|, |L| en |C| kunnen dan als volgt gebruikt worden:
-\cpplstinputfragment[linerange={84-99}]{netwerk0.cpp}
+\cpplstinputfragment[linerange={92-99}]{netwerk0.cpp}
 
 Merk op dat de functie |print_impedance_table| niet \squote{weet} welke |Component| gebruikt wordt.
 Dit betekent dat deze polymorfe functie voor alle huidige soorten componenten te gebruiken is.
 De functie is zelfs ook voor toekomstige soorten componenten bruikbaar.
 Dit maakt het programma eenvoudig uitbreidbaar.
 
+Om complexe getallen te kunnen printen, is in \proglink{netwerk0.cpp} de template |std::formatter| gespecialiseerd voor |complex<T>|, zie \csecref{sec:template specialisation}.
+
 De uitvoer van het bovenstaande programma is:
 \begin{coutput}
 Impedantie tabel voor: R(100)
 
-      freq                   Z
-        10             (100,0)
-       100             (100,0)
-      1000             (100,0)
-     10000             (100,0)
-    100000             (100,0)
-    1e+006             (100,0)
+   freq | Z
+-------------------------
+     10 | 100.000+0.000j
+    100 | 100.000+0.000j
+   1000 | 100.000+0.000j
+  10000 | 100.000+0.000j
+ 100000 | 100.000+0.000j
+1000000 | 100.000+0.000j
 
-Impedantie tabel voor: C(1e-005)
+Impedantie tabel voor: C(1e-05)
 
-      freq                   Z
-        10        (0,-1591.55)
-       100        (0,-159.155)
-      1000        (0,-15.9155)
-     10000        (0,-1.59155)
-    100000       (0,-0.159155)
-    1e+006      (0,-0.0159155)
+   freq | Z
+-------------------------
+     10 | 0.000-1591.549j
+    100 | 0.000-159.155j
+   1000 | 0.000-15.915j
+  10000 | 0.000-1.592j
+ 100000 | 0.000-0.159j
+1000000 | 0.000-0.016j
 
 Impedantie tabel voor: L(0.001)
 
-      freq                   Z
-        10       (0,0.0628319)
-       100        (0,0.628319)
-      1000         (0,6.28319)
-     10000         (0,62.8319)
-    100000         (0,628.319)
-    1e+006         (0,6283.19)
+   freq | Z
+-------------------------
+     10 | 0.000+0.063j
+    100 | 0.000+0.628j
+   1000 | 0.000+6.283j
+  10000 | 0.000+62.832j
+ 100000 | 0.000+628.319j
+1000000 | 0.000+6283.185j
 \end{coutput}
 
 \needspace{2\baselineskip}
@@ -3434,7 +3447,7 @@ Implementeer nu zelf de classes |R|, |C| en |L|.
 \needspace{2\baselineskip}
 \subsection*{Antwoord:}
 \vspace{-.4\baselineskip}
-\cpplstinputfragment[linerange={42-82}]{netwerk0.cpp}
+\cpplstinputfragment[linerange={50-90}]{netwerk0.cpp}
 
 \subsection{Serie- en parallelschakeling}
 Natuurlijk wil je het programma nu uitbreiden zodat je ook de impedantie van serieschakelingen kunt berekenen.
@@ -7700,6 +7713,7 @@ Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald k
 Over \USE{templates} valt nog veel meer te vertellen, onder andere:
 \begin{itemize}
 	\item \USE{Template specialisation};\\
+	\label{sec:template specialisation}
 	Een speciale versie van een template die alleen voor een bepaald type (bijvoorbeeld |int|) of voor bepaalde types (bijvoorbeeld |T*|) wordt gebruikt.
 	De laatste vorm wordt \emph{\USE{partial}} \USE{specialisation} genoemd.
 	\item Template memberfuncties;\\

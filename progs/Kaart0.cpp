@@ -1,7 +1,6 @@
 // Een gestructureerde oplossing ... zo deden we het vroeger!
 
-#include <iostream>
-
+import std;
 using namespace std;
 
 enum Card_type {AD178, NI323};
@@ -20,11 +19,11 @@ void init_card(ADCCard& card, Card_type type) {
     switch (card.type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "AD178 is geinitialiseeerd.\n";
+            println("AD178 is geinitialiseeerd.");
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "NI323 is geinitialiseeerd.\n";
+            println("NI323 is geinitialiseeerd.");
             break;
     }
 }
@@ -35,11 +34,11 @@ void select_channel(ADCCard& card, int channel) {
     switch (card.type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "Kanaal " << channel << " van AD178 is geselecteerd.\n";
+            println("Kanaal {} van AD178 is geselecteerd.", channel);
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "Kanaal " << channel << " van NI323 is geselecteerd.\n";
+            println("Kanaal {} van NI323 is geselecteerd.", channel);
             break;
     }
 }
@@ -54,11 +53,11 @@ void set_amplifier(ADCCard& card, double factor) {
     switch (card.type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "Versterkingsfactor van AD178 is " << factor << ".\n";
+            println("Versterkingsfactor van AD178 is {:.2f}.", factor);
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "Versterkingsfactor van NI323 is " << factor << ".\n";
+            println("Versterkingsfactor van NI323 is {:.2f}.", factor);
             break;
         }
 }
@@ -84,19 +83,15 @@ double read_card(const ADCCard& card) {
 }
 
 int main() {
-    // druk alle doubles af met 2 cijfers na de decimale punt
-    cout.setf(ios_base::fixed, ios_base::floatfield);
-    cout.precision(2);
-    
     ADCCard c1;
     init_card(c1, AD178);
     set_amplifier(c1, 10);
     select_channel(c1, 3);
-    cout << "Kanaal " << get_channel(c1) << " van kaart c1 = " << read_card(c1) << " V.\n";
+    println("Kanaal {} van kaart c1 = {:.2f} V.", get_channel(c1), read_card(c1));
     
     ADCCard c2;
     init_card(c2, NI323);
     set_amplifier(c2, 5);
     select_channel(c2, 4);
-    cout << "Kanaal " << get_channel(c2) << " van kaart c2 = " << read_card(c2) << " V.\n";
+    println("Kanaal {} van kaart c2 = {:.2f} V.", get_channel(c2), read_card(c2));
 }

@@ -1,8 +1,5 @@
-#include <iostream>
-#include <valarray>
-#include <numeric>
+import std;
 #include <cassert>
-
 using namespace std;
 
 template<typename T>
@@ -72,18 +69,27 @@ ostream& operator<<(ostream& out, const Breuk& b) {
     return out << b.boven << '/' << b.onder;
 }
 
+template<>
+struct std::formatter<Breuk>: public formatter<string> {
+    auto format(const Breuk& breuk, auto& context) const {
+        ostringstream ss;
+        ss << breuk;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
 int main() {
     valarray<int> v1 {0, 1, 2, 3, 4};
-    print_valarray(v1);
+    println("{}", v1);
     valarray<int> v2 {5, 6, 7, 8, 9};
-    print_valarray(v2);
+    println("{}", v2);
     valarray<int> v3 {2 * v1 + v2};
-    print_valarray(v3);
+    println("{}", v3);
     
     valarray<Breuk> b1 { {1, 2}, {1, 3} };
-    print_valarray(b1);
+    println("{}", b1);
     valarray<Breuk> b2 { {2, 2}, {2, 3} };
-    print_valarray(b2);
+    println("{}", b2);
     valarray<Breuk> b3 {2 * b1 + b2};
-    print_valarray(b3);
+    println("{}", b3);
 }

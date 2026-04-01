@@ -11,7 +11,6 @@ void print1(const vector<int>& vec) {
     cout << '\n';
 }
 
-
 // Afdrukken van een vector door middel van indexering met decltype.
 void print2(const vector<int>& vec) {
     cout << "De inhoud van de vector is:\n";

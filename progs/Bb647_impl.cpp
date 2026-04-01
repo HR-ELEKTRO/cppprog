@@ -1,25 +1,22 @@
-#include <iostream>
-#include <iomanip>
+module hr.brojz.adc.bb647;
+import std;
 using namespace std;
-
-#include "bb647.h"
 
 BB647::BB647() {
     // ... de specifieke voor de BB647 benodigde code
-    cout << "BB647 is geinitialiseeerd.\n";
+    println("BB647 is geinitialiseeerd.");
 }
 void BB647::select_channel(int channel) {
     remember_channel(channel);
     // ... de specifieke voor de BB647 benodigde code
-    cout << "Kanaal " << channel << " van BB647 is geselecteerd.\n";
+    println("Kanaal {} van BB647 is geselecteerd.", channel);
 }
 void BB647::set_amplifier(double factor) {
     remember_amplifier(factor);
     // ... de specifieke voor de BB647 benodigde code
-    cout << "Versterkingsfactor van BB647 is " << factor << ".\n";
+    println("Versterkingsfactor van BB647 is {:.2f}.", factor);
 }
 int BB647::sample() const {
     // ... de specifieke voor de BB647 benodigde code
     return 0x4000; // 2.5 * f V
 }
-

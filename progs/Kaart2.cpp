@@ -1,7 +1,6 @@
 // Een object georienteerde oplossing ... wel HERBRUIKBAAR wel AANPASBAAR wel UITBREIDBAAR
 
-#include <iostream>
-
+import std;
 using namespace std;
 
 class ADCCard {
@@ -41,7 +40,7 @@ private:
 
 ADCCard::ADCCard(): amplifying_factor{1.0}, selected_channel{1} {
     // ... voor alle kaarten benodigde code
-    cout << "initialisatie is gestart.\n";
+    println("initialisatie is gestart.");
 }
 int ADCCard::get_channel() const {
     return selected_channel;
@@ -58,17 +57,17 @@ void ADCCard::remember_amplifier(double factor) {
 
 AD178::AD178() {
     // ... de specifieke voor de AD178 benodigde code
-    cout << "AD178 is geinitialiseeerd.\n";
+    println("AD178 is geinitialiseeerd.");
 }
 void AD178::select_channel(int channel) {
     remember_channel(channel);
     // ... de specifieke voor de AD178 benodigde code
-    cout << "Kanaal " << channel << " van AD178 is geselecteerd.\n";
+    println("Kanaal {} van AD178 is geselecteerd.", channel);
 }
 void AD178::set_amplifier(double factor) {
     remember_amplifier(factor);
     // ... de specifieke voor de AD178 benodigde code
-    cout << "Versterkingsfactor van AD178 is " << factor << ".\n";
+    println("Versterkingsfactor van AD178 is {:.2f}.", factor);
 }
 int AD178::sample() const {
     // ... de specifieke voor de AD178 benodigde code
@@ -77,17 +76,17 @@ int AD178::sample() const {
 
 NI323::NI323() {
     // ... de specifieke voor de NI323 benodigde code
-    cout << "NI323 is geinitialiseeerd.\n";
+    println("NI323 is geinitialiseeerd.");
 }
 void NI323::select_channel(int channel) {
     remember_channel(channel);
     // ... de specifieke voor de NI323 benodigde code
-    cout << "Kanaal " << channel << " van NI323 is geselecteerd.\n";
+    println("Kanaal {} van NI323 is geselecteerd.", channel);
 }
 void NI323::set_amplifier(double factor) {
     remember_amplifier(factor);
     // ... de specifieke voor de NI323 benodigde code
-    cout << "Versterkingsfactor van NI323 is " << factor << ".\n";
+    println("Versterkingsfactor van NI323 is {:.2f}.", factor);
 }
 int NI323::sample() const {
     // ... de specifieke voor de NI323 benodigde code
@@ -97,14 +96,10 @@ int NI323::sample() const {
 void do_measurement(ADCCard& card, double factor, int channel) {
     card.set_amplifier(factor);
     card.select_channel(channel);
-    cout << "Kanaal " << card.get_channel() << " = " << card.read() << " V.\n";
+    println("Kanaal {} = {:.2f} V.", card.get_channel(), card.read());
 }
 
 int main() {
-    // druk alle doubles af met 2 cijfers na de decimale punt
-    cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
-    cout.precision(2);
-    
     AD178 card1;
     do_measurement(card1, 10, 3);
     NI323 card2;

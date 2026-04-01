@@ -11,7 +11,7 @@ private:
     int data[12];
 };
 
-ostream& operator<<(ostream& out, const Dozijn& v);
+string naar_string(const Dozijn d);
 
 void Dozijn::zet_in(int index, int waarde) {
     if (index >= 0 && index < 12) 
@@ -24,35 +24,16 @@ int Dozijn::lees_uit(int index) const {
     return 0; /* ik weet niets beters */
 }
 
-ostream& operator<<(ostream& out, const Dozijn& d) {
-    out << d.lees_uit(0);
+string naar_string(const Dozijn& d) {
+    string s {format("{}", d.lees_uit(0))};
     for (int i {1}; i < 12; ++i)
-        out << ", " << d.lees_uit(i);
-    return out;
+        s += format(", {}", d.lees_uit(i));
+    return s;
 }
-
-template<>
-struct std::formatter<Dozijn>: public formatter<string> {
-    auto format(const Dozijn& d, auto& context) const {
-        ostringstream ss;
-        ss << d;
-        return formatter<string>::format(ss.str(), context);
-    }
-};
-
-template<>
-struct std::formatter<Dozijn>: public formatter<string> {
-    auto format(const Dozijn& d, auto& context) const {
-        context.advance_to(format_to(context.out(), "{}", d.lees_uit(0)));
-        for (int i {1}; i < 12; ++i)
-            context.advance_to(format_to(context.out(), ", {}", d.lees_uit(i)));
-        return context.out();
-    }
-};
 
 int main() {
     Dozijn kwadraten;
     for (int j {0}; j < 12; ++j)
         kwadraten.zet_in(j, j * j);
-    println("kwadraten = {}", kwadraten);
+    println("kwadraten = {}", naar_string(kwadraten));
 }

@@ -1,15 +1,12 @@
+export module hr.brojz.adc.ni323;
 
-#ifndef _ad178_
-#define _ad178_
-#include "Adccard.h"
+import hr.brojz.adc;
 
-class AD178: public ADCCard {
+export class NI323: public ADCCard {
 public:
-    AD178();
+    NI323();
     void select_channel(int channel) override;
     void set_amplifier(double factor) override;
 private:
     int sample() const override;
 };
-
-#endif

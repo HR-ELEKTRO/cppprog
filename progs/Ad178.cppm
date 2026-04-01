@@ -1,15 +1,12 @@
-#ifndef _bb674_
-#define _bb674_
+export module hr.brojz.adc.ad178;
 
-#include "Adccard.h"
+import hr.brojz.adc;
 
-class BB647: public ADCCard {
+export class AD178: public ADCCard {
 public:
-    BB647();
+    AD178();
     void select_channel(int channel) override;
     void set_amplifier(double factor) override;
 private:
     int sample() const override;
 };
-
-#endif

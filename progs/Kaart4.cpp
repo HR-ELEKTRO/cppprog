@@ -1,19 +1,11 @@
 // Een nieuwe kaart toevoegen: het bewijs voor uitbreidbaarheid
 
-#include <iostream>
-
-using namespace std;
-
-#include "Ad178.h"
-#include "Ni323.h"
-#include "Bb647.h" // new!e d
-#include "do_measurement.h"
+import hr.brojz.adc.ad178;
+import hr.brojz.adc.ni323;
+import hr.brojz.adc.bb647; // new!
+import hr.brojz.adc.do_measurement;
 
 int main() {
-    // druk alle doubles af met 2 cijfers na de decimale punt
-    cout.setf(ios_base::fixed, ios_base::floatfield);
-    cout.precision(2);
-
     AD178 card1;
     do_measurement(card1, 10, 3);
     NI323 card2;

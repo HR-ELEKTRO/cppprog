@@ -1,12 +1,10 @@
-#include <iostream>
-#include <iomanip>
+module hr.brojz.adc;
+import std;
 using namespace std;
-
-#include "Adccard.h"
 
 ADCCard::ADCCard(): amplifying_factor(1.0), selected_channel(1) {
     // voor alle kaarten benodigde code
-    cout << "initialisatie is gestart.\n";
+    println("initialisatie is gestart.");
 }
 int ADCCard::get_channel() const {
     return selected_channel;

@@ -1,7 +1,6 @@
 // Een oplossing m.b.v. een UDT ... wel herbruikbaar en aanpasbaar maar niet uitbreidbaar!
 
-#include <iostream>
-
+import std;
 using namespace std;
 
 enum Card_type {AD178, NI323};
@@ -25,11 +24,11 @@ ADCCard::ADCCard(Card_type name): type{name}, amplifying_factor{1.0}, selected_c
     switch (type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "AD178 is geinitialiseeerd.\n";
+            println("AD178 is geinitialiseeerd.");
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "NI323 is geinitialiseeerd.\n";
+            println("NI323 is geinitialiseeerd.");
             break;
     }
 }
@@ -40,11 +39,11 @@ void ADCCard::select_channel(int channel) {
     switch (type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "Kanaal " << channel << " van AD178 is geselecteerd.\n";
+            println("Kanaal {} van AD178 is geselecteerd.", channel);
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "Kanaal " << channel << " van NI323 is geselecteerd.\n";
+            println("Kanaal {} van NI323 is geselecteerd.", channel);
             break;
     }
 }
@@ -59,11 +58,11 @@ void ADCCard::set_amplifier(double factor) {
     switch (type) {
         case AD178:
             // ... de specifieke voor de AD178 benodigde code
-            cout << "Versterkingsfactor van AD178 is " << factor << ".\n";
+            println("Versterkingsfactor van AD178 is {:.2f}.", factor);
             break;
         case NI323:
             // ... de specifieke voor de NI323 benodigde code
-            cout << "Versterkingsfactor van NI323 is " << factor << ".\n";
+            println("Versterkingsfactor van NI323 is {:.2f}.", factor);
             break;
     }
 }
@@ -89,17 +88,13 @@ double ADCCard::read() const {
 }
 
 int main() {
-    // druk alle doubles af met 2 cijfers na de decimale punt
-    cout.setf(ios_base::fixed, ios_base::floatfield);
-    cout.precision(2);
-
     ADCCard k1 {AD178};
     k1.set_amplifier(10);
     k1.select_channel(3);
-    cout << "Kanaal " << k1.get_channel() << " van kaart k1 = " << k1.read() << " V.\n";
+    println("Kanaal {} van kaart k1 = {:.2f} V.", k1.get_channel(), k1.read());
 
     ADCCard k2 {NI323};
     k2.set_amplifier(5);
     k2.select_channel(4);
-    cout << "Kanaal " << k2.get_channel() << " van kaart k2 = " << k2.read() << " V.\n";
+    println("Kanaal {} van kaart k2 = {:.2f} V.", k2.get_channel(), k2.read());
 }

@@ -1,7 +1,6 @@
 // Een dozijn van een willekeurig type T
 
-#include <iostream>
-#include <string>
+import std;
 using namespace std;
 
 template<typename T> class Dozijn {
@@ -25,18 +24,18 @@ template<typename T> const T& Dozijn<T>::lees_uit(int index) const {
     return data[index];
 }
 
-template<typename T> ostream& operator<<(ostream& out, const Dozijn<T>& d) {
-    out << d.lees_uit(0);
+template<typename T> string naar_string(const Dozijn<T>& d) {
+    string s {format("{}", d.lees_uit(0))};
     for (int i {1}; i < 12; ++i)
-        out << ", " << d.lees_uit(i);
-    return out;
+        s += format(", {}", d.lees_uit(i));
+    return s;
 }
 
 int main() {
     Dozijn<int> kwadraten;
     for (int j {0}; j < 12; ++j)
         kwadraten.zet_in(j, j * j);
-    cout << "kwadraten = " << kwadraten << '\n';
+    println("kwadraten = {}", naar_string(kwadraten));
     Dozijn<string> provincies;
     provincies.zet_in(0, "Drenthe");
     provincies.zet_in(1, "Flevoland");
@@ -50,5 +49,5 @@ int main() {
     provincies.zet_in(9, "Utrecht");
     provincies.zet_in(10, "Zeeland");
     provincies.zet_in(11, "Zuid-Holland");
-    cout << "provincies = " << provincies << '\n';   
+    println("provincies = {}", naar_string(provincies));
 }

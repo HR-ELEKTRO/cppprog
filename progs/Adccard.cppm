@@ -1,7 +1,6 @@
-#ifndef _adccard_
-#define _adccard_
+export module hr.brojz.adc;
 
-class ADCCard {
+export class ADCCard {
 public:
     ADCCard();
     virtual ~ADCCard() = default;
@@ -17,6 +16,3 @@ private:
     int selected_channel;
     virtual int sample() const = 0;
 };
-
-#endif
-
