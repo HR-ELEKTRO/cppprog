@@ -5,20 +5,20 @@ using namespace std;
 
 int main() {
     try {
-        Stack<char>* s {nullptr};
+        unique_ptr<Stack<char>> s {nullptr};
 
         print("Welke stack wil je gebruiken (l = list, a = array): ");
         char c;
         do {
             cin.get(c);
             if (c == 'l' || c == 'L') {
-                s = new Stack_with_list<char>;
+                s = move(make_unique<Stack_with_list<char>>());
             }
             else if (c == 'a' || c == 'A') {
                 print("Hoeveel elementen wil je gebruiken: ");
                 int i;
                 cin >> i;
-                s = new Stack_with_array<char>(i);
+                s = move(make_unique<Stack_with_array<char>>(i));
             }
         } while (s == nullptr);
 
@@ -32,7 +32,6 @@ int main() {
             print("{}", s->top());
             s->pop();
         }
-        delete s;
     } catch (const exception& e) {
         println(cerr, "Error: {}", e.what());
     }
