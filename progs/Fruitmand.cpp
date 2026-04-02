@@ -1,8 +1,6 @@
 // Voorbeeld van gebruik van ABC, vector en polymorphism
 
-#include <iostream>
-#include <string>
-#include <vector>
+import std;
 using namespace std;
 
 class Fruit {
@@ -33,9 +31,9 @@ public:
         fp.push_back(&p);
     }
     void print_inhoud() const {
-        cout << "De fruitmand bevat:\n";
+        println("De fruitmand bevat:");
         for (const Fruit* e: fp)
-            cout << e->soort() << '\n';
+            println("  {}", e->soort());
     }
 private:
     vector<Fruit*> fp;
@@ -53,8 +51,8 @@ int main() {
 
 /* Uitvoer:
 De fruitmand bevat:
-Appel
-Appel
-Peer
+  Appel
+  Appel
+  Peer
 */
 

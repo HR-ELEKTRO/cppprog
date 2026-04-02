@@ -1,14 +1,12 @@
 // Voorbeeld van gebruik van ABC, virtual destructor en polymorphism
 
-#include <iostream>
-#include <string>
-#include <vector>
+import std;
 using namespace std;
 
 class Fruit {
 public:
     virtual ~Fruit() {
-        cout << "Er is een stuk Fruit verwijderd.\n";
+        println("Er is een stuk Fruit verwijderd.");
     }
     virtual string soort() const = 0;
 // ...
@@ -17,7 +15,7 @@ public:
 class Appel: public Fruit {
 public:
     ~Appel() override {
-        cout << "Er is een Appel verwijderd.\n";
+        println("Er is een Appel verwijderd.");
     }
     string soort() const override {
         return "Appel";
@@ -28,7 +26,7 @@ public:
 class Peer: public Fruit {
 public:
     ~Peer() override {
-        cout << "Er is een Peer verwijderd.\n";
+        println("Er is een Peer verwijderd.");
     }
     string soort() const override {
         return "Peer";
@@ -47,9 +45,9 @@ public:
         fp.push_back(p);
     }
     void print_inhoud() const {
-        cout << "De fruitmand bevat:\n";
+        println("De fruitmand bevat:");
         for (const Fruit* e: fp)
-            cout << e->soort() << '\n';
+            println("  {}", e->soort());
     }
 private:
     vector<Fruit*> fp;
@@ -66,9 +64,9 @@ int main() {
 
 /* Uitvoer:
 De fruitmand bevat:
-Appel
-Appel
-Peer
+  Appel
+  Appel
+  Peer
 Er is een Appel verwijderd.
 Er is een stuk Fruit verwijderd.
 Er is een Appel verwijderd.
@@ -80,9 +78,9 @@ Er is een stuk Fruit verwijderd.
 // Als we de constructor in de class Fruit *NIET* virtual maken:
 /* Uitvoer:
 De fruitmand bevat:
-Appel
-Appel
-Peer
+  Appel
+  Appel
+  Peer
 Er is een stuk Fruit verwijderd.
 Er is een stuk Fruit verwijderd.
 Er is een stuk Fruit verwijderd.

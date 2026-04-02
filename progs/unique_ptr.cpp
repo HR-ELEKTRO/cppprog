@@ -1,15 +1,13 @@
-#include <iostream>
-#include <memory>
-
+import std;
 using namespace std;
 
 class Test {
 public:
     Test(int i): waarde{i} {
-        cout << "Test object met waarde " << waarde << " aangemaakt.\n";
+        println("Test object met waarde {} aangemaakt.", waarde);
     }
     ~Test() {
-        cout << "Test object met waarde " << waarde << " verwijderd.\n";
+        println("Test object met waarde {} verwijderd.", waarde);
     }
     bool is_waarde(int i) const {
         return waarde == i;
@@ -21,38 +19,38 @@ private:
 void f0(int i) {
     Test t {i};
     if (t.is_waarde(0)) {
-        cout << "Test object heeft waarde 0\n";
+        println("Test object heeft waarde 0");
         return;
     }
-    cout << "Test object heeft waarde ongelijk aan 0\n";
+    println("Test object heeft waarde ongelijk aan 0");
 }
 
 void f1(int i) {
     Test* p {new Test{i}};
     if (p->is_waarde(0)) {
-        cout << "Test object heeft waarde 0\n";
+        println("Test object heeft waarde 0");
         return;
     }
-    cout << "Test object heeft waarde ongelijk aan 0\n";
+    println("Test object heeft waarde ongelijk aan 0");
     delete p;
 }
 
 void f2(int i) {
     unique_ptr<Test> p {new Test {i}};
     if (p->is_waarde(0)) {
-        cout << "Test object heeft waarde 0\n";
+        println("Test object heeft waarde 0");
         return;
     }
-    cout << "Test object heeft waarde ongelijk aan 0\n";
+    println("Test object heeft waarde ongelijk aan 0");
 }
 
 void f3(int i) {
     auto p {make_unique<Test>(i)};
     if (p->is_waarde(0)) {
-        cout << "Test object heeft waarde 0\n";
+        println("Test object heeft waarde 0");
         return;
     }
-    cout << "Test object heeft waarde ongelijk aan 0\n";
+    println("Test object heeft waarde ongelijk aan 0");
 }
 
 int main() {

@@ -3566,16 +3566,16 @@ Er zijn twee soorten smart pointers die veel gebruikt worden.
 De |unique_pointer| en de |shared_pointer|.
 
 Een |unique_ptr| gebruik je als er één eigenaar is van de data waar de pointer naar wijst.
-Als deze pointer ophoud te bestaan, dan wordt automatisch de operator |delete| aangeroepen op de pointer.
+Als deze pointer ophoudt te bestaan, dan wordt automatisch de operator |delete| aangeroepen op de pointer.
 Zie \proglink{unique_ptr.cpp}.
 
 In de onderstaande functie wordt dynamisch een object aangemaakt van de class |Test|.
 De functie kan via twee paden verlaten worden.
 De programmeur is echter vergeten om in een van deze paden |delete| aan te roepen.
-Ook als de functie |is_waarde| een exception gooit, dan wordt |delete| niet aangeroepen.
+Ook als de functie |is_waarde| een exception gooit, zie \cref{exceptions}, dan wordt |delete| niet aangeroepen.
 Deze functie kan dus een geheugenlek veroorzaken. 
  
-\cpplstinputfragment[linerange={30-38}]{unique_ptr.cpp}
+\cpplstinputfragment[linerange={28-36}]{unique_ptr.cpp}
 
 In de onderstaande functie wordt dynamisch een object aangemaakt van de class |Test|.
 De functie kan via twee paden verlaten worden.
@@ -3586,14 +3586,14 @@ Ook als de functie |is_waarde| een exception, zie \cref{exceptions}, gooit, dan 
 Als een functie verlaten wordt doordat er een excption wordt gegooid, dan worden de lokale variabelen namelijk netjes verwijderd.
 Deze functie kan dus \emph{geen} geheugenlek veroorzaken. 
 
-\cpplstinputfragment[linerange={40-47}]{unique_ptr.cpp}
+\cpplstinputfragment[linerange={38-45}]{unique_ptr.cpp}
 
 Je kunt gebruik maken van de standaard functie |make_unique| om een dynamisch object aan te maken en het beheer over te dragen aan een |unique_ptr|\footnote{%
 	Dit wordt ook aangeraden in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#r23-use-make_unique-to-make-unique_ptrs}{R.23}.
 }.
 Het is dan ook niet meer nodig om zelf |new| aan te roepen:
 
-\cpplstinputfragment[linerange={50-50}]{unique_ptr.cpp}
+\cpplstinputfragment[linerange={48-48}]{unique_ptr.cpp}
 
 Een |unique_ptr| kan \emph{niet} gekopieerd worden.
 Er kan namelijk maar één eigenaar zijn van de data waar de pointer naar wijst.
@@ -3643,19 +3643,19 @@ public:
 };
 
 Breuk::~Breuk() {
-    cout << "Een breuk met de waarde " << boven << "/" << onder << " is verwijderd uit het geheugen.\n";
+    println("Een breuk met de waarde {}/{} is verwijderd uit het geheugen.", boven, onder);
 }
 \end{cpplstfragment}
 
 Het hoofdprogramma om deze versie van |Breuk| te testen is (zie \cpageref{breuk1::main}):
-\cpplstinputfragment[linerange={84-97}]{Breuk1_destructor.cpp}
+\cpplstinputfragment[linerange={83-96}]{Breuk1_destructor.cpp}
 
 \needspace{3\baselineskip}
 De uitvoer van dit programma (\proglink{Breuk1\_destructor.cpp}) is nu:
 \begin{coutput}
-b1 \{4\} = 4/1
-b2 \{23, -5\} = -23/5
-b3 \{b2\} = -23/5
+b1 {4} = 4/1
+b2 {23, -5} = -23/5
+b3 {b2} = -23/5
 b3.abs() = 23/5
 b3 = b2 = -23/5
 Een breuk met de waarde 5/1 is verwijderd uit het geheugen.
@@ -3681,7 +3681,7 @@ Iets uit elkaar halen gaat ook altijd in de omgekeerde volgorde dan iets in elka
 We zien dat halverwege de functie |main| ook nog een |Breuk| object wordt verwijderd. 
 Dit lijkt op het eerste gezicht wat vreemd.
 Als we goed kijken, zien we dat deze \USE{destructor} wordt aangeroepen bij het uitvoeren van de volgende regel uit |main|:
-\cpplstinputfragment[linerange={95-95}]{Breuk1_destructor.cpp}
+\cpplstinputfragment[linerange={94-94}]{Breuk1_destructor.cpp}
 
 Snap je welk |Breuk| object aan het einde van deze regel wordt verwijderd? 
 Lees indien nodig \cref{sec:conversieconstructor} nog eens door.
@@ -3714,14 +3714,14 @@ Hier volgt een voorbeeld van het gebruik van een ABC en polymorfisme
 % harde return in printed versie om overfull hbox te voorkomen
 \iftoggle{ebook}{ }{\\}%
 (\proglink{Fruit\\-mand\_\\-de\\-struc\\-tor.cpp}):
-\cpplstinputfragment[linerange={8-65}]{Fruitmand_destructor.cpp}
+\cpplstinputfragment[linerange={6-63}]{Fruitmand_destructor.cpp}
 
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
 De fruitmand bevat:
-Appel
-Appel
-Peer
+  Appel
+  Appel
+  Peer
 Er is een Appel verwijderd.
 Er is een stuk Fruit verwijderd.
 Er is een Appel verwijderd.
@@ -3733,9 +3733,9 @@ Er is een stuk Fruit verwijderd.
 Als in de \USE{base class} |Fruit| \emph{geen} \USE{virtual destructor} gedefinieerd wordt maar een gewone (non-virtual) \USE{destructor} die \emph{niet} \USE{overridden} wordt voor |Appel| en |Peer|, dan wordt de uitvoer als volgt:
 \begin{coutput}
 De fruitmand bevat:
-Appel
-Appel
-Peer
+  Appel
+  Appel
+  Peer
 Er is een stuk Fruit verwijderd.
 Er is een stuk Fruit verwijderd.
 Er is een stuk Fruit verwijderd.
@@ -3766,23 +3766,23 @@ In elke class die nu of in de toekomst als \USE{base class} gebruikt wordt moete
 \label{sec:toepassingunique_ptr}
 In de voorgaande paragraaf is de class |Fruitmand| als volgt gedefinieerd:
 
-\cpplstinputfragment[linerange={39-43,45-56}]{Fruitmand_destructor.cpp}
+\cpplstinputfragment[linerange={37-41,43-54}]{Fruitmand_destructor.cpp}
 
 \needspace{2\baselineskip}
 Deze class werd als volgt gebruikt:
-\cpplstinputfragment[linerange={59-63}]{Fruitmand_destructor.cpp}
+\cpplstinputfragment[linerange={57-61}]{Fruitmand_destructor.cpp}
 
 De class |Fruitmand| heeft een destructor waarin al het aan de fruitmand toegevoegde fruit wordt ge|delete| als de fruitmand wordt vrijgegeven.
 We kunnen deze verantwoordelijkheid ook overdragen aan een smart pointer.%
 \needspace{2\baselineskip}
 De |Fruitmand| bevat dan een |vector| van |unique_ptr|s en heeft geen destructor meer nodig:
-\cpplstinputfragment[linerange={40-52}]{Fruitmand_destructor_smart_pointer.cpp}
+\cpplstinputfragment[linerange={37-49}]{Fruitmand_destructor_smart_pointer.cpp}
 
 De standaardfunctie |move|, zie \cpageref{std::move}, wordt gebruikt om er voor te zorgen dat het eigenaarschap overgedragen wordt van de smart pointer |p| naar een in de |vector| opgeslagen |unique_ptr|. 
 
 \needspace{2\baselineskip}
 Deze class kan nu als volgt gebruikt worden:
-\cpplstinputfragment[linerange={55-59}]{Fruitmand_destructor_smart_pointer.cpp}
+\cpplstinputfragment[linerange={52-56}]{Fruitmand_destructor_smart_pointer.cpp}
 
 Als de variabele |m| wordt verwijderd, wordt de (default) destructor van |Fruitmand| aangeroepen.
 Deze (default) destructor roept de destructor aan van al zijn datamembers in dit geval is dat |m.fp|.
@@ -3792,9 +3792,9 @@ Elk element is een |unique_pointer| en elke destructor van die |unique_pointer| 
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
 De fruitmand bevat:
-Appel
-Appel
-Peer
+  Appel
+  Appel
+  Peer
 Er is een Appel verwijderd.
 Er is een stuk Fruit verwijderd.
 Er is een Appel verwijderd.
@@ -3822,7 +3822,7 @@ Als deze functie aangeroepen wordt om de impedantie van een condensator van 0 F 
 verschijnt de volgende vreemde uitvoer:
 
 \begin{coutput}
-(0,-inf)
+0.000-infj
 \end{coutput}
 
 De waarde |-inf| staat voor negatief oneindig.
@@ -3841,20 +3841,20 @@ Omdat macro's niet vanuit modules geexporteerd kunnen worden, moet de file |cass
 Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan een bepaalde voorwaarden (waarvan je \squote{zeker} weet dat ze geldig zijn) wordt voldaan.
 Je kunt de functie |impedance_C| voorzien van een \USE{assertion} (\proglink{impedance_C2.cpp}):
 
-\cpplstinputfragment[linerange={10-13}]{impedance_C2.cpp}
+\cpplstinputfragment[linerange={17-20}]{impedance_C2.cpp}
 
 Als je nu tijdens het debuggen deze functie aanroept om de impedantie van een condensator van 0 F uit te rekenen (of om de impedantie van een condensator bij 0 Hz uit te rekenen), beëindigt de |assert| functie het programma.
 De volgende foutmelding verschijnt:
 
 \begin{cpplstfragment}[language=]
-assertion "c != 0.0 && f != 0.0" failed: file "impedance_C2.cpp", line 11, function: std::complex<double> impedance_C(double, double)
+assertion "c != 0.0 && f != 0.0" failed: file "impedance_C2.cpp", line 18, function: std::complex<double> impedance_C(double, double)
 \end{cpplstfragment}
 
 Het programma stopt na deze melding.
 Als het programma echter gecompileerd wordt zonder zogenoemde debug informatie%
 \footnote{%
     In GCC moet je het programma met de optie \cppcode{-DNDEBUG} compileren om de \USE{assertions} te verwijderen.
-}, worden alle |assert| functies verwijderd en verschijnt weer de vreemde uitvoer |(0,-inf)|.
+}, worden alle |assert| functies verwijderd en verschijnt weer de vreemde uitvoer |0.000-infj|.
 
 De standaard functie |assert| is bedoeld om tijdens het ontwikkelen van programma's te controleren of iedereen zich aan bepaalde afspraken houdt.
 Als bijvoorbeeld is afgesproken dat de functie |impedance_C| alleen mag worden aangeroepen met argumenten die ongelijk aan 0 zijn, is dat prima met |assert| te controleren.
@@ -3906,7 +3906,7 @@ De class van de \USE{exception} die bedoeld is om te gooien als een parameter va
     Als je opgelet hebt bij de wiskunde lessen, komt deze naam je bekend voor.
 }. Zie \proglink{impedance_C4.cpp}
 
-\cpplstinputfragment[linerange={4-4,6-6,9-16}]{impedance_C4.cpp}
+\cpplstinputfragment[linerange={16-22}]{impedance_C4.cpp}
 
 Je kunt een \USE{exception} object gooien door het \Cpp{} \USE{keyword} |throw| te gebruiken.
 Bij het aanroepen van de \USE{constructor} van de class |domain_error| die gedefinieerd is in de \USE{include file} |<exception>| kun je een string meegeven die de oorzaak van de fout aangeeft.
@@ -3916,7 +3916,7 @@ Ook de functie waarin de functie |impedance_C| is aangeroepen wordt meteen afgeb
 Dit proces van afbreken wordt gestopt zodra de \USE{exception} wordt opgevangen.
 Als de \USE{exception} nergens wordt opgevangen, wordt het programma gestopt.
 
-\cpplstinputfragment[linerange={19-26}]{impedance_C4.cpp}
+\cpplstinputfragment[linerange={25-32}]{impedance_C4.cpp}
 
 \USE{Exceptions} kunnen worden opgevangen in een zogenaamd \emph{try\hyp{}blok}.
 Dit blok begint met het \USE{keyword} |try| en wordt afgesloten met het \USE{keyword} |catch|.
@@ -3935,8 +3935,8 @@ De class |domain_error| heeft een memberfunctie |what()| die de bij constructie 
 De uitvoer van het bovenstaande programma is:
 
 \begin{coutput}
-(0,-159.155)
-Frequentie == 0
+Z = 0.000-159.155j
+Fout: Frequentie == 0
 The END.
 \end{coutput}
 
@@ -3956,23 +3956,23 @@ Pas de impedance calculator (zie \cref{impedance calculator}) aan zodat dit prog
 
 \subsection*{Antwoord:}
 De classes |C| en |P| moeten worden aangepast (\proglink{netwerk2.cpp}):
-\cpplstinputfragment[linerange={80-96,113-128}]{netwerk2.cpp}
+\cpplstinputfragment[linerange={87-103,120-135}]{netwerk2.cpp}
  
 In het hoofdprogramma kunnen \USE{exceptions} als volgt worden opgevangen:
-\cpplstinputfragment[linerange={139-149}]{netwerk2.cpp}
+\cpplstinputfragment[linerange={147-157}]{netwerk2.cpp}
 
 \section{Het gebruik van zelfgedefinieerde exceptions}
 In plaats van het gebruik van de standaard gedefinieerde \USE{exceptions} kun je ook zelf \USE{exception} classes definiëren. Zie \proglink{impedance_C5.cpp}:
 
-\cpplstinputfragment[linerange={9-18}]{impedance_C5.cpp}
+\cpplstinputfragment[linerange={16-25}]{impedance_C5.cpp}
 
 Voorbeeld van gebruik:
-\cpplstinputfragment[linerange={20-30}]{impedance_C5.cpp}
+\cpplstinputfragment[linerange={27-37}]{impedance_C5.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
-(0,-159.155)
+Z = 0.000-159.155j
 Frequentie == 0
 The END.
 \end{coutput}
@@ -3991,15 +3991,15 @@ Doordat \USE{exceptions} gewoon objecten zijn kun je ze ook data en gedrag geven
 Je kunt bijvoorbeeld een |virtual| memberfunctie definiëren die een bij de \USE{exception} passende foutmelding geeft.
 Als je deze memberfunctie in specifiekere \USE{exceptions} \USE{override}, kun je een generieke \USE{exception} vangen en toch door middel van \USE{dynamic binding} de juiste foutmelding krijgen! Zie \proglink{impedance_C6.cpp}:
 
-\cpplstinputfragment[linerange={9-39}]{impedance_C6.cpp}
+\cpplstinputfragment[linerange={16-46}]{impedance_C6.cpp}
 
 Voorbeeld van gebruik:
-\cpplstinputfragment[linerange={42-49}]{impedance_C6.cpp}
+\cpplstinputfragment[linerange={49-56}]{impedance_C6.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
-(0,-159.155)
+Z = 0.000-159.155j
 Frequentie == 0
 The END.
 \end{coutput}
@@ -4015,11 +4015,11 @@ Dus:
     try {
     //  ...
     } catch (Frequency_error&) {
-        cout << "Frequency_error exception\n";
+        println("Frequency_error exception");
     } catch (Impedance_error&) {
-        cout << "Other exception derived from Impedance_error\n";
+        println("Other exception derived from Impedance_error");
     } catch (...) {
-        cout << "Other exception\n";
+        println("Other exception");
     }
 \end{cpplstfragment}
 
@@ -4031,9 +4031,9 @@ Waarom verschijnt bij het uitvoeren van de onderstaande code de foutmelding \hco
     try {
     //  ...
     } catch (Impedance_error&) {
-        cout << "Other exception derived from Impedance_error\n";
+        println("Other exception derived from Impedance_error");
     } catch (Frequency_error&) {
-        cout << "Frequency_error exception\n";
+        println("Frequency_error exception");
     }
 \end{cpplstfragment}
 

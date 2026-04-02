@@ -1,10 +1,17 @@
-#include <iostream>
-#include <complex>
-#include <cmath>
-
+import std;
 using namespace std;
-// define PI (which is not included in std C++)
-const double PI {atan(1.0) * 4};
+
+template<typename T> 
+struct std::formatter<std::complex<T>>: public formatter<T> {
+    auto format(const std::complex<T>& z, auto& context) const {
+        context.advance_to(formatter<T>::format(z.real(), context));
+        if (z.imag() >= 0)
+            context.advance_to(format_to(context.out(), "+"));
+        context.advance_to(formatter<T>::format(z.imag(), context));
+        context.advance_to(format_to(context.out(), "j"));
+        return context.out();
+    }
+};
 
 class Impedance_error {
 public:
@@ -35,22 +42,22 @@ complex<double> impedance_C(double c, double f) {
         throw Capacity_error {};
     if (f == 0.0)
         throw Frequency_error {};
-    return complex<double> {0, -1 / (2 * PI * f * c)};
+    return complex<double> {0, -1 / (2 * numbers::pi * f * c)};
 }
 
 int main() {
     try {
-        cout << impedance_C(1e-6, 1e3) << '\n';
-        cout << impedance_C(1e-6, 0) << '\n';
-        cout << "Dit was het!\n";
+        println("Z = {:.3f}", impedance_C(1e-6, 1e3));
+        println("Z = {:.3f}", impedance_C(1e-6, 0));
+        println("Dit was het!");
     } catch (const Impedance_error& e) {
-        cout << e.get_error_message() << '\n';
+        println("Error: {}", e.get_error_message());
     }
-    cout << "The END.\n";
+    println("The END.");
 }
 
 /* Uitvoer:
-(0,-159.155)
-Frequentie == 0
+Z = 0.000-159.155j
+Error: Frequentie == 0
 The END.
 */

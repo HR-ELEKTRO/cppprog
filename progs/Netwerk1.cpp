@@ -38,8 +38,8 @@ public:
 };
 
 template<typename T> 
-struct std::formatter<std::complex<T>>: public formatter<T> {
-    auto format(const std::complex<T>& z, auto& context) const {
+struct std::formatter<complex<T>>: public formatter<T> {
+    auto format(const complex<T>& z, auto& context) const {
         context.advance_to(formatter<T>::format(z.real(), context));
         if (z.imag() >= 0)
             context.advance_to(format_to(context.out(), "+"));

@@ -1,7 +1,6 @@
 // Werken met breuken in C++ ... destructor
 
-#include <iostream>
-#include <numeric>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -46,7 +45,7 @@ Breuk::Breuk(int t, int n): boven{t}, onder{n} {
 }
 
 Breuk::~Breuk() {
-    cout << "Een breuk met de waarde " << boven << "/" << onder << " is verwijderd uit het geheugen.\n";
+    println("Een breuk met de waarde {}/{} is verwijderd uit het geheugen.", boven, onder);
 }
 
 int Breuk::teller() const {
@@ -83,17 +82,17 @@ void Breuk::normaliseer() {
 
 int main() {
     Breuk b1 {4};
-    cout << "b1 {4} = " << b1.teller() << '/' << b1.noemer() << '\n';
+    println("b1 {{4}} = {}/{}", b1.teller(), b1.noemer());
     Breuk b2 {23, -5};
-    cout << "b2 {23, -5} = " << b2.teller() << '/' << b2.noemer() << '\n';
+    println("b2 {{23, -5}} = {}/{}", b2.teller(), b2.noemer());
     Breuk b3 {b2};
-    cout << "b3 {b2} = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3 {{b2}} = {}/{}", b3.teller(), b3.noemer());
     b3.abs();
-    cout << "b3.abs() = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3.abs() = {}/{}", b3.teller(), b3.noemer());
     b3 = b2;
-    cout << "b3 = b2 = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3 = b2 = {}/{}", b3.teller(), b3.noemer());
     b3.plus(5);
-    cout << "b3.plus(5) = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3.plus(5) = {}/{}", b3.teller(), b3.noemer());
 }
 
 /* Output:
@@ -103,12 +102,8 @@ b3 {b2} = -23/5
 b3.abs() = 23/5
 b3 = b2 = -23/5
 Een breuk met de waarde 5/1 is verwijderd uit het geheugen.
-Druk op enter om verder te gaan...
 b3.plus(5) = 2/5
 Een breuk met de waarde 2/5 is verwijderd uit het geheugen.
-Druk op enter om verder te gaan...
 Een breuk met de waarde -23/5 is verwijderd uit het geheugen.
-Druk op enter om verder te gaan...
 Een breuk met de waarde 4/1 is verwijderd uit het geheugen.
-Druk op enter om verder te gaan...
 */
