@@ -4113,9 +4113,9 @@ worden:
 \begin{cpplstfragment}
 class Deelnemer {
 public:
-	Deelnemer(const string& n, int p);
+	Deelnemer(string_view n, int p);
 	int punten() const;
-	const string& naam() const;
+	string naam() const;
 	void verhoogpunten(int p);
 private:
 	int pnt;
@@ -4135,7 +4135,8 @@ private:
 
 Stand s;
 \end{cpplstfragment}
-%TODO bovenstaande const string& als returntype van naam() kan net zo goed string zijn doordat RVO toch kopietje voorkomt.
+%TODO bovenstaande const string& als returntype van naam() kan net zo goed string zijn doordat RVO toch kopietje voorkomt. DONE
+%TODO string_view nog uitleggen!
 
 De lijst met deelnemers kan in C ook dynamisch gemaakt worden door het gebruik van |malloc| en |free| en door de ingebouwde datastructuur |struct| te combineren met pointers.
 Het fundamentele inzicht dat je moet krijgen is dat niet alleen code, maar ook data, \emph{recursief} kan worden gedefinieerd.
@@ -4286,7 +4287,7 @@ Om deze reden wordt een \USE{stack} ook wel een LIFO (Last In First Out) buffer 
 Het gedrag van een \USE{stack} (de interface) kan worden gedefinieerd met behulp van een ABC (Abstract Base Class).
 Dit kan bijvoorbeeld als volgt, zie \proglink{stack.h}\footnote{In de ISO/ANSI \Cpp{} standaard \USE{library} is ook een type \USE{stack} gedefinieerd, zie \cref{sec:stdlib}.}:
 
-\cpplstinputfragment[linerange={1-17}]{stack.h}
+\cpplstinputfragment[linerange={1-14}]{stack.cppm}
 
 Je ziet dat de ABC |Stack| bestaat uit 2 doe\hyp{}functies (|push| en |pop|) en 3 vraag\hyp{}functies (|top|, |empty| en |full|).
 Het van de \USE{stack} afhalen van een element gaat bij deze interface in twee stappen.
@@ -4306,7 +4307,7 @@ Omdat de class |Stack| als een base class gebruikt wordt is het belangrijk dat d
 Als voorbeeld bekijken we nu een \Cpp{} programma \proglink{balance.cpp} dat controleert of alle haakjes in een tekst gebalanceerd zijn.
 We maken daarbij gebruik van de class \hcode{Stack_\\-with_\\-list<T>}, zie \proglink{stacklist.h}, die is afgeleid van de hierboven gedefinieerde |Stack<T>|.
 
-\cpplstinputfragment[linerange={1-41}]{balance.cpp}
+\cpplstinputfragment[linerange={1-38}]{balance.cpp}
 
 \section{Eenvoudige rekenmachine}
 In veel programma's moeten numerieke waarden ingevoerd worden.
@@ -4425,7 +4426,7 @@ Je mag jezelf beperken tot optellen en vermenigvuldigen.
 
 \subsection*{Antwoord \proglink{postfix.cpp}:}
 \vspace{-.4\baselineskip}
-\cpplstinputfragment[linerange={4-43}]{postfix.cpp}
+\cpplstinputfragment[linerange={3-39}]{postfix.cpp}
 
 \subsection{Een infix-calculator}
 Een postfix-calculator is niet erg gebruiksvriendelijk.
@@ -4491,7 +4492,7 @@ Je mag jezelf beperken tot optellen en vermenigvuldigen.
 \needspace{2\baselineskip}
 \subsection*{Antwoord \proglink{infix_to_postfix.cpp}:}
 \vspace{-.4\baselineskip}
-\cpplstinputfragment[linerange={3-55}]{infix_to_postfix.cpp}
+\cpplstinputfragment[linerange={3-51}]{infix_to_postfix.cpp}
 
 \subsection*{Vraag:}
 Implementeer nu zelf een infix-calculator door de infix naar postfix converter te combineren met de postfix-calculator.
@@ -4499,7 +4500,7 @@ Je mag jezelf beperken tot optellen en vermenigvuldigen.
 
 \subsection*{Antwoord \proglink{infix.cpp}:}
 \vspace{-.4\baselineskip}
-\cpplstinputfragment[linerange={3-67}]{infix.cpp}
+\cpplstinputfragment[linerange={3-63}]{infix.cpp}
 
 Het is natuurlijk netter om het geheel in een class |Calculator| in te kapselen zodat de calculator eenvoudig kan worden (her)gebruikt.
 Zie \proglink{infix_calculator.cpp}.
@@ -4514,22 +4515,22 @@ Ik bespreek in dit hoofdstuk beide implementaties.
 \section{\USE{Stack} met behulp van een array}
 \label{sec:stackarray}
 
-Inhoud van de file \proglink{stackarray.h}:
+Inhoud van de file \proglink{stackarray.cppm}:
 
-\cpplstinputfragment[linerange={1-72}]{stackarray.h}
+\cpplstinputfragment[linerange={1-55}]{stackarray.cppm}
 
 Het programma \proglink{stackarray.cpp} om deze implementatie te testen:
 
-\cpplstinputfragment[linerange={3-20}]{stackarray.cpp}
+\cpplstinputfragment[linerange={3-24}]{stackarray.cpp}
 
 \section{\USE{Stack} met behulp van een gelinkte lijst}
-Inhoud van de file \proglink{stacklist.h}:
+Inhoud van de file \proglink{stacklist.cppm}:
 
-\cpplstinputfragment[linerange={1-6,12-34,38-79}]{stacklist.h}
+\cpplstinputfragment[linerange={1-4,6-29,33-65}]{stacklist.cppm}
 
 Het programma \proglink{stacklist.cpp} om deze implementatie te testen:
 
-\cpplstinputfragment[linerange={3-15,19-23}]{stacklist.cpp}
+\cpplstinputfragment[linerange={3-16,20-27}]{stacklist.cpp}
 
 \section{\USE{Stack} met array versus \USE{stack} met gelinkte lijst}
 Beide implementaties |Stack_with_array| en |Stack_with_list| hebben voor- en nadelen.
@@ -4553,7 +4554,7 @@ We kunnen dus concluderen dat een |Stack_with_array| minder overhead heeft voor 
 We kunnen de keuze voor het type \USE{stack} ook pas tijdens run time maken! 
 Dit is een uitstekend voorbeeld van het gebruik van polymorfisme, zie \proglink{stack.cpp}.
 
-\cpplstinputfragment[linerange={1-36}]{stack.cpp}
+\cpplstinputfragment[linerange={1-39}]{stack.cpp}
 
 In de praktijk komt het niet vaak voor dat je de gebruiker van een applicatie de implementatie van de \USE{stack} laat kiezen.
 Het kan echter wel voorkomen dat bij het vertalen van het programma nog niet bekend is hoe groot de objecten zijn die op de \USE{stack} geplaatst moeten worden.

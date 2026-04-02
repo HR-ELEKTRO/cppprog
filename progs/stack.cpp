@@ -1,14 +1,13 @@
-#include <iostream>
-#include <cassert>
-#include "stacklist.h"
-#include "stackarray.h"
+import std;
+import stacklist;
+import stackarray;
 using namespace std;
 
 int main() {
     try {
         Stack<char>* s {nullptr};
 
-        cout << "Welke stack wil je gebruiken (l = list, a = array): ";
+        print("Welke stack wil je gebruiken (l = list, a = array): ");
         char c;
         do {
             cin.get(c);
@@ -16,25 +15,25 @@ int main() {
                 s = new Stack_with_list<char>;
             }
             else if (c == 'a' || c == 'A') {
-                cout << "Hoeveel elementen wil je gebruiken: ";
+                print("Hoeveel elementen wil je gebruiken: ");
                 int i;
                 cin >> i;
                 s = new Stack_with_array<char>(i);
             }
         } while (s == nullptr);
 
-        cout << "Type een tekst en sluit af met .\n";
+        println("Type een tekst en sluit af met .");
         cin.get(c);
         while (c != '.') {
             s->push(c);
             cin.get(c);
         }
         while (!s->empty()) {
-            cout << s->top();
+            print("{}", s->top());
             s->pop();
         }
         delete s;
     } catch (const exception& e) {
-        cerr << e.what();
+        println(cerr, "Error: {}", e.what());
     }
 }

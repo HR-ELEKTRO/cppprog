@@ -1,16 +1,10 @@
-#ifndef _HR_BroJZ_Stack_with_list_
-#define _HR_BroJZ_Stack_with_list_
-
-#include <iostream>
-#include <cstdlib>
-#include <exception>
-#include "stack.h"
+export module stacklist;
+export import stack;
+import std;
+using namespace std;
 //#define VERBOSE
-#ifdef VERBOSE
-#include <iostream>
-#endif
 
-template <typename T> class Stack_with_list: public Stack<T> {
+export template <typename T> class Stack_with_list: public Stack<T> {
 public:
     Stack_with_list();
     ~Stack_with_list() override;
@@ -34,7 +28,7 @@ template <typename T> Stack_with_list<T>::Stack_with_list(): p(0) {
 
 template <typename T> Stack_with_list<T>::~Stack_with_list() {
 #ifdef VERBOSE
-    std::cerr << "Stack_with_list<T>::~Stack_with_list() called\n"; 
+    println(cerr, "Stack_with_list<T>::~Stack_with_list() called");
 #endif
     while (!empty())
         pop();
@@ -69,5 +63,3 @@ template <typename T> bool Stack_with_list<T>::full() const {
 template <typename T> Stack_with_list<T>::Node::Node(const T& t, Node* n):
          data(t), next(n) {
 }
-
-#endif

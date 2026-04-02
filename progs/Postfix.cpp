@@ -1,14 +1,13 @@
 // Gebruik een stack voor een postfix calculator
 
-#include <iostream>
-#include <cctype>
-#include "stacklist.h"
+import std;
+import stacklist;
 using namespace std;
 
 int main() {
     Stack_with_list<int> s;
     char c;
-    cout << "Type een postfix expressie (met + en * operator) en sluit af met =\n";
+    println("Type een postfix expressie (met + en * operator) en sluit af met =");
     cin >> c;
     while (c != '=') {
         if (isdigit(c)) {
@@ -18,23 +17,23 @@ int main() {
             s.push(i);
         }
         else if (c == '+') {
-            int op2 {s.top(); s.pop()};
-            int op1 {s.top(); s.pop()};
+            int op2 {s.top()}; s.pop();
+            int op1 {s.top()}; s.pop();
             s.push(op1 + op2);
         }
         else if (c == '*') {
-            int op2 {s.top(); s.pop()};
-            int op1 {s.top(); s.pop()};
+            int op2 {s.top()}; s.pop();
+            int op1 {s.top()}; s.pop();
             s.push(op1 * op2);
         }
         else {
-            cout << "Syntax error\n";
+            println("Syntax error");
         }
         cin >> c;
     }
-    cout << "= " << s.top() << '\n';
+    println("= {}", s.top());
     s.pop();
     if (!s.empty()) {
-        cout << "Fout operator ontbreekt.\n";
+        println("Fout operator ontbreekt.");
     }
 }

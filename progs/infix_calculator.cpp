@@ -1,9 +1,6 @@
-#include <iostream>
-#include <sstream>
-#include <cctype>
+import std;
+import stacklist;
 #include <cassert>
-#include <cmath>
-#include "stacklist.h"
 using namespace std;
 
 // Deze Calculator class berekent de waarde van een infix expressie
@@ -49,7 +46,7 @@ int Calculator::calculate(const string& s){
             s1.pop();
         }
         else {
-            cout << "Syntax error\n";
+            println("Syntax error");
         }
         is >> c;
     }
@@ -59,7 +56,7 @@ int Calculator::calculate(const string& s){
     int result {s2.top()};
     s2.pop();
     if (!s2.empty()) {
-        cout << "Fout operator ontbreekt.\n";
+        println("Fout operator ontbreekt.");
         s2.pop();
     }
     return result;
@@ -91,10 +88,11 @@ int main() {
     assert(c.calculate("(3 * 4 + (40 / (23 - 7 % 4)) * 2 ^ 1) ^ 2 =") == 256);
     string s;
     do {
-        cout << "Type een infix expressie en sluit af met <enter>\n";
+        println("Type een infix expressie afgesloten met een =");
+        println("<Enter> om te stoppen");
         getline(cin, s);
         if (!s.empty()) {
-            cout << "= " << c.calculate(s + '=') << '\n';
+            println("= {}", c.calculate(s + '='));
         }
     } while (!s.empty());
 }

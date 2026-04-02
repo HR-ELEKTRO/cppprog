@@ -1,8 +1,7 @@
 // Gebruik twee stacks voor een infix calculator
 
-#include <iostream>
-#include <cctype>
-#include "stacklist.h"
+import std;
+import stacklist;
 using namespace std;
 
 bool has_lower_prio(char op1, char op2) {
@@ -23,7 +22,7 @@ int main() {
     Stack_with_list<char> s1;
     Stack_with_list<int> s2;
     char c;
-    cout << "Type een infix expressie (met + en * operator) en sluit af met =\n";
+    println("Type een infix expressie (met + en * operator) en sluit af met =");
     cin >> c;
     while (c != '=') {
         if (isdigit(c)) {
@@ -48,17 +47,17 @@ int main() {
             s1.pop();
         }
         else {
-            cout << "Syntax error\n";
+            println("Syntax error");
         }
         cin >> c;
     }
     while (!s1.empty()) {
         process_operator(s1, s2);
     }
-    cout << "= " << s2.top() << '\n';
+    println("= {}", s2.top());
     s2.pop();
     if (!s2.empty()) {
-        cout << "Fout operator ontbreekt.\n";
+        println("Fout operator ontbreekt.");
         s2.pop();
     }
 }

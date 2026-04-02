@@ -1,14 +1,14 @@
 // Een stack geimplementeerd d.m.v. een list
 
-#include <iostream>
-#include "stacklist.h"
+import std;
+import stacklist;
 using namespace std;
 
 int main() {
     try {
         Stack_with_list<char> s;
         char c;
-        cout << "Type een tekst en sluit af met .\n";
+        println("Type een tekst en sluit af met .");
         cin.get(c);
         while (c != '.') {
             s.push(c);
@@ -18,10 +18,10 @@ int main() {
     //  Stack_with_list<char> t {s};
     //  Error: use of deleted function 'Stack_with_list<char>::Stack_with_list(const Stack_with_list<char>&)'
         while (!s.empty()) {
-            cout << s.top();
+            print("{}", s.top());
             s.pop();
         }
     } catch (const exception& e) {
-        cerr << e.what();
+        println(cerr, "Error: {}", e.what());
     }
 }

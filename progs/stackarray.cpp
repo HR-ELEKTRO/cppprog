@@ -1,24 +1,24 @@
 // Een stack geimplementeerd d.m.v. een array
 
-#include <iostream>
-#include "stackarray.h"
+import std;
+import stackarray;
 using namespace std;
 
 int main() {
     try {
         Stack_with_array<char> s {32};
         char c;
-        cout << "Type een tekst en sluit af met .\n";
+        println("Type een tekst en sluit af met .");
         cin.get(c);
         while (c != '.') {
             s.push(c);
             cin.get(c);
         }
         while (!s.empty()) {
-            cout << s.top();
+            print("{}", s.top());
             s.pop();
         }
     } catch (const exception& e) {
-        cerr << e.what();
+        println(cerr, "Error: {}", e.what());
     }
 }

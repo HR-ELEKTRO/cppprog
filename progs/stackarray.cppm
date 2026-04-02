@@ -1,10 +1,9 @@
-#ifndef _HR_BROJZ_Stack_with_array_
-#define _HR_BROJZ_Stack_with_array_
+export module stackarray;
+export import stack;
+import std;
+using namespace std;
 
-#include <exception>
-#include "stack.h"
-
-template <typename T> class Stack_with_array: public Stack<T> {
+export template <typename T> class Stack_with_array: public Stack<T> {
 public:
     explicit Stack_with_array(size_t size);
     ~Stack_with_array() override;
@@ -54,5 +53,3 @@ template <typename T> bool Stack_with_array<T>::empty() const {
 template <typename T> bool Stack_with_array<T>::full() const {
     return i == s;
 }
-
-#endif

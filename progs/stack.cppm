@@ -1,7 +1,6 @@
-#ifndef _HR_BroJZ_Stack_
-#define _HR_BroJZ_Stack_
+export module stack;
 
-template <typename T> class Stack {
+export template <typename T> class Stack {
 public:
     Stack() = default;
     Stack(const Stack&) = delete;
@@ -13,5 +12,3 @@ public:
     virtual bool empty() const = 0;
     virtual bool full() const = 0;
 };
-
-#endif
