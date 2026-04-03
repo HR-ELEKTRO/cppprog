@@ -1,8 +1,4 @@
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <iterator>
-#include <algorithm>
+import std;
 using namespace std;
 
 int main() {

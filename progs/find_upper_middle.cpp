@@ -7,16 +7,12 @@
 // Afhankelijk van het soort iterator wordt de meest efficiente implementatie
 // gekozen (tijdens compile time).
 
-#include <iostream>
-#include <vector>
-#include <list>
-#include <forward_list>
-#include <iterator>
+import std;
 using namespace std;
 
-template <typename I>
-I find_upper_middle(I begin, I end, forward_iterator_tag /*dummy*/) {
-    cout << "forward iterator used\n";
+template <forward_iterator I>
+I find_upper_middle(I begin, I end) {
+    println("forward iterator used");
     I i {begin};
     while (begin != end) {
         ++begin;
@@ -28,9 +24,9 @@ I find_upper_middle(I begin, I end, forward_iterator_tag /*dummy*/) {
     return i;
 }
 
-template <typename I>
-I find_upper_middle(I begin, I end, bidirectional_iterator_tag /*dummy*/) {
-    cout << "bidirectional iterator used\n";
+template <bidirectional_iterator I>
+I find_upper_middle(I begin, I end) {
+    println("bidirectional iterator used");
     while (begin != end) {
         --end;
         if (begin != end) {
@@ -40,35 +36,30 @@ I find_upper_middle(I begin, I end, bidirectional_iterator_tag /*dummy*/) {
     return begin;
 }
 
-template <typename I>
-I find_upper_middle(I begin, I end, random_access_iterator_tag /*dummy*/) {
-    cout << "random access iterator used\n";
-    return begin + (end - begin)/2;
-}
-
-template <typename I>
+template <random_access_iterator I>
 I find_upper_middle(I begin, I end) {
-    return find_upper_middle(begin, end, typename iterator_traits<I>::iterator_category {});
+    println("random access iterator used");
+    return begin + (end - begin)/2;
 }
 
 int main() {
     forward_list<int> fl {1, 2};
-    cout << "find_upper_middle called on forward_list\n";
+    println("find_upper_middle called on forward_list");
     if (*find_upper_middle(fl.begin(), fl.end()) != 2) {
-        cerr << "Test 1 failed!\n";
+        println(cerr, "Test 1 failed!");
         return 1;
     }
     list<int> l {1, 2, 3};
-    cout << "find_upper_middle called on list\n";
+    println("find_upper_middle called on list");
     if (*find_upper_middle(l.begin(), l.end()) != 2) {
-        cerr << "Test 2 failed!\n";
+        println(cerr, "Test 2 failed!");
         return 2;
     }
     vector<int> v {1, 2, 3, 4};
-    cout << "find_upper_middle called on vector\n";
+    println("find_upper_middle called on vector");
     if (*find_upper_middle(v.begin(), v.end()) != 3) {
-        cerr << "Test 3 failed!\n";
+        println(cerr, "Test 3 failed!");
         return 3;
     }
-    cerr << "All tests passed!\n";
+    println("All tests passed!");
 }

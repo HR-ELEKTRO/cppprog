@@ -1,9 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <set>
-#include <iterator>
-#include <algorithm>
+import std;
 using namespace std;
 
 int main() {
