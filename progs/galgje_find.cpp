@@ -1,7 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <algorithm>
+import std;
 using namespace std;
 
 int main() {
@@ -9,9 +6,9 @@ int main() {
     vector<bool> gevonden (w.size(), false);
     do {
         for (string::size_type i {0}; i < w.size(); ++i) {
-            cout << (gevonden[i] ? w[i] : '.');
+            print("{}", gevonden[i] ? w[i] : '.');
         }
-        cout << "\nRaad een letter: ";
+        print("\nRaad een letter: ");
         char c {static_cast<char>(cin.get())}; cin.get();
         auto itr {w.cbegin()};
         int count {0};
@@ -20,10 +17,10 @@ int main() {
             ++itr;
             ++count;
         }
-        cout << "De letter '" << c << "' komt " << count << " keer voor in het te raden woord.\n";
+        println("De letter '{}' komt {} keer voor in het te raden woord.", c, count);
     }
     while (any_of(gevonden.cbegin(), gevonden.cend(), [](auto b) {
         return b == false;
     }));
-    cout << "Je hebt het woord \"" << w << "\" geraden.\n";
+    println("Je hebt het woord \"{}\" geraden.", w);
 }

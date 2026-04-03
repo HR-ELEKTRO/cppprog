@@ -1,35 +1,27 @@
-#include <vector>
-#include <iostream>
-#include <iomanip>
-#include <iterator>
-#include <algorithm>
+import std;
 using namespace std;
 
 class Score {
 public:
-    Score(const string& n, int p);
+    Score(string_view n, int p);
     int punten() const;
-    const string& naam() const;
+    string naam() const;
 private:
     string nm;
     int pnt;
 };
 
-Score::Score(const string& n, int p): nm{n}, pnt{p} {
+Score::Score(string_view n, int p): nm{n}, pnt{p} {
 }
 int Score::punten() const {
     return pnt;
 }
-const string& Score::naam() const {
+string Score::naam() const {
     return nm;
 }
 
-ostream& operator<<(ostream& out, const Score& d) {
-    return out << setw(5) << d.punten() << " " << d.naam();
-}
-
 int main() {
-    vector<Score> scores {
+    vector scores {
         Score {"Theo", 300},
         Score {"Marie-louise", 300},
         Score {"Koen", 300},
@@ -44,6 +36,8 @@ int main() {
     stable_sort(scores.begin(), scores.end(), [](const auto& d1, const auto& d2) {
         return d1.punten() > d2.punten();
     });
-    ostream_iterator<Score> iout {cout, "\n"};
-    copy(scores.begin(), scores.end(), iout);
+    println("Scores van hoog naar laag:");
+    for (const auto& s: scores) {
+        println("{:>5} {}", s.punten(), s.naam());
+    }
 }

@@ -27,22 +27,22 @@ int main() {
         println(cerr, "Test 1 failed!");
         return 1;
     }
-    forward_list<int> l2 {1};
+    forward_list l2 {1};
     if (*find_upper_middle(l2.begin(), l2.end()) != 1) {
         println(cerr, "Test 2 failed!");
         return 2;
     }
-    forward_list<int> l3 {1, 2};
+    forward_list l3 {1, 2};
     if (*find_upper_middle(l3.begin(), l3.end()) != 2) {
         println(cerr, "Test 3 failed!");
         return 3;
     }
-    forward_list<int> l4 {1, 2, 3};
+    forward_list l4 {1, 2, 3};
     if (*find_upper_middle(l4.begin(), l4.end()) != 2) {
         println(cerr, "Test 4 failed!");
         return 4;
     }
-    forward_list<int> l5 {1, 2, 3, 4};
+    forward_list l5 {1, 2, 3, 4};
     if (*find_upper_middle(l5.begin(), l5.end()) != 3) {
         println(cerr, "Test 5 failed!");
         return 5;

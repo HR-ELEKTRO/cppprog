@@ -1,12 +1,11 @@
-#include <iostream>
-#include <string>
+import std;
 using namespace std;
 
 int main() {
     string w {"galgje"};
     string geraden (w.length(), '.');
     do {
-        cout << geraden << "\nRaad een letter: ";
+        print("{}\nRaad een letter: ", geraden);
         char c {static_cast<char>(cin.get())}; cin.get();
         int count {0};
         for (string::size_type i {0}; i < w.length(); ++i) {
@@ -15,8 +14,8 @@ int main() {
                 ++count;
             }
         }
-        cout << "De letter '" << c << "' komt " << count << " keer voor in het te raden woord.\n";
+        println("De letter '{}' komt {} keer voor in het te raden woord.", c, count);
     }
     while (geraden != w);
-    cout << "Je hebt het woord \"" << w << "\" geraden.\n";
+    println("Je hebt het woord \"{}\" geraden.", w);
 }

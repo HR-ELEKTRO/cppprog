@@ -1,5 +1,4 @@
-#include <iostream>
-#include <vector>
+import std;
 using namespace std;
 
 template<typename T>
@@ -17,11 +16,11 @@ public:
 
 int main() {
     try {
-        vector<int> v1 {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        Save_vector<int> v2 {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        vector v1 {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        Save_vector v2 {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-        cout << "v1[10] = " << v1[10] << '\n';
-        cout << "v2[10] = " << v2[10] << '\n';
+        println("v1[10] = {}", v1[10]);
+        println("v2[10] = {}", v2[10]);
     } catch (const exception& e) {
         cerr << e.what() << '\n';
     }

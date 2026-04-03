@@ -5080,7 +5080,7 @@ Het standaard |sort| algoritme maakt bijvoorbeeld gebruik van indexering en die 
 Als je probeert om |sort| uit te voeren op een |list|, dan geeft de compiler een foutmelding.
 
 \begin{cpplstfragment}[mathescape=true]
-list<int> l {12, 18, 6};
+list l {12, 18, 6};
 sort(l.begin(), l.end()); // $\color{hrred}\textbf{error:}$ no match for 'operator-'
 \end{cpplstfragment}
 
@@ -5226,7 +5226,7 @@ De executietijd van deze functie is $O(1)$.
 Als deze functie echter aangeroepen wordt om het midden van een |list| te vinden dan geeft de compiler een foutmelding:
 
 \begin{cpplstfragment}[mathescape=true]
-list<int> l = {12, 18, 6};
+list l = {12, 18, 6};
 println("{}", *find_upper_middle(l.begin(), l.end())); // $\color{hrred}\textbf{error:}$ no matching function ...
 \end{cpplstfragment}
 
@@ -5241,7 +5241,7 @@ De executietijd van deze functie is $O(n)$.
 Als deze functie echter aangeroepen wordt om het midden van een |forward_list| te vinden dan geeft de compiler een foutmelding:
 
 \begin{cpplstfragment}[mathescape=true]
-forward_list<int> l {12, 18, 6};
+forward_list l {12, 18, 6};
 println("{}", *find_upper_middle(l.begin(), l.end())); // $\color{hrred}\textbf{error:}$ no matching function ...
 \end{cpplstfragment}
 
@@ -5376,7 +5376,7 @@ Je hebt in \cref{sec:iteratoren} gezien dat het |sort| algoritme niet gebruikt k
 Om deze reden heeft een |list| de memberfunctie |sort| waarmee de lijst wel gesorteerd kan worden.
 
 \begin{cpplstfragment}[mathescape=true]
-list<int> l {12, 18, 6};
+list l {12, 18, 6};
 l.sort(); // $\color{darkgreen}\textbf{Ok}$
 \end{cpplstfragment}
 
@@ -5385,7 +5385,7 @@ Je hebt in \cref{sec:asscon} gezien dat de gewone associatieve containers een zo
 Om deze reden hebben alle associatieve containers de memberfunctie |find| waarmee snel in de container gezocht kan worden.
 
 \begin{cpplstfragment}[mathescape=true]
-set<int> priem {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
+set priem {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
 auto i1 {find(priem.begin(), priem.end(), 91)}; // $\color{hrred}O(n)$
 auto i2 {priem.find(91)}; // $\color{darkgreen}O(\log{n})$
 \end{cpplstfragment}
@@ -5495,7 +5495,7 @@ Zolang de waarde |false| nog in de |vector| |gevonden| voorkomt, zijn nog niet a
 We maken hier gebruik van |count| om het aantal maal te tellen dat de waarde |false| in de |vector| |gevonden| voorkomt.
 Later, op \cpageref{pag:any_of}, wordt besproken hoe je dit met behulp van |any_of| kunt doen.
 
-\cpplstinputfragment[linerange={1-27}]{find.cpp}
+\cpplstinputfragment[linerange={1-24}]{find.cpp}
 
 Mogelijke invoer\footnote{%
 	De invoer is groen en onderstreept weergegeven.
@@ -5553,7 +5553,7 @@ De zoekvoorwaarde (condition) wordt op drie verschillende manieren opgegeven:
 	die een |bool| teruggeeft die aangeeft of aan de voorwaarde wordt voldaan.
 \end{itemize}
 
-\cpplstinputfragment[linerange={1-47,58-58}]{find_if.cpp}
+\cpplstinputfragment[linerange={1-45,65-65}]{find_if.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
@@ -5567,9 +5567,9 @@ Nu je gezien hebt hoe, met behulp van een lambda expressie, een bepaalde voorwaa
 
 \needspace{2\baselineskip}
 De regel:
-\cpplstinputfragment[linerange={25-25}]{find.cpp}
+\cpplstinputfragment[linerange={22-22}]{find.cpp}
 kan vervangen worden door (zie \proglink{galgje\_find.cpp}):
-\cpplstinputfragment[linerange={25-27}]{galgje_find.cpp}
+\cpplstinputfragment[linerange={22-24}]{galgje_find.cpp}
 
 Het |any_of| algoritme is sneller dan het |count| algoritme omdat het niet altijd alle elementen hoeft af te gaan.
 Om te testen of één of meer elementen in de |vector| |gevonden| de waarde |false| hebben werden de elementen die |false| zijn geteld, met |count| en vervolgens werd gekeken of dit een waarde ongelijk aan nul opleverde.
@@ -5593,7 +5593,7 @@ De bewerking die voor elk element uitgevoerd moet worden, wordt op twee verschil
 	\item door middel van een \emph{lambda\hyp{}functie} die de bewerking uitvoert.
 \end{itemize}
 
-\cpplstinputfragment[linerange={1-28,48-48}]{for_each.cpp}
+\cpplstinputfragment[linerange={1-21,46-46}]{for_each.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
@@ -5603,7 +5603,7 @@ De uitvoer van dit programma:
 \end{coutput}
 
 We kunnen alle elementen van een vector ook dubbel afdrukken met behulp van een \USE{range\hyp{}based for}:
-\cpplstinputfragment[linerange={52-56}]{for_each.cpp}
+\cpplstinputfragment[linerange={42-45}]{for_each.cpp}
 
 Het gebruik van een \USE{range\hyp{}based for} heeft dezelfde voordelen en nadelen als het gebruik van een |for_each| met een lambda\hyp{}functie.
 De syntax van de \USE{range\hyp{}based for} is echter eenvoudiger.
@@ -5638,7 +5638,7 @@ Het onderstaande programma \proglink{closure.cpp} laat zien hoe je met behulp va
 	Zie online: \proglink{accumulate.cpp}.
 }
 
-\cpplstinputfragment[linerange={1-15}]{closure.cpp}
+\cpplstinputfragment[linerange={1-13}]{closure.cpp}
 
 In plaats van |[&som_even]| kan ook |[&]| gebruikt worden.
 Het expliciet specificeren dat de variabele |som_even| ingesloten moet worden in de \USE{closure} heeft als voordeel dat de compiler een foutmelding geeft als je per ongeluk een andere variabele in de code van de lambda-functie gebruikt.
@@ -5656,7 +5656,7 @@ naar een |vector| met gehele toetsresultaten.
 Daarbij moeten de oorspronkelijke resultaten worden afgerond.
 Het minimaal te behalen gehele toetsresultaat is echter 1, dus alle oorspronkelijke toetsresultaten < 1.5 moeten omgezet worden naar 1.
 
-\cpplstinputfragment[linerange={1-26}]{resultaat_naar_geheel.cpp}
+\cpplstinputfragment[linerange={1-17}]{resultaat_naar_geheel.cpp}
 
 In dit geval is het noodzakelijk om het returntype van de lambda\hyp{}functie expliciet op te geven.
 De compiler is niet in staat om zelf het returntype te bepalen omdat de |round| functie een |double| teruggeeft.
@@ -5670,10 +5670,10 @@ Het is ook mogelijk om het parametertype van een lambda\hyp{}function als |auto|
 De compiler bepaalt dan zelf het juiste type.
 
 In \cref{sec:findif} is de volgende lambda\hyp{}functie gebruikt:
-\cpplstinputfragment[linerange={42-44}]{find_if.cpp}
+\cpplstinputfragment[linerange={40-42}]{find_if.cpp}
 
 Je kunt het type van de parameter van de lambda\hyp{}functie ook als |auto| declareren en door de compiler laten bepalen:
-\cpplstinputfragment[linerange={51-53}]{find_if.cpp}
+\cpplstinputfragment[linerange={49-51}]{find_if.cpp}
 
 De compiler bepaalt nu zelf dat het parametertype van de lambda functie |int| moet zijn omdat de elementen van de |list| |l| van het type |int| zijn.
 Het voordeel hiervan is dat je deze code niet aan hoeft te passen als het type van de variabele |l| van |list<int>| wordt gewijzigd in |list<double>|.
@@ -5773,19 +5773,19 @@ De transformatie (bewerking) wordt op twee\footnote{%
 	\item door middel van een \emph{lambda\hyp{}functie} die de transformatie uitvoert.
 \end{itemize}
 
-\cpplstinputfragment[linerange={1-33,44-44}]{transform.cpp}
+\cpplstinputfragment[linerange={1-23,39-39}]{transform.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
--3 -4 3 4
-1 2 3 4
--2 -2 6 8
--1 0 9 12
+v: [-3, -4, 3, 4]
+w: [1, 2, 3, 4]
+v na transform: [-2, -2, 6, 8]
+v na transform: [-1, 0, 9, 12]
 \end{coutput}
 
 Je kunt ook |auto| gebruiken om de parametertypes van de lambda\hyp{}functie te definiëren, zoals besproken in \cref{sec:autolambdapar}:
 
-\cpplstinputfragment[linerange={12-13,22-24}]{transform_auto.cpp}
+\cpplstinputfragment[linerange={27-29}]{transform.cpp}
 
 De compiler bepaalt nu zelf de parametertypes van de lambda\hyp{}functie.
 Het type van parameter |i1| moet |int| zijn omdat de elementen van de |vector| |v| van het type |int| zijn.
@@ -5803,20 +5803,15 @@ De |remove| algoritmen plaatsen alle elementen die niet verwijderd moeten worden
 Daarna moet de memberfunctie |erase| van de betreffende container aangeroepen worden om deze elementen daadwerkelijk te verwijderen.
 Dit wordt gedemonstreerd in het onderstaande programma \proglink{remove.cpp}:
 
-\cpplstinputfragment[linerange={1-36}]{remove.cpp}
+\cpplstinputfragment[linerange={1-27}]{remove.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
-Na initialisatie:
-0 1 4 9 16 25 36 49 64 81
-Na remove (tot returned iterator):
-1 9 25 49 81
-Na remove (hele vector):
-1 9 25 49 81 25 36 49 64 81
-Na erase (hele vector):
-1 9 25 49 81
-Na remove binnen erase:
-1 9 25 49 81
+Na initialisatie: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+Na remove (tot returned iterator): [1, 9, 25, 49, 81]
+Na remove (hele vector): [1, 9, 25, 49, 81, 25, 36, 49, 64, 81]
+Na erase (hele vector): [1, 9, 25, 49, 81]
+Na remove binnen erase: [1, 9, 25, 49, 81]
 \end{coutput}
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::generate\_n}
@@ -5826,7 +5821,7 @@ In \cref{sec:remove} werd de |vector| |v| gevuld met kwadraten door een |for|\hy
 Als alternatief kunnen we ook gebruik maken van het algoritme |generate_n|, een \USE{insert}\hyp{}iterator (zie \cref{sec:insitr}) en een \USE{closure} (zie \cref{sec:closure}.
 Al kun je jezelf in dit geval natuurlijk wel afvragen of de |for|\hyp{}lus niet eenvoudiger en duidelijker is.
 
-\cpplstinputfragment[linerange={1-15}]{generate_n.cpp}
+\cpplstinputfragment[linerange={1-11}]{generate_n.cpp}
 
 \section{Sorteren en bewerkingen op gesorteerde ranges}
 \label{sec:algo3}
@@ -5870,11 +5865,11 @@ Deze vergelijkingsfunctie moet als derde argument aan |sort| worden meegegeven.
 Dit is nodig als je in een andere volgorde wilt sorteren of als voor de te sorteren objecten geen |operator<| gedefinieerd is.
 
 Als je de getallen in het programma \proglink{stream_iterator.cpp} uit \cref{sec:vbiteratoren} van hoog naar laag wilt sorteren dan kun je de regel:
-\cpplstinputfragment[linerange={15-15}]{stream_iterator.cpp}
+\cpplstinputfragment[linerange={11-11}]{stream_iterator.cpp}
 vervangen door (zie \proglink{sort\_lambda.cpp})\footnote{%
 	Er is een nog eenvoudigere manier, zie \cref{sec:stdfunctieobjecten}.
 }:
-\cpplstinputfragment[linerange={15-17}]{sort_lambda.cpp}
+\cpplstinputfragment[linerange={11-13}]{sort_lambda.cpp}
 
 Een |stable_sort| is nodig als een range dubbel gesorteerd moet worden.
 Stel dat bij een spelletje, na afloop van elk spel, de naam van de speler en het behaalde aantal punten opgeslagen worden in een |vector| met objecten van de class |Score|.
@@ -5883,17 +5878,18 @@ Bij de tweede sorteeroperatie mogen scores met een gelijk aantal punten niet in 
 Voor de tweede sorteeroperatie moet dus een |stable_sort| gebruikt worden.
 Zie \proglink{sort\_deelnemers.cpp}.
 
-\cpplstinputfragment[linerange={1-49}]{sort_deelnemers.cpp}
+\cpplstinputfragment[linerange={1-43}]{sort_deelnemers.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
-400 Marie-Louise
-300 Anne
-300 Koen
-300 Linda
-300 Marie-Louise
-300 Theo
-50 Marie-Louise
+Scores van hoog naar laag:
+  400 Marie-louise
+  300 Anne
+  300 Koen
+  300 Linda
+  300 Marie-louise
+  300 Theo
+   50 Marie-louise
 \end{coutput}
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::includes}
@@ -5917,7 +5913,7 @@ Als dit niet lukt\footnote{%
 wordt net zo lang om een nieuwe letter gevraagd tot het toevoegen wel lukt.
 Zolang de verzameling |te_raden| nog \emph{geen} deelverzameling is van de verzameling |geraden|, zijn nog niet alle letters van het te raden woord geraden.
 
-\cpplstinputfragment[linerange={1-26}]{galgje_sets.cpp}
+\cpplstinputfragment[linerange={1-22}]{galgje_sets.cpp}
 
 Invoer en uitvoer van dit programma:
 \begin{coutput}
@@ -8760,7 +8756,7 @@ Zie \proglink{Array\_template\_rbf.cpp}:
 De in \cref{sec:class template array} gegeven class template Array kan niet met behulp van een initialisatielijst geïnitialiseerd worden. Als je dit toch probeert, dan krijg je een foutmelding:
 
 \begin{cpplstfragment}[mathescape=true]
-     Array<int> v {1, 2, 3};
+     Array v {1, 2, 3};
     //  $\color{hrred}\textbf{error:}$ no matching function for call to 'Array<int>::Array(<brace-enclosed initializer list>)'
 \end{cpplstfragment}
 

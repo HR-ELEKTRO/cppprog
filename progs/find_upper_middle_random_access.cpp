@@ -19,28 +19,28 @@ int main() {
         println(cerr, "Test 1 failed!");
         return 1;
     }
-    vector<int> v2 {1};
+    vector v2 {1};
     if (*find_upper_middle(v2.begin(), v2.end()) != 1) {
         println(cerr, "Test 2 failed!");
         return 2;
     }
-    vector<int> v3 {1, 2};
+    vector v3 {1, 2};
     if (*find_upper_middle(v3.begin(), v3.end()) != 2) {
         println(cerr, "Test 3 failed!");
         return 3;
     }
-    vector<int> v4 {1, 2, 3};
+    vector v4 {1, 2, 3};
     if (*find_upper_middle(v4.begin(), v4.end()) != 2) {
         println(cerr, "Test 4 failed!");
         return 4;
     }
-    vector<int> v5 {1, 2, 3, 4};
+    vector v5 {1, 2, 3, 4};
     if (*find_upper_middle(v5.begin(), v5.end()) != 3) {
         println(cerr, "Test 5 failed!");
         return 5;
     }
     println("All tests passed!");
-    // list<int> l = {12, 18, 6};
+    // list l = {12, 18, 6};
     // println("{}", *find_upper_middle(l.begin(), l.end()));
     // find_upper_middle_random_access.cpp: In function 'int main()':
     // find_upper_middle_random_access.cpp:44:37: error: no matching function for call to 'find_upper_middle(std::__cxx11::list<int>::iterator, std::__cxx11::list<int>::iterator)'

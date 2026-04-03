@@ -25,29 +25,28 @@ int main() {
         println(cerr, "Test 1 failed!");
         return 1;
     }
-    list<int> l2 {1};
+    list l2 {1};
     if (*find_upper_middle(l2.begin(), l2.end()) != 1) {
         println(cerr, "Test 2 failed!");
-
         return 2;
     }
-    list<int> l3 {1, 2};
+    list l3 {1, 2};
     if (*find_upper_middle(l3.begin(), l3.end()) != 2) {
         println(cerr, "Test 3 failed!");
         return 3;
     }
-    list<int> l4 {1, 2, 3};
+    list l4 {1, 2, 3};
     if (*find_upper_middle(l4.begin(), l4.end()) != 2) {
         println(cerr, "Test 4 failed!");
         return 4;
     }
-    list<int> l5 {1, 2, 3, 4};
+    list l5 {1, 2, 3, 4};
     if (*find_upper_middle(l5.begin(), l5.end()) != 3) {
         println(cerr, "Test 5 failed!");
         return 5;
     }
     println("All tests passed!");
-    // forward_list<int> l {12, 18, 6};
+    // forward_list l {12, 18, 6};
     // println("{}", *find_upper_middle(l.begin(), l.end()));
     // find_upper_middle_bidirectional.cpp: In function 'int main()':
     // find_upper_middle_bidirectional.cpp:51:37: error: no matching function for call to 'find_upper_middle(std::forward_list<int>::iterator, std::forward_list<int>::iterator)'

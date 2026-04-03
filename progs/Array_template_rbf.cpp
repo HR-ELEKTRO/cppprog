@@ -1,12 +1,9 @@
 // Template class Array
 // Support for range-based for
 // Support for initializer list
+// Support for formatted output
 
-#include <iostream>
-#include <cmath>
-#include <cassert>
-#include <initializer_list>
-
+import std;
 using namespace std;
 
 template <typename T> class Array {
@@ -121,18 +118,29 @@ template <typename T> ostream& operator<<(ostream& out, const Array<T>& v) {
     return out;
 }
 
-int main() {
-    Array<int> v{1, 2, 3, 4};
-    for (auto e: v) {
-        cout << e << " ";
+template<>
+struct std::formatter<Breuk>: public formatter<string> {
+    auto format(const Breuk& breuk, auto& context) const {
+        ostringstream ss;
+        ss << breuk;
+        return formatter<string>::format(ss.str(), context);
     }
-    cout << '\n';
+};
+
+template<typename T>
+struct std::formatter<Array<T>>: public range_formatter<T> {
+    auto format(const Array<T>& a, auto& context) const {
+        return range_formatter<T>::format({a.cbegin(), a.cend()}, context);
+    }
+};
+
+int main() {
+    Array v{1, 2, 3, 4};
+    println(v);
     Array<double> w(10);
     int i {1};
     for (auto& e: w) {
         e = 1.0/i++;
     }
-    for (auto e: w) {
-        cout << e << " ";
-    }
+    println(w);
 }

@@ -1,50 +1,28 @@
-#include <stack>
-#include <queue>
-#include <vector>
-#include <deque>
-#include <list>
-#include <forward_list>
-#include <iostream>
-#include <typeinfo>
+import std;
 using namespace std;
 
 template <typename S> void stack_test(S& s) {
-    cout << "stack_test voor: " << typeid(S).name() << '\n';
-    vector<int> v{1, 3, 2};
-    for (auto e: v) {
+    println("stack_test voor: {}", typeid(S).name());
+    for (auto e: {1, 3, 2}) {
         s.push(e);
     }
-    while (!s.empty()) {
-        cout << s.top() << " ";
-        s.pop();
-    }
-    cout << '\n';
+    println("{}", s);
 }
 
 template <typename Q> void queue_test(Q& q) {
-    cout << "queue_test voor: " << typeid(Q).name() << '\n';
-    vector<int> v{1, 3, 2};
-    for (auto e: v) {
+    println("queue_test voor: {}", typeid(Q).name());
+    for (auto e: {1, 3, 2}) {
         q.push(e);
     }
-    while (!q.empty()) {
-        cout << q.front() << " ";
-        q.pop();
-    }
-    cout << '\n';
+    println("{}", q);
 }
 
 template <typename P> void priority_queue_test(P& p) {
-    cout << "priority_queue_test voor: " << typeid(P).name() << '\n';
-    vector<int> v{1, 3, 2};
-    for (auto e: v) {
+    println("priority_queue_test voor: {}", typeid(P).name());
+    for (auto e: {1, 3, 2}) {
         p.push(e);
     }
-    while (!p.empty()) {
-        cout << p.top() << " ";
-        p.pop();
-    }
-    cout << '\n';
+    println("{}", p);
 }
 
 int main() {

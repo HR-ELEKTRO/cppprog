@@ -2,7 +2,7 @@ import std;
 using namespace std;
 
 int main() {
-    vector<int> v {1, 5, 4, 5, 4, 5, 9, 3};
+    vector v {1, 5, 4, 5, 4, 5, 9, 3};
     println("{}", v);
     // vector van voor naar achter doorzoeken
     auto eerste_vijf {find(v.begin(), v.end(), 5)};

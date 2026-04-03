@@ -1,8 +1,4 @@
-#include <iostream>
-#include <list>
-#include <algorithm>
-#include <vector>
-#include <stack>
+import std;
 using namespace std;
 
 class Hond { /* ... */ };
@@ -22,7 +18,7 @@ int main() {
     a = ++++b;
 //  a = b++++;
 //  error: lvalue required as increment operand
-    list<int> l {12, 18, 6};
+    list l {12, 18, 6};
 //  sort(l.begin(), l.end());
 //  error: no match for ‘operator-’
     int i;
@@ -43,11 +39,7 @@ int main() {
 //  Sint_bernard* sbp = new Hond; // NOT OK: een Hond is geen Sint_bernard
 //  error: invalid conversion from 'Hond*' to 'Sint_bernard*' 
 	vector v1 {1, 2, 3}; // v1 is van het type vector<int>
-    for (auto e: v1)
-        cout << e << " ";
-    cout << '\n';
+    println("v1 = {}", v1);
 	vector v2 {v1}; // v2 is ook van het type vector<int>
-    for (auto e: v2)
-        cout << e << " ";
-    cout << '\n';
+    println("v2 = {}", v2);
 }

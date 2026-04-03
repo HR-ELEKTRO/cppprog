@@ -1,7 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <iterator>
-#include <algorithm>
+import std;
 using namespace std;
 
 int main() {
@@ -13,7 +10,7 @@ int main() {
 //  Bewerking opgeven met een lambda functie.
 //  Gebruik auto als parametertype (werkt niet voor C++11, wel voor C++14).
     for_each(v.cbegin(), v.cend(), [](auto i) {
-        cout << i << " " << i << " ";
+        print("i = {}", i);
     });
-    cout << '\n';
+    println();
 }

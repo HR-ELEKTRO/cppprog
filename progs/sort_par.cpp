@@ -1,33 +1,25 @@
-#include <vector>
-#include <iostream>
-#include <iterator>
-#include <algorithm>
-#include <execution>
+import std;
 using namespace std;
 
 int main() {
     {
-        vector<int> rij {1, 7, 2, 5, 8, 3};
+        vector rij {1, 7, 2, 5, 8, 3};
         sort(rij.begin(), rij.end());
-        ostream_iterator<int> iout {cout, " "};
-        copy(rij.begin(), rij.end(), iout);
+        println("{}", rij);
     }
     {
-        vector<int> rij {1, 7, 2, 5, 8, 3};
+        vector rij {1, 7, 2, 5, 8, 3};
         sort(execution::seq, rij.begin(), rij.end());
-        ostream_iterator<int> iout {cout, " "};
-        copy(rij.begin(), rij.end(), iout);
+        println("{}", rij);
     }
     {
-        vector<int> rij {1, 7, 2, 5, 8, 3};
+        vector rij {1, 7, 2, 5, 8, 3};
         sort(execution::par, rij.begin(), rij.end());
-        ostream_iterator<int> iout {cout, " "};
-        copy(rij.begin(), rij.end(), iout);
+        println("{}", rij);
     }
     {
-        vector<int> rij {1, 7, 2, 5, 8, 3};
+        vector rij {1, 7, 2, 5, 8, 3};
         sort(execution::par_unseq, rij.begin(), rij.end());
-        ostream_iterator<int> iout {cout, " "};
-        copy(rij.begin(), rij.end(), iout);
+        println("{}", rij);
     }
 }

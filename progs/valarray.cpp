@@ -79,11 +79,11 @@ struct std::formatter<Breuk>: public formatter<string> {
 };
 
 int main() {
-    valarray<int> v1 {0, 1, 2, 3, 4};
+    valarray v1 {0, 1, 2, 3, 4};
     println("{}", v1);
-    valarray<int> v2 {5, 6, 7, 8, 9};
+    valarray v2 {5, 6, 7, 8, 9};
     println("{}", v2);
-    valarray<int> v3 {2 * v1 + v2};
+    valarray v3 {2 * v1 + v2};
     println("{}", v3);
     
     valarray<Breuk> b1 { {1, 2}, {1, 3} };

@@ -1,21 +1,17 @@
-#include <iostream>
-#include <string>
-#include <set>
-#include <algorithm>
-
+import std;
 using namespace std;
 
 int main() {
     string w {"galgje"};
     string geraden (w.length(), '.');
     do {
-        cout << geraden << "\nRaad een letter: ";
+        print("{}\nRaad een letter: ", geraden);
         char c {static_cast<char>(cin.get())}; cin.get();
         transform(w.cbegin(), w.cend(), geraden.cbegin(), geraden.begin(), [c](char cw, char cg) {
             return c == cw ? cw : cg;
         });
-        cout << "De letter '" << c << "' komt " << count(w.cbegin(), w.cend(), c) << " keer voor in het te raden woord.\n";
+        print("De letter '{}' komt {} keer voor in het te raden woord.\n", c, count(w.cbegin(), w.cend(), c));
     }
     while (geraden != w);
-    cout << "Je hebt het woord \"" << w << "\" geraden.\n";
+    print("Je hebt het woord \"{}\" geraden.\n", w);
 }

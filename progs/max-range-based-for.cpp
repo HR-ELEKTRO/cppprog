@@ -1,5 +1,4 @@
-#include <iostream>
-#include <vector>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -15,6 +14,6 @@ int max(const vector<int>& v) {
 }
 
 int main() {
-    vector<int> v = {12, 2, 17, 32, 1, 18};
-    cout << "max = " << max(v) << '\n';
+    vector v = {12, 2, 17, 32, 1, 18};
+    println("max = {}", max(v));
 }

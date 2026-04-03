@@ -43,19 +43,19 @@ I find_upper_middle(I begin, I end) {
 }
 
 int main() {
-    forward_list<int> fl {1, 2};
+    forward_list fl {1, 2};
     println("find_upper_middle called on forward_list");
     if (*find_upper_middle(fl.begin(), fl.end()) != 2) {
         println(cerr, "Test 1 failed!");
         return 1;
     }
-    list<int> l {1, 2, 3};
+    list l {1, 2, 3};
     println("find_upper_middle called on list");
     if (*find_upper_middle(l.begin(), l.end()) != 2) {
         println(cerr, "Test 2 failed!");
         return 2;
     }
-    vector<int> v {1, 2, 3, 4};
+    vector v {1, 2, 3, 4};
     println("find_upper_middle called on vector");
     if (*find_upper_middle(v.begin(), v.end()) != 3) {
         println(cerr, "Test 3 failed!");
