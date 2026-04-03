@@ -1,30 +1,21 @@
-#include <iostream>
-#include <string>
-#include <set>
+import std;
 using namespace std;
-
-void print(const multiset<string>& bag) {
-    cout << "De bag bevat: ";
-    for (const auto& e: bag)
-        cout << e << " ";
-    cout << '\n';
-}
 
 int main() {
     multiset<string> docenten {"Ron", "Daniël", "Roy", "Harry"};
     docenten.insert("Elles");
-    print(docenten);
+    println("De multiset bevat: {:n:s}", docenten);
     docenten.insert("Harry");
-    print(docenten);
+    println("De multiset bevat: {:n:s}", docenten);
     docenten.insert("Harry");
-    print(docenten);
-    cout << "Er zijn " << docenten.count("Harry") << " Harry's.\n";
+    println("De multiset bevat: {:n:s}", docenten);
+    println("Er zijn {} Harry's.", docenten.count("Harry"));
     docenten.erase(docenten.find("Harry"));
-    print(docenten);
+    println("De multiset bevat: {:n:s}", docenten);
     docenten.erase("Harry");
-    print(docenten);
+    println("De multiset bevat: {:n:s}", docenten);
     docenten.erase(docenten.find("Elles"));
-    print(docenten);
+    println("De multiset bevat: {:n:s}", docenten);
     docenten.erase(docenten.find("Ron"), docenten.end());
-    print(docenten);
+    println("De multiset bevat: {:n:s}", docenten);
 }

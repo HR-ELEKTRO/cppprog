@@ -4554,7 +4554,8 @@ We kunnen dus concluderen dat een |Stack_with_array| minder overhead heeft voor 
 We kunnen de keuze voor het type \USE{stack} ook pas tijdens run time maken! 
 Dit is een uitstekend voorbeeld van het gebruik van polymorfisme, zie \proglink{stack.cpp}.
 
-\cpplstinputfragment[linerange={1-39}]{stack.cpp}
+\cpplstinputfragment[linerange={1-38}]{stack.cpp}
+%TODO: verwijzen naar unique_ptr
 
 In de praktijk komt het niet vaak voor dat je de gebruiker van een applicatie de implementatie van de \USE{stack} laat kiezen.
 Het kan echter wel voorkomen dat bij het vertalen van het programma nog niet bekend is hoe groot de objecten zijn die op de \USE{stack} geplaatst moeten worden.
@@ -4586,13 +4587,13 @@ Het voorbeeldprogramma \proglink{std_string.cpp} laat zien dat je met een iterat
 Een C\hyp{}string is een array van karakters waarbij het einde van de string wordt aangegeven door het karakter NUL (|'\0'|).
 
 Met een pointer kun je als volgt door een C\hyp{}string heenlopen en de karakters één voor één benaderen:
-\cpplstinputfragment[linerange={8-11}]{std_string.cpp}
+\cpplstinputfragment[linerange={7-10}]{std_string.cpp}
 
 Je kunt ook het \USE{keyword} |auto| gebruiken om de compiler zelf het type van de pointer te laten bepalen.
-\cpplstinputfragment[linerange={17-20}]{std_string.cpp}
+\cpplstinputfragment[linerange={16-19}]{std_string.cpp}
 
 Met een iterator kun je als volgt door een |std::string| heenlopen en de karakters één voor één benaderen:
-\cpplstinputfragment[linerange={31-34}]{std_string.cpp}
+\cpplstinputfragment[linerange={30-33}]{std_string.cpp}
 
 Met behulp van een |string::const_iterator| kun je de karakters uit de |string| alleen lezen.
 De memberfunctie |cbegin()| geeft een |const_iterator| terug naar het eerste karakter van de string.
@@ -4602,7 +4603,7 @@ De memberfunctie |begin()| geeft een |iterator| terug naar het eerste karakter v
 De memberfunctie |end()| geeft een |iterator| terug net na het laatste element van de string.
 
 Je kunt ook het \USE{keyword} |auto| gebruiken om de compiler zelf het type van de iterator te laten bepalen.
-\cpplstinputfragment[linerange={40-43}]{std_string.cpp}
+\cpplstinputfragment[linerange={39-42}]{std_string.cpp}
 
 \section{Overzicht van de standaard library}
 \label{sec:stdliboverview}
@@ -4788,40 +4789,42 @@ Dit voorbeeldprogramma \proglink{stdvector.cpp} laat zien:
 	\item hoe door (een deel van) de vector heengelopen kan worden door middel van een \emph{iterator}%
 	\footnote{
 		Je kunt hierbij gebruik maken van een zogenoemde \emph{auto\hyp{}typed} variabele.
-		Deze variabele wordt geïnitialiseerd met \code{cbegin()}.
-		De memberfunctie geeft een \code{const_iterator} naar het eerste element in de container terug.
+		Deze variabele wordt geïnitialiseerd met \code{begin()}.
+		De memberfunctie geeft een \code{iterator} naar het eerste element in de container terug.
 	};
 	\item hoe door de vector heengelopen kan worden door middel van een \emph{\USE{range\hyp{}based for}};
 	\item hoe het gemiddelde van een rij getallen (opgeslagen in een vector) bepaald kan worden.
 \end{itemize}
 
-\cpplstinputfragment[linerange={1-105}]{std_vector.cpp}
+\cpplstinputfragment[linerange={1-85}]{std_vector.cpp}
 
-In het bovenstaande programma worden maar liefst 5 verschillende manieren gedemonstreerd om een |vector<int>| af te drukken.
-De eerste twee implementaties |print1| en |print2| gebruiken indexering om de elementen in de vector te benaderen.
+In het bovenstaande programma worden maar liefst 5 verschillende manieren gedemonstreerd om de elementen in een |vector<int>| te verdubbelen.
+De eerste twee implementaties |verdubbel1| en |verdubbel2| gebruiken indexering om de elementen in de vector te benaderen.
 In plaats van de expressie |vec[index]| had de expressie |vec.at(index)| gebruikt kunnen worden zodat de waarde van de index gecontroleerd wordt op geldigheid.
 In dit geval vond ik dit niet zinvol omdat de expressie in een herhalingslus wordt gebruikt waarbij alleen geldige waarden van de index worden gebruikt.
-De volgende twee implementaties |print3| en |print4| gebruiken een iterator om de elementen in de vector te benaderen.
-De laatste implementatie |print5| gebruikt een \USE{range\hyp{}based for} om de elementen in de vector te benaderen en is het eenvoudigst.
+De volgende twee implementaties |verdubbel3| en |verdubbel4| gebruiken een iterator om de elementen in de vector te benaderen.
+De laatste implementatie |verdubbel5| gebruikt een \USE{range\hyp{}based for} om de elementen in de vector te benaderen en is het eenvoudigst.
 
 \section{Generieke print voor containers}
-Geïnspireerd door het bovenstaande voorbeeld zou je een generieke |print| functie kunnen bedenken waarmee elk willekeurige container afgedrukt kan worden.
+Geïnspireerd door het bovenstaande voorbeeld zou je een generieke |verdubbel| functie kunnen bedenken waarmee de elementen uit elke willekeurige container gevuld met integers verdubbeld kunnen worden.
 We kunnen voor deze generieke functie geen indexering gebruiken omdat indexering niet bij alle containers gebruikt kan worden.
-We zouden wel, als volgt, gebruik kunnen maken van een iterator, zie \proglink{generieke_print-iterator.cpp}:
+We zouden wel, als volgt, gebruik kunnen maken van een iterator, zie \proglink{generieke_verdubbel-iterator.cpp}:
 
-\cpplstinputfragment[linerange={10-16}]{generieke_print-iterator.cpp}
+\cpplstinputfragment[linerange={18-23}]{generieke_verdubbel-iterator.cpp}
 
-Het is, ook in dit geval, eenvoudiger om gebruik te maken van een \USE{range\hyp{}based for}, zie \proglink{generieke_print-range-based-for.cpp}:
+%TODO: gebruik van concepts uitleggen
 
-\cpplstinputfragment[linerange={10-16}]{generieke_print-range-based-for.cpp}
+Het is, ook in dit geval, eenvoudiger om gebruik te maken van een \USE{range\hyp{}based for}, zie \proglink{generieke_verdubbel-range-based-for.cpp}:
+
+\cpplstinputfragment[linerange={18-23}]{generieke_verdubbel-range-based-for.cpp}
 
 In de bovenstaande functie is een |const auto&| gebruikt om een onnodig kopietje te voorkomen.
 We weten immers niet hoe groot de elementen in de container zijn.
 
-Bovenstaande twee generieke |print| functies drukken altijd de inhoud van de gehele container af.
-Als we ook een gedeelte van een container af willen kunnen drukken met de generieke |print| functie, dan moeten we de functie twee iteratoren meegeven, zie \proglink{generieke_print-range.cpp}:
+Bovenstaande twee generieke |verdubbel| functies verdubbelen altijd de waarden van de gehele container.
+Als we ook een gedeelte van een container willen kunnen verdubbelen met de generieke |verdubbel| functie, dan moeten we de functie twee iteratoren meegeven, zie \proglink{generieke_verdubbel-range.cpp}:
 
-\cpplstinputfragment[linerange={10-16}]{generieke_print-range.cpp}
+\cpplstinputfragment[linerange={18-23}]{generieke_verdubbel-range.cpp}
 
 De eerste iterator |begin| wijst naar het eerste element dat moet worden afgedrukt en de tweede iterator |end| wijst net voorbij het laatste element dat moet worden afgedrukt.
 Als de iteratoren |i1| en |i2| aan deze functie worden meegegeven, dan worden alle elementen vanaf |i1| tot (en dus \emph{niet} tot en met) |i2| afgedrukt.
@@ -4829,11 +4832,11 @@ In de wiskunde zouden we dat noteren als het halfopen interval $[$|i1|$, $|i2|$)
 In \Cpp{} wordt zo'n halfopen interval van twee iteratoren een \emph{range} genoemd.
 Alle algoritmen uit de standaard \Cpp{} \USE{library} gebruiken ranges als parameters zodat ze ook op een deel van een container uitgevoerd kunnen worden.
 
-De bovenstaande generieke |print| kan gebruikt worden om de vector |v| volledig af te drukken:
-\cpplstinputfragment[linerange={25-25}]{generieke_print-range.cpp}
+De bovenstaande generieke |verdubbel| kan gebruikt worden om de vector |v| volledig te verdubbelen:
+\cpplstinputfragment[linerange={33-33}]{generieke_verdubbel-range.cpp}
 
-Dezelfde functie kan ook gebruikt worden om alle elementen van de vector |v| af te drukken \emph{behalve} de eerste en de laatste:
-\cpplstinputfragment[linerange={26-26}]{generieke_print-range.cpp}
+Dezelfde functie kan ook gebruikt worden om alle elementen van de vector |v| te verdubbelen \emph{behalve} de eerste en de laatste:
+\cpplstinputfragment[linerange={35-35}]{generieke_verdubbel-range.cpp}
 
 \section{Container adapters}
 Bepaalde sequentiële containers kunnen met behulp van zogenoemde adapter classes van een bepaalde interface worden voorzien.
@@ -4877,7 +4880,7 @@ Je kunt een |priority_queue| dus niet implementeren met een |list| omdat de elem
 %\markright{}
 Het onderstaande voorbeeldprogramma \proglink{std_balanced.cpp} is identiek aan het programma uit \cref{sec:balance} maar in plaats van de zelfgemaakte \hcode{Stack_\\-with_\\-list} wordt nu de standaard |stack| gebruikt.
 
-\cpplstinputfragment[linerange={1-41}]{std_balanced.cpp}
+\cpplstinputfragment[linerange={1-37}]{std_balanced.cpp}
 
 \section{Associatieve containers}
 \label{sec:asscon}
@@ -4989,7 +4992,7 @@ Een |set| heeft, onder andere, de volgende memberfuncties:
 	Een |multiset| heeft dezelfde memberfunctie en in dat geval kan de returnwaarde wel groter dan 1 zijn.
 \end{itemize}
 
-\cpplstinputfragment[linerange={1-23}]{set.cpp}
+\cpplstinputfragment[linerange={1-14}]{set.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
@@ -4997,6 +5000,17 @@ De set bevat: Daniël Elles Harry Ron Roy
 1 Harry is genoeg.
 Er is 1 Ron.
 De set bevat: Daniël Elles Ron Roy
+\end{coutput}
+
+De inhoud van een |set| kan eenvoudig afgedrukt worden met behulp van de standaard functie |println|.
+In de \USE{format specifier} |{:n:s}| zorgt de |:n| ervoor dat er geen accolades om de set heen geprint worden\footnote{%
+	Zie: \url{https://en.cppreference.com/w/cpp/utility/format/range_formatter.html}.
+} en de |:s| zorgt ervoor dat de elementen van de set als |string|s zonder aanhalingstekens eromheen worden afgedrukt\footnote{%
+	Zie: \url{https://en.cppreference.com/w/cpp/utility/format/spec.html}.
+}.
+Als de standaard \USE{format specifier} |{}| wordt gebruikt, dan wordt de eerste regel van de output van het bovenstaande programma:
+\begin{coutput}
+De set bevat: {"Daniël", "Elles", "Harry", "Ron", "Roy"}
 \end{coutput}
 
 \subsectionTextCodeText{Voorbeeldprogramma met}{std::multiset}{(bag)}
@@ -5007,7 +5021,7 @@ De memberfunctie |insert| geeft echter alleen een iterator als returnwaarde in p
 Het invoegen in een multiset kan namelijk niet mislukken.
 Als bij de memberfunctie |erase| een sleutel als argument wordt weergegeven, dan worden alle sleutels met die specifieke waarde uit de |multiset| verwijderd.
 Als je slechts één sleutel wil verwijderen dan moet je een iterator als argument aan |erase| meegeven.
-\cpplstinputfragment[linerange={1-30}]{multiset.cpp}
+\cpplstinputfragment[linerange={1-21}]{multiset.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
@@ -5025,25 +5039,25 @@ De bag bevat: Daniël
 %\markright{}
 Vergelijk het onderstaande programma \proglink{unordered\_set.cpp} met het programma uit \cref{sec:set} en let op de verschillen tussen een |set| en een \hcode{un\\-ordered_\\-set}.
 
-\cpplstinputfragment[linerange={1-31}]{unordered_set.cpp}
+\cpplstinputfragment[linerange={1-22}]{unordered_set.cpp}
 
 Een mogelijke\footnote{%
-	De uitvoer kan variëren afhankelijk van de gebruikte compiler.
-	In dit geval is GCC 9.1 gebruikt.%
+	De volgorde van de elemeneten in de set kan variëren afhankelijk van de gebruikte compiler.
+	In dit geval is GCC 15.2 gebruikt.%
 } uitvoer van dit programma:
 
 \begin{cpplstfragment}[language=]
-De set bevat: Harry Roy Daniël Elles Ron
+De set bevat: Elles, Harry, Roy, Daniël, Ron
 1 Harry is genoeg.
 Er is 1 Elles.
-De set bevat: Roy Daniël Elles Ron
-De hash table heeft 5 buckets.
-Elke bucket bevat gemiddeld 0.8 elementen.
+De set bevat: Elles, Roy, Daniël, Ron
+De hash table heeft 13 buckets.
+Elke bucket bevat gemiddeld 0.30769232 elementen.
 De maximale load_factor is 1.
-We voegen nu nog 24 namen toe.
-De set bevat: Tim Umit Remco Nick Soufiane Mustafa Mathijs Juul Jorg Matthijs Jasper Jarl Koen Gabriël Robin Diederik Daan Jennifer Corjan Amer Alia Abdel Ron Erwin Elles Daniël Roy
+We voegen nu nog 21 namen toe.
+De set bevat: Jasper, Wesley, Thomas, Maurice, Leendert, Alexander, Nino, Connor, Ron, Martijn, Deniz, Bas, Daniël, Bálint, Roy, Sietse, Elles, Amir, Ashwin, Jennifer, Nicholas, Mitchel, Finley, Dewin, Robin
 De hash table heeft 29 buckets.
-Elke bucket bevat gemiddeld 0.931035 elementen.
+Elke bucket bevat gemiddeld 0.86206895 elementen.
 \end{cpplstfragment}
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::map}
@@ -5054,7 +5068,7 @@ Van een aantal belangrijke C/\Cpp{} \USE{keywords} wordt het aantal maal dat ze 
 Een |map| heeft dezelfde memberfuncties als een |set|, zie \cref{sec:set}.
 Je kunt daarnaast ook gebruik maken van indexering waarbij de sleutel als index wordt gebruikt.
 
-\cpplstinputfragment[linerange={1-27}]{count_words.cpp}
+\cpplstinputfragment[linerange={1-19}]{count_words.cpp}
 
 \chapter{Iteratoren}
 \label{sec:iteratoren}

@@ -1,5 +1,4 @@
-#include <iostream>
-#include <string>
+import srd;
 using namespace std;
 
 // Met een pointer kun je door een C-string heenlopen en de elementen één voor één benaderen.
@@ -7,18 +6,18 @@ using namespace std;
 void demo1() {
     char naam[] {"Roy"};
     for (const char* p {naam}; *p != '\0'; ++p) {
-        cout << *p << ' ';
+        print("{} ", *p);
     }
-    cout << '\n';
+    println();
 }
 
 // Je kunt ook het keyword auto gebruiken om de compiler zelf het type van de pointer te laten bepalen.
 void demo2() {
     char naam[] {"Roy"};
     for (const auto* p {naam}; *p != '\0'; ++p) {
-        cout << *p << ' ';
+        print("{} ", *p);
     }
-    cout << '\n';
+    println();
 }
 
 // Met een iterator kun je door een std::string heenlopen en de elementen één voor één benaderen.
@@ -30,18 +29,18 @@ void demo2() {
 void demo3() {
     string naam {"Harry"};
     for (string::const_iterator i {naam.cbegin()}; i != naam.cend(); ++i) {
-        cout << *i << ' ';
+        print("{} ", *i);
     }
-    cout << '\n';
+    println();
 }
 
 // Je kunt ook het keyword auto gebruiken om de compiler zelf het type van de iterator te laten bepalen.
 void demo4() {
     string naam {"Harry"};
     for (auto i {naam.cbegin()}; i != naam.cend(); ++i) {
-        cout << *i << ' ';
+        print("{} ", *i);
     }
-    cout << '\n';
+    println();
 }
 
 int main() {

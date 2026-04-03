@@ -1,50 +1,39 @@
-#include <iostream>
-#include <vector>
+import std;
 using namespace std;
 
-// Afdrukken van een vector door middel van indexering.
-void print1(const vector<int>& vec) {
-    cout << "De inhoud van de vector is:\n";
+// Verdubbel elementen van een vector<int> door middel van indexering.
+void verdubbel1(vector<int>& vec) {
     for (vector<int>::size_type index {0}; index != vec.size(); ++index) {
-        cout << vec[index] << " ";
+        vec[index] *= 2;
     }
-    cout << '\n';
 }
 
-// Afdrukken van een vector door middel van indexering met decltype.
-void print2(const vector<int>& vec) {
-    cout << "De inhoud van de vector is:\n";
+// Verdubbel elementen van een vector<int> door middel van indexering met decltype.
+void verdubbel2(vector<int>& vec) {
     for (decltype(vec.size()) index {0}; index != vec.size(); ++index) {
-        cout << vec[index] << " ";
+        vec[index] *= 2;
     }
-    cout << '\n';
 }
 
-// Afdrukken van een vector door middel van iterator.
-void print3(const vector<int>& vec) {
-    cout << "De inhoud van de vector is:\n";
-    for (vector<int>::const_iterator iter {vec.cbegin()}; iter != vec.cend(); ++iter) {
-        cout << *iter << " ";
+// Verdubbel elementen van een vector<int> door middel van iterator.
+void verdubbel3(vector<int>& vec) {
+    for (vector<int>::iterator iter {vec.begin()}; iter != vec.end(); ++iter) {
+        *iter *= 2;
     }
-    cout << '\n';
 }
 
-// Afdrukken van een vector door middel van iterator met auto.
-void print4(const vector<int>& vec) {
-    cout << "De inhoud van de vector is:\n";
-    for (auto iter {vec.cbegin()}; iter != vec.cend(); ++iter) {
-        cout << *iter << " ";
+// Verdubbel elementen van een vector<int> door middel van iterator met auto.
+void verdubbel4(vector<int>& vec) {
+    for (auto iter {vec.begin()}; iter != vec.end(); ++iter) {
+        *iter *= 2;
     }
-    cout << '\n';
 }
 
-// Afdrukken van een vector door middel van range-based for.
-void print5(const vector<int>& vec) {
-    cout << "De inhoud van de vector is:\n";
-    for (auto elm: vec) {
-        cout << elm << " ";
+// Verdubbel elementen van een vector<int> door middel van range-based for.
+void verdubbel5(vector<int>& vec) {
+    for (auto& elm: vec) {
+        elm *= 2;
     }
-    cout << '\n';
 }
 
 // Berekenen van het gemiddelde door middel van iterator met auto.
@@ -74,31 +63,23 @@ double gem2(const vector<int>& vec) {
 int main() {
     vector<int> v;
     int i;
-    cout << "Geef een aantal getallen (afgesloten door een 0):\n";
+    print("Geef een aantal getallen (afgesloten door een 0): ");
     cin >> i;
     while (i != 0) {
         v.push_back(i);
         cin >> i;
     }
-    print1(v);
-    print2(v);
-    print3(v);
-    print4(v);
-    print5(v);
-    cout << "Het gemiddelde is: " << gem1(v) << '\n';
-    cout << "Het gemiddelde is: " << gem2(v) << '\n';
-    cout << "Nu wordt een deel van de vector bewerkt.\n";
-    if (v.size() >= 4) {
-        for (auto iter {v.begin() + 2}; iter != v.begin() + 4; ++iter) {
-            *iter *= 2;
-        }
-    }
-    print3(v);
-    cout << "Nu wordt de vorige bewerking weer teruggedraaid.\n";
-    if (v.size() >= 4) {
-        for (decltype(v.size()) i = 2; i < 4; ++i) {
-            v[i] /= 2;
-        }
-    }
-    print5(v);
+    println("v = {}", v);
+    verdubbel1(v);
+    println("v = {}", v);
+    verdubbel2(v);
+    println("v = {}", v);
+    verdubbel3(v);
+    println("v = {}", v);
+    verdubbel4(v);
+    println("v = {}", v);
+    verdubbel5(v);
+    println("v = {}", v);
+    println("Het gemiddelde is: {:.3f}", gem1(v));
+    println("Het gemiddelde is: {:.3f}", gem2(v));
 }
