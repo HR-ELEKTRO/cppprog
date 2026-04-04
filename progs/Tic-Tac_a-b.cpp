@@ -1,28 +1,25 @@
-#include <iostream>
-#include <algorithm>
-#include <string>
+import std;
 using namespace std;
-#include "Matrix.h"
+import hr.brojz.Matrix;
 
 // print number of moves considered and time used
 #define ANALYSE
-#ifdef ANALYSE
-#include <chrono>
-#endif
 
 class Tic_tac_toe {
 public:
-    enum Side {EMPTY, HUMAN, COMPUTER};
-    enum Value {HUMAN_WINS = -1, DRAW, COMPUTER_WINS, UNDECIDED};
+    enum class Side {EMPTY, HUMAN, COMPUTER};
+    using enum Side;
+    enum class Value {HUMAN_WINS = -1, DRAW, COMPUTER_WINS, UNDECIDED};
+    using enum Value;
     using Board = matrix<Side, 3, 3>;
     using Row = Board::size_type;
     using Column = Board::size_type;
     Tic_tac_toe()
-#ifdef ANALYSE
+    #ifdef ANALYSE
         : moves_considered{0}
-#endif
+    #endif
     {
-        fill(board.begin(), board.end(), EMPTY);
+        ranges::fill(board, EMPTY);
     }
     Value choose_computer_move(Row& best_row, Column& best_column, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS);
     Value choose_human_move(Row& best_row, Column& best_column, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS);
@@ -31,19 +28,19 @@ public:
     bool play_move(Side s, Row row, Column column);
     bool board_is_full() const;
     bool is_awin(Side s) const;
-#ifdef ANALYSE
+    #ifdef ANALYSE
     int get_and_reset_moves_considered() {
         int i {moves_considered};
         moves_considered = 0;
         return i;
     }
-#endif
+    #endif
 private:
     Board board;
     Value value() const;
-#ifdef ANALYSE
+    #ifdef ANALYSE
     int moves_considered;
-#endif
+    #endif
 };
 
 class Console_tttgame {
@@ -132,7 +129,7 @@ bool Tic_tac_toe::play_move(Side s, Row row, Column column) {
 }
 
 bool Tic_tac_toe::board_is_full() const {
-    return none_of(board.cbegin(), board.cend(), [](Side s) {
+    return ranges::none_of(board, [](Side s) {
         return s == EMPTY;
     });
 }
@@ -152,28 +149,28 @@ bool Tic_tac_toe::is_awin(Side s) const {
         (board(0, 2) == s && board(1, 1) == s && board(2, 0) == s);
 }
 
-Console_tttgame::Console_tttgame(bool computer_goes_first) :
-computer_symbol(computer_goes_first ? 'x' : 'o'), human_symbol(computer_goes_first ? 'o' : 'x') {
+Console_tttgame::Console_tttgame(bool computer_goes_first) : 
+        computer_symbol(computer_goes_first ? 'x' : 'o'), human_symbol(computer_goes_first ? 'o' : 'x') {
     if (computer_goes_first) {
         do_computer_move();
-        cout << '\n';
+        println();
     }
 }
 
 void Console_tttgame::print_board() const {
     string streep(3, '-');
-    cout << streep << '\n';
+    print("{}\n", streep);
     for (Tic_tac_toe::Row row {0}; row < 3; ++row) {
         for (Tic_tac_toe::Column column {0}; column < 3; ++column)
         if (t.side(row, column) == Tic_tac_toe::COMPUTER)
-            cout << computer_symbol;
+            print("{}", computer_symbol);
         else if (t.side(row, column) == Tic_tac_toe::HUMAN)
-            cout << human_symbol;
+            print("{}", human_symbol);
         else
-            cout << ' ';
-        cout << '\n';
+            print(" ");
+        println();
     }
-    cout << streep << '\n';
+    print("{}\n", streep);
 }
 
 void Console_tttgame::do_computer_move() {
@@ -186,10 +183,10 @@ void Console_tttgame::do_computer_move() {
 #ifdef ANALYSE
     auto stop {chrono::high_resolution_clock::now()};
     auto duration {chrono::duration_cast<chrono::microseconds>(stop - start).count()};
-    cout << "Calculation time: " << duration << " us\n";
-    cout << "Moves considered: " << t.get_and_reset_moves_considered() << '\n';
+    println("Calculation time: {} us", duration);
+    println("Moves considered: {}", t.get_and_reset_moves_considered());
 #endif
-    cout << "Computer plays: ROW = " << best_row << " COLUMN = " << best_column << '\n';
+    println("Computer ({}) plays: ROW = {} COLUMN = {}", computer_symbol, best_row, best_column);
     t.play_move(Tic_tac_toe::COMPUTER, best_row, best_column);
 }
 
@@ -199,41 +196,41 @@ void Console_tttgame::play() {
         Tic_tac_toe::Column column;
         do {
             print_board();
-            cout << '\n' << "Enter row and column (starts at 0): ";
+            print("\nEnter row and column (starts at 0): ");
             cin >> row >> column;
         } while (!t.play_move(Tic_tac_toe::HUMAN, row, column));
-        cout << '\n';
+        println();
         if (t.is_undecided()) {
             print_board();
-            cout << '\n';
+            println();
             do_computer_move();
-            cout << '\n';
+            println();
         }
     } while (t.is_undecided());
     print_board();
     if (t.is_awin(Tic_tac_toe::COMPUTER)) {
-        cout << "Computer wins!!\n";
+        println("Computer wins!!");
     }
     else if (t.is_awin(Tic_tac_toe::HUMAN)) {
-        cout << "Human wins!!\n";
+        println("Human wins!!");
     }
     else {
-        cout << "Draw!!\n";
+        println("Draw!!");
     }
 }
 
 int main() {
-    cout << "Welcome to TIC-TAC-TOE\n";
+    println("Welcome to TIC-TAC-TOE\n");
     bool computer_goes_first {true};
     char again;
     do {
         Console_tttgame game {computer_goes_first};
         game.play();
         do {
-            cout << "Play again (y/n)? ";
+            print("Play again (y/n)? ");
             cin >> again;
         } while (again != 'y' && again != 'Y' && again != 'n' && again != 'N');
         computer_goes_first = !computer_goes_first;
-        cout << '\n';
+        println();
     } while (again != 'n' && again != 'N');
 }

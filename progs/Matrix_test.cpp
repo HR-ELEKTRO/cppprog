@@ -1,8 +1,6 @@
-#include <iostream>
-#include <algorithm>
+import std;
+import hr.brojz.Matrix;
 using namespace std;
-
-#include "Matrix.h"
 
 int main() {
     using Matrix = matrix<int, 2, 3>;
@@ -13,31 +11,31 @@ int main() {
     }
     for (Index row {0}; row < m.num_rows(); ++row) {
         for (Index column {0}; column < m.num_cols(); ++column) {
-            cout << m(row, column) << " ";
+            print("{} ", m(row, column));
         }
-        cout << '\n';
+        println();
     }
     for (auto i = m.begin(); i != m.end(); ++i) {
-        cout << *i << " ";
+        print("{} ", *i);
     }
-    cout << '\n';
+    println();
     for_each(m.begin(), m.end(), [](auto& i){
         i += 1;
     });
     for_each(m.begin(), m.end(), [](const auto& i){
-        cout << i << " ";
+        print("{} ", i);
     });
-    cout << '\n';
+    println();
     for_each(m.cbegin(), m.cend(), [](const auto& i){
-        cout << i << " ";
+        print("{} ", i);
     });
-    cout << '\n';
+    println();
 
     const Matrix cm {m};
     for_each(cm.begin(), cm.end(), [](const auto& i){
-        cout << i << " ";
+        print("{} ", i);
     });
-    cout << '\n';
+    println();
 //  Should give compiler error!
 //  for_each(cm.begin(), cm.end(), [](auto& i){
 //      i += 1;
@@ -46,9 +44,9 @@ int main() {
     Matrix m2 {1, 2, 3, 
                4, 5, 6};
     for (auto e : m2) {
-        cout << e << " ";
+        print("{} ", e);
     }
-    cout << '\n';
+    println();
 
 //  Should give compiler error!
 //  Matrix m3 {{1, 2, 3, 

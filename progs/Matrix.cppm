@@ -1,24 +1,21 @@
-#ifndef MATRIX_H
-#define MATRIX_H
+export module hr.brojz.Matrix;
 
-#include <stdexcept>
-#include <initializer_list>
-#include <array>
-#include <algorithm>
+import std;
+using namespace std;
 
-template <typename Object, std::size_t Num_rows, std::size_t Num_cols>
+export template <typename Object, size_t Num_rows, size_t Num_cols>
 class matrix {
 private:
-    using Array_type = std::array<Object, Num_rows * Num_cols>;
+    using Array_type = array<Object, Num_rows * Num_cols>;
     Array_type a;
 public:
     matrix() = default;
     matrix(const initializer_list<Object>& init) {
-        if (init.size() > a.size()) throw std::out_of_range {"To much elements in initializer list for class matrix."};
-        std::copy(init.begin(), init.end(), a.begin());
+        if (init.size() > a.size()) throw out_of_range {"To much elements in initializer list for class matrix."};
+        copy(init.begin(), init.end(), a.begin());
     }
     matrix(const Array_type& init) {
-        std::copy(init.begin(), init.end(), a.begin());
+        copy(init.begin(), init.end(), a.begin());
     }
     using const_iterator = typename Array_type::const_iterator;
     using iterator = typename Array_type::iterator;
@@ -60,5 +57,3 @@ public:
         return a.cend();
     }
 };
-
-#endif

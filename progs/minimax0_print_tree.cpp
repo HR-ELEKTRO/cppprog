@@ -1,5 +1,4 @@
-#include <iostream>
-#include <iomanip>
+import std;
 using namespace std;
 
 int value(int pos);
@@ -48,7 +47,7 @@ int choose_human_move(int pos) {
 void print_tree(int pos, int level) {
     if (level != 5) {
         print_tree(2 * pos + 2, level + 1);
-        cout << setw(level * 5) << pos << ":" << value(pos) << '\n';
+        println("{:>{}}:{}", pos, level * 5, value(pos));
         print_tree(2 * pos + 1, level + 1);
     }
 }
@@ -56,17 +55,19 @@ void print_tree(int pos, int level) {
 void print_calculated_tree(int pos, int level) {
     if (level != 5) {
         print_calculated_tree(2 * pos + 2, level + 1);
-        cout << setw(level * 5) << pos << ":" << (level % 2 == 0 ? choose_computer_move(pos) : choose_human_move(pos)) << '\n';
+        println("{:>{}}:{}", pos, level * 5, (level % 2 == 0 ? choose_computer_move(pos) : choose_human_move(pos)));
         print_calculated_tree(2 * pos + 1, level + 1);
     }
 }
 
 int main() {
     print_tree();
+    print("Type Enter to continue...");
     cin.get();
-    cout << '\n';
+    println();
     print_calculated_tree();
+    print("Type Enter to continue...");
     cin.get();
-    cout << '\n';
-    cout << "Minimaal te behalen Maximale waarde = " << choose_computer_move(0) << '\n';
+    println();
+    println("Minimaal te behalen Maximale waarde = {}", choose_computer_move(0));
 }

@@ -1,17 +1,9 @@
-#include <iostream>
-#include <algorithm>
-#include <numeric>
-#include <map>
-#include <string>
-#include <array>
+import std;
 using namespace std;
-#include "Matrix.h"
+import hr.brojz.Matrix;
 
 // print number of moves considered, time used and map size
 #define ANALYSE
-#ifdef ANALYSE
-#include <chrono>
-#endif    
 
 // This program determines the optimal value for MAX_TABLE_DEPTH
 
@@ -22,17 +14,19 @@ int MAX_DEPTH {2};
 
 class Tic_tac_toe {
 public:
-    enum Side { EMPTY, HUMAN, COMPUTER };
-    enum Value { HUMAN_WINS = -1, DRAW, COMPUTER_WINS, UNDECIDED };
+    enum class Side {EMPTY, HUMAN, COMPUTER};
+    using enum Side;
+    enum class Value {HUMAN_WINS = -1, DRAW, COMPUTER_WINS, UNDECIDED};
+    using enum Value;
     using Board = matrix<Side, 3, 3>;
     using Row = Board::size_type;
     using Column = Board::size_type;
     Tic_tac_toe()
-#ifdef ANALYSE
+    #ifdef ANALYSE
         : moves_considered{0}
-#endif
+    #endif
     {
-        fill(board.begin(), board.end(), EMPTY);
+        ranges::fill(board, EMPTY);
     }
     Value choose_computer_move(Row& best_row, Column& best_column, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS, int depth = 1);
     Value choose_human_move(Row& best_row, Column& best_column, Value alpha = HUMAN_WINS, Value beta = COMPUTER_WINS, int depth = 1);
@@ -41,7 +35,7 @@ public:
     bool play_move(Side s, Row row, Column column);
     bool board_is_full() const;
     bool is_awin(Side s) const;
-#ifdef ANALYSE
+    #ifdef ANALYSE
     int get_and_reset_moves_considered() {
         int i {moves_considered};
         moves_considered = 0;
@@ -50,13 +44,13 @@ public:
     int get_map_size() const {
         return boards.size();
     }
-#endif
+	#endif
 private:
     Board board;
     Value value() const;
     class Board_wrapper {
     public:
-        Board_wrapper(const Board& b) : board(b) {
+        Board_wrapper(const Board& b): board(b) {
         }
         bool operator<(const Board_wrapper& rhs) const;
     private:
@@ -72,7 +66,7 @@ private:
         int best_column;
     };
     map<Board_wrapper, Value_and_best_move> boards;
-#ifdef ANALYSE
+    #ifdef ANALYSE
     int moves_considered;
 #endif
 };
@@ -173,7 +167,7 @@ bool Tic_tac_toe::play_move(Side s, Row row, Column column) {
 }
 
 bool Tic_tac_toe::board_is_full() const {
-    return none_of(board.cbegin(), board.cend(), [](Side s) {
+    return ranges::none_of(board, [](Side s) {
         return s == EMPTY;
     });
 }
@@ -209,7 +203,7 @@ void seek_optimal() {
     Tic_tac_toe::Column best_column;
     map<int, chrono::microseconds::rep> results;
     for (MAX_DEPTH = 2; MAX_DEPTH <= 9; ++MAX_DEPTH) {
-        cout << "MAX_DEPTH: " << MAX_DEPTH << '\n';
+        println("MAX_DEPTH: {}", MAX_DEPTH);
         // repeat every measurement N times to lower error
         constexpr int N {10};
         array<chrono::microseconds::rep, N> time;
@@ -223,21 +217,21 @@ void seek_optimal() {
             t = duration;
 #ifdef VERBOSE
             if (&t == &time[0]) {
-                cout << "Map size is: " << ttt.get_map_size() << '\n';
-                cout << "Moves considered: " << ttt.get_and_reset_moves_considered() << '\n';
+                println("Map size is: {}", ttt.get_map_size());
+                println("Moves considered: {}", ttt.get_and_reset_moves_considered());
             }
-            cout << "Executiom time: " << duration << " us\n";
+            println("Execution time: {} us", duration);
 #endif
         }
         results[MAX_DEPTH] = accumulate(time.begin(), time.end(), 0) / N;
 #ifdef VERBOSE
-        cout << "Avarage execution time: " << results[MAX_DEPTH] << " us\n";
+        println("Average execution time: {} us", results[MAX_DEPTH]);
 #endif
     }
     auto min {min_element(results.begin(), results.end(), [](auto p1, auto p2) {
         return p1.second < p2.second;
     })};
-    cout << "Optimal value for MAX_DEPTH = " << min->first << '\n';
+    println("Optimal value for MAX_DEPTH = {}", min->first);
 }
 
 int main() {

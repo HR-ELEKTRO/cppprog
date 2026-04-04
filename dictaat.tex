@@ -5992,7 +5992,7 @@ Omdat je dus afwisselend kiest voor de maximale (als de computer aan de beurt is
 In het onderstaande programma \proglink{Minimax0.cpp} wordt de boom uit \cref{fig:gameTree1} gebruikt en wordt de hoogst haalbare waarde berekend met het minimax algoritme.
 Er wordt daarbij gebruik gemaakt van 2 functies die elkaar (recursief) aanroepen.
 
-\cpplstinputfragment[linerange={1-49}]{Minimax0.cpp}
+\cpplstinputfragment[linerange={1-48}]{minimax0.cpp}
 
 De functie |value| geeft \hcode{UN\\-DE\\-CIDED} terug als de waarde van de positie berekend moet worden.
 Als de positie zich in de onderste laag van de boom bevindt en de waarde dus bekend is, geeft |value| deze waarde terug.
@@ -6222,7 +6222,7 @@ Beide functies zijn hieronder weergegeven:
 
 Het is ook mogelijk om de functies |value_move_computer| en |value_move_human| te combineren tot 1 functie, zie \proglink{minimax1.cpp}:
 
-\cpplstinputfragment[linerange={16-30}]{minimax1.cpp}
+\cpplstinputfragment[linerange={15-30}]{minimax1.cpp}
 
 Er zijn echter twee redenen om dit \emph{niet} te doen:\begin{itemize}
 	\item De functie wordt moeilijker te begrijpen en dus moeilijker te debuggen en/of aan te passen.
@@ -6236,11 +6236,11 @@ We moeten ook weten welke zet we moeten doen om deze waarde te bereiken!
 Dit kan eenvoudig worden bereikt door bij het zoeken naar de maximale of minimale waarde de beste positie op te slaan in de uitvoerparameter |best_next_pos|.
 De functies \hcode{choose_\\-com\\-puter_\\-move} en \hcode{choose_\\-hu\\-man_\\-move} moeten dan als volgt worden aangepast:
 
-\cpplstinputfragment[linerange={18-48}]{minimax2.cpp}
+\cpplstinputfragment[linerange={17-47}]{minimax2.cpp}
 
 In de functie |main| kunnen we deze functies als volgt gebruiken om beste zet voor de computer respectievelijk de gebruiker te bepalen:
 
-\cpplstinputfragment[linerange={50-72}]{minimax2.cpp}
+\cpplstinputfragment[linerange={49-69}]{minimax2.cpp}
 
 Een mogelijke uitvoer van dit programma \proglink{minimax2.cpp} is als volgt:
 \begin{coutput}
@@ -6317,7 +6317,7 @@ Om dit mogelijk te maken moet wel de tot dan toe gevonden minimale waarde van de
 Dit gebeurt in het onderstaande programma \proglink{alpha_beta0.cpp} door middel van de parameter beta.
 Deze naam is toevallig zo gekozen door de bedenkers van dit zogenoemde \USE{alpha\hyp{}beta pruning} algoritme en heeft verder geen betekenis \cite{Knuth1975}.
 
-\cpplstinputfragment[linerange={1-51}]{alpha_beta0.cpp}
+\cpplstinputfragment[linerange={1-50}]{alpha_beta0.cpp}
 
 In een uitgebreidere versie van het bovenstaande programma, genaamd \proglink{alpha_\\-beta0_\\-ver\\-bose.cpp}, wordt output naar |cout| gestuurd als er gesnoeid wordt.
 De uitvoer van dit programma is als volgt:
@@ -6352,11 +6352,11 @@ In de |for|\hyp{}lus is het gebruik van \hcode{best_\\-value} dus overbodig.
 De expressie |beta > alpha| kan vervangen worden door |alpha < beta| die exact hetzelfde betekent.
 In het onderstaande programma \proglink{alpha_beta1.cpp} zijn deze wijzigingen doorgevoerd:
 
-\cpplstinputfragment[linerange={18-44}]{alpha_beta1.cpp}
+\cpplstinputfragment[linerange={17-43}]{alpha_beta1.cpp}
 
 De voorwaarde om te snoeien is dus in de functies \hcode{choose_\\-com\\-puter_\\-move} en \hcode{choose_\\-hu\\-man_\\-move} exact hetzelfde, namelijk |alpha| $\geq$ |beta|.
 In \cref{fig:gameTree11} zijn de waarden van |alpha| en |beta| bij elke aanroep van \hcode{choose_\\-com\\-puter_\\-move} en \hcode{choose_\\-hu\\-man_\\-move} gegeven.
-Om de werking van dit \USE{alpha\hyp{}beta} algoritme helemaal te doorgronden is het heel zinvol om het uitvoeren van het programma \proglink{alpha_beta1Verbose.c} stap voor stap te volgen, eventueel met behulp van een debugger.
+Om de werking van dit \USE{alpha\hyp{}beta} algoritme helemaal te doorgronden is het heel zinvol om het uitvoeren van het programma \proglink{alpha_beta1_verbose.cpp} stap voor stap te volgen, eventueel met behulp van een debugger.
 
 \figuur{scale=0.5}{gameTree11}{De waarde van \USE{alpha} en \USE{beta} bij elke aanroep van \code{choose_computer_move} en \code{choose_human_move}.}
 
@@ -6366,17 +6366,17 @@ We moeten ook weten welke zet we moeten doen om deze waarde te bereiken!
 Dit kan weer worden bereikt door bij het zoeken naar de maximale of minimale waarde de beste positie op te slaan in de uitvoerparameter |best_next_pos|.
 De functies \hcode{choose_\\-com\\-puter_\\-move} en \hcode{choose_\\-hu\\-man_\\-move} moeten dan worden aangepast zoals weergegeven in het onderstaande programma \proglink{alpha_beta2.cpp}.
 
-\cpplstinputfragment[linerange={18-48}]{alpha_beta2.cpp}
+\cpplstinputfragment[linerange={17-47}]{alpha_beta2.cpp}
 
 De volgorde waarin de mogelijke volgende posities worden onderzocht heeft invloed op het gedrag van het \USE{alpha\hyp{}beta} algoritme.
-In het programma \proglink{alpha_\\-beta1\\-verbose.cpp} wordt deze volgorde bepaald door de regel:
+In het programma \proglink{alpha_\\-beta1_\\-verbose.cpp} wordt deze volgorde bepaald door de regel:
 
-\cpplstinputfragment[linerange={22-22}]{alpha_beta1_verbose.cpp}
+\cpplstinputfragment[linerange={21-21}]{alpha_beta1_verbose.cpp}
 
 De mogelijke posities worden dus van links naar rechts doorzocht.
 We kunnen de mogelijke posities ook van rechts naar links doorzoeken door de bovenstaande regel te vervangen door de regel:
 
-\cpplstinputfragment[linerange={22-22}]{alpha_beta3_verbose.cpp}
+\cpplstinputfragment[linerange={21-21}]{alpha_beta3_verbose.cpp}
 
 In het resulterende programma \proglink{alpha_beta3_verbose.cpp} kan heel wat minder worden gesnoeid.
 De uitvoer van dit programma is als volgt:

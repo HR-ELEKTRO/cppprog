@@ -1,5 +1,4 @@
-#include <iostream>
-#include <iomanip>
+import std;
 using namespace std;
 
 constexpr int UNDECIDED {-1};
@@ -13,7 +12,8 @@ int value(int pos) {
 
 // alles in 1 routine is minder duidelijk en ook minder snel!
 
-enum Side {HUMAN, COMPUTER};
+enum class Side {HUMAN, COMPUTER};
+using enum Side;
 
 int choose_move(Side s, int pos) {
     int best_value {value(pos)};
@@ -31,5 +31,5 @@ int choose_move(Side s, int pos) {
 
 int main() {
     int value {choose_move(COMPUTER, 0)};
-    cout << "Minimaal te behalen Maximale waarde = " << value << '\n';
+    println("Minimaal te behalen Maximale waarde = {}", value);
 }

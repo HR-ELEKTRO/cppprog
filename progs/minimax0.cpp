@@ -1,5 +1,4 @@
-#include <iostream>
-#include <iomanip>
+import std;
 using namespace std;
 
 int value(int pos);
@@ -45,5 +44,5 @@ int choose_human_move(int pos) {
 
 int main() {
     int value {choose_computer_move(0)};
-    cout << "Minimaal te behalen Maximale waarde = " << value << '\n';
+    println("Minimaal te behalen Maximale waarde = {}", value);
 }

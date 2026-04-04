@@ -1,5 +1,4 @@
-#include <iostream>
-#include <iomanip>
+import std;
 using namespace std;
 
 int value(int pos);
@@ -51,20 +50,20 @@ int main() {
     int pos {0}, best_next_pos;
     while (pos < 15) {
         int best_value {choose_computer_move(pos, best_next_pos)};
-        cout << "Minimaal te behalen Maximale waarde = " << best_value << '\n';
+        println("Minimaal te behalen Maximale waarde = {}", best_value);
         pos = best_next_pos;
-        cout << "Computer kiest positie: " << pos << '\n';
+        println("Computer kiest positie: {}", pos);
         if (pos < 15) {
             int pos_l {2 * pos + 1};
             int pos_r {2 * pos + 2};
-            cout << "Je kunt kiezen voor positie " << pos_l << " of positie " << pos_r << '\n';
+            println("Je kunt kiezen voor positie {} of positie {}", pos_l, pos_r);
             choose_human_move(pos, best_next_pos);
-            cout << "Pssst, " << best_next_pos << " is de beste keuze.\n";
+            println("Pssst, {} is de beste keuze.", best_next_pos);
             do {
-                cout << "Maak je keuze: ";
+                print("Maak je keuze: ");
                 cin >> pos;
             } while (pos != pos_l && pos != pos_r);
         }
     }
-    cout << "Behaalde waarde = " << value(pos) << '\n';
+    println("Behaalde waarde = {}", value(pos));
 }

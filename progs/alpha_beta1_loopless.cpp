@@ -1,5 +1,4 @@
-#include <iostream>
-#include <iomanip>
+import std;
 using namespace std;
 
 class Value_next_pos {
@@ -65,19 +64,19 @@ int main() {
     int pos {0};
     while (pos < 15) {
         Value_next_pos res {value_move_computer(pos, 0, 15)};
-        cout << "Minimaal te behalen Maximale waarde = " << res.value() << '\n';
+        println("Minimaal te behalen Maximale waarde = {}", res.value());
         pos = res.next_pos();
-        cout << "Computer kiest positie: " << pos << '\n';
+        println("Computer kiest positie: {}", pos);
         if (pos < 15) {
             int pos_l {2 * pos + 1};
             int pos_r {2 * pos + 2};
-            cout << "Je kunt kiezen voor positie " << pos_l << " of positie " << pos_r << '\n';
-            cout << "Pssst, " << value_move_human(pos, 0, 15).next_pos() << " is de beste keuze.\n";
+            println("Je kunt kiezen voor positie {} of positie {}", pos_l, pos_r);
+            println("Pssst, {} is de beste keuze.", value_move_human(pos, 0, 15).next_pos());
             do {
-                cout << "Maak je keuze: ";
+                print("Maak je keuze: ");
                 cin >> pos;
             } while (pos != pos_l && pos != pos_r);
         }
     }
-    cout << "Behaalde waarde = " << position_value(pos) << '\n';
+    println("Behaalde waarde = {}", position_value(pos));
 }

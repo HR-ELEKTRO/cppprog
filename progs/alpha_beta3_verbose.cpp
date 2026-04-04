@@ -1,5 +1,4 @@
-#include <iostream>
-#include <iomanip>
+import std;
 using namespace std;
 
 int value(int pos);
@@ -26,7 +25,7 @@ int choose_computer_move(int pos, int alpha, int beta) {
             }
         }
         if (alpha >= beta && i > 0) {
-            cout << "snoei node " << 2 * pos + i << '\n';
+            println("snoei node {}", 2 * pos + i)   ;
         }
         best_value = alpha;
     }
@@ -44,7 +43,7 @@ int choose_human_move(int pos, int alpha, int beta) {
             }
         }
         if (alpha >= beta && i > 0) {
-            cout << "snoei node " << 2 * pos + i << '\n';
+            println("snoei node {}", 2 * pos + i);
         }
         best_value = beta;
     }
@@ -53,5 +52,5 @@ int choose_human_move(int pos, int alpha, int beta) {
 
 int main() {
     int value {choose_computer_move(0)};
-    cout << "Minimaal te behalen Maximale waarde = " << value << '\n';
+    println("Minimaal te behalen Maximale waarde = {}", value);
 }
