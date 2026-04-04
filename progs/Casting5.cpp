@@ -1,24 +1,24 @@
-#include <iostream>
+import std;
 using namespace std;
 
 class Hond {
 public:
     virtual ~Hond() = default;
     virtual void blaf() const {
-        cout << "Blaf.\n";
+        println("Blaf.");
     }
 //  ...
 };
 
 class Sint_bernard: public Hond {
 public:
-    Sint_bernard(int w = 10): whisky{w} {
+    explicit Sint_bernard(int w = 10): whisky{w} {
     }
     void blaf() const override {
-        cout << "Woef!\n";
+        println("Woef!");
     }
     int geef_drank() {
-        cout << "Geeft drank.\n";
+        println("Geeft drank.");
         int w {whisky};
         whisky = 0;
         return w;
@@ -32,7 +32,7 @@ void geef_hulp(Hond* hp) {
     hp->blaf();
     Sint_bernard* sbp {dynamic_cast<Sint_bernard*>(hp)};
     if (sbp != nullptr)
-        cout << sbp->geef_drank() << " liter.\n";
+        println("{} liter.", sbp->geef_drank());
 }
 
 int main() {

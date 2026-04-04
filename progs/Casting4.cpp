@@ -1,24 +1,24 @@
-#include <iostream>
+import std;
 using namespace std;
 
 class Hond {
 public:
     virtual ~Hond() = default;
     virtual void blaf() const {
-        cout << "Blaf.\n";
+        println("Blaf.");
     }
 //  ...
 };
 
 class Sint_bernard: public Hond {
 public:
-    Sint_bernard(int w = 10): whisky{w} {
+    explicit Sint_bernard(int w = 10): whisky{w} {
     }
     void blaf() const override {
-        cout << "Woef!\n";
+        println("Woef!");
     }
     int geef_drank() {
-        cout << "Geeft drank.\n";
+        println("Geeft drank.");
         int w {whisky};
         whisky = 0;
         return w;
@@ -30,10 +30,10 @@ private:
 
 void geef_hulp(Hond* hp) {
     hp->blaf();
-//  cout << hp->geef_drank() << " liter.\n";
+//  println("{}", hp->geef_drank());
 //  Error: 'class Hond' has no member named 'geef_drank'
 //  We kunnen een cast gebruiken maar dat geeft foutieve uitvoer als hp niet naar een Sint_bernard wijst.
-    cout << static_cast<Sint_bernard*>(hp)->geef_drank() << " liter.\n";
+    println("{} liter.", static_cast<Sint_bernard*>(hp)->geef_drank());
 }
 
 int main() {
@@ -52,5 +52,5 @@ Geeft drank.
 10 liter.
 Blaf.
 Geeft drank.
--2144382840 liter.
+1714 liter.
 */

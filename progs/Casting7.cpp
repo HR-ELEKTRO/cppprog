@@ -1,4 +1,4 @@
-#include <iostream>
+import std;
 using namespace std;
 
 // Deze code is NIET uitbreidbaar!
@@ -24,11 +24,11 @@ class Tekkel: public Hond {
 
 void blaf(const Hond* hp) {
     if (dynamic_cast<const Sint_bernard*>(hp) != nullptr)
-        cout << "Woef!\n";
+        println("Woef!");
     else if (dynamic_cast<const Tekkel*>(hp) != nullptr)
-        cout << "Kef kef!\n";
+        println("Kef kef!");
     else
-        cout << "Blaf.\n";
+        println("Blaf.");
 }
 
 int main() {

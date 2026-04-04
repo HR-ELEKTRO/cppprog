@@ -1,12 +1,11 @@
-#include <iostream>
-#include <typeinfo>
+import std;
 using namespace std;
 
 class Hond {
 public:
     virtual ~Hond() = default; 
     virtual void blaf() const {
-        cout << "Blaf.\n";
+        println("Blaf.");
     }
 //  ...
 };
@@ -16,10 +15,10 @@ public:
     Sint_bernard(int w = 10): whisky{w} {
     }
     void blaf() const override {
-        cout << "Woef!\n";
+        println("Woef!");
     }
     int geef_drank() {
-        cout << "Geeft drank.\n";
+        println("Geeft drank.");
         int w {whisky};
         whisky = 0;
         return w;
@@ -33,7 +32,7 @@ void geef_hulp(Hond& hr) {
     hr.blaf();
     try {
         Sint_bernard& sbr {dynamic_cast<Sint_bernard&>(hr)};
-        cout << sbr.geef_drank() << " liter.\n";
+        println("{} liter.", sbr.geef_drank());
     } catch (const bad_cast&) {
         /* doe niets */
     }

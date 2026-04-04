@@ -6556,20 +6556,19 @@ In dit hoofdstuk bespreken we nog een aantal kleine verbeteringen.
 
 \section{Binaire getallen}
 \label{sec:binairegetallen}
-In een \Cpp{} programma kun je constante getallen niet alleen meer in het decimale, octale\footnote{%
+In een \Cpp{} en C23 \cite{ISO2023C} programma kun je constante getallen niet alleen meer in het decimale, octale\footnote{%
 	Octale getallen kun je invoeren door ze vooraf te laten gaan door een \cppcode{0}. Dus de code \cppcode{int x = 023;} initialiseert de variabele \cppcode{i} met de waarde 19 want $23_8$ is $19_{10}$.  
 } en hexadecimale\footnote{%
 	Hexadecimale getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0x} of \cppcode{0X}. Dus de code \cppcode{int x = 0x23;} initialiseert de variabele \cppcode{i} met de waarde 35 want $23_{16}$ is $35_{10}$.  
 } talstelsel invoeren maar ook in het binaire talstelsel.
-Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} of \cppcode{0B}\footnote{%
-	Hoewel deze notatie \emph{niet} toegestaan is volgens de C-standaard \cite{ISO2018} ondersteunen veel C\hyp{}compilers zoals de GCC C\hyp{}compiler en de Texas Instruments Optimizing C\hyp{}Compiler deze notatie ook. 
-}. Dus de code \cppcode{int x = 0b10111101;} initialiseert de variabele \cppcode{i} met de waarde 189 want $10111101_2$ is $189_{10}$.
+Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} of \cppcode{0B}. 
+Dus de code \cppcode{int x = 0b10111101;} initialiseert de variabele \cppcode{i} met de waarde 189 want $10111101_2$ is $189_{10}$.
 
 \sectionTextCode{Het type}{bool}
 %\markright{}
-Als je in een C-programma een variabele van het type |bool| wilt definiëren, dan moet je de \USE{preprocessor directive} \ccode{#include stdbool.h} gebruiken.
-In \Cpp{} is een \USE{preprocessor directive} niet nodig, als je het type |bool| wilt gebruiken.
-In \Cpp{} is \cppcode{bool} een \USE{keyword} en hoef je dus geen |#include| te gebruiken.
+Als je in een C-programma (van vóór de C23 standaard maar na de C99 standaard) een variabele van het type |bool| wilt definiëren, dan moet je de \USE{preprocessor directive} \ccode{#include stdbool.h} gebruiken.
+In \Cpp{} en C23 \cite{ISO2023C} is een \USE{preprocessor directive} niet nodig, als je het type |bool| wilt gebruiken.
+In \Cpp{} en C23 is \cppcode{bool} een \USE{keyword} en hoef je dus geen |#include| te gebruiken.
 Met dit \USE{keyword} kun je booleaanse variabelen definiëren van het type |bool|.
 Een variabele van dit type heeft slechts twee mogelijke waarden: |true| en |false|.
 
@@ -6591,7 +6590,7 @@ Met behulp van de template functie |to_integer<T>| kan een |byte| worden omgezet
 
 \section{Digit separators}
 \label{sec:digitseparators}
-Om lange getallen beter leesbaar te maken mag een enkel aanhalingsteken (\code{'}) gebruikt worden om groepjes cijfers te onderscheiden.
+Om lange getallen beter leesbaar te maken mag in \Cpp{} en C23 \cite{ISO2023C} een enkel aanhalingsteken (\code{'}) gebruikt worden om groepjes cijfers te onderscheiden.
 \begin{lstfragment}
 	uint16_t uart_settings = 0b1011'1001'000'1011;
 	int32_t miljard = 1'000'000'000; 
@@ -6627,7 +6626,7 @@ Je kunt de module interface compileren met het commando:
 \begin{coutput}
 g++ -std=c++23 -fmodules -fmodule-only -c hello_world_module_interface.cppm
 \end{coutput}
-Dit genereerd een een precompiled module interface file genaamd |helloworld.gcm| in het directory |gcm.cache|.
+Dit genereerd een precompiled module interface file genaamd |helloworld.gcm| in het directory |gcm.cache|.
 
 \needspace{3\baselineskip}
 Je kunt de module implementatie compileren met het commando:
@@ -6815,8 +6814,7 @@ De GCC \Cpp{}\hyp{}compiler geeft de volgende foutmelding:
 \begin{lstfragment}[mathescape=true]
 $\color{hrred}\textbf{error:}$ cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'
 \end{lstfragment}
-In de standaard \Cpp{} library zijn een aantal functietemplates opgenomen die gebruikt kunnen worden om types te manipuleren. 
-Deze functietemplates zijn gedefinieerd in de standaard \USE{include file} \href{https://en.cppreference.com/w/cpp/header/type_traits}{\cppcode{<type_traits>}}\footnote{%
+In de standaard \Cpp{} library zijn een aantal functietemplates opgenomen die gebruikt kunnen worden om types te manipuleren\footnote{%
 	Zie: \url{https://en.cppreference.com/w/cpp/header/type_traits}.
 }.
 Je kunt de functietemplate \href{https://en.cppreference.com/w/cpp/types/remove_reference}{\cppcode{remove_reference_t}} gebruiken om van een reference type een gewoon type te maken.
@@ -7087,7 +7085,7 @@ De output van deze regel is:
 
 Er bestaat ook een speciale \USE{cast} om een |const| weg te casten de zogenoemde |const_cast|\label{sec:const_cast}.
 Voorbeeld (\proglink{casting3.cpp}):
-\cpplstinputfragment[linerange={5-14}]{casting3.cpp}
+\cpplstinputfragment[linerange={4-13}]{casting3.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -7125,19 +7123,19 @@ In dit geval had je natuurlijk in plaats van het type |int| ook het type |int32_
 In \Cpp{} kun je zogenoemde \squote{\USE{structured binding}} toepassen.
 Hiermee kun je de waarden van een samengesteld type (bijvoorbeeld een |struct|) in één statement toekennen aan meerdere variabelen.
 Bijvoorbeeld, stel dat je de volgende |struct| hebt gedefinieerd:
-\cpplstinputfragment[linerange={5-9}]{structured_binding.cpp}
+\cpplstinputfragment[linerange={4-8}]{structured_binding.cpp}
 Als de functie |adreslocatie_HR| dan het adres van een locatie van de Hogeschool Rotterdam teruggeeft, dan kan dit adres met behulp van \USE{structured binding} toegekend worden aan drie variabelen:
-\cpplstinputfragment[linerange={26-28}]{structured_binding.cpp}
+\cpplstinputfragment[linerange={25-26}]{structured_binding.cpp}
 Het gebruik hiervan is soms handig, maar vaak is het duidelijker om de waarden van het samengestelde type één voor één te gebruiken:
-\cpplstinputfragment[linerange={21-23}]{structured_binding.cpp}
+\cpplstinputfragment[linerange={21-22}]{structured_binding.cpp}
 
 Vooral bij gebruik van sommige standaard library types zoals |set| en |map| is het gebruik van \USE{structured binding} handig.
 In \cref{sec:set} heb je gezien dat de memberfunctie |insert| van |set| het returntype  |pair<iterator, bool>| heeft.
 De |iterator| geeft de plek aan waar ingevoegd is en de |bool| geeft aan of het invoegen gelukt is.
 In het voorbeeldprogramma werd de volgende code gebruikt om te kijken of het invoegen van |"Harry"| in de set |docenten| gelukt was:
-\cpplstinputfragment[linerange={14-14,17-19}]{set.cpp}
+\cpplstinputfragment[linerange={5-5,8-10}]{set.cpp}
 Dit zou je nu ook met behulp van structured binding als volgt kunnen coderen:
-\cpplstinputfragment[linerange={14-14,17-19}]{set_structured_binding.cpp}
+\cpplstinputfragment[linerange={5-5,8-10}]{set_structured_binding.cpp}
 
 \chapter{Objects and classes (de details)}
 \label{sec:objectsandclassesdetails}

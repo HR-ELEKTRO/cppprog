@@ -1,5 +1,4 @@
-#include <iostream>
-#include <type_traits>
+import std;
 using namespace std;
 
 int main() {
@@ -8,7 +7,7 @@ int main() {
     for (auto element: rij) {
         som += element;
     }
-    cout << "som = " << som << '\n';
+    println("som = {}", som);
 }
 
 // Als de rij nu als volgt wordt gedefinieerd:

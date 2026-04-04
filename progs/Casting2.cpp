@@ -1,11 +1,11 @@
-#include <iostream>
+import std;
 using namespace std;
 
 int main() {
-    int i1 = 1;
-    int i2 = 2;
-    cout << "1/2 = " << i1 / i2 << '\n';
-    cout << "1/2 = " << static_cast<double>(i1) / i2 << '\n';
+    int i1 {1};
+    int i2 {2};
+    println("1/2 = {}", i1 / i2);
+    println("1/2 = {}", static_cast<double>(i1) / i2);
 }
 
 /* Output:

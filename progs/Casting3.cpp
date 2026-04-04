@@ -1,5 +1,4 @@
-#include <iostream>
-#include <string>
+import std;
 using namespace std;
 
 void stiekem(const string& a) {
@@ -8,9 +7,9 @@ void stiekem(const string& a) {
 
 int main() {
     string s {"Dag"};
-    cout << "s = " << s << '\n';
+    println("s = {}", s);
     stiekem(s);
-    cout << "s = " << s << '\n';
+    println("s = {}", s);
 }
 
 /* Output:
