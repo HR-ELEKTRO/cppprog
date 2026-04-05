@@ -7483,14 +7483,14 @@ In UML worden |static| datavelden en |static| memberfuncties \underline{onderstr
 
 \begin{minipage}{\textwidth}
 \begin{minipage}[c]{.5\textwidth}
-\cpplstinputfragment[linerange={1-15}]{Honden_teller.cpp}
+\cpplstinputfragment[linerange={1-13}]{Honden_teller.cpp}
 \end{minipage}
 \hfill
 \begin{minipage}[c]{.45\textwidth}
 \figuur[H]{scale=1}{hond}{Class \cppcode{Hond} met \cppcode{static} members.}
 \end{minipage} 
 \end{minipage} 
-\cpplstinputfragment[linerange={17-45}]{Honden_teller.cpp}
+\cpplstinputfragment[linerange={15-41}]{Honden_teller.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -7524,12 +7524,12 @@ Als dezelfde datavelden ook in een \USE{member initialization list} (zie \cref{i
 \iftoggle{ebook}{\\}{ }%
 Zie \proglink{Breuk1_direct_member_init.cpp}:
 
-\cpplstinputfragment[linerange={6-12,16-30}]{Breuk1_direct_member_init.cpp}
+\cpplstinputfragment[linerange={5-11,15-29}]{Breuk1_direct_member_init.cpp}
 \begin{cpplstfragment}
 //  ...
 \end{cpplstfragment}
 \vspace{-.8\baselineskip}
-\cpplstinputfragment[linerange={50-58}]{Breuk1_direct_member_init.cpp}
+\cpplstinputfragment[linerange={49-57}]{Breuk1_direct_member_init.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -7546,10 +7546,10 @@ Globale constanten komen de onderhoudbaarheid niet ten goede.
 Als je alle objecten van een class dezelfde \USE{compile time} constante wilt laten delen, kun je deze constanten |static|\footnote{Zie \cref{sec:staticclassmembers}} definiëren.
 
 Voorbeeld met |static| \USE{compile time} constanten (\proglink{Color.cpp}):
-\cpplstinputfragment[linerange={14-50}]{Color.cpp}
+\cpplstinputfragment[linerange={13-49}]{Color.cpp}
 
 Deze constanten kunnen als volgt gebruikt worden:
-\cpplstinputfragment[linerange={136-139}]{Color.cpp}
+\cpplstinputfragment[linerange={163-166}]{Color.cpp}
 
 Uitvoer:
 \begin{coutput}
@@ -7560,10 +7560,10 @@ c = 0000ff
 Als alternatief kun je ook een |enum| gebruiken.
 
 Voorbeeld met \USE{anonymous} (naamloze) |enum|:
-\cpplstinputfragment[linerange={96-130}]{Color.cpp}
+\cpplstinputfragment[linerange={95-111}]{Color.cpp}
 
 Deze constanten kunnen als volgt gebruikt worden:
-\cpplstinputfragment[linerange={150-153}]{Color.cpp}
+\cpplstinputfragment[linerange={177-180}]{Color.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -7717,17 +7717,34 @@ rood = 2
 \section{Variable-template}
 Ook variabelen en constanten kun je als template definiëren.
 
-Je kunt bijvoorbeeld de constante |pi| definiëren als template zodat je naar keuze een |float| of |double| met de waarde $\pi$ kunt aanmaken:
+Sinds \Cpp{}20 zijn in de namespace |std::numbers| een aantal wiskundige constanten gedefinieerd als templates, zoals |pi_v<T>| en |e<v>|.
+De constanten |pi| en |e| zijn in diezelfde namespace gedefinieerd als respectievelijk |pi_v<double>| en |e_v<double>|.
 
+Je kunt deze constanten als volgt gebruiken:
 \begin{cpplstfragment}
-template<typename T> constexpr T pi = atan(static_cast<T>(1)) * 4;
-\end{cpplstfragment}
-Je kunt nu de constante |pi| als volgt gebruiken:
 \begin{cpplstfragment}[mathescape=true]
-auto d {pi<double>}; // d is een double met de waarde $\color{lstturquoisegreen}\pi$
-auto f {pi<float>}; // f is een float met de waarde $\color{lstturquoisegreen}\pi$
+auto d1 {numbers::pi_v<double>}; // d1 is een double met de waarde $\color{lstturquoisegreen}\pi$
+auto d2 {numbers::pi}; // d2 is een double met de waarde $\color{lstturquoisegreen}\pi$
+auto f {numbers::pi<float>}; // f is een float met de waarde $\color{lstturquoisegreen}\pi$
 \end{cpplstfragment}
-Zie \proglink{pi.cpp}.
+
+De constante $\tau$ (tau)\footnote{%
+	De constante $\tau$ is gelijk aan $2\pi$, zie \url{https://en.wikipedia.org/wiki/Tau_(mathematics)}.
+} is niet gedefinieerd in de namespace |std::numbers|.
+
+Je kunt de constante |tau| zelf definiëren als template zodat je naar keuze een |float|, |double| of |long double| met de waarde $\tau$ kunt aanmaken:
+\begin{cpplstfragment}
+template<floating_point T> constexpr T tau = atan(static_cast<T>(1)) * 8;
+\end{cpplstfragment}
+Je ziet dat het concept |floating_point| gebruikt is als template parameter constraint, zie \cref{sec:concepts}.
+Dit zorgt ervoor dat de compiler een duidelijke foutmelding geeft als de template met een niet floating point type wordt gebruikt.
+
+Je kunt nu de constante |tau| als volgt gebruiken:
+\begin{cpplstfragment}[mathescape=true]
+auto f {tau<float>}; // f is een float met de waarde $\color{lstturquoisegreen}\tau$
+\end{cpplstfragment}
+auto d {tau<double>}; // d is een double met de waarde $\color{lstturquoisegreen}\tau$
+Zie \proglink{tau.cpp}.
 
 \section{Template argument binding}
 \label{sec:templateargumentbinding}
@@ -7755,9 +7772,9 @@ Bijvoorbeeld het standaard type |vector| kan als volgt gebruikt worden:
 \end{cpplstfragment}
 
 Een zogenoemde \emph{deduction guide} kan gespecificeerd worden om de compiler hierbij te helpen.
-Voor de in \cref{sec:Arraymetinitlist} gedefinieerde class |Array| kun je bijvoorbeeld de volgende deduction guide specificeren, zie \proglink{Array_template_deduction_guide}:
+Voor de in \cref{sec:Arraymetinitlist} gedefinieerde class |Array| kun je bijvoorbeeld de volgende deduction guide specificeren, zie \proglink{Array_template_deduction_guide.cpp}:
 \begin{cpplstfragment}
-template<typename Iter> Array(Iter, Iter) -> Array<typename iterator_traits<Iter>::value_type>;
+template<input_iterator Iter> Array(Iter, Iter) -> Array<iter_value_t<Iter>>;
 \end{cpplstfragment}
 Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald kan worden.
 \begin{cpplstfragment}
