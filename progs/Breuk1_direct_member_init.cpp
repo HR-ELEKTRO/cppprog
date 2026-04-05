@@ -1,5 +1,4 @@
-#include <iostream>
-#include <numeric>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -50,11 +49,11 @@ void Breuk::normaliseer() {
 
 int main() {
     Breuk b1;
-    cout << "b1 = " << b1.teller() << '/' << b1.noemer() << '\n';
+    println("b1 = {}/{}", b1.teller(), b1.noemer());
     Breuk b2 {4};
-    cout << "b2 {4} = " << b2.teller() << '/' << b2.noemer() << '\n';
+    println("b2 {{4}} = {}/{}", b2.teller(), b2.noemer());
     Breuk b3 {23, -5};
-    cout << "b3 {23, -5} = " << b3.teller() << '/' << b3.noemer() << '\n';
+    println("b3 {{23, -5}} = {}/{}", b3.teller(), b3.noemer());
 }
 
 /*

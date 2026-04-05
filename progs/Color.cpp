@@ -5,8 +5,7 @@
 // - als static const datamembers     ==> zie Manier2
 // - als een anoniem enumeratietype   ==> zie Manier3
 
-#include <iostream>
-#include <iomanip>
+import std;
 using namespace std;
 
 namespace Manier1 {
@@ -130,26 +129,54 @@ void Color::set_value(int v) {
 }
 
 }
+
+template<>
+struct std::formatter<Manier1::Color>: public formatter<string> {
+    auto format(const Manier1::Color& color, auto& context) const {
+        ostringstream ss;
+        ss << color;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
+template<>
+struct std::formatter<Manier2::Color>: public formatter<string> {
+    auto format(const Manier2::Color& color, auto& context) const {
+        ostringstream ss;
+        ss << color;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
+template<>
+struct std::formatter<Manier3::Color>: public formatter<string> {
+    auto format(const Manier3::Color& color, auto& context) const {
+        ostringstream ss;
+        ss << color;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
 int main() {
 {
     using namespace Manier1;
     Color c {Color::YELLOW};
-    cout << "c = " << c << '\n';
+    println("c = {}", c);
     c.set_value(Color::BLUE);
-    cout << "c = " << c << '\n';
+    println("c = {}", c);
 }
 {
     using namespace Manier2;
     Color c {Color::YELLOW};
-    cout << "c = " << c << '\n';
+    println("c = {}", c);
     c.set_value(Color::BLUE);
-    cout << "c = " << c << '\n';
+    println("c = {}", c);
 }
 {
     using namespace Manier3;
     Color c {Color::YELLOW};
-    cout << "c = " << c << '\n';
+    println("c = {}", c);
     c.set_value(Color::BLUE);
-    cout << "c = " << c << '\n';
+    println("c = {}", c);
 }
 }

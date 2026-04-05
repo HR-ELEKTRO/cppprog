@@ -652,7 +652,7 @@ Type een foating point getal in: \cinput{666.66666666666666666666666666}
 Hoeveel decimalen wil je afdrukken?: \cinput{5}
 d = 666.66667
 \end{coutput}
-Je ziet dat het ook mogelijk is om binnen een format specifier een invulveld te gebruiken dat tijdens de uitvoering van het programma ingevuld wordt, in dit geval met de waarde van de variabele |aantal_decimalen|.
+Je ziet dat het ook mogelijk is om binnen een \USE{format specifier} een invulveld te gebruiken dat tijdens de uitvoering van het programma ingevuld wordt, in dit geval met de waarde van de variabele |aantal_decimalen|.
 
 \needspace{5\baselineskip}
 \section{Universele initialisatie}
@@ -7151,11 +7151,11 @@ Deze verbeterde versie wordt in dit hoofdstuk besproken.
 \section{Operator overloading (deel 2)}
 Behalve de operator |+=| kun je ook andere operatoren \USE{overloaden}. 
 Voor de class |Breuk| kun je bijvoorbeeld de operator |+| definiëren, zodat objecten |b1| en |b2| van de class |Breuk| gewoon door middel van \hbox{\cppcode{b1 + b2}} opgeteld kunnen worden. 
-\cpplstinputfragment[linerange={11-18,26-26,46-51,76-79}]{operator+_member.cpp}
+\cpplstinputfragment[linerange={10-17,25-25,45-50,84-87}]{operator+_member.cpp}
 
 Zoals je ziet heb ik de |operator+| eenvoudig geïmplementeerd door gebruik te maken van de al eerder gedefinieerde \hcode{operator\\-+=}. 
 De code kan nog verder vereenvoudigd worden tot:
-\cpplstinputfragment[linerange=54-56]{operator+_member.cpp}
+\cpplstinputfragment[linerange=53-55]{operator+_member.cpp}
 
 Zie \proglink{operator+_member.cpp} voor een compleet voorbeeldprogramma.
 
@@ -7242,13 +7242,13 @@ Een expressie zoals: |a + b| wordt dus, als |a| en |b| beide van het type |int| 
 Je kunt nu door gebruik te maken van \USE{operator overloading} zelf zoveel globale |operator+| functies definiëren als je maar wilt.
 
 Als je dus een |Breuk| bij een |int| wilt kunnen optellen, kun je de volgende globale |operator+| definiëren:
-\cpplstinputfragment[linerange={90-90,92-93}]{operator+_global.cpp}
+\cpplstinputfragment[linerange={98-98,100-102}]{operator+_global.cpp}
 
 Deze implementatie roept simpelweg de |Breuk::operator+| memberfunctie aan! Optellen is namelijk commutatief, dat wil zeggen dat $a + b$ gelijk is aan $b + a$. Als we van een |int| een |Breuk| willen aftrekken, moet een andere aanpak worden gekozen want aftrekken is niet commutatief, $a - b$ is namelijk ongelijk aan $b - a$.
-\cpplstinputfragment[linerange={95-95,97-100}]{operator+_global.cpp}
+\cpplstinputfragment[linerange={103-103,105-108}]{operator+_global.cpp}
 
 Deze implementatie roept de |Breuk::operator-=| memberfunctie aan. Die moet dan natuurlijk wel gedefinieerd zijn:
-\cpplstinputfragment[linerange={62-67}]{operator+_global.cpp}
+\cpplstinputfragment[linerange={61-66}]{operator+_global.cpp}
 
 Zie \proglink{operator+_global.cpp} voor een compleet voorbeeldprogramma.
 
@@ -7256,15 +7256,15 @@ In plaats van zowel een memberfunctie |Breuk::operator+(const Breuk&)| en een gl
 
 \needspace{3\baselineskip}
 Voorbeeld van het \USE{overloaden} van de globale |operator+| voor objecten van de class |Breuk|:
-\cpplstinputfragment[linerange={10-11,13-13,15-15,18-18,27-27,77-81}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={9-10,12-12,14-14,17-17,26-26,75-79}]{Breuk3.cpp}
 
 \needspace{2\baselineskip}
 Voor de fijnproever: de implementatie van |operator+| kan ook in 1 regel:
-\cpplstinputfragment[linerange={84-86}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={82-83}]{Breuk3.cpp}
 
 \needspace{2\baselineskip}
 Voor de connaisseur (echte kenner): De implementatie kan ook zo:
-\cpplstinputfragment[linerange={90-92}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={88-89}]{Breuk3.cpp}
 
 Doordat de eerste parameter |left| hier als \USE{call by value} (zie \cpageref{call by value}) is gedeclareerd wordt bij aanroep \squote{van zelf} een kopietje van het linker argument van de |operator+| gemaakt.
 
@@ -7284,7 +7284,7 @@ Dit probleem is opgelost door de postfix versie te voorzien van een (dummy) |int
 
 \needspace{2\baselineskip}
 Voorbeeld van het \USE{overloaden} van |operator++| voor objecten van de class |Breuk|:
-\cpplstinputfragment[linerange={10-11,13-13,15-18,27-27}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={9-10,12-12,14-17,26-26}]{Breuk3.cpp}
 De implementatie van deze memberfuncties wordt in \cref{Breuk::operator++ implementatie} gegeven.
 %verwijzen naar page gaat niet omdat programma wordt ingelezen uit cpp file
 
@@ -7336,11 +7336,11 @@ Dit maakt het type |Breuk| voor programmeurs erg eenvoudig te gebruiken.
 Ik presenteer nu eerst de complete broncode van het programma \proglink{Breuk3.cpp} waarin het type |Breuk| gedeclareerd, geïmplementeerd en gebruikt wordt. 
 Meteen daarna ga ik, één voor één, op bovengenoemde punten in.
 \label{Breuk::operator++ implementatie}
-\cpplstinputfragment[linerange={3-6,9-35,38-81,94-119}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={3-5,8-33,36-79,92-123}]{Breuk3.cpp}
 \iftoggle{ebook}{
 	\cpplstinputfragment[linerange={Breuk3_main-Breuk3_main,Breuk3_main2-Breuk3_main2}]{fragments.cpp}
 }{
-	\cpplstinputfragment[linerange={122-145}]{Breuk3.cpp}
+	\cpplstinputfragment[linerange={126-146}]{Breuk3.cpp}
 }
 
 Ik heb ervoor gekozen om de globale |operator==| te \USE{overloaden} in plaats van een memberfunctie |Breuk::operator==| te definiëren.
@@ -7348,7 +7348,7 @@ Dit heeft als voordeel dat zowel het linker als het rechter argument indien nodi
 Dus zowel de expressies| b == 3| als |3 == b| kunnen worden gebruikt als |b| van het type |Breuk| is.%
 \needspace{2\baselineskip}
 De implementatie van deze globale |operator ==| is als volgt:
-\cpplstinputfragment[linerange={113-115}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={120-122}]{Breuk3.cpp}
 
 Dit levert bij compilatie echter de volgende fouten op: \error{error: 'int Breuk::boven' is private within this context} en \error{error: 'int Breuk::onder' is private within this context}.
 
@@ -7387,16 +7387,23 @@ Voor alle overige functies (geen \USE{member} en geen \USE{friend}) geldt nog st
 Net zoals in het gewone leven moet een class zijn vrienden met zorg selecteren. 
 Als je elke functie als \USE{friend} van elke class declareert, wordt het principe van \USE{information hiding} natuurlijk wel overboord gegooid.
 
-\needspace{2\baselineskip}
-De globale |operator!=| is als volgt \USE{overloaded} voor het type |Breuk|:
-\cpplstinputfragment[linerange={117-119}]{Breuk3.cpp}
-
-Bij de implementatie is gebruik gemaakt van de al eerder voor het type |Breuk| \USE{overloaded} globale |operator==|. 
-Het is dus niet nodig om deze |operator!=| als \USE{friend} functie van de class |Breuk| te definiëren.
+Vanaf \Cpp{}20 zal de compiler automatisch een |operator!=| genereren voor een UDT als er een |operator==| gedefinieerd is\footnote{%
+	Als je gebruik maakt van een \Cpp{} versie van vóór \Cpp{}20, dan moet je zelf een globale \ccode{operator!=} \USE{overloaden} voor het type \ccode{Breuk}:\\
+	\ccode{bool operator!=(const Breuk& left, const Breuk& right) \{}\\
+	\ccode{\ \ \ \ return !(left == right);}\\
+	\ccode{\}}\\
+	Bij de implementatie is gebruik gemaakt van de al eerder voor het type \code{Breuk} \USE{overloaded} globale \ccode{operator==}. 
+	Het is dus niet nodig om deze \ccode{operator!=} als \USE{friend} functie van de class \ccode{Breuk} te definiëren.
+}.
+De gegenereerde |operator!=| zal de uitkomst van de |operator==| inverteren.
 
 \section{Operator overloading (deel 4)} 
 \label{sec:overloadoutput}
-Het object |cout| dat in de \USE{headerfile}| iostream.h| gedeclareerd is, is van het type |ostream|. 
+Sinds \Cpp{}23 kunnen de |print| en |println| functies gebruikt worden om variabelen af te drukken, zie \cref{sec:print}.
+Daarvoor werd de |operator<<| gebruikt om variabelen af te drukken, zie \cref{sec:iostream}.
+Om het gebruik van een UDT zo flexibel mogelijk te maken is het aan te bevelen om het mogelijk te maken om objecten van het UDT op beide manieren af te kunnen drukken.
+
+Het object |cout| dat in de standaard \USE{library} gedeclareerd is, is van het type |ostream|.
 Om er voor te zorgen dat je een |Breuk| |b| op het scherm kunt afdrukken door middel van: |cout << b|, moet je, zoals je nu zo langzamerhand wel zult begrijpen, de globale |operator<<| \USE{overloaden}%
 \footnote{%
 	We hebben hier geen keuze omdat het definiëren van de memberfunctie \hcode[style=cppstyle]{ostream::\\-oper\\-ator<<\\-(const Breuk)} geen reële mogelijkheid is.
@@ -7420,13 +7427,34 @@ Bijvoorbeeld:
 
 \needspace{2\baselineskip}
 Omdat alle ingebouwde \USE{overloaded} |<<| operatoren met als eerste parameter een |ostream&| deze \USE{reference} ook weer als return waarde teruggeven kun je de bovenstaande |operator<<| vereenvoudigen tot:
-\cpplstinputfragment[linerange={95-97}]{Breuk3.cpp}
+\cpplstinputfragment[linerange={93-95}]{Breuk3.cpp}
 
 Op vergelijkbare wijze kun je de globale |operator>>| \USE{overloaden} zodat de objecten |a| en |b| van de class |Breuk| als volgt ingelezen kunnen worden: |cin >> a >> b|
 
 Voor het type van de eerste parameter en het return type moet je in dit geval |istream| gebruiken.
 
-Als je deze laatste versie van |Breuk| vergelijkt met de eerste versie op \cpageref{breuk0}, dan is eigenlijk het enige belangrijke verschil dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als de ingebouwde types te gebruiken is. 
+Om het mogelijk te maken om een |Breuk| af te drukken met de |print| functies, moet de template |std::formatter| gespecialiseerd worden voor het de class |Breuk|, zie \cref{sec:userdefinedformatter}.
+
+\cpplstinputfragment[linerange={111-118}]{Breuk3.cpp}
+
+In dit geval is er voor gekozen om de |formatter<Breuk>| over te erven van |formatter<string>|.
+Dit zorgt ervoor dat de \USE{format specifiers} die bij een |string| gebruikt kunnen worden, nu ook bij een |Breuk| gebruikt kunnen worden.
+De implementatie van de |format| functie maakt gebruik van de al eerder gedefinieerde |operator<<| om een |Breuk| af te drukken naar de |ostringstream| |ss|die vervolgens omgezet kan worden naar een |string| door middel van |ss.str()|.
+
+De volgende code:
+\cpplstinputfragment[linerange=39-46]{format_Breuk.cpp}
+Geeft de volgende uitvoer:
+\begin{coutput}
+b = 15/47
+     b =
+   15/47
+"b ="
+"15/47"
+______b =_______
+_____15/47______
+\end{coutput}
+
+ls je deze laatste versie van |Breuk| vergelijkt met de eerste versie op \cpageref{breuk0}, dan is eigenlijk het enige belangrijke verschil dat het zelfgedefinieerde type |Breuk| nu op precies dezelfde wijze als de ingebouwde types te gebruiken is. 
 Je hebt er heel wat pagina's gedetailleerde informatie voor door moeten worstelen om dit te bereiken. 
 Dat dit toch de moeite waard is heb ik op een van de eerste van die pagina's al een keer benadrukt, maar het zou kunnen zijn dat je door alle tussenliggende details het uiteindelijke nut van alle inspanning vergeten bent. 
 Dus geef ik hier nogmaals antwoord op de vraag: \dquote{Is het al die inspanningen wel waard om een \cppcode{Breuk} zo te maken dat je hem net zoals een ingebouwd type kan gebruiken?} 

@@ -1,8 +1,7 @@
 // Probleem met memberfunctie operator+
 // Zie operator+Global voor een oplossing voor dit probleem
 
-#include <iostream>
-#include <numeric>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -67,27 +66,37 @@ void Breuk::normaliseer() {
     onder /= d;
 }
 
-
 ostream& operator<<(ostream& out, const Breuk& b) {
     return out << b.boven << '/' << b.onder;
 }
+
+template<>
+struct std::formatter<Breuk>: public formatter<string> {
+    auto format(const Breuk& breuk, auto& context) const {
+        ostringstream ss;
+        ss << breuk;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
 
 // Hoofdprogramma:
 
 int main() {
     Breuk b1 {2, 3}, b2 {4, 5}, b3;
     b3 = b1 + b2;
-    cout << b1 << " + " << b2 << " = " << b3 << '\n';
+    println("{} + {} = {}", b1, b2, b3);
 
 //  kun je bij een Breuk een int optellen?
     b3 = b1 + 5;
-    cout << b1 << " + 5 = " << b3 << '\n';
+    println("{} + 5 = {}", b1, b3);
 //  Ja, de int wordt omgezet in een Breuk met de constructor Breuk::Breuk(int t)
 //  b3 = b1 + Breuk(5);
 
 //  kun je bij een int een Breuk optellen?
-//  b3 = 5 + b2;
-//  cout << "5 + " << b2 << " = " << b3 << '\n';
+/*
+    b3 = 5 + b2;
+    println("5 + {} = {}", b2, b3);
+*/
 //  Nee
 //  Error: no match for ‘operator+’ (operand types are ‘int’ and ‘Breuk’)
 //  Zie operator+_global voor een oplossing voor dit probleem

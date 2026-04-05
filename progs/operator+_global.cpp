@@ -2,8 +2,7 @@
 // In plaats van 1 member operator+ en 1 globale operator+ kan er ook 
 // alleen een globale operator+ gebruikt worden. Zie Breuk3.cpp
 
-#include <iostream>
-#include <numeric>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -87,6 +86,15 @@ ostream& operator<<(ostream& out, const Breuk& b) {
     return out << b.boven << '/' << b.onder;
 }
 
+template<>
+struct std::formatter<Breuk>: public formatter<string> {
+    auto format(const Breuk& breuk, auto& context) const {
+        ostringstream ss;
+        ss << breuk;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
 const Breuk operator+(int links, const Breuk& rechts) {
     // optellen is commutatief dus links + rechts is gelijk aan rechts + links
     return rechts + links;
@@ -104,26 +112,26 @@ const Breuk operator-(int links, const Breuk& rechts) {
 int main() {
     Breuk b1 {2, 3}, b2 {4, 5}, b3;
     b3 = b1 + b2;
-    cout << b1 << " + " << b2 << " = " << b3 << '\n';
-    cout << b1 << " - " << b2 << " = " << b1 - b2 << '\n';
-    
+    println("{} + {} = {}", b1, b2, b3);
+    println("{} - {} = {}", b1, b2, b1 - b2);
+
 //  kun je bij een Breuk een int optellen?
     b3 = b1 + 5;
-    cout << b1 << " + 5 = " << b3 << '\n';
+    println("{} + 5 = {}", b1, b3);
 //  Ja, de int wordt omgezet in een Breuk met de constructor Breuk::Breuk(int t)
 //  b3 = b1 + Breuk {5};
 
 //  kun je van een Breuk een int aftrekken?
-    cout << b1 << " - 5 = " << b1 - 5 << '\n';
+    println("{} - 5 = {}", b1, b1 - 5);
 //  Ja, de int wordt omgezet in een Breuk met de constructor Breuk::Breuk(int t)
     
 //  kun je bij een int een Breuk optellen?
     b3 = 5 + b2;
-    cout << "5 + " << b2 << " = " << b3 << '\n';
+    println("5 + {} = {}", b2, b3);
 //  Ja, de globale operator+(int links, const Breuk& rechts) wordt aangeroepen.
 //  b3.operator+(5, b2);
 
 //  kun je van een int een Breuk aftrekken?
-    cout << "5 - " << b2 << " = " << 5 - b2 << '\n';
+    println("5 - {} = {}", b2, 5 - b2);
 //  Ja, de globale operator-(int links, const Breuk& rechts) wordt aangeroepen.
 }

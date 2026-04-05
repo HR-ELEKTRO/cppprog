@@ -1,4 +1,4 @@
-#include <iostream>
+import std;
 using namespace std;
 
 struct Breuk {
@@ -18,9 +18,9 @@ constexpr Breuk operator/(int links, Breuk rechts) {
 
 int main() {
     Breuk b {1, 6};
-    cout << b.boven << "/" << b.onder << '\n';
+    println("{}/{}", b.boven, b.onder);
     b = 1/6_b;
-    cout << b.boven << "/" << b.onder << '\n';
+    println("{}/{}", b.boven, b.onder);
     b = 2/6_b;
-    cout << b.boven << "/" << b.onder << '\n';
+    println("{}/{}", b.boven, b.onder);
 }

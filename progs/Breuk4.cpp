@@ -1,7 +1,6 @@
 // Werken met breuken in C++ ... zoals met ints!! een echt UDT
 
-#include <iostream>
-#include <numeric>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -27,7 +26,7 @@ friend bool operator==(Breuk links, Breuk rechts);
 };
 
 istream& operator>>(istream& in, Breuk& b);
-bool operator!=(Breuk links, Breuk rechts);
+
 const Breuk operator+(Breuk links, Breuk rechts);
 // ...
 // Er zijn nog veel uitbreidingen mogelijk
@@ -81,6 +80,15 @@ ostream& operator<<(ostream& out, Breuk b) {
     return out << b.boven << '/' << b.onder;
 }
 
+template<>
+struct std::formatter<Breuk>: public formatter<string> {
+    auto format(const Breuk& breuk, auto& context) const {
+        ostringstream ss;
+        ss << breuk;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
 istream& operator>>(istream& in, Breuk& b) {
     int teller;
     if (in >> teller)
@@ -99,19 +107,40 @@ bool operator==(Breuk links, Breuk rechts) {
     return links.boven == rechts.boven && links.onder == rechts.onder;
 }
 
-bool operator!=(Breuk links, Breuk rechts) {
-    return !(links == rechts);
-}
-
 // Hoofdprogramma:
 
 int main() {
+    // Afdrukken met print en println:
+    {
+    Breuk b1, b2;                   // definiëren van variabelen
+    print("Geef Breuk (a/b): ");
+    cin >> b1;                      // inlezen met >>
+    print("Geef nog een Breuk (c/d): ");
+    cin >> b2;                      // inlezen met >>
+    print("{} + {} = ", b1, b2);    // afdrukken met print
+    println("{}", b1 + b2);         // optellen met +
+    Breuk b3(18, -9);               // definiëren en initialiseren
+    if (b1 != b3) {                 // vergelijken met !=
+        ++b3;                       // verhogen met ++
+    }
+    println("{}", b3);              // afdrukken met println
+    b3 += 5;                        // verhogen met +=
+    println("{}", b3);              // afdrukken met println
+    if (-2 == b3) {                 // vergelijken met een int met ==
+        println("Ok.");
+    } 
+    else {
+        println("Error.");
+    }
+    }
+    // Afdrukken met cout en operator<<:
+    {
     Breuk b1, b2;                   // definiëren van variabelen
     cout << "Geef Breuk (a/b): ";
     cin >> b1;                      // inlezen met >>
     cout << "Geef nog een Breuk (c/d): ";
     cin >> b2;                      // inlezen met >>
-    cout << b1 << "+" << b2 << "=";  // afdrukken met <<
+    cout << b1 << " + " << b2 << " = "; // afdrukken met <<
     cout << (b1 + b2) << '\n';      // optellen met +
     Breuk b3(18, -9);               // definiëren en initialiseren
     if (b1 != b3) {                 // vergelijken met !=
@@ -125,5 +154,6 @@ int main() {
     } 
     else {
         cout << "Error.\n";
+    }
     }
 }
