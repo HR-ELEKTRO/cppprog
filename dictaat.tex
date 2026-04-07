@@ -7820,7 +7820,7 @@ Voorbeeld%
 Uitvoer:
 \begin{coutput}
 Ik ben f()
-Ik ben f(int)
+Ik ben f(int i): i = 3
 \end{coutput}
 
 \USE{Overloading} en overerving gaan echter \emph{niet} goed samen.
@@ -7835,7 +7835,7 @@ Voorbeeld van het verkeerd gebruik van \USE{overloading} en de \USE{hiding rule}
 class Base {
 	public:
 	void f() const {
-		cout << "Ik ben f()\n";
+		println("Ik ben Base::f()");
 	}
 };
 
@@ -7847,7 +7847,7 @@ class Derived: public Base {
 	\global\let\saved@Href@P\Hy@footnote@currentHref%
 	\makeatother%
 	$ { // Verberg f() !! Geen goed idee !!!
-		cout << "Ik ben f(int)\n";
+		println("Ik ben Derived::f(int i): i = {}", i);
 	}
 };
 
@@ -7902,9 +7902,9 @@ int main() {
 
 Uitvoer (nadat code |d.f();| is verwijderd):
 \begin{coutput}
-Ik ben f()
-Ik ben f(int)
-Ik ben f()
+Ik ben Base::f()
+Ik ben Derived::f(int i): i = 3
+Ik ben Base::f()
 \end{coutput}
 
 De \USE{hiding rule} vergroot de onderhoudbaarheid van een programma.
@@ -7925,7 +7925,7 @@ public:
 class Derived: public Base {
 public:
     void f(double d) const {
-        cout << "Ik ben f(double)\n";
+        println("Ik ben Derived::f(double d): d = {:.2f}", d);
     }
 };
 
@@ -7938,7 +7938,7 @@ int main() {
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
-Ik ben f(double)
+Ik ben Derived::f(double d): d = 3.00
 \end{coutput}
 
 Bas besluit nu om zijn class |Base| uit te breiden en voegt een functie |f| toe:
@@ -7948,7 +7948,7 @@ class Base {
 public:
     // ...
     void f(int i) const {
-        cout << "Ik ben f(int)\n";
+        println("Ik ben Base::f(int i): i = {}", i);
     }
 };
 \end{cpplstfragment}
@@ -7983,18 +7983,21 @@ Voor degene die echt alles wil begrijpen: een functie met dezelfde parameters in
 \needspace{2\baselineskip}
 Voorbeeld van het gebruik van \USE{overriding} en \textcolor{hrred}{\textbf{verkeerd}} gebruik van \USE{overloading}.
 De functie |f| wordt \USE{overloaded} en de functie |g| wordt \USE{overridden} (\proglink{override.cpp}):
-\cpplstinputfragment[linerange={6-34,37-41}]{override.cpp}
+\cpplstinputfragment[linerange={6-36,41-47}]{override.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
-Base::f(int) called.
-Derived::f(int) called.
-Base::f(int) called.
-Base::g(int) called.
-Derived::g(int) called.
-Derived::g(int) called.
-Base::g(int) called.
+Base::f(int) called: i = 1
+Derived::f(int) called: i = 2
+Base::f(int) called: i = 3
+Base::f(int) called: i = 4
+Base::g(int) called: i = 5
+Derived::g(int) called: i = 6
+Derived::g(int) called: i = 7
+Base::g(int) called: i = 8
+Derived::g(int) called: i = 9
+Base::g(int) called: i = 10
 \end{coutput}
 
 \section{Dynamic binding werkt niet in constructors en destructors}
@@ -8002,7 +8005,7 @@ Als in een memberfunctie een andere memberfunctie van dezelfde class wordt aange
 Bij het zoeken van de \USE{method} voor deze \USE{message} wordt eerst gekeken in de class van de \USE{receiver} en daarna in de \USE{base class} van de \USE{receiver} enz.
 Dit wordt \emph{\USE{dynamic binding}} genoemd.
 Hieronder is een voorbeeld van \USE{dynamic binding} gegeven (\proglink{DynamicBinding.cpp}):
-\cpplstinputfragment[linerange={7-42}]{DynamicBinding.cpp}
+\cpplstinputfragment[linerange={6-41}]{DynamicBinding.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:

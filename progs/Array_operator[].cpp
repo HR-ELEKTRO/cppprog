@@ -1,6 +1,6 @@
 // operator[] moet twee maal gedefinieerd worden
 
-#include <iostream>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -91,11 +91,11 @@ int main() {
     w5[0] = 5;
 //  Schrijven in een const Array moet niet mogen maar mag hier wel!
     for (size_t i {0}; i < 5; ++i)
-        cout << v5[i];
-    cout << '\n';
+        print("{} ", v5[i]);
+    println();
     for (size_t i {0}; i < 5; ++i)
-        cout << w5[i];
-    cout << '\n';
+        print("{} ", w5[i]);
+    println();
 
     Array6 v6;
     for (size_t j {0}; j < 6; ++j)
@@ -104,12 +104,12 @@ int main() {
 //  w6[0] = 6;
 //  Error: passing ‘const Array6’ as ‘this’ argument discards qualifiers
     for (size_t j {0}; j < 6; ++j)
-        cout << v6[j];
-    cout << '\n';
+        print("{} ", v6[j]);
+    println();
 //  for (size_t j {0}; j < 6; ++j)
-//      cout << w6[j];
+//      print("{} ", w6[j]);
 //  Error: passing ‘const Array6’ as ‘this’ argument discards qualifiers
-    cout << '\n';
+    println();
 
     Array10 v10;
     for (size_t k {0}; k < 10; ++k)
@@ -118,9 +118,9 @@ int main() {
 //  w10[0] = 10;
 //  Error: assignment of read-only location ‘w10.Array10::operator[](0)’
     for (size_t k {0}; k < 10; ++k)
-        cout << v10[k];
-    cout << '\n';
+        print("{} ", v10[k]);
+    println();
     for (size_t k {0}; k < 10; ++k)
-        cout << w10[k];
-    cout << '\n';
+        print("{} ", w10[k]);
+    println();
 }

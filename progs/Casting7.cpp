@@ -32,12 +32,10 @@ void blaf(const Hond* hp) {
 }
 
 int main() {
-    Hond* boris_ptr{new Sint_bernard};
-    blaf(boris_ptr);
-    delete boris_ptr;
-    boris_ptr = new Tekkel;
-    blaf(boris_ptr);
-    delete boris_ptr;
+    Sint_bernard boris;
+    blaf(&boris);
+    Tekkel harry;
+    blaf(&harry);
 }
 
 /* Output:

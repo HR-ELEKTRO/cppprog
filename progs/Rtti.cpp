@@ -1,12 +1,11 @@
-#include <iostream>
-#include <typeinfo>
+import std;
 using namespace std;
 
 class Hond {
 public:
     virtual ~Hond() = default;
     virtual void blaf() const {
-        cout << "Blaf.\n";
+        println("Blaf.");
     }
 //  ...
 };
@@ -14,20 +13,20 @@ public:
 class Sint_bernard: public Hond {
 public:
     void blaf() const override {
-        cout << "Woef!\n";
+        println("Woef!");
     }
 //  ...
 };
 
-void print_ras(Hond& hr) {
-    cout << typeid(hr).name() << '\n';
+void print_ras(Hond& h) {
+    println("{}", typeid(h).name());
 }
 
 int main() {
     Sint_bernard boris;
     print_ras(boris);
-    Hond h;
-    print_ras(h);
+    Hond fikkie;
+    print_ras(fikkie);
 }
 
 /* Output:

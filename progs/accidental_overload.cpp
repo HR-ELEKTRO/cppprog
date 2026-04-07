@@ -1,23 +1,23 @@
-#include <iostream>
+import std;
 using namespace std;
 
 class Base {
 public:
     void f(int i) const {
-        cout << "Base::f(int) called.\n";
+        println("Base::f(int) called: i = {}", i);
     }
     virtual void g(int i) const {
-        cout << "Base::g(int) called.\n";
+        println("Base::g(int) called: i = {}", i);
     }
 };
 
 class Derived: public Base {
 public:
     void f(int i) const {
-        cout << "Derived::f(int) called.\n";
+        println("Derived::f(int) called: i = {}", i);
     }
     void g(int i) {
-        cout << "Derived::g(int) called.\n";
+        println("Derived::g(int) called: i = {}", i);
     }
 };
 
@@ -29,13 +29,13 @@ g wordt niet overridden omdat g in de base class const is en in de derived class
 
 De programmeur, die denkt zowel f als g overridden te hebben, verwachtte de volgende uitvoer:
 
-Derived::f(int) called.
-Derived::g(int) called.
+Derived::f(int) called: i = 1
+Derived::g(int) called: i = 2
 
 De werkelijke uitvoer is echter:
 
-Base::f(int) called.
-Base::g(int) called.
+Base::f(int) called: i = 1
+Base::g(int) called: i = 2
 
 Zie explicit_override.cpp hoe je kunt voorkomen dat functies "per ongeluk" overloaded worden. 
 */
@@ -43,7 +43,7 @@ Zie explicit_override.cpp hoe je kunt voorkomen dat functies "per ongeluk" overl
 int main() {
     Derived d;
     Base* pb {&d};
-    pb->f(3);
-    pb->g(3);
+    pb->f(1);
+    pb->g(2);
     // ...
 }

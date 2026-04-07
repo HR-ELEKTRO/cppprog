@@ -1,15 +1,15 @@
 // Overloading van memberfuncties
 
-#include <iostream>
+import std;
 using namespace std;
 
 class Class {
 public:
     void f() const {
-        cout << "Ik ben f()\n";
+        println("Ik ben f()");
     }
     void f(int i) const { // overload f()
-        cout << "Ik ben f(int)\n";
+        println("Ik ben f(int i): i = {}", i);
     }
 };
 
@@ -22,5 +22,5 @@ int main() {
 /*
 Output:
 Ik ben f()
-Ik ben f(int)
+Ik ben f(int i): i = 3
 */

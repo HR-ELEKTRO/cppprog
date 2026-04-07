@@ -12,16 +12,16 @@ public:
 int a[test::tien]; // werkt dit? Ja natuurlijk.
 
 int main() {
-    int a, b, c;
+    [[maybe_unused]] int a, b{}, c;
 // (a+b)+=c;
 //  error: lvalue required as left operand of assignment
     a = ++++b;
 //  a = b++++;
 //  error: lvalue required as increment operand
-    list l {12, 18, 6};
+    [[maybe_unused]] std::list<int> l {12, 18, 6};
 //  sort(l.begin(), l.end());
 //  error: no match for ‘operator-’
-    int i;
+    [[maybe_unused]] int i;
 //  i = "Hallo";
 //  error: invalid conversion from 'const char*' to 'int'
 //  i = (int)"Hallo";
@@ -31,12 +31,17 @@ int main() {
 //  i = reinterpret_cast<int>("Hallo");
 //  error: cast from 'const char*' to 'int' loses precision
     using ll = long long;
-    ll i64;
+    [[maybe_unused]] ll i64;
     i64 = (ll)"Hallo";
     i64 = ll("Hallo");
     i64 = reinterpret_cast<ll>("Hallo");
-    Hond* hp = new Sint_bernard; // OK: een Sint_bernard is een Hond
-//  Sint_bernard* sbp = new Hond; // NOT OK: een Hond is geen Sint_bernard
+    Sint_bernard boris;
+	[[maybe_unused]] Hond& h {boris}; // OK: een Sint_bernard is een Hond
+	[[maybe_unused]] Hond fikkie;
+//  Sint_bernard& sb {fikkie}; // NOT OK: een Hond is geen Sint_bernard
+// error: cannot bind non-const lvalue reference of type 'Sint_bernard&' to an rvalue of type 'Sint_bernard'
+    [[maybe_unused]] Hond* hp {&boris}; // OK: een Sint_bernard is een Hond
+//  [[maybe_unused]] Sint_bernard* sbp {&fikkie}; // NOT OK: een Hond is geen Sint_bernard
 //  error: invalid conversion from 'Hond*' to 'Sint_bernard*' 
 	vector v1 {1, 2, 3}; // v1 is van het type vector<int>
     println("v1 = {}", v1);

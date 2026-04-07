@@ -1,6 +1,6 @@
 // Overloading van memberfuncties en de hiding rule
 
-#include <iostream>
+import std;
 using namespace std;
 
 /*
@@ -12,28 +12,28 @@ using namespace std;
 class Base {
 public:
 // Als Bas deze code later toevoegt heeft Dewi hier GEEN last van!
-//  void f(int i) const {
-//      cout << "Ik ben f(int)\n";
-//  }
+// void f(int i) const {
+//     println("Ik ben Base::f(int i): i = {}", i);
+// }
 };
 
 // Code van Dewi
 class Derived: public Base {
 public:
     void f(double d) const {
-        cout << "Ik ben f(double)\n";
+        println("Ik ben Derived::f(double d): d = {:.2f}", d);
     }
 };
 
 int main() {
     Derived d;
-    d.f(3);
+        d.f(3);
 }
 
 /* 
 Output zonder Base::f(int):
-Ik ben f(double)
+Ik ben Derived::f(double d): d = 3.00
 
 Output met Base::f(int):
-Ik ben f(double)
+Ik ben Derived::f(double d): d = 3.00
 */

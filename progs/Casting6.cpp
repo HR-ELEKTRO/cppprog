@@ -28,21 +28,19 @@ private:
     int whisky;
 };
 
-void geef_hulp(Hond& hr) {
-    hr.blaf();
-    try {
-        Sint_bernard& sbr {dynamic_cast<Sint_bernard&>(hr)};
-        println("{} liter.", sbr.geef_drank());
-    } catch (const bad_cast&) {
-        /* doe niets */
+void geef_hulp(Hond* hp) {
+    hp->blaf();
+    Sint_bernard* sbp {dynamic_cast<Sint_bernard*>(hp)};
+    if (sbp != nullptr) {
+        println("{} liter.", sbp->geef_drank());
     }
 }
 
 int main() {
     Sint_bernard boris;
-    geef_hulp(boris);
+    geef_hulp(&boris);
     Hond fikkie;
-    geef_hulp(fikkie);
+    geef_hulp(&fikkie);
 }
 
 /* Output:

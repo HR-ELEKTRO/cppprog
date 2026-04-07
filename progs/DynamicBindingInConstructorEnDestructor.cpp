@@ -1,19 +1,18 @@
 // Dynamic binding werkt niet in de constructor en destructor
 
-#include <iostream>
-#include <string>
+import std;
 using namespace std;
 
 class Fruit {
 public:
     Fruit() {
-        cout << "Er is een " << soort() << " aangemaakt.\n";
+        println("Er is een {} aangemaakt.", soort());
     }
     virtual ~Fruit() {
-        cout << "Er is een " << soort() << " verwijderd.\n";
+        println("Er is een {} verwijderd.", soort());
     }
-    virtual void print(ostream& o) {
-        o << soort() << '\n';
+    virtual void print() {
+        println("{}", soort());
     }
 private:
     virtual string soort() const {
@@ -40,11 +39,11 @@ public:
 int main() {
     {
         Fruit f;
-        f.print(cout);
+        f.print();
         Appel a;
-        a.print(cout);
+        a.print();
         Peer p;
-        p.print(cout);
+        p.print();
     } // hier worden f, a en p verwijderd
 }
 

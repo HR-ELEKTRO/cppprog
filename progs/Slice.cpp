@@ -1,7 +1,6 @@
 // Voorbeeld van slicing probleem
 
-#include <iostream>
-#include <string>
+import std;
 using namespace std;
 
 class Mens {
@@ -42,21 +41,21 @@ private:
 
 int main() {
     Docent brojz {"Harry", 30000};
-    cout << brojz.soort() << " " << brojz.naam() << " verdient " << brojz.salaris() << '\n';
+    println("{} {} verdient {}", brojz.soort(), brojz.naam(), brojz.salaris());
     brojz.verhoog_salaris_met(10000);
-    cout << brojz.soort() << " " << brojz.naam() << " verdient " << brojz.salaris() << '\n';
+    println("{} {} verdient {}", brojz.soort(), brojz.naam(), brojz.salaris());
 
     Mens m {brojz}; // Waar blijft het salaris?
-    cout << m.soort() << " " << m.naam() << " verdient " << m.salaris() << '\n';
+    println("{} {} verdient {}", m.soort(), m.naam(), m.salaris());
 
 //  Docent versd {m}; 
 //  Error: no matching function for call to ‘Docent::Docent(<brace-enclosed initializer list>)
 
     Mens& mr {brojz};
-    cout << mr.soort() << " " << mr.naam() << " verdient " << mr.salaris() << '\n';
+    println("{} {} verdient {}", mr.soort(), mr.naam(), mr.salaris());
 
     Mens* mp {&brojz};
-    cout << mp->soort() << " " << mp->naam() << " verdient " << mp->salaris() << '\n';
+    println("{} {} verdient {}", mp->soort(), mp->naam(), mp->salaris());
 }
 
 /* Output:

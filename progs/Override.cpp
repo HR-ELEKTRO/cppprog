@@ -1,15 +1,15 @@
 // Verschil tussen overloading en overriding!
 
-#include <iostream>
+import std;
 using namespace std;
 
 class Base {
 public:
     void f(int i) const {
-        cout << "Base::f(int) called.\n";
+        println("Base::f(int) called: i = {}", i);
     }
     virtual void g(int i) const {
-        cout << "Base::g(int) called.\n";
+        println("Base::g(int) called: i = {}", i);
     }
 // ...
 };
@@ -17,10 +17,10 @@ public:
 class Derived: public Base {
 public:
     void f(int i) const { // f is overloaded!
-        cout << "Derived::f(int) called.\n";
+        println("Derived::f(int) called: i = {}", i);
     }
     void g(int i) const override { // g is overridden
-        cout << "Derived::g(int) called.\n";
+        println("Derived::g(int) called: i = {}", i);
     }
 // ...
 };
@@ -28,24 +28,30 @@ public:
 int main() {
     Base b;
     Derived d;
+    Base& rb{d};
     Base* pb{&d};
-    b.f(3);
-    d.f(3);
-    pb->f(3);
-//  pb->Derived::f(3);
-//  Error: `Derived' is not a base of 'Base'
-    b.g(3);
-    d.g(3);
-    pb->g(3);
-    pb->Base::g(3);
+    b.f(1);
+    d.f(2);
+    rb.f(3);
+    pb->f(4);
+//  rb.Derived::f(666);
+//  Error: 'Derived' is not a base of 'Base'
+//  pb->Derived::f(666);
+//  Error: 'Derived' is not a base of 'Base'
+    b.g(5);
+    d.g(6);
+    rb.g(7);
+    rb.Base::g(8);
+    pb->g(9);
+    pb->Base::g(10);
 }
 
 /* Output:
-Base::f(int) called.
-Derived::f(int) called.
-Base::f(int) called.
-Base::g(int) called.
-Derived::g(int) called.
-Derived::g(int) called.
-Base::g(int) called.
+Base::f(int) called: i = 3
+Derived::f(int) called: i = 3
+Base::f(int) called: i = 3
+Base::g(int) called: i = 3
+Derived::g(int) called: i = 3
+Derived::g(int) called: i = 3
+Base::g(int) called: i = 3
 */

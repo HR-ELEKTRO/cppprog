@@ -28,24 +28,20 @@ private:
     int whisky;
 };
 
-void geef_hulp(Hond* hp) {
-    hp->blaf();
-    Sint_bernard* sbp {dynamic_cast<Sint_bernard*>(hp)};
-    if (sbp != nullptr)
-        println("{} liter.", sbp->geef_drank());
+void geef_hulp(Hond& h) {
+    h.blaf();
+    try {
+        println("{} liter.", dynamic_cast<Sint_bernard&>(h).geef_drank());
+    } catch (const bad_cast& e) {
+    }
 }
 
 int main() {
-    Hond* boris_ptr {new Sint_bernard};
-    geef_hulp(boris_ptr);
-    delete boris_ptr;
+    Sint_bernard boris;
+    geef_hulp(boris);
     
-    Hond* fikkie_ptr {new Hond};
-    geef_hulp(fikkie_ptr);
-    delete fikkie_ptr;
-
-//  Sint_bernard* sbp {new Hond};
-//  Error: invalid conversion from 'Hond*' to 'Sint_bernard*'
+    Hond fikkie;
+    geef_hulp(fikkie);
 }
 
 /* Output:

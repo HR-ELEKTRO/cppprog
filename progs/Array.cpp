@@ -1,7 +1,6 @@
 // Een zelfgemaakt alternatief voor int[]
 
-#include <iostream>
-#include <algorithm>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -15,15 +14,16 @@ public:
     int& operator[](size_type index);
     const int& operator[](size_type index) const;
     size_type length() const;
-    bool operator==(const Array& r) const;
-    bool operator!=(const Array& r) const;
 private:
     size_type size;
     int* data;
-friend ostream& operator<<(ostream& out, const Array& a);
+friend bool operator==(const Array& l, const Array& r);
+friend ostream& operator<<(ostream& out, const Array& r);
 };
 
 Array::Array(size_type s): size{s}, data{new int[s]} {
+    for (size_type i {0}; i < size; ++i)
+        data[i] = 0;
 }
 
 Array::Array(const Array& r): size{r.size}, data{new int[r.size]} {
@@ -56,58 +56,63 @@ Array::size_type Array::length() const {
     return size;
 }
 
-bool Array::operator==(const Array& r) const {
-    if (size != r.size)
+bool operator==(const Array& l, const Array& r) {
+    if (l.size != r.size)
         return false;
-    for (size_type i {0}; i < size; ++i)
-        if (data[i] != r.data[i])
+    for (Array::size_type i {0}; i < l.size; ++i)
+        if (l.data[i] != r.data[i])
             return false;
     return true;
 }
 
-bool Array::operator!=(const Array& r) const {
-    return !(*this == r);
-}
-
-ostream& operator<<(ostream& out, const Array& a) {
-    for (Array::size_type i {0}; i < a.size; ++i) {
-        out << a.data[i];
-        if (i != a.size - 1)
-            out << ',';
+ostream& operator<<(ostream& out, const Array& r) {
+    for (Array::size_type i {0}; i < r.size; ++i) {
+        out << r.data[i];
+        if (i != r.size - 1)
+            out << ", ";
     }
     return out;
 }
 
+template<>
+struct std::formatter<Array>: public formatter<string> {
+    auto format(const Array& a, auto& context) const {
+        ostringstream ss;
+        ss << a;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
 int main() {
-    cout << "Hoeveel elementen moet de Array bevatten? ";
+    print("Hoeveel elementen moet de Array bevatten? ");
     Array::size_type i; 
     cin >> i;
     Array a {i};
-    cout << "a = " << a << '\n';
+    println("a = {}", a);
     for (Array::size_type j {0}; j < a.length(); ++j)
         a[j] = j * j; // vul a met kwadraten
-    cout << "a = " << a << '\n';
+    println("a = {}", a);
     Array b {a};
-    cout << "b = " << b << '\n';
-    cout << "a[12] = " << a[12] << '\n';
-    cout << "b[12] = " << b[12] << '\n';
-    a[0] = 4; 
-    cout << "a[0] = " << a[0] << '\n';
-    cout << "a = " << a << '\n';
-    cout << "b = " << b << '\n';
+    println("b = {}", b);
+    println("a[12] = {}", a[12]);
+    println("b[12] = {}", b[12]);
+    a[0] = 4;
+    println("a[0] = {}", a[0]);
+    println("a = {}", a);
+    println("b = {}", b);
 
     if (a == b)
-        cout << "a is nu gelijk aan b.\n";
+        println("a is nu gelijk aan b.");
     else 
-        cout << "a is nu ongelijk aan b.\n";
+        println("a is nu ongelijk aan b.");
 
     b = a;
-    cout << "b = a is uitgevoerd.\n";
-    cout << "a = " << a << '\n';
-    cout << "b = " << b << '\n';
+    println("b = a is uitgevoerd.");
+    println("a = {}", a);
+    println("b = {}", b);
 
     if (a != b) 
-        cout << "a is nu ongelijk aan b.\n";
+        println("a is nu ongelijk aan b.");
     else 
-        cout << "a is nu gelijk aan b.\n";
+        println("a is nu gelijk aan b.");
 }

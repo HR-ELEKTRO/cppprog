@@ -1,13 +1,12 @@
 // Voorbeeld van dynamic binding
 
-#include <iostream>
-#include <string>
+import std;
 using namespace std;
 
 class Fruit {
 public:
-    virtual void print(ostream& o) {
-        o << soort() << '\n';
+    virtual void print() {
+        println("{}", soort());
     }
 private:
     virtual string soort() const {
@@ -34,11 +33,11 @@ private:
 
 int main() {
     Fruit f;
-    f.print(cout);
+    f.print();
     Appel a;
-    a.print(cout);
+    a.print();
     Peer p;
-    p.print(cout);
+    p.print();
 //  ...
 }
 

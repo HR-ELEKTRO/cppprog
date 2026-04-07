@@ -1,23 +1,23 @@
-#include <iostream>
+import std;
 using namespace std;
 
 class Base {
 public:
     void f(int i) const {
-        cout << "Base::f(int) called.\n";
+        println("Base::f(int) called: i = {}", i);
     }
     virtual void g(int i) const {
-        cout << "Base::g(int) called.\n";
+        println("Base::g(int) called: i = {}", i);
     }
 };
 
 class Derived: public Base {
 public:
     void f(int i) const override {
-        cout << "Derived::f(int) called.\n";
+        println("Derived::f(int) called: i = {}", i);
     }
     void g(int i) override {
-        cout << "Derived::g(int) called.\n";
+        println("Derived::g(int) called: i = {}", i);
     }
 };
 
@@ -36,6 +36,6 @@ De GCC C++ compiler geeft de volgende foutmeldingen:
 int main() {
     Derived d;
     Base* pb {&d};
-    pb->f(3);
-    pb->g(3);
+    pb->f(1);
+    pb->g(2);
 }
