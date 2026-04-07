@@ -1,17 +1,17 @@
 // Code om te zien of de compiler return value optimization (RVO) toepast.
-#include <iostream>
+import std;
 using namespace std;
 
 class Int {
 public:
     Int(int i): value{i} {
-        cout << "Int met waarde " << value << " wordt aangemaakt.\n";
+        println("Int met waarde {} wordt aangemaakt.", value);
     }
     ~Int() {
-        cout << "Int met waarde " << value << " wordt verwijderd.\n";
+        println("Int met waarde {} wordt verwijderd.", value);
     }
     Int(const Int& r): value{r.value} {
-        cout << "Int met waarde " << value << " wordt gekopieerd.\n";
+        println("Int met waarde {} wordt gekopieerd.", value);
     }
     int get_value() const {
         return value;
@@ -27,5 +27,5 @@ Int maak_Int(int i) {
 
 int main() {
     Int local {maak_Int(42)};
-    cout << "De waarde van local is " << local.get_value() << '\n';
+    println("De waarde van local is {}.", local.get_value());
 }

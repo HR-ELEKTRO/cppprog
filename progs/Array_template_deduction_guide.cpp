@@ -1,13 +1,15 @@
 // Template class Array
 // Support for range-based for and ranges
 // Support for initializer list
+// Support for formatted output
+// Support for constructing from pair of iterators
 // Support for automatic template parameter deduction
 
 import std;
 #include <cassert>
 using namespace std;
 
-template <regular T> class Array {
+template <typename T> class Array {
 public:
     using size_type = size_t;
     using value_type = int;
@@ -23,7 +25,6 @@ public:
     const T& operator[](size_type index) const;
     size_type length() const;
     bool operator==(const Array<T>& r) const;
-    bool operator!=(const Array<T>& r) const;
 // Support for range-based for and ranges
     T* begin();
     const T* begin() const;
@@ -39,17 +40,14 @@ private:
 // Support for automatic template parameter deduction from iterators
 template<input_iterator Iter> Array(Iter, Iter) -> Array<iter_value_t<Iter>>;
 
-template <regular T> Array<T>::Array(size_type s): size{s}, data{new T[s]} {
+template <typename T> Array<T>::Array(size_type s): size{s}, data{new T[s]} {
 }
 
-template <regular T> Array<T>::Array(initializer_list<T> list): size{list.size()}, data{new T[size]} {
-    auto list_iter{list.begin()};
-    for (size_type i {0}; i < size; ++i) {
-        data[i] = *list_iter++;
-    }
+template <typename T> Array<T>::Array(initializer_list<T> list): size{list.size()}, data{new T[size]} {
+    ranges::copy(list, data);
 }
 
-template <regular T>
+template <typename T>
 template<input_iterator Iter> Array<T>::Array(Iter begin, Iter end): size{static_cast<size_type>(distance(begin, end))}, data{new T[size]} {
     auto list_iter{begin};
     for (size_type i {0}; i < size; ++i) {
@@ -57,37 +55,37 @@ template<input_iterator Iter> Array<T>::Array(Iter begin, Iter end): size{static
     }
 }    
 
-template <regular T> Array<T>::Array(const Array<T>& r): size{r.size}, data{new T[r.size]} {
+template <typename T> Array<T>::Array(const Array<T>& r): size{r.size}, data{new T[r.size]} {
     for (size_type i {0}; i < size; ++i)
         data[i] = r.data[i];
 }
 
-template <regular T> Array<T>& Array<T>::operator=(const Array<T>& r) {
+template <typename T> Array<T>& Array<T>::operator=(const Array<T>& r) {
     Array t{r};
     swap(data, t.data);
     swap(size, t.size);
     return *this;
 }
 
-template <regular T> Array<T>::~Array() {
+template <typename T> Array<T>::~Array() {
     delete[] data;
 }
 
-template <regular T> T& Array<T>::operator[](size_type index) {
+template <typename T> T& Array<T>::operator[](size_type index) {
     assert(index < size);
     return data[index];
 }
 
-template <regular T> const T& Array<T>::operator[](size_type index) const {
+template <typename T> const T& Array<T>::operator[](size_type index) const {
     assert(index < size);
     return data[index];
 }
 
-template <regular T> Array<T>::size_type Array<T>::length() const {
+template <typename T> Array<T>::size_type Array<T>::length() const {
     return size;
 }
 
-template <regular T> bool Array<T>::operator==(const Array<T>& r) const {
+template <typename T> bool Array<T>::operator==(const Array<T>& r) const {
     if (size != r.size)
         return false;
     for (size_type i {0}; i < size; ++i)
@@ -96,35 +94,31 @@ template <regular T> bool Array<T>::operator==(const Array<T>& r) const {
     return true;
 }
 
-template <regular T> bool Array<T>::operator!=(const Array<T>& r) const {
-    return !(*this == r);
-}
-
-template <regular T> T* Array<T>::begin() {
+template <typename T> T* Array<T>::begin() {
     return data;
 }
 
-template <regular T> const T* Array<T>::begin() const {
+template <typename T> const T* Array<T>::begin() const {
     return data;
 }
 
-template <regular T> const T* Array<T>::cbegin() const {
+template <typename T> const T* Array<T>::cbegin() const {
     return data;
 }
 
-template <regular T> T* Array<T>::end() {
+template <typename T> T* Array<T>::end() {
     return data + size;
 }
 
-template <regular T> const T* Array<T>::end() const {
+template <typename T> const T* Array<T>::end() const {
     return data + size;
 }
 
-template <regular T> const T* Array<T>::cend() const {
+template <typename T> const T* Array<T>::cend() const {
     return data + size;
 }
 
-template <regular T> ostream& operator<<(ostream& out, const Array<T>& v) {
+template <typename T> ostream& operator<<(ostream& out, const Array<T>& v) {
     for (typename Array<T>::size_type i {0}; i < v.size; ++i) {
         out << v.data[i];
         if (i != v.size-1)

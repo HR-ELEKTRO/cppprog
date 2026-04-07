@@ -1,7 +1,6 @@
 // Een zelfgemaakt alternatief voor int[]
 
 import std;
-#include <cassert>
 using namespace std;
 
 class Array {
@@ -14,10 +13,11 @@ public:
     int& operator[](size_type index);
     const int& operator[](size_type index) const;
     size_type length() const;
+    bool operator==(const Array& r) const;
 private:
+    void check_index(size_type index) const;
     size_type size;
     int* data;
-friend bool operator==(const Array& l, const Array& r);
 friend ostream& operator<<(ostream& out, const Array& r);
 };
 
@@ -42,13 +42,19 @@ Array::~Array() {
     delete[] data;
 }
 
+void Array::check_index(size_type index) const {
+    if (index >= size) {
+        throw std::out_of_range("Gebruikte index (" + to_string(index) + ") ligt buiten de grenzen van de Array (0.." + to_string(size - 1) + ")");
+    }
+}
+
 int& Array::operator[](size_type index) {
-    assert(index < size);
+    check_index(index);
     return data[index];
 }
 
 const int& Array::operator[](size_type index) const {
-    assert(index < size);
+    check_index(index);
     return data[index];
 }
 
@@ -56,11 +62,11 @@ Array::size_type Array::length() const {
     return size;
 }
 
-bool operator==(const Array& l, const Array& r) {
-    if (l.size != r.size)
+bool Array::operator==(const Array& r) const {
+     if (size != r.size)
         return false;
-    for (Array::size_type i {0}; i < l.size; ++i)
-        if (l.data[i] != r.data[i])
+    for (size_type i {0}; i < size; ++i)
+        if (data[i] != r.data[i])
             return false;
     return true;
 }
@@ -70,7 +76,7 @@ ostream& operator<<(ostream& out, const Array& r) {
         out << r.data[i];
         if (i != r.size - 1)
             out << ", ";
-    }
+}
     return out;
 }
 
@@ -94,10 +100,18 @@ int main() {
     println("a = {}", a);
     Array b {a};
     println("b = {}", b);
-    println("a[12] = {}", a[12]);
-    println("b[12] = {}", b[12]);
-    a[0] = 4;
-    println("a[0] = {}", a[0]);
+    try {
+        println("a[12] = {}", a[12]);
+        println("b[12] = {}", b[12]);
+    } catch (const std::out_of_range& e) {
+        println("Exception: {}", e.what());
+    }
+    try {
+        a[0] = 4;
+        println("a[0] = {}", a[0]);
+    } catch (const std::out_of_range& e) {
+        println("Exception: {}", e.what());
+    }
     println("a = {}", a);
     println("b = {}", b);
 

@@ -1,5 +1,5 @@
 // Template class Array
-// Support for range-based for
+// Support for range-based for and ranges
 // Support for initializer list
 // Support for formatted output
 
@@ -19,8 +19,7 @@ public:
     const T& operator[](size_type index) const;
     size_type length() const;
     bool operator==(const Array<T>& r) const;
-    bool operator!=(const Array<T>& r) const;
-// Support for range-based for
+// Support for range-based for and ranges
     T* begin();
     const T* begin() const;
     const T* cbegin() const;
@@ -28,11 +27,14 @@ public:
     const T* end() const;
     const T* cend() const;
 private:
+    void check_index(size_type index) const;
     size_type size;
     T* data;
 };
 
 template <typename T> Array<T>::Array(size_type s): size{s}, data{new T[s]} {
+    for (size_type i {0}; i < size; ++i)
+        data[i] = T{};
 }
 
 template <typename T> Array<T>::Array(initializer_list<T> list): size{list.size()}, data{new T[size]} {
@@ -58,13 +60,19 @@ template <typename T> Array<T>::~Array() {
     delete[] data;
 }
 
+template <typename T> void Array<T>::check_index(size_type index) const {
+    if (index >= size) {
+        throw std::out_of_range("Gebruikte index (" + to_string(index) + ") ligt buiten de grenzen van de Array (0.." + to_string(size - 1) + ")");
+    }
+}
+
 template <typename T> T& Array<T>::operator[](size_type index) {
-    assert(index < size);
+    check_index(index);
     return data[index];
 }
 
 template <typename T> const T& Array<T>::operator[](size_type index) const {
-    assert(index < size);
+    check_index(index);
     return data[index];
 }
 
@@ -79,10 +87,6 @@ template <typename T> bool Array<T>::operator==(const Array<T>& r) const {
         if (data[i] != r.data[i])
             return false;
     return true;
-}
-
-template <typename T> bool Array<T>::operator!=(const Array<T>& r) const {
-    return !(*this == r);
 }
 
 template <typename T> T* Array<T>::begin() {
@@ -109,38 +113,19 @@ template <typename T> const T* Array<T>::cend() const {
     return data + size;
 }
 
-template <typename T> ostream& operator<<(ostream& out, const Array<T>& v) {
-    for (typename Array<T>::size_type i {0}; i < v.size; ++i) {
-        out << v.data[i];
-        if (i != v.size-1)
-            out << ',';
-    }
-    return out;
-}
-
-template<>
-struct std::formatter<Breuk>: public formatter<string> {
-    auto format(const Breuk& breuk, auto& context) const {
-        ostringstream ss;
-        ss << breuk;
-        return formatter<string>::format(ss.str(), context);
-    }
-};
-
-template<typename T>
-struct std::formatter<Array<T>>: public range_formatter<T> {
-    auto format(const Array<T>& a, auto& context) const {
-        return range_formatter<T>::format({a.cbegin(), a.cend()}, context);
-    }
-};
-
 int main() {
-    Array v{1, 2, 3, 4};
-    println(v);
+    Array v {14, 12, 13, 11};
+    println("v = {}", v);
+    ranges::sort(v);
+    println("na sorteren: v = {}", v);
+    Array r {11, 12, 13, 14};
+    if (v != r)
+        println("Sorteren is niet gelukt!");
+    println("v (hexadecimal) = {::#X}", v);
     Array<double> w(10);
     int i {1};
     for (auto& e: w) {
         e = 1.0/i++;
     }
-    println(w);
+    println("w = {::.3f}", w);
 }

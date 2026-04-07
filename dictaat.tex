@@ -724,7 +724,7 @@ Dat maakt je programma duidelijker en voorkomt fouten.
 Verderop in dit dictaat kom je een aantal meer zinvolle manieren van het gebruik van |auto| tegen:
 \begin{itemize}
 	\item Bij het gebruik van templates, zie \cref{sec:templates}, is het soms wel erg handig om |auto| te gebruiken.
-	\item Bij het gebruik van een range-based |for|-statement, zie \cref{sec:range-basedfor} is het handig om |auto| te gebruiken.
+	\item Bij het gebruik van een range-based |for|\hyp{}statement, zie \cref{sec:range-basedfor} is het handig om |auto| te gebruiken.
 \end{itemize}
 
 Het gebruik van |auto| kan ook de aanpasbaarheid van je programma vergroten.
@@ -811,7 +811,7 @@ Je bent gewend om in C programma's symbolische constanten%
 In \Cpp{} definieer je een zogenoemde \USE{compile time} constante met behulp van het \USE{keyword} |constexpr|.
 Een \USE{compile time} constante is een constante waarvan de waarde al tijdens het compileren van het programma bepaald kan worden. 
 De grootte van een array moet bijvoorbeeld een \USE{compile time} constante zijn. 
-Ook een |case|-label in een |switch|-statement moet een \USE{compile time} constante zijn.
+Ook een |case|-label in een |switch|\hyp{}statement moet een \USE{compile time} constante zijn.
 Een \USE{compile time} constante kan door de compiler voor een embedded systeem in \USE{read-only} geheugen worden geplaatst.
 
 Voorbeeld met |#define|:
@@ -1048,7 +1048,7 @@ Als we de verbeteringen die in C zijn doorgevoerd bij de definitie van \Cpp{} to
 	Ik heb hier dus \USE{function name overloading} toegepast, zie \cref{sec:functionoverloading}.
     \item
     De functie |som| heeft nu het returntype |auto|.
-    De compiler kan namelijk aan de hand van het |return|-statement zelf bepalen dat het returntype |Tijdsduur| is, zie \cref{sec:autoreturntype}.
+    De compiler kan namelijk aan de hand van het |return|\hyp{}statement zelf bepalen dat het returntype |Tijdsduur| is, zie \cref{sec:autoreturntype}.
     \item 
     De lokale variabele |teller| wordt geïnitialiseerd met een universele initialisatie in plaats van met een toekenning, zie \cref{sec:universeleinitialisatie}.
     \item 
@@ -1062,7 +1062,7 @@ Als we de verbeteringen die in C zijn doorgevoerd bij de definitie van \Cpp{} to
 %    	Zie eventueel \url{https://en.cppreference.com/w/cpp/io/basic_ios/clear}.
 %	}.
 	\item 
-	De functie |main| heeft in \Cpp{} net zoals in C99 en hoger geen |return|-statement meer nodig.
+	De functie |main| heeft in \Cpp{} net zoals in C99 en hoger geen |return|\hyp{}statement meer nodig.
 \end{itemize}
 
 Merk op dat dit programma niet meer dan |MAX_TIJDSDUREN| tijdsduren kan verwerken.
@@ -2036,7 +2036,7 @@ Omdat |this| een pointer is naar het object waarop de |operator+=| uitgevoerd wo
 Als we nu de |Breuk| objecten |a|, |b| en |c| aanmaken en de expressie |a += b += c;| testen, dan zien we dat het werkt zoals verwacht. 
 Object |a| wordt gelijk aan |a + b + c|, object |b| wordt gelijk aan |b + c| en object |c| verandert niet.
 
-Toch is het (nog steeds) niet correct. In de bovenstaande |Breuk::operator+=| memberfunctie wordt bij het uitvoeren van het |return| statement een kopie van het huidige object teruggegeven. 
+Toch is het (nog steeds) niet correct. In de bovenstaande |Breuk::operator+=| memberfunctie wordt bij het uitvoeren van het |return|\hyp{}statement een kopie van het huidige object teruggegeven. 
 Dit is echter niet correct. 
 Want als we deze operator als volgt gebruiken: |(a += b) += c;| dan wordt eerst |a += b| uitgerekend en een kopie van |a| teruggegeven, |c| wordt dan bij deze kopie van |a| opgeteld waarna de kopie wordt verwijderd. 
 Dit is natuurlijk niet de bedoeling, het is de bedoeling dat |c| bij |a| wordt opgeteld.
@@ -2212,7 +2212,7 @@ De \USE{reference} |element| is nu één voor één een alias voor een element u
 
 \section{Reference return type}
 \label{refreturn}
-Als een functie een waarde teruggeeft door middel van een |return| statement, dan wordt de waarde van de expressie achter het |return| statement, als het ware, ingevuld op de plaats waar de functie aangeroepen is.
+Als een functie een waarde teruggeeft door middel van een |return|\hyp{}statement, dan wordt de waarde van de expressie achter het |return|\hyp{}statement, als het ware, ingevuld op de plaats waar de functie aangeroepen is.
 Door nu een \USE{reference} als return type te gebruiken kun je een alias in plaats van een waarde teruggeven. Deze alias kun je dan gebruiken om een waarde aan toe te kennen. Zie voorbeeldprogramma \proglink{ref_ret.cpp}: 
 \cpplstinputfragment[linerange={6-9,33-35,37-37,39-39}]{ref_ret.cpp}
 
@@ -2275,7 +2275,7 @@ Zie \proglink{ref_ret.cpp} voor een compleet voorbeeldprogramma.
 \section{Reference return type (deel 2)}
 \label{sec:Breuk::operator+=}
 In de |Breuk::operator+=| memberfunctie die gegeven is op \cpageref{operator+= niet correct} wordt bij het uitvoeren van
-het |return| statement een kopie van het huidige object teruggegeven. 
+het |return|\hyp{}statement een kopie van het huidige object teruggegeven. 
 Dit is echter niet correct.
 Want als we deze operator als volgt gebruiken: |(a += b) += c;| dan wordt eerst |a += b| uitgerekend en een kopie van |a| teruggegeven, |c| wordt dan bij deze kopie van |a| opgeteld waarna de kopie wordt verwijderd.
 Dit is natuurlijk niet de bedoeling, het is de bedoeling dat |c| bij |a| wordt opgeteld. We kunnen dit probleem oplossen door een \USE{reference} naar het object zelf terug te geven. 
@@ -3200,7 +3200,7 @@ Aan elk van de eerder genoemde functies wordt de te gebruiken kaart dan als para
 
 \cpplstinputfragment[linerange={6-21,23-25,27-36,38-40,42-55,57-59,61-70,72-74,76-97}]{kaart0.cpp}
 
-%Het |switch| statement uit |init_card| wordt in de functies |select_channel|, |set_amplifier| en |sample_card| op soortgelijke wijze gebruikt.
+%Het |switch|\hyp{}statement uit |init_card| wordt in de functies |select_channel|, |set_amplifier| en |sample_card| op soortgelijke wijze gebruikt.
 
 Hopelijk heb je allang zelf de nadelen van deze aanpak bedacht:
 \begin{itemize}
@@ -3227,14 +3227,14 @@ Deze problemen kunnen voorkomen worden als een UDT gebruikt wordt, waarin zowel 
 
 \cpplstinputfragment[linerange={6-26,28-30,32-41,43-45,47-60,62-64,66-75,77-79,81-100}]{kaart1.cpp}
 
-%Het |switch| statement uit |init_card| wordt in de functies |select_channel|, |set_amplifier| en |sample_card| op soortgelijke wijze gebruikt.
+%Het |switch|\hyp{}statement uit |init_card| wordt in de functies |select_channel|, |set_amplifier| en |sample_card| op soortgelijke wijze gebruikt.
 Aan deze oplossingsmethode zit echter nog steeds het volgende nadeel:
 \begin{itemize}
     \item Als een nieuw type 8 kanaals 16 bits ADC met instelbare voorversterker (typenaam BB647) in het programma ook gebruikt moet kunnen worden, dan moet ten eerste het enumeratie type |Card_type| uitgebreid worden.
     Bovendien moeten alle memberfuncties, waarin door middel van een |switch| afhankelijk van het kaarttype verschillende code wordt uitgevoerd, gewijzigd en opnieuw gecompileerd worden.
 \end{itemize}
 
-Op zich is dit nadeel bij deze oplossing minder groot dan bij de gestructureerde oplossing omdat in dit geval alleen de UDT |ADCCard| aangepast hoeft te worden, terwijl in de gestructureerde oplossing de gehele applicatie (kan enkele miljoenen regels code zijn) doorzocht moet worden op het gebruik van het betreffende |switch| statement.
+Op zich is dit nadeel bij deze oplossing minder groot dan bij de gestructureerde oplossing omdat in dit geval alleen de UDT |ADCCard| aangepast hoeft te worden, terwijl in de gestructureerde oplossing de gehele applicatie (kan enkele miljoenen regels code zijn) doorzocht moet worden op het gebruik van het betreffende |switch|\hyp{}statement.
 Toch kan ook de oplossing door middel van een UDT tot een probleem voor wat betreft de uitbreidbaarheid leiden.
 
 Stel dat ik niet zelf het UDT |ADCCard| heb ontwikkeld, maar dat ik deze herbruikbare UDT heb ingekocht.
@@ -8015,8 +8015,8 @@ Appel
 Peer
 \end{coutput}
 
-Laten we eens kijken hoe de regel |a.print(cout);| wordt uitgevoerd.
-De \USE{message} \cppcode{print(cout)} wordt verstuurd naar het object |a|.
+Laten we eens kijken hoe de regel |a.print();| wordt uitgevoerd.
+De \USE{message} \cppcode{print()} wordt verstuurd naar het object |a|.
 Er wordt in de class van de \USE{receiver} (de class |Appel|) gekeken of er een \USE{method} |print| is gedefinieerd.
 Dit is niet het geval.
 Vervolgens wordt in de \USE{base class} van de class |Appel| (de class |Fruit|) gekeken of er een \USE{method} |print| is gedefinieerd.
@@ -8041,7 +8041,7 @@ In een \USE{constructor} en in een \USE{destructor} werkt \USE{dynamic binding} 
 Op het eerste gezicht is dit vreemd maar als je er goed over nadenkt dan blijkt het toch logisch te zijn.
 Dit wordt uitgelegd aan de hand van het volgende voorbeeld.
 Als we in het bovenstaande programma de class |Fruit| als volgt wijzigen (\proglink{Dynamic\\-Binding\\-In\\-Constructor\\-En\\-De\\-struc\\-tor.cpp}):
-\cpplstinputfragment[linerange={7-22}]{DynamicBindingInConstructorEnDestructor.cpp}
+\cpplstinputfragment[linerange={6-21}]{DynamicBindingInConstructorEnDestructor.cpp}
 
 \needspace{2\baselineskip}
 dan wordt de uitvoer:
@@ -8101,21 +8101,23 @@ De programmeur heeft het volgende testprogramma geschreven:
 \needspace{3\baselineskip}
 De programmeur, die denkt zowel |f| als |g| \USE{overridden} te hebben, verwachtte de volgende uitvoer:
 \begin{coutput}
-Derived::f(int) called.
-Derived::g(int) called.
+Derived::f(int) called: i = 1
+Derived::g(int) called: i = 2
 \end{coutput}
 
 De werkelijke uitvoer is echter:
 \begin{coutput}
-Base::f(int) called.
-Base::g(int) called.
+Base::f(int) called: i = 1
+Base::g(int) called: i = 2
 \end{coutput}
 
 Dit komt omdat de programmeur beide functies |f| en |g| \emph{\USE{overloaded}} heeft in plaats van \USE{overridden}.
 De functie |f| is in de \USE{base class} niet virtual gedefinieerd en kan dus niet \USE{overridden} worden.
 De functie |g| in de \USE{derived class} heeft een andere definitie dan in de basis class (in de basis class is |g| een |const|
 memberfunctie maar in de \USE{derived class} ontbreekt het woordje |const|).
-De functie |g| wordt dus \USE{overloaded} in plaats van \USE{overridden}.
+De functie |g| wordt dus \USE{overloaded} in plaats van \USE{overridden}\footnote{%
+	De gcc compiler 15.2.0 geeft wel de volgende waarschuwing: \error{warning: 'virtual void Base::g(int) const' was hidden}.
+}.
 
 We kunnen deze problemen eenvoudig voorkomen door expliciet aan te geven dat we een functie willen \USE{overridden}.
 Dit kun je doen door het woord |override| achter de declaratie van de memberfunctie te plaatsen.
@@ -8130,11 +8132,11 @@ class Derived: public Base {
 public:
     void f(int i) const override {
 //  $\color{hrred}\textbf{error:}$ 'void Derived::f(int) const' marked override, but does not override
-        cout << "Derived::f(int) called.\n";
+        println("Derived::f(int) called: i = {}", i);
     }
     void g(int i) override {
 //  $\color{hrred}\textbf{error:}$ 'void Derived::g(int)' marked override, but does not override
-        cout << "Derived::g(int) called.\n";
+        println("Derived::g(int) called: i = {}", i);
     }
 };
 \end{cpplstfragment}
@@ -8206,7 +8208,7 @@ Het is dus aan te raden om nooit een object van een \USE{derived class} toe te k
  
 \needspace{4\baselineskip}
 Voorbeeld van slicing (\proglink{slice.cpp}):
-\cpplstinputfragment[linerange={7-50,54-60}]{slice.cpp}
+\cpplstinputfragment[linerange={6-49,53-59}]{slice.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -8229,14 +8231,14 @@ Als we dus polymorfe objecten willen opslaan, kan dit alleen door pointers of \U
 Het opslaan van \USE{references} in een |vector| is echter niet mogelijk omdat een \USE{reference} altijd moet verwijzen naar een object dat al bestaat en bij het aanmaken van de |vector| weten we nog niet welke objecten in de |vector| moeten worden opgeslagen.
 De enige mogelijkheid is dus het opslaan van polymorfe pointers naar objecten.
 Hier volgt een voorbeeld van het gebruik van een |vector| en polymorfisme (\proglink{fruitmand.cpp}):
-\cpplstinputfragment[linerange={8-52}]{fruitmand.cpp}
+\cpplstinputfragment[linerange={6-50}]{fruitmand.cpp}
 
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
 De fruitmand bevat:
-Appel
-Peer
-Appel
+  Appel
+  Peer
+  Appel
 \end{coutput}
 
 Omdat de |vector| nu pointers naar de objecten bevat, moeten we zelf goed opletten dat deze objecten niet verwijderd worden voordat de |vector| wordt verwijderd.
@@ -8244,39 +8246,53 @@ Omdat de |vector| nu pointers naar de objecten bevat, moeten we zelf goed oplett
 De abstract base class |Fruit| moet eigenlijk een |virtual| destructor hebben, zie \cref{sec:virtualdestructor}. 
 
 \section{Casting en overerving}
+Als we een reference naar een |Base| class hebben dan kan die refereren naar een |Derived| (van |Base| afgeleide) class, maar niet vice versa. Bijvoorbeeld:
+\begin{cpplstfragment}[mathescape=true]
+class Hond { /* ... */ };
+class Sint_bernard: public Hond { /* ... */ };
+//  ...
+	Sint_bernard boris;
+	Hond& h {boris}; // OK: een Sint_bernard is een Hond
+	Hond fikkie;
+	Sint_bernard& sb {fikkie}; // $\color{hrred}\textbf{NOT OK:}$ een Hond is geen Sint_bernard
+//  $\color{hrred}\textbf{error:}$ cannot bind non-const lvalue reference of type 'Sint_bernard&' to an rvalue of type 'Sint_bernard'
+\end{cpplstfragment}
+
 Als we een pointer naar een |Base| class hebben, mogen we een pointer naar een |Derived| (van |Base| afgeleide) class toekennen aan deze |Base| class pointer, maar niet vice versa. Bijvoorbeeld:
 \begin{cpplstfragment}[mathescape=true]
 class Hond { /* ... */ };
 class Sint_bernard: public Hond { /* ... */ };
 //  ...
-    Hond* hp = new Sint_bernard; // OK: een Sint_bernard is een Hond
-    Sint_bernard* sbp = new Hond; // $\color{hrred}\textbf{NOT OK:}$ een Hond is geen Sint_bernard
+	Sint_bernard boris;
+    Hond* hp {&boris}; // OK: een Sint_bernard is een Hond
+    Sint_bernard* sbp {&fikkie}; // $\color{hrred}\textbf{NOT OK:}$ een Hond is geen Sint_bernard
 //  $\color{hrred}\textbf{error:}$ invalid conversion from 'Hond*' to 'Sint_bernard*'
 \end{cpplstfragment}
 
-Het omzetten van een |Hond*| naar een |Sint_bernard*| kan soms toch nodig zijn.
+Het omzetten van een |Hond&| naar een |Sint_bernard&| of van een |Hond*| naar een |Sint_bernard*| kan soms toch nodig zijn.
 We noemen dit een \emph{\USE{downcast}} omdat we afdalen in de class hiërarchie.
 \needspace{2\baselineskip}
 Voorbeeld (\proglink{casting4.cpp}):
 \cpplstinputfragment[linerange={4-30}]{casting4.cpp}
 \begin{cpplstfragment}[mathescape=true]
-void geef_hulp(Hond* hp) { 
-    hp->blaf();
-//  cout << hp->geef_drank() << " liter.\n";
+void geef_hulp(Hond& h) { 
+    h->blaf();
+//  println("{}", h.geef_drank());
+//  Error: 'class Hond' has no member named 'geef_drank'
 //  $\color{hrred}\textbf{error:}$ 'class Hond' has no member named 'geef_drank'
-//  We kunnen een cast gebruiken maar dat geeft foutieve uitvoer als hp niet naar een Sint_bernard wijst.
-    cout << static_cast<Sint_bernard*>(hp)->geef_drank() << " liter.\n";
+//  We kunnen een cast gebruiken maar dat geeft foutieve uitvoer als h niet naar een Sint_bernard refereert.
+    println("{} liter.", static_cast<Sint_bernard&>(h).geef_drank());
 }
 \end{cpplstfragment}
 
 In dit geval is een |static_cast| gebruikt om een \USE{downcast} te maken.
-Als je de functie |geef_hulp| aanroept met een |Hond*| als argument die wijst naar een |Sint_bernard|, gaat alles goed.%
+Als je de functie |geef_hulp| aanroept met een |Sint_bernard|, dan gaat alles goed.%
 \footnote{%
-    Als de functie \cppcode{geef_hulp} alleen maar aangeroepen wordt met een \cppcode{Sint_bernard*} als argument, is het natuurlijk veel slimmer om deze functie te definiëren als: \cppcode{void geef_hulp(Sint_bernard* sbp)}. 
+    Als de functie \cppcode{geef_hulp} alleen maar aangeroepen wordt met een \cppcode{Sint_bernard&} als argument, is het natuurlijk veel slimmer om deze functie te definiëren als: \cppcode{void geef_hulp(Sint_bernard& sbp)}. 
     De \USE{downcast} is dan niet meer nodig!
 }
 
-\cpplstinputfragment[linerange={40-42}]{casting4.cpp}
+\cpplstinputfragment[linerange={40-41}]{casting4.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -8286,23 +8302,23 @@ Geeft drank.
 10 liter.
 \end{coutput}
 
-Als je de functie |geef_hulp| echter aanroept met een |Hond*| als argument die niet wijst naar een |Sint_bernard|, dan geeft het programma onvoorspelbare resultaten (en/of loopt het vast):
-\cpplstinputfragment[linerange={44-46}]{casting4.cpp}
+Als je de functie |geef_hulp| echter aanroept met een |Hond| als argument, dan geeft het programma onvoorspelbare resultaten (en/of loopt het vast):
+\cpplstinputfragment[linerange={43-44}]{casting4.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
 Blaf.
 Geeft drank.
--2144382840 liter.
+4328928 liter.
 \end{coutput}
 
 Een |static_cast| is dus alleen maar geschikt als \USE{downcast} als je zeker weet dat de \USE{cast} geldig is. 
 In het bovenstaande programma zou je de mogelijkheid willen hebben om te kijken of een \USE{downcast} mogelijk is.
 Dit kan met een zogenoemde |dynamic_cast|. Zie \proglink{casting5.cpp}:
-\cpplstinputfragment[linerange={31-36}]{casting5.cpp}
+\cpplstinputfragment[linerange={31-37}]{casting5.cpp}
 
-Je kunt de functie |geef_hulp| nu veilig aanroepen zowel met een |Sint_bernard*| als met een |Hond*| als argument.
+Je kunt de functie |geef_hulp| nu veilig aanroepen zowel met een |Sint_bernard| als met een |Hond| als argument.
 
 \cpplstinputfragment[linerange={39-45}]{casting5.cpp}
 
@@ -8320,12 +8336,12 @@ Als een |dynamic_cast| van een pointer mislukt, geeft de \USE{cast} een |nullptr
 Bij een |dynamic_cast| van een \USE{reference} is dit niet mogelijk (omdat een nul \USE{reference} niet bestaat).
 Als een |dynamic_cast| van een \USE{reference} mislukt, wordt de standaard \USE{exception} |bad_cast| gegooid.
 
-Een versie van |geef_hulp| die werkt met een |Hond&| in plaats van met een |Hond*| kun je dus als volgt implementeren (\proglink{casting6.cpp}):
-\cpplstinputfragment[linerange={2-2,11-11,32-40}]{casting6.cpp}
+Een versie van |geef_hulp| die werkt met een |Hond*| in plaats van met een |Hond&| kun je dus als volgt implementeren (\proglink{casting6.cpp}):
+\cpplstinputfragment[linerange={31-37}]{casting6.cpp}
 
 \needspace{2\baselineskip}
 Deze functie kun je als volgt aanroepen:
-\cpplstinputfragment[linerange={43-46}]{casting6.cpp}
+\cpplstinputfragment[linerange={40-43}]{casting6.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -8347,11 +8363,11 @@ Deze gegevens zijn opgeslagen in een object van de class |type_info|.
 Deze class heeft een vraagfunctie |name()| waarmee de naam van de class opgevraagd kan worden.
 Om het |type_info| object van een (ander) object op te vragen moet je het \Cpp{} \USE{keyword} |typeid| gebruiken. Zie \proglink{rtti.cpp}:
 
-\cpplstinputfragment[linerange={22-24}]{rtti.cpp}
+\cpplstinputfragment[linerange={21-23}]{rtti.cpp}
 
 \needspace{2\baselineskip}
 Deze functie kun je als volgt aanroepen:
-\cpplstinputfragment[linerange={27-30}]{rtti.cpp}
+\cpplstinputfragment[linerange={26-29}]{rtti.cpp}
 
 \needspace{2\baselineskip}
 De uitvoer is compiler afhankelijk. De GCC \Cpp{}-compiler produceert de volgende uitvoer:
@@ -8387,11 +8403,11 @@ class Tekkel: public Hond {
 
 void blaf(const Hond* hp) {
     if (dynamic_cast<const Sint_bernard*>(hp) != 0)
-        cout << "Woef!\n";
+        println("Woef!");
     else if (dynamic_cast<const Tekkel*>(hp) != 0)
-        cout << "Kef kef!\n";
+        println("Kef kef!");
     else
-        cout << "Blaf.\n";
+        println("Blaf.");
 }
 \end{cpplstfragment}
 
@@ -8422,7 +8438,13 @@ In \Cpp{} doe je dit als programmeur meestal niet zelf, maar maak je gebruik van
 %TODO: verwijzing toevoegen
 In dit hoofdstuk wordt bespreken hoe je zelf een class kunt ontwikkelen die gebruikt maakt van \USE{dynamic memory allocation} waarbij je dit kunt verbergen voor de programmeur die gebruik maakt van deze class. 
 In dit hoofdstuk wordt dynamic memory allocation toegepast bij het maken van een UDT |Array|. 
-Ook laat ik in dit hoofdstuk zien hoe je er voor kunt zorgen dat je deze UDT ook met een \USE{range-based} |for| kunt doorlopen en met een initialisatielijst kunt initialiseren.
+Ook laat ik in dit hoofdstuk zien hoe je er voor kunt zorgen dat je deze UDT:
+\begin{itemize}
+	\item met een \USE{range-based} |for| kunt doorlopen;
+	\item met alle algoritmen uit de |ranges| library kunt gebruiken;
+	\item met |print| en |println| kunt afdrukken;
+	\item en met een initialisatielijst kunt initialiseren.
+\end{itemize}
 
 \sectionTextCode{Voorbeeld class}{Array}
 %\markright{}
@@ -8451,126 +8473,19 @@ In dit voorbeeld ga je zien hoe ik zelf een eigen array type genaamd |Array| heb
 } waarbij:
 \begin{itemize}
     \item de grootte pas tijdens het uitvoeren van het programma bepaald kan worden;
-    \item bij het indexeren de index wordt gecontroleerd en een foutmelding wordt gegeven als de index zich buiten de grenzen van de |Array| bevindt.
+    \item bij het indexeren de index wordt gecontroleerd en een exception\footnote{%
+	Zie \cref{exceptions}.	
+} |out_of_range| wordt gegooid als de index zich buiten de grenzen van de |Array| bevindt.
 \end{itemize}
 De door de compiler gegenereerde \USE{copy constructor}, \USE{destructor} en |operator=| blijken voor de class |Array| niet correct te werken.
 Ik heb daarom voor deze class zelf een \USE{copy constructor}, \USE{destructor} en |operator=| gedefinieerd.
 Na het voorbeeldprogramma \proglink{Array.cpp} worden de belangrijkste aspecten toegelicht en worden verwijzingen naar verdere literatuur gegeven.
 
+\cpplstinputfragment[linerange={3-13}]{Array.cpp}
+\vspace{-.8\baselineskip}
 \begin{cpplstfragment}[mathescape=true]
-#include <iostream>
-#include <algorithm>
-#include <cassert>
-using namespace std;
-
-class Array {
-public:
-    using size_type = size_t;
-	explicit Array(size_type s);
-	Array(const Array& r);
-	Array& operator=(const Array& r);
-	~Array();
-    int& operator[](size_type index);
-    const int& operator[](size_type index) const$\footnotemark$;
-    int length() const;
-	bool operator==(const Array& r) const;
-	bool operator!=(const Array& r) const;
-private:
-	size_type size;
-	int* data;
-friend ostream& operator<<(ostream& o, const Array& a);
-};
-
-Array::Array(size_type s): size{s}, data{new int[s]} {
-}
-
-Array::Array(const Array& r): size{r.size}, data{new int[r.size]} {
-	for (size_type i {0}; i < size; ++i)
-		data[i] = r.data[i];
-}
-
-Array& Array::operator=(const Array& r) {
-	Array t {r};
-	swap(data, t.data);
-	swap(size, t.size);
-	return *this;
-}
-
-Array::~Array() {
-	delete[] data;
-}
-
-int& Array::operator[](size_type index) {
-	assert(index < size);
-	return data[index];
-}
-
-const int& Array::operator[](size_type index) const {
-	assert(index < size);
-	return data[index];
-}
-
-Array::size_type Array::length() const {
-	return size;
-}
-
-bool Array::operator==(const Array& r) const {
-	if (size != r.size)
-		return false;
-	for (size_type i {0}; i < size; ++i)
-		if (data[i] != r.data[i])
-			return false;
-	return true;
-}
-
-bool Array::operator!=(const Array& r) const {
-	return !(*this == r);
-}
-
-ostream& operator<<(ostream& o, const Array& a) {
-	for (Array::size_type i {0}; i < a.size; ++i) {
-		o << a.data[i];
-		if (i != a.size - 1)
-			o << ',';
-	}
-	return o;
-}
-
-int main() {
-	cout << "Hoeveel elementen moet de Array bevatten? ";
-	Array::size_type i; 
-	cin >> i;
-	Array a {i};
-	cout << "a = " << a << '\n';
-	for (int j {0}; j < a.length(); ++j)
-		a[j] = j * j; // vul a met kwadraten
-	cout << "a = " << a << '\n';
-	Array b {a};
-	cout << "b = " << b << '\n';
-	cout << "a[12] = " << a[12] << '\n';
-	cout << "b[12] = " << b[12] << '\n';
-	a[0] = 4; 
-	cout << "a[0] = " << a[0] << '\n';
-	cout << "a = " << a << '\n';
-	cout << "b = " << b << '\n';
-	
-	if (a == b)
-		cout << "a is nu gelijk aan b.\n";
-	else 
-		cout << "a is nu ongelijk aan b.\n";
-	
-	b = a;
-	cout << "b = a is uitgevoerd.\n";
-	cout << "a = " << a << '\n';
-	cout << "b = " << b << '\n';
-	
-	if (a != b) 
-		cout << "a is nu ongelijk aan b.\n";
-	else 
-		cout << "a is nu gelijk aan b.\n";
-}
+	const int& operator[](size_type index) const$\footnotemark$;
 \end{cpplstfragment}
-
 \footnotetext{%
     Het \USE{overloaden} van de \cppcode{operator[]} is noodzakelijk omdat ik vanuit deze operator een \USE{reference} terug wil geven zodat met deze \USE{reference} in het \cppcode{Array} object geschreven kan worden bijvoorbeeld \cppcode{v[12] = 144;}.
     Als ik deze operator als \cppcode{const} zou hebben gedefinieerd (wat in eerste instantie logisch lijkt, de \cppcode{operator[]} verandert immers niets in het \cppcode{Array} object), dan zou deze operator ook gebruikt kunnen worden voor een \cppcode{const} \cppcode{Array} object.
@@ -8581,7 +8496,9 @@ int main() {
     Om het lezen uit een \cppcode{const} \cppcode{Array} object toch weer mogelijk te maken heb ik naast de non-const \cppcode{operator[]} nog een \cppcode{const} \cppcode{operator[]} gedefinieerd.
     Deze \cppcode{const} \cppcode{operator[]} geeft een \cppcode{const} \USE{reference} terug en zoals je weet kan een \cppcode{const} \USE{reference} alleen gebruikt worden om te lezen.
     (Als je deze voetnoot na één keer lezen begrijpt, is er waarschijnlijk iets niet helemaal in orde). Zie  \proglink{Array\_operator[].cpp} voor een voorbeeldprogramma.
-}
+}%
+\vspace{-.8\baselineskip}
+\cpplstinputfragment[linerange={15-132}]{Array.cpp}
 
 Je ziet dat de typenaam |size_type| in de class is gelijk gesteld is aan het standaard type |size_t| met behulp van een |using|-declaratie.
 %TODO: verwijzing toevoegen
@@ -8667,7 +8584,7 @@ In de implementatie van de |operator=| is gebruik gemaakt van de standaard funct
 De |operator=| begint met het maken van een kopie van de als argument meegegeven |Array r|.
 Vervolgens wordt de |data| (pointer) en de |size| van de \USE{receiver} en |t| verwisseld.
 De nieuwe waarde van de \USE{receiver} wordt dus gelijk aan |r|.
-Na het uitvoeren van het |return| statement wordt het object |t| verwijderd.
+Na het uitvoeren van het |return|\hyp{}statement wordt het object |t| verwijderd.
 Hierdoor wordt de oude waarde van de \USE{receiver} opgeruimd.
 Bedenk dat |t| door de verwisseling de oude waarde van de \USE{receiver} bevat! 
 Waarschijnlijk moet je deze paragraaf een paar keer lezen om het helemaal te vatten.
@@ -8691,6 +8608,7 @@ Ja! De \USE{copy constructor} wordt nu impliciet aangeroepen bij het doorgeven v
 %\markright{}
 \label{sec:ruleofthree}
 Een class moet een \emph{zelf} gedefinieerde \USE{copy constructor}, |operator=| en \USE{destructor} bevatten als:
+%TODO: move operaties toevoegen!
 \begin{itemize}
     \item die class een pointer bevat en;
     \item als bij het kopiëren van een object van de class niet de pointer, maar de data waar de pointer naar wijst moet worden gekopieerd en;
@@ -8723,11 +8641,13 @@ Bijvoorbeeld:
 %\markright{}
 \label{sec:class template array}
 Zie \proglink{Array\_template.cpp}:
-\cpplstinputfragment[linerange={3-26}]{Array_template.cpp}
+\cpplstinputfragment[linerange={3-32}]{Array_template.cpp}
+\vspace{-.8\baselineskip}
 \begin{cpplstfragment}
 // ... enz. ...
 \end{cpplstfragment}
-\cpplstinputfragment[linerange={80-90,100-100}]{Array_template.cpp}
+\vspace{-.8\baselineskip}
+\cpplstinputfragment[linerange={96-119,141-141}]{Array_template.cpp}
 
 Een template kan ook meerdere parameters hebben.
 Een template\hyp{}parameter kan in plaats van een \USE{typename} parameter ook een normale parameter zijn.
@@ -8784,17 +8704,25 @@ Als we dit willen laten werken moeten we de functies |begin|, |cbegin|, |end| en
 teruggeven naar het eerste element van de |Array|. De functies |end| en |cend| moeten een pointer\addtocounter{footnote}{-1}\addtocounter{Hfootnote}{-1}\footnotemark{}  teruggeven net na het laatste element van de |Array|.
 
 Zie \proglink{Array\_template\_rbf.cpp}:
-\cpplstinputfragment[linerange={12-15}]{Array_template_rbf.cpp}
+\cpplstinputfragment[linerange={9-12}]{Array_template_rbf.cpp}
+\vspace{-.8\baselineskip}
 \begin{cpplstfragment}
 // ... enz. ...
 \end{cpplstfragment}
-\cpplstinputfragment[linerange={27-32}]{Array_template_rbf.cpp}
+\vspace{-.8\baselineskip}
+\cpplstinputfragment[linerange={23-28}]{Array_template_rbf.cpp}
+\vspace{-.8\baselineskip}
 \begin{cpplstfragment}
 // ... enz. ...
 \end{cpplstfragment}
-\cpplstinputfragment[linerange={36-36}]{Array_template_rbf.cpp}
+\vspace{-.8\baselineskip}
+\cpplstinputfragment[linerange={33-33}]{Array_template_rbf.cpp}
 % moet in twee stappen om er een lege regel tussen te krijgen 
-\cpplstinputfragment[linerange={91-113}]{Array_template_rbf.cpp}
+\cpplstinputfragment[linerange={116-131}]{Array_template_rbf.cpp}
+
+% TODO: uitleg toevoegen:
+% ranges
+% print
 
 \sectionTextCode{Ondersteuning initialisatielijst voor class template}{Array}
 %\markright{}
@@ -8809,21 +8737,19 @@ De in \cref{sec:class template array} gegeven class template Array kan niet met 
 Als we dit willen laten werken moeten we een extra \USE{constructor} toevoegen aan de class |Array|.
 
 Zie \proglink{Array\_template\_rbf.cpp}:
-\cpplstinputfragment[linerange={12-15,17-17}]{Array_template_rbf.cpp}
+\cpplstinputfragment[linerange={9-12,14-14}]{Array_template_rbf.cpp}
+\vspace{-.8\baselineskip}
 \begin{cpplstfragment}
 // ... enz. ...
 \end{cpplstfragment}
-\cpplstinputfragment[linerange={36-36}]{Array_template_rbf.cpp}
+\vspace{-.8\baselineskip}
+\cpplstinputfragment[linerange={33-33}]{Array_template_rbf.cpp}
 % moet in twee stappen om er een lege regel tussen te krijgen 
-\cpplstinputfragment[linerange={41-46}]{Array_template_rbf.cpp}
+\cpplstinputfragment[linerange={40-45}]{Array_template_rbf.cpp}
 
 \needspace{4\baselineskip}
 Of nog eenvoudiger:
-\begin{cpplstfragment}
-	template <typename T> Array<T>::Array(initializer_list<T> list): size{list.size()}, data{new T[size]} {
-		copy(lst.begin, lst.end, data)
-	}
-\end{cpplstfragment}
+\cpplstinputfragment[linerange={46-48}]{Array_template_deduction_guide.cpp}
 In dit geval heb ik gebruik gemaakt van de functie |copy| uit de standaard library.
 %TODO: verwijzing toevoegen.
 
@@ -8841,12 +8767,12 @@ Je kunt kijken of deze optimalisatie wel of niet wordt toegepast door een class 
 Bijvoorbeeld, zie \proglink{RVO.cpp}:
 \cpplstinputfragment[linerange={5-31}]{RVO.cpp}
 Het enige doel van dit programma is om te kijken of de compiler de return value optimization toepast.
-Als dit programma gecompileerd wordt met gcc 9.1\footnote{%
-	\code{g++ -std=c++17 -pedantic-errors -Wall -g3 -O0 RVO.cpp}
+Als dit programma gecompileerd wordt met gcc 15.2\footnote{%
+	\code{g++ -std=c++23 -fmodules -pedantic-errors -Wall -Wextra -g3 -O0 RVO.cpp}
 }, dan geeft dit programma de volgende uitvoer:
 \begin{coutput}
 Int met waarde 42 wordt aangemaakt.
-De waarde van local is 42
+De waarde van local is 42.
 Int met waarde 42 wordt verwijderd.
 \end{coutput}  
 Blijkbaar is de GCC \Cpp{}\hyp{}compiler zo slim om alle benodigde kopieeracties weg te optimaliseren\footnote{%
@@ -8854,20 +8780,21 @@ Blijkbaar is de GCC \Cpp{}\hyp{}compiler zo slim om alle benodigde kopieeracties
 }.
 \footnotetext{Zie: \url{ https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html}.}
 
-De GCC \Cpp{}\hyp{}compiler heeft een optie waarmee de RVO uitgezet kan worden.
-Als we deze optie gebruiken\footnote{%
-	\code{g++ -std=c++17 -pedantic-errors -Wall -g3 -O0 -fno-elide-constructors RVO.cpp}
-}, dan geeft dit programma de volgende uitvoer:
+Als we bovenstaand programma compileren\footnote{%
+	De gebruikte versie van de TI \Cpp{}\hyp{}compiler is 18.12.4.
+} en uitvoeren op een CC3220 Launchpad met de compiler optimalisatie op \squote{off}, dan geeft het de volgende uitvoer:
 \begin{coutput}
-Int met waarde 42 wordt aangemaakt.
+[Cortex_M4_0] Int met waarde 42 wordt aangemaakt.
 Int met waarde 42 wordt gekopieerd.
 Int met waarde 42 wordt verwijderd.
 Int met waarde 42 wordt gekopieerd.
 Int met waarde 42 wordt verwijderd.
-De waarde van local is 42
+De waarde van local is 42.
 Int met waarde 42 wordt verwijderd.
-\end{coutput}  
-Je ziet dat de RVO het maken van twee kopietjes heeft voorkomen.
+\end{coutput}
+We zien dat deze compiler in dit geval geen RVO toepast.
+Ook als de optimalisatie op het maximale level (4) wordt gezet, veranderd de uitvoer niet.
+
 Door het programma zonder RVO te compileren en vervolgens stap voor stap uit te voeren in de debugger, kun je zien waar deze kopietjes aangemaakt en weer verwijderd worden\footnote{%
 	Ik raad je sterk aan om dit zelf te doen!
 }:
@@ -8881,7 +8808,7 @@ Door het programma zonder RVO te compileren en vervolgens stap voor stap uit te 
 	\item 
 	De constructor slaat de waarde van |i| op in de private datamember |value|.
 	\item 
-	Bij het uitvoeren van het |return|-statement wordt de waarde van |result| gekopieerd naar een naamloze tijdelijke variabele in |main| door de copy constructor van |Int| aan te roepen met |result| als argument.
+	Bij het uitvoeren van het |return|\hyp{}statement wordt de waarde van |result| gekopieerd naar een naamloze tijdelijke variabele in |main| door de copy constructor van |Int| aan te roepen met |result| als argument.
 	\item 
 	Bij het beëindigen van de functie |maak_Int| wordt de destructor van |Int| aangeroepen om de lokale variabele |result| te verwijderen.
 	\item 
@@ -8890,7 +8817,7 @@ Door het programma zonder RVO te compileren en vervolgens stap voor stap uit te 
 	\item 
 	Nadat de variabele |local| is aangemaakt wordt de destructor van |Int| aangeroepen, om de naamloze tijdelijke variabele te verwijderen.
 	\item 
-	Dan wordt de |cout|-statement uitgevoerd.
+	Dan wordt het |println|\hyp{}statement uitgevoerd.
 	\item 
 	Tot slot wordt de destructor van |Int| aangeroepen om de variabele |local| te verwijderen.
 \end{itemize}
@@ -8905,27 +8832,14 @@ Als dit zelfde programma met RVO gecompileerd wordt en wordt uitgevoerd, dan geb
 	\item 
 	De constructor slaat de waarde van |i| op in de private datamember |value|.
 	\item 
-	Bij het uitvoeren van het |return|-statement wordt de variabele |result|, als het ware hernoemd, tot |local|.
+	Bij het uitvoeren van het |return|\hyp{}statement wordt de variabele |result|, als het ware hernoemd, tot |local|.
 	Er wordt niets gekopieerd en ook niets verwijderd.
 	\item 
-	Dan wordt de |cout|-statement uitgevoerd.
+	Dan wordt het |println|\hyp{}statement uitgevoerd.
 	\item 
 	Tot slot wordt de destructor van |Int| aangeroepen om de variabele |local| (die bij het aanmaken nog |result| heette) te verwijderen.
 \end{itemize}
-Als we bovenstaand programma compileren\footnote{%
-	De gebruikte versie van de TI \Cpp{}\hyp{}compiler is 18.12.4.
-} en uitvoeren op een CC3220 Launchpad met de compiler optimalisatie op \squote{off}, dan geeft het de volgende uitvoer:
-\begin{coutput}
-[Cortex_M4_0] Int met waarde 42 wordt aangemaakt.
-Int met waarde 42 wordt gekopieerd.
-Int met waarde 42 wordt verwijderd.
-Int met waarde 42 wordt gekopieerd.
-Int met waarde 42 wordt verwijderd.
-De waarde van local is 42
-Int met waarde 42 wordt verwijderd.
-\end{coutput}
-We zien dat deze compiler in dit geval geen RVO toepast.
-Ook als de optimalisatie op het maximale level (4) wordt gezet, veranderd de uitvoer niet.
+Je ziet dat de RVO het maken van twee kopietjes heeft voorkomen.
 %TODO testen met MSP430
 
 \section{Rvalue reference}
@@ -9001,15 +8915,15 @@ Ook kan de compiler in een aantal gevallen zelf bepalen dat een \USE{move assign
 Als voorbeeld bekijken we een eenvoudige class genaamd |Dozijn| die 12 integers beheert die opgeslagen zijn op de heap\footnote{%
 	Zie eventueel \cpageref{heap}.
 }.
-\cpplstinputfragment[linerange={7-10,12-12,14-14,16-19,21-21}]{Dozijn_move.cpp}
-De implementatie van de memberfuncties kun je vinden in \proglink{Dozijn_move.cpp}.
+\cpplstinputfragment[linerange={6-22}]{Dozijn_zonder_move.cpp}
+De implementatie van de memberfuncties kun je vinden in \proglink{Dozijn_zonder_move.cpp}.
 
 Voor deze class kan een |operator+| worden gedefinieerd waarmee twee dozijnen opgeteld kunnen worden:
-\cpplstinputfragment[linerange={77-83}]{Dozijn_move.cpp}
+\cpplstinputfragment[linerange={78-82}]{Dozijn_zonder_move.cpp}
 Deze operator kun je als volgt gebruiken om twee dozijnen |b| en |c| bij elkaar op te tellen:
-\cpplstinputfragment[linerange={96-96}]{Dozijn_move.cpp}
+\cpplstinputfragment[linerange={96-96}]{Dozijn_zonder_move.cpp}
 De werking is\footnote{%
-	Ervan uitgaande dat het programma gecompileerd is met gcc 9.1.
+	Ervan uitgaande dat het programma gecompileerd is met gcc 15.2.
 }, stap voor stap, als volgt\footnote{%
 	Gebruik een debugger met een single step functie om dit zelf na te gaan.
 }: 
@@ -9019,31 +8933,32 @@ De werking is\footnote{%
 		Door hier const reference parameters te gebruiken zorgen we ervoor dat \code{b} en \code{c} niet gekopieerd hoeven te worden en niet veranderd kunnen worden. Zie \cref{sec:constreferenceparameter}. 
 	}.
 	\item 
-	De constructor |Dozijn()| wordt aangeroepen om de variabele |result| aan te maken.
+	De constructor |Dozijn()| wordt aangeroepen om de variabele |res| aan te maken.
 	\item 
-	De inhoud van elke element in |result| wordt gelijk gemaakt aan de som van de corresponderende elementen uit |left| (een andere naam voor |b|) en |right| (een andere naam voor |c|).
+	De inhoud van elke element in |res| wordt gelijk gemaakt aan de som van de corresponderende elementen uit |left| (een andere naam voor |b|) en |right| (een andere naam voor |c|).
+	Omdat de iteratoren |begin()| en |end()| voor de class |Dozijn| gedefinieerd zijn, kunnen we gebruik maken van het standaard |ranges::transform| algoritme om de |Dozijn|en op te tellen.
 	\item
-	Door het toepassen van return value optimization, zie \cref{sec:rvo}, wordt de variabele |result| niet gekopieerd of verwijderd maar meteen gebruikt als \emph{rvalue} van de |operator=|.
-	Met andere woorden: de instructie |a = b + c| wordt als het ware vervangen door |a = result|.
+	Door het toepassen van return value optimization, zie \cref{sec:rvo}, wordt de variabele |res| niet gekopieerd of verwijderd maar meteen gebruikt als \emph{rvalue} van de |operator=|.
+	Met andere woorden: de instructie |a = b + c| wordt als het ware vervangen door |a = res|.
 	\item 
-	De |operator=| van |Dozijn| wordt aangeroepen. De parameter |r| refereert naar de variabele |result| het resultaat van de optelling.
+	De |operator=| van |Dozijn| wordt aangeroepen. De parameter |r| refereert naar de variabele |res| het resultaat van de optelling.
 	Deze operator is als volgt gedefinieerd:
-	\cpplstinputfragment[linerange={39-45}]{Dozijn_move.cpp}
+	\cpplstinputfragment[linerange={40-44}]{Dozijn_move.cpp}
 	\item 
-	De inhoud van elke element in de receiver van de |operator=|, dat is |a|, wordt gelijk gemaakt aan het corresponderende element uit |r| (een andere naam voor |result|).
-	De variabele |a| is na afloop van de |operator=| dus een kopietje van |result| en bevat de som van |b| en |c|.
+	De inhoud van elke element in de receiver van de |operator=|, dat is |a|, wordt gelijk gemaakt aan het corresponderende element uit |r| (een andere naam voor |res|).
+	De variabele |a| is na afloop van de |operator=| dus een kopietje van |res| en bevat de som van |b| en |c|.
 	\item 
-	Nu |a| de juiste waarde heeft gekregen wordt de destructor |~Dozijn()| aangeroepen voor de variabele |result|.
+	Nu |a| de juiste waarde heeft gekregen wordt de destructor |~Dozijn()| aangeroepen voor de variabele |res|.
 	\item 
-	De destructor |~Dozijn()| geeft de bij |result| behorende data (die inmiddels is gekopieerd naar |a|) weer vrij, door |delete[] data| aan te roepen.
+	De destructor |~Dozijn()| geeft de bij |res| behorende data (die inmiddels is gekopieerd naar |a|) weer vrij, door |delete[] data| aan te roepen.
 \end{itemize}
 Het kopiëren van het resultaat van de optelling (in de variabele |result|) naar de variabele |a| kan voorkomen worden door een move assignment operator te definiëren.
-\cpplstinputfragment[linerange={7-10,12-14,16-19,21-21}]{Dozijn_move.cpp}
+\cpplstinputfragment[linerange={6-9,11-24}]{Dozijn_move.cpp}
 De parameter |r| van deze |operator=| is van het type |Dozijn&&|.
 Dit is een zogenoemde \USE{rvalue reference}.
-Een \USE{rvalue reference} refereert naar een \emph{tijdelijke} variabele die aangepast mag worden omdat deze variabele niet meer nodig is en de bijbehorende geheugenruimte binnenkort vrijgegeven wordt.  
+Een \USE{rvalue reference} refereert naar een \emph{tijdelijke} variabele die aangepast mag worden omdat deze variabele niet meer nodig is en de bijbehorende geheugenruimte binnenkort vrijgegeven wordt.
 De werking van dit programma is\footnote{%
-	Ervan uitgaande dat het programma gecompileerd is met gcc 9.1.
+	Ervan uitgaande dat het programma gecompileerd is met gcc 15.2.
 }, stap voor stap, nu als volgt\footnote{%
 	Gebruik een debugger met een single step functie om dit zelf na te gaan.
 }: 
@@ -9051,28 +8966,27 @@ De werking van dit programma is\footnote{%
 	\item 
 	De |operator+| wordt aangeroepen waarbij de parameter |left| een referentie is naar |b| en |right| een referentie is naar |c|.
 	\item 
-	De constructor |Dozijn()| wordt aangeroepen om de variabele |result| aan te maken.
+	De constructor |Dozijn()| wordt aangeroepen om de variabele |res| aan te maken.
 	\item 
-	De inhoud van elke element in |result| wordt gelijk gemaakt aan de som van de corresponderende elementen uit |left| (een andere naam voor |b|) en |right| (een andere naam voor |c|).
+	De inhoud van elke element in |res| wordt gelijk gemaakt aan de som van de corresponderende elementen uit |left| (een andere naam voor |b|) en |right| (een andere naam voor |c|).
 	\item
-	Door het toepassen van return value optimization, zie \cref{sec:rvo}, wordt de variabele |result| niet gekopieerd of verwijderd maar meteen gebruikt als \emph{rvalue} van de |operator=|.
-	Met andere woorden: de instructie |a = b + c| wordt als het ware vervangen door |a = result|.
+	Door het toepassen van return value optimization, zie \cref{sec:rvo}, wordt de variabele |res| niet gekopieerd of verwijderd maar meteen gebruikt als \emph{rvalue} van de |operator=|.
+	Met andere woorden: de instructie |a = b + c| wordt als het ware vervangen door |a = res|.
 	\item 
 	De move assignment operator van |Dozijn| wordt nu aangeroepen.
 	Deze operator is als volgt gedefinieerd:
 	\cpplstinputfragment[linerange={47-51}]{Dozijn_move.cpp}
 	\item  
-	De rvalue reference parameter |r| refereert naar de variabele |result| het resultaat van de optelling.
+	De rvalue reference parameter |r| refereert naar de variabele |res| het resultaat van de optelling.
 	\item 
-	De |data| van de receiver wordt verwisseld met de |data| van de parameter |r| (een andere naam voor |result|).
+	De |data| van de receiver wordt verwisseld met de |data| van de parameter |r| (een andere naam voor |res|).
 	Let er op dat niet de data zelf maar de pointer naar de data wordt verwisseld.
 	Om deze pointers te verwisselen gebruiken we de standaard |swap|-functie.
-	De standaard functie |swap| is gedefinieerd in de de header file |<utility>|.
 	\item 
-	Nu |a| de juiste waarde heeft gekregen wordt de destructor |~Dozijn()| aangeroepen voor de variabele |result|.
-	De variabele |result| bevat de oude waarden van |a| die nu worden vrijgegeven. 
+	Nu |a| de juiste waarde heeft gekregen wordt de destructor |~Dozijn()| aangeroepen voor de variabele |res|.
+	De variabele |res| bevat de oude waarden van |a| die nu worden vrijgegeven. 
 \end{itemize}
-Doordat nu de move assignment operator gebruikt is in plaats van de copy assignment operator is voorkomen dat de gehele inhoud van |result| (twaalf integers) naar |a| gekopieerd is. In plaats daarvan zijn slechts twee pointers verwisseld.
+Doordat nu de move assignment operator gebruikt is in plaats van de copy assignment operator is voorkomen dat de gehele inhoud van |res| (twaalf integers) naar |a| gekopieerd is. In plaats daarvan zijn slechts twee pointers verwisseld.
 De besparing is in dit geval nog gering, maar je begrijpt dat het gebruik van een move assignment bij classes die veel data beheren een behoorlijke besparing kan opleveren. 
 
 Als we een |Dozijn| aanmaken en initialiseren met een ander |Dozijn| dan wordt, uiteraard, de copy constructor aangeroepen, zie \cref{copy constructor}.
@@ -9088,14 +9002,15 @@ Als je deze copy constructor aanroept met een rvalue als argument, bijvoorbeeld:
 \end{cpplstfragment}
 
 Dan kun je het maken van een extra kopie voorkomen door een move constructor te definiëren:
-\cpplstinputfragment[linerange={7-14,16-19,21-21}]{Dozijn_move.cpp}
+\cpplstinputfragment[linerange={6-24}]{Dozijn_move.cpp}
 De parameter |r| van deze move constructor is van het type |Dozijn&&|.
 Deze move constructor kan als volgt gedefinieerd worden:
-\cpplstinputfragment[linerange={34-37}]{Dozijn_move.cpp}
+\cpplstinputfragment[linerange={35-38}]{Dozijn_move.cpp}
 Je ziet dat deze constructor simpelweg de data van de parameter overneemt.
 Niet door de data zelf te kopiëren maar door de pointer naar de data te kopiëren.
 De pointer naar de data van de parameter wordt gelijk gemaakt aan de |nullptr| zodat de variabele waar deze parameter naar refereert later veilig opgeruimd kan worden.
-Volgens de \Cpp{}-standaard mag |delete[]| worden aangeroepen op de |nullptr|, zie \cite[paragraaf 8.3.5]{ISO2017}.
+Volgens de \Cpp{}-standaard mag |delete[]| worden aangeroepen op de |nullptr|, zie \cite[paragraaf 8.3.5]{ISO2023}.
+%TODO check link
 
 Als je zeker weet dat een lvalue die je als argument van een constructor of assignment operator gebruikt na afloop niet meer nodig is, dan kun je de standaard |move|-functie gebruiken om de lvalue om te zetten in een rvalue reference.
 Hierdoor wordt dan de move constructor of de move assignment operator aangeroepen.   
@@ -9114,9 +9029,9 @@ Pas wel goed op. Na deze instructie kun je |a| niet meer uitlezen!\footnote{%
 Een meer realistische toepassing van de standaard functie |move| is als volgt.
 Stel dat je regelmatig twee objecten van de hierboven gedefinieerde class |Dozijn| moet verwisselen.
 Je schrijft vervolgens een functie genaamd |swap| die twee als argumenten meegegeven dozijnen als volgt verwisselt:
-\cpplstinputfragment[linerange={77-81}]{swap_move.cpp}
+\cpplstinputfragment[linerange={91-96}]{swap_move.cpp}
 Deze functie roep je vervolgens als volgt aan:
-\cpplstinputfragment[linerange={98-98}]{swap_move.cpp}
+\cpplstinputfragment[linerange={114-114}]{swap_move.cpp}
 
 Het uitvoeren van deze regel blijkt echter behoorlijk wat tijd in beslag te nemen. 
 In de eerste regel wordt de copy constructor van |Dozijn| aangeroepen om de lokale variabele |hulp| aan te maken.
@@ -9133,9 +9048,9 @@ Je kunt dit eenvoudig voor elkaar krijgen door gebruik te maken van de move cons
 De waarde van |d1| hoeft namelijk niet meer uitgelezen te worden nadat |hulp| is aangemaakt.
 De waarde van |d2| hoeft niet meer uitgelezen te worden nadat deze is toegekend aan |d1| en hetzelfde geldt voor de waarde van |hulp| nadat die is toegekend aan |d2|.
 Je kunt de |swap_move| dus als volgt definiëren:
-\cpplstinputfragment[linerange={83-87}]{swap_move.cpp}
+\cpplstinputfragment[linerange={98-103}]{swap_move.cpp}
 Deze functie roep je vervolgens als volgt aan:
-\cpplstinputfragment[linerange={103-103}]{swap_move.cpp}
+\cpplstinputfragment[linerange={119-119}]{swap_move.cpp}
 
 De code is nu sneller\footnote{%
 	Op een CC3220S Launchpad gecompileerd met optimization off duurt de \code{swap} 12306 clockcycles en de \code{swap_move} en \code{std::swap} duren elk 10965 clockcycles.
@@ -9146,7 +9061,7 @@ Ook wordt de destructor |~Dozijn| één maal aangeroepen om de lokale variabele 
 Er hoeft echter geen geheugen vrijgegeven te worden omdat de pointer |data| van |hulp| op dat moment gelijk is aan de |nullptr|.
 
 In plaats van zelf een swap functie te definiëren, hadden we natuurlijk ook de standaard template functie |swap| aan kunnen roepen:
-\cpplstinputfragment[linerange={108-108}]{swap_move.cpp}
+\cpplstinputfragment[linerange={125-125}]{swap_move.cpp}
 
 Het zal je waarschijnlijk niet verbazen dat deze standaard template functie ook gebruikt maakt van de move constructor en de move assignment operator.
 Dat kan natuurlijk alleen maar als deze gedefinieerd zijn voor de betreffende class, in dit geval |Dozijn|.

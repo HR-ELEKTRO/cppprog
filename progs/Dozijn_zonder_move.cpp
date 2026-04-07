@@ -1,4 +1,4 @@
-// Voorbeeld van het gebruik van een rvalue reference
+// Deze class kan uitgebreid worden met een move construtor en een move assignment operator, zie Dozijn_move.cpp.
 import std;
 #include <cassert>
 using namespace std;
@@ -7,9 +7,7 @@ class Dozijn {
 public:
     Dozijn();
     Dozijn(const Dozijn& r);
-    Dozijn(Dozijn&& r); // move constructor
     Dozijn& operator=(const Dozijn& r);
-    Dozijn& operator=(Dozijn&& r); // move assignment
     ~Dozijn();
     int& operator[](int index);
     const int& operator[](int index) const;
@@ -32,20 +30,9 @@ Dozijn::Dozijn(const Dozijn& r): data{new int[12]} {
     ranges::copy(r, begin());
 }
 
-Dozijn::Dozijn(Dozijn&& r): data(r.data) {
-    println("Move constructor aangeroepen");
-    r.data = nullptr;
-}
-
 Dozijn& Dozijn::operator=(const Dozijn& r) {
     println("Copy assignment operator aangeroepen");
     ranges::copy(r, begin());
-    return *this;
-}
-
-Dozijn& Dozijn::operator=(Dozijn&& r) {
-    println("Move assignment operator aangeroepen");
-    swap(data, r.data);
     return *this;
 }
 
@@ -88,42 +75,24 @@ const int* Dozijn::cend() const {
     return data + 12;
 }
 
-void swap(Dozijn& d1, Dozijn& d2) {
-    println("swap aangeroepen:");
-    Dozijn hulp {d1};
-    d1 = d2;
-    d2 = hulp;
-}
-
-void swap_move(Dozijn& d1, Dozijn& d2) {
-    println("swap_move aangeroepen:");
-    Dozijn hulp {move(d1)};
-    d1 = move(d2);
-    d2 = move(hulp);
+Dozijn operator+(const Dozijn& links, const Dozijn& rechts) {
+    Dozijn res;
+    ranges::transform(links, rechts, res.begin(), [](int l, int r) { return l + r; });
+    return res;
 }
 
 int main() {
-    Dozijn a, b;
-    for (int j {0}; j < 12; ++j) {
-        a[j] = j + j; // vul a met dubbelen
-        b[j] = j * j; // vul b met kwadraten
-    }
+    Dozijn a;
+    // vul a met kwadraten
+    int n {0};
+    ranges::generate(a, [&n] () { auto r {n * n}; ++n; return r; });
     println("a = {}", a);
+    Dozijn b {a};
     println("b = {}", b);
 
-    swap(a, b);
+    Dozijn c {a + b};
+    println("c = {}", c);
 
+    a = b + c;
     println("a = {}", a);
-    println("b = {}", b);
-
-    swap_move(a, b);
-
-    println("a = {}", a);
-    println("b = {}", b);
-
-    // println("std::swap aangeroepen:");
-    std::swap(a, b);
-
-    println("a = {}", a);
-    println("b = {}", b);
 }
