@@ -1,30 +1,28 @@
-#include <iostream>
-#include <vector>
+import std;
 using namespace std;
 
 class Breuk {
 public:
     Breuk(int b, int o): boven{b}, onder{o} {
-        cout << "Er is een breuk met de waarde " << boven << '/' << onder << " aangemaakt.\n";
+        println("Er is een breuk met de waarde {}/{} aangemaakt.", boven, onder);
     }
     Breuk(const Breuk& b): boven{b.boven}, onder{b.onder} {
-        cout << "Er is een breuk met de waarde " << boven << '/' << onder << " gekopieerd.\n";
+        println("Er is een breuk met de waarde {}/{} gekopieerd.", boven, onder);
     }
     ~Breuk() {
-    cout << "Er is een breuk met de waarde " << boven << '/' << onder << " verwijderd.\n";
+        println("Er is een breuk met de waarde {}/{} verwijderd.", boven, onder);
     }
 private:
     int boven;
     int onder;
 };
 
-
 int main() {
     vector<Breuk> v;
     v.reserve(2);
-    cout << "1/2 toevoegen met push_back:\n";
+    println("1/2 toevoegen met push_back:");
     v.push_back(Breuk {1, 2});
-    cout << "3/4 toevoegen met emplace_back:\n";
+    println("3/4 toevoegen met emplace_back:");
     v.emplace_back(3, 4);
-    cout << "Einde van het programma:\n";
+    println("Einde van het programma:");
 }

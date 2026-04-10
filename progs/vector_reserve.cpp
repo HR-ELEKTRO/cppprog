@@ -1,46 +1,57 @@
-#include <iostream>
-#include <vector>
+import std;
 using namespace std;
-
-template<typename T>
-void print_vector(const vector<T>& v) {
-    for (const auto& e: v) 
-        cout << e << ' ';
-    cout << '\n';
-}
     
 int main() {
-    vector<int> v1 {10};
-    print_vector(v1);
-    vector<int> v2 (10);
-    print_vector(v2);
+    vector v1 {10};
+    println("v1 = {}", v1);
+    println("v1.size() = {}", v1.size());
+    println("v1.capacity() = {}", v1.capacity());
     
-    cout << "v1.capacity() = " << v1.capacity() << '\n';
-    cout << "v2.capacity() = " << v2.capacity() << '\n';
-    
-    // Pointer en Iterator wijzen naar elementen van v1
-    int* p1 {&v1[0]};
-    // Voeg element aan v1 toe
+    // Pointer p1 wijst naar het eerste element van v1
+    auto* p1 {&v1[0]};
+    // Reference r1 wijst naar het eerste element van v1
+    auto& r1 {v1[0]};
+    // Iterator i1 wijst naar het eerste element van v1
     auto i1 {v1.cbegin()};
+    // Voeg element aan v1 toe
     v1.push_back(42);
-    // v2 wordt nu vergroot maar ook verplaatst
-    cout << "v1.capacity() = " << v1.capacity() << '\n';
-    if (p1 != &v1[2])
-        cout << "Oops p1 wijst niet meer naar v1[0]\n";
+    // v1 wordt nu vergroot maar ook verplaatst
+    println("v1 = {}", v1);
+    println("v1.size() = {}", v1.size());
+    println("v1.capacity() = {}", v1.capacity());
+    if (p1 != &v1[0])
+        println("Oops p1 wijst niet meer naar v1[0]");
+    if (r1 != v1[0])
+        println("Oops r1 refereert niet meer naar v1[0]");
     if (i1 != v1.cbegin())
-        cout << "Oops i1 wijst niet meer naar v1.cbegin()\n";
+        println("Oops i1 wijst niet meer naar v1.cbegin()");
     
-    // Dit kunnen we voorkomen door eerst reserve aan te roepen.
+    // Dit kunnen we voorkomen door eerst reserve aan te roepen.    
+    vector v2 {10};
+    println("v2 = {}", v2);
+    println("v2.size() = {}", v2.size());
+    println("v2.capacity() = {}", v2.capacity());
     v2.reserve(32); // reserveer minstens 32 elementen
-    cout << "v2.capacity() = " << v2.capacity() << '\n';
-    
-    int* p2 {&v2[0]};
-    // Voeg element aan v2 toe
+    println("v2.capacity() = {}", v2.capacity());
+
+    // Pointer p2 wijst naar het eerste element van v2
+    auto* p2 {&v2[0]};
+    // Reference r2 wijst naar het eerste element van v2
+    auto& r2 {v2[0]};
+    // Iterator i2 wijst naar het eerste element van v2
     auto i2 {v2.cbegin()};
+    // Voeg element aan v1 toe
     v2.push_back(42);
-    cout << "v2.capacity() = " << v2.capacity() << '\n';
+    // v2 wordt nu vergroot maar niet verplaatst
+    println("v2 = {}", v2);
+    println("v2.size() = {}", v2.size());
+    println("v2.capacity() = {}", v2.capacity());
     if (p2 == &v2[0])
-        cout << "p2 wijst nog steeds naar v2[0]\n";
+        println("p2 wijst nog steeds naar v2[0]");
+    if (p2 == &v2[0])
+        println("p2 wijst nog steeds naar v2[0]");
+    if (r2 == v2[0])
+        println("r2 refereert nog steeds naar v2[0]");
     if (i2 == v2.cbegin())
-        cout << "i2 wijst nog steeds naar v2.cbegin()\n";
+        println("i2 wijst nog steeds naar v2.cbegin()");
 }

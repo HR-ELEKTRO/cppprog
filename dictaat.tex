@@ -9120,7 +9120,7 @@ Kan de laatste regel efficiënter gecodeerd worden als:
 \begin{cpplstfragment}
 	v.emplace_back(1, 2);
 \end{cpplstfragment}
-Zie \proglink{vector_emplace}.	
+Zie \proglink{vector_emplace.cpp}.	
 
 \section{Unordered container met UDT's}
 \label{sec:unorderedcontainermetUDT}
@@ -9139,55 +9139,51 @@ Dit functie-object moet dan de hash waarde voor het betreffende object producere
 Zie \proglink{unordered_set1.cpp}.
 Het type dat het functie-object moet aanmaken is |Breuk_hash|:
 
-\cpplstinputfragment[linerange={9-11}]{unordered_set1.cpp}
+\cpplstinputfragment[linerange={7-9}]{unordered_set1.cpp}
 
 De overloaded |operator()| moet de als argument meegegeven |Breuk| omzetten in een hash-waarde van het type |size_t|.
 Het keyword |noexcept| geeft aan dat deze functie geen exception kan gooien.
 Daardoor kan de compiler code verder optimaliseren.
 De implementatie van deze overloaded |operator()| is als volgt:
 
-\cpplstinputfragment[linerange={54-56}]{unordered_set1.cpp}
+\cpplstinputfragment[linerange={55-57}]{unordered_set1.cpp}
 
 De hashwaarde wordt bepaald door de hashwaarde van de twee datamembers van |Breuk|, |boven| en |onder|, met elkaar te exoren (met de operator |^|).
 Omdat de datamembers van |Breuk||private| zijn, moet deze |operator()| als |friend| in |Breuk| gedeclareerd worden:
 
-\cpplstinputfragment[linerange={22-22}]{unordered_set1.cpp}
+\cpplstinputfragment[linerange={20-20}]{unordered_set1.cpp}
 
 Het type |Breuk_hash| moet nu als tweede argument aan de template |unordered_set| worden meegegeven:
 
-\cpplstinputfragment[linerange={59-59}]{unordered_set1.cpp}
+\cpplstinputfragment[linerange={60-60}]{unordered_set1.cpp}
 
 Als alternatief kun je ook een template specialisation voor hash<T> definiëren in namespace |std|.
 
 Zie \proglink{unordered_set2.cpp}:
 
-\cpplstinputfragment[linerange={9-14}]{unordered_set2.cpp}
+\cpplstinputfragment[linerange={7-12}]{unordered_set2.cpp}
 
 De overloaded |operator()| moet de als argument meegegeven |Breuk| omzetten in een hash-waarde van het type |size_t|.
 De implementatie van deze overloaded |operator()| is als volgt:
 
-\cpplstinputfragment[linerange={57-62}]{unordered_set2.cpp}
+\cpplstinputfragment[linerange={58-63}]{unordered_set2.cpp}
 
 De hashwaarde wordt bepaald door de hashwaarde van de twee datamembers van |Breuk|, |boven| en |onder|, met elkaar te exoren (met de operator |^|).
 Omdat de datamembers van |Breuk| |private| zijn, moet deze |operator()| als |friend| in |Breuk| gedeclareerd worden:
 
-\cpplstinputfragment[linerange={25-25}]{unordered_set2.cpp}
+\cpplstinputfragment[linerange={23-23}]{unordered_set2.cpp}
 
 Er hoeft nu geen tweede argument aan de template |unordered_set| te worden meegegeven:
 
-\cpplstinputfragment[linerange={65-65}]{unordered_set2.cpp}
+\cpplstinputfragment[linerange={66-66}]{unordered_set2.cpp}
 
 De volgende code:
 
-\cpplstinputfragment[linerange={60-68}]{unordered_set1.cpp}
+\cpplstinputfragment[linerange={61-67}]{unordered_set1.cpp}
 
 Levert nu, in beide gevallen, de volgende uitvoer op:
 \begin{coutput}
-1/4
-2/3
-1/2
-3/4
-1/3
+breuken = {3/4, 1/4, 2/3, 1/3, 1/2}
 \end{coutput}
 
 Omdat breuken genormaliseerd worden, wordt de |Breuk {2,4}| niet in de set opgenomen omdat de |Breuk {1,2}| er al inzit.
@@ -9195,7 +9191,7 @@ Omdat breuken genormaliseerd worden, wordt de |Breuk {2,4}| niet in de set opgen
 \section{Voorbeeldprogramma dat generiek en objectgeoriënteerd programmeren combineert}
 De standaard functie |mem_fn| vormt de koppeling tussen generiek programmeren en objectgeoriënteerd programmeren omdat hiermee een memberfunctie kan worden omgezet in een functie\hyp{}object, zie \proglink{mem\_fn.cpp}.
 
-\cpplstinputfragment[linerange={1-33,54-54}]{mem_fn.cpp}
+\cpplstinputfragment[linerange={1-22,29-31,48-48}]{mem_fn.cpp}
 
 De uitvoer van dit programma:
 \begin{coutput}
@@ -9203,10 +9199,10 @@ Kef kef Woef woef Kef kef
 \end{coutput}
 
 Je kunt alle honden in de kennel ook laten blaffen met behulp van lambda-functie:
-\cpplstinputfragment[linerange={36-39}]{mem_fn.cpp}
+\cpplstinputfragment[linerange={34-37}]{mem_fn.cpp}
 
 Je kunt alle honden in de kennel ook laten blaffen met behulp van een \USE{range\hyp{}based for}:
-\cpplstinputfragment[linerange={46-49}]{mem_fn.cpp}
+\cpplstinputfragment[linerange={44-47}]{mem_fn.cpp}
 
 Het gebruik van een \USE{range\hyp{}based for} is eenvoudiger dan het gebruik van een |for_each|.
 De \USE{range\hyp{}based for} kan echter alleen gebruikt worden als de hele container moet worden doorlopen.
@@ -9216,7 +9212,6 @@ Met een |for_each| kan ook een deel van een container doorlopen worden.
 \label{sec:stdfunctieobjecten}
 Je hebt gezien dat je een bepaalde voorwaarde of een bepaalde bewerking kunt doorgeven aan een algoritme door middel van een functie\hyp{}pointer, een zelfgemaakt functie\hyp{}object of een lambda\hyp{}functie, zie \cref{sec:findif} en \cref{sec:transform}.
 Je kunt echter ook gebruik maken van een zogenoemd standaard functie\hyp{}object.
-De classes waarmee deze objecten gemaakt kunnen worden zijn gedefiniëerd in de headerfile |functional|.
 Voor alle rekenkundige en logische operaties zijn template classes beschikbaar.
 Zo wordt, bijvoorbeeld, door een object van de class |plus<T>| een |operator+| uitgevoerd op twee objecten van het type |T| en wordt door een object van de class |greater<T>| een |operator>| uitgevoerd op twee objecten van het type |T|.
 Zie voor een compleet overzicht \url{http://en.cppreference.com/w/cpp/utility/functional}.
@@ -9225,14 +9220,14 @@ Het gebruik van standaard functie\hyp{}objecten is vooral handig als de operatie
 
 Zo kun je bijvoorbeeld de |vector| |w| bij de |vector| |v| optellen door middel van een |transfer| algoritme met een standaard functie\hyp{}object |plus|, zie \proglink{transfer\_plus}.
 
-\cpplstinputfragment[linerange={1-22}]{transform_plus.cpp}
+\cpplstinputfragment[linerange={1-14}]{transform_plus.cpp}
 
 Als je dit vergelijkt met het gebruik van een functie of lambda\hyp{}functie zoals in \cref{sec:transform}, dan zie je dat het gebruik van een standaard functie\hyp{}object in dit geval eenvoudiger is.
 
 De code die in \cref{sec:sort} gegeven is om een |vector| met integers van hoog naar laag te sorteren (zie \proglink{sort\_lambda.cpp}):
-\cpplstinputfragment[linerange={15-17}]{sort_lambda.cpp}
+\cpplstinputfragment[linerange={11-13}]{sort_lambda.cpp}
 kan sterk vereenvoudigd worden door het gebruik van een standaard functie\hyp{}object (zie \proglink{sort\_greater.cpp}):
-\cpplstinputfragment[linerange={16-16}]{sort_greater.cpp}
+\cpplstinputfragment[linerange={11-11}]{sort_greater.cpp}
 
 Het gebruik van een standaard functie\hyp{}object om een voorwaarde door te geven aan één van de |_if| algoritmen is minder eenvoudig.
 In \cref{sec:findif} heb je gezien dat het eerste getal $\ge{}0$ in een |list| met integers opgezocht kan worden door deze voorwaarde aan |find_if| door te geven met behulp van een functie of een lambda\hyp{}functie.
@@ -9252,16 +9247,16 @@ De |_1| is een zogenoemde \USE{placeholder}\footnote{%
 De |0| geeft aan dat de constante waarde $0$ ingevuld moet worden als tweede argument van |greater_equal<int>()|.
 Het door |bind| teruggegeven functie\hyp{}object kan  vervolgens aan het |find_if| algoritme worden doorgegeven om de eerste integer $\ge{}0$ in de |vector| |rij| te vinden, zie \proglink{find\_if\_bind.cpp}:
 
-\cpplstinputfragment[linerange={1-14}]{find_if_bind.cpp}
+\cpplstinputfragment[linerange={1-11}]{find_if_bind.cpp}
 
 Persoonlijk vind ik het gebruik van een lambda\hyp{}functie in dit geval eenvoudiger, zie \cref{sec:findif}.
 
 In \cref{sec:remove} heb je gezien hoe de even getallen uit een |vector| met integers verwijderd kunnen worden met behulp van een lambda\hyp{}functie, zie \proglink{remove.cpp}:
-\cpplstinputfragment[linerange={31-33}]{remove.cpp}
+\cpplstinputfragment[linerange={23-25}]{remove.cpp}
 
 Dit zou ook met behulp van standaard functie\hyp{}objecten kunnen, zie \proglink{remove\_bind\\-.cpp}:
 
-\cpplstinputfragment[linerange={18-18}]{remove_bind.cpp}
+\cpplstinputfragment[linerange={12-12}]{remove_bind.cpp}
 
 Ook in dit geval vind ik het gebruik van een lambda\hyp{}functie eenvoudiger.
 

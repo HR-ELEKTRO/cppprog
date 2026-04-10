@@ -1,7 +1,4 @@
-#include <iostream>
-#include <random>
-#include <vector>
-#include <chrono>
+import std;
 #include <cassert>
 using namespace std;
 
@@ -18,20 +15,23 @@ private:
     default_random_engine eng;
 };
 
-ostream& operator<<(ostream& out, Dobbelsteen& d) {
-    return out<<d.rol();
-}
+template<>
+struct std::formatter<Dobbelsteen>: public formatter<int> {
+    auto format(Dobbelsteen& d, auto& context) const {
+        return formatter<int>::format(d.rol(), context);
+    }
+};
 
 int main() {
     Dobbelsteen d;
     for (int i {0}; i < 20; ++i)
-        cout << d << ", ";
-    cout << d << '\n';
+        print("{}, ", d);
+    println("{}", d);
     
     // bepaal verdeling
     vector<int> verdeling (6);
     for (int i {0}; i < 10'000'000; ++i)
         ++verdeling[d.rol() - 1];
     for (int i {0}; i < 6; ++i) 
-        cout << i+1 << ": " << verdeling[i] << '\n';
+        println("{}: {}", i + 1, verdeling[i]);
 }

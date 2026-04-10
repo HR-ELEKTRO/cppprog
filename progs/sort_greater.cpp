@@ -1,9 +1,4 @@
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <iterator>
-#include <algorithm>
-#include <functional>
+import std;
 using namespace std;
 
 int main() {
@@ -13,10 +8,10 @@ int main() {
         return 1; // kan fin niet openen
     istream_iterator<int> iin {fin}, einde;
     copy(iin, einde, back_inserter(rij));
-    sort(rij.begin(), rij.end(), greater<int>());
+    ranges::sort(rij, greater());
     ofstream fout {"getallen_gesorteerd.txt"};
     if (!fout)
         return 2; // kan fout niet openen
     ostream_iterator<int> iout {fout, " "};
-    copy(rij.begin(), rij.end(), iout);
+    ranges::copy(rij, iout);
 }

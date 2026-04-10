@@ -1,7 +1,5 @@
-#include <iostream>
+import std;
 #include <cassert>
-#include <numeric>
-#include <unordered_set>
 using namespace std;
 
 class Breuk;
@@ -25,8 +23,6 @@ friend bool operator==(const Breuk& links, const Breuk& rechts);
 friend size_t hash<Breuk>::operator()(Breuk const& h) const noexcept;
 };
 
-bool operator!=(const Breuk& links, const Breuk& rechts);
-
 Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     normaliseer();
 }
@@ -46,12 +42,17 @@ ostream& operator<<(ostream& out, const Breuk& b) {
     return out << b.boven << '/' << b.onder;
 }
 
+template<>
+struct std::formatter<Breuk>: public formatter<string> {
+    auto format(const Breuk& b, auto& context) const {
+        ostringstream ss;
+        ss << b;
+        return formatter<string>::format(ss.str(), context);
+    }
+};
+
 bool operator==(const Breuk& links, const Breuk& rechts) {
     return links.boven == rechts.boven && links.onder == rechts.onder;
-}
-
-bool operator!=(const Breuk& links, const Breuk& rechts) {
-    return !(links == rechts);
 }
 
 namespace std
@@ -69,7 +70,5 @@ int main() {
     breuken.insert(Breuk {1,4});
     breuken.insert(Breuk {2,4});
     breuken.insert(Breuk {3,4});
-    for (auto b: breuken) {
-        cout << b << '\n';
-    }
+    println("breuken = {::s}", breuken);
 }

@@ -1,8 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <iterator>
-#include <algorithm>
-#include <functional>
+import std;
 using namespace std;
 using namespace std::placeholders;
 
@@ -11,10 +7,8 @@ int main() {
     for (int i {0}; i < 10; ++i) {
         w.push_back(i * i);
     }
-    ostream_iterator<int> out {cout, " "};
-    copy(w.cbegin(), w.cend(), out); cout << '\n';
-        
+    println("Na initialisatie: {}", w);
 //  verwijder alle even elementen:
-    w.erase(remove_if(w.begin(), w.end(), bind(equal_to<int>(), bind(modulus<int>(), _1, 2), 0)), w.end());
-    copy(w.cbegin(), w.cend(), out); cout << '\n';
+    w.erase(ranges::remove_if(w, bind(equal_to(), bind(modulus(), _1, 2), 0)).begin(), w.end());
+    println("Na remove: {}", w);
 }
