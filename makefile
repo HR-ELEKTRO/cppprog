@@ -2,7 +2,7 @@
 TARGET := Dictaat_OPinCpp
 SOURCE := dictaat
 DEPENDENCIES := style_nl_NL.tex styleCode.tex
-PUBLIC := ../cppprog_wiki/
+PUBLIC := ../cppprog.wiki/
 
 # Define font here:
 #FONT := "\timestrue"
