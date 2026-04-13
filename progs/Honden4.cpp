@@ -1,12 +1,11 @@
-#include <iostream>
-#include <string>
+import std;
 using namespace std;
 
 class Hond {
 public:
-    explicit Hond(const string& n);
+    explicit Hond(string_view n);
     virtual ~Hond();
-    void set_naam(const string& n);
+    void set_naam(string_view n);
     virtual void blaf() const;
 private:
     string naam;
@@ -14,50 +13,42 @@ private:
 
 class Teckel: public Hond {
 public:
-    explicit Teckel(const string& n);
+    explicit Teckel(string_view n);
     ~Teckel() override;
     void blaft() const override; // OOPS foutje
 //  foutje wordt door de compiler gemeld:
-//  Error: 'void Teckel::blaft() const' marked override, but does not override
+//  error: 'void Teckel::blaft() const' marked 'override', but does not override
 };
 
-Hond::Hond(const string& n): naam{n} {
-    cout << "Hoera, " << naam << " is geboren!\n";
+Hond::Hond(string_view n): naam {n} {
+    println("Hoera, {} is geboren!", naam);
 }
 
 Hond::~Hond() {
-    cout << "Helaas, " << naam << " is gestorven.\n";
+    println("Helaas, {} is gestorven.", naam);
 }
 
-void Hond::set_naam(const string& n) {
+void Hond::set_naam(string_view n) {
     naam = n;
 }
 
 void Hond::blaf() const {
-    cout << "Blaf blaf\n";
+    println("Blaf blaf");
 }
 
-Teckel::Teckel(const string& n): Hond{n} {
-    cout << "Er is een Teckel geboren!\n";
+Teckel::Teckel(string_view n): Hond {n} {
+    println("Er is een Teckel geboren!");
 }
 
 Teckel::~Teckel() {
-    cout << "Er is een Teckel gestorven.\n";
+    println("Er is een Teckel gestorven.");
 }
 
 void Teckel::blaft() const {
-    cout << "Kef kef\n";
+    println("Kef kef");
 }
 
 int main() {
-    Teckel h1{"Biefie"};
+    Teckel h1 {"Biefie"};
     h1.blaf();
 }
-
-/* Uitvoer: 
-Hoera, Biefie is geboren!
-Er is een Teckel geboren!
-Blaf blaf
-Er is een Teckel gestorven.
-Helaas, Biefie is gestorven.
-*/

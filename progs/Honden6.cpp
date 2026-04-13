@@ -1,12 +1,11 @@
-#include <iostream>
-#include <string>
+import std;
 using namespace std;
 
 class Hond {
 public:
-    explicit Hond(const string& n);
+    explicit Hond(string_view n);
     virtual ~Hond();
-    void set_naam(const string& n);
+    void set_naam(string_view n);
     virtual void blaf() const =0;
 private:
     string naam;
@@ -14,7 +13,7 @@ private:
 
 class Teckel: public Hond {
 public:
-    explicit Teckel(const string& n);
+    explicit Teckel(string_view n);
     ~Teckel() override;
     void blaf() const override;
 };
@@ -28,27 +27,27 @@ private:
     int aantal_borrels;
 };
 
-Whisky_vat::Whisky_vat(int b): aantal_borrels{b} {
-    cout << "Vat met " << aantal_borrels << " borrels aangemaakt.\n";
+Whisky_vat::Whisky_vat(int b): aantal_borrels {b} {
+    println("Vat met {} borrels aangemaakt.", aantal_borrels);
 }
 
 Whisky_vat::~Whisky_vat() {
-    cout << "Vat met " << aantal_borrels << " borrels opgeruimd.\n";
+    println("Vat met {} borrels opgeruimd.", aantal_borrels);
 }
 
 bool Whisky_vat::geef_borrel() {
     if (aantal_borrels > 0) {
         --aantal_borrels;
-        cout << "Ik kom je helpen, drink deze borrel maar op!\n";
+        println("Ik kom je helpen, drink deze borrel maar op!");
         return true;
     }
-    cout << "Ik kan je niet helpen, mijn Whisky is op.\n";
+    println("Ik kan je niet helpen, mijn Whisky is op.");
     return false;
 }
 
 class Sint_bernard: public Hond {
 public:
-    Sint_bernard(const string& n, int b);
+    Sint_bernard(string_view n, int b);
     ~Sint_bernard() override;
     void blaf() const override;
     void help();
@@ -56,40 +55,40 @@ private:
     Whisky_vat vat;
 };
 
-Hond::Hond(const string& n): naam{n} {
-    cout << "Hoera, " << naam << " is geboren!\n";
+Hond::Hond(string_view n): naam {n} {
+    println("Hoera, {} is geboren!", naam);
 }
 
 Hond::~Hond() {
-    cout << "Helaas, " << naam << " is gestorven.\n";
+    println("Helaas, {} is gestorven.", naam);
 }
 
-void Hond::set_naam(const string& n) {
+void Hond::set_naam(string_view n) {
     naam = n;
 }
 
-Teckel::Teckel(const string& n): Hond{n} {
-    cout << "Er is een Teckel geboren!\n";
+Teckel::Teckel(string_view n): Hond {n} {
+    println("Er is een Teckel geboren!");
 }
 
 Teckel::~Teckel() {
-    cout << "Er is een Teckel gestorven.\n";
+    println("Er is een Teckel gestorven.");
 }
 
 void Teckel::blaf() const {
-    cout << "Kef kef\n";
+    println("Kef kef");
 }
 
-Sint_bernard::Sint_bernard(const string& n, int b): Hond{n}, vat{b} {
-    cout << "Er is een Sint_bernard geboren!\n";
+Sint_bernard::Sint_bernard(string_view n, int b): Hond {n}, vat {b} {
+    println("Er is een Sint_bernard geboren!");
 }
 
 Sint_bernard::~Sint_bernard() {
-    cout << "Er is een Sint_bernard gestorven.\n";
+    println("Er is een Sint_bernard gestorven.");
 }
 
 void Sint_bernard::blaf() const {
-    cout << "WOEF, WOEF\n";
+    println("WOEF, WOEF");
 }
 
 void Sint_bernard::help() {
@@ -98,14 +97,14 @@ void Sint_bernard::help() {
 }
 
 int main() {
-    Sint_bernard h1{"Boris", 10};
+    Sint_bernard h1 {"Boris", 10};
     h1.blaf();
     h1.help();
-//  Hond h2{h1};
-//  Error: cannot declare variable ‘h2’ to be of abstract type ‘Hond’
-//  Note: because the following virtual functions are pure within ‘Hond’:
-//  Note: ‘virtual void Hond::blaf() const’
-    Hond& h3{h1};
+//  Hond h2 {h1};
+//  error: cannot declare variable 'h2' to be of abstract type 'Hond'
+//  note: because the following virtual functions are pure within 'Hond':
+//  note: 'virtual void Hond::blaf() const'
+    Hond& h3 {h1};
     h3.blaf();
 }
 

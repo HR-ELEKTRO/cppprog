@@ -3,7 +3,7 @@ using namespace std;
 
 class Hond {
 public:
-    Hond(const string& n);
+    Hond(string_view n);
     ~Hond();
     void blaf() const;
     static int aantal();
@@ -14,7 +14,7 @@ private:
 
 int Hond::aantal_honden {0};
 
-Hond::Hond(const string& n): naam{n} {
+Hond::Hond(string_view n): naam {n} {
     ++aantal_honden;
 }
 Hond::~Hond() {
@@ -24,7 +24,7 @@ int Hond::aantal() {
     return aantal_honden;
 }
 void Hond::blaf() const {
-    cout << naam << " zegt: WOEF\n";
+    println("{} zegt: WOEF", naam);
 }
 
 int main() {
@@ -39,3 +39,12 @@ int main() {
     }
     println("Er zijn nu {} honden.", Hond::aantal());
 }
+
+/* Uitvoer:
+Er zijn nu 0 honden.
+Boris zegt: WOEF
+Er zijn nu 1 honden.
+Fikkie zegt: WOEF
+Er zijn nu 2 honden.
+Er zijn nu 0 honden.
+*/
