@@ -16,19 +16,33 @@
 % 	FONT = \timestrue voor times met helvet fonts
 %   (default) standaard latex fonts (Computer Modern)
 
+\newif\ifWIP
+\WIPtrue
+
 \newcommand{\myClass}{book}
 \newcommand{\modulecode}{\Cpp}
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
+\ifWIP
+\newcommand{\huidigeversie}{1.91}
+\else
 \newcommand{\huidigeversie}{2.0}
+\fi
 % start a new line by using \\ 
 \newcommand{\auteurs}{
+\ifWIP
+	Work In Progress\\
+	\vspace{1cm}
+\fi
 	J.Z.M. Broeders
 }
 
 \input{style_nl_NL.tex}
 \newcommand{\mail}{\href{mailto:J.Z.M.Broeders@hhs.nl}{J.Z.M.Broeders@hhs.nl}}
 \newcommand{\opleiding}{Elektrotechniek}
+
+\newtoggle{WIP}
+\ifWIP \toggletrue{WIP} \else \togglefalse{WIP} \fi
 
 % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/l3packages/xfrac.pdf
 % met xfrac kun je breuken in de tekst opnemen zoals 3/4 met het commando \sfrac{3}{4}
@@ -44,6 +58,8 @@
 \newcommand{\progs}{progs}
 \newcommand{\progsurl}{https://bitbucket.org/HR_ELEKTRO/cppprog/src/master/progs}
 \input{styleCode.tex}
+
+\newcommand{\boldred}[1]{\textbf{\textcolor{hrred}{#1}}}
 
 % Question Answer paar voor FAQ
 \newcommand{\qa}[2]{%
@@ -409,8 +425,9 @@ Je kunt de gehele standaard \Cpp{} library als module importeren met de volgende
 \needspace{3\baselineskip}
 Als je gebruik maakt van de GCC compiler, dan moeten modules geprecompiled worden met het commando:
 \begin{lstfragment}
-	g++ -std=c++23 -fmodules -fmodule-only -pedantic-errors -Wall -Wextra -g3 -O0 -c -fsearch-include-path bits/std.cc
+	g++ -std=c++23 -fmodules -fmodule-only -Wall -Wextra -Wpedantic -g3 -O0 -c -fsearch-include-path bits/std.cc
 \end{lstfragment}
+%TODO: uitleggen wat deze opties betekenen
 Hierna kun je de module importeren in je programma met |import std;|.
 \needspace{3\baselineskip}
 Bijvoorbeeld in een \dquote{Hello World} programma (\proglink{hello_world.cpp}):
@@ -418,7 +435,7 @@ Bijvoorbeeld in een \dquote{Hello World} programma (\proglink{hello_world.cpp}):
 \needspace{3\baselineskip}
 Dit programma kan dan gecompileerd worden met het commando:
 \begin{lstfragment}
-	g++ -std=c++23 -fmodules -pedantic-errors -Wall -Wextra -g3 -O0 hello_world.cpp -o hello_world
+	g++ -std=c++23 -fmodules -Wall -Wextra -Wpedantic -g3 -O0 hello_world.cpp -o hello_world
 \end{lstfragment}
 \needspace{3\baselineskip}
 En vervolgens uitgevoerd worden met het commando\footnote{%
@@ -436,7 +453,7 @@ De voordelen van modules ten opzichte van include files zijn onder andere:
 	\item Als je een header file include, dan worden alle includes in die header file ook geinclude. Bij modules is dat niet het geval, omdat modules alleen de symbolen exporteren die expliciet worden geëxporteerd.
 \end{itemize}
 Modules zijn dus beter voor de onderhoudbaarheid van de code, omdat ze minder afhankelijkheden hebben ze verminderen bovendien de compilatie-tijd.
-Je kunt ook zelf modules definiëren, zie \cref{sec:zelf-gedefinieerde modules}.
+Je kunt ook zelf modules definiëren, zie \cref{sec:zelfgedefinieerdemodule}.
 
 Om het mogelijk te maken dat de standaard \USE{library} met andere (oude en nieuwe) \USE{libraries} in één programma kan worden gebruikt zijn in \Cpp{} \USE{namespaces} \label{namespace} opgenomen\footnote{%
 	Namespaces worden verder besproken in \cref{sec:namespaces}. 
@@ -591,6 +608,8 @@ Je kunt ook printen naar een bestand in plaats van naar het beeldscherm (\progli
 \cpplstinputfragment{hello_world_file.cpp}
 Dit programma maakt een bestand genaamd |output.txt| aan en schrijft de string |Hello, World!| in dit bestand.
 Als het bestand al bestaat, dan wordt de inhoud van dit bestand overschreven.
+
+%TODO: Verwijzen naar meer info over file IO?
 
 \section[Input en output met \texttt{>>} en \texttt{<<}]{Input en output met \texorpdfstring{\cppcode{>>}}{>>} en \texorpdfstring{\cppcode{<<}}{<<}}
 %\markright{}
@@ -936,6 +955,8 @@ De |string| \USE{library} is zeer uitgebreid.
 In dit dictaat gaan we daar niet verder op in.
 Zie eventueel voor verdere informatie \cite[hoofdstuk 5: \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus05.html}{String}]{Brokken2019} of \url{https://en.cppreference.com/w/cpp/string}.
 
+%TODO: Verwijs naar opdracht. Verwijs naar string_view in hoofdstuk 15.
+
 \section[Het type \texttt{array} en \texttt{vector}]{Het type \texorpdfstring{\cppcode{array}}{array} en \texorpdfstring{\cppcode{vector}}{vector}}
 %\markright
 \label{sec:introarryvector}
@@ -973,19 +994,19 @@ De compiler bepaalt nu zelf aan de hand van het type van het gebruikte argument 
 \section{Default argumenten}
 \label{sec:defaultarguments}
 Het is in \Cpp{} mogelijk om voor de laatste parameters van een functie default argumenten te definiëren.
-Stel dat we een functie |print| geschreven hebben waarmee we een integer in elk gewenst talstelsel kunnen afdrukken.
+Stel dat we een functie |drukaf| geschreven hebben waarmee we een integer in elk gewenst talstelsel kunnen afdrukken.
 Het prototype van deze functie is als volgt:
 \begin{cpplstfragment}
-void print(int i, int talstelsel);
+void drukaf(int i, int talstelsel);
 \end{cpplstfragment}
 
 Als we nu bijvoorbeeld de waarde 5 in het binaire (tweetallig) stelsel willen afdrukken, dan kan dit als volgt:
 \begin{cpplstfragment}
-    print(5, 2);  // uitvoer: 101
+    drukaf(5, 2);  // uitvoer: 101
 \end{cpplstfragment}
 Als we de waarde 5 in het decimale (tientallig) stelsel willen afdrukken, dan kan dit als volgt:
 \begin{cpplstfragment}
-    print(5, 10); // uitvoer: 5
+    drukaf(5, 10); // uitvoer: 5
 \end{cpplstfragment}
 In dit geval is het handig om bij de laatste parameter een default argument op te geven (in het prototype) zodat we niet steeds het talstelsel 10 als tweede argument hoeven op te geven als we een variabele in het decimale stelsel willen afdrukken.
 \cpplstinputfragment[linerange={def_par-def_par}]{fragments.cpp}
@@ -993,7 +1014,7 @@ Als de functie nu met maar één argument wordt aangeroepen, wordt als tweede ar
 Deze functie kan als volgt worden gebruikt, zie \proglink{default_argument.cpp}:
 \cpplstinputfragment[linerange={use_def_par-use_def_par}]{fragments.cpp}
 
-Het default argument maakt de |print| functie eenvoudiger te gebruiken omdat de gebruiker (de programmeur die deze functies aanroept) niet steeds het tweede argument hoeft mee te geven als zij/hij getallen decimaal wil afdrukken.%
+Het default argument maakt de |drukaf| functie eenvoudiger te gebruiken omdat de gebruiker (de programmeur die deze functies aanroept) niet steeds het tweede argument hoeft mee te geven als zij/hij getallen decimaal wil afdrukken.%
 \footnote{%
     Je kan echter ook zeggen dat het default argument het analyseren een programma moeilijker maakt omdat nu niet meer meteen duidelijk is welke waarde als tweede argument wordt meegegeven. 
     Om deze reden is het niet verstandig het gebruik van default argumenten te overdrijven.
@@ -1030,11 +1051,11 @@ Als we de verbeteringen die in C zijn doorgevoerd bij de definitie van \Cpp{} to
 \begin{itemize}
     \item
     Hier is gebruik gemaakt van de standaard \USE{library} van \Cpp{}, zie \cref{sec:print,sec:iostream} in plaats van de standaard C \USE{library}.
-	In de eerste regel wordt de module |std| geïmporteerd, \cref{sec:module}.
+	In de eerste regel wordt de module |std| geïmporteerd, \cref{sec:modules}.
 	Dit is nodig om gebruik te kunnen maken van functies, objecten en types die in de standaard \Cpp{} \USE{library} zijn opgenomen.
 	In dit programma maak ik gebruik van |print| en |println| (om te schrijven naar het scherm) en |cin| (om te lezen vanaf het toetsenbord).
 	\item
-	In de derde regel wordt aangegeven dat de \USE{namespace} |std| wordt gebuikt, zie \cref{sec:modules}.
+	In de derde regel wordt aangegeven dat de \USE{namespace} |std| wordt gebuikt, zie \cref{sec:namespace}.
 	Dit is nodig om de functies, types enz.\ die in de standard \Cpp{} \USE{library} zijn gedefinieerd te kunnen gebruiken zonder er steeds |std::| voor te zetten.
     \item 
     De naam van de |struct Tijdsuur| kan meteen als typenaam gebruikt worden. Een |typedef| is hier dus niet nodig, zie \cref{sec:structnotypedef}.
@@ -1091,7 +1112,7 @@ Als een programma echter groter is of als het uitbreidbaar of onderhoudbaar moet
 
 Tot slot van dit hoofdstuk bekijken we een versie van bovenstaand programma waarbij gebruik gemaakt wordt van het type |vector| uit de standaard \USE{library}, zie \proglink{C_vector.cpp}.
 Het is bedoeld om je een indruk te geven van mogelijkheden van \Cpp{}.
-Het is niet nodig om alles al helemaal te begrijpen, we komen er in \cref{sec:templates} nog uitgebreid op terug.
+Het is niet nodig om alles al helemaal te begrijpen, we komen er in \cref{sec:constreferenceparameter,std::vector} nog uitgebreid op terug.
 
 \cpplstinputfragment{C_vector.cpp}
 
@@ -1116,6 +1137,7 @@ Het is niet nodig om alles al helemaal te begrijpen, we komen er in \cref{sec:te
 	De |vector| \squote{weet} zelf hoeveel elementen er in zitten, dus dit hoeven we niet meer als tweede parameter aan deze functies mee te geven.
 	\item 
 	Omdat de |vector| zelf weet hoeveel elementen er in zitten, kunnen we nu de \USE{range-based} |for| gebruiken om elementen van de vector één voor één te behandelen.
+	Zie \cref{sec:range-basedfor}.
 \end{itemize}
 
 In dit hoofdstuk zijn de kleine verbeteringen van \Cpp{} ten opzichte van zijn voorganger C besproken die je moet weten om de rest van dit dictaat te kunnen lezen.
@@ -1271,9 +1293,8 @@ Op generieke functies en datatypes komen we nog uitgebreid terug.
 In moderne programmeertalen zoals Java, C$\sharp$, Python, PHP, Ruby, Perl, Smalltalk en ook in \Cpp{} kunnen een aantal logisch bij elkaar behorende UDT's van elkaar worden afgeleid door middel van \USE{inheritance}.
 Door nu programma's te schrijven in termen van \USE{base classes} (basisklassen) en de in deze \USE{base classes} gedefinieerde \USE{messages} in \USE{derived classes} (afgeleide klassen) te implementeren kan je deze \USE{base classes} gebruiken zonder dat je de implementatie van deze classes hoeft te kennen of te begrijpen en kun je eenvoudig van implementatie wisselen.
 Zo'n \USE{base class} wordt dan ook wel een \USE{Abstract Data Type} (ADT) genoemd omdat zo'n class geen implementatie bevat en dus niet geïnstantieerd kan worden. 
-De \USE{derived classes} die dit ADT implementeren worden ook wel  \USE{Concrete Data Types} (CDT's) genoemd.
-
-Tevens kun je code die alleen \USE{messages} aanroept van de \USE{base class} zonder opnieuw te compileren hergebruiken voor alle direct of indirect van deze \USE{base class} afgeleide classes. Dit wordt veelvormige of met een moeilijk woord polymorf (Engels: \emph{\USE{polymorph}}) genoemd.
+De \USE{derived classes} die dit ADT implementeren worden ook wel  \USE{Concrete Data Types} (CDT's) genoemd.\\
+Tevens kun je code die alleen \USE{messages} aanroept van de \USE{base class} zonder opnieuw te compileren hergebruiken voor alle direct of indirect van deze \USE{base class} afgeleide classes. Dit wordt veelvormigheid of met een moeilijk woord polymorfisme (Engels: \emph{\USE{polymorphism}}) genoemd.
 Dit laatste wordt mogelijk gemaakt door de \USE{message} pas tijdens \USE{run time} aan een bepaalde \USE{method} te verbinden en wordt late binding (Engels: \emph{\USE{late binding}}) genoemd.
 Op deze begrippen komen we later nog uitgebreid terug.
 \end{itemize}
@@ -1650,8 +1671,7 @@ Na het prototype van de \USE{constructor} volgt een |:| waarna de datavelden é�
 \cpplstinputfragment[linerange=38-39]{Breuk1.cpp}
 
 In dit geval wordt het dataveld |boven| geïnitialiseerd met de waarde |0| en wordt het dataveld |onder| geïnitialiseerd met de waarde |1|, verder is er geen code in de \USE{constructor} opgenomen.
-Door in de \USE{constructor} een output opdracht op te nemen zou je een melding op het scherm kunnen geven telkens als een |Breuk|
-aangemaakt wordt.
+Door in de \USE{constructor} een |print| opdracht op te nemen zou je een melding op het scherm kunnen geven telkens als een |Breuk| aangemaakt wordt.
 Deze \USE{constructor} wordt dus aangeroepen als je een |Breuk| aanmaakt zonder deze te initialiseren.
 Na het uitvoeren van de onderstaande code heeft de breuk |b1| de waarde \myfrac{0}{1}.
 \begin{cpplstfragment}
@@ -1755,7 +1775,7 @@ In het programma op \cpageref{breuk1::main} wordt de \USE{copy constructor} van 
     Breuk b3 {b2};
 \end{cpplstfragment}
 
-De door de compiler gegenereerde \USE{default copy constructor} maakt nu een object van de class |Breuk| aan genaamd |b3| en de waarde van de private variabelen |boven| en |onder| uit de |Breuk| genaamd |b2| kopiëren naar |b3|.
+De door de compiler gegenereerde \USE{default copy constructor} maakt nu een object van de class |Breuk| aan genaamd |b3| en zal de waarde van de private variabelen |boven| en |onder| uit de |Breuk| genaamd |b2| kopiëren naar |b3|.
 
 De \USE{default copy constructor} maakt een zogenoemde diepe kopie (Engels: \USE{deep copy}).\footnote{%
     Met een kopieerapparaat dat in staat is om een diepe kopie te maken, zouden we met één druk op de knop een heel boek kunnen kopiëren. Alle onderdelen waaruit het boek bestaat zouden dan ook automatisch gekopieerd worden. Helaas zijn kopieerapparaten op dit moment alleen nog maar in staat om een zogenoemde oppervlakkige kopie (Engels: \USE{shallow copy}) te maken. 
@@ -1965,7 +1985,7 @@ Als de |Breuk::operator+=| memberfunctie wel gedefinieerd is, wordt het bovensta
 
 De memberfunctie |operator+=| in deze derde versie van |Breuk| heeft dezelfde implementatie als de memberfunctie |plus| in de tweede versie van |Breuk| (zie \cpageref{Breuk::plus}).
 
-Je kunt voor een zelfgedefinieerd type alle operatoren zelf definiëren behalve de operator |.| waarmee een \USE{member} geselecteerd wordt en de operator |?:|%
+Je kunt voor een zelfgedefinieerd type alle operatoren zelf definiëren behalve de operator~|.| waarmee een \USE{member} geselecteerd wordt en de operator |?:|%
 \footnote{%
     Ook de niet in dit dictaat besproken operatoren \cppcode{.*} en \cppcode{sizeof} kun je niet zelf definiëren.
 }. 
@@ -1977,7 +1997,7 @@ Ook is het niet mogelijk om de operatoren die al gedefinieerd zijn voor de ingeb
 Het zelf definiëren van operatoren die in de taal \Cpp{} nog niet bestaan bijvoorbeeld |@| of |**| is niet mogelijk. 
 Bij het definiëren van operatoren voor zelfgedefinieerde types moet je er natuurlijk wel voor zorgen dat het gebruik voor de hand
 liggend is. 
-De compiler heeft er geen enkele moeilijkheid mee als je bijvoorbeeld de memberfunctie |Breuk::operator+=| definieert die de als argument meegegeven |Breuk| van de \USE{receiver} aftrekt. 
+De compiler heeft er geen enkele moeite mee als je bijvoorbeeld de memberfunctie |Breuk::operator+=| definieert die de als argument meegegeven |Breuk| van de \USE{receiver} aftrekt. 
 De programmeurs die de class |Breuk| gebruiken zullen dit minder kunnen waarderen.
 
 Er blijkt nu toch nog een verschil te zijn tussen het gebruik van de operator |+=| voor het zelfgedefinieerde type |Breuk| en het gebruik van de operator |+=| voor het ingebouwde type |int|. 
@@ -2214,7 +2234,7 @@ De \USE{reference} |element| is nu één voor één een alias voor een element u
 \label{refreturn}
 Als een functie een waarde teruggeeft door middel van een |return|\hyp{}statement, dan wordt de waarde van de expressie achter het |return|\hyp{}statement, als het ware, ingevuld op de plaats waar de functie aangeroepen is.
 Door nu een \USE{reference} als return type te gebruiken kun je een alias in plaats van een waarde teruggeven. Deze alias kun je dan gebruiken om een waarde aan toe te kennen. Zie voorbeeldprogramma \proglink{ref_ret.cpp}: 
-\cpplstinputfragment[linerange={6-9,33-35,37-37,39-39}]{ref_ret.cpp}
+\cpplstinputfragment[linerange={6-9,33-34,36-36,38-38}]{ref_ret.cpp}
 
 Als je probeert om een \USE{reference} naar een lokale variabele terug te geven, 
 geeft de compiler de volgende foutmelding: \cppcode{error: cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'}.
@@ -2304,7 +2324,7 @@ In een object van de class |Memory_cell| kun je een waarde van het type |int| op
 	Dat kan natuurlijk ook gewoon in een variabele van het type \ccode{int} maar het gaat hier alleen om een voorbeeld van het gebruik van een zelfgedefinieerde module.
 }.
 
-Voor de class |Memory_cell| zien de files \proglink{memory_cell.cppm}, \proglink{memory_cell.cpp} en \proglink{memory_appl.cpp} er als volgt uit:
+Voor de class |Memory_cell| zien de files \proglink{memory_cell.cppm}, \proglink{memory_cell.cpp} en \proglink{memory_\\-appl.cpp} er als volgt uit:
 
 \cpplstinputfragment{memory_cell.cppm}
 \cpplstinputfragment{memory_cell.cpp}
@@ -2744,6 +2764,18 @@ Zie \proglink{valarray.cpp}.
 Deze rekenkundige bewerkingen kunnen efficiënt geïmplementeerd worden.
 Zo kan de bewerking:
 |v3 = 2 * v1 + v2| door de compiler vertaald worden in één loop waarin voor elke element van |v1|, |v2| en |v3| de volgende code wordt uitgevoerd: |v3[i] = 2 * v1[i] + v2[i];|.
+
+\iftoggle{WIP}{
+\sectionTextCode{Alternatieve notatie met }{auto}
+\label{template_auto}
+\boldred{TODO: nog toevoegen!}
+% voorbeeld abs?
+% TODO Pas op bij swap
+\section{Concepts}
+\label{concepts}
+\boldred{TODO: nog toevoegen!}
+%TODO: Template specialisaties. Abs voor complexe getallen.
+}{}
 
 \chapter{Inheritance}
 \label{sec:inheritance}
@@ -5357,6 +5389,14 @@ De strings uit het bestand |namen.txt| worden ingelezen in de |set| genaamd |nam
 Vervolgens wordt de inhoud van deze |set| van achter naar voor op het scherm afgedrukt, één string per regel.
 In tegenstelling tot het vorige programma worden in dit programma geen variabelen van het type \hcode{istream_\\-iter\\-ator} en \hcode{ostream_\\-iter\\-ator} aangemaakt maar worden de \USE{constructors} van deze classes aangeroepen op de plaats waar deze objecten nodig zijn (als argumenten van de functie |copy|).
 
+\iftoggle{WIP}{
+\section{Ranges}
+\label{ranges}
+\boldred{TODO: nog toevoegen!}
+}{}
+
+% TODO: nog aanpassen aan ranges!
+
 \chapter{Algoritmen}
 \label{sec:algoritmen}
 De \Cpp{}\hyp{}standaard bevat vele generiek algoritmen.
@@ -7137,6 +7177,13 @@ In het voorbeeldprogramma werd de volgende code gebruikt om te kijken of het inv
 Dit zou je nu ook met behulp van structured binding als volgt kunnen coderen:
 \cpplstinputfragment[linerange={5-5,8-10}]{set_structured_binding.cpp}
 
+% \iftoggle{WIP}{
+% \sectionCode{std::string\_view}
+% \label{concepts}
+% \boldred{TODO: nog toevoegen!}
+% }{}
+
+
 \chapter{Objects and classes (de details)}
 \label{sec:objectsandclassesdetails}
 In \cref{sec:objectandclasses} heb je geleerd wat een UDT is.
@@ -8768,7 +8815,7 @@ Bijvoorbeeld, zie \proglink{RVO.cpp}:
 \cpplstinputfragment[linerange={5-31}]{RVO.cpp}
 Het enige doel van dit programma is om te kijken of de compiler de return value optimization toepast.
 Als dit programma gecompileerd wordt met gcc 15.2\footnote{%
-	\code{g++ -std=c++23 -fmodules -pedantic-errors -Wall -Wextra -g3 -O0 RVO.cpp}
+	\code{g++ -std=c++23 -fmodules -Wall -Wextra -Wpedantic -g3 -O0 RVO.cpp}
 }, dan geeft dit programma de volgende uitvoer:
 \begin{coutput}
 Int met waarde 42 wordt aangemaakt.
@@ -9259,6 +9306,13 @@ Dit zou ook met behulp van standaard functie\hyp{}objecten kunnen, zie \proglink
 \cpplstinputfragment[linerange={12-12}]{remove_bind.cpp}
 
 Ook in dit geval vind ik het gebruik van een lambda\hyp{}functie eenvoudiger.
+
+\iftoggle{WIP}{
+\section{Views}
+\label{views}
+\boldred{TODO: nog toevoegen!}
+}{}
+
 
 \end{cpplstShortInline}
 

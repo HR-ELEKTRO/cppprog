@@ -22,7 +22,7 @@ void drukaf(const vector<Tijdsduur>& rij) {
 
 // Deze functie berekent de totale Tijdsduur van een rij met Tijdsduren
 auto som(const vector<Tijdsduur>& rij) {
-    Tijdsduur s{0, 0};
+    Tijdsduur s {0, 0};
     for (auto t: rij) {
         s.uur += t.uur;
         s.minuten += t.minuten;

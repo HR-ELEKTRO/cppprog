@@ -21,10 +21,10 @@ double absolute_waarde(double f) {
 //<abs_overloaded
 
 //>def_par
-void print_int(int i, int talstelsel = 10);
+void drukaf_int(int i, int talstelsel = 10);
 //<def_par
 
-void print_int(int i, int talstelsel) {
+void drukaf_int(int i, int talstelsel) {
 }
 
 //>struct_Tijdsduur
@@ -196,10 +196,10 @@ void dummy() {
 {
     
 //>use_def_par
-    print_int(12, 2);  // uitvoer: 1100
-    print_int(12);     // uitvoer: 12
-    print_int(12, 10); // uitvoer: 12
-    print_int(12, 7);  // uitvoer: 15
+    drukaf_int(12, 2);  // uitvoer: 1100
+    drukaf_int(12);     // uitvoer: 12
+    drukaf_int(12, 10); // uitvoer: 12
+    drukaf_int(12, 7);  // uitvoer: 15
 //<use_def_par
 }
 {
