@@ -1,7 +1,7 @@
 import std;
 using namespace std;
 
-#define ERROR // commentaar deze regel uit om de ONJUISTE copy constructor en assignment operator te laten genereren door de compiler
+// #define ERROR // commentaar deze regel uit om de ONJUISTE copy constructor en assignment operator te laten genereren door de compiler
 
 class Hond {
 public:
