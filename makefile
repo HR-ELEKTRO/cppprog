@@ -28,7 +28,7 @@ all : $(TARGET).pdf $(TARGET)_ebook.pdf
 
 .PHONY : clean
 clean :
-	-$(RM) -f *.aux *.log *.toc *.out *.bcf *.blg *.bbl *.run.xml *.synctex.gz *.fdb_latexmk *.fls *.bak
+	-$(RM) -f *.aux *.log *.toc *.out *.bcf *.blg *.bbl *.run.xml *.synctex.gz *.fdb_latexmk *.fls *.bak *-SAVE-ERROR
 
 .PHONY : cleanall
 cleanall :

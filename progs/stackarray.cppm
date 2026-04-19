@@ -6,26 +6,21 @@ using namespace std;
 export template <typename T> class Stack_with_array: public Stack<T> {
 public:
     explicit Stack_with_array(size_t size);
-    ~Stack_with_array() override;
     void push(const T& t) override;
     void pop() override;
     const T& top() const override;
     bool empty() const override;
     bool full() const override;
 private:
-    T* a;     // pointer naar de array
+    unique_ptr<T[]> a; // pointer naar de array
     size_t s; // size van a (max aantal elementen op de stack)
     size_t i; // index in a van eerste vrije plaats op de stack
 };
 
-template <typename T> Stack_with_array<T>::Stack_with_array(size_t size): a{0}, s{size}, i{0} {
+template <typename T> Stack_with_array<T>::Stack_with_array(size_t size): a{nullptr}, s{size}, i{0} {
     if (s == 0) 
         throw std::domain_error {"Stack size should be >0\n"};
-    a = new T[s];
-}
-
-template <typename T> Stack_with_array<T>::~Stack_with_array() {
-    delete[] a;
+    a = make_unique<T[]>(s);
 }
 
 template <typename T> void Stack_with_array<T>::push(const T& t) {

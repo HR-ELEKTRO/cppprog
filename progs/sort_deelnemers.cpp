@@ -30,10 +30,10 @@ int main() {
         Score {"Anne", 300},
         Score {"Marie-louise", 50}
     };
-    sort(scores.begin(), scores.end(), [](const auto& d1, const auto& d2) {
+    ranges::sort(scores, [](const auto& d1, const auto& d2) {
         return d1.naam() < d2.naam();
     });
-    stable_sort(scores.begin(), scores.end(), [](const auto& d1, const auto& d2) {
+    ranges::stable_sort(scores, [](const auto& d1, const auto& d2) {
         return d1.punten() > d2.punten();
     });
     println("Scores van hoog naar laag:");

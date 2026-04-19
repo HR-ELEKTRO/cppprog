@@ -37,12 +37,12 @@ int main() {
     Tijdsduur tijdsduren[MAX_TIJDSDUREN];
     size_t aantal {0};
     do {
-        print("Type uren en minuten in:");
+        print("Type uren en minuten in: ");
         cin >> tijdsduren[aantal].uur >> tijdsduren[aantal].minuten;
     }
     while (cin && ++aantal < MAX_TIJDSDUREN);
     println();
     drukaf(tijdsduren, aantal);
-    println("De totale tijdsduur is: ");
+    println("De totale tijdsduur is:");
     drukaf(som(tijdsduren, aantal));
 }

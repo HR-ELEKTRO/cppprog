@@ -10,19 +10,19 @@ int main() {
     println("{:n}", v);
 //  Bewerking opgeven met een functie.
 //  Nadeel: voor elke bewerking moet een aparte functie worden geschreven.
-    for_each(v.cbegin(), v.cend(), print_dubbel);
+    ranges::for_each(v, print_dubbel);
     println();
 //  Bewerking opgeven met een lambda functie.
 //  Voordeel: handige oplossing als zoekvoorwaarde uniek is.
 //  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
-    for_each(v.cbegin(), v.cend(), [](int i) {
+    ranges::for_each(v, [](int i) {
         print("{0} {0} ", i);
     });
     println();
 //  Bewerking opgeven met een lambda functie met auto parameter.
 //  Voordeel: meest handige oplossing als zoekvoorwaarde uniek is.
 //  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
-    for_each(v.cbegin(), v.cend(), [](auto i) {
+    ranges::for_each(v, [](auto i) {
         print("{0} {0} ", i);
     });
     println();
@@ -32,7 +32,7 @@ int main() {
     auto print_twice {[](auto i) {
         print("{0} {0} ", i);
     }};
-    for_each(v.cbegin(), v.cend(), print_twice);
+    ranges::for_each(v, print_twice);
     println();
 //  Alternatief voor for_each met lambda functie: gebruik range-based for.
 //  Voordeel: eenvoudigere syntax.

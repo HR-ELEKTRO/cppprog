@@ -19,6 +19,6 @@ int main() {
         }
         println("De letter '{}' komt {} keer voor in het te raden woord.", c, count);
     }
-    while (count(gevonden.begin(), gevonden.end(), false) != 0);
+    while (ranges::count(gevonden, false) != 0);
     println("Je hebt het woord \"{}\" geraden.", w);
 }

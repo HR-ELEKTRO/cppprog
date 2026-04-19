@@ -19,7 +19,7 @@ int main() {
         }
         println("De letter '{}' komt {} keer voor in het te raden woord.", c, count);
     }
-    while (any_of(gevonden.cbegin(), gevonden.cend(), [](auto b) {
+    while (ranges::any_of(gevonden, [](auto b) {
         return b == false;
     }));
     println("Je hebt het woord \"{}\" geraden.", w);

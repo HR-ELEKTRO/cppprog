@@ -24,7 +24,7 @@
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
 \ifWIP
-\newcommand{\huidigeversie}{1.91}
+\newcommand{\huidigeversie}{1.92}
 \else
 \newcommand{\huidigeversie}{2.0}
 \fi
@@ -34,7 +34,7 @@
 	Work In Progress\\
 	\vspace{1cm}
 \fi
-	J.Z.M. Broeders
+	J.Z.M. (Harry) Broeders
 }
 
 \input{style_nl_NL.tex}
@@ -56,7 +56,10 @@
 %https://mirror.lyrahosting.com/CTAN/macros/latex/contrib/hwemoji/hwemoji.pdf
 
 \newcommand{\progs}{progs}
-\newcommand{\progsurl}{https://bitbucket.org/HR_ELEKTRO/cppprog/src/master/progs}
+\newcommand{\repourl}{https://github.com/HR-ELEKTRO/cppprog/}
+\newcommand{\progsurl}{\repourl/tree/master/progs}
+\newcommand{\issuesurl}{\repourl/issues}
+\newcommand{\wikiurl}{\repourl/wiki}
 \input{styleCode.tex}
 
 \newcommand{\boldred}[1]{\textbf{\textcolor{hrred}{#1}}}
@@ -95,6 +98,7 @@
 
 % gebruik voor opmaak van warnings en error meldingen van de C++ compiler
 \newcommand{\error}{\texttt}
+\usepackage{upgreek}
 
 % mooie checkmarks
 % http://ctan.org/pkg/pifont
@@ -214,14 +218,18 @@
 \vspace*{\stretch{1}}
 \includegraphics{figs/by-nc-sa_eu.pdf}
 \par
+\iftoggle{WIP}{
+\titel{} van \href{http://www.hc11.demon.nl/}{J.Z.M. (Harry) Broeders} is in licentie gegeven volgens een \href{http://creativecommons.org/licenses/by-nc-sa/3.0/nl/}{Creative Commons Naamsvermelding\hyp{}NietCommercieel\hyp{}GelijkDelen 3.0 Nederland\hyp{}licentie}.
+}{
 \titel{} van \href{http://www.hc11.demon.nl/}{\auteurs{}} is in licentie gegeven volgens een \href{http://creativecommons.org/licenses/by-nc-sa/3.0/nl/}{Creative Commons Naamsvermelding\hyp{}NietCommercieel\hyp{}GelijkDelen 3.0 Nederland\hyp{}licentie}.
+}
 
 \chapter*{Voorwoord}
 %TODO Check URL's
 Dit dictaat is lang geleden begonnen als een korte introductie in \Cpp{} en inmiddels uitgegroeid tot dit met \LaTeX{} opgemaakte document\footnote{%
-	De \LaTeX{} code is beschikbaar op \url{https://bitbucket.org/HR_ELEKTRO/cppprog/src/master/}.
-}. In de tussentijd hebben veel studenten en collega's mij feedback gegeven. De opbouwende kritiek van Harm Jongsma, Cor Diependaal, Henk van den Bosch, Dave Stikkelorum, John Visser, Gerard Tuk, Fidelis Theinert, Ben Kuiper, René Theil, René Boeije en vele anderen hebben dit dictaat ontegenzeggelijk beter gemaakt. Desondanks heb ik niet de illusie dat dit dictaat foutvrij is. Op- en aanmerkingen zijn dus nog altijd welkom, mail me op  \href{mailto:J.Z.M.Broeders@hr.nl}{J.Z.M.Broeders@hr.nl}, of maak een \href{https://bitbucket.org/HR_ELEKTRO/cppprog/issues}{issue}\iftoggle{ebook}{}{\footnote{%
-	Je kunt een issue aanmaken op: \url{https://bitbucket.org/HR_ELEKTRO/cppprog/issues}.
+	De \LaTeX{} code is beschikbaar op \url{\repourl}.
+}. In de tussentijd hebben veel studenten en collega's mij feedback gegeven. De opbouwende kritiek van Harm Jongsma, Cor Diependaal, Henk van den Bosch, Dave Stikkelorum, John Visser, Gerard Tuk, Fidelis Theinert, Ben Kuiper, René Theil, René Boeije en vele anderen hebben dit dictaat ontegenzeggelijk beter gemaakt. Desondanks heb ik niet de illusie dat dit dictaat foutvrij is. Op- en aanmerkingen zijn dus nog altijd welkom, mail me op  \href{mailto:J.Z.M.Broeders@hr.nl}{J.Z.M.Broeders@hr.nl}, of maak een \href{\issuesurl}{issue}\iftoggle{ebook}{}{\footnote{%
+	Je kunt een issue aanmaken op: \url{\issuesurl}.
 }} aan.
 
 In dit dictaat is zoveel mogelijk gebruik gemaakt van de \Cpp{}23 standaard.
@@ -233,7 +241,7 @@ Alle programmacode in dit dictaat is getest met GCC%
 \footnote{%
     De GNU \USE{Compiler Collection} (GCC) bevat een zeer veelgebruikte open source \Cpp{}\hyp{}compiler. Zie \url{http://gcc.gnu.org/}
 } versie 15.2.0.
-Op \url{https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/Home} vind je de source code van alle in dit dictaat besproken programma's. Als je dit dictaat leest op een device met internettoegang, dan kun je op de bestandsnamen in dit dictaat klikken om de programma's te downloaden.
+Op \url{\wikiurl} vind je de source code van alle in dit dictaat besproken programma's. Als je dit dictaat leest op een device met internettoegang, dan kun je op de bestandsnamen in dit dictaat klikken om de programma's te downloaden.
 
 Veel literatuur over \Cpp{} en objectgeoriënteerd programmeren is geschreven in het Engels. Om er voor te zorgen dat je deze literatuur na (of tijdens) het lezen van dit dictaat eenvoudig kunt gebruiken heb ik veel van het jargon dat in deze literatuur wordt gebruikt niet vertaald naar het Nederlands. De keuze om een term wel of niet te vertalen is arbitraal. Zo heb ik bijvoorbeeld het Engelse begrip \squote{return type} niet vertaal in het Nederlandse \squote{terugkeertype} of \squote{retourtype}, maar heb ik het Engelse begrip \squote{parameter type} wel vertaald naar het Nederlandse \squote{parametertype}. De Engelse begrippen \squote{class} en \squote{class template} zijn niet vertaald in \squote{klasse} en \squote{klassetemplate} maar de Engelse begrippen \squote{function} en \squote{function template} zijn wel vertaald in \squote{functie} en \squote{functietemplate}. 
 
@@ -284,7 +292,7 @@ We starten dit dictaat met de overgang van gestructureerd programmeren in C naar
 \footnotetext{%
 	De \USE{draft version} is beschikbaar op \url{https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf}.%
 } Misschien is het nodig om deze kennis op te frissen\footnote{%
-	Zie eventueel \url{https://bitbucket.org/HR_ELEKTRO/cprog/wiki/Home}.
+	Zie eventueel \url{\wikiurl}.
 }.
 Vandaar dat dit dictaat begint met een terugblik op C.
 We doen dit aan de hand van het voorbeeldprogramma \proglink{C.c} dat een lijst met tijdsduren (in uren en minuten) inleest vanaf het toetsenbord en de totale tijdsduur (in uren en minuten) bepaalt en afdrukt.
@@ -604,11 +612,11 @@ int main() {
 \end{cpplstfragment}
 
 \needspace{3\baselineskip}
-Je kunt ook printen naar een bestand in plaats van naar het beeldscherm (\proglink{hello_world_file.cpp}):
+Je kunt ook printen naar een bestand in plaats van naar het beeldscherm (\proglink{hello_world_\\-file.cpp}):
 \cpplstinputfragment{hello_world_file.cpp}
 Dit programma maakt een bestand genaamd |output.txt| aan en schrijft de string |Hello, World!| in dit bestand.
 Als het bestand al bestaat, dan wordt de inhoud van dit bestand overschreven.
-
+%TODO: uitleggen hoe je dit kan voorkomen.
 %TODO: Verwijzen naar meer info over file IO?
 
 \section[Input en output met \texttt{>>} en \texttt{<<}]{Input en output met \texorpdfstring{\cppcode{>>}}{>>} en \texorpdfstring{\cppcode{<<}}{<<}}
@@ -987,7 +995,7 @@ Hetzelfde voorbeeld met \USE{function name overloading}:
 Als je één van deze \USE{overloaded} functies wilt gebruiken om bijvoorbeeld de absolute waarde van een variabele van het type |double| te berekenen, dan kun je dit als volgt doen:
 \cpplstinputfragment[linerange={use_abs_overloaded-use_abs_overloaded}]{fragments.cpp}
 
-De compiler bepaalt nu zelf aan de hand van het type van het gebruikte argument (|d|) welk van de twee bovenstaande |modulus| functies aangeroepen wordt.\footnote{%
+De compiler bepaalt nu zelf aan de hand van het type van het gebruikte argument (|d|) welk van de twee bovenstaande |absolute_waarde| functies aangeroepen wordt.\footnote{%
 	In C kun je een soortgelijk effect creëren door het gebruik van een macro in combinatie met het keyword \ccode{_Generic}, zie eventueel: \url{https://en.cppreference.com/w/c/language/generic}.
 }
 
@@ -1055,7 +1063,7 @@ Als we de verbeteringen die in C zijn doorgevoerd bij de definitie van \Cpp{} to
 	Dit is nodig om gebruik te kunnen maken van functies, objecten en types die in de standaard \Cpp{} \USE{library} zijn opgenomen.
 	In dit programma maak ik gebruik van |print| en |println| (om te schrijven naar het scherm) en |cin| (om te lezen vanaf het toetsenbord).
 	\item
-	In de derde regel wordt aangegeven dat de \USE{namespace} |std| wordt gebuikt, zie \cref{sec:namespace}.
+	In de derde regel wordt aangegeven dat de \USE{namespace} |std| wordt gebuikt, zie \cpageref{namespace}.
 	Dit is nodig om de functies, types enz.\ die in de standard \Cpp{} \USE{library} zijn gedefinieerd te kunnen gebruiken zonder er steeds |std::| voor te zetten.
     \item 
     De naam van de |struct Tijdsuur| kan meteen als typenaam gebruikt worden. Een |typedef| is hier dus niet nodig, zie \cref{sec:structnotypedef}.
@@ -1193,7 +1201,7 @@ Microsoft heeft voor dit doel de .NET-architectuur ontwikkeld.
 De objectgeoriënteerde benadering is vooral bedoeld om het ontwikkelen van herbruikbare softwarecomponenten mogelijk te maken.
 In dit dictaat maak je kennis met deze objectgeoriënteerde benadering.
 Wij hebben daarbij gekozen voor de taal \Cpp{} omdat dit de meest gebruikte objectgeoriënteerde programmeertaal is voor embedded systems\footnote{%
-    Bron: \href{https://bitbucket.org/HR_ELEKTRO/ems31/wiki/Documenten/Aspencore_2025_Embedded_Markets_Study.pdf\#page=9}{AspenCore 2025 Embedded Market Study}.
+    Bron: \href{https://github.com/HR-ELEKTRO/ems3/wiki/Documenten/Aspencore_2025_Embedded_Markets_Study.pdf\#page=9}{AspenCore 2025 Embedded Market Study}.
 }.
 Het is echter niet zo dat je na het bestuderen van dit dictaat op de hoogte bent van alle aspecten en details van \Cpp{}.
 Wel begrijp je na het bestuderen van dit dictaat de algemene ideeën achter OOP en kun je die toepassen in \Cpp{}.
@@ -1859,7 +1867,7 @@ Met deze |const| memberfunctie kun je de |teller| van een |Breuk| opvragen. De i
 Je kunt de memberfunctie |teller| nu dus ook aanroepen voor \USE{read-only} breuken:
 \begin{cpplstfragment}
     const Breuk halve {1, 2}; // constante halve met waarde 1/2
-    cout << halve.teller() << '\n';
+    println({}, halve.teller();
 \end{cpplstfragment}
 
 Het aanroepen van de memberfunctie |plus| voor de |const| |Breuk| |halve| geeft echter een foutmelding en dat is precies de bedoeling want bij een \USE{read-only} object moet je niets kunnen optellen:
@@ -2572,6 +2580,7 @@ Deze class template |Dozijn| kan nu als volgt gebruikt worden:
 Bij het gebruik van de class template |Dozijn| kan de compiler niet zelf bepalen wat het type |T| moet zijn.
 Vandaar dat je dit bij het gebruik van de class template |Dozijn| zelf moet specificeren.
 
+\needspace{3\baselineskip}
 De uitvoer van het bovenstaande programma is:
 % cpplstfragment gebruikt in plaats van coutput zodat regel netjes afgebroken wordt.
 \begin{cpplstfragment}[language=]
@@ -2619,6 +2628,7 @@ Om de inhoud van een |Rij| eenvoudig om te kunnen zetten naar een |string| is de
 Deze class template |Rij| kan nu als volgt gebruikt worden:
 \cpplstinputfragment[linerange={37-46,53-53}]{Rij.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van het bovenstaande programma is:
 % cpplstfragment gebruikt in plaats van coutput zodat regel netjes afgebroken wordt.
 \begin{cpplstfragment}[language=]
@@ -2767,12 +2777,12 @@ Zo kan de bewerking:
 
 \iftoggle{WIP}{
 \sectionTextCode{Alternatieve notatie met }{auto}
-\label{template_auto}
+\label{sec:template_auto}
 \boldred{TODO: nog toevoegen!}
 % voorbeeld abs?
 % TODO Pas op bij swap
 \section{Concepts}
-\label{concepts}
+\label{sec:concepts}
 \boldred{TODO: nog toevoegen!}
 %TODO: Template specialisaties. Abs voor complexe getallen.
 }{}
@@ -2875,9 +2885,11 @@ Om deze reden mag je een object van de \USE{derived class} ook gebruiken als de 
 }. 
 De relatie tussen de \USE{derived class} en de \USE{base class} wordt een IS-A (is een) relatie genoemd.
 De \USE{derived class} is een (speciaal geval van de) \USE{base class}.
+Volgens \cref{fig:inheritance} is een |Bloemiste| een (speciaal geval van een) |Winkelier|.
 Omdat een \USE{derived class} datavelden en memberfuncties kan toevoegen aan de \USE{base class} is het omgekeerde niet waar.
 Je kunt een object van de \USE{base class} niet gebruiken als de compiler een object van de \USE{derived class} verwacht.
 Een \USE{base class} IS-NOT-A \USE{derived class}.
+Volgens \cref{fig:inheritance} is een |Winkelier| dus geen (speciaal geval van een) |Bloemiste|.
 
 De \USE{derived class} erft alle datavelden van de \USE{base class} over.
 Dit wil zeggen dat een object van een \USE{derived class} (minimaal) dezelfde datavelden heeft als een object van de \USE{base class}.
@@ -2972,7 +2984,7 @@ Door het toepassen van polymorfisme kun je software maken die eenvoudig aangepas
 Als ik nu de volgende functie definieer:
 \begin{cpplstfragment}
 void druk_v_af(const Base& p) {
-    cout << p.get_v();
+    print("{}", p.get_v());
 }
 \end{cpplstfragment}
 dan kun je deze functie dus niet alleen gebruiken voor een object van de class |Base| maar ook voor een object van de class |Derived|.
@@ -3044,11 +3056,17 @@ Base* bp1 {&b};
 Base* bp2 {&d};
 bp1->print_name();
 bp2->print_name();
+Base& br1 {b};
+Base& br2 {d};
+br1.print_name();
+br2.print_name();
 \end{cpplstfragment}
 
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
+Ik ben een Base.
+Ik ben een Derived.
 Ik ben een Base.
 Ik ben een Derived.
 \end{coutput}
@@ -3059,14 +3077,14 @@ Als ik het feit dat een |Derived| IS-A |Base| in het bovenstaande programma verw
 class Base {
 public:
     virtual void print_name() const {
-        cout << "Ik ben een Base.\n";
+        println("Ik ben een Base.");
     }
 };
 
 class Derived: public Base {
 public:
     void print_name() const override {
-        cout << "Ik ben een Derived en ";
+        println("Ik ben een Derived en ");
         Base::print_name();
     }
 };
@@ -3081,11 +3099,17 @@ Base* bp1 {&b};
 Base* bp2 {&d};
 bp1->print_name();
 bp2->print_name();
+Base& br1 {b};
+Base& br2 {d};
+br1.print_name();
+br2.print_name();
 \end{cpplstfragment}
 
 \needspace{2\baselineskip}
 Uitvoer:
 \begin{coutput}
+Ik ben een Base.
+Ik ben een Derived en Ik ben een Base.
 Ik ben een Base.
 Ik ben een Derived en Ik ben een Base.
 \end{coutput}
@@ -3202,7 +3226,7 @@ Daarna vergelijk ik deze oplossingen met elkaarn (nu mag je één keer raden wel
 \subsection{Probleemdefinitie}
 \label{ADC probleem}
 In een programma om een machine te besturen moeten bepaalde signalen via een ADC kaart (ADC = \USE{Analoog Digitaal Converter}) ingelezen worden.
-Het programma moet met 2 verschillende types ADC kaarten kunnen werken.
+Het programma moet met twee verschillende types ADC kaarten kunnen werken.
 Deze kaarten hebben de typenamen AD178 en NI323.
 Deze kaarten zijn functioneel gelijk en hebben beide een 8 kanaals 16 bits ADC met instelbare voorversterker.
 Het initialiseren van de kaarten, het selecteren van een kanaal, het uitlezen van de \squote{sampled} waarde en het instellen van de versterkingsfactor moet echter bij elke kaart op een andere wijze gebeuren (andere adressen, andere bits en/of andere procedures).
@@ -3215,6 +3239,7 @@ Hoe kun je in het programma nu het beste met de verschillen tussen de kaarten om
 \subsection{Een gestructureerde oplossing}
 Eerst bespreek ik hoe je dit probleem op een gestructureerde manier oplost.
 Met de methode van functionele decompositie deel ik het probleem op in een aantal deelproblemen.
+\needspace{2\baselineskip}
 Voor elk deelprobleem definieer ik vervolgens een functie:
 \begin{itemize}
     \item |init_card| voor het initialiseren van de kaart;
@@ -3228,6 +3253,11 @@ Voor elk deelprobleem definieer ik vervolgens een functie:
 Voor elke kaart die in het programma gebruikt wordt moeten een aantal gegevens bijgehouden worden zoals: het kaarttype, de ingestelde versterkingsfactor en het geselecteerde kanaal.
 Om deze gegevens per kaart netjes bij elkaar te houden heb ik de struct |ADCCard| gedeclareerd.
 Voor elke kaart die in het programma gebruikt wordt, wordt dan een variabele van dit struct type aangemaakt.
+Het type van de kaart wordt in de struct met behulp van het enumeratie-type |Card_type| opgeslagen\footnote{%
+	In \Cpp{} kun je naast het enumeratie-type \cppcode{enum} ook het enumeratie-type \cppcode{enum class} gebruiken.
+	Deze \cppcode{enum class} heeft als voordeel dat de enumerators niet in de globale namespace terecht komen en dat er geen impliciete conversie naar een geheel getal plaatsvindt,
+	zie \cref{sec:enumclass}.
+}. 
 Aan elk van de eerder genoemde functies wordt de te gebruiken kaart dan als parameter van het type |ADCCard| doorgegeven. Zie \proglink{kaart0.cpp}:
 
 \cpplstinputfragment[linerange={6-21,23-25,27-36,38-40,42-55,57-59,61-70,72-74,76-97}]{kaart0.cpp}
@@ -3362,7 +3392,7 @@ Met de volgende implementatie (\proglink{Bb647_impl.cpp}):
 \cpplstinputfragment[linerange={5-6,8-11,13-16,18-20,22-22}]{Bb647_impl.cpp}
 
 Het programma |main| kan nu als volgt aangepast worden (\proglink{Kaart4.cpp}):
-\cpplstinputfragment[linerange={11-18}]{kaart4.cpp}
+\cpplstinputfragment[linerange={8-15}]{kaart4.cpp}
 
 Als alle functie- en classdeclaraties in aparte module interfaces (.cppm) en alle functie- en classdefinities in aparte |.cpp| files opgenomen zijn, dan hoeft alleen de nieuwe class en de nieuwe |main| functie opnieuw vertaald te worden.
 De rest van het programma kan dan eenvoudig (zonder hercompilatie) meegelinkt worden.
@@ -3423,7 +3453,7 @@ De functie |Z| moet in een van |Component| afgeleide class de impedantie bereken
 De functie |naar_string| moet in een van |Component| afgeleide class het type en de waarde opslaan in een string en deze retourneren.
 Bijvoorbeeld: |"L(1E-3)"| voor een spoel van \SI{1}{\milli\henry}.
 
-Om componenten met behulp van de |print| en |println| af te kunnen drukken, is de template |std::formatter| gespecialiseerd voor |Component| (\proglink{netwerk0.cpp}), zie \csecref{sec:template specialisation}:
+Om componenten met behulp van de |print| en |println| af te kunnen drukken, is de template |std::formatter| gespecialiseerd voor |Component| (\proglink{netwerk0.cpp}), zie \csecref{sec:userdefinedformatter}:
 \cpplstinputfragment[linerange={43-48}]{netwerk0.cpp}
 
 De classes |R|, |L| en |C| kunnen dan als volgt gebruikt worden:
@@ -3434,8 +3464,9 @@ Dit betekent dat deze polymorfe functie voor alle huidige soorten componenten te
 De functie is zelfs ook voor toekomstige soorten componenten bruikbaar.
 Dit maakt het programma eenvoudig uitbreidbaar.
 
-Om complexe getallen te kunnen printen, is in \proglink{netwerk0.cpp} de template |std::formatter| gespecialiseerd voor |complex<T>|, zie \csecref{sec:template specialisation}.
+Om complexe getallen te kunnen printen, is in \proglink{netwerk0.cpp} de template |std::formatter| gespecialiseerd voor |complex<T>|, zie \csecref{sec:userdefinedformatter}.
 
+\needspace{3\baselineskip}
 De uitvoer van het bovenstaande programma is:
 \begin{coutput}
 Impedantie tabel voor: R(100)
@@ -3494,7 +3525,7 @@ Het antwoord op de eerste vraag is misschien moeilijker.
 De ABC |Component| is gedefinieerd als \squote{iets} dat een impedantie heeft en dat geprint kan worden.
 Als je bedenkt dat een serieschakeling ook een impedantie heeft en ook geprint kan worden, is duidelijk dat een serieschakeling een soort component \emph{is}.
 De class |S| (serieschakeling) moet dus van de class |Component| afgeleid worden maar bestaat ook uit andere componenten. Zie \cref{fig:component2}.
-Dit heeft als bijkomend voordeel dat je het aantal componenten waaruit een serieschakeling bestaat tot 2 kunt beperken.
+Dit heeft als bijkomend voordeel dat je het aantal componenten waaruit een serieschakeling bestaat tot twee kunt beperken.
 Als je bijvoorbeeld een serieschakeling wilt doorrekenen van een |R|, |L| en |C|, dan maak je eerst van de |R| en |L| een serieschakeling, die je vervolgens met de |C| combineert tot een tweede serieschakeling.
 Op soortgelijke wijze kun je het programma uitbreiden met parallelschakelingen.
 Met dit programma kun je dan van elk passief elektrisch netwerk de impedantie berekenen.
@@ -3506,6 +3537,7 @@ De classes |S| en |P| kunnen dan als volgt gebruikt worden (\proglink{netwerk1.c
 
 Je ziet dat je de al bestaande polymorfe functie |print_impedance_table| ook voor objecten van de nieuwe classes |S| en |P| kunt gebruiken!
 
+\needspace{3\baselineskip}
 De uitvoer van het bovenstaande programma is:
 \begin{coutput}
 Impedantie tabel voor: ((R(100)+C(1e-06))//(R(100)+L(0.03)))
@@ -3700,7 +3732,7 @@ Een breuk met de waarde 4/1 is verwijderd uit het geheugen.
 Zoals je ziet worden de in de functie |main| aangemaakte lokale objecten |b1|, |b2| en |b3| aan het einde van de functie |main| uit het geheugen verwijderd.
 De volgorde van verwijderen is \emph{omgekeerd} ten opzichte van de volgorde van aanmaken.
 Dit is niet toevallig maar hier is door de ontwerper van \Cpp{} goed over nagedacht.
-Stel dat we aan het begin van een functie 4 objecten van de class |Wiel| aanmaken en vervolgens een object van de class |Auto| aanmaken waarbij we aan de \USE{constructor} van |Auto| de 4 |Wiel| objecten meegeven.
+Stel dat we aan het begin van een functie vier objecten van de class |Wiel| aanmaken en vervolgens een object van de class |Auto| aanmaken waarbij we aan de \USE{constructor} van |Auto| de vier |Wiel| objecten meegeven.
 Bij het verlaten van deze functie worden de objecten dan in omgekeerde volgorde uit het geheugen verwijderd%
 \footnote{%
     Bij het uitvoeren van een programma worden de lokale variabelen aangemaakt op de \USE{stack}.
@@ -3748,6 +3780,7 @@ Hier volgt een voorbeeld van het gebruik van een ABC en polymorfisme
 (\proglink{Fruit\\-mand\_\\-de\\-struc\\-tor.cpp}):
 \cpplstinputfragment[linerange={6-63}]{Fruitmand_destructor.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
 De fruitmand bevat:
@@ -3762,6 +3795,7 @@ Er is een Peer verwijderd.
 Er is een stuk Fruit verwijderd.
 \end{coutput}
 
+\needspace{3\baselineskip}
 Als in de \USE{base class} |Fruit| \emph{geen} \USE{virtual destructor} gedefinieerd wordt maar een gewone (non-virtual) \USE{destructor} die \emph{niet} \USE{overridden} wordt voor |Appel| en |Peer|, dan wordt de uitvoer als volgt:
 \begin{coutput}
 De fruitmand bevat:
@@ -3821,6 +3855,7 @@ Deze (default) destructor roept de destructor aan van al zijn datamembers in dit
 De destructor van deze |vector| roept de destructor aan van alle elementen van de |vector|.
 Elk element is een |unique_pointer| en elke destructor van die |unique_pointer| roept |delete| aan om het door de |unique_pointer| beheerde dynamische geheugen weer vrij te geven. 
 
+\needspace{3\baselineskip}
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
 De fruitmand bevat:
@@ -3841,18 +3876,17 @@ Vaak wordt in een functie of memberfunctie gecontroleerd op uitzonderlijke situa
 De volgende functie berekent de impedantie van een condensator van |c| Farad bij een frequentie van |f|
 Hz. Zie \proglink{impedance_C1.cpp}:
 
-\cpplstinputfragment[linerange={9-11}]{impedance_C1.cpp}
+\cpplstinputfragment[linerange={16-18}]{impedance_C1.cpp}
 
 Deze functie kan als volgt aangeroepen worden om de impedantie van een condensator van 1 mF bij
 1 kHz op het scherm af te drukken:
 
-\cpplstinputfragment[linerange={14-14}]{impedance_C1.cpp}
+\cpplstinputfragment[linerange={21-21}]{impedance_C1.cpp}
 
 \newcommand{\ccoutput}{\texttt}
 
-Als deze functie aangeroepen wordt om de impedantie van een condensator van 0 F uit te rekenen, 
-verschijnt de volgende vreemde uitvoer:
-
+\needspace{3\baselineskip}
+Als deze functie aangeroepen wordt om de impedantie van een condensator van 0 F uit te rekenen, verschijnt de volgende vreemde uitvoer:
 \begin{coutput}
 0.000-infj
 \end{coutput}
@@ -3866,7 +3900,7 @@ Het zal voor iedereen duidelijk zijn dat zulke vreemde uitvoer tijdens het uitvo
 \label{sec:assert}
 In \cref{assert} heb je al kennis gemaakt met de standaard macro |assert|.
 Deze macro doet niets als de, als argument meegegeven, expressie |true| oplevert maar breekt het programma met een passende foutmelding af als dit niet zo is.
-Omdat macro's niet vanuit modules geexporteerd kunnen worden, moet de file |cassert| worden geïnclude om gebruik te kunnen maken van de |assert| macro\footnote{%
+Omdat macro's niet vanuit modules geëxporteerd kunnen worden, moet de file |cassert| worden geïnclude om gebruik te kunnen maken van de |assert| macro\footnote{%
 	Waarschijnlijk zijn \dquote{Contracts} de vervanging voor de assert macro in \Cpp{}26.
 	Maar die worden helaas nog niet ondersteund in \href{https://gcc.gnu.org/projects/cxx-status.html}{gcc 15}. 
 }.
@@ -3911,7 +3945,7 @@ We kunnen concluderen dat |assert| in dit geval niet geschikt is.
 In C (en ook in \Cpp{}) werd dit traditioneel opgelost door de functie een returnwaarde te geven die
 aangeeft of het uitvoeren van de functie gelukt is (\proglink{impedance_\\-C3.cpp}):
 
-\cpplstinputfragment[linerange={9-16}]{impedance_C3.cpp}
+\cpplstinputfragment[linerange={16-23}]{impedance_C3.cpp}
 
 Het programma wordt nu niet meer abrupt afgebroken.
 Het gebruik van een return waarde om aan te geven of een functie gelukt is heeft echter de volgende nadelen:
@@ -3964,6 +3998,7 @@ Dit heeft 2 voordelen:
 \end{itemize}
 
 De class |domain_error| heeft een memberfunctie |what()| die de bij constructie van het object meegegeven string weer teruggeeft.
+\needspace{3\baselineskip}
 De uitvoer van het bovenstaande programma is:
 
 \begin{coutput}
@@ -4536,6 +4571,7 @@ Je mag jezelf beperken tot optellen en vermenigvuldigen.
 
 Het is natuurlijk netter om het geheel in een class |Calculator| in te kapselen zodat de calculator eenvoudig kan worden (her)gebruikt.
 Zie \proglink{infix_calculator.cpp}.
+%TODO: module van maken?
 
 \chapter{Implementaties van een \USE{stack}}
 \label{sec:VoorbeeldenImpl}
@@ -4549,7 +4585,12 @@ Ik bespreek in dit hoofdstuk beide implementaties.
 
 Inhoud van de file \proglink{stackarray.cppm}:
 
-\cpplstinputfragment[linerange={1-55}]{stackarray.cppm}
+\cpplstinputfragment[linerange={1-50}]{stackarray.cppm}
+
+Er is hier gebruik gemaakt van een |unique_ptr<T[]>| en de functie |make_unique<T[]>| om de array |a| te benaderen en aan te vragen.
+%TODO: verwijzen naar unique_ptr
+Dit zorgt ervoor dat we niet kunnen vergeten om het geheugen weer vrij te geven met |delete[]|.
+De |unique_ptr<T[]>| zorgt ervoor dat het geheugen automatisch wordt vrijgegeven als het |Stack_with_array| object wordt vernietigd.
 
 Het programma \proglink{stackarray.cpp} om deze implementatie te testen:
 
@@ -4560,26 +4601,30 @@ Inhoud van de file \proglink{stacklist.cppm}:
 
 \cpplstinputfragment[linerange={1-4,6-29,33-65}]{stacklist.cppm}
 
+Er is hier bewust géén gebruik gemaakt van een smart pointer (|shared_ptr<Node>|) maar van een gewone pointer (Node*).
+Dit is gedaan omdat elke |Node| een pointer naar de volgende |Node| moet bevatten.
+Een |shared_ptr<Node>| neemt op een 64-bits pc twee keer zoveel ruimte in als een |Node*|.
+Het gebruik van een gewone pointer bespaart dus geheugen.
+Maar we moeten nu wel zelf zorgen dat het geheugen dat aangemaakt wordt in de functie |pop| ook weer vrijgeven wordt in de functie |pop|.
+
 Het programma \proglink{stacklist.cpp} om deze implementatie te testen:
 
 \cpplstinputfragment[linerange={3-16,20-27}]{stacklist.cpp}
 
 \section{\USE{Stack} met array versus \USE{stack} met gelinkte lijst}
 Beide implementaties |Stack_with_array| en |Stack_with_list| hebben voor- en nadelen.
-Het geheugengebruik van |Stack_with_array| is statisch (bij het aanmaken moet je de maximale grootte opgeven) terwijl het geheugengebruik van |Stack_with_list| dynamisch is.
+Het geheugengebruik van |Stack_with_array| is vast nadat de stack is aangemaakt (bij het aanmaken moet je de maximale grootte opgeven) terwijl het geheugengebruik van |Stack_with_list| dynamisch is.
 De \hcode{Stack_\\-with_\\-array} is erg snel omdat bij de |push|, |top| en |pop| bewerkingen slechts maximaal een array indexering en het bijwerken van een index nodig zijn.
-De |Stack_with_list| is veel trager omdat bij de |push| en |pop| bewerkingen een \USE{system call} (respectievelijk |new| en |delete|) wordt aangeroepen.
+De |Stack_with_list| is veel trager omdat bij de |push| en |pop| bewerkingen een \USE{system call} (respectievelijk |new| en |delete| wordt aangeroepen.
 De orde van de executietijd voor alle bewerkingen is natuurlijk bij beide implementaties wel gelijk: $O(1)$.
 De |Stack_with_array| gebruikt, als de \USE{stack} niet vol is, meer geheugen dan eigenlijk nodig is.
 Het niet gevulde deel van de array is, op dat moment, eigenlijk niet nodig en kunnen we dus beschouwen als overhead.
 De |Stack_with_list| gebruikt, als de \USE{stack} niet leeg is, meer geheugen dan eigenlijk nodig is.
-Voor elk element dat op de \USE{stack} staat moet ook een pointer in het geheugen worden opgeslagen.
-De overhead is afhankelijk van de grootte van het data\hyp{}element en de grootte van een pointer.
+Voor elk element dat op de \USE{stack} staat moet ook een |Node*| in het geheugen worden opgeslagen.
+De overhead is afhankelijk van de grootte van het data\hyp{}element en de grootte van een |Node*|.
 Op een 64 bits machine (waar een pointer acht bytes groot is) heeft een |Stack_with_list| van |char|'s (die één byte groot zijn) dus een behoorlijke overhead.
 Een |Stack_with_list| met objecten die 1 Kbyte groot zijn heeft slechts een kleine overhead.
 We kunnen dus concluderen dat een |Stack_with_array| minder overhead heeft voor een \USE{stack} met kleine objecten en dat een |Stack_with_list| minder overhead heeft voor een \USE{stack} met grote objecten.
-
-%TODO: Er valt nog veel te verbeteren en/of op te merken. B.v. exceptions gebruiken. Waarom geen using namespace std;
 
 \section{Dynamisch kiezen voor een bepaald type \USE{stack}}
 \label{sec:dynamischeStack}
@@ -4595,22 +4640,22 @@ In dat geval is het handig dat je dynamisch (tijdens \USE{run time}), afhankelij
 
 \chapter[De standaard C++ \USE{library}]{De standaard \Cpp{} \USE{library}}
 \label{sec:stdlib}
-De standaard \Cpp{} \USE{library} is zeer uitgebreid en beslaat 14 hoofdstukken en ruim 800 pagina's in de \Cpp{} standaard \cite{ISO2017}. 
+De standaard \Cpp{} \USE{library} is zeer uitgebreid en beslaat 17 hoofdstukken en ruim 1400 pagina's in de \Cpp{} standaard \cite{ISO2023}. 
 In het vervolg van dit dictaat kijken we naar \emph{containers}, \emph{iteratoren} en \emph{algoritmen}.
 De in \cref{sec:Datastructuren} geïntroduceerde datastructuren worden in de standaard \Cpp{} \USE{library} \emph{containers} genoemd.
 Een \emph{iterator} kan gebruikt worden om de elementen in een container te benaderen.
 Je kunt in \Cpp{} met een iterator door een container heenlopen zoals je in C met een pointer door een array kunt lopen.
 Een iterator kan \squote{wijzen} naar een element uit een container op dezelfde wijze als een pointer kan wijzen naar een element uit een array.
 De algoritmen uit de standaard \USE{library} werken op de data die door twee iteratoren wordt aangegeven.
-Deze twee iteratoren wijzen samen een opeenvolgende hoeveelheid elementen (\emph{range}) aan waar het betreffende algoritme op wordt uitgevoerd.
-Een iterator wijst naar het eerste data\hyp{}element van de range en de andere iterator wijst naar de locatie net voorbij het laatste element van de range.
+Deze twee iteratoren wijzen samen een opeenvolgende hoeveelheid elementen (het \emph{bereik}) aan waar het betreffende algoritme op wordt uitgevoerd.
+Een iterator wijst naar het eerste data\hyp{}element van het bereik en de andere iterator wijst naar de locatie net voorbij het laatste element van het bereik.
 De iteratoren zorgen ervoor dat de algoritmen generiek gehouden kunnen worden en dus op verschillende soorten containers uitgevoerd kunnen worden.
 In \cref{fig:stl} is de samenhang tussen containers, iteratoren en algoritmen weergegeven.
 Dit figuur laat de meest complexe situatie zien: een algoritme dat data uit twee verschillende containers leest en het resultaat in een derde container wegschrijft.
 Een algoritme kan ook data uit slechts één container lezen en het resultaat in dezelfde container wegschrijven.
 
 \figuur{width=8cm}{stl}{De samenhang tussen containers, iteratoren en algoritmen.
-	A = Algoritme, C = Container, i = iterator, b = begin, e = end, [ib,ie) = range van ib tot ie.}
+	A = Algoritme, C = Container, i = iterator, b = begin, e = end, [ib,ie) = bereik van ib tot ie.}
 
 \sectionTextCode{Voorbeeldprogramma met}{std::string}
 %\markright{}
@@ -4649,27 +4694,29 @@ Als je niet kunt vinden wat je zoekt in de standaard \USE{library} dan kun je oo
 %TODO: in de gaten houden of deze links stabiel zijn.
 Ook in \citetitle{Brokken2019} \cite{Brokken2019} is veel informatie te vinden, onder andere over \USE{library}-faciliteiten voor:
 \USE{strings}
-\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus05.html\#l98}{§5}]{Brokken2019}, 
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus05.html}{§5}]{Brokken2019}, 
 %\USE{localization}, 
 \USE{smart pointers}
-\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l366}{§18.3},\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l373}{§18.4} en \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l380}{§18.5}]{Brokken2019},
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l372}{§18.3},\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l379}{§18.4} en \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l386}{§18.5}]{Brokken2019},
 \USE{containers}
-\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus12.html\#l265}{§12}]{Brokken2019}, 
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus12.html}{§12}]{Brokken2019}, 
 \USE{iterators}
-\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l359}{§18.2}]{Brokken2019}, 
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l364}{§18.2}]{Brokken2019}, 
 \USE{algorithms}
-\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus19.html\#l419}{§19}]{Brokken2019}, 
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus19.html}{§19}]{Brokken2019}, 
 %\USE{numerics}, 
 \USE{input/output}
-\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus06.html\#l106}{§6}]{Brokken2019}, 
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus06.html}{§6}]{Brokken2019}, 
 \USE{regular expressions}
-\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l388}{§18.8}]{Brokken2019}, 
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l394}{§18.8}]{Brokken2019}, 
 \USE{threads}
-\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus20.html\#l493}{§20}]{Brokken2019},
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus20.html}{§20}]{Brokken2019},
+\USE{coroutines}
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus24.html}{§24}]{Brokken2019},
 \USE{randomization}
-\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l399}{§18.9}]{Brokken2019},
-\USE{date and time} \cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus04.html\#l81}{§4.2}]{Brokken2019} en
-\USE{filesystem} \cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus04.html\#l86}{§4.3}]{Brokken2019}.
+\cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus18.html\#l405}{§18.9}]{Brokken2019},
+\USE{date and time} \cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus04.html\#l79}{§4.2}]{Brokken2019} en
+\USE{filesystem} \cite[\href{http://www.icce.rug.nl/documents/cplusplus/cplusplus04.html\#l84}{§4.3}]{Brokken2019}.
 
 \chapter{Containers}
 \label{sec:containers}
@@ -4723,6 +4770,18 @@ De standaard \Cpp{} \USE{library} bevat de volgende associatieve containers:
 	\item |unordered_map|
 	\item |unordered_multimap|
 \end{itemize}
+%TODO: nog toevoegen: 
+% Container adaptors C++23
+%  flat_set
+% 	adapts a container to provide a collection of unique keys, sorted by keys 
+%  flat_map
+% 	adapts two containers to provide a collection of key-value pairs, sorted by unique keys
+% flat_multiset
+% 	adapts a container to provide a collection of keys, sorted by keys
+% flat_multimap
+% 	adapts two containers to provide a collection of key-value pairs, sorted by keys
+
+%TODO: verwijzen naar Views
 
 \section{Sequentiële containers}
 \label{sec:seqcon}
@@ -4830,25 +4889,27 @@ Dit voorbeeldprogramma \proglink{stdvector.cpp} laat zien:
 
 \cpplstinputfragment[linerange={1-85}]{std_vector.cpp}
 
-In het bovenstaande programma worden maar liefst 5 verschillende manieren gedemonstreerd om de elementen in een |vector<int>| te verdubbelen.
+In het bovenstaande programma worden maar liefst vijf verschillende manieren gedemonstreerd om de elementen in een |vector<int>| te verdubbelen.
 De eerste twee implementaties |verdubbel1| en |verdubbel2| gebruiken indexering om de elementen in de vector te benaderen.
 In plaats van de expressie |vec[index]| had de expressie |vec.at(index)| gebruikt kunnen worden zodat de waarde van de index gecontroleerd wordt op geldigheid.
 In dit geval vond ik dit niet zinvol omdat de expressie in een herhalingslus wordt gebruikt waarbij alleen geldige waarden van de index worden gebruikt.
 De volgende twee implementaties |verdubbel3| en |verdubbel4| gebruiken een iterator om de elementen in de vector te benaderen.
 De laatste implementatie |verdubbel5| gebruikt een \USE{range\hyp{}based for} om de elementen in de vector te benaderen en is het eenvoudigst.
 
-\section{Generieke print voor containers}
+\section{Generieke verdubbel functie voor containers}
 Geïnspireerd door het bovenstaande voorbeeld zou je een generieke |verdubbel| functie kunnen bedenken waarmee de elementen uit elke willekeurige container gevuld met integers verdubbeld kunnen worden.
 We kunnen voor deze generieke functie geen indexering gebruiken omdat indexering niet bij alle containers gebruikt kan worden.
 We zouden wel, als volgt, gebruik kunnen maken van een iterator, zie \proglink{generieke_verdubbel-iterator.cpp}:
 
-\cpplstinputfragment[linerange={18-23}]{generieke_verdubbel-iterator.cpp}
+\cpplstinputfragment[linerange={30-35}]{generieke_verdubbel-iterator.cpp}
 
 %TODO: gebruik van concepts uitleggen
+Bij het definiëren van deze generieke functie is gebruik gemaakt van het zelfgedefinieerde |Number| concept, het zelfgedefinieerde |non_const| concept, zie \cref{sec:defineconcepts} en van het standaard concept |std::output_iterator|, zie \cref{sec:iteratoren,sec:concepts}.
+Dit zorgt ervoor dat deze functietemplate alleen gebruikt kan worden voor containers die gevuld zijn met getallen en die aangepast kunnen worden.
 
 Het is, ook in dit geval, eenvoudiger om gebruik te maken van een \USE{range\hyp{}based for}, zie \proglink{generieke_verdubbel-range-based-for.cpp}:
 
-\cpplstinputfragment[linerange={18-23}]{generieke_verdubbel-range-based-for.cpp}
+\cpplstinputfragment[linerange={30-35}]{generieke_verdubbel-range-based-for.cpp}
 
 In de bovenstaande functie is een |const auto&| gebruikt om een onnodig kopietje te voorkomen.
 We weten immers niet hoe groot de elementen in de container zijn.
@@ -4856,13 +4917,14 @@ We weten immers niet hoe groot de elementen in de container zijn.
 Bovenstaande twee generieke |verdubbel| functies verdubbelen altijd de waarden van de gehele container.
 Als we ook een gedeelte van een container willen kunnen verdubbelen met de generieke |verdubbel| functie, dan moeten we de functie twee iteratoren meegeven, zie \proglink{generieke_verdubbel-range.cpp}:
 
-\cpplstinputfragment[linerange={18-23}]{generieke_verdubbel-range.cpp}
+\cpplstinputfragment[linerange={30-35}]{generieke_verdubbel-range.cpp}
 
-De eerste iterator |begin| wijst naar het eerste element dat moet worden afgedrukt en de tweede iterator |end| wijst net voorbij het laatste element dat moet worden afgedrukt.
-Als de iteratoren |i1| en |i2| aan deze functie worden meegegeven, dan worden alle elementen vanaf |i1| tot (en dus \emph{niet} tot en met) |i2| afgedrukt.
+De eerste iterator |begin| wijst naar het eerste element dat moet worden verdubbeld en de tweede iterator |end| wijst net voorbij het laatste element dat moet worden verdubbeld.
+Als de iteratoren |i1| en |i2| aan deze functie worden meegegeven, dan worden alle elementen vanaf |i1| tot (en dus \emph{niet} tot en met) |i2| verdubbeld.
 In de wiskunde zouden we dat noteren als het halfopen interval $[$|i1|$, $|i2|$)$.
-In \Cpp{} wordt zo'n halfopen interval van twee iteratoren een \emph{range} genoemd.
-Alle algoritmen uit de standaard \Cpp{} \USE{library} gebruiken ranges als parameters zodat ze ook op een deel van een container uitgevoerd kunnen worden.
+In \Cpp{} wordt zo'n halfopen interval van twee iteratoren een \emph{bereik} (Engels: \emph{range}) genoemd.
+Algoritmen uit de standaard \Cpp{} \USE{library} gebruiken twee iteratoren als parameters zodat ze ook op een deel van een container uitgevoerd kunnen worden.
+Daarnaast zijn in namespace |ranges| algoritmen beschikbaar die op een hele container uitgevoerd kunnen worden en waarbij de container als argument doorgegeven kan worden, zie \cref{sec:ranges}.
 
 De bovenstaande generieke |verdubbel| kan gebruikt worden om de vector |v| volledig te verdubbelen:
 \cpplstinputfragment[linerange={33-33}]{generieke_verdubbel-range.cpp}
@@ -4963,7 +5025,7 @@ Met behulp van indexering kun je nu het telefoonnummer\footnote{%
 \end{cpplstfragment}
 Het telefoonnummer van |Sonja| kan nu, wederom met behulp van indexering, als volgt worden opgezocht en afgedrukt.
 \begin{cpplstfragment}
-	cout << "Sonja : " << telefoonnummer["Sonja"] << '\n';
+	println("{}: {}", "Sonja", telefoonnummer["Sonja"]);
 \end{cpplstfragment}
 Je ziet dat een |map| gebruikt kan worden alsof het een soort array (of |vector|) is waarbij de index geen integer hoeft te zijn.
 Dit soort arrays worden in veel andere programmeertalen (waaronder JavaScript en PHP) \emph{associatieve arrays} genoemd.
@@ -5026,6 +5088,7 @@ Een |set| heeft, onder andere, de volgende memberfuncties:
 
 \cpplstinputfragment[linerange={1-14}]{set.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van dit programma:
 \begin{coutput}
 De set bevat: Daniël Elles Harry Ron Roy
@@ -5055,6 +5118,7 @@ Als bij de memberfunctie |erase| een sleutel als argument wordt weergegeven, dan
 Als je slechts één sleutel wil verwijderen dan moet je een iterator als argument aan |erase| meegeven.
 \cpplstinputfragment[linerange={1-21}]{multiset.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van dit programma:
 \begin{coutput}
 De bag bevat: Daniël Elles Harry Ron Roy
@@ -5214,7 +5278,7 @@ In \cref{tab:iteratorsoorten} is aangegeven welke bewerkingen door de verschille
 	\USE{random access} & \vtje & \vtje & \vtje & \vtje & \vtje & \vtje
 }
 
-Je ziet in \cref{tab:iteratorsoorten} dat een \USE{forward iterator} ook alle operaties levert die door een input en een output operator worden geleverd.
+Je ziet in \cref{tab:iteratorsoorten} dat een \USE{forward iterator} ook alle operaties levert die door een input en een output iterator worden geleverd.
 Een \USE{bidirectional} iterator levert ook alle operaties die door een \USE{forward iterator} worden geleverd.
 Een \USE{random access} iterator levert ook alle operaties die door een \USE{bidirectional} iterator worden geleverd.
 Deze relatie tussen de verschillende iterator concepten is weergegeven in \cref{fig:iteratoren}.
@@ -5246,8 +5310,8 @@ Het |sort| algoritme heeft een \USE{random access} iterator nodig maar de contai
 \section{Voorbeeldprogramma's met verschillende iterator soorten}
 \label{sec:vbverschillendeiteratorsoorten}
 De implementatie van een algoritme kan afhankelijk zijn van de soort iterator die beschikbaar is.
-Als voorbeeld bekijken we een functie die een iterator teruggeeft die refereert naar het middelste element in een als argument meegegeven range [begin, end).
-Als de range een even aantal elementen bevat dan is er niet echt een middelste element (er zijn dan twee elementen die samen het midden van de range vormen), in dit geval wordt een iterator die refereert naar het laatste van deze twee elementen teruggegeven.
+Als voorbeeld bekijken we een functie die een iterator teruggeeft die refereert naar het middelste element in een als argument meegegeven bereik [begin, end).
+Als het bereik een even aantal elementen bevat dan is er niet echt een middelste element (er zijn dan twee elementen die samen het midden van het bereik vormen), in dit geval wordt een iterator die refereert naar het laatste van deze twee elementen teruggegeven.
 
 Als er \USE{random access} iteratoren beschikbaar zijn, dan is de implementatie van deze functie erg eenvoudig, zie \proglink{find\_upper\_middle\_random\_access.cpp}:
 
@@ -5295,6 +5359,7 @@ Doordat er gebruik gemaakt is van \USE{\emph{constrained} templates} zal de comp
 Zie \proglink{find\_upper\_middle.cpp}:
 \cpplstinputfragment[linerange={10-65}]{find_upper_middle.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van het bovenstaande programma is:
 \begin{coutput}
 find_upper_middle called on forward_list
@@ -5391,7 +5456,7 @@ In tegenstelling tot het vorige programma worden in dit programma geen variabele
 
 \iftoggle{WIP}{
 \section{Ranges}
-\label{ranges}
+\label{sec:ranges}
 \boldred{TODO: nog toevoegen!}
 }{}
 
@@ -5400,10 +5465,12 @@ In tegenstelling tot het vorige programma worden in dit programma geen variabele
 \chapter{Algoritmen}
 \label{sec:algoritmen}
 De \Cpp{}\hyp{}standaard bevat vele generiek algoritmen.
-Een generiek algoritme werkt op één of meer ranges, zie \cref{fig:stl}.
-Een range wordt aangegeven door twee iteratoren i1 en i2.
-De range loopt van i1 \emph{tot} (dus niet tot en met) i2.
+Een generiek algoritme werkt op één of meerdere bereiken [i1, i2), zie \cref{fig:stl}.
+Een bereik wordt aangegeven door twee iteratoren i1 en i2.
+Het bereik loopt van i1 \emph{tot} (dus niet tot en met) i2.
 In de wiskunde zouden we dit noteren als het halfopen interval [i1, i2).
+
+Daarnaast zijn in de namespace |ranges| ook algoritmen beschikbaar die werken op het gehele bereik van een container (dus van |c.begin()| tot |c.end()|), zie \cref{sec:ranges}.
 
 Een generiek algoritme werkt op meerdere container types.
 Sommige containers hebben voor bepaalde bewerkingen specifieke memberfuncties:
@@ -5426,7 +5493,7 @@ Om deze reden hebben alle associatieve containers de memberfunctie |find| waarme
 
 \begin{cpplstfragment}[mathescape=true]
 set priem {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
-auto i1 {find(priem.begin(), priem.end(), 91)}; // $\color{hrred}O(n)$
+auto i1 {ranges::find(priem, 91)}; // $\color{hrred}O(n)$
 auto i2 {priem.find(91)}; // $\color{darkgreen}O(\log{n})$
 \end{cpplstfragment}
 
@@ -5434,11 +5501,15 @@ Kijk dus voordat je een generiek algoritme gebruikt bij een bepaalde container a
 
 Er zijn heel veel algoritmen beschikbaar in de \Cpp{} \USE{library}.
 In dit dictaat worden ze niet allemaal behandeld, kijk voor een volledig overzicht op \url{http://en.cppreference.com/w/cpp/algorithm}.
-Alle algoritmen uit de standaard \Cpp{} \USE{library} gebruiken ranges als parameters zodat ze ook op een deel van een container uitgevoerd kunnen worden.
+De algoritmen uit de standaard \Cpp{} \USE{library} gebruiken twee iteratoren als parameters zodat ze ook op een deel van een container uitgevoerd kunnen worden.
+Daarnaast zijn in namespace |ranges| algoritmen beschikbaar die op een hele container uitgevoerd kunnen worden (dus van |c.begin()| tot |c.end()|) en waarbij de container |c| als argument doorgegeven kan worden, zie \cref{sec:ranges}.
 
 \section{Zoeken, tellen, testen, bewerken en vergelijken}
 \label{sec:algo1}
-De volgende algoritmen kun je gebruiken om een bepaald element te zoeken in een range:
+De volgende algoritmen kun je gebruiken om een bepaald element te zoeken in een range\footnote{%
+	Vanaf hier wordt in dit dictaat het Engelse woord \emph{range} gebruikt in plaats van het Nederlandse woord \emph{bereik}.
+	Een range kan worden doorgegeven als twee iteratoren (dat geldt voor algoritmen in de namespace \cppcode{std} of als een gehele container (dat geldt voor algoritmen in de namespace \cppcode{ranges}).
+}:
 \begin{itemize}
 	\item |find|; Zoek het eerste element met een bepaalde waarde.
 	\item |find_if|; Zoek het eerste element dat voldoet aan een bepaalde voorwaarde.\footnote{%
@@ -5595,6 +5666,7 @@ De zoekvoorwaarde (condition) wordt op drie verschillende manieren opgegeven:
 
 \cpplstinputfragment[linerange={1-45,65-65}]{find_if.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van dit programma:
 \begin{coutput}
 Het eerste positieve element is: 3
@@ -5635,7 +5707,8 @@ De bewerking die voor elk element uitgevoerd moet worden, wordt op twee verschil
 
 \cpplstinputfragment[linerange={1-21,46-46}]{for_each.cpp}
 
-De uitvoer van dit programma:
+\needspace{3\baselineskip}
+ van dit programma:
 \begin{coutput}
 -3 -4 3 4
 -3 -3 -4 -4 3 3 4 4
@@ -5813,8 +5886,13 @@ De transformatie (bewerking) wordt op twee\footnote{%
 	\item door middel van een \emph{lambda\hyp{}functie} die de transformatie uitvoert.
 \end{itemize}
 
+%TODO: werkt niet met ranges::transform. Vermelden.
+%Werkt wel met views?
+%Werkt wel met view::zip?
+\needspace{3\baselineskip}
 \cpplstinputfragment[linerange={1-23,39-39}]{transform.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van dit programma:
 \begin{coutput}
 v: [-3, -4, 3, 4]
@@ -5845,6 +5923,7 @@ Dit wordt gedemonstreerd in het onderstaande programma \proglink{remove.cpp}:
 
 \cpplstinputfragment[linerange={1-27}]{remove.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van dit programma:
 \begin{coutput}
 Na initialisatie: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
@@ -5904,6 +5983,7 @@ Je kunt echter ook indien gewenst zelf een vergelijkingsfunctie definiëren.
 Deze vergelijkingsfunctie moet als derde argument aan |sort| worden meegegeven.
 Dit is nodig als je in een andere volgorde wilt sorteren of als voor de te sorteren objecten geen |operator<| gedefinieerd is.
 
+\needspace{3\baselineskip}
 Als je de getallen in het programma \proglink{stream_iterator.cpp} uit \cref{sec:vbiteratoren} van hoog naar laag wilt sorteren dan kun je de regel:
 \cpplstinputfragment[linerange={11-11}]{stream_iterator.cpp}
 vervangen door (zie \proglink{sort\_lambda.cpp})\footnote{%
@@ -5920,6 +6000,7 @@ Zie \proglink{sort\_deelnemers.cpp}.
 
 \cpplstinputfragment[linerange={1-43}]{sort_deelnemers.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van dit programma:
 \begin{coutput}
 Scores van hoog naar laag:
@@ -5999,7 +6080,7 @@ Daarna wordt uitgelegd hoe je dit algoritme kunt versnellen door de zogenoemde \
 Tot slot wordt verwezen naar programma's waarin het minimax algoritme en \USE{alpha-beta pruning} zijn toegepast om een computer Boter, Kaas en Eieren te laten spelen.
 \subsection{Minimax algoritme}
 \label{sec:MiniMaxAlgoritme}
-Als je de beste zet in een spel (met 2 spelers, die elk afwisselend aan de beurt zijn) wilt vinden, kun een boom tekenen met alle mogelijke posities.
+Als je de beste zet in een spel (met twee spelers, die elk afwisselend aan de beurt zijn) wilt vinden, kun een boom tekenen met alle mogelijke posities.
 Stel dat deze boom er (voor een denkbeeldig spel) uitziet zoals in \cref{fig:gameTree1} is gegeven.
 
 \figuur{scale=0.5}{gameTree1}{Voorbeeld van een spelboom.}
@@ -6081,6 +6162,7 @@ De waarde van \hcode{best_\\-value} wordt teruggegeven aan de aanroepende functi
 
 In de functie |main| wordt ervan uitgegaan dat de computer in positie |0| aan de beurt is.
 
+\needspace{2\baselineskip}
 De uitvoer van dit programma is:
 \begin{coutput}
 Minimaal te behalen Maximale waarde = 4
@@ -6359,7 +6441,8 @@ Deze naam is toevallig zo gekozen door de bedenkers van dit zogenoemde \USE{alph
 
 \cpplstinputfragment[linerange={1-50}]{alpha_beta0.cpp}
 
-In een uitgebreidere versie van het bovenstaande programma, genaamd \proglink{alpha_\\-beta0_\\-ver\\-bose.cpp}, wordt output naar |cout| gestuurd als er gesnoeid wordt.
+In een uitgebreidere versie van het bovenstaande programma, genaamd \proglink{alpha_\\-beta0_\\-ver\\-bose.cpp}, wordt output naar het beeldscherm gestuurd als er gesnoeid wordt.
+\needspace{3\baselineskip}
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
 snoei node 18
@@ -6419,6 +6502,7 @@ We kunnen de mogelijke posities ook van rechts naar links doorzoeken door de bov
 \cpplstinputfragment[linerange={21-21}]{alpha_beta3_verbose.cpp}
 
 In het resulterende programma \proglink{alpha_beta3_verbose.cpp} kan heel wat minder worden gesnoeid.
+\needspace{3\baselineskip}
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
 snoei node 27
@@ -6565,13 +6649,14 @@ In het programma \proglink{Paths.cpp} worden vier verschillende algoritmen geïm
 	De executietijd van dit algoritme is $O(|E|\cdot{}|V|)$.
 \end{itemize}
 
+\needspace{3\baselineskip}
 Als we dit programma gebruiken om het kortste pad van Amsterdam naar Florence in de \USE{graph} die gegeven in \cref{fig:steden} te berekenen dan ziet de uitvoer er als volgt uit:
 
 \begin{coutput}
-p = positive (\href{https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_positive.png}{graph_positive.png}),
-n = negative (\href{https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_negative.png}{graph_negative.png}),
-a = acyclic  (\href{https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_acyclic.png}{graph_acyclic.png}),
-s = steden   (\href{https://bitbucket.org/HR_ELEKTRO/cppprog/wiki/graph_steden.png}{graph_steden.png}) or
+p = positive (\href{\wikiurl/graph_positive.png}{graph_positive.png}),
+n = negative (\href{\wikiurl/graph_negative.png}{graph_negative.png}),
+a = acyclic  (\href{\wikiurl/graph_acyclic.png}{graph_acyclic.png}),
+s = steden   (\href{\wikiurl/graph_steden.png}{graph_steden.png}) or
 q = quit.
 Choose graph: \cinput{s}
 Show graph? (y/n): \cinput{n}
@@ -7099,6 +7184,7 @@ Dit kun je in \Cpp{} als volgt doen:
 }
 Als we een \USE{cast} willen doen die wel portable is, kan dat met |static_cast|.
 
+\needspace{3\baselineskip}
 \subsection*{Vraag:}
 Wat is de uitvoer van het volgende programmadeel (\proglink{casting2.cpp})?
 \cpplstinputfragment[linerange={5-7}]{casting2.cpp}
@@ -7177,11 +7263,11 @@ In het voorbeeldprogramma werd de volgende code gebruikt om te kijken of het inv
 Dit zou je nu ook met behulp van structured binding als volgt kunnen coderen:
 \cpplstinputfragment[linerange={5-5,8-10}]{set_structured_binding.cpp}
 
-% \iftoggle{WIP}{
-% \sectionCode{std::string\_view}
-% \label{concepts}
-% \boldred{TODO: nog toevoegen!}
-% }{}
+\iftoggle{WIP}{
+\sectionCode{std::string\_view}
+\label{sec:string_view}
+\boldred{TODO: nog toevoegen!}
+}{}
 
 
 \chapter{Objects and classes (de details)}
@@ -7317,7 +7403,7 @@ Doordat de eerste parameter |left| hier als \USE{call by value} (zie \cpageref{c
 
 Zie \proglink{Breuk3.cpp} voor een compleet voorbeeldprogramma.
 
-De unary operatoren (dat zijn operatoren met 1 operand, zoals |!|) en de \USE{assignment} operatoren (zoals |+=|) kunnen het beste als memberfunctie \USE{overloaded} worden. De overige binaire operatoren (dat zijn operatoren met 2 operanden, zoals |+|) kunnen het beste als gewone functie \USE{overloaded} worden. 
+De unary operatoren (dat zijn operatoren met 1 operand, zoals |!|) en de \USE{assignment} operatoren (zoals |+=|) kunnen het beste als memberfunctie \USE{overloaded} worden. De overige binaire operatoren (dat zijn operatoren met twee operanden, zoals |+|) kunnen het beste als gewone functie \USE{overloaded} worden. 
 In dit geval wordt namelijk (indien nodig) de linker operand of de rechter operand geconverteerd naar het benodigde type.
 
 \section[Overloaden \texttt{operator++} en \texttt{operator--}]{Overloaden \texorpdfstring{\cppcode{operator++}}{operator++} en \texorpdfstring{\cppcode{operator--}}{operator--}}
@@ -7488,8 +7574,10 @@ In dit geval is er voor gekozen om de |formatter<Breuk>| over te erven van |form
 Dit zorgt ervoor dat de \USE{format specifiers} die bij een |string| gebruikt kunnen worden, nu ook bij een |Breuk| gebruikt kunnen worden.
 De implementatie van de |format| functie maakt gebruik van de al eerder gedefinieerde |operator<<| om een |Breuk| af te drukken naar de |ostringstream| |ss|die vervolgens omgezet kan worden naar een |string| door middel van |ss.str()|.
 
+\needspace{3\baselineskip}
 De volgende code:
 \cpplstinputfragment[linerange=39-46]{format_Breuk.cpp}
+\needspace{3\baselineskip}
 Geeft de volgende uitvoer:
 \begin{coutput}
 b = 15/47
@@ -7699,7 +7787,7 @@ In C en \Cpp{} kun je een gewoon enumeratie-type als volgt definiëren en gebrui
 \begin{cpplstfragment}
 	enum Stoplicht {groen, oranje, rood};
 	Stoplicht s = rood;
-	cout << "s = " << s << '\n';
+	println("s = {}", s);
 \end{cpplstfragment}
 De namen die je gebruikt in de |enum| zijn niets anders dan namen voor integer constanten. 
 Ze worden automatisch genummerd vanaf |0|\footnote{%
@@ -7708,6 +7796,7 @@ Ze worden automatisch genummerd vanaf |0|\footnote{%
 	\cppcode{typedef enum {groen = 7, oranje = 13, rood} Stoplicht};
 	De naam \code{groen} heeft nu de waarde \code{7}, \code{oranje} de waarde \code{13} en \code{rood} de waarde 14. Als je geen waarde opgeeft, wordt er doorgenummerd.
 }.
+\needspace{2\baselineskip}
 De uitvoer van de bovenstaande code is dus:
 \begin{coutput}
 	s = 2
@@ -7829,11 +7918,22 @@ Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald k
 	Array w (v.cbegin() + 1, v.cend() - 1); // a2 is van het type Array<int>
 \end{cpplstfragment}
 
+\iftoggle{WIP}{
+\sectionTextCodeText{Zelf }{concept}{s definiëren}
+\label{sec:defineconcepts}
+\boldred{TODO: nog toevoegen!}
+}{}
+
+\iftoggle{WIP}{
+\sectionTextCodeText{Zelf een }{formatter}{ definiëren}
+\label{sec:userdefinedformatter}
+\boldred{TODO: nog toevoegen!}
+}{}
+
 \section{Nog meer template details}
 Over \USE{templates} valt nog veel meer te vertellen, onder andere:
 \begin{itemize}
 	\item \USE{Template specialisation};\\
-	\label{sec:template specialisation}
 	Een speciale versie van een template die alleen voor een bepaald type (bijvoorbeeld |int|) of voor bepaalde types (bijvoorbeeld |T*|) wordt gebruikt.
 	De laatste vorm wordt \emph{\USE{partial}} \USE{specialisation} genoemd.
 	\item Template memberfuncties;\\
@@ -7841,7 +7941,7 @@ Over \USE{templates} valt nog veel meer te vertellen, onder andere:
 	\item Default waarden voor template\hyp{}parameters.\\
 	Net zoals voor gewone functie parameters kun je voor template\hyp{}parameters ook default waarden (of types) specificeren.
 \end{itemize}
-Voor al deze details verwijs ik je naar \cite[hoofdstuk \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{22}, \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{23} en \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{24}]{Brokken2019},  \cite[hoofdstuk 23 t/m 29]{Stroustrup2013} en \cite{Vandevoorde2017}.
+Voor al deze details verwijs ik je naar \cite[hoofdstuk \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus21.html}{21}, \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{22} en \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus23.html}{23}]{Brokken2019},  \cite[hoofdstuk 23 t/m 29]{Stroustrup2013} en \cite{Vandevoorde2017}.
 
 \chapter{Inheritance (de details)}
 \label{sec:inheritancedetails}
@@ -8090,7 +8190,7 @@ Dit wordt uitgelegd aan de hand van het volgende voorbeeld.
 Als we in het bovenstaande programma de class |Fruit| als volgt wijzigen (\proglink{Dynamic\\-Binding\\-In\\-Constructor\\-En\\-De\\-struc\\-tor.cpp}):
 \cpplstinputfragment[linerange={6-21}]{DynamicBindingInConstructorEnDestructor.cpp}
 
-\needspace{2\baselineskip}
+\needspace{3\baselineskip}
 dan wordt de uitvoer:
 \begin{coutput}
 Er is een Fruit aangemaakt.
@@ -8280,6 +8380,7 @@ De enige mogelijkheid is dus het opslaan van polymorfe pointers naar objecten.
 Hier volgt een voorbeeld van het gebruik van een |vector| en polymorfisme (\proglink{fruitmand.cpp}):
 \cpplstinputfragment[linerange={6-50}]{fruitmand.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
 De fruitmand bevat:
@@ -8476,7 +8577,7 @@ Over \USE{inheritance} valt nog veel meer te vertellen:
     \item Virtual \USE{inheritance}.
     Speciale vorm van \USE{inheritance} nodig om bepaalde problemen bij multiple \USE{inheritance} op te kunnen lossen.
 \end{itemize}
-Voor al deze details verwijs ik je naar \cite[hoofdstuk \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus13.html}{13} en \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus14.html}{14}]{Brokken2019} en \cite[hoofdstuk 20 en 21]{Stroustrup2013}.
+Voor al deze details en meer verwijs ik je naar \cite[hoofdstuk \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus13.html}{13} tot en met \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus17.html}{17}]{Brokken2019} en \cite[hoofdstuk 20 en 21]{Stroustrup2013}.
 
 \chapter{\USE{Dynamic memory allocation} en \USE{destructors} (de details)}
 \label{sec:dynamicmemoryallocationendestructorsdetails}
@@ -8814,6 +8915,7 @@ Je kunt kijken of deze optimalisatie wel of niet wordt toegepast door een class 
 Bijvoorbeeld, zie \proglink{RVO.cpp}:
 \cpplstinputfragment[linerange={5-31}]{RVO.cpp}
 Het enige doel van dit programma is om te kijken of de compiler de return value optimization toepast.
+\needspace{3\baselineskip}
 Als dit programma gecompileerd wordt met gcc 15.2\footnote{%
 	\code{g++ -std=c++23 -fmodules -Wall -Wextra -Wpedantic -g3 -O0 RVO.cpp}
 }, dan geeft dit programma de volgende uitvoer:
@@ -8827,6 +8929,7 @@ Blijkbaar is de GCC \Cpp{}\hyp{}compiler zo slim om alle benodigde kopieeracties
 }.
 \footnotetext{Zie: \url{ https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html}.}
 
+\needspace{3\baselineskip}
 Als we bovenstaand programma compileren\footnote{%
 	De gebruikte versie van de TI \Cpp{}\hyp{}compiler is 18.12.4.
 } en uitvoeren op een CC3220 Launchpad met de compiler optimalisatie op \squote{off}, dan geeft het de volgende uitvoer:
@@ -8926,14 +9029,17 @@ Deze rvalue reference kun je daarna ook nog wijzigen.
 	r5 = 5; // $\color{darkgreen}\textbf{OK}:$ de tijdelijke variabele waar r5 naar refereert wordt 5
 \end{cpplstfragment}
 
+\needspace{3\baselineskip}
 Als je nu wilt weten of de functie |f| met een lvalue of met een rvalue wordt aangeroepen, dan kun je deze functie als volgt overloaden, zie \cref{sec:functionoverloading}:
 
 \cpplstinputfragment[linerange={6-8,10-12}]{rvalue_reference.cpp}
 
+\needspace{3\baselineskip}
 De code gegeven in \proglink{rvalue_reference.cpp}:
 
 \cpplstinputfragment[linerange={15-16,33-35}]{rvalue_reference.cpp}
 
+\needspace{3\baselineskip}
 Geeft nu de volgende uitvoer:
 \begin{coutput}
 f(int&& irr) is aangeroepen met irr = 0
@@ -9128,12 +9234,12 @@ Soms wil je bepalen welk van deze oplossingen sneller is op een bepaald platform
 De enige goede manier om dit vast te stellen is om te \emph{meten} hoe lang het uitvoeren van elke oplossing duurt.
 
 Met behulp van de standaard library opgenomen |high_resolution_clock| kun je eenvoudig de executietijd van een stuk code meten.
-\begin{cpplstfragment}
+\begin{cpplstfragment}[mathescape=true]
 	auto start {chrono::high_resolution_clock::now()};
 	// code die je wilt timen
 	auto stop {chrono::high_resolution_clock::now()};
 	auto duration {chrono::duration_cast<std::chrono::microseconds>(stop - start).count()};
-	cout << "Executietijd = " << duration << " us\n";
+	println("Executietijd = {} $\textcolor{lstblue}{\upmu}$s", duration);
 \end{cpplstfragment}
 
 \section{Random getallen}
@@ -9235,11 +9341,13 @@ breuken = {3/4, 1/4, 2/3, 1/3, 1/2}
 
 Omdat breuken genormaliseerd worden, wordt de |Breuk {2,4}| niet in de set opgenomen omdat de |Breuk {1,2}| er al inzit.
 
+\needspace{5\baselineskip}
 \section{Voorbeeldprogramma dat generiek en objectgeoriënteerd programmeren combineert}
 De standaard functie |mem_fn| vormt de koppeling tussen generiek programmeren en objectgeoriënteerd programmeren omdat hiermee een memberfunctie kan worden omgezet in een functie\hyp{}object, zie \proglink{mem\_fn.cpp}.
 
 \cpplstinputfragment[linerange={1-22,29-31,48-48}]{mem_fn.cpp}
 
+\needspace{3\baselineskip}
 De uitvoer van dit programma:
 \begin{coutput}
 Kef kef Woef woef Kef kef
@@ -9309,7 +9417,7 @@ Ook in dit geval vind ik het gebruik van een lambda\hyp{}functie eenvoudiger.
 
 \iftoggle{WIP}{
 \section{Views}
-\label{views}
+\label{sec:views}
 \boldred{TODO: nog toevoegen!}
 }{}
 

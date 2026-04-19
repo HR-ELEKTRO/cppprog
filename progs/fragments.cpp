@@ -20,11 +20,34 @@ double absolute_waarde(double f) {
 }
 //<abs_overloaded
 
+#define USE_DEFAULT_PARAMETER
+#ifdef USE_DEFAULT_PARAMETER
 //>def_par
-void drukaf_int(int i, int talstelsel = 10);
+void drukaf(int i, int talstelsel = 10);
 //<def_par
+#else
+void drukaf(int i, int talstelsel) {
+}
+#endif
 
-void drukaf_int(int i, int talstelsel) {
+void drukaf_recursief(int i, int talstelsel) {
+    if (talstelsel != 10) {
+        int rest {i % talstelsel};
+        int quotiënt {i / talstelsel};
+        if (quotiënt != 0) {
+            drukaf_recursief(quotiënt, talstelsel);
+        }
+        print("{}", rest);
+    }
+    else {
+        print("{}", i);
+    }
+}
+
+void drukaf(int i, int talstelsel) {
+    assert(talstelsel <= 10);
+    drukaf_recursief(i, talstelsel);
+    println();
 }
 
 //>struct_Tijdsduur
@@ -140,6 +163,8 @@ bool operator==(const Breuk& links, const Breuk& rechts) {
     return links.boven == rechts.boven && links.onder == rechts.onder;
 }
 
+//#define Breuk3_main
+#ifdef Breuk3_main
 //>Breuk3_main
 int main() {
     Breuk b1, b2;              // definiëren van variabelen
@@ -165,8 +190,8 @@ int main() {
     }
 }
 //<Breuk3_main2
-
-void dummy() {
+#else
+int main() {
 {
 //>som_in_C
     int rij[] {12, 2, 17, 32, 1, 18};
@@ -187,6 +212,7 @@ void dummy() {
 //<som_in_Cpp_zonder_auto
 }
 {
+    println("Geef een double: ");
 //>use_abs_overloaded
     double d;
     cin >> d; // lees d in
@@ -194,12 +220,11 @@ void dummy() {
 //<use_abs_overloaded
 }
 {
-    
 //>use_def_par
-    drukaf_int(12, 2);  // uitvoer: 1100
-    drukaf_int(12);     // uitvoer: 12
-    drukaf_int(12, 10); // uitvoer: 12
-    drukaf_int(12, 7);  // uitvoer: 15
+    drukaf(12, 2);  // uitvoer: 1100
+    drukaf(12);     // uitvoer: 12
+    drukaf(12, 10); // uitvoer: 12
+    drukaf(12, 7);  // uitvoer: 15
 //<use_def_par
 }
 {
@@ -228,6 +253,7 @@ typedef struct Tijdsduur Tijdsduur_t;
     // Error: lvalue required as increment operand
 }    
 {
+    println("Geef een kleine int: ");
 //>new
     double* dp {new double}; // reserveer een double
     int i; cin >> i;
@@ -238,3 +264,4 @@ typedef struct Tijdsduur Tijdsduur_t;
 //<new
 }
 }
+#endif

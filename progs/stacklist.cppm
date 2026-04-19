@@ -23,7 +23,7 @@ private:
     Node* p; // pointer naar de Node aan de top van de stack
 };
 
-template <typename T> Stack_with_list<T>::Stack_with_list(): p(0) {
+template <typename T> Stack_with_list<T>::Stack_with_list(): p(nullptr) {
 }
 
 template <typename T> Stack_with_list<T>::~Stack_with_list() {
@@ -53,7 +53,7 @@ template <typename T> const T& Stack_with_list<T>::top() const {
 }
 
 template <typename T> bool Stack_with_list<T>::empty() const {
-    return p == 0;
+    return p == nullptr;
 }
 
 template <typename T> bool Stack_with_list<T>::full() const {

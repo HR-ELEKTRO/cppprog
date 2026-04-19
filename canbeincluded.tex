@@ -14,6 +14,7 @@
 \usepackage{needspace}
 \usepackage{hwemoji}
 \usepackage{xfrac}
+% \usepackage{comment}
 \newcommand{\myfrac}[2]{\raisebox{0.35ex}{\sfrac{#1}{#2}}}
 
 \newcommand{\progs}{progs}
@@ -46,8 +47,12 @@
 % gebruik voor opmaak van warnings en error meldingen van de C++ compiler
 \newcommand{\error}{\texttt}
 
+% gebruikt voor in te vullen parameter in code
+\newcommand{\param}[1]{\text{\color{cyan}{\textbf{#1}}}}
+
 \begin{document}
 \begin{cpplstShortInline}
+% \begin{comment}
 \tableofcontents
 \section{Notes from A Tour if C++, Second Edition}
 Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Second Edition} van Bjarne Stroustrup. 
@@ -426,7 +431,7 @@ unique_ptr<T> make_unique(Args&&... args) {
 \section{Notes from Effective Modern C++}
 Aantekeningen die ik gemaakt heb bij het lezen van \emph{Effective Modern C++} van Scott Meyers. 
 
-\section{Notes from }
+\section{Notes from Professional C++, 6th Edition}
 Aantekeningen die ik gemaakt heb bij het lezen van \emph{Professional C++, 6th Edition} van Gregoire.
 Programmacode: \url{https://github.com/Professional-CPP/edition-6}.
 \subsection{C++ Crash Course}
@@ -539,8 +544,134 @@ Programmacode: \url{https://github.com/Professional-CPP/edition-6}.
 	|auto| stript qualifiers (|const| en |volatile|) en references van het type dat wordt afgeleid weg.
 	Dit kan tot onverwachte kopietjes leiden.
 	|decltype| doet dat niet, maar behoudt alle qualifiers en references.
+\end{itemize}
+\subsection{Working with Strings and String Views}
+\begin{itemize}
 	\item
-	Bla
+	\USE{\emph{raw string literals}}, zie \proglink{raw_string_literal.cpp}.
+	De delimiter kan tussen de 1 en 16 karakters lang zijn.
+	\item
+	Alles wat in een USE{\emph{inline namespace}} wordt gedefinieerd is automatisch ook beschikbaar in de bovenliggende namespace, zie \proglink{inline_namespace.cpp}.
+	\item
+	CTAD met |vector| met strings.
+	Je moet oppassen wanneer je CTAD gebruikt voor een |vector| met strings.
+	Een string literal is namelijk niet van het type |string| maar van het type |const char*| of |const char[]|.
+	Zie \proglink{CTAD_vector_string.cpp}.
+	\item
+	De volgende functies zijn beschikbaar om numerieke waarden om te zetten in een |string|, waarbij het type \code[mathescape=true]{$\param{T}$} (|unsigned|) |int|, (|unsigned|) |long|, (|unsigned|) |long long|, |float|, |double| of |long double| kan zijn.
+\begin{cpplstfragment}[mathescape=true]
+string to_string($\param{T}$ value);
+\end{cpplstfragment}
+	Zie \proglink{to_string.cpp}.
+	\item
+	De volgende functies zijn beschikbaar om een |string| om te zetten in een numerieke waarde.
+\begin{cpplstfragment}[mathescape=true]
+$\param{T}$ sto$\param{X}$(const string& str, size_t *pos = nullptr, int base = 10);
+\end{cpplstfragment}
+	Waarbij \code[mathescape=true]{$\param{X}$} |i|, |ui|, |l|, |ul|, |ll|, |ull|, |f|, |d| of |ld| kan zijn.
+	\code[mathescape=true]{$\param{T}$} is dan respectievelijk |int|, |unsigned int|, |long|, |unsigned long|, |long long|, |unsigned long long|, |float|, |double| of |long double|.
+	De functies die een floating point waarde teruggeven, hebben geen parameter |base|.
+	|pos| is een output parameter. Na afloop bevat |*pos| de index van het eerste niet-omgezette teken. 
+	|base| geeft het grondtal aan dat tijdens de omzetting moet worden gebruikt.
+	Als |base| 0 is, wordt het grondtal automatisch bepaald op basis van de inhoud van de string:
+	\begin{itemize}
+		\item als de string begint met |0|, wordt het grondtal 8;
+		\item als de string begint met |0x|, wordt het grondtal 16;
+		\item anders wordt het grondtal 10\footnote{%
+			Je zou misschien verwachten dat als de string begint met \code{0b}, het grondtal 2 zou worden, maar dat is (helaas) niet het geval in \Cpp{}23.
+			Zie \url{https://en.cppreference.com/w/cpp/string/basic_string/stol}.
+		}.
+	\end{itemize}
+	Deze functies slaan voorafgaande spaties over.
+	Er wordt een genereren een |invalid_argument| exception gegooid als er geen conversie kan worden uitgevoerd.
+	Er wordt een |out_of_range| exception gegooid als de geconverteerde waarde buiten het bereik van het return type valt.
+	Zie \proglink{sto_numeriek.cpp}.
+	\item
+	Er zijn low level conversie functies beschikbaar (|from_chars| en |to_chars|) om numerieke gegevens te serialiseren naar en te deserialiseren vanuit formaten zoals JSON, XML, enzovoort..
+	\item
+	Operaties op variabelen van het type |string| zijn altijd veilig omdat de class |string| het geheugen beheert dat nodig is om de string op te slaan.
+	Bij het uitvoeren van operaties op een string, zoals het opvragen van een substring, wordt er een nieuw object van het type |string| gemaakt dat een kopie van de substring bevat.
+	
+	\cpplstinputfragment[linerange={6-11}]{string_view.cpp}
+
+	De format specifier |:?| zorgt ervoor dat de inhoud van de string met dubbele aanhalingstekens eromheen wordt afgedrukt.
+	
+	Een |string_view| is een lichtgewicht object dat een read-only pointer naar een tekenreeks en een lengte bevat.
+	Een |string_view| biedt een interface die bijna gelijk is aan de \emph{read-only} interface van |string|.
+	Hierdoor kun je bovenstaande code efficiënter schrijven door een |string_view| te gebruiken in plaats van een |string|, omdat er dan geen nieuw object van het type |string| hoeft te worden gemaakt.
+
+	\cpplstinputfragment[linerange={14-19}]{string_view.cpp}
+
+	Er worden nu helemaal geen objecten van het type |string| aangemaakt in het geheugen.
+	De objecten van het type |string_view| bevatten enkel een pointer naar de string literal en een lengte.
+	Maar omdat de |string_view| in tegenstelling tot een |string| de karakters niet zelf opslaat en beheert, moet je wel oppassen bij het gebruik ervan.
+	Als de tekst waarnaar de |string_view| verwijst, wordt gewijzigd of verwijderd, dan kan dit leiden tot onverwacht of zelfs ongedefinieerd gedrag als je daarna de |string_view| gebruikt.
+
+	\cpplstinputfragment[linerange={22-32}]{string_view.cpp}
+
+	In de bovenstaande code wordt de |string_view| |sv2| na het aanpassen van de |string| |s1| afgedrukt.
+
+	\cpplstinputfragment[linerange={28-28,32-32}]{string_view.cpp}
+
+	Dit geeft, misschien onverwacht, als output |"Hi, W"| omdat de |string_view| |sv2| nog steeds verwijst naar de eerste vijf karakters van de |string| |s1|.
+
+	Ook wordt de |string_view| |sv1| afgedrukt, dat heeft in principe ongedefinieerd gedrag tot gevolg omdat de |string_view| |sv1| nog steeds verwijst naar de eerst dertien karakters van de |string| |s1|.
+	Maar deze |string| bevat nog maar tien karakters. 
+	Het afdrukken van dertien karakters uit deze |string| leidt tot ongedefinieerd gedrag\footnote{%
+		Er kan dus vanalles gebeuren, zoals het afdrukken van willekeurige tekens, een crash van het programma, enzovoort.
+	}.
+
+	|string_view| voegt de memberfuncties |remove_prefix(size_t)| en \hcode{re\\-move_\\-suf\\-fix(size_t)} toe, die een |string_view| inkorten.
+	Zie \proglink{string_view.cpp}.
+	\item
+	Als je een stukje tekst aan een functie wilt meegeven, dan kun je dat doen door een  een |const string&| te gebruiken. 
+	Als je nu echter een string literal (bijvoorbeeld |"Hallo"|) doorgeeft, dan creëert de compiler stilzwijgend een tijdelijk object van het type |string| dat misschien niet nodig is.
+	Je zou een overloaded functie, zie \cref{sec:overloading}, kunnen schrijven die een |const char*| accepteert.
+	Er hoeft dan geen object van het type |string| gemaakt te worden.
+	In dit geval kun je ook één functie schrijven die een |string_view| accepteert, omdat een |string_view| zowel een |const char*| als een |string| kan accepteren zonder dat er een tijdelijk object van het type |string| hoeft te worden gemaakt.
+
+	\cpplstinputfragment[linerange={4-22}]{string_view_parameter.cpp}
+
+	In het bovenstaande codefragment zijn vijf functies gedefinieerd waarmee een string afgedrukt kan worden.
+	\begin{itemize}
+		\item 
+		|f1(const char* s)| kan aangeroepen worden met een string literal:
+		\cpplstinputfragment[linerange={26-26}]{string_view_parameter.cpp}
+		|f1| kan niet aangeroepen worden met een |string|:
+\begin{cpplstfragment}[mathescape=true]
+	string hallo {"Hallo daar!"};
+	f1(hallo); // $\text{\color{hrred}{\textbf{error}}}$: cannot convert 'std::string' to 'const char*'
+\end{cpplstfragment}
+		Je kunt de |string| wel omzetten naar een |const char*| door de |c_str()| memberfunctie van de |string| te gebruiken:
+		\cpplstinputfragment[linerange={26-26}]{string_view_parameter.cpp}
+		Maar dit is onhandig en in de functie |f1| kun je natuurlijk geen gebruik maken van de memberfuncties van de class |string|.
+		\item 
+		|f2(const string& s)| kan aangeroepen worden met een |string| en met een string literal:
+		\cpplstinputfragment[linerange={31-32}]{string_view_parameter.cpp}
+		Maar als je |f2| aanroept met een string literal, dan wordt er een tijdelijk object van het type |string| gemaakt en dat is niet efficiënt als je de memberfuncties van de class |string| niet nodig hebt.
+		\item
+		De twee functies |f3| zijn overloaded zodat deze zowel een |const char*| als een |const string&| kunnen accepteren:
+		\cpplstinputfragment[linerange={33-34}]{string_view_parameter.cpp}
+		Maar het is natuurlijk niet handig om steeds twee functies te definiëren om de code zo efficiënt mogelijk te maken.
+		\item |f4(string_view s)| kan ook aangeroepen worden met een |string| en met een string literal, maar er wordt geen tijdelijk object van het type |string| gemaakt als je een string literal doorgeeft.
+		Dit is dus de meest efficiënte manier om een string aan een functie door te geven als je de memberfuncties die een |string| aanpassen niet nodig hebt.
+		De |string_view| heeft dezelfde read-only interface als een |string|, waar je gebruik van kunt maken in de functie, ook als je een string literal doorgeeft.
+		Een |string_view| wordt meestal als call by value parameter gebruikt, omdat het efficiënt gekopieerd kan worden.
+	\end{itemize}
+	Zie \proglink{string_view_parameter.cpp}.
+	\item
+	Een |string_view| wordt niet impliciet geconverteerd naar een |string|.
+	Deze conversie moet expliciet worden gemaakt door een |string| te construeren met de |string_view| als argument:
+\begin{cpplstfragment}
+string_view sv {"Hallo Wereld!"};
+string s {sv}; // expliciete conversie van string_view naar string
+\end{cpplstfragment}
+	Als een functie een |string_view| als parameter heeft en in de functie moet de |string_view| worden geconverteerd naar een |string| dan is het beter om de functie een |const string&| parameter te geven omdat er uiteindelijk toch een kopietje gemaakt moet worden.
+	\item
+	Je kunt een string literal afsluiten met de |sv| literal om deze als |string_view| te interpreteren:
+\begin{cpplstfragment}
+	auto hallo = "Hallo Wereld!"sv; // hallo is van het type string_view
+\end{cpplstfragment}
 	\item
 	Bla
 	\item
@@ -694,9 +825,17 @@ post (C++26)
 trivially_relocatable_if_eligible (C++26)
 replaceable_if_eligible (C++26)
 \end{cpplstfragment}
+% \end{comment}
 
 \section{Testcode}
-Bla bla.
 
+
+% \begin{comment}
+\section{Bruikbare tekst}
+Het \USE{keyword} |typename| is nodig om de compiler duidelijk te maken dat \hcode{iterator_\\-traits<I>::\\-iterator_\\-category} een typenaam is.
+Zie eventueel \url{http://en.cppreference.com/w/cpp/keyword/typename}.
+
+
+% \end{comment}
 \end{cpplstShortInline}
 \end{document}

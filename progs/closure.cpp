@@ -4,7 +4,7 @@ using namespace std;
 int main() {
     vector v {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int som_even {0};
-    for_each(v.cbegin(), v.cend(), [&som_even](auto i) {
+    ranges::for_each(v, [&som_even](auto i) {
         if (i % 2 == 0) {
             som_even += i;
         }
