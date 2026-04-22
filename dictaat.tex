@@ -24,7 +24,7 @@
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
 \ifWIP
-\newcommand{\huidigeversie}{1.92}
+\newcommand{\huidigeversie}{1.93}
 \else
 \newcommand{\huidigeversie}{2.0}
 \fi
@@ -5874,7 +5874,7 @@ De volgende algoritmen kun je gebruiken om elementen in een range te overschrijv
 
 De executietijd van de in deze paragraaf genoemde algoritmen is $O(n)$.
 
-\subsectionTextCode{Voorbeeldprogramma met}{std::transform}
+\subsectionTextCode{Voorbeeldprogramma met}{std::ranges::transform}
 %\markright{}
 \label{sec:transform}
 Het onderstaande voorbeeldprogramma \proglink{transform.cpp} laat zien hoe je het standaard algoritme |transform| kunt gebruiken om een vector bij een andere vector op te tellen.
@@ -5886,9 +5886,6 @@ De transformatie (bewerking) wordt op twee\footnote{%
 	\item door middel van een \emph{lambda\hyp{}functie} die de transformatie uitvoert.
 \end{itemize}
 
-%TODO: werkt niet met ranges::transform. Vermelden.
-%Werkt wel met views?
-%Werkt wel met view::zip?
 \needspace{3\baselineskip}
 \cpplstinputfragment[linerange={1-23,39-39}]{transform.cpp}
 
@@ -6518,7 +6515,7 @@ In \cref{fig:gameTree12} is te zien welke takken het alpha\hyp{}beta algoritme d
 \subsection{Verschillende implementaties van Boter, Kaas en Eieren}
 In deze paragraaf wordt verwezen naar programma's die Boter, Kaas en Eieren (Engels: \USE{Tic-Tac-Toe}) spelen.
 Deze programma's zijn geïnspireerd door paragraaf 11.2 van het boek \citetitle{Weiss1999} van \citeauthor{Weiss1999}\cite{Weiss1999}.
-Al deze programma's maken gebruik van een matrix class (zie \proglink{Matrix.h}) om de rondjes en kruisjes in op te slaan.
+Al deze programma's maken gebruik van een matrix class (zie \proglink{Matrix.cppm}) om de rondjes en kruisjes in op te slaan.
 
 Online zijn de volgende programma's beschikbaar:
 \begin{itemize}

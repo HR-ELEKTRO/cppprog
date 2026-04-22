@@ -12,19 +12,19 @@ int main() {
     println("w: {}", w);
 //  Bewerking opgeven met een functie.
 //  Nadeel: voor elke bewerking moet een aparte functie worden geschreven.
-    transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), telop);
+    ranges::transform(v, w, v.begin(), telop);
     println("v na transform: {}", v);
 //  Bewerking opgeven met een lambda functie.
 //  Voordeel: handige oplossing als zoekvoorwaarde uniek is.
 //  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
-    transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), [](int i1, int i2) {
+    ranges::transform(v, w, v.begin(), [](int i1, int i2) {
         return i1 + i2;
     });
     println("v na transform: {}", v);
 //  Bewerking opgeven met een lambda functie met auto parameters.
 //  Voordeel: meest handige oplossing als zoekvoorwaarde uniek is.
 //  Nadeel: lambda funties hebben een speciale, niet heel leesbare, syntax.
-    transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), [](auto i1, auto i2) {
+    ranges::transform(v, w, v.begin(), [](auto i1, auto i2) {
         return i1 + i2;
     });
     println("v na transform: {}", v);
@@ -34,6 +34,6 @@ int main() {
     auto add {[](int i1, int i2) {
         return i1 + i2;
     }};
-    transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), add);
+    ranges::transform(v, w, v.begin(), add);
     println("v na transform: {}", v);
 }

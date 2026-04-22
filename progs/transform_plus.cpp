@@ -9,6 +9,6 @@ int main() {
     
 //  Bewerking opgeven met een standaard functie-object.
 //  Voordeel: hergebruik van standaardcomponenten.
-    transform(v.cbegin(), v.cend(), w.cbegin(), v.begin(), plus());
+    ranges::transform(v, w, v.begin(), plus());
     println("v na transform: {}", v);
 }

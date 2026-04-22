@@ -7,7 +7,7 @@ int main() {
     do {
         print("{}\nRaad een letter: ", geraden);
         char c {static_cast<char>(cin.get())}; cin.get();
-        transform(w.cbegin(), w.cend(), geraden.cbegin(), geraden.begin(), [c](char cw, char cg) {
+        ranges::transform(w, geraden, geraden.begin(), [c](char cw, char cg) {
             return c == cw ? cw : cg;
         });
         print("De letter '{}' komt {} keer voor in het te raden woord.\n", c, count(w.cbegin(), w.cend(), c));
