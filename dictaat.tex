@@ -121,6 +121,9 @@
 \newcommand{\sectionTextCodeText}[3]{%
 	\section[#1 \texttt{#2} #3]{#1 \texorpdfstring{\cppcode{#2}}{#2} #3}%
 }
+\newcommand{\sectionTextCodeTextNoSpaces}[3]{%
+	\section[#1 \texttt{#2} #3]{#1\texorpdfstring{\cppcode{#2}}{#2}#3}%
+}
 \newcommand{\subsectionCode}[1]{%
 	\subsection[\texttt{#1}]{\texorpdfstring{\cppcode{#1}}{#1}}%
 }
@@ -2778,8 +2781,7 @@ Deze rekenkundige bewerkingen kunnen efficiënt geïmplementeerd worden.
 Zo kan de bewerking:
 |v3 = 2 * v1 + v2| door de compiler vertaald worden in één loop waarin voor elke element van |v1|, |v2| en |v3| de volgende code wordt uitgevoerd: |v3[i] = 2 * v1[i] + v2[i];|.
 
-\iftoggle{WIP}{
-\sectionTextCode{Alternatieve notatie met }{auto}
+\sectionTextCode{Alternatieve notatie met}{auto}
 \label{sec:template_auto}
 In deze en volgende paragraaf worden verschillende varianten besproken van de functietemplate |number_of_zero_bits| die het aantal nullen in de binaire representatie van een gegeven geheel getal berekent.
 Het gaat daarbij niet om de implementatie van deze functie, maar om de verschillende manieren waarop een functietemplate gedefinieerd kan worden.
@@ -2787,6 +2789,7 @@ Het gaat daarbij niet om de implementatie van deze functie, maar om de verschill
 
 \needspace{3\baselineskip}
 De eerste variant van deze functietemplate \proglink{number_of_zero_bits1.cpp} is als volgt gedefinieerd:
+\label{code:number_of_zero_bits1}
 \cpplstinputfragment[linerange={5-18}]{number_of_zero_bits1.cpp}
 
 \needspace{3\baselineskip}
@@ -2801,7 +2804,7 @@ Het uint64_t getal 0 heeft 64 bit(s) met de waarde 0.
 \end{coutput}
 
 \needspace{3\baselineskip}
-Met behulp van het keyword |auto| kun je deze functietemplate ook als volgt definiëren:
+Met behulp van het keyword |auto| kun je deze functietemplate ook als volgt definiëren:\label{prog:number_of_zero_bits2}
 \cpplstinputfragment[linerange={5-18}]{number_of_zero_bits2.cpp}
 
 Hoewel dat nu niet meteen duidelijk is, is deze functie |number_of_zero_bits| nog steeds een functietemplate, omdat de parameter |n| een |auto|\hyp{}parameter is.
@@ -2809,7 +2812,9 @@ De compiler zal namelijk nog steeds voor elke unieke type van |n| een aparte ver
 De implementatie blijft (bijna\footnote{%
 	Het enige verschil is dat het parametertype van \cppcode{n} nu moet worden achterhaald met behulp van \cppcode{decltype(n)}, zie \cref{decltype}.
 }) hetzelfde, maar de functietemplate is nu iets eenvoudiger gedefinieerd.
-Elke functie met één of meer |auto|\hyp{}parameters is dus in feite een functietemplate in een verkorte notatie.
+Elke functie met één of meer |auto|\hyp{}parameters is dus in feite een functietemplate in een verkorte notatie\footnote{%
+	In de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#t13-prefer-the-shorthand-notation-for-simple-single-type-argument-concepts}{CG: T.13.} wordt geadviseerd om voor eenvoudige functietemplates met één parameter de verkorte notatie met \cppcode{auto} te gebruiken., 
+}.
 
 Je moet wel oppassen als je deze verkorte notatie gebruikt, omdat elke |auto|\hyp{}parameter een aparte template\hyp{}parameter is, dus als je meerdere |auto|-parameters hebt, dan kunnen deze allemaal verschillende types hebben.
 \needspace{3\baselineskip}
@@ -2844,9 +2849,129 @@ waarbij beide parameters dezelfde template parameter hebben, zodat je alleen waa
 
 \section{Concepts}
 \label{sec:concepts}
-\boldred{TODO: nog toevoegen!}
+In \Cpp{}20 zijn zogenoemde \emph{concepts} geïntroduceerd.
+Een |concept| is een predicate template voor een type.
+Een predicate is een bewering die waar of onwaar is.
+
+Er zijn een aantal standaard concepts gedefinieerd in de standaard library, zie \url{https://en.cppreference.com/w/cpp/concepts.html}.
+
+Zo kan bijvoorbeeld het concept |integral<T>| worden gebruikt om te bepalen of het type |T| een integer getal kan bevatten.
+
+\needspace{3\baselineskip}
+De volgende code:
+\begin{cpplstfragment}
+    println("integral<int> = {}", integral<int>);
+    println("integral<int8_t> = {}", integral<int8_t>);
+    println("integral<uint64_t> = {}", integral<uint64_t>);
+    println("integral<double> = {}", integral<double>);
+\end{cpplstfragment}
+
+\needspace{3\baselineskip}
+Geeft de volgende output:
+\begin{coutput}
+integral<int> = true
+integral<int8_t> = true
+integral<uint64_t> = true
+integral<double> = false
+\end{coutput}
+
+Een |concept| kan gebruikt worden om het type waarmee een template gebruikt kan worden te beperken (Engels: to constrain).
+
+\needspace{3\baselineskip}
+Als je de functietemplate |number_of_zero_bits|, zie \cpageref{code:number_of_zero_bits1} bijvoorbeeld als volgt gebruikt:
+\begin{cpplstfragment}
+    double d {3.14};
+    println("number_of_zero_bits({}) = {}", d, number_of_zero_bits(d));
+\end{cpplstfragment}
+
+Dan zal de compiler de volgende foutmelding geven:
+\begin{lstfragment}
+error: invalid use of incomplete type 'class std::__make_unsigned_selector<double, false, false>'
+\end{lstfragment}
+
+Dit is een vrij cryptische foutmelding, die aangeeft dat de compiler probeert een unsigned versie van het type |double| te maken, maar dat dit niet mogelijk is omdat het type |double| geen unsigned variant heeft.
+De compiler genereert namelijk met behulp van de functietemplate een functie door voor het type |T| |double| in te vullen, waarna de compiler deze functie probeert te compileren, met de bovenstaande foutmelding als gevolg.
+
+Het zou veel beter zijn als je de compiler zou kunnen vertellen dat de functietemplate |number_of_zero_bits| alleen gebruikt mag worden met types die een integer getal kunnen bevatten.
+
+Met behulp van een |concept| is dat sinds \Cpp{}20 mogelijk.
+\needspace{3\baselineskip}
+De eerste twee regels van de functietemplate |number_of_zero_bits| kunnen dan als volgt worden gedefinieerd (\proglink{number_of_zero_bits3.cpp}):
+\cpplstinputfragment[linerange={5-6}]{number_of_zero_bits3.cpp}
+
+Als deze functietemplate nu als volgt gebruikt:
+\begin{cpplstfragment}
+    double d {3.14};
+    println("number_of_zero_bits({}) = {}", d, number_of_zero_bits(d));
+\end{cpplstfragment}
+
+Dan zal de compiler de volgende duidelijkere foutmelding geven:
+\begin{coutput}
+error: no matching function for call to 'number_of_zero_bits(double&)'
+note: constraints not satisfied
+\end{coutput}
+
+De compiler zal nu niet meer proberen om in de functietemplate |number_of_zero_bits| |double| in te vullen voor het type |T|, omdat het concept |integral<double>| niet waar (|false|) is.
+
+Het gebruik van een |concept| zorgt ervoor dat de compiler betere foutmeldingen kan geven als een template wordt gebruikt met een type dat niet aan de eisen van het |concept| voldoet.
+Een template waarvan het gebruik beperkt is, wordt een \dquote{\USE{constrained template}} genoemd\footnote{%
+	In de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#t10-specify-concepts-for-all-template-arguments}{CG: T.10.} wordt geadviseerd om voor alle template parameters een concept te specificeren.
+}.
+
+Het beperken van een template met behulp van een |concept| kan op verschillende manieren worden gedaan.
+\needspace{3\baselineskip}
+De eerste twee regels van de functietemplate |number_of_zero_bits| kunnen ook als volgt worden gedefinieerd (\proglink{number_of_zero_bits4.cpp}):
+\cpplstinputfragment[linerange={5-6}]{number_of_zero_bits4.cpp}
+
+Je kunt de |requires|-voorwaarde dus ook achter de parameterlijst plaatsen.
+
+Er is ook een derde manier om een template te beperken met behulp van een |concept|, namelijk door de naam van het |concept| in plaats van het keyword |typename| in de template parameterlijst te plaatsen.
+Er is dan helemaal geen |requires|-voorwaarde meer nodig.
+\needspace{3\baselineskip}
+De eerste twee regel van de functietemplate |number_of_zero_bits| kunnen dan als volgt worden gedefinieerd (\proglink{number_of_zero_bits5.cpp}):
+\cpplstinputfragment[linerange={5-6}]{number_of_zero_bits5.cpp}
+
+Ook als de functietemplate in de verkorte notatie is gedefinieerd, zie \cpageref{prog:number_of_zero_bits2}, kun je een concept gebruiken om de template te beperken.
+Je plaatst dan de naam van het |concept| vóór het keyword |auto|.
+
+\needspace{3\baselineskip}
+De eerste regel van de verkorte notatie van de functietemplate |number_of_zero_bits| kan dan als volgt gedefinieerd worden (\proglink{number_of_zero_bits6.cpp}):
+\label{prog:number_of_zero_bits6}
+\cpplstinputfragment[linerange={5-5}]{number_of_zero_bits6.cpp}
+
+De vier verschillende manieren om een template te beperken met behulp van een |concept| zijn functioneel allemaal gelijk.
+
+Er zit nog een klein addertje onder het gras, het concept |integral<T>| is niet alleen |true| voor de standaard integer types, maar ook voor de standaard character types en voor het type |bool|.
+\needspace{3\baselineskip}
+Het aantal bits met de waarde |0| in een character is wel te bepalen, maar als je probeert het aantal bits met de waarde |0| in een |bool| te bepalen, dan krijg je de volgende foutmelding van de compiler, omdat het type |bool| geen unsigned variant heeft:
+\begin{coutput}
+error: invalid use of incomplete type 'struct std::make_unsigned<bool>'
+\end{coutput}
+
+\needspace{3\baselineskip}
+Als je wilt voorkomen dat de functietemplate |number_of_zero_bits| gebruikt kan worden met het type |bool|, dan kun je dit als volgt doen (\proglink{number_of_zero_bits7.cpp}):
+\cpplstinputfragment[linerange={5-6}]{number_of_zero_bits7.cpp}
+
+Hierbij is gebruik gemaakt van het standaard concept |same_as<T, U>|, dat waar is als de types |T| en |U| hetzelfde zijn.
+Je ziet dat je achter het keyword |requires| meerdere voorwaarden kunt plaatsen, die met logische operatoren kunnen worden gecombineerd.
+De logische expressie moet wel tussen haakjes worden geplaatst.
+
+\needspace{4\baselineskip}
+Als je de verkorte notatie van de functietemplate |number_of_zero_bits| gebruikt, zie \cpageref{prog:number_of_zero_bits6} en je wilt voorkomen dat de template met het type |bool| wordt gebruikt, dan moet je zelf een |concept| definiëren (\proglink{number_of_zero_bits8.cpp}):
+\cpplstinputfragment[linerange={5-8}]{number_of_zero_bits8.cpp}
+
+Je kunt concepten dus gebruiken om duidelijkere foutmeldingen te krijgen als een template wordt gebruikt met een type dat niet aan de eisen van het concept voldoet.
+Daarnaast kun je door concepten te gebruiken templates ook overloaden (concept-based overloading).
+De compiler kiest dan de template waarbij de meegegeven argumenten het beste aan de gedefinieerde voorwaarden (concepten) voldoen.
+%TODO: eenvoudig voorbeeld bedenken dat de studenten zonder kennis van iteratoren kunenn begrijpen.
+%Zie \proglink{concept-based_overloading.cpp}.
+In \cref{sec:vbverschillendeiteratorsoorten} vind je hiervan een voorbeeld.
+
+Het is ook mogelijk om zelf concepten te definiëren, die \emph{niet} bestaan uit logische combinaties van standaard concepten, zie \cref{sec:defineconcepts}\footnote{%
+	In de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#t11-whenever-possible-use-standard-concepts}{CG: T.11.} wordt geadviseerd om waar mogelijk standaard concepten te gebruiken.
+}.
+
 %TODO: Template specialisaties. Abs voor complexe getallen.
-}{}
 
 \chapter{Inheritance}
 \label{sec:inheritance}
@@ -5521,8 +5646,6 @@ In tegenstelling tot het vorige programma worden in dit programma geen variabele
 \boldred{TODO: nog toevoegen!}
 }{}
 
-% TODO: nog aanpassen aan ranges!
-
 \chapter{Algoritmen}
 \label{sec:algoritmen}
 De \Cpp{}\hyp{}standaard bevat vele generiek algoritmen.
@@ -7977,13 +8100,13 @@ Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald k
 \end{cpplstfragment}
 
 \iftoggle{WIP}{
-\sectionTextCodeText{Zelf }{concept}{s definiëren}
+\sectionTextCodeTextNoSpaces{Zelf }{concept}{s definiëren}
 \label{sec:defineconcepts}
 \boldred{TODO: nog toevoegen!}
 }{}
 
 \iftoggle{WIP}{
-\sectionTextCodeText{Zelf een }{formatter}{ definiëren}
+\sectionTextCodeText{Zelf een}{formatter}{definiëren}
 \label{sec:userdefinedformatter}
 \boldred{TODO: nog toevoegen!}
 }{}

@@ -2,8 +2,8 @@ import std;
 #include <cassert>
 using namespace std;
 
-int number_of_zero_bits(auto n) {
-    using T = decltype(n);
+template<typename T>
+int number_of_zero_bits(T n) requires integral<T> {
     using unsigned_T = make_unsigned_t<T>;
     unsigned_T unsigned_n {static_cast<unsigned_T>(n)};
     int count {0};
@@ -61,5 +61,6 @@ int main() {
 
     // double n15 {3.14};
     // println("number_of_zero_bits({}) = {}", n15, number_of_zero_bits(n15));
-    // error: invalid use of incomplete type 'class std::__make_unsigned_selector<double, false, false>'
+    // error: no matching function for call to 'number_of_zero_bits(double&)'
+    // note: constraints not satisfied
 }

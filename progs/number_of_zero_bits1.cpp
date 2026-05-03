@@ -1,5 +1,5 @@
 import std;
-#include <assert.h>
+#include <cassert>
 using namespace std;
 
 template<typename T>

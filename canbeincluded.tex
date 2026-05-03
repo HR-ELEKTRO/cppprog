@@ -99,12 +99,6 @@ void f() noexcept {
 \subsection{Templates}
 \begin{itemize}
 	\item 
-	In \Cpp{}20 worden zogenoemde \emph{Concepts} geïntroduceerd.
-	Een concept is een predicate voor een type.
-	Een predicate is een bewerking die waar of onwaar is.
-	Met behulp van concepts kunnen je template argumenten beperken tot verschillende types.
-	Bijvoorbeeld: |template<Elem T>| kan gebruikt worden voor types |T| waarvoor geldt dat |Elem<T>| waar is.
-	Je kunt een concept dus ook zien als een soort van type van een type (dit wordt ook wel een metatype genoemd).
 	\item 
 	%TODO spelling consequent maken
 	Een member-functie kan een functie-template zijn maar dat geldt niet voor een virtual functie.		
@@ -128,9 +122,6 @@ void f() noexcept {
 	};
 \end{cpplstfragment}
 \end{itemize}
-
-\subsection{Concepts and Generic Programming}
-Kan pas vanaf \Cpp{}20. Te gedetailleerd voor dit dictaat.
 
 \subsection{Strings and Regular Expressions}
 \begin{itemize}
@@ -206,8 +197,6 @@ unique_ptr<T> make_unique(Args&&... args) {
 \begin{cpplstfragment}
 	this_thread::sleep(10ms+500us);
 \end{cpplstfragment}
-	\item 
-	Het kiezen van een implementatie afhankelijk van het type van de iterator zal in \Cpp{}20 veel eenvoudiger worden door het gebruik van concepts.
 \end{itemize}
 
 \subsection{Numerics}
@@ -323,7 +312,6 @@ public:
 	\item
 	Het zelfgedefinieerde type |Array| kan als \dquote{\USE{constrained template}} (to constrain = beperken) worden gedefinieerd, zodat het alleen gebruikt kan worden voor types die voldoen aan bepaalde eisen.
 	Een constrained template heeft een zogenoemd \dquote{\USE{\emph{concept}}} als template parameter.
-	Een concept is een predicaat dat waar of onwaar kan zijn voor een bepaald type.
 \begin{cpplstfragment}
 template<copyable T> class Array {
 	// ...
@@ -341,50 +329,14 @@ template<copyable T> class Array {
 \subsection{Concepts and Generic Programming}
 \begin{itemize}
 	\item
-	Een concept is een predicaat dat waar of onwaar kan zijn voor een bepaald type.
-	Er zijn een aantal standaard concepts gedefinieerd in de standaard library, zie \url{https://en.cppreference.com/w/cpp/concepts.html}.
-	Een concept kan als template parameter worden gebruikt om een template te beperken tot bepaalde types.
-	Dit zorgt ervoor dat de compiler betere foutmeldingen kan geven als een template wordt gebruikt met een type dat niet aan de eisen van het concept voldoet.
-	Zie \proglink{concepts.cpp}.
-	Gebruik bij voorkeur deze standaard concepts in plaats van zelf gedefinieerde concepts.
-	Je kunt een concept ook zelf definiëren, bijvoorbeeld als combinatie van andere concepts.
-	Zie \proglink{concepts.cpp}.
-	Bijvoorbeeld het concept |Number| kan gedefinieerd worden als combinatie van de standaard concepts |integral| en |floating_point| waarbij de character types worden uitgesloten:
-\begin{cpplstfragment}
-template <typename T>
-concept Number = (std::integral<T> || std::floating_point<T>) 
-                 && !std::same_as<T, bool>
-                 && !std::same_as<T, char>
-                 && !std::same_as<T, unsigned char>
-                 && !std::same_as<T, char8_t>
-                 && !std::same_as<T, char16_t>
-                 && !std::same_as<T, char32_t>
-                 && !std::same_as<T, wchar_t>;
-
-auto add(Number auto a, Number auto b) {
-    return a + b;
-}
-\end{cpplstfragment}	
-	\item
-	Omdat je met behulp van concepts kunt aangeven aan welke eisen de meegegeven template argumenten moeten voldoen, kun je templates ook overloaden (concept-based overloading). 
-	De compiler kiest dan de template waarbij de meegegeven argumenten het beste aan de gedefinieerde voorwaarden (concepten) voldoen.
-	Zie \proglink{concept-based_overloading.cpp}.
-	In dictaat moet paragraaf 20.7 \dquote{Automatisch de meest efficiënte implementatie kiezen afhankelijk van de beschikbare iterator soort} en \proglink{find_upper_middle.cpp} herschreven worden.
-	\item
 	Je kunt ook je eigen concepten definiëren, bijvoorbeeld om aan te geven dat een type een bepaalde operator moet ondersteunen.
 	Zie \proglink{require.cpp}.
 	\item
 	De concepten die voor een template zijn gespecificeerd, worden gebruikt om argumenten te controleren op het moment dat het template wordt gebruikt.
 	Ze worden niet gebruikt om het gebruik van de parameters in de definitie van het template te controleren.
 	\item
-	Door een |auto|-parameter te gebruiken, wordt een functie een functietemplate.
-	Zie \proglink{swap_auto.cpp}.
-	Maar pas op nu kun je ook een |int| met een |double| uitwisselen, wat waarschijnlijk niet de bedoeling is.
-	Dat kan niet bij een template waarbij beide parameters dezelfde template parameter hebben.
-	Zie \proglink{swap_template.cpp}.
 	Met behulp van concepten kunnen we de vereisten voor de parameter aanscherpen door |auto| te laten voorafgaan door een concept.
 	Zie \proglink{swap_auto_concept.cpp} en \proglink{swap_template_concept.cpp}.
-	Geef de voorkeur aan de verkorte notatie m.b.v. |auto| voor eenvoudige template functies met één parameter, \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#t13-prefer-the-shorthand-notation-for-simple-single-type-argument-concepts}{CG: T.13.}
 	\item
 	Een template kan zo worden gedefinieerd dat deze een willekeurig aantal argumenten van willekeurige typen accepteert. 
 	Een dergelijk template wordt een \dquote{\USE{variadic template}} genoemd.
@@ -402,10 +354,6 @@ unique_ptr<T> make_unique(Args&&... args) {
 	return unique_ptr<T>{new T(std::forward<Args>(args)...)};
 }
 \end{cpplstfragment}
-	\item
-	Gebruik concepten voor alle template parameters, \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#t10-specify-concepts-for-all-template-arguments}{CG: T.10.}
-	\item
-	Gebruik waar mogelijk standaard concepten, \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#t11-whenever-possible-use-standard-concepts}{CG: T.11.} 
 	\item
 	Bla
 	\item
@@ -587,7 +535,11 @@ $\param{T}$ sto$\param{X}$(const string& str, size_t *pos = nullptr, int base = 
 	Er wordt een |out_of_range| exception gegooid als de geconverteerde waarde buiten het bereik van het return type valt.
 	Zie \proglink{sto_numeriek.cpp}.
 	\item
-	Er zijn low level conversie functies beschikbaar (|from_chars| en |to_chars|) om numerieke gegevens te serialiseren naar en te deserialiseren vanuit formaten zoals JSON, XML, enzovoort..
+	Er zijn low level conversie functies beschikbaar (|from_chars|\footnote{%
+		Zie \url{https://en.cppreference.com/cpp/utility/from_chars}.
+	} en |to_chars|\footnote{%
+		Zie \url{https://en.cppreference.com/cpp/utility/to_chars}.
+	}) om numerieke gegevens te serialiseren naar en te deserialiseren vanuit formaten zoals JSON, XML, enzovoort..
 	\item
 	Operaties op variabelen van het type |string| zijn altijd veilig omdat de class |string| het geheugen beheert dat nodig is om de string op te slaan.
 	Bij het uitvoeren van operaties op een string, zoals het opvragen van een substring, wordt er een nieuw object van het type |string| gemaakt dat een kopie van de substring bevat.
@@ -618,7 +570,7 @@ $\param{T}$ sto$\param{X}$(const string& str, size_t *pos = nullptr, int base = 
 	Ook wordt de |string_view| |sv1| afgedrukt, dat heeft in principe ongedefinieerd gedrag tot gevolg omdat de |string_view| |sv1| nog steeds verwijst naar de eerst dertien karakters van de |string| |s1|.
 	Maar deze |string| bevat nog maar tien karakters. 
 	Het afdrukken van dertien karakters uit deze |string| leidt tot ongedefinieerd gedrag\footnote{%
-		Er kan dus vanalles gebeuren, zoals het afdrukken van willekeurige tekens, een crash van het programma, enzovoort.
+		Er kan dus van alles gebeuren, zoals het afdrukken van willekeurige tekens, een crash van het programma, enzovoort.
 	}.
 
 	|string_view| voegt de memberfuncties |remove_prefix(size_t)| en \hcode{re\\-move_\\-suf\\-fix(size_t)} toe, die een |string_view| inkorten.
@@ -640,7 +592,7 @@ $\param{T}$ sto$\param{X}$(const string& str, size_t *pos = nullptr, int base = 
 		|f1| kan niet aangeroepen worden met een |string|:
 \begin{cpplstfragment}[mathescape=true]
 	string hallo {"Hallo daar!"};
-	f1(hallo); // $\text{\color{hrred}{\textbf{error}}}$: cannot convert 'std::string' to 'const char*'
+	f1(hallo); // $\color{hrred}\textbf{error:}$: cannot convert 'std::string' to 'const char*'
 \end{cpplstfragment}
 		Je kunt de |string| wel omzetten naar een |const char*| door de |c_str()| memberfunctie van de |string| te gebruiken:
 		\cpplstinputfragment[linerange={26-26}]{string_view_parameter.cpp}
@@ -673,9 +625,126 @@ string s {sv}; // expliciete conversie van string_view naar string
 	auto hallo = "Hallo Wereld!"sv; // hallo is van het type string_view
 \end{cpplstfragment}
 	\item
-	Bla
+	In de format string van een |format|, |print| of |println| functieaanroep wordt een |{{| geïnterpreteerd als |{| en een |}}| als |}|, zodat je deze tekens in de output kunt opnemen zonder dat ze worden geïnterpreteerd als format specifiers.
 	\item
-	Bla
+	Sinds Cpp{}23 moet de format string in de |format|, |print| en |println| functies een compile time constant zijn.
+	\needspace{2\baselineskip}
+	De code:
+\begin{cpplstfragment}[mathescape=true]
+    string s {"Hello World!"};
+    println(s); // $\color{hrred}\textbf{error:}$: call to consteval function 'std::basic_format_string<char>(s)' is not a constant expression
+\end{cpplstfragment}
+	Geef dus een foutmelding omdat de format sting geen compile time constante is, maar een variabele.
+
+	Op \cpageref{prog:lees_en_print_double} heb je het programma \proglink{lees_en_print_double.cpp} gezien waarbij de het aantal decimalen dat wordt afgedrukt van een floating point getal |d| afhankelijk is van de waarde van de variabele |aantal_decimalen|.
+\begin{cpplstfragment}
+	println("d = {:.{}f}", d, aantal_decimalen);
+\end{cpplstfragment}
+	\needspace{3\baselineskip}
+	Als je echter probeert om tijdens runtime te bepalen of een floating point getal in wetenschappelijke notatie\footnote{%
+		Zie eventueel \url{https://nl.wikipedia.org/wiki/Wetenschappelijke_notatie}.
+	} moet worden afgedrukt of niet, dan kun je dat niet als volgt doen:
+\begin{cpplstfragment}
+    println("{:{}}", wetenschappelijke_notatie ? "e" : "f", 12345.67890);
+\end{cpplstfragment}
+	Deze code compileert wel, maar geef bij het uitvoeren een exception:
+\begin{coutput}
+terminate called after throwing an instance of 'std::format_error'
+ what():  format error: argument used for width or precision must be a non-negative integer
+Aborted
+\end{coutput}
+	\needspace{3\baselineskip}
+	Je kunt dit natuurlijk oplossen door twee aparte |println| aanroepen te maken, maar dat is niet erg elegant.
+\begin{cpplstfragment}
+    if (wetenschappelijke_notatie) {
+        println("{:e}", 12345.67890);
+    } else {
+        println("{:f}", 12345.67890);
+    }
+\end{cpplstfragment}
+
+	Als je de format string tijdens runtime wilt samenstellen, dan moet je gebruik maken van de |vformat|, |vprint_unicode| of |vprint_nonunicode| functies.
+	% C++26 heeft hier een mooiere oplossing voor |dynamic_format| zie: \url{https://en.cppreference.com/cpp/utility/format/dynamic_format}.
+	\needspace{3\baselineskip}
+	Op de volgende wijze kun je dan bepalen of een floating point getal in wetenschappelijke notatie moet worden afgedrukt of niet:
+\begin{cpplstfragment}
+	println("{}", vformat(wetenschappelijke_notatie ? "{:e}" : "{:f}", make_format_args(d)));
+\end{cpplstfragment}
+	De |vformat| functie neemt een format string en een object van het type |format_args| als argumenten en retourneert een |string| die is opgemaakt volgens de format string en de meegegeven argumenten.
+	De functie |make_format_args| neemt een willekeurig aantal argumenten en retourneert een object van het type |format_args| dat deze argumenten bevat.
+	De functie |println| wordt gebruikt om de door |vformat| geretourneerde string af te drukken.
+
+	\needspace{3\baselineskip}
+	Als alternatief kun je ook de functie |vprint_unicode| of |vprint_nonunicode| gebruiken om de string direct af te drukken zonder dat er een tijdelijk object van het type |string| hoeft te worden gemaakt:
+\begin{cpplstfragment}
+	vprint_unicode(wetenschappelijke_notatie ? "{:e}\n" : "{:f}\n", make_format_args(d));
+\end{cpplstfragment}
+	Omdat er geen |println|-versie van deze functies bestaat moet je zelf een newline karakter toevoegen aan de format string.
+	Zie \proglink{vformat.cpp}.
+
+		\needspace{3\baselineskip}
+	In \Cpp{}26 zijn |vformat| en de |vprint|-varianten niet meer nodig en kan de bovenstaande code vervangen worden door:
+\begin{cpplstfragment}
+    println(dynamic_format(wetenschappelijke_notatie ? "{:e}" : "{:f}"), d);
+\end{cpplstfragment}
+
+	Als je een programma schrijft dat meerdere talen moet ondersteunen, dan komt het gebruik van |vformat| (of een van de |vprint|-varianten) vaak goed van pas.
+	\needspace{3\baselineskip}
+	Bijvoorbeeld:
+	\cpplstinputfragment[linerange={1-9,23-30}]{getal_number.cpp}
+	In dit voorbeeld zijn de Nederlandse en Engelse teksten opgenomen in een |array| maar in de praktijk zou je deze teksten waarschijnlijk in aparte bestanden opslaan en deze bestanden inlezen op het moment dat het programma wordt uitgevoerd.
+	Ook dan is het noodzakelijk om |vformat| (of een van de |vprint|-varianten) te gebruiken omdat de format string tijdens runtime wordt bepaald.
+
+	\needspace{3\baselineskip}
+	In \Cpp{}26 kan de laatste regel van het bovenstaande programma vervangen worden door:
+\begin{cpplstfragment}
+    println(dynamic_format(antwoord[index]), getal);
+\end{cpplstfragment}
+	\item
+	(Niet uit boek.) Als in het programm |getal_number.cpp| een groot getal wordt ingetypt, dan zou het handig zij om dit getal met scheidingstekens voor duizendtallen af te drukken, bijvoorbeeld (in het Nederlands) |1.000.000| in plaats van |1000000|.
+	Het enige probleem hierbij is dat dit afhankelijk is van de gebruikte taal.
+	In het Engels is het gebruikelijk om een komma als scheidingsteken voor duizendtallen te gebruiken, dus |1,000,000| in plaats van |1000000|.
+	\Cpp{} biedt ondersteuning voor lokale conventies zoals datum en tijd-notaties, valuta, getalnotaties enzovoort, via de class |locale|.
+	\needspace{3\baselineskip}
+	Bijvoorbeeld:
+	\cpplstinputfragment[linerange={1-3,11-26}]{getal_number_locale.cpp}
+	In dit voorbeeld wordt ervan uitgegaan dat de locales |nl_NL.utf8| en |en_US.utf8| beschikbaar zijn op het systeem waarop het programma wordt uitgevoerd\footnote{%
+		Op een Linux- of WSL-systeem kun je de beschikbare locales afdrukken met het commando \code{locale -a} in een terminal.
+		Als \code{en_US.utf8} en \code{nl_NL.utf8} niet in de lijst staan, kunt u ze inschakelen met het volgende comando in de terminal:\\
+		\code{sudo nano /etc/locale.gen}\\
+		Verwijder het commentaar bij de regels voor \code{en_US.UTF-8} en \code{nl_NL.UTF-8} en voer vervolgens het volgende commando uit om de landinstellingen te genereren: \code{sudo locale-gen}.
+	}.
+	Aan de functie |format| kun je als eerste argument een locale meegeven en als je dan in de format specifier |{:L}| gebruikt, dan zal de betreffende locale worden toegepast bij het formateren van de betreffende data.
+	Helaas kan aan de functie |vformat| geen locale worden meegegeven, dus als je een format string tijdens runtime wilt samenstellen en daarbij gebruik wilt maken van een locale, dan moet je zelf de locale toepassen op de argumenten voordat je deze aan |vformat| meegeeft.
+
+	In \Cpp{}26 kunnen de laatste zes regels van het bovenstaande programma vervangen worden door:
+\begin{cpplstfragment}
+    array antwoord {"Je hebt het getal {:L} ingevoerd.", "You have entered the number {:L}."};
+    print("{}", vraag[index]);
+    int getal;
+    cin >> getal;
+    println("{}", format(loc, dynamic_format(antwoord[index]), getal);
+\end{cpplstfragment}
+
+\needspace{3\baselineskip}
+	De uitvoer van het programma \proglink{getal_nummer_locale.cpp} is bijvoorbeeld:
+\begin{coutput}
+Nederlands (N) / English (E): \cinput{N}
+Geef een groot getal: \cinput{1234567890}
+Je hebt het getal 1.234.567.890 ingevoerd.
+\end{coutput}
+
+	\needspace{3\baselineskip}
+	Een andere mogelijke uitvoer is:
+\begin{coutput}
+Nederlands (N) / English (E): \cinput{E}
+Enter a big number: \cinput{1234567890}
+You have entered the number 1,234,567,890.
+\end{coutput}
+
+
+
+
 	\item
 	Bla
 	\item
