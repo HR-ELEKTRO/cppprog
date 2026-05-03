@@ -670,6 +670,7 @@ Zie eventueel voor verdere informatie \cite[hoofdstuk 6: \href{http://www.icce.r
 De meeste programmeurs vinden het gebruik van |cout| en |<<| om output te formateren minder handig dan het gebruik van de functies |print| en |println|.
 \needspace{3\baselineskip}
 In dit dictaat gebruiken we daarom voor output de functies |print| en |println| en voor input de |>>| operator (\proglink{lees_en_print_double.cpp}):
+\label{prog:lees_en_print_double}
 \cpplstinputfragment{lees_en_print_double.cpp}
 De in- en uitvoer van dit programma is bijvoorbeeld als volgt\footnote{%
 	De invoer is groen en onderstreept weergegeven.
@@ -2384,6 +2385,8 @@ Deze vorm van hergebruik heeft de volgende nadelen:
 Door middel van een functietemplate kun je de handelingen (knippen, plakken, zoeken en vervangen) die nodig zijn om een functie geschikt te maken voor een ander datatype automatiseren.
 Je definieert dan een zogenoemde \emph{generieke} functie, een functie die je als het ware voor verschillende datatypes kunt gebruiken.
 
+\needspace{2\baselineskip}
+\label{code:swap_template}
 De definitie van de functietemplate voor |swap| ziet er als volgt uit (\proglink{swap_\\-tem\\-plate.\\-cpp}):
 \cpplstinputfragment[linerange={6-10}]{swap_template.cpp}
 
@@ -2778,9 +2781,67 @@ Zo kan de bewerking:
 \iftoggle{WIP}{
 \sectionTextCode{Alternatieve notatie met }{auto}
 \label{sec:template_auto}
-\boldred{TODO: nog toevoegen!}
-% voorbeeld abs?
-% TODO Pas op bij swap
+In deze en volgende paragraaf worden verschillende varianten besproken van de functietemplate |number_of_zero_bits| die het aantal nullen in de binaire representatie van een gegeven geheel getal berekent.
+Het gaat daarbij niet om de implementatie van deze functie, maar om de verschillende manieren waarop een functietemplate gedefinieerd kan worden.
+%TODO: toch nog uitleg over gebruik using, make_unsigned_t en static_cast toevoegen?
+
+\needspace{3\baselineskip}
+De eerste variant van deze functietemplate \proglink{number_of_zero_bits1.cpp} is als volgt gedefinieerd:
+\cpplstinputfragment[linerange={5-18}]{number_of_zero_bits1.cpp}
+
+\needspace{3\baselineskip}
+Je kunt deze functietemplate bijvoorbeeld als volgt gebruiken:
+\cpplstinputfragment[linerange={21-24}]{number_of_zero_bits1.cpp}
+
+\needspace{3\baselineskip}
+De uitvoer van dit programmafragment is:
+\begin{coutput}
+Het int8_t getal 127 heeft 1 bit(s) met de waarde 0.
+Het uint64_t getal 0 heeft 64 bit(s) met de waarde 0.
+\end{coutput}
+
+\needspace{3\baselineskip}
+Met behulp van het keyword |auto| kun je deze functietemplate ook als volgt definiëren:
+\cpplstinputfragment[linerange={5-18}]{number_of_zero_bits2.cpp}
+
+Hoewel dat nu niet meteen duidelijk is, is deze functie |number_of_zero_bits| nog steeds een functietemplate, omdat de parameter |n| een |auto|\hyp{}parameter is.
+De compiler zal namelijk nog steeds voor elke unieke type van |n| een aparte versie van de functie genereren.
+De implementatie blijft (bijna\footnote{%
+	Het enige verschil is dat het parametertype van \cppcode{n} nu moet worden achterhaald met behulp van \cppcode{decltype(n)}, zie \cref{decltype}.
+}) hetzelfde, maar de functietemplate is nu iets eenvoudiger gedefinieerd.
+Elke functie met één of meer |auto|\hyp{}parameters is dus in feite een functietemplate in een verkorte notatie.
+
+Je moet wel oppassen als je deze verkorte notatie gebruikt, omdat elke |auto|\hyp{}parameter een aparte template\hyp{}parameter is, dus als je meerdere |auto|-parameters hebt, dan kunnen deze allemaal verschillende types hebben.
+\needspace{3\baselineskip}
+Op \cpageref{code:swap_template} heb je de definitie van de functietemplate |swap| gezien:
+\cpplstinputfragment[linerange={6-10}]{swap_template.cpp}
+
+\needspace{3\baselineskip}
+Het is nu \emph{geen} goed idee om deze functietemplate in een verkorte notatie te definiëren (\proglink{swap_auto.cpp}):
+\cpplstinputfragment[linerange={6-10}]{swap_auto.cpp}
+
+\needspace{3\baselineskip}
+Als deze functietemplate op de volgende wijze wordt gebruikt:
+\begin{cpplstfragment}
+	float f {0.4}
+	int i {4}; 
+	swap(f, i);
+	println("f = {}, i = {}", f, i);
+\end{cpplstfragment}
+\needspace{3\baselineskip}
+Dan zal dit programma zonder fouten compileren en uitvoeren, maar de uitvoer zal waarschijnlijk niet zijn wat je verwacht:
+\begin{coutput}
+f = 4, i = 0
+\end{coutput}
+
+Als je de oorspronkelijke functietemplate |swap| had gebruikt, dan zou dit programma bij het compileren de volgende foutmelding hebben gegeven:
+\begin{coutput}
+error: no matching function for call to 'swap(int&, double&)' 
+\end{coutput}
+Het is beter om een foutmelding te krijgen bij het compileren van het programma dan onverwacht gedrag bij het uitvoeren van het programma.
+Dus in dit geval is het beter om de oorspronkelijke functietemplate te gebruiken, 
+waarbij beide parameters dezelfde template parameter hebben, zodat je alleen waarden van hetzelfde type kunt verwisselen, zie \proglink{swap_template.cpp}.
+
 \section{Concepts}
 \label{sec:concepts}
 \boldred{TODO: nog toevoegen!}
