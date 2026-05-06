@@ -24,7 +24,7 @@
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
 \ifWIP
-\newcommand{\huidigeversie}{1.93}
+\newcommand{\huidigeversie}{1.94}
 \else
 \newcommand{\huidigeversie}{2.0}
 \fi
@@ -2849,11 +2849,11 @@ waarbij beide parameters dezelfde template parameter hebben, zodat je alleen waa
 
 \section{Concepts}
 \label{sec:concepts}
-In \Cpp{}20 zijn zogenoemde \emph{concepts} geïntroduceerd.
-Een |concept| is een predicate template voor een type.
+In \Cpp{}20 zijn zogenoemde \emph{concepts} (concepten) geïntroduceerd.
+Een concept is een predicate template voor een type.
 Een predicate is een bewering die waar of onwaar is.
 
-Er zijn een aantal standaard concepts gedefinieerd in de standaard library, zie \url{https://en.cppreference.com/w/cpp/concepts.html}.
+Er zijn een aantal standaard concepten gedefinieerd in de standaard library, zie \url{https://en.cppreference.com/w/cpp/concepts.html}.
 
 Zo kan bijvoorbeeld het concept |integral<T>| worden gebruikt om te bepalen of het type |T| een integer getal kan bevatten.
 
@@ -2875,7 +2875,7 @@ integral<uint64_t> = true
 integral<double> = false
 \end{coutput}
 
-Een |concept| kan gebruikt worden om het type waarmee een template gebruikt kan worden te beperken (Engels: to constrain).
+Een concept kan gebruikt worden om het type waarmee een template gebruikt kan worden te beperken (Engels: to constrain).
 
 \needspace{3\baselineskip}
 Als je de functietemplate |number_of_zero_bits|, zie \cpageref{code:number_of_zero_bits1} bijvoorbeeld als volgt gebruikt:
@@ -2894,7 +2894,7 @@ De compiler genereert namelijk met behulp van de functietemplate een functie doo
 
 Het zou veel beter zijn als je de compiler zou kunnen vertellen dat de functietemplate |number_of_zero_bits| alleen gebruikt mag worden met types die een integer getal kunnen bevatten.
 
-Met behulp van een |concept| is dat sinds \Cpp{}20 mogelijk.
+Met behulp van een concept is dat sinds \Cpp{}20 mogelijk.
 \needspace{3\baselineskip}
 De eerste twee regels van de functietemplate |number_of_zero_bits| kunnen dan als volgt worden gedefinieerd (\proglink{number_of_zero_bits3.cpp}):
 \cpplstinputfragment[linerange={5-6}]{number_of_zero_bits3.cpp}
@@ -2913,33 +2913,33 @@ note: constraints not satisfied
 
 De compiler zal nu niet meer proberen om in de functietemplate |number_of_zero_bits| |double| in te vullen voor het type |T|, omdat het concept |integral<double>| niet waar (|false|) is.
 
-Het gebruik van een |concept| zorgt ervoor dat de compiler betere foutmeldingen kan geven als een template wordt gebruikt met een type dat niet aan de eisen van het |concept| voldoet.
+Het gebruik van een concept zorgt ervoor dat de compiler betere foutmeldingen kan geven als een template wordt gebruikt met een type dat niet aan de eisen van het concept voldoet.
 Een template waarvan het gebruik beperkt is, wordt een \dquote{\USE{constrained template}} genoemd\footnote{%
 	In de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#t10-specify-concepts-for-all-template-arguments}{CG: T.10.} wordt geadviseerd om voor alle template parameters een concept te specificeren.
 }.
 
-Het beperken van een template met behulp van een |concept| kan op verschillende manieren worden gedaan.
+Het beperken van een template met behulp van een concept kan op verschillende manieren worden gedaan.
 \needspace{3\baselineskip}
 De eerste twee regels van de functietemplate |number_of_zero_bits| kunnen ook als volgt worden gedefinieerd (\proglink{number_of_zero_bits4.cpp}):
 \cpplstinputfragment[linerange={5-6}]{number_of_zero_bits4.cpp}
 
 Je kunt de |requires|-voorwaarde dus ook achter de parameterlijst plaatsen.
 
-Er is ook een derde manier om een template te beperken met behulp van een |concept|, namelijk door de naam van het |concept| in plaats van het keyword |typename| in de template parameterlijst te plaatsen.
+Er is ook een derde manier om een template te beperken met behulp van een concept, namelijk door de naam van het concept in plaats van het keyword |typename| in de template parameterlijst te plaatsen.
 Er is dan helemaal geen |requires|-voorwaarde meer nodig.
 \needspace{3\baselineskip}
 De eerste twee regel van de functietemplate |number_of_zero_bits| kunnen dan als volgt worden gedefinieerd (\proglink{number_of_zero_bits5.cpp}):
 \cpplstinputfragment[linerange={5-6}]{number_of_zero_bits5.cpp}
 
 Ook als de functietemplate in de verkorte notatie is gedefinieerd, zie \cpageref{prog:number_of_zero_bits2}, kun je een concept gebruiken om de template te beperken.
-Je plaatst dan de naam van het |concept| vóór het keyword |auto|.
+Je plaatst dan de naam van het concept vóór het keyword |auto|.
 
 \needspace{3\baselineskip}
 De eerste regel van de verkorte notatie van de functietemplate |number_of_zero_bits| kan dan als volgt gedefinieerd worden (\proglink{number_of_zero_bits6.cpp}):
 \label{prog:number_of_zero_bits6}
 \cpplstinputfragment[linerange={5-5}]{number_of_zero_bits6.cpp}
 
-De vier verschillende manieren om een template te beperken met behulp van een |concept| zijn functioneel allemaal gelijk.
+De vier verschillende manieren om een template te beperken met behulp van een concept zijn functioneel allemaal gelijk.
 
 Er zit nog een klein addertje onder het gras, het concept |integral<T>| is niet alleen |true| voor de standaard integer types, maar ook voor de standaard character types en voor het type |bool|.
 \needspace{3\baselineskip}
@@ -5083,27 +5083,27 @@ De volgende twee implementaties |verdubbel3| en |verdubbel4| gebruiken een itera
 De laatste implementatie |verdubbel5| gebruikt een \USE{range\hyp{}based for} om de elementen in de vector te benaderen en is het eenvoudigst.
 
 \section{Generieke verdubbel functie voor containers}
-Geïnspireerd door het bovenstaande voorbeeld zou je een generieke |verdubbel| functie kunnen bedenken waarmee de elementen uit elke willekeurige container gevuld met integers verdubbeld kunnen worden.
+\label{sec:generiekeverdubbel}
+Geïnspireerd door het bovenstaande voorbeeld zou je een generieke |verdubbel| functie kunnen bedenken waarmee de elementen uit elke willekeurige container gevuld met getallen verdubbeld kunnen worden.
 We kunnen voor deze generieke functie geen indexering gebruiken omdat indexering niet bij alle containers gebruikt kan worden.
-We zouden wel, als volgt, gebruik kunnen maken van een iterator, zie \proglink{generieke_verdubbel-iterator.cpp}:
+We zouden wel, als volgt, gebruik kunnen maken van een iterator, zie \proglink{generieke_verdubbel-container.cpp}:
 
-\cpplstinputfragment[linerange={30-35}]{generieke_verdubbel-iterator.cpp}
+\cpplstinputfragment[linerange={30-35}]{generieke_verdubbel-container.cpp}
 
-%TODO: gebruik van concepts uitleggen
-Bij het definiëren van deze generieke functie is gebruik gemaakt van het zelfgedefinieerde |Number| concept, het zelfgedefinieerde |non_const| concept, zie \cref{sec:defineconcepts} en van het standaard concept |std::output_iterator|, zie \cref{sec:iteratoren,sec:concepts}.
+Bij het definiëren van deze generieke functie is gebruik gemaakt van het zelfgedefinieerde concept |Number<T>|, het zelfgedefinieerde concept |Const<T>|, zie \cref{sec:defineconcepts} en van het standaard concept |output_iterator<I, T>|, zie \cref{sec:iteratoren,sec:concepts}.
 Dit zorgt ervoor dat deze functietemplate alleen gebruikt kan worden voor containers die gevuld zijn met getallen en die aangepast kunnen worden.
 
 Het is, ook in dit geval, eenvoudiger om gebruik te maken van een \USE{range\hyp{}based for}, zie \proglink{generieke_verdubbel-range-based-for.cpp}:
 
 \cpplstinputfragment[linerange={30-35}]{generieke_verdubbel-range-based-for.cpp}
 
-In de bovenstaande functie is een |const auto&| gebruikt om een onnodig kopietje te voorkomen.
+In de bovenstaande functie is een |auto&| gebruikt om een onnodig kopietje te voorkomen.
 We weten immers niet hoe groot de elementen in de container zijn.
 
 Bovenstaande twee generieke |verdubbel| functies verdubbelen altijd de waarden van de gehele container.
-Als we ook een gedeelte van een container willen kunnen verdubbelen met de generieke |verdubbel| functie, dan moeten we de functie twee iteratoren meegeven, zie \proglink{generieke_verdubbel-range.cpp}:
+Als we ook een gedeelte van een container willen kunnen verdubbelen met de generieke |verdubbel| functie, dan moeten we de functie twee iteratoren meegeven, zie \proglink{generieke_verdubbel-iterator.cpp}:
 
-\cpplstinputfragment[linerange={30-35}]{generieke_verdubbel-range.cpp}
+\cpplstinputfragment[linerange={27-32}]{generieke_verdubbel-iterator.cpp}
 
 De eerste iterator |begin| wijst naar het eerste element dat moet worden verdubbeld en de tweede iterator |end| wijst net voorbij het laatste element dat moet worden verdubbeld.
 Als de iteratoren |i1| en |i2| aan deze functie worden meegegeven, dan worden alle elementen vanaf |i1| tot (en dus \emph{niet} tot en met) |i2| verdubbeld.
@@ -5113,10 +5113,10 @@ Algoritmen uit de standaard \Cpp{} \USE{library} gebruiken twee iteratoren als p
 Daarnaast zijn in namespace |ranges| algoritmen beschikbaar die op een hele container uitgevoerd kunnen worden en waarbij de container als argument doorgegeven kan worden, zie \cref{sec:ranges}.
 
 De bovenstaande generieke |verdubbel| kan gebruikt worden om de vector |v| volledig te verdubbelen:
-\cpplstinputfragment[linerange={33-33}]{generieke_verdubbel-range.cpp}
+\cpplstinputfragment[linerange={42-42}]{generieke_verdubbel-iterator.cpp}
 
 Dezelfde functie kan ook gebruikt worden om alle elementen van de vector |v| te verdubbelen \emph{behalve} de eerste en de laatste:
-\cpplstinputfragment[linerange={35-35}]{generieke_verdubbel-range.cpp}
+\cpplstinputfragment[linerange={44-44}]{generieke_verdubbel-iterator.cpp}
 
 \section{Container adapters}
 Bepaalde sequentiële containers kunnen met behulp van zogenoemde adapter classes van een bepaalde interface worden voorzien.
@@ -7049,14 +7049,14 @@ Tot de bijbehorende accolade sluiten dus.
 In C en \Cpp{} kun je met behulp van een |typedef| een alias (andere naam) voor een bestaand type definiëren, bijvoorbeeld:
 
 \begin{cpplstfragment}
-typedef std::map<std:string, int> Frequenties;
+typedef map<string, int> Frequenties;
 \end{cpplstfragment}
 
-De typenaam |Frequenties| is nu een alias voor het type |std::map<std:string, int>|.
+De typenaam |Frequenties| is nu een alias voor het type |map<string, int>|.
 In \Cpp{} kunnen we hetzelfde bereiken met behulp van het keyword |using|:
 
 \begin{cpplstfragment}
-	using Frequenties = std::map<std:string, int>;
+	using Frequenties = map<string, int>;
 \end{cpplstfragment}
 
 De meeste programmeurs vinden deze vorm leesbaarder.
@@ -7751,7 +7751,7 @@ Om het mogelijk te maken om een |Breuk| af te drukken met de |print| functies, m
 
 \cpplstinputfragment[linerange={111-118}]{Breuk3.cpp}
 
-In dit geval is er voor gekozen om de |formatter<Breuk>| over te erven van |formatter<string>|.
+In dit geval is er voor gekozen om de |formatter<Breuk>| over te erven van \hcode[style=cppstyle]{formatter<str-ing>}.
 Dit zorgt ervoor dat de \USE{format specifiers} die bij een |string| gebruikt kunnen worden, nu ook bij een |Breuk| gebruikt kunnen worden.
 De implementatie van de |format| functie maakt gebruik van de al eerder gedefinieerde |operator<<| om een |Breuk| af te drukken naar de |ostringstream| |ss|die vervolgens omgezet kan worden naar een |string| door middel van |ss.str()|.
 
@@ -8099,11 +8099,105 @@ Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald k
 	Array w (v.cbegin() + 1, v.cend() - 1); // a2 is van het type Array<int>
 \end{cpplstfragment}
 
-\iftoggle{WIP}{
 \sectionTextCodeTextNoSpaces{Zelf }{concept}{s definiëren}
 \label{sec:defineconcepts}
-\boldred{TODO: nog toevoegen!}
-}{}
+In \cref{sec:concepts} heb je al kennis gemaakt met standaard concepten.
+Standaard concepten kun je vinden in de \hreffn{https://en.cppreference.com/cpp/concepts}{concepts library}, \hreffn{https://en.cppreference.com/cpp/iterator\#Iterator_concepts}{iterators library}, \hreffn{https://en.cppreference.com/cpp/iterator\#Algorithm_concepts_and_utilities}{algorithms library} en \hreffn{https://en.cppreference.com/cpp/ranges\#Range_concepts}{ranges library}. 
+Ook heb je gezien dat deze concepten met behulp van logische expressies gecombineerd kunnen worden.
+Het is daarnaast ook mogelijk om zelf concepten te definiëren.
+In \cref{sec:generiekeverdubbel} heb je al een voorbeeld gezien waarin de zelfgedefinieerde concepten |Number<T>| en |Const<T>| gebruikt werden.
+Hierbij moet |Number<T>| waar (|true|) zijn voor een type |T| waarmee je kunt rekenen (zoals |int| of |double| maar ook |complex| of |Breuk|).
+Het concept |Const<T>| moet waar (|true|) zijn voor een type |T| dat read-only, dus als |const T|, is gedefinieerd.
+
+\needspace{3\baselineskip}
+Het definiëren van een |concept| dat waar (|true|) is voor types waarmee je kunt rekenen, lijkt in eerste instantie eenvoudig:
+\begin{cpplstfragment}
+concept Number = integral<T> || floating_point<T>;
+\end{cpplstfragment}
+Maar dit is niet correct want |integral<bool>| is |true|, maar met een |bool| kun je \emph{niet} rekenen.
+En zowel |integral<complex<double>>| als |floating_point<complex<double>>| zijn |false|, maar met een |complex<double>| kun je \emph{wel} rekenen.
+Ook voor een zelfgedefinieerd UDT zoals |Breuk| zal |Number<Breuk>| nu |false| zijn, ook als alle rekenkundige operatoren voor het UDT |Breuk| gedefinieerd zijn.
+
+Het is mogelijk om zelf een concept te definiëren door in een zogenoemde |requires| clausule aan te geven welke operaties het type moet ondersteunen om aan het concept te voldoen.
+\needspace{3\baselineskip}
+Je kunt bijvoorbeeld het concept |Arithmetic<T>| definiëren dat waar (|true|) is voor types |T| waarvoor de rekenkundige operatoren |+|, |-|, |*| en |/| gedefinieerd zijn (\proglink{concept_number.cpp}):
+\cpplstinputfragment[linerange={13-18}]{concept_number.cpp}
+
+Na het keyword |requires| volgt een soort parameterlijst waarin variabelen gedefinieerd kunnen worden.
+Daarna volgt een codeblok.
+De code in het codeblok wordt nooit uitgevoerd, alleen gecontroleerd door de compiler.
+Als deze code \emph{zonder} errors gecompileerd kan worden, dan is het concept waar (|true|).
+Als de code \emph{niet} zonder errors gecompileerd kan worden, dan geeft de comiler \emph{geen} foutmelding, maar is het concept onwaar (|false|).
+
+\needspace{3\baselineskip}
+De volgende code:
+\cpplstinputfragment[linerange={73-77}]{concept_number.cpp}
+\needspace{3\baselineskip}
+Geeft, zoals verwacht, de uitvoer:
+\begin{coutput}
+Arithmetic<int> = true
+Arithmetic<double> = true
+Arithmetic<complex<double>> = true
+Arithmetic<Breuk> = true
+Arithmetic<vector<int>> = false
+\end{coutput}
+
+\needspace{3\baselineskip}
+Maar het zal je misschien verrassen dat de volgende code:
+\cpplstinputfragment[linerange={79-80}]{concept_number.cpp}
+\needspace{3\baselineskip}
+De volgende uitvoer geeft:
+\begin{coutput}
+Arithmetic<bool> = true
+Arithmetic<char> = true
+\end{coutput}
+Dit komt omdat de types |bool| en |char| automatisch kunnen worden geconverteerd naar |int|, en daardoor dus voldoen aan de eisen van het concept |Arithmetic<T>|.
+Maar |bool| en |char| zijn natuurlijk geen types die je gebruikt om rekenkundige bewerkingen mee uit te voeren. 
+Dus een concept dat waar (|true|) is voor types waarmee je kunt rekenen, moet deze types niet accepteren.
+
+\needspace{3\baselineskip}
+Omdat er in \Cpp{} verschillende types zijn waarin een character kan worden opgeslagen, is het handig om eerst het concept |Character<T>| te definiëren dat bepaald of |T| een character type is:
+\cpplstinputfragment[linerange={20-28}]{concept_number.cpp}
+
+Er is hier gebruik gemaakt van het standaard concept |same_as<T, U>| dat bepaalt of |T| en |U| hetzelfde type zijn\footnote{%
+	Zie \url{https://en.cppreference.com/cpp/concepts/same_as}.
+}.
+
+\needspace{3\baselineskip}
+Vervolgens kan dan het concept |Number<T>| als volgt gedefinieerd worden:
+\cpplstinputfragment[linerange={30-31}]{concept_number.cpp}
+
+\needspace{3\baselineskip}
+De volgende code:
+\cpplstinputfragment[linerange={102-108}]{concept_number.cpp}
+\needspace{3\baselineskip}
+Geeft, zoals verwacht, de uitvoer:
+\begin{coutput}
+Number<int> = true
+Number<double> = true
+Number<complex<double>> = true
+Number<Breuk> = true
+Number<char> = false
+Number<bool> = false
+Number<vector<int>> = false
+\end{coutput}
+
+Zie \cref{sec:generiekeverdubbel} voor een toepassing van het concept |Number<T>|.
+In datzelfde voorbeeld is ook het concept |Const<T>| gebruikt dat waar (|true|) is voor types die read-only, dus als |const T|, zijn gedefinieerd.
+
+\needspace{3\baselineskip}
+Tot mijn verbazing is dit concept niet opgenomen in de \Cpp{}23 standaard en ook niet in de \Cpp{}26 standaard, maar gelukkig is het eenvoudig zelf te definiëren:
+\begin{cpplstfragment}
+template <typename T>
+concept Const = is_const_v<T>;
+\end{cpplstfragment}
+
+Hierbij is gebruik gemaakt van een zogenoemde \emph{type trait}, namelijk |is_const|, die in \Cpp{}11 gedefinieerd is en de bijbehorende \emph{helper variabele template} |is_const_v| die in \Cpp{}17 gedefinieerd is\footnote{%
+	Zie \url{https://en.cppreference.com/cpp/types/is_const}.
+}.
+Deze type traits waren een manier om informatie over types te verkrijgen voordat concepten in \Cpp{}20 werden geïntroduceerd.
+In dit geval geeft |is_const_v<T>| aan of |T| read-only, dus als |const T|, gedefinieerd is.
+Precies wat we nodig hebben om het concept |Const<T>| te definiëren.
 
 \iftoggle{WIP}{
 \sectionTextCodeText{Zelf een}{formatter}{definiëren}
@@ -9419,7 +9513,7 @@ Met behulp van de standaard library opgenomen |high_resolution_clock| kun je een
 	auto start {chrono::high_resolution_clock::now()};
 	// code die je wilt timen
 	auto stop {chrono::high_resolution_clock::now()};
-	auto duration {chrono::duration_cast<std::chrono::microseconds>(stop - start).count()};
+	auto duration {chrono::duration_cast<chrono::microseconds>(stop - start).count()};
 	println("Executietijd = {} $\textcolor{lstblue}{\upmu}$s", duration);
 \end{cpplstfragment}
 

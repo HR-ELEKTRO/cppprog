@@ -25,10 +25,10 @@ template<typename T>
 concept Number = Arithmetic<T> && !Character<T> && !same_as<T, bool>;
 
 template <typename T>
-concept non_const = !is_const_v<T>;
+concept Const = is_const_v<T>;
 
 template<typename C> void verdubbel(C& c) 
-requires Number<typename C::value_type> && non_const<C> && output_iterator<typename C::iterator, typename C::value_type> {
+requires Number<typename C::value_type> && !Const<C> && output_iterator<typename C::iterator, typename C::value_type> {
     for (auto& e: c) {
         e *= 2;
     }

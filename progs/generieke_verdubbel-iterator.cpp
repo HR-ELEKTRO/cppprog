@@ -1,8 +1,8 @@
 import std;
 using namespace std;
 
-// generieke verdubbel m.b.v. iterator
-// kan gebruikt worden voor ALLE containers waarvan de elementen verdubbeld kunnen worden
+// generieke verdubbel met behulp van een range van twee iteratoren
+// met deze functie kun je ook een DEEL van een container verdubbelen
 
 template <typename T>
 concept Arithmetic = requires(T x, T y) {
@@ -24,12 +24,9 @@ concept Character =
 template<typename T>
 concept Number = Arithmetic<T> && !Character<T> && !same_as<T, bool>;
 
-template <typename T>
-concept non_const = !is_const_v<T>;
-
-template<typename C> void verdubbel(C& c) 
-requires Number<typename C::value_type> && non_const<C> && output_iterator<typename C::iterator, typename C::value_type> {
-    for (auto iter {c.begin()}; iter != c.end(); ++iter) {
+template <typename Iter> void verdubbel(Iter begin, Iter end)
+requires Number<typename Iter::value_type> && output_iterator<Iter, typename Iter::value_type> {
+    for (Iter iter {begin}; iter != end; ++iter) {
         *iter *= 2;
     }
 }
@@ -42,10 +39,12 @@ int main() {
         l.push_back(1.0 / i);
     }
     println("v = {}", v);
-    verdubbel(v);
+    verdubbel(v.begin(), v.end());
+    println("v = {}", v);
+    verdubbel(v.begin() + 1, v.end() - 1);
     println("v = {}", v);
     println("l = {::.3f}", l);
-    verdubbel(l);
+    verdubbel(l.begin(), l.end());
     println("l = {::.3f}", l);
     // vector<string> vs {"a", "b", "c"};
     // println("vs = {}", vs);
@@ -61,10 +60,12 @@ int main() {
     // note: template argument deduction/substitution failed
     // note: constraints not satisfied
     // println("s = {}", s);
-    // const vector<int> cv1 {1, 2, 3};
-    // verdubbel(cv1);
+    // const vector cv1 {1, 2, 3};
+    // verdubbel(cv1.begin(), cv1.end());
+    // error: no matching function for call to 'verdubbel(std::vector<int>::const_iterator, std::vector<int>::const_iterator)'
+    // note: template argument deduction/substitution failed:
+    // note: constraints not satisfied
+    // Een vector met constanten is so-wie-so niet toegestaan.
     // vector<const int> cv2 {1, 2, 3};
-    // verdubbel(cv2);
-    deque<complex<double>> d {4.0 + 7i, 5.0 + 6i};
-    verdubbel(d);
+    // error: static assertion failed: std::vector must have a non-const, non-volatile value_type
 }
