@@ -96,7 +96,7 @@
 }{%
 }
 
-% gebruik voor opmaak van warnings en error meldingen van de C++ compiler
+% gebruik voor opmaak van warnings en error meldingen van de C++-compiler
 \newcommand{\error}{\texttt}
 \usepackage{upgreek}
 
@@ -272,10 +272,10 @@ Deze objectgeoriënteerde versie van C heeft de naam \Cpp{} gekregen en heeft zi
 \Cpp{} is echter geen pure OO-taal (zoals bijvoorbeeld Smalltalk) en kan ook gebruikt worden als procedurele programmeertaal.
 Dit heeft als voordeel dat de overstap van C naar \Cpp{} eenvoudig te maken is maar heeft als nadeel dat \Cpp{} gebruikt kan worden als een soort geavanceerd C zonder gebruik te maken van OOP\@.
 De taal \Cpp{} is nog steeds in ontwikkeling.
-In dit dictaat gebruiken we de versie van de \Cpp{} standaard die \Cpp{}23 wordt genoemd \cite{ISO2023}%
+In dit dictaat gebruiken we de versie van de \Cpp{}\hyp{}standaad die \Cpp{}23 wordt genoemd \cite{ISO2023}%
 \footnote{%
-    Een zogenoemde \USE{draft version} van de \Cpp{}23 standaard is beschikbaar op \url{https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/n4950.pdf}.
-    Ook van de \Cpp{}26 standaard is al een \USE{draft version} beschikbaar op \url{https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/n5032.pdf}.
+    Een zogenoemde \USE{draft version} van de \Cpp{}23\hyp{}standaard is beschikbaar op \url{https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/n4950.pdf}.
+    Ook van de \Cpp{}26\hyp{}standaard is al een \USE{draft version} beschikbaar op \url{https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/n5032.pdf}.
 }.
 Daarbij volgen we zoveel mogelijk de \emph{\Cpp{} Core Guidelines}\footnote{
 	Zie: \url{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines}.
@@ -623,7 +623,6 @@ Als het bestand al bestaat, dan wordt de inhoud van dit bestand overschreven.
 %TODO: Verwijzen naar meer info over file IO?
 
 \section[Input en output met \texttt{>>} en \texttt{<<}]{Input en output met \texorpdfstring{\cppcode{>>}}{>>} en \texorpdfstring{\cppcode{<<}}{<<}}
-%\markright{}
 \label{sec:iostream}
 Vóór \Cpp{}23 werd de iostream \USE{library} gebruikt voor het inlezen en wegschrijven van data.
 Sinds \Cpp{}23 heeft het de voorkeur om voor output de functies |print| en |println| te gebruiken, zie \cref{sec:print}.
@@ -732,7 +731,6 @@ Om deze redenen is er voor gekozen om in dit dictaat altijd gebruik te maken van
 }.	
 
 \sectionCodeText{auto}{type}
-%\markright{}
 \label{sec:autotype}
 Als een variabele geïnitialiseerd wordt, is het mogelijk om de compiler zelf het type van een variabele te laten bepalen. 
 Dit doe je door in de variabeledefinitie, in plaats van een typenaam, het \USE{keyword} |auto| te gebruiken. 
@@ -774,7 +772,6 @@ We kunnen het type van de variabele |eerste| in dit geval ook door de compiler l
 Dit komt de onderhoudbaarheid van het programma ten goede want als het type van de array nu veranderd wordt van |int| naar |uint16_t| dan wordt het type van de variabele |eerste| automatisch aangepast.
 
 \sectionCodeText{auto}{return type}
-%\markright{}
 \label{sec:autoreturntype}
 Het is ook mogelijk om de compiler zelf het return type van een functie te laten bepalen.
 Dit doe je door in de functiedefinitie in plaats van een typenaam het \USE{keyword} |auto| te gebruiken.
@@ -802,7 +799,6 @@ Als later blijkt dat het type |float| niet nauwkeurig genoeg is om het eindkapit
 Het return type van de functie wordt dan ook automatisch aangepast van |float| naar |double|.
 
 \sectionTextCode{Range-based}{for}
-%\markright{}
 \label{sec:range-basedfor}
 In \Cpp{} kan dezelfde |for|\hyp{}lus als in C gebruikt worden.
 Maar er is in \Cpp{} ook nieuwe variant van de |for|\hyp{}lus, de zogenoemde \emph{\USE{range-based for}}, beschikbaar.
@@ -833,7 +829,6 @@ Als het type van de variabele |rij| gewijzigd wordt, dan wordt het type van de v
 Als je de elementen in de |rij| wilt veranderen in de \USE{range-based} |for| dan heb je een zogenoemde reference variabele nodig. Dit wordt verderop in dit dictaat uitgelegd in \cref{reference} en \cref{sec:referenceinrange-basedfor}.
 
 \sectionTextCode{Constante waarden met}{constexpr}
-%\markright{}
 \label{sec:constexpr}
 Je bent gewend om in C programma's symbolische constanten%
 \footnote{%
@@ -889,7 +884,6 @@ aantalRegels = 79;
 Je kunt in \Cpp{} ook functies definiëren die tijdens \USE{compile time} uitgevoerd kunnen worden, door het returntype met |constexpr| te definiëren, zie \cref{compile time functies}. 
 
 \sectionTextCode{Read-only variabelen met}{const}
-%\markright{}
 \label{sec:const}
 Het is in \Cpp{} net zoals in C mogelijk om een \USE{read-only} variabele, ook wel een constante genoemd, te definiëren met behulp van een |const| \USE{qualifier}. 
 
@@ -929,7 +923,6 @@ In \cref{sec:constmember} ga je zien dat het met een |const| \USE{qualifier} ook
 Bij het definiëren van pointers kun je het keyword |const| op verschillende manieren gebruiken om de waarde waar de pointer naar wijst of de pointer zelf of beide \USE{read-only} te maken, zie \cref{sec:constpointers}.
 
 \sectionTextCode{Het type}{string}
-%\markright{}
 \label{sec:string}
 In C wordt een \USE{character} string opgeslagen in een variabele van het type |char[]| (\USE{character array}).
 De afspraak is dan dat het einde van de \USE{character} string aangegeven wordt door een \USE{null character} |'\0'|.
@@ -1505,7 +1498,6 @@ De class |Breuk| hoeft maar één keer gemaakt te worden, maar kan talloze malen
 Met een beetje geluk ben je als ontwerper van de class |Breuk| later zelf ook gebruiker van de class |Breuk|, zodat je zelf de vruchten van je inspanningen kunt plukken.
 
 \sectionTextCodeText{Voorbeeld class}{Breuk}{(tweede versie)}
-%\markright{}
 \label{breuk1}
 Dit voorbeeld is een eerste uitbreiding van de op \cpageref{breuk0} gegeven class |Breuk| (eerste versie). In deze versie leer je:
 \begin{itemize}
@@ -1669,7 +1661,6 @@ b3.plus(5) = 2/5
 
 \sectionTextCode{Constructor}{Breuk}
 \label{sec:constructor}
-%\markright{}
 De \label{constructor}\USE{constructors} definiëren hoe een object gemaakt kan worden.
 De \USE{constructors} hebben dezelfde naam als de class.%
 \needspace{2\baselineskip}
@@ -1748,7 +1739,7 @@ Als je de memberfunctie |plus| aanroept op een |Breuk| met een |int| als argumen
 Als dit het geval is, wordt deze memberfunctie aangeroepen. 
 Als dit niet het geval is, \squote{kijkt} de compiler of er in de class |Breuk| een memberfunctie is met een parameter van een ander type waarnaar het type |int| omgezet kan worden%
 \footnote{%
-    Als dit er meerdere zijn, zijn er allerlei regels in de \Cpp{} standaard opgenomen om te bepalen welke conversie gekozen wordt. 
+    Als dit er meerdere zijn, zijn er allerlei regels in de \Cpp{}\hyp{}standaad opgenomen om te bepalen welke conversie gekozen wordt. 
     Ik bespreek dat hier niet. 
     Een conversie naar een ingebouwd type gaat altijd voor ten opzichte van een conversie naar een zelfgedefinieerd type.
 }. 
@@ -1832,7 +1823,6 @@ De \USE{default assignment operator} zorgt ervoor dat, als een private variabele
 De \USE{default assignment operator} van de class |Rechthoek| kopieert nu de private variabelen |lengte| en |breedte| van |r1| naar |r2|. Beide variabelen bestaan voor zich weer uit de private variabelen |boven| en |onder|, die ook automatisch gekopieerd worden.
 
 \sectionCodeText{const}{memberfuncties}
-%\markright{}
 \label{sec:constmember}
 Een object (variabele) van de class (het zelfgedefinieerde type) |Breuk| kan ook als \USE{read-only} object gedefinieerd worden. 
 Bijvoorbeeld:
@@ -1922,7 +1912,6 @@ Als je ervoor zorgt dat de class invariant aan het einde van elke public memberf
 Dit vermindert de kans op het maken van fouten.
 
 \sectionTextCodeText{Voorbeeld class}{Breuk}{(derde versie)}
-%\markright{}
 \label{breuk2}
 Dit voorbeeld is een uitbreiding van de in \cref{breuk1} gegeven class |Breuk| (tweede versie). 
 Met behulp van dit voorbeeld leer je, hoe je een object van de class |Breuk| kunt optellen bij een ander object van de class |Breuk| met
@@ -2048,7 +2037,6 @@ Breuk Breuk::operator+=(Breuk right) {
 Ik bespreek nu eerst hoe je de \USE{receiver} (|DIT_OBJECT|) kunt benaderen en daarna kom ik weer op de definitie van de |operator+=| terug.
 
 \section[\texttt{this}-pointer]{\texorpdfstring{\cppcode{this}}{this}-pointer}
-%\markright{}
 Elke memberfunctie kan beschikken over een impliciete parameter genaamd \label{this}|this| die het adres bevat van het object waarop de memberfunctie wordt uitgevoerd. 
 Met deze pointer kun je bijvoorbeeld het object waarop een memberfunctie wordt uitgevoerd als return waarde van deze memberfunctie teruggeven.%
 \needspace{2\baselineskip}
@@ -2169,7 +2157,6 @@ Dit betekent dat het vanzelfsprekend niet mogelijk is om als argument een consta
 Zie \proglink{param.cpp} voor een compleet voorbeeldprogramma.
 
 \sectionCodeText{const}{reference parameters}
-%\markright{}
 \label{sec:constreferenceparameter}
 Er is nog een andere reden om een \USE{reference} parameter in plaats van een normale \USE{value} parameter te gebruiken. 
 Bij een \USE{reference} parameter wordt zoals we hebben gezien een adres (een vast aantal bytes\footnote{Op een MSP430-microcontroller bestaat een adres uit 2 bytes, op een CC3220-microcontroller uit 4 bytes en op een 64-bit pc uit 8 bytes.}) gekopieerd terwijl bij een \USE{value} parameter de waarde (een variabel aantal bytes, afhankelijk van het type) gekopieerd wordt. 
@@ -2321,7 +2308,6 @@ Deze kennis heb je echter niet nodig om de rest van dit dictaat te begrijpen.
 Hoe je andere operatoren kunt overloaden bij het type |Breuk| kun je vinden in \cref{sec:objectsandclassesdetails}.
 
 \section[Voorbeeld module \texttt{breuk}]{Voorbeeld module  \texorpdfstring{\hcode{breuk}}{breuk}}
-%\markright{}
 \label{separaat compileren}
 Je kunt de \emph{declaratie} en \emph{definitie} (implementatie) van een class splitsen in een |.cppm| (module interface) en een |.cpp| (module implementatie) file, \cref{sec:zelfgedefinieerdemodule}.
 Dit heeft als voordeel dat je de implementatie afzonderlijk kunt compileren tot een zogenoemde object file\footnote{Een object file bevat machine code en heeft afhankelijk van de gebruikte compiler de extensie \cppcode{.o} of \cppcode{.obj}}. 
@@ -2486,6 +2472,7 @@ Door gebruik te maken van een functietemplate in plaats van \squote{met de hand}
 De functietemplate |swap| is hier als voorbeeld zelf gedefinieerd, maar in de praktijk is dit niet nodig omdat deze functietemplate al in de standaard \Cpp{}\hyp{}library is opgenomen.
 
 \section{Class templates}
+\label{sec:classtemplate}
 In de vorige paragraaf hebben we gezien dat je een template van een functie kunt maken waardoor de functie generiek wordt.
 Een generieke functie kun je voor verschillende datatypes gebruiken.
 Als je de generieke functie aanroept, genereert de compiler zelf, afhankelijk van het type van de gebruikte argumenten, de benodigde \squote{versie} van de generieke functie door, voor de template\hyp{}parameter, het betreffende type in te vullen.
@@ -2537,7 +2524,7 @@ De als argument meegegeven |index| wordt bij beide memberfuncties gecontroleerd.
 \needspace{3\baselineskip}
 Om de inhoud van een object van de class |Dozijn| eenvoudig om te kunnen zetten naar een |string| is de functie |naar_string| gedefinieerd:
 \cpplstinputfragment[linerange={27-32}]{Dozijn.cpp}
-In deze functie wordt gebruik gemmaakt van de standaard functie |format| die op dezelfde manier werkt als de standaard functie |print| alleen wordt het resultaat niet weergegeven op het scherm, maar opgeslagen in een string.
+In deze functie wordt gebruik gemaakt van de standaard functie |format| die op dezelfde manier werkt als de standaard functie |print| alleen wordt het resultaat niet weergegeven op het scherm, maar opgeslagen in een string.
 
 Je kunt de class |Dozijn| bijvoorbeeld als volgt gebruiken:
 \cpplstinputfragment[linerange={34-39}]{Dozijn.cpp}
@@ -2561,7 +2548,7 @@ Dozijn<Breuk> db; // een dozijn breuken
 
 \needspace{4\baselineskip}
 \sectionTextCode{Voorbeeld class template}{Dozijn}
-%\markright{}
+\label{sec:class_template_Dozijn}
 De \emph{class template} |Dozijn| kan als volgt worden gedeclareerd (\proglink{Dozijn_template.cpp}):
 \cpplstinputfragment[linerange={6-12}]{Dozijn_template.cpp}
 
@@ -2597,7 +2584,6 @@ provincies = Drenthe, Flevoland, Friesland, Gelderland, Groningen, Limburg, Noor
 Je ziet dat je de class template |Dozijn| kunt gebruiken om twaalf elementen van het type |int| in op te slaan maar ook om twaalf elementen van het type |string| in op te slaan.
 
 \sectionTextCode{Voorbeeld class template}{Rij}
-%\markright{}
 \label{Rij}
 In de, in de vorige paragraaf beschreven, class template |Dozijn| kunnen we twaalf elementen van een type naar keuze opslaan.
 Als je meer dan twaalf elementen wilt opslaan, kun je deze template niet gebruiken.
@@ -2652,7 +2638,6 @@ De basis voor deze verzameling \USE{templates} is in de jaren '90 gelegd door Al
 In de standaard \USE{library} zijn ook een generiek type |array| en een generiek type |vector| opgenomen.
 
 \sectionCode{std::array}
-%\markright{}
 \label{std::array}
 De class template |array| uit de standaard \Cpp{} \USE{library} vervangt de C\hyp{}array.
 Deze |array| ondersteunt net zoals de C\hyp{}array de |operator[]|.
@@ -2699,7 +2684,6 @@ Aborted
 %TODO: uitvoer nog uitleggen.
 
 \sectionCode{std::vector}
-%\markright{}
 \label{std::vector}
 De class template |vector| uit de standaard \Cpp{} \USE{library} wordt in \Cpp{} vaak gebruikt op plaatsen waar je een array wilt gebruiken maar nog niet tijdens het compileren weet hoeveel elementen de array moet bevatten.
 Een |vector| kan tijdens het uitvoeren van het programma \emph{groeien} en \emph{krimpen}. 
@@ -2963,7 +2947,7 @@ Als je de verkorte notatie van de functietemplate |number_of_zero_bits| gebruikt
 Je kunt concepten dus gebruiken om duidelijkere foutmeldingen te krijgen als een template wordt gebruikt met een type dat niet aan de eisen van het concept voldoet.
 Daarnaast kun je door concepten te gebruiken templates ook overloaden (concept-based overloading).
 De compiler kiest dan de template waarbij de meegegeven argumenten het beste aan de gedefinieerde voorwaarden (concepten) voldoen.
-%TODO: eenvoudig voorbeeld bedenken dat de studenten zonder kennis van iteratoren kunenn begrijpen.
+%TODO: eenvoudig voorbeeld bedenken dat de studenten zonder kennis van iteratoren kunnen begrijpen.
 %Zie \proglink{concept-based_overloading.cpp}.
 In \cref{sec:vbverschillendeiteratorsoorten} vind je hiervan een voorbeeld.
 
@@ -2972,6 +2956,7 @@ Het is ook mogelijk om zelf concepten te definiëren, die \emph{niet} bestaan ui
 }.
 
 %TODO: Template specialisaties. Abs voor complexe getallen.
+%TODO: NEE: Function template specialisaties worden afgeraden. Gebruik overloading.
 
 \chapter{Inheritance}
 \label{sec:inheritance}
@@ -3376,7 +3361,6 @@ private:
 \end{cpplstfragment}
 
 \sectionCodeText{protected}{members}
-%\markright{}
 Het is in \Cpp{} ook mogelijk om in een \USE{base class} datavelden en memberfuncties te definiëren die niet toegankelijk zijn voor gebruikers van objecten van deze class, maar die wel vanuit de van deze \USE{base class} afgeleide classes bereikbaar zijn.
 Dit wordt in de classdeclaratie aangegeven door het \USE{keyword} |protected| te gebruiken.
 
@@ -3638,7 +3622,7 @@ Het type |complex| is opgenomen in de standaard \Cpp{} \USE{library}\footnote{%
 De functie |Z| moet in een van |Component| afgeleide class de impedantie berekenen (een complex getal) bij de als parameter gegeven frequentie |f|.
 De functie |naar_string| moet in een van |Component| afgeleide class het type en de waarde opslaan in een string en deze retourneren.
 Bijvoorbeeld: |"L(1E-3)"| voor een spoel van \SI{1}{\milli\henry}.
-
+sec:userdefinedformatter
 Om componenten met behulp van de |print| en |println| af te kunnen drukken, is de template |std::formatter| gespecialiseerd voor |Component| (\proglink{netwerk0.cpp}), zie \csecref{sec:userdefinedformatter}:
 \cpplstinputfragment[linerange={43-48}]{netwerk0.cpp}
 
@@ -3775,7 +3759,6 @@ In \cref{sec:dynamicmemoryallocationendestructorsdetails} wordt dynamic memory a
 Aan het einde van dat hoofdstuk laat ik zien hoe je er voor zorgt dat je deze UDT ook met een \USE{range-based} |for| kunt doorlopen en met een initialisatielijst kunt initialiseren.
 
 \section[Dynamische geheugenallocatie met \texttt{new} en \texttt{delete}]{Dynamische geheugenallocatie met \texorpdfstring{\cppcode{new}}{new} en \texorpdfstring{\cppcode{delete}}{delete}}
-%\markright{}
 \label{sec:delete}\label{sec:new}
 Je bent gewend om variabelen globaal of lokaal te definiëren.
 De geheugenruimte voor globale variabelen wordt gereserveerd zodra het programma start en pas weer vrijgegeven bij het beëindigen van het programma.
@@ -3868,7 +3851,6 @@ Vaak kan het gebruik van een standaard container, zie \cref{sec:containers}, het
 %TODO: plaatsen opzoeken waar new gebuikt wordt en verwijzen naar gebruik smart pointers.
 
 \section[Destructor \texttt{\textasciitilde{}Breuk}]{Destructor \texorpdfstring{\texttt{\textasciitilde{}Breuk}}{\textasciitilde{}Breuk}}
-%\markright{}
 Een class kan naast een aantal \USE{constructors} (zie \cref{constructor}) ook één \emph{\USE{destructor}} hebben.
 De \label{destructor}\USE{destructor} heeft als naam, de naam van de class voorafgegaan door het teken |~|.
 %Waarom?
@@ -4014,7 +3996,6 @@ In elke class die nu of in de toekomst als \USE{base class} gebruikt wordt moete
 }. Achter de declaratie kan de code |= default| gebruikt worden om aan te geven dat de default implementatie van de \USE{destructor}, zie \cpageref{default destructor} gebruikt moet worden. 
 
 \sectionTextCode{Toepassing van}{std::unique\_ptr}
-%\markright{}
 \label{sec:toepassingunique_ptr}
 In de voorgaande paragraaf is de class |Fruitmand| als volgt gedefinieerd:
 
@@ -4082,13 +4063,12 @@ Ook het berekenen van de impedantie van een condensator bij 0 Hz veroorzaakt dez
 Het zal voor iedereen duidelijk zijn dat zulke vreemde uitvoer tijdens het uitvoeren van het programma voorkomen moet worden.
 
 \sectionTextCode{Het gebruik van}{assert}
-%\markright{}
 \label{sec:assert}
 In \cref{assert} heb je al kennis gemaakt met de standaard macro |assert|.
 Deze macro doet niets als de, als argument meegegeven, expressie |true| oplevert maar breekt het programma met een passende foutmelding af als dit niet zo is.
 Omdat macro's niet vanuit modules geëxporteerd kunnen worden, moet de file |cassert| worden geïnclude om gebruik te kunnen maken van de |assert| macro\footnote{%
 	Waarschijnlijk zijn \dquote{Contracts} de vervanging voor de assert macro in \Cpp{}26.
-	Maar die worden helaas nog niet ondersteund in \href{https://gcc.gnu.org/projects/cxx-status.html}{gcc 15}. 
+	Maar die worden helaas nog niet ondersteund in \href{https://gcc.gnu.org/projects/cxx-status.html}{GCC 15}. 
 }.
 Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan een bepaalde voorwaarden (waarvan je \squote{zeker} weet dat ze geldig zijn) wordt voldaan.
 Je kunt de functie |impedance_C| voorzien van een \USE{assertion} (\proglink{impedance_C2.cpp}):
@@ -4127,7 +4107,6 @@ Het gebruik van |assert| heeft de volgende nadelen:
 We kunnen concluderen dat |assert| in dit geval niet geschikt is.
 
 \sectionTextCodeText{Het gebruik van een}{bool}{returnwaarde}
-%\markright{}
 In C (en ook in \Cpp{}) werd dit traditioneel opgelost door de functie een returnwaarde te geven die
 aangeeft of het uitvoeren van de functie gelukt is (\proglink{impedance_\\-C3.cpp}):
 
@@ -4260,7 +4239,6 @@ The END.
 Als je nu bijvoorbeeld alleen de |Capacity_error| \USE{exception} wilt opvangen maar de \hcode{Fre\\-quen\\-cy_\\-error} \USE{exception} niet, dan kan dat eenvoudig door in de bovenstaande catch het type \hcode{Impe\\-dance_\\-error} te vervangen door |Capacity_error|.
 
 \sectionTextCodeText{De volgorde van}{catch}{blokken}
-%\markright{}
 Als je meerdere catch blokken gebruikt om \USE{exceptions} af te vangen, moet je er op letten dat de meest specifieke \USE{exceptions} vóór de generieke \USE{exceptions} komen.
 Omdat de catch blokken van boven naar beneden worden geprobeerd als er een \USE{exception} gevangen wordt.
 Dus:
@@ -4428,9 +4406,9 @@ De titel van een bekend boek op dit terrein luidt dan ook niet voor niets: \emph
 
 Het spreekt voor zich dat de klassieke datastructuren al snel door gebruik te maken van objectgeoriënteerde programmeertechnieken als herbruikbare \emph{componenten} werden geïmplementeerd.
 Er zijn dan ook diverse componenten bibliotheken op het gebied van klassieke datastructuren verkrijgbaar.
-In 1998 is zelfs een componenten bibliotheek van elementaire datastructuren en algoritmen officieel in de ISO/ANSI \Cpp{} standaard opgenomen.
-Deze bibliotheek werd eerst de STL (\USE{Standard Template Library}) genoemd maar sinds deze \USE{library} in de \Cpp{} standaard is opgenomen spreken we over de standaard \Cpp{} \USE{library}.
-Deze \USE{library} is in latere versies van de \Cpp{} standaard \cite{ISO2012,ISO2014,ISO2017} behoorlijk uitgebreid.
+In 1998 is zelfs een componenten bibliotheek van elementaire datastructuren en algoritmen officieel in de ISO/ANSI \Cpp{}\hyp{}standaad opgenomen.
+Deze bibliotheek werd eerst de STL (\USE{Standard Template Library}) genoemd maar sinds deze \USE{library} in de \Cpp{}\hyp{}standaad is opgenomen spreken we over de standaard \Cpp{} \USE{library}.
+Deze \USE{library} is in latere versies van de \Cpp{}\hyp{}standaad \cite{ISO2012,ISO2014,ISO2017} behoorlijk uitgebreid.
 In het vervolg van dit dictaat gaan we uitgebreid op deze standaard \Cpp{} \USE{library} in.
 Ook worden in dit dictaat een aantal applicaties besproken waarin gebruik gemaakt wordt van standaard datastructuren.
 %Hierbij wordt gebruik gemaakt van UML \cite{Warmer2011} om de werking van de gegeven \Cpp{} programma's uit te leggen.
@@ -4497,7 +4475,7 @@ Elke  datastructuur kent dezelfde drie basisbewerkingen: invoegen (Engels: \USE{
 In de tabel is voor elke datastructuur de orde van de executietijd (en de specifieke naam) van elke basisbewerking gegeven.
 Daarnaast zijn van elke datastructuur de belangrijkste applicaties en implementaties gegeven.
 
-In 1998 is de zogenaamde STL (\USE{Standard Template Library}) officieel in de \Cpp{} standaard opgenomen.
+In 1998 is de zogenaamde STL (\USE{Standard Template Library}) officieel in de \Cpp{}\hyp{}standaad opgenomen.
 Doordat nu een standaard implementatie van de klassieke datastructuren en algoritmen in elke standaard \Cpp{} \USE{library} is opgenomen, is het minder belangrijk om zelf te weten hoe z'n datastructuur geïmplementeerd moet worden.
 Het belangrijkste is dat je weet wanneer je welke datastructuur kunt toepassen en hoe je dat dan moet doen.
 
@@ -4826,7 +4804,7 @@ In dat geval is het handig dat je dynamisch (tijdens \USE{run time}), afhankelij
 
 \chapter[De standaard C++ \USE{library}]{De standaard \Cpp{} \USE{library}}
 \label{sec:stdlib}
-De standaard \Cpp{} \USE{library} is zeer uitgebreid en beslaat 17 hoofdstukken en ruim 1400 pagina's in de \Cpp{} standaard \cite{ISO2023}. 
+De standaard \Cpp{} \USE{library} is zeer uitgebreid en beslaat 17 hoofdstukken en ruim 1400 pagina's in de \Cpp{}\hyp{}standaad \cite{ISO2023}. 
 In het vervolg van dit dictaat kijken we naar \emph{containers}, \emph{iteratoren} en \emph{algoritmen}.
 De in \cref{sec:Datastructuren} geïntroduceerde datastructuren worden in de standaard \Cpp{} \USE{library} \emph{containers} genoemd.
 Een \emph{iterator} kan gebruikt worden om de elementen in een container te benaderen.
@@ -4844,7 +4822,6 @@ Een algoritme kan ook data uit slechts één container lezen en het resultaat in
 	A = Algoritme, C = Container, i = iterator, b = begin, e = end, [ib,ie) = bereik van ib tot ie.}
 
 \sectionTextCode{Voorbeeldprogramma met}{std::string}
-%\markright{}
 \label{sec:vbstring}
 Het voorbeeldprogramma \proglink{std_string.cpp} laat zien dat je met een iterator door een \hcode{std\\-::\\-string} kunt lopen op dezelfde manier als dat je met een pointer door een C\hyp{}string kunt lopen.
 Een C\hyp{}string is een array van karakters waarbij het einde van de string wordt aangegeven door het karakter NUL (|'\0'|).
@@ -5030,7 +5007,7 @@ Voor een |deque| geldt dat de |push_front| operatie \emph{gemiddeld} van de orde
 } van de |deque| moet vergroot worden dan kan die ene |push_front| wel eens langer duren.
 De executietijd van de |pop_front| van een |deque| is gemiddeld $O(1)$ omdat een |deque| zijn capaciteit uit zichzelf mag verlagen%
 \footnote{%
-	Dit is, volgens de \Cpp{} standaard, implementatie afhankelijk.%
+	Dit is, volgens de \Cpp{}\hyp{}standaad, implementatie afhankelijk.%
 }\addtocounter{footnote}{-1}\addtocounter{Hfootnote}{-1}
 .
 Als er aan de voorkant een element wordt toegevoegd aan een |deque|, dan krijgt dat nieuwe element de index 0 en het element dat voor de toevoeging index 0 had krijgt index 1 enz.
@@ -5055,7 +5032,6 @@ Via de achterwaartse pointer kan het element voor de plaats waar ingevoegd moet 
 
 %TODO eventueel toevoegen: hoe is een vector geïmplenteerd? Hoe is een deque geïmplementeerd?
 \subsectionTextCode{Voorbeeldprogramma met}{std::vector}
-%\markright{}
 Dit voorbeeldprogramma \proglink{stdvector.cpp} laat zien:
 \begin{itemize}
 	\item hoe een standaard vector gevuld kan worden;
@@ -5157,7 +5133,6 @@ Je kunt een |priority_queue| dus niet implementeren met een |list| omdat de elem
 }
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::stack}
-%\markright{}
 Het onderstaande voorbeeldprogramma \proglink{std_balanced.cpp} is identiek aan het programma uit \cref{sec:balance} maar in plaats van de zelfgemaakte \hcode{Stack_\\-with_\\-list} wordt nu de standaard |stack| gebruikt.
 
 \cpplstinputfragment[linerange={1-37}]{std_balanced.cpp}
@@ -5242,7 +5217,6 @@ Als je een zelf gedefinieerd type als sleutel wilt gebruiken dan moet je zelf ee
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::set}
 \label{sec:set}
-%\markright{}
 In een |set| mag elk element ten hoogste één keer voorkomen.
 In het onderstaande voorbeeldprogramma \proglink{set.cpp} wordt het gebruik van een |set| gedemonstreerd.
 Een |set| heeft, onder andere, de volgende memberfuncties:
@@ -5295,7 +5269,6 @@ De set bevat: {"Daniël", "Elles", "Harry", "Ron", "Roy"}
 \end{coutput}
 
 \subsectionTextCodeText{Voorbeeldprogramma met}{std::multiset}{(bag)}
-%\markright{}
 Vergelijk het onderstaande programma \proglink{multiset.cpp} met het vorige en let op de verschillen tussen een |set| en een |multiset|.
 Een |mutiset| heeft dezelfde memberfuncties als een |set|.
 De memberfunctie |insert| geeft echter alleen een iterator als returnwaarde in plaats van een |pair| van een iterator en een |bool|.
@@ -5318,7 +5291,6 @@ De bag bevat: Daniël
 \end{coutput}
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::unordered\_set}
-%\markright{}
 Vergelijk het onderstaande programma \proglink{unordered\_set.cpp} met het programma uit \cref{sec:set} en let op de verschillen tussen een |set| en een \hcode{un\\-ordered_\\-set}.
 
 \cpplstinputfragment[linerange={1-22}]{unordered_set.cpp}
@@ -5343,7 +5315,6 @@ Elke bucket bevat gemiddeld 0.86206895 elementen.
 \end{cpplstfragment}
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::map}
-%\markright{}
 \label{sec:vbmap}
 Het onderstaande voorbeeldprogramma \proglink{count_words.cpp} gebruikt een |map| om de woordfrequentie te tellen.
 Van een aantal belangrijke C/\Cpp{} \USE{keywords} wordt het aantal maal dat ze voorkomen afgedrukt.
@@ -5366,13 +5337,13 @@ list l {12, 18, 6};
 sort(l.begin(), l.end()); // $\color{hrred}\textbf{error:}$ no match for 'operator-'
 \end{cpplstfragment}
 
-Om deze reden zijn er meerder soorten iteratoren in de \Cpp{} standaard gedefinieerd.
+Om deze reden zijn er meerder soorten iteratoren in de \Cpp{}\hyp{}standaad gedefinieerd.
 Elke soort ondersteund bepaalde bewerkingen.
 Een container levert (Engels: \USE{provides}) een specifieke iteratorsoort en elk algoritme heeft bepaalde iteratorsoorten nodig (Engels: \USE{requires}).
 Op deze manier kun je een algoritme op elke container toepassen die een iterator levert die de door het algoritme benodigde bewerkingen ondersteund.
 Elk object dat de operaties van een bepaalde soort iterator ondersteund is te gebruiken als zo'n soort iterator.
 Een iteratorsoort is dus niets anders dan een afspraak (of concept).
-Er zijn in de \Cpp{} standaard vijf iteratorsoorten gedefinieerd:
+Er zijn in de \Cpp{}\hyp{}standaad vijf iteratorsoorten gedefinieerd:
 \begin{itemize}
 	\item Een \emph{input iterator} kan gebruikt worden om uit een container te lezen.
 	Deze iteratorsoort ondersteund de volgende operaties:
@@ -5475,13 +5446,13 @@ Als een algoritme bijvoorbeeld een input iterator nodig heeft om zijn werk te ku
 Het is namelijk niet erg als de betreffende iterator meer operaties levert dan het algoritme nodig heeft.
 Als een algoritme bijvoorbeeld een \USE{random access} iterator nodig heeft om zijn werk te kunnen doen, dan kun je dit algoritme \emph{niet} uitvoeren op een container die een \USE{bidirectional} iterator levert.
 Het dan namelijk zo dat de betreffende iterator minder operaties levert dan het algoritme nodig heeft.
-Voor alle containers is in de \Cpp{} standaard aangegeven welke soort iterator ze leveren:
+Voor alle containers is in de \Cpp{}\hyp{}standaad aangegeven welke soort iterator ze leveren:
 \begin{itemize}
 	\item |forward_list|, |unordered_set|, |unordered_multiset|, |unordered_map| en \hcode{un\\-ordered_\\-multi\\-map} leveren een \USE{forward iterator};
 	\item |list|, |set|, |multiset|, |map| en |multimap| leveren een \USE{bidirectional} iterator;
 	\item |vector| en |deque| leveren een \USE{random access} iterator.
 \end{itemize}
-Voor alle algoritmen is in de \Cpp{} standaard aangegeven welke soort iterator ze nodig hebben.
+Voor alle algoritmen is in de \Cpp{}\hyp{}standaad aangegeven welke soort iterator ze nodig hebben.
 Bijvoorbeeld:
 \begin{itemize}
 	\item |find| heeft een input iterator nodig;
@@ -5757,7 +5728,6 @@ De executietijd van |find_end| is $O(m\times{}(n-m))$.
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::find}
 \label{sec:find}
-%\markright{}
 In het onderstaande voorbeeldprogramma \proglink{find.cpp} wordt het |find| algoritme gebruikt om het bekende spelletje galgje te implementeren.
 %TODO: dit niet de handigste manier om galgje te implementeren. Beter voorbeeld zoeken.
 
@@ -5829,7 +5799,6 @@ Je hebt het woord "galgje" geraden.
 Dit is zeker niet de meest efficiënte en meest eenvoudige implementatie van het spelletje galgje. Een eenvoudigere en efficiëntere versie vind je in \proglink{galgje_strings.cpp}.
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::find\_if}
-%\markright{}
 \label{sec:findif}
 Het onderstaande voorbeeldprogramma \proglink{find\_if.cpp} laat zien hoe je het standaard algoritme |find_if| kunt gebruiken om positieve getallen te zoeken.
 De zoekvoorwaarde (condition) wordt op drie verschillende manieren opgegeven:
@@ -5873,14 +5842,12 @@ De |count| moet echter altijd alle elementen van de |vector| doorlopen maar een 
 Beiden algoritmen zijn O(n) maar de |any_of| is altijd sneller.
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::find\_first\_of}
-%\markright{}
 \label{sec:findfirstof}
 Het onderstaande voorbeeldprogramma \proglink{find\_first\_of} laat zien hoe je het standaard algoritme |find_first_of| kunt gebruiken om het eerste priemgetal kleiner dan honderd in een bestand gevuld met integers te zoeken.
 
 \cpplstinputfragment[linerange={1-17}]{find_first_of.cpp}
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::for\_each}
-%\markright{}
 \label{sec:foreach}
 Het onderstaande voorbeeldprogramma \proglink{for\_each.cpp} laat zien hoe je het standaard algoritme |for_each| kunt gebruiken om elk element van een |vector| dubbel af te drukken.
 De bewerking die voor elk element uitgevoerd moet worden, wordt op twee verschillende manieren opgegeven:
@@ -5961,7 +5928,6 @@ Het returntype van de lambda\hyp{}functie zou dus |int| of |double| kunnen zijn 
 Als je het returntype niet specificeert krijg je de volgende foutmelding: \error{error: inconsistent types 'int' and 'double' deduced for lambda return type}.
 
 \subsectionTextCode{Lambda\hyp{}functieparametertype met}{auto}
-%\markright{}
 \label{sec:autolambdapar}
 Het is ook mogelijk om het parametertype van een lambda\hyp{}function als |auto| te definiëren.%
 De compiler bepaalt dan zelf het juiste type.
@@ -6059,7 +6025,6 @@ De volgende algoritmen kun je gebruiken om elementen in een range te overschrijv
 De executietijd van de in deze paragraaf genoemde algoritmen is $O(n)$.
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::ranges::transform}
-%\markright{}
 \label{sec:transform}
 Het onderstaande voorbeeldprogramma \proglink{transform.cpp} laat zien hoe je het standaard algoritme |transform| kunt gebruiken om een vector bij een andere vector op te tellen.
 De transformatie (bewerking) wordt op twee\footnote{%
@@ -6093,7 +6058,6 @@ Het type van parameter |i2| moet, toevallig ook, |int| zijn omdat de elementen v
 In het programma \proglink{galgje\_strings\_transform.cpp} kun je zien dat het standaard algoritme |transform| ook kunt gebruiken om het bekende spelletje galgje te implementeren.
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::remove}
-%\markright{}
 \label{sec:remove}
 Na |remove| is nog een |erase| nodig om de elementen echt te verwijderen.
 Het is namelijk niet mogelijk om vanuit een generiek algoritme elementen daadwerkelijk uit een range te verwijderen omdat het algoritme niet weet wat het type van de container is.
@@ -6115,7 +6079,6 @@ Na remove binnen erase: [1, 9, 25, 49, 81]
 \end{coutput}
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::generate\_n}
-%\markright{}
 \label{sec:generate}
 In \cref{sec:remove} werd de |vector| |v| gevuld met kwadraten door een |for|\hyp{}lus te gebruiken.
 Als alternatief kunnen we ook gebruik maken van het algoritme |generate_n|, een \USE{insert}\hyp{}iterator (zie \cref{sec:insitr}) en een \USE{closure} (zie \cref{sec:closure}.
@@ -6155,7 +6118,6 @@ Je kunt deze bewerkingen niet alleen uitvoeren op containers van het type |set| 
 De executietijd van deze algoritmen is $O(n1+n2)$, waarbij $n1$ staat voor het aantal elementen in verzameling $S1$ en $n2$ staat voor het aantal elementen in verzameling $S2$
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::sort}
-%\markright{}
 \label{sec:sort}
 In \cref{sec:vbiteratoren} heb je al gezien hoe het |sort| algoritme gebruikt kan worden om een |vector| met integers te sorteren.
 Het |sort| algoritme maakt default gebruik van de |operator<| om de elementen met elkaar te vergelijken.
@@ -6195,7 +6157,6 @@ Scores van hoog naar laag:
 \end{coutput}
 
 \subsectionTextCode{Voorbeeldprogramma met}{std::includes}
-%\markright{}
 \label{sec:includes}
 In \cref{sec:find} is het |find| algoritme gebruikt om het bekende spelletje galgje te implementeren.
 Dit spel kan ook geïmplementeerd worden door gebruik te maken van verzamelingen, zie \proglink{galgje\_sets.cpp}.
@@ -6871,7 +6832,6 @@ Binaire getallen kun je invoeren door ze vooraf te laten gaan door \cppcode{0b} 
 Dus de code \cppcode{int x = 0b10111101;} initialiseert de variabele \cppcode{i} met de waarde 189 want $10111101_2$ is $189_{10}$.
 
 \sectionTextCode{Het type}{bool}
-%\markright{}
 Als je in een C-programma (van vóór de C23 standaard maar na de C99 standaard) een variabele van het type |bool| wilt definiëren, dan moet je de \USE{preprocessor directive} \ccode{#include stdbool.h} gebruiken.
 In \Cpp{} en C23 \cite{ISO2023C} is een \USE{preprocessor directive} niet nodig, als je het type |bool| wilt gebruiken.
 In \Cpp{} en C23 is \cppcode{bool} een \USE{keyword} en hoef je dus geen |#include| te gebruiken.
@@ -6915,7 +6875,7 @@ In het onderstaande voorbeeld wordt een module aangemaakt die een functie genaam
 
 \needspace{3\baselineskip}
 De interface van deze module is gedefinieerd in \proglink{hello_world_module_interface.cppm}\footnote{%
-	Er is geen standaard extensie voor module interface bestanden, maar de extensie \code{.cppm} wordt ondersteund door de gcc en clang compilers. De Microsoft \Cpp{} compiler gebruikt de extensie \code{.ixx}.
+	Er is geen standaard extensie voor module interface bestanden, maar de extensie \code{.cppm} wordt ondersteund door de GCC en Clang compilers. De Microsoft \Cpp{}\hyp{}compiler gebruikt de extensie \code{.ixx}.
 }:
 \cpplstinputfragment{hello_world_module_interface.cppm}
 
@@ -7045,7 +7005,6 @@ Tot de bijbehorende accolade sluiten dus.
 
 \needspace{6\baselineskip}
 \section[\texttt{using} in plaats van \texttt{typedef}]{\texorpdfstring{\cppcode{using}}{using} in plaats van \texorpdfstring{\cppcode{typedef}}{typedef}}
-%\markright{}
 In C en \Cpp{} kun je met behulp van een |typedef| een alias (andere naam) voor een bestaand type definiëren, bijvoorbeeld:
 
 \begin{cpplstfragment}
@@ -7063,7 +7022,6 @@ De meeste programmeurs vinden deze vorm leesbaarder.
 Deze vorm maakt bovendien template argument binding mogelijk, zie \cref{sec:templateargumentbinding}.
 
 \sectionCodeText{decltype}{type}
-%\markright{}
 \label{decltype}
 In \Cpp{} kun je het type van een expressie opvragen met behulp van het keyword |decltype|.
 Dit kan soms handig zijn.
@@ -7207,7 +7165,6 @@ Dit doe je door de functie te laten voorafgaan door het \USE{keyword} |consteval
 Zie \proglink{consteval\\-func\\-tie.cpp}.
 
 \sectionTextCode{Compile time}{if}
-%\markright{}
 \label{compiletimeif}
 Vanaf \Cpp{}17 kun je gebruik maken van een zogenoemde \emph{\USE{compile time if}}. 
 Dit is een |if|-instructie die niet tijdens het uitvoeren van het programma (tijdens \USE{run time}), maar tijdens het vertalen van het programma (\USE{compile time}) wordt uitgevoerd.
@@ -7222,7 +7179,6 @@ De expressie die als conditie gebruikt wordt moet uiteraard tijdens compile time
 % toepassing van een \USE{compile time if} gegeven. 
 
 \sectionTextCode{Read-only pointers met}{const}
-%\markright{}
 \label{sec:constpointers}
 Je hebt in \cref{sec:const} gezien hoe je in \Cpp{} de |const| \USE{qualifier} kunt gebruiken om \USE{read-only} variabelen (met een constante waarde) te definiëren.
 
@@ -7234,7 +7190,6 @@ const int aantal_regels {80};
 De \USE{qualifier} |const| kan op verschillende manieren bij pointers gebruikt worden.
 
 \subsectionCode{const *}
-%\markright{}
 \begin{cpplstfragment}[mathescape=true]
 int i {3};
 const int j {4};
@@ -7266,7 +7221,6 @@ De pointer |p| is in dit geval zelf \emph{geen} \USE{read-only} variabele. Zoals
 
 \vspace{\baselineskip}
 \subsectionCode{* const}
-%\markright{}
 \begin{cpplstfragment}
 int* const q {&i};
 \end{cpplstfragment}
@@ -7287,7 +7241,6 @@ De pointer |q| is in dit geval een \USE{read-only} variabele.
 
 \needspace{3\baselineskip}
 \subsectionCode{const * const}
-%\markright{}
 \begin{cpplstfragment}
 const int* const r {&i};
 \end{cpplstfragment}
@@ -7344,7 +7297,7 @@ In \Cpp{} mag je deze \USE{cast} ook als volgt coderen:
 Het vervelende van beide vormen van casting is dat een \USE{cast} erg moeilijk te vinden is.
 Omdat een \USE{cast} in bijna alle gevallen code oplevert die niet portable is, is het echter wel belangrijk om alle casts in een programma op te kunnen sporen.
 
-In de \Cpp{} standaard is om deze reden een nieuwe syntax voor casting gedefinieerd die eenvoudiger te vinden is:
+In de \Cpp{}\hyp{}standaad is om deze reden een nieuwe syntax voor casting gedefinieerd die eenvoudiger te vinden is:
 \begin{cpplstfragment}
     i = reinterpret_cast<int>("Hallo");
 \end{cpplstfragment}
@@ -7405,7 +7358,6 @@ Het zal duidelijk zijn dat je het gebruik van |const_cast| zoveel mogelijk moet 
 Als de \USE{reference} |a| in het bovenstaande programma naar een |const string| verwijst, is het resultaat onbepaald omdat een compiler |const| objecten in het ROM geheugen kan plaatsen (dit gebeurt veel bij embedded systems).
 
 \sectionCode{static\_assert}
-%\markright{}
 In \cref{sec:assert} heb je al kennis gemaakt met de standaard functie |assert|.
 Met deze functie wordt tijdens het uitvoeren van het programma gecheckt of aan een bepaalde voorwaarde wordt voldaan.
 In \Cpp{} kun je ook tijdens het compileren van je programma al checken of aan een bepaalde voorwaarde is voldaan.
@@ -7444,12 +7396,94 @@ In het voorbeeldprogramma werd de volgende code gebruikt om te kijken of het inv
 Dit zou je nu ook met behulp van structured binding als volgt kunnen coderen:
 \cpplstinputfragment[linerange={5-5,8-10}]{set_structured_binding.cpp}
 
-\iftoggle{WIP}{
 \sectionCode{std::string\_view}
 \label{sec:string_view}
-\boldred{TODO: nog toevoegen!}
-}{}
+In \cref{sec:string} heb je de class |std::string| leren kennen.
+Operaties op variabelen van het type |string| zijn altijd veilig omdat de class |string| het geheugen beheert dat nodig is om de string op te slaan.
+Bij het uitvoeren van operaties op een string, zoals het opvragen van een substring, wordt er een nieuw object van het type |string| gemaakt dat een kopie van de substring bevat.
 
+\needspace{3\baselineskip}
+Bijvoorbeeld:
+\cpplstinputfragment[linerange={6-11}]{string_view.cpp}
+
+De format specifier |:?| zorgt ervoor dat de inhoud van de string met dubbele aanhalingstekens eromheen wordt afgedrukt.
+
+Een |string_view| is een lichtgewicht object dat een read-only pointer naar een tekenreeks en een lengte bevat.
+Een |string_view| biedt een interface die bijna gelijk is aan de \emph{read-only} interface van |string|.
+\needspace{4\baselineskip}
+Hierdoor kun je bovenstaande code efficiënter schrijven door een |string_view| te gebruiken in plaats van een |string|, omdat er dan geen nieuw object van het type |string| hoeft te worden gemaakt, zie proglink{string\_view.cpp}:
+\cpplstinputfragment[linerange={14-19}]{string_view.cpp}
+
+Er worden nu helemaal geen objecten van het type |string| aangemaakt in het geheugen.
+De objecten van het type |string_view| bevatten enkel een pointer naar de string literal en een lengte.
+Maar omdat de |string_view| in tegenstelling tot een |string| de karakters niet zelf opslaat en beheert, moet je wel oppassen bij het gebruik ervan.
+Als de tekst waarnaar de |string_view| verwijst, wordt gewijzigd of verwijderd, dan kan dit leiden tot onverwacht of zelfs ongedefinieerd gedrag als je daarna de |string_view| gebruikt.
+
+\needspace{3\baselineskip}
+Bijvoorbeeld:
+\cpplstinputfragment[linerange={22-32}]{string_view.cpp}
+
+\needspace{3\baselineskip}
+In de bovenstaande code wordt de |string_view| |sv2| na het aanpassen van de |string| |s1| afgedrukt:
+\cpplstinputfragment[linerange={28-28,32-32}]{string_view.cpp}
+
+Dit geeft, misschien onverwacht, als output |"Hi, W"| omdat de |string_view| |sv2| nog steeds verwijst naar de eerste vijf karakters van de |string| |s1|.
+
+Ook wordt de |string_view| |sv1| afgedrukt, dat heeft in principe ongedefinieerd gedrag tot gevolg omdat de |string_view| |sv1| nog steeds verwijst naar de eerst dertien karakters van de |string| |s1|.
+Maar deze |string| bevat nog maar tien karakters. 
+Het afdrukken van dertien karakters uit deze |string| leidt tot ongedefinieerd gedrag\footnote{%
+	Er kan dus van alles gebeuren, zoals het afdrukken van willekeurige tekens, een crash van het programma, enzovoort.
+}.
+
+|string_view| voegt de memberfuncties |remove_prefix(size_t)| en \hcode{re\\-move_\\-suf\\-fix(size_t)} toe, die een |string_view| inkorten.
+Zie \proglink{string_view.cpp}.
+
+Als je een stukje tekst aan een functie wilt meegeven, dan kun je dat doen door een |const string&| parameter te gebruiken. 
+Als je nu echter een string literal (bijvoorbeeld |"Hallo"|) als argument doorgeeft, dan creëert de compiler stilzwijgend een tijdelijk object van het type |string| dat misschien niet nodig is.
+Je zou een overloaded functie, zie \cref{sec:overloading}, kunnen schrijven die een |const char*| accepteert.
+Er hoeft dan geen object van het type |string| gemaakt te worden.
+In dit geval kun je ook één functie schrijven die een |string_view| accepteert, omdat een |string_view| zowel een |const char*| als een |string| kan accepteren zonder dat er een tijdelijk object van het type |string| hoeft te worden gemaakt.
+
+\cpplstinputfragment[linerange={4-22}]{string_view_parameter.cpp}
+
+In het bovenstaande codefragment zijn vijf functies gedefinieerd waarmee een string afgedrukt kan worden.
+\begin{itemize}
+	\item 
+	|f1(const char* s)| kan aangeroepen worden met een string literal:
+	\cpplstinputfragment[linerange={26-26}]{string_view_parameter.cpp}
+	|f1| kan niet aangeroepen worden met een |string|:
+\begin{cpplstfragment}[mathescape=true]
+string hallo {"Hallo daar!"};
+f1(hallo); // $\color{hrred}\textbf{error:}$: cannot convert 'std::string' to 'const char*'
+\end{cpplstfragment}
+	Je kunt de |string| wel omzetten naar een |const char*| door de |c_str()| memberfunctie van de |string| te gebruiken:
+	\cpplstinputfragment[linerange={26-26}]{string_view_parameter.cpp}
+	Maar dit is onhandig en in de functie |f1| kun je natuurlijk geen gebruik maken van de memberfuncties van de class |string|.
+	\item 
+	|f2(const string& s)| kan aangeroepen worden met een |string| en met een string literal:
+	\cpplstinputfragment[linerange={31-32}]{string_view_parameter.cpp}
+	Maar als je |f2| aanroept met een string literal, dan wordt er een tijdelijk object van het type |string| gemaakt en dat is niet efficiënt als je de memberfuncties van de class |string| niet nodig hebt.
+	\item
+	De twee functies |f3| zijn overloaded zodat deze zowel een |const char*| als een |const string&| kunnen accepteren:
+	\cpplstinputfragment[linerange={33-34}]{string_view_parameter.cpp}
+	Maar het is natuurlijk niet handig om steeds twee functies te definiëren om de code zo efficiënt mogelijk te maken.
+	\item |f4(string_view s)| kan ook aangeroepen worden met een |string| en met een string literal, maar er wordt geen tijdelijk object van het type |string| gemaakt als je een string literal doorgeeft.
+	Dit is dus de meest efficiënte manier om een string aan een functie door te geven als je de memberfuncties die een |string| aanpassen niet nodig hebt.
+	De |string_view| heeft dezelfde read-only interface als een |string|, waar je gebruik van kunt maken in de functie, ook als je een string literal doorgeeft.
+	Een |string_view| wordt meestal als call by value parameter gebruikt, omdat een |string_view| efficiënt gekopieerd kan worden.
+\end{itemize}
+Zie \proglink{string_view_parameter.cpp}.
+
+Als een functie een |string_view| als parameter heeft en in de functie moet de |string_view| worden geconverteerd naar een |string|, dan is het beter om de functie een |const string&| parameter te geven.
+Dit is dan efficienter omdat er, als de functie met een string literal als argument wordt aangeroepen, uiteindelijk toch een |string| aangemaakt moet worden.
+
+Een |string_view| wordt niet impliciet geconverteerd naar een |string| om onbewuste kopietjes te voorkomen, want dat was namelijk het idee achter |string_view|).
+\needspace{3\baselineskip}
+Deze conversie moet expliciet worden gemaakt door een |string| te construeren met de |string_view| als argument:
+\begin{cpplstfragment}
+string_view sv {"Hallo Wereld!"};
+string s {sv}; // expliciete conversie van string_view naar string
+\end{cpplstfragment}
 
 \chapter{Objects and classes (de details)}
 \label{sec:objectsandclassesdetails}
@@ -7474,7 +7508,6 @@ De code kan nog verder vereenvoudigd worden tot:
 Zie \proglink{operator+_member.cpp} voor een compleet voorbeeldprogramma.
 
 \sectionCodeText{operator+}{FAQ}
-%\markright{}
 \qa{
 	Waarom gebruik je \cppcode{const Breuk} in plaats van \cppcode{Breuk} als return type bij \cppcode{operator+}?
 }{
@@ -7588,7 +7621,6 @@ De unary operatoren (dat zijn operatoren met 1 operand, zoals |!|) en de \USE{as
 In dit geval wordt namelijk (indien nodig) de linker operand of de rechter operand geconverteerd naar het benodigde type.
 
 \section[Overloaden \texttt{operator++} en \texttt{operator--}]{Overloaden \texorpdfstring{\cppcode{operator++}}{operator++} en \texorpdfstring{\cppcode{operator--}}{operator--}}
-%\markright{}
 Bij het \USE{overloaden} van de |operator++| en |operator--| ontstaat een probleem omdat beide zowel een \emph{prefix} als een \emph{postfix} operator variant kennen%
 \footnote{%
 	Voor wie het niet meer weet: Een postfix operator \cppcode{++} wordt na afloop van de expressie uitgevoerd dus \cppcode{a = b++;} wordt geïnterpreteerd als \cppcode{a = b; b = b + 1;}. 
@@ -7639,7 +7671,7 @@ Is het dan wel verstandig om een |Breuk| automatisch te laten converteren naar e
 }
 
 \sectionTextCodeText{Voorbeeld class}{Breuk}{(vierde versie)}
-%\markright{}
+\label{sec:Breuk3}
 Dit voorbeeld is een uitbreiding van de in \cref{breuk2} gegeven class |Breuk| (derde versie). 
 In deze versie zijn de operator |==| en de operator |!=| toegevoegd. 
 We leren een nieuwe vriend (\emph{\USE{friend}}) kennen die ons helpt bij het implementeren van deze operatoren. 
@@ -7669,7 +7701,6 @@ Dit levert bij compilatie echter de volgende fouten op: \error{error: 'int Breuk
 De globaal gedefinieerde |operator==| is namelijk geen memberfunctie en heeft dus geen toegang tot de private velden van de class |Breuk|. Maar gelukkig is er een vriend die ons hier te hulp komt: de \emph{\USE{friend function}}.
 
 \sectionCodeText{friend}{functions}
-%\markright{}
 \label{sec:friend}
 Een functie kan als \USE{friend} van een class gedeclareerd worden. 
 Deze \USE{friend} functies hebben dezelfde rechten als memberfuncties van de class. 
@@ -7786,7 +7817,6 @@ In dit dictaat heb ik het type |Breuk| stap voor stap ontwikkeld om je te leren 
 In de praktijk moet je deze kennis alleen toepassen om een UDT mee te definiëren die je nergens kunt vinden.
 
 \sectionCodeText{static}{class members}
-%\markright{}
 \label{sec:staticclassmembers}
 Je hebt geleerd dat elk object zijn eigen datavelden heeft terwijl de memberfuncties door alle objecten van een bepaalde class gedeeld worden.
 Stel nu dat je wilt tellen hoeveel objecten van een bepaalde class \squote{levend} zijn.
@@ -7957,7 +7987,6 @@ Dit is bijvoorbeeld ook gebruikt in de volgende standaard library classes:
 \end{itemize}   
 
 \sectionCode{enum class}
-%\markright{}
 \label{sec:enumclass}
 In C heb je de |enum| leren kennen, zie eventueel \cite[paragraaf 5.6.2]{Gustedt2019} of \url{https://en.cppreference.com/w/c/language/enum}.
 In \Cpp{} is een verbeterde versie, zogenoemde |enum class|, toegevoegd.
@@ -8079,7 +8108,7 @@ String_map<Breuk> m2; // m2 is van het type map<string, Breuk>
 \end{cpplstfragment}
 
 \section{Template parameters automatisch bepalen}
-In sommige gevallen kunnen template parameters automatisch door de \Cpp{}-compiler bepaald worden\footnote{%
+In sommige gevallen kunnen template parameters automatisch door de \Cpp{}\hyp{}compiler bepaald worden\footnote{%
 	Dit is mogelijk vanaf \Cpp{}17.
 }.
 Bijvoorbeeld het standaard type |vector| kan als volgt gebruikt worden:
@@ -8106,7 +8135,7 @@ Standaard concepten kun je vinden in de \hreffn{https://en.cppreference.com/cpp/
 Ook heb je gezien dat deze concepten met behulp van logische expressies gecombineerd kunnen worden.
 Het is daarnaast ook mogelijk om zelf concepten te definiëren.
 In \cref{sec:generiekeverdubbel} heb je al een voorbeeld gezien waarin de zelfgedefinieerde concepten |Number<T>| en |Const<T>| gebruikt werden.
-Hierbij moet |Number<T>| waar (|true|) zijn voor een type |T| waarmee je kunt rekenen (zoals |int| of |double| maar ook |complex| of |Breuk|).
+Hierbij moet |Number<T>| waar (|true|) zijn voor een type |T| waarmee je kunt rekenen (zoals |int| of |double| maar ook |complex<double>| of |Breuk|).
 Het concept |Const<T>| moet waar (|true|) zijn voor een type |T| dat read-only, dus als |const T|, is gedefinieerd.
 
 \needspace{3\baselineskip}
@@ -8199,6 +8228,113 @@ Deze type traits waren een manier om informatie over types te verkrijgen voordat
 In dit geval geeft |is_const_v<T>| aan of |T| read-only, dus als |const T|, gedefinieerd is.
 Precies wat we nodig hebben om het concept |Const<T>| te definiëren.
 
+\section{Class template specialisatie}
+\label{sec:template_specialisatie}
+In \cref{sec:template_auto} is de functietemplate |number_of_zero_bits| besproken, zie \proglink{number_\\-of_\\-zero_\\-bits.cpp}.
+Stel dat je deze functie in een programma heel vaak moet aanroepen voor het type |uint8_t| en dat dit programma niet snel genoeg uitgevoerd wordt en dat uit een analyse blijkt dat deze functie de bottleneck is en dus versneld moet worden.
+
+Je zou dan op het idee kunnen komen dat een |uint8_t| maar 256 verschillende waarden kan hebben en dat je dus een \emph{\USE{lookup table}} kunt maken met 256 elementen, waarin voor elke mogelijke waarde van een |uint8_t| het aantal nullen in de binaire representatie van die waarde opgeslagen is\footnote{%
+	Deze manier van het versnellen van een functie door gebruik te maken van een \emph{\USE{lookup table}} is een veelgebruikte optimalisatietechniek, zie \url{https://en.wikipedia.org/wiki/Lookup_table} die \emph{\USE{memoization}} genoemd wordt, zie \url{https://en.wikipedia.org/wiki/Memoization}.
+}.
+\needspace{3\baselineskip}
+In dat geval zou je \emph{function name overloading}, zie \cref{sec:functionoverloading}, kunnen gebruiken om een overload van |number_of_zero_bits| te definiëren die een |uint8_t| als parameter heeft en die de waarde uit de lookup table teruggeeft, zie \proglink{number_of_zero_bits9.cpp}:
+\begin{cpplstfragment}[escapeinside={(*}{*)}]
+int number_of_zero_bits(uint8_t n) {
+    static const int lookup[256] = {
+        8, 7, 7, 6, 7, 6, 6, 5, 7, 6, 6, 5, 6, 5, 5, 4, 
+        7, 6, 6, 5, 6, 5, 5, 4, 6, 5, 5, 4, 5, 4, 4, 3, 
+		// zie voor de rest van de lookup table: (*\href{\progsurl/number_of_zero_bits9.cpp}{number\_of\_zero\_bits9.cpp}*)
+        4, 3, 3, 2, 3, 2, 2, 1, 3, 2, 2, 1, 2, 1, 1, 0
+    };
+    return lookup[n];
+}
+\end{cpplstfragment}
+
+\needspace{3\baselineskip}
+De volgende code:
+\cpplstinputfragment[linerange={43-46}]{number_of_zero_bits9.cpp}
+\needspace{3\baselineskip}
+Geeft de volgende uitvoer:
+\begin{coutput}
+number_of_zero_bits(00101010) = 5
+number_of_zero_bits(00000000000000000000000000101010) = 29
+\end{coutput}
+Met de debugger kun je zien dat de eerste aanroep van |number_of_zero_bits| de functie |number_of_zero_bits(uint8_t n)| aanroept en dat de tweede aanroep de functietemplate |number_of_zero_bits<unsigned int>| aanroept.
+
+Net zoals het wenselijk kan zijn om een functietemplate te overloaden voor een bepaald type, kan het ook wenselijk zijn om een aparte versie van een class template te definiëren voor een bepaald type.
+Je kunt een class template echter \emph{niet} overloaden, maar je kunt een class template \emph{wel} specialiseren\footnote{%
+	Een functietemplate kan ook gespecialiseerd worden, maar in de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#t144-dont-specialize-function-templates}{T.144} wordt aangeraden om dit \emph{niet} te doen en in plaats daarvan overloading te gebruiken.
+}.
+Dit wordt \emph{class template specialisation} genoemd.
+
+In \cref{sec:class_template_Dozijn} is de class template |Dozijn| besproken, die een dozijn objecten van een willekeurig type kan opslaan.
+Stel dat je een dozijn |bool|'s wilt opslaan, dan zou je op het idee kunnen komen om een aparte  class voor |Dozijn<bool>| te definiëren, die in plaats van een array van 12 |bool|'s een enkele |uint16_t| gebruikt, waarbij elk bit van de |uint16_t| een |bool| voorstelt.
+Een |bool| moet door de compiler in een hele byte opgeslagen worden\footnote{%
+	Dit is noodzakelijk omdat je volgens de \Cpp{}-standaad het adres van een \cppcode{bool} object op moet kunnen vragen en dus ook een pointer naar een \cppcode{bool} object moet kunnen maken, en dat kan alleen als een \cppcode{bool} object minstens 1 byte geheugen gebruikt.
+	De GCC \Cpp{}\hyp{}compiler gebruikt 1 byte per \cppcode{bool} object, maar er zijn ook compilers die 4 bytes per \cppcode{bool} object gebruiken.
+}, dus een array van 12 |bool|'s zou 12 bytes geheugen gebruiken, terwijl een enkele |uint16_t| maar 2 bytes geheugen gebruikt.
+Deze optimalisatie is natuurlijk in de praktijk alleen zinvol als er \emph{heel veel} dozijnen met |bool|'s opgeslagen moeten worden, wat erg onwaarschijnlijk is.
+Maar een class template specialisatie voor |Dozijn<bool>| is wel een mooi voorbeeld om te laten zien hoe je een class template kunt specialiseren voor een bepaald type.
+
+\needspace{3\baselineskip}
+Een class template specialisatie voor |Dozijn<bool>| kan als volgt gedefinieerd worden, zie \proglink{Dozijn_template_specialisation.cpp}:
+\cpplstinputfragment[linerange={29-53}]{Dozijn_template_specialisation.cpp}
+
+Je ziet dat de class template specialisatie van de class template |template<typename T> class Dozijn| voor het type |bool| wordt gedefinieerd met de syntax |template<> class Dozijn<bool>|.
+
+De volgende code:
+\cpplstinputfragment[linerange={87-90}]{Dozijn_template_specialisation.cpp}
+\needspace{3\baselineskip}
+Geeft de volgende uitvoer:
+\begin{coutput}
+sizeof(int) = 4
+sizeof(Dozijn<int>) = 48
+sizeof(bool) = 1
+sizeof(Dozijn<bool>) = 2
+\end{coutput}
+
+Je ziet dat voor een dozijn |int|'s inderdaad $12 \times 4{} = 48$ bytes geheugen gebruikt worden, terwijl voor een dozijn |bool|'s geen $12 \times{} 1 = 12$ maar slechts 2 bytes geheugen gebruikt worden.
+
+De class template specialisatie van |Dozijn| voor |bool| wordt een volledige (Engels: \USE{\emph{full}}) class template specialisatie genoemd, omdat er geen template parameters meer zijn.
+Je kunt ook een class template specialisatie definiëren die nog wel template parameters heeft, maar die voor een deel gespecialiseerd zijn, dit wordt een \USE{\emph{partial class template specialisation}} genoemd.
+
+In \cref{Rij} is de class template |template<typename T, size_t N> class Rij| besproken.
+In een |Rij| kunnen |N| elementen van type |T| opgeslagen worden.
+Stel dat je, als voorbeeld, een aparte versie voor deze template wilt definiëren voor |N| gelijk aan 1. Deze gespecialiseerde class kan (iets) sneller werken omdat er geen array meer nodig is om de elementen in op te slaan.
+
+Dan kan dat als volgt gedaan worden, zie \proglink{Rij_partial_specialisation.cpp}:
+\cpplstinputfragment[linerange={32-52}]{Rij_partial_specialisation.cpp}
+
+Je ziet dat de gedeeltelijk gespecialiseerde class template nu nog steeds een template parameter heeft, namelijk |T|, maar dat de template parameter |N| nu \squote{vastgezet} is op 1.
+
+\needspace{3\baselineskip}
+De interface is bewust gelijk gehouden aan de interface van de oorspronkelijke class template, zodat de code die een |Rij| gebruikt, zoals bijvoorbeeld de functietemplate |naar_string(const Rij<T, N>& r)| niet aangepast hoeft te worden als er een |Rij| met maar 1 element gebruikt wordt.
+
+\needspace{3\baselineskip}
+De volgende code:
+\cpplstinputfragment[linerange={78-81}]{Rij_partial_specialisation.cpp}
+\needspace{3\baselineskip}
+Geeft de volgende uitvoer:
+\begin{coutput}
+Sparta was landskampioen in 1959
+kampioen_schappen_Sparta = 1959
+\end{coutput}
+
+Met gedeeltelijke class template specialisatie kun je bijvoorbeeld ook een aparte versie van een class template definiëren voor pointer types.
+\needspace{3\baselineskip}
+Stel dat je niet wilt dat de template class |Dozijn| gebruikt mag worden met pointer types, dan zou je de volgende \emph{partial class template specialisation} kunnen definiëren voor pointer types:
+\cpplstinputfragment[linerange={56-59}]{Dozijn_template_specialisation.cpp}
+In deze template class is de standaard constructor verwijderd, zodat er geen objecten van deze class gemaakt kunnen worden.
+De volgende code:
+\begin{cpplstfragment}
+	Dozijn<int*> d;
+\end{cpplstfragment}
+\needspace{3\baselineskip}
+Geeft bij het compileren de volgende foutmelding:
+\begin{coutput}
+error: use of deleted function 'Dozijn<T*>::Dozijn() [with T = int]'
+\end{coutput}
+
 \iftoggle{WIP}{
 \sectionTextCodeText{Zelf een}{formatter}{definiëren}
 \label{sec:userdefinedformatter}
@@ -8208,9 +8344,6 @@ Precies wat we nodig hebben om het concept |Const<T>| te definiëren.
 \section{Nog meer template details}
 Over \USE{templates} valt nog veel meer te vertellen, onder andere:
 \begin{itemize}
-	\item \USE{Template specialisation};\\
-	Een speciale versie van een template die alleen voor een bepaald type (bijvoorbeeld |int|) of voor bepaalde types (bijvoorbeeld |T*|) wordt gebruikt.
-	De laatste vorm wordt \emph{\USE{partial}} \USE{specialisation} genoemd.
 	\item Template memberfuncties;\\
 	Een class (die zelf geen template hoeft te zijn) kan memberfuncties hebben die als template gedefinieerd zijn.
 	\item Default waarden voor template\hyp{}parameters.\\
@@ -8538,7 +8671,7 @@ De functie |f| is in de \USE{base class} niet virtual gedefinieerd en kan dus ni
 De functie |g| in de \USE{derived class} heeft een andere definitie dan in de basis class (in de basis class is |g| een |const|
 memberfunctie maar in de \USE{derived class} ontbreekt het woordje |const|).
 De functie |g| wordt dus \USE{overloaded} in plaats van \USE{overridden}\footnote{%
-	De gcc compiler 15.2.0 geeft wel de volgende waarschuwing: \error{warning: 'virtual void Base::g(int) const' was hidden}.
+	De GCC compiler 15.2.0 geeft wel de volgende waarschuwing: \error{warning: 'virtual void Base::g(int) const' was hidden}.
 }.
 
 We kunnen deze problemen eenvoudig voorkomen door expliciet aan te geven dat we een functie willen \USE{overridden}.
@@ -8569,7 +8702,6 @@ Het is dus, om fouten te voorkomen, het beste om elke functie die je override ex
 .
    
 \sectionCodeText{final}{overriding van memberfuncties}
-%\markright{}
 Een functie die in een \USE{derived class} \USE{overridden} is kan, in een class die weer afgeleid is van deze class, opnieuw \USE{overridden} worden.
 Normaal is dit geen probleem, maar in sommige gevallen is dit ongewenst.
 Je kunt ook expliciet aangeven dat een functie die \USE{overridden} is niet verder \USE{overridden} mag worden.
@@ -8594,7 +8726,6 @@ De \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCor
 Soms is dat zinvol en nodig, maar meestal niet.
 
 \sectionCodeText{final}{overerving}
-%\markright{}
 Soms is het niet de bedoeling dat een class als \USE{base class} gebruikt wordt. Je kunt expliciet aangeven dat je niet kunt overerven van een bepaalde class door in de class declaratie meteen na de naam het woord |final| te gebruiken. Stel dat we in een bibliotheekapplicatie een basis class |Uitleenbaar_item| hebben gedefinieerd waar de class |DVD| van afgeleid is. Stel dat we niet willen dat deze class als basis class gebruikt wordt, dan kunnen we de class |DVD| met het woord |final| markeren. Het is dan niet meer toegestaan om van deze class te overerven.
 
 Zie \proglink{final_inheritance.cpp}:
@@ -8647,7 +8778,6 @@ Van een ABC kunnen namelijk geen objecten aangemaakt worden.
 Probeer dus zoveel mogelijk over te erven van abstracte base classes en maak classes die bedoeld zijn om van over te erven abstract.
 
 \sectionTextCode{Voorbeeld: opslaan van polymorfe objecten in een}{vector}
-%\markright{}
 In het voorgaande programma heb je gezien dat alleen pointers en \USE{references} polymorf kunnen zijn. 
 Als we dus polymorfe objecten willen opslaan, kan dit alleen door pointers of \USE{references} naar deze objecten op te slaan.
 Het opslaan van \USE{references} in een |vector| is echter niet mogelijk omdat een \USE{reference} altijd moet verwijzen naar een object dat al bestaat en bij het aanmaken van de |vector| weten we nog niet welke objecten in de |vector| moeten worden opgeslagen.
@@ -8793,14 +8923,13 @@ Deze functie kun je als volgt aanroepen:
 \cpplstinputfragment[linerange={26-29}]{rtti.cpp}
 
 \needspace{2\baselineskip}
-De uitvoer is compiler afhankelijk. De GCC \Cpp{}-compiler produceert de volgende uitvoer:
+De uitvoer is compiler afhankelijk. De GCC \Cpp{}\hyp{}compiler produceert de volgende uitvoer:
 \begin{coutput}
 12Sint_bernard
 4Hond
 \end{coutput}
 
 \sectionTextCode{Maak geen misbruik van RTTI en}{dynamic\_cast}
-%\markright{}
 Het verkeerd gebruik van |dynamic_cast| en RTTI kan leiden tot code die \emph{niet} uitbreidbaar en aanpasbaar is! Je zou bijvoorbeeld op het idee kunnen komen om een functie |blaf()| als volgt te implementeren (\proglink{casting7.cpp}):
 \begin{cpplstfragment}[mathescape=true]
 class Hond {
@@ -8870,7 +8999,6 @@ Ook laat ik in dit hoofdstuk zien hoe je er voor kunt zorgen dat je deze UDT:
 \end{itemize}
 
 \sectionTextCode{Voorbeeld class}{Array}
-%\markright{}
 Het in C ingebouwde array type heeft een aantal nadelen en beperkingen.
 De belangrijkste daarvan zijn:
 \begin{itemize}
@@ -8931,7 +9059,6 @@ Het type |size_type| wordt gebruikt voor de private variabele waarin de |size| v
 Ook de parameter |s| van de constructor en de parameter |index| van de |operator[]|-memberfuncties zijn ook van dit type. Deze |index| kan ook alleen maar positief zijn.
 
 \sectionCodeText{explicit}{constructor}
-%\markright{}
 De \USE{constructor} |Array(size_type)| is |explicit| gedeclareerd om te voorkomen dat de compiler deze \USE{constructor} gebruikt om een variabele van het type |size_type| oftewel |size_t| automatisch om te zetten naar een |Array|.
 Zie \cref{sec:conversieconstructor}.
 
@@ -8984,7 +9111,6 @@ De parameter van de \USE{copy constructor} moet een |Array&| zijn en kan geen |A
 Als je namelijk een |Array| als (\USE{call by value}) parameter gebruikt, moet een kopietje worden gemaakt bij aanroep van de \USE{copy constructor}, maar daarvoor moet de \USE{copy constructor} worden aangeroepen, waarvoor een kopietje moet worden gemaakt, maar daarvoor moet de \USE{copy constructor} \ldots enz.
 
 \sectionTextCode{Overloading}{operator=}
-%\markright{}
 \label{sec:assignmentoperator}
 Voor de door de compiler gegenereerde \USE{assignment operator} geldt ongeveer hetzelfde verhaal als voor de door de compiler gegenereerde \USE{copy constructor}.
 Na het statement |b = a;| ontstaat de situatie zoals gegeven in \cref{fig:assign1}.
@@ -9028,7 +9154,6 @@ Array& Array::operator=(Array r) {
 Ja! De \USE{copy constructor} wordt nu impliciet aangeroepen bij het doorgeven van het bij aanroep gebruikte argument aan de parameter |r| (\USE{call by value}).
 
 \section[Wanneer moet je zelf een destructor, enz definiëren?]{Wanneer moet je zelf een destructor, copy constructor en \texorpdfstring{\cppcode{operator=}}{operator=} definiëren?}
-%\markright{}
 \label{sec:ruleofthree}
 Een class moet een \emph{zelf} gedefinieerde \USE{copy constructor}, |operator=| en \USE{destructor} bevatten als:
 %TODO: move operaties toevoegen!
@@ -9061,7 +9186,6 @@ Bijvoorbeeld:
 
 \needspace{4\baselineskip}
 \sectionTextCode{Voorbeeld class template}{Array}
-%\markright{}
 \label{sec:class template array}
 Zie \proglink{Array\_template.cpp}:
 \cpplstinputfragment[linerange={3-32}]{Array_template.cpp}
@@ -9111,7 +9235,6 @@ Er zijn grote verschillen tussen deze class template |Fixed_array| en de eerder 
 \end{itemize}
 
 \section[Ondersteuning range-based \texttt{for} voor class template \texttt{Array}]{Ondersteuning range-based \texorpdfstring{\cppcode{for}}{for} voor class template \texorpdfstring{\cppcode{Array}}{Array}}
-%\markright{}
 De in \cref{sec:class template array} gegeven class template Array kan niet met behulp van een \USE{range-based} |for| (zie \cref{sec:range-basedfor}) doorlopen worden. Als je dit toch probeert, dan krijg je de volgende foutmeldingen:
 
 \begin{cpplstfragment}[mathescape=true]
@@ -9148,7 +9271,6 @@ Zie \proglink{Array\_template\_rbf.cpp}:
 % print
 
 \sectionTextCode{Ondersteuning initialisatielijst voor class template}{Array}
-%\markright{}
 \label{sec:Arraymetinitlist}
 De in \cref{sec:class template array} gegeven class template Array kan niet met behulp van een initialisatielijst geïnitialiseerd worden. Als je dit toch probeert, dan krijg je een foutmelding:
 
@@ -9191,7 +9313,7 @@ Bijvoorbeeld, zie \proglink{RVO.cpp}:
 \cpplstinputfragment[linerange={5-31}]{RVO.cpp}
 Het enige doel van dit programma is om te kijken of de compiler de return value optimization toepast.
 \needspace{3\baselineskip}
-Als dit programma gecompileerd wordt met gcc 15.2\footnote{%
+Als dit programma gecompileerd wordt met GCC 15.2\footnote{%
 	\code{g++ -std=c++23 -fmodules -Wall -Wextra -Wpedantic -g3 -O0 RVO.cpp}
 }, dan geeft dit programma de volgende uitvoer:
 \begin{coutput}
@@ -9200,7 +9322,7 @@ De waarde van local is 42.
 Int met waarde 42 wordt verwijderd.
 \end{coutput}  
 Blijkbaar is de GCC \Cpp{}\hyp{}compiler zo slim om alle benodigde kopieeracties weg te optimaliseren\footnote{%
-	Ondanks het feit dat we de optie \code{-O0} hebben meegegeven. Volgens de documentatie van gcc\footnotemark{} disabled de optie \code{-O0} de meeste optimalisaties (maar de RVO blijkbaar niet.) 
+	Ondanks het feit dat we de optie \code{-O0} hebben meegegeven. Volgens de documentatie van GCC\footnotemark{} disabled de optie \code{-O0} de meeste optimalisaties (maar de RVO blijkbaar niet.) 
 }.
 \footnotetext{Zie: \url{ https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html}.}
 
@@ -9351,7 +9473,7 @@ Voor deze class kan een |operator+| worden gedefinieerd waarmee twee dozijnen op
 Deze operator kun je als volgt gebruiken om twee dozijnen |b| en |c| bij elkaar op te tellen:
 \cpplstinputfragment[linerange={96-96}]{Dozijn_zonder_move.cpp}
 De werking is\footnote{%
-	Ervan uitgaande dat het programma gecompileerd is met gcc 15.2.
+	Ervan uitgaande dat het programma gecompileerd is met GCC 15.2.
 }, stap voor stap, als volgt\footnote{%
 	Gebruik een debugger met een single step functie om dit zelf na te gaan.
 }: 
@@ -9386,7 +9508,7 @@ De parameter |r| van deze |operator=| is van het type |Dozijn&&|.
 Dit is een zogenoemde \USE{rvalue reference}.
 Een \USE{rvalue reference} refereert naar een \emph{tijdelijke} variabele die aangepast mag worden omdat deze variabele niet meer nodig is en de bijbehorende geheugenruimte binnenkort vrijgegeven wordt.
 De werking van dit programma is\footnote{%
-	Ervan uitgaande dat het programma gecompileerd is met gcc 15.2.
+	Ervan uitgaande dat het programma gecompileerd is met GCC 15.2.
 }, stap voor stap, nu als volgt\footnote{%
 	Gebruik een debugger met een single step functie om dit zelf na te gaan.
 }: 
@@ -9518,6 +9640,7 @@ Met behulp van de standaard library opgenomen |high_resolution_clock| kun je een
 \end{cpplstfragment}
 
 \section{Random getallen}
+\label{sec:random}
 Soms is het handig om random getallen te gebruiken in een programma.
 De \Cpp{} standaard library bevat hier uitgebreide faciliteiten voor.
 In \proglink{Dobbelsteen.cpp} is de class |Dobbelsteen| gedefinieerd waarmee eenvoudig een random getal tussen 1 en 6 gegenereerd kan worden:
@@ -9527,14 +9650,12 @@ In \proglink{Dobbelsteen.cpp} is de class |Dobbelsteen| gedefinieerd waarmee een
 \end{cpplstfragment}
 
 \sectionCode{vector::reserve}
-%\markright{}
 Als een |vector| groeit kunnen de elementen van plaats veranderen. 
 Pointers en iteratoren naar deze elementen staan dan naar verkeerde adressen te wijzen.
 Dit kun je voorkomen door met behulp van de functie |reserve|, van tevoren, voldoende elementen te reserveren.
 Zie \proglink{vector_reserve.cpp}.
 
 \sectionCode{emplace}
-%\markright{}
 De standaardcontainer hebben zogenoemde \emph{emplace}-operaties.
 Zo heeft bijvoorbeeld een |vector| naast de bekende |push_back|-operatie ook een |emplace_back|-operatie.
 De \hcode{emplace_\\-back} combineert het toevoegen van een element in de vector met het aanroepen van de constructor van dit element.

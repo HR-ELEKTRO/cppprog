@@ -15,23 +15,21 @@ private:
     default_random_engine eng;
 };
 
-template<>
-struct std::formatter<Dobbelsteen>: public formatter<int> {
-    auto format(Dobbelsteen& d, auto& context) const {
-        return formatter<int>::format(d.rol(), context);
-    }
-};
-
 int main() {
+    // rol de dobbeldsteen twintig keer
     Dobbelsteen d;
-    for (int i {0}; i < 20; ++i)
-        print("{}, ", d);
-    println("{}", d);
-    
+    for (int i {0}; i < 19; ++i) {
+        print("{}, ", d.rol());
+    }
+    println("{}", d.rol());
+
     // bepaal verdeling
     vector<int> verdeling (6);
-    for (int i {0}; i < 10'000'000; ++i)
+    for (int i {0}; i < 30'000'000; ++i) {
         ++verdeling[d.rol() - 1];
-    for (int i {0}; i < 6; ++i) 
+    }
+    // print verdeling
+    for (int i {0}; i < 6; ++i) {
         println("{}: {}", i + 1, verdeling[i]);
+    }
 }
