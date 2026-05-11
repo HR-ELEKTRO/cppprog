@@ -44,16 +44,19 @@
 \newtoggle{WIP}
 \ifWIP \toggletrue{WIP} \else \togglefalse{WIP} \fi
 
+\usepackage{xfrac}
 % http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/l3packages/xfrac.pdf
 % met xfrac kun je breuken in de tekst opnemen zoals 3/4 met het commando \sfrac{3}{4}
-\usepackage{xfrac}
 \newcommand{\myfrac}[2]{\raisebox{0.35ex}{\sfrac{#1}{#2}}}
 
-%http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/needspace/needspace.pdf
 \usepackage{needspace}
+%http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/needspace/needspace.pdf
 
 \usepackage{hwemoji}
 %https://mirror.lyrahosting.com/CTAN/macros/latex/contrib/hwemoji/hwemoji.pdf
+
+\usepackage{epsdice}
+%https://mirror.koddos.net/CTAN/macros/latex/contrib/epsdice/epsdice.pdf
 
 \newcommand{\progs}{progs}
 \newcommand{\repourl}{https://github.com/HR-ELEKTRO/cppprog/}
@@ -428,11 +431,13 @@ Verdere kleine verbeteringen, die ook best handig zijn bij het programmeren in \
 \label{sec:modules}
 In \Cpp{} worden bij voorkeur modules gebruikt in plaats van include files.
 De standaard \Cpp{} \USE{library} is zeer uitgebreid en in \cref{sec:stdlib} komen we hier uitgebreid op terug.
+
 \needspace{3\baselineskip}
 Je kunt de gehele standaard \Cpp{} library als module importeren met de volgende regel:
 \begin{cpplstfragment}
 	import std;
 \end{cpplstfragment}
+
 \needspace{3\baselineskip}
 Als je gebruik maakt van de GCC compiler, dan moeten modules geprecompiled worden met het commando:
 \begin{lstfragment}
@@ -440,14 +445,15 @@ Als je gebruik maakt van de GCC compiler, dan moeten modules geprecompiled worde
 \end{lstfragment}
 %TODO: uitleggen wat deze opties betekenen
 Hierna kun je de module importeren in je programma met |import std;|.
-\needspace{3\baselineskip}
 Bijvoorbeeld in een \dquote{Hello World} programma (\proglink{hello_world.cpp}):
 \cpplstinputfragment{hello_world.cpp}
+
 \needspace{3\baselineskip}
 Dit programma kan dan gecompileerd worden met het commando:
 \begin{lstfragment}
 	g++ -std=c++23 -fmodules -Wall -Wextra -Wpedantic -g3 -O0 hello_world.cpp -o hello_world
 \end{lstfragment}
+
 \needspace{3\baselineskip}
 En vervolgens uitgevoerd worden met het commando\footnote{%
 	Onder windows kan het programma uitgevoerd worden met het commando \code{Hello_world.exe}.
@@ -521,7 +527,6 @@ Dit programmadeel bevat een fout die niet door de compiler gesignaleerd wordt\fo
 	Als het programma gecompileerd wordt met het commando \code{gcc printf.c}, dan wordt inderdaad geen melding gegeven. Als je echter het commando \code{gcc -Wall printf.c} gebruikt, dan geeft de compiler de waarschuwing: 
 	\ccode{warning: format '\%d' expects argument of type 'int', but argument 2 has type 'double'}.
 } en pas bij executie blijkt.
-\needspace{3\baselineskip}
 De uitvoer van dit programma is namelijk:
 \begin{coutput}
 d = 1374389535
@@ -538,6 +543,7 @@ using namespace std;
 	double d = 3.14;
 	println("d = {}", d);
 \end{cpplstfragment}
+
 \needspace{3\baselineskip}
 De uitvoer van dit programma is:
 \begin{coutput}
@@ -547,18 +553,18 @@ De accolades |{}| in de |println| functie geven aan waar de waarde van het volge
 De compiler bepaald zelf het type van |d| en zorgt er automatisch voor dat de juiste conversie (in dit geval van |double| naar tekst) plaatsvindt.
 
 De functies |print| en |println| bieden zeer uitgebreide formatting mogelijkheden.
-\needspace{3\baselineskip}
 Als je bijvoorbeeld in het bovenstaande programma de variabele |d| met drie decimalen wilt weergegeven, dan kun je dat doen met behulp van een zogenoemde \emph{\USE{format specifier}} |{:.3f}|:
 \cpplstinputfragment[linerange={7-7}]{println_formatted.cpp}
+
 \needspace{3\baselineskip}
 De uitvoer is dan:
 \begin{coutput}
 d = 3.140
 \end{coutput}
 Als er meerdere argumenten zijn, dan worden deze in de volgorde van de accolades ingevuld.
-\needspace{3\baselineskip}
 Bijvoorbeeld:
 \cpplstinputfragment[linerange={8-10}]{println_formatted.cpp}
+
 \needspace{3\baselineskip}
 De uitvoer van dit programma is:
 \begin{coutput}
@@ -566,32 +572,39 @@ i = 42, j = 666
 \end{coutput}
 Je kunt de volgorde van invullen ook aanpassen door een getal toe te voegen aan de accolades:
 \cpplstinputfragment[linerange={13-13}]{println_formatted.cpp}
+
 \needspace{3\baselineskip}
 De uitvoer van deze regel is:
 \begin{coutput}
 j = 666, i = 42
 \end{coutput}
+
 \needspace{3\baselineskip}
 Je kunt |i| en |j| ook onder elkaar netjes uitgelijnd weergeven:
 \cpplstinputfragment[linerange={14-14}]{println_formatted.cpp}
+
 \needspace{3\baselineskip}
 De uitvoer van deze regel is:
 \begin{coutput}
 i =   42
 j =  666
 \end{coutput}
+
 \needspace{3\baselineskip}
 Je kunt ook nullen toevoegen aan de linkerkant van de getallen:
 \cpplstinputfragment[linerange={15-15}]{println_formatted.cpp}
+
 \needspace{3\baselineskip}
 De uitvoer van deze regel is:
 \begin{coutput}
 i = 0042
 j = 0666
 \end{coutput}
+
 \needspace{3\baselineskip}
 Je kunt een argument ook meerdere keren gebruiken:
 \cpplstinputfragment[linerange={16-16}]{println_formatted.cpp}
+
 \needspace{3\baselineskip}
 De uitvoer van deze regel is:
 \begin{coutput}
@@ -670,7 +683,6 @@ In dit dictaat gaan we daar niet verder op in.
 Zie eventueel voor verdere informatie \cite[hoofdstuk 6: \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus06.html}{IOStreams}]{Brokken2019} of \url{http://en.cppreference.com/w/cpp/io}.
 
 De meeste programmeurs vinden het gebruik van |cout| en |<<| om output te formateren minder handig dan het gebruik van de functies |print| en |println|.
-\needspace{3\baselineskip}
 In dit dictaat gebruiken we daarom voor output de functies |print| en |println| en voor input de |>>| operator (\proglink{lees_en_print_double.cpp}):
 \label{prog:lees_en_print_double}
 \cpplstinputfragment{lees_en_print_double.cpp}
@@ -706,6 +718,7 @@ Eventueel kan tussen de variabelenaam en de accolade openen nog een is-teken geb
 \begin{cpplstfragment}
 	double d = {4.6};
 \end{cpplstfragment}
+
 \needspace{3\baselineskip}
 Het gebruik van universele initialisatie ten opzichte van de andere mogelijke manieren van initialiseren\footnote{%
 	Een variabele kan ook geïnitialiseerd worden met een is-teken of door het gebruik van ronde haakjes.  
@@ -733,9 +746,7 @@ Om deze redenen is er voor gekozen om in dit dictaat altijd gebruik te maken van
 \sectionCodeText{auto}{type}
 \label{sec:autotype}
 Als een variabele geïnitialiseerd wordt, is het mogelijk om de compiler zelf het type van een variabele te laten bepalen. 
-Dit doe je door in de variabeledefinitie, in plaats van een typenaam, het \USE{keyword} |auto| te gebruiken. 
-
-\needspace{2\baselineskip}
+Dit doe je door in de variabeledefinitie, in plaats van een typenaam, het \USE{keyword} |auto| te gebruiken.
 Bijvoorbeeld:
 \begin{cpplstfragment}
 	auto antwoord {42};
@@ -749,6 +760,7 @@ Meestal is het beter om toch zelf het type te definiëren\footnote{%
 	Wij volgen het advies uit de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#es11-use-auto-to-avoid-redundant-repetition-of-type-names}{ES.11} en gebruiken \cppcode{auto} alleen als dit de code duidelijker maakt. 
 }.
 Dat maakt je programma duidelijker en voorkomt fouten.
+
 \needspace{3\baselineskip}
 Verderop in dit dictaat kom je een aantal meer zinvolle manieren van het gebruik van |auto| tegen:
 \begin{itemize}
@@ -1479,7 +1491,6 @@ Bij het ontwikkelen van kleine programma's zijn deze voordelen niet zo belangrij
 Door gebruik te maken van de |class| |Breuk| met bijbehorende memberfuncties in \Cpp{} in plaats van de |typedef struct| |Breuk| met de bijbehorende functies in C wordt het programma \emph{beter onderhoudbaar} en \emph{eenvoudiger uitbreidbaar}.
 
 De hierboven gedefinieerde class |Breuk| is erg beperkt. In de inleiding van dit hoofdstuk heb ik geschreven: \dquote{Een UDT is een user-defined type dat voor een gebruiker niet te onderscheiden is van ingebouwde types (zoals \cppcode{int})}.
-\needspace{2\baselineskip}
 Een UDT |Breuk| moet dus uiteindelijk als volgt gebruikt kunnen worden:
 %Waarom deze splitsing? Misschien omdat regels in Breuk3 breder zijn?
 \iftoggle{ebook}{
@@ -1662,8 +1673,7 @@ b3.plus(5) = 2/5
 \sectionTextCode{Constructor}{Breuk}
 \label{sec:constructor}
 De \label{constructor}\USE{constructors} definiëren hoe een object gemaakt kan worden.
-De \USE{constructors} hebben dezelfde naam als de class.%
-\needspace{2\baselineskip}
+De \USE{constructors} hebben dezelfde naam als de class.
 Voor de class |Breuk| heb ik de volgende drie \USE{constructors} gedeclareerd:
 \cpplstinputfragment[linerange=15-17]{Breuk1.cpp}
 
@@ -1830,6 +1840,7 @@ Bijvoorbeeld:
     Breuk b {1, 3};           // variabele b met waarde 1/3
     const Breuk halve {1, 2}; // constante halve met waarde 1/2
 \end{cpplstfragment}
+
 \needspace{3\baselineskip}
 Een |const| |Breuk| mag je (vanzelfsprekend) niet veranderen.
 \begin{cpplstfragment}[mathescape=true]
@@ -1850,7 +1861,6 @@ De compiler kan niet (altijd%
 }) controleren of het aanroepen van een memberfunctie een verandering in het object tot gevolg heeft. 
 Daarom mag je een memberfunctie alleen aanroepen voor een |const| object als je expliciet aanduidt dat deze memberfunctie het object niet verandert. 
 Dit doe je door het \USE{keyword} |const| achter de memberfunctie te plaatsten. 
-\needspace{2\baselineskip}
 Bijvoorbeeld:
 \cpplstinputfragment[linerange=18-18]{Breuk1.cpp}
 
@@ -2038,8 +2048,7 @@ Ik bespreek nu eerst hoe je de \USE{receiver} (|DIT_OBJECT|) kunt benaderen en d
 
 \section[\texttt{this}-pointer]{\texorpdfstring{\cppcode{this}}{this}-pointer}
 Elke memberfunctie kan beschikken over een impliciete parameter genaamd \label{this}|this| die het adres bevat van het object waarop de memberfunctie wordt uitgevoerd. 
-Met deze pointer kun je bijvoorbeeld het object waarop een memberfunctie wordt uitgevoerd als return waarde van deze memberfunctie teruggeven.%
-\needspace{2\baselineskip}
+Met deze pointer kun je bijvoorbeeld het object waarop een memberfunctie wordt uitgevoerd als return waarde van deze memberfunctie teruggeven.
 Bijvoorbeeld:
 \label{operator+= nog niet correct}
 \begin{cpplstfragment}[mathescape=true]
@@ -2801,7 +2810,6 @@ Elke functie met één of meer |auto|\hyp{}parameters is dus in feite een functi
 }.
 
 Je moet wel oppassen als je deze verkorte notatie gebruikt, omdat elke |auto|\hyp{}parameter een aparte template\hyp{}parameter is, dus als je meerdere |auto|-parameters hebt, dan kunnen deze allemaal verschillende types hebben.
-\needspace{3\baselineskip}
 Op \cpageref{code:swap_template} heb je de definitie van de functietemplate |swap| gezien:
 \cpplstinputfragment[linerange={6-10}]{swap_template.cpp}
 
@@ -2817,6 +2825,7 @@ Als deze functietemplate op de volgende wijze wordt gebruikt:
 	swap(f, i);
 	println("f = {}, i = {}", f, i);
 \end{cpplstfragment}
+
 \needspace{3\baselineskip}
 Dan zal dit programma zonder fouten compileren en uitvoeren, maar de uitvoer zal waarschijnlijk niet zijn wat je verwacht:
 \begin{coutput}
@@ -2878,8 +2887,8 @@ De compiler genereert namelijk met behulp van de functietemplate een functie doo
 
 Het zou veel beter zijn als je de compiler zou kunnen vertellen dat de functietemplate |number_of_zero_bits| alleen gebruikt mag worden met types die een integer getal kunnen bevatten.
 
+\needspace{4\baselineskip}
 Met behulp van een concept is dat sinds \Cpp{}20 mogelijk.
-\needspace{3\baselineskip}
 De eerste twee regels van de functietemplate |number_of_zero_bits| kunnen dan als volgt worden gedefinieerd (\proglink{number_of_zero_bits3.cpp}):
 \cpplstinputfragment[linerange={5-6}]{number_of_zero_bits3.cpp}
 
@@ -2902,8 +2911,8 @@ Een template waarvan het gebruik beperkt is, wordt een \dquote{\USE{constrained 
 	In de \Cpp{} Core Guideline \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines\#t10-specify-concepts-for-all-template-arguments}{CG: T.10.} wordt geadviseerd om voor alle template parameters een concept te specificeren.
 }.
 
+\needspace{4\baselineskip}
 Het beperken van een template met behulp van een concept kan op verschillende manieren worden gedaan.
-\needspace{3\baselineskip}
 De eerste twee regels van de functietemplate |number_of_zero_bits| kunnen ook als volgt worden gedefinieerd (\proglink{number_of_zero_bits4.cpp}):
 \cpplstinputfragment[linerange={5-6}]{number_of_zero_bits4.cpp}
 
@@ -2911,7 +2920,6 @@ Je kunt de |requires|-voorwaarde dus ook achter de parameterlijst plaatsen.
 
 Er is ook een derde manier om een template te beperken met behulp van een concept, namelijk door de naam van het concept in plaats van het keyword |typename| in de template parameterlijst te plaatsen.
 Er is dan helemaal geen |requires|-voorwaarde meer nodig.
-\needspace{3\baselineskip}
 De eerste twee regel van de functietemplate |number_of_zero_bits| kunnen dan als volgt worden gedefinieerd (\proglink{number_of_zero_bits5.cpp}):
 \cpplstinputfragment[linerange={5-6}]{number_of_zero_bits5.cpp}
 
@@ -2926,7 +2934,6 @@ De eerste regel van de verkorte notatie van de functietemplate |number_of_zero_b
 De vier verschillende manieren om een template te beperken met behulp van een concept zijn functioneel allemaal gelijk.
 
 Er zit nog een klein addertje onder het gras, het concept |integral<T>| is niet alleen |true| voor de standaard integer types, maar ook voor de standaard character types en voor het type |bool|.
-\needspace{3\baselineskip}
 Het aantal bits met de waarde |0| in een character is wel te bepalen, maar als je probeert het aantal bits met de waarde |0| in een |bool| te bepalen, dan krijg je de volgende foutmelding van de compiler, omdat het type |bool| geen unsigned variant heeft:
 \begin{coutput}
 error: invalid use of incomplete type 'struct std::make_unsigned<bool>'
@@ -3409,7 +3416,6 @@ Hoe kun je in het programma nu het beste met de verschillen tussen de kaarten om
 \subsection{Een gestructureerde oplossing}
 Eerst bespreek ik hoe je dit probleem op een gestructureerde manier oplost.
 Met de methode van functionele decompositie deel ik het probleem op in een aantal deelproblemen.
-\needspace{2\baselineskip}
 Voor elk deelprobleem definieer ik vervolgens een functie:
 \begin{itemize}
     \item |init_card| voor het initialiseren van de kaart;
@@ -3622,7 +3628,7 @@ Het type |complex| is opgenomen in de standaard \Cpp{} \USE{library}\footnote{%
 De functie |Z| moet in een van |Component| afgeleide class de impedantie berekenen (een complex getal) bij de als parameter gegeven frequentie |f|.
 De functie |naar_string| moet in een van |Component| afgeleide class het type en de waarde opslaan in een string en deze retourneren.
 Bijvoorbeeld: |"L(1E-3)"| voor een spoel van \SI{1}{\milli\henry}.
-sec:userdefinedformatter
+
 Om componenten met behulp van de |print| en |println| af te kunnen drukken, is de template |std::formatter| gespecialiseerd voor |Component| (\proglink{netwerk0.cpp}), zie \csecref{sec:userdefinedformatter}:
 \cpplstinputfragment[linerange={43-48}]{netwerk0.cpp}
 
@@ -4007,7 +4013,6 @@ Deze class werd als volgt gebruikt:
 
 De class |Fruitmand| heeft een destructor waarin al het aan de fruitmand toegevoegde fruit wordt ge|delete| als de fruitmand wordt vrijgegeven.
 We kunnen deze verantwoordelijkheid ook overdragen aan een smart pointer.%
-\needspace{2\baselineskip}
 De |Fruitmand| bevat dan een |vector| van |unique_ptr|s en heeft geen destructor meer nodig:
 \cpplstinputfragment[linerange={37-49}]{Fruitmand_destructor_smart_pointer.cpp}
 
@@ -4163,7 +4168,6 @@ Dit heeft 2 voordelen:
 \end{itemize}
 
 De class |domain_error| heeft een memberfunctie |what()| die de bij constructie van het object meegegeven string weer teruggeeft.
-\needspace{3\baselineskip}
 De uitvoer van het bovenstaande programma is:
 
 \begin{coutput}
@@ -5535,7 +5539,6 @@ Je ziet dat de compiler de meest effectieve variant van |find_upper_middle| aanr
 Alle containers hebben de memberfuncties |begin()| en |end()| waarmee een iterator naar het eerste respectievelijk één voorbij het laatste element opgevraagd kan worden.
 Deze iteratoren kunnen gebruikt worden om alle elementen van een container van voor naar achter te doorlopen, zie \cref{sec:vbstring}.
 De functies |cbegin()| en |cend()| zijn vergelijkbaar maar geven in plaats van een |iterator| een |const_iterator| terug die alleen gebruikt kan worden om elementen uit de container te lezen.
-\needspace{3\baselineskip}
 Als je bijvoorbeeld de eerste 5 in een vector met integers wilt vervangen door een 7 dan kan dit als volgt:
 
 \cpplstinputfragment[linerange={8-11}]{reverse_iterator.cpp}
@@ -6584,7 +6587,6 @@ Deze naam is toevallig zo gekozen door de bedenkers van dit zogenoemde \USE{alph
 \cpplstinputfragment[linerange={1-50}]{alpha_beta0.cpp}
 
 In een uitgebreidere versie van het bovenstaande programma, genaamd \proglink{alpha_\\-beta0_\\-ver\\-bose.cpp}, wordt output naar het beeldscherm gestuurd als er gesnoeid wordt.
-\needspace{3\baselineskip}
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
 snoei node 18
@@ -6644,7 +6646,6 @@ We kunnen de mogelijke posities ook van rechts naar links doorzoeken door de bov
 \cpplstinputfragment[linerange={21-21}]{alpha_beta3_verbose.cpp}
 
 In het resulterende programma \proglink{alpha_beta3_verbose.cpp} kan heel wat minder worden gesnoeid.
-\needspace{3\baselineskip}
 De uitvoer van dit programma is als volgt:
 \begin{coutput}
 snoei node 27
@@ -6841,7 +6842,6 @@ Een variabele van dit type heeft slechts twee mogelijke waarden: |true| en |fals
 \sectionTextCode{Het type}{byte}
 Type |byte| is bedoeld voor het opslaan van een byte (8 bits data). Deze data wordt in tegenstelling tot een |int8_t| of een |char| niet geïnterpreteerd als een getal of een karakter maar als een ongestructureerde verzameling van bits.
 Alleen de bitwise logische operatoren en de schuifoperatoren kunnen gebruikt worden bij dit type.
-\needspace{3\baselineskip}
 Bijvoorbeeld (\proglink{byte.cpp})
 \begin{cpplstfragment}[mathescape=true]
 	byte b1 {234};
@@ -6931,7 +6931,6 @@ Deze module kan vervolgens gecompileerd worden met het commando:
 g++ -std=c++23 -fmodules -c hello_world_module_interface.cppm
 \end{coutput}
 Dit commando maakt dan zowel het bestand |helloworld.gcm| in het directory |gcm.cache| als het object file |hello_world_module.o| aan.
-\needspace{3\baselineskip}
 De object file kan gelinkt worden met de al eerder aangemaakte |hello_world_main.o| met het commando:
 \begin{coutput}
 g++ hello_world_module.o hello_world_module_main.o -o hello
@@ -7047,7 +7046,6 @@ Dit kan met de volgende code:
 \end{cpplstfragment}
 De type van de variabele |ri2| is gedefieerd als hetzelfde type als |ri1|, dus |ri2| is ook een reference naar |i|.
 De naam |ri1| komt nu twee keer voor in deze code, wat ook weer niet zo elegant is.
-\needspace{3\baselineskip}
 De mooiste manier om aan te geven dat |ri2| van hetzelfde type moet zijn als |ri1| is:
 \begin{cpplstfragment}
 	int i {42};
@@ -7410,7 +7408,6 @@ De format specifier |:?| zorgt ervoor dat de inhoud van de string met dubbele aa
 
 Een |string_view| is een lichtgewicht object dat een read-only pointer naar een tekenreeks en een lengte bevat.
 Een |string_view| biedt een interface die bijna gelijk is aan de \emph{read-only} interface van |string|.
-\needspace{4\baselineskip}
 Hierdoor kun je bovenstaande code efficiënter schrijven door een |string_view| te gebruiken in plaats van een |string|, omdat er dan geen nieuw object van het type |string| hoeft te worden gemaakt, zie proglink{string\_view.cpp}:
 \cpplstinputfragment[linerange={14-19}]{string_view.cpp}
 
@@ -7418,8 +7415,6 @@ Er worden nu helemaal geen objecten van het type |string| aangemaakt in het gehe
 De objecten van het type |string_view| bevatten enkel een pointer naar de string literal en een lengte.
 Maar omdat de |string_view| in tegenstelling tot een |string| de karakters niet zelf opslaat en beheert, moet je wel oppassen bij het gebruik ervan.
 Als de tekst waarnaar de |string_view| verwijst, wordt gewijzigd of verwijderd, dan kan dit leiden tot onverwacht of zelfs ongedefinieerd gedrag als je daarna de |string_view| gebruikt.
-
-\needspace{3\baselineskip}
 Bijvoorbeeld:
 \cpplstinputfragment[linerange={22-32}]{string_view.cpp}
 
@@ -7478,7 +7473,6 @@ Als een functie een |string_view| als parameter heeft en in de functie moet de |
 Dit is dan efficienter omdat er, als de functie met een string literal als argument wordt aangeroepen, uiteindelijk toch een |string| aangemaakt moet worden.
 
 Een |string_view| wordt niet impliciet geconverteerd naar een |string| om onbewuste kopietjes te voorkomen, want dat was namelijk het idee achter |string_view|).
-\needspace{3\baselineskip}
 Deze conversie moet expliciet worden gemaakt door een |string| te construeren met de |string_view| als argument:
 \begin{cpplstfragment}
 string_view sv {"Hallo Wereld!"};
@@ -7691,8 +7685,7 @@ Meteen daarna ga ik, één voor één, op bovengenoemde punten in.
 
 Ik heb ervoor gekozen om de globale |operator==| te \USE{overloaden} in plaats van een memberfunctie |Breuk::operator==| te definiëren.
 Dit heeft als voordeel dat zowel het linker als het rechter argument indien nodig naar het type |Breuk| geconverteerd kan worden.
-Dus zowel de expressies| b == 3| als |3 == b| kunnen worden gebruikt als |b| van het type |Breuk| is.%
-\needspace{2\baselineskip}
+Dus zowel de expressies| b == 3| als |3 == b| kunnen worden gebruikt als |b| van het type |Breuk| is.
 De implementatie van deze globale |operator ==| is als volgt:
 \cpplstinputfragment[linerange={120-122}]{Breuk3.cpp}
 
@@ -7789,6 +7782,7 @@ De implementatie van de |format| functie maakt gebruik van de al eerder gedefini
 \needspace{3\baselineskip}
 De volgende code:
 \cpplstinputfragment[linerange=39-46]{format_Breuk.cpp}
+
 \needspace{3\baselineskip}
 Geeft de volgende uitvoer:
 \begin{coutput}
@@ -8006,7 +8000,6 @@ Ze worden automatisch genummerd vanaf |0|\footnote{%
 	\cppcode{typedef enum {groen = 7, oranje = 13, rood} Stoplicht};
 	De naam \code{groen} heeft nu de waarde \code{7}, \code{oranje} de waarde \code{13} en \code{rood} de waarde 14. Als je geen waarde opgeeft, wordt er doorgenummerd.
 }.
-\needspace{2\baselineskip}
 De uitvoer van de bovenstaande code is dus:
 \begin{coutput}
 	s = 2
@@ -8015,7 +8008,6 @@ De naam |rood| wordt, zoals je ziet automatisch omgezet naar een integer.
 De naam |rood| kun je overal waar de |enum Stoplicht| zichtbaar is gebruiken.
 Omdat een |enum| vaak globaal gedefinieerd wordt, leidt dit bij grotere programma's tot problemen als er ook een |enum Kleur| is gedefinieerd die ook de naam |rood| definieert.
 Als je in plaats van een |enum| een |enum class| gebruikt dan wordt zogenoemde \squote{\USE{strong typing}} gebruikt en zijn de namen \squote{\USE{scoped}}.
-\needspace{3\baselineskip}
 Bijvoorbeeld:
 \begin{cpplstfragment}
 	enum class Stoplicht {groen, oranje, rood};
@@ -8035,7 +8027,6 @@ Omdat het gebruik van |enum class| geen onverwachtse verrassingen op kan leveren
 }.
 
 Als je de |enum class| in een beperkte scope gebruikt, dan kun je ook gebruik maken van |using| om de namen van de enumeratie-waarden in die scope beschikbaar te maken.
-\needspace{3\baselineskip}
 Bijvoorbeeld (\proglink{enum_class_using.cpp}):
 \begin{cpplstfragment}
 	enum class Stoplicht {groen, oranje, rood};
@@ -8052,6 +8043,7 @@ Je kunt ook de onderliggende waarde van een enum class constante opvragen:
 \begin{cpplstfragment}
 	println("rood = {}", to_underlying(Stoplicht::rood));
 \end{cpplstfragment}
+
 \needspace{3\baselineskip}
 Geeft als uitvoer:
 \begin{coutput}
@@ -8148,7 +8140,6 @@ En zowel |integral<complex<double>>| als |floating_point<complex<double>>| zijn 
 Ook voor een zelfgedefinieerd UDT zoals |Breuk| zal |Number<Breuk>| nu |false| zijn, ook als alle rekenkundige operatoren voor het UDT |Breuk| gedefinieerd zijn.
 
 Het is mogelijk om zelf een concept te definiëren door in een zogenoemde |requires| clausule aan te geven welke operaties het type moet ondersteunen om aan het concept te voldoen.
-\needspace{3\baselineskip}
 Je kunt bijvoorbeeld het concept |Arithmetic<T>| definiëren dat waar (|true|) is voor types |T| waarvoor de rekenkundige operatoren |+|, |-|, |*| en |/| gedefinieerd zijn (\proglink{concept_number.cpp}):
 \cpplstinputfragment[linerange={13-18}]{concept_number.cpp}
 
@@ -8161,6 +8152,7 @@ Als de code \emph{niet} zonder errors gecompileerd kan worden, dan geeft de comi
 \needspace{3\baselineskip}
 De volgende code:
 \cpplstinputfragment[linerange={73-77}]{concept_number.cpp}
+
 \needspace{3\baselineskip}
 Geeft, zoals verwacht, de uitvoer:
 \begin{coutput}
@@ -8174,6 +8166,7 @@ Arithmetic<vector<int>> = false
 \needspace{3\baselineskip}
 Maar het zal je misschien verrassen dat de volgende code:
 \cpplstinputfragment[linerange={79-80}]{concept_number.cpp}
+
 \needspace{3\baselineskip}
 De volgende uitvoer geeft:
 \begin{coutput}
@@ -8199,6 +8192,7 @@ Vervolgens kan dan het concept |Number<T>| als volgt gedefinieerd worden:
 \needspace{3\baselineskip}
 De volgende code:
 \cpplstinputfragment[linerange={102-108}]{concept_number.cpp}
+
 \needspace{3\baselineskip}
 Geeft, zoals verwacht, de uitvoer:
 \begin{coutput}
@@ -8236,7 +8230,6 @@ Stel dat je deze functie in een programma heel vaak moet aanroepen voor het type
 Je zou dan op het idee kunnen komen dat een |uint8_t| maar 256 verschillende waarden kan hebben en dat je dus een \emph{\USE{lookup table}} kunt maken met 256 elementen, waarin voor elke mogelijke waarde van een |uint8_t| het aantal nullen in de binaire representatie van die waarde opgeslagen is\footnote{%
 	Deze manier van het versnellen van een functie door gebruik te maken van een \emph{\USE{lookup table}} is een veelgebruikte optimalisatietechniek, zie \url{https://en.wikipedia.org/wiki/Lookup_table} die \emph{\USE{memoization}} genoemd wordt, zie \url{https://en.wikipedia.org/wiki/Memoization}.
 }.
-\needspace{3\baselineskip}
 In dat geval zou je \emph{function name overloading}, zie \cref{sec:functionoverloading}, kunnen gebruiken om een overload van |number_of_zero_bits| te definiëren die een |uint8_t| als parameter heeft en die de waarde uit de lookup table teruggeeft, zie \proglink{number_of_zero_bits9.cpp}:
 \begin{cpplstfragment}[escapeinside={(*}{*)}]
 int number_of_zero_bits(uint8_t n) {
@@ -8253,6 +8246,7 @@ int number_of_zero_bits(uint8_t n) {
 \needspace{3\baselineskip}
 De volgende code:
 \cpplstinputfragment[linerange={43-46}]{number_of_zero_bits9.cpp}
+
 \needspace{3\baselineskip}
 Geeft de volgende uitvoer:
 \begin{coutput}
@@ -8284,6 +8278,7 @@ Je ziet dat de class template specialisatie van de class template |template<type
 
 De volgende code:
 \cpplstinputfragment[linerange={87-90}]{Dozijn_template_specialisation.cpp}
+
 \needspace{3\baselineskip}
 Geeft de volgende uitvoer:
 \begin{coutput}
@@ -8313,6 +8308,7 @@ De interface is bewust gelijk gehouden aan de interface van de oorspronkelijke c
 \needspace{3\baselineskip}
 De volgende code:
 \cpplstinputfragment[linerange={78-81}]{Rij_partial_specialisation.cpp}
+
 \needspace{3\baselineskip}
 Geeft de volgende uitvoer:
 \begin{coutput}
@@ -8321,7 +8317,6 @@ kampioen_schappen_Sparta = 1959
 \end{coutput}
 
 Met gedeeltelijke class template specialisatie kun je bijvoorbeeld ook een aparte versie van een class template definiëren voor pointer types.
-\needspace{3\baselineskip}
 Stel dat je niet wilt dat de template class |Dozijn| gebruikt mag worden met pointer types, dan zou je de volgende \emph{partial class template specialisation} kunnen definiëren voor pointer types:
 \cpplstinputfragment[linerange={56-59}]{Dozijn_template_specialisation.cpp}
 In deze template class is de standaard constructor verwijderd, zodat er geen objecten van deze class gemaakt kunnen worden.
@@ -8329,15 +8324,183 @@ De volgende code:
 \begin{cpplstfragment}
 	Dozijn<int*> d;
 \end{cpplstfragment}
+
 \needspace{3\baselineskip}
 Geeft bij het compileren de volgende foutmelding:
 \begin{coutput}
 error: use of deleted function 'Dozijn<T*>::Dozijn() [with T = int]'
 \end{coutput}
 
-\iftoggle{WIP}{
 \sectionTextCodeText{Zelf een}{formatter}{definiëren}
 \label{sec:userdefinedformatter}
+Om het mogelijk te maken om een object van een UDT af te drukken met de |print| functies of te formatteren met de |format| functie, moet de template |std::formatter| gespecialiseerd, zie \cref{sec:template_specialisatie}, worden voor het betreffende UDT.
+
+Een template specialisatie moet altijd in dezelfde namespace gedefinieerd worden als de oorpronkelijke template. 
+In dit geval is dat de namespace |std|.
+Een |formatter| is een |class| template met twee public members: een memberfunctietemplate\footnote{%
+	Een memberfunctie van een class of van een class template kan zelf ook een template zijn.
+	In dat geval wordt deze memberfunctie een \emph{memberfunctietemplate} genoemd.
+} |parse| en een memberfunctietemplate |format|.
+Deze |class| kan als |struct| gedefinieerd worden, zodat de members standaard |public| zijn.
+
+Als voorbeelden worden in deze paragraaf achtereenvolgens formatters besproken voor de classes |Dobbelsteen| (zie \cref{sec:random}), |Breuk| (zie \cref{sec:Breuk3}) en |complex<T>|\footnote{%
+	Zie eventueel \url{https://en.cppreference.com/w/cpp/numeric/complex}.
+}.
+
+\subsectionCode{formatter<Dobbelsteen>}
+In \cref{sec:random} wordt verwezen naar de class |Dobbelsteen|, zie \proglink{Dobbelsteen.cpp}.
+Het enige wat je van de class |Dobbelsteen| hoeft te weten, is dat deze class een memberfunctie |rol()| heeft die een willekeurig getal vanaf 1 tot en met 6 teruggeeft.
+Je kunt bijvoorbeeld twintig worpen met een |Dobbelsteen| afdrukken met de volgende code:
+\cpplstinputfragment[linerange={20-24}]{Dobbelsteen.cpp}
+De uitvoer is bijvoorbeeld als volgt:
+\begin{coutput}
+6, 4, 2, 1, 4, 5, 5, 5, 5, 4, 2, 4, 6, 2, 2, 2, 6, 5, 6, 1
+\end{coutput}
+
+Je kunt een formatter voor |Dobbelsteen| definiëren zodat je een |Dobbelsteen| object meteen kunt afdrukken met de |print| functies of formatteren met de |format| functie.
+Dat maakt het mogelijk om de bovenstaande code te vervangen door de volgende code:
+\cpplstinputfragment[linerange={32-36}]{format_Dobbelsteen_simple.cpp}
+In dit geval is het misschien een beetje overdreven om een formatter te definiëren, maar het is een eenvoudig voorbeeld om te laten zien hoe een formatter voor een UDT gedefinieerd kan worden.
+
+\needspace{3\baselineskip}
+Een eenvoudige formatter voor |Dobbelsteen|, die zeker nog voor verbetering vatbaar is, kan als volgt gedefinieerd worden:
+\cpplstinputfragment[linerange={17-29}]{format_Dobbelsteen_simple.cpp}
+De memberfunctietemplate |parse| is verantwoordelijk voor het interpreteren of ontleden (Engels: \USE{to parse}) van de format specifier, die zich tussen de |{| en |}| tekens bevindt in een formatstring.
+De memberfunctietemplate |format| is verantwoordelijk voor het formatteren van een |Dobbelsteen| object volgens de format specifier die geïnterpreteerd is door de memberfunctietemplate |parse|.
+De memberfunctietemplate |parse| moet als |constexpr|, zie \cref{sec:constexpr}, gedefinieerd zijn zodat de compiler de format specifier al tijdens het compileren kan interpreteren.
+Het argument van de memberfunctietemplate |parse| is een instantie van de template |basic_format_parse_context|\footnote{%
+	Zie eventueel \url{https://en.cppreference.com/cpp/utility/format/basic_format_parse_context}
+}.
+Dit object bevat een iterator, zie \cref{sec:iteratoren}, op te vragen met |begin()| die wijst naar het karakter dat volgt op de dubbele puntin de format specifier en een iterator, op te vragen met |end()|, die wijst naar het einde van de format specifier.
+
+\needspace{3\baselineskip}
+Als de dobbelsteen |d| bijvoorbeeld als volgt geprint wordt:
+\begin{cpplstfragment}
+	println("{:>20}", d);
+\end{cpplstfragment}
+Dan wordt de memberfunctietemplate |parse| van |formatter<Dobbelsteen>| aangeroepen met een |context| object waarvan de iterator |begin()| wijst naar het teken |>| in de format specifier |{:>20}| en waarvan de iterator |end()| wijst 
+
+\needspace{3\baselineskip}
+Als de dobbelsteen |d| bijvoorbeeld als volgt geprint wordt:
+\begin{cpplstfragment}
+	println("{}", d);
+\end{cpplstfragment}
+Dan wijst de iterator |begin()| van het |context| object dat aan de memberfunctietemplate |parse| wordt doorgegeven naar het teken |}| in de format specifier of is |begin()| gelijk aan |end()|.
+De memberfunctietemplate |parse| moet controleren of de format specifier geldig is en de relevante informatie uit deze format specifier opslaan in data members van de formatter class, zodat deze informatie later gebruikt kan worden door de memberfunctietemplate |format|.
+De memberfunctietemplate |parse| moet een iterator teruggeven die wijst naar het einde van de geïnterpreteerde format specifier.
+
+In de eenvoudige formatter voor |Dobbelsteen| wordt alleen de lege (|{}|) format specifier ondersteund.
+Er wordt dus alleen gecontroleerd of de iterator |context.begin()| gelijk is aan |context.end()| of dat |*context.begin()| gelijk is aan |}|.
+Als dit niet het geval is, dan wordt een |format_error| exception gegooid\footnote{%
+	Zie eventueel \url{https://en.cppreference.com/cpp/utility/format/format_error}.
+}.
+Dit is een beetje vreemd omdat de memberfunctietemplate |parse| tijdens compile-time wordt uitgevoerd, maar een exception alleen tijdens run-time kan worden gegooid.
+Maar dit zorgt wel voor een duidelijke foutmelding als er een ongeldige format specifier gebruikt wordt, bijvoorbeeld als de dobbelsteen |d| als volgt geprint wordt:
+\begin{cpplstfragment}
+	println("{:>20}", d);
+\end{cpplstfragment}
+Wordt door de compiler de volgende foutmelding gegenereerd:
+\begin{lstfragment}
+error: call to consteval function 'std::basic_format_string<char, Dobbelsteen&>("{:>20}")' is not a constant expression
+error: expression '<throw-expression>' is not a constant expression
+       throw format_error {"Ongeldige format specifier voor Dobbelsteen."};
+\end{lstfragment}
+
+De memberfunctietemplate |format| moet als |const| gedefinieerd zijn omdat deze functie het formatter object niet mag wijzigen.
+Het eerste argument van de memberfunctietemplate |format| is een referentie naar het |Dobbelsteen| object dat geformatteerd moet worden (|d|).
+Het tweede argument van de memberfunctietemplate |format| is een instantie van de template |basic_format_context|\footnote{%
+	Zie eventueel \url{https://en.cppreference.com/cpp/utility/format/basic_format_context}
+}.
+Dit object bevat een iterator, op te vragen met |out()| die wijst naar de plek waar de geformateerde uitvoer weggeschreven moet worden.
+De memberfunctietemplate |format| moet de geformatteerde uitvoer naar deze plek schrijven en een iterator teruggeven die wijst net voorbij het einde van de geformateerde uitvoer.
+In de eenvoudige formatter voor |Dobbelsteen| wordt de standaard functie |format_to|\footnote{%
+	Zie eventueel \url{https://en.cppreference.com/cpp/utility/format/format_to}
+} gebruikt om de returnwaarde van de aanroep |d.rol()| te formatteren en naar |context.out()| te schrijven.
+Deze functie geeft een iterator terug die net voorbij het einde van de geformatteerde uitvoer wijst.
+Deze iterator kan dus meteen teruggegeven worden door de memberfunctietemplate |format|.
+
+Natuurlijk wil je de eenvoudige formatter voor |Dobbelsteen| verbeteren zodat ook format specifiers ondersteund worden.
+Het meest logisch is om dezelfde format specifiers te ondersteunen als de formatter voor |int|.
+Dit blijkt eenvoudig, door het parsen en formatteren uit te besteden (Engels: to delegate) aan de formatter voor |int|, zie \proglink{format_Dobbelsteen_delegate.cpp}.
+\cpplstinputfragment[linerange={17-27}]{format_Dobbelsteen_delegate.cpp}
+
+\needspace{3\baselineskip}
+De code:
+\cpplstinputfragment[linerange={30-34}]{format_Dobbelsteen_delegate.cpp}
+
+\needspace{3\baselineskip}
+Geeft nu als uitvoer bijvoorbeeld het volgende:
+\begin{coutput}
+|2       |
+|       5|
+|   3    |
+|00000110|
+\end{coutput}
+Je ziet dat je de format specifiers die ondersteund worden door de formatter voor |int|\footnote{%
+	Zie eventueel \url{https://en.cppreference.com/cpp/utility/format/spec}.
+}, zoals alignment en binaire notatie, nu ook kunt gebruiken voor |Dobbelsteen| objecten.
+
+\needspace{3\baselineskip}
+Het is zelfs nog eenvoudiger om een formatter voor |Dobbelsteen| te definiëren als je overerft van de formatter voor |int|, zie \proglink{format_Dobbelsteen_derived.cpp}.
+\cpplstinputfragment[linerange={17-22}]{format_Dobbelsteen_inheritance.cpp}
+Zoals je ziet is het nu niet meer nodig om zelf een memberfunctietemplate |parse| te definiëren, omdat deze al overgeërfd worden van de formatter voor |int|.
+De memberfunctietemplate |format| van de formatter voor |Dobbelsteen| roept de memberfunctietemplate |format| van de formatter voor |int| aan, waarbij het resultaat van de aanroep |d.rol()| als argument wordt doorgegeven.
+
+Je kunt ook zelf een format specifier bedenken.
+Omdat je in \Cpp{}23 ook gebruik kunt maken van UTF-8 tekens kun je een dobbelsteen ook als tekstsymbool (\small{\epsdice{1} \epsdice{2} \epsdice{3} \epsdice{4} \epsdice{5} \epsdice{6}}) formatteren.
+
+\needspace{5\baselineskip}
+Het idee is dat als de format specifier begint met een |s|, symbolen gebruikt moeten worden in plaats van getallen.
+De formatter voor |Dobbelsteen| die de dobbelsteem als getal of als symbool kan formatteren kan als volgt gedefinieerd worden, zie \proglink{format_Dobbelsteen_symbolen.cpp}:
+
+\begin{cpplstfragment}[escapeinside={<*}{*>}]
+template<>
+struct std::formatter<Dobbelsteen> {
+    constexpr auto parse(auto& context) {
+        auto iter {begin(context)};
+        if (*iter == 's') {
+            gebruik_symbolen = true;
+            context.advance_to(iter+1);
+            return string_formatter.parse(context);
+        }
+        gebruik_symbolen = false;
+        return int_formatter.parse(context);
+    }
+    auto format(Dobbelsteen& d, auto& context) const {
+        if (gebruik_symbolen) {
+            const array symbols {<*"\epsdice{1}", "\epsdice{2}", "\epsdice{3}", "\epsdice{4}", "\epsdice{5}", "\epsdice{6}"*>};
+            return string_formatter.format(symbols[d.rol() - 1], context);
+        }
+        return int_formatter.format(d.rol(), context);
+    }
+private:
+    bool gebruik_symbolen;
+    formatter<int> int_formatter;
+    formatter<string> string_formatter;
+};
+\end{cpplstfragment}
+
+Als de format specifier begint met een |s|, dan wordt de rest van de format specifier geparsed door de formatter voor |string| en worden de dobbelsteen symbolen gebruikt.
+Als de format specifier niet begint met een |s|, dan wordt de rest van de format specifier geparsed door de formatter voor |int| en worden getallen gebruikt.
+
+De code:
+\cpplstinputfragment[linerange={43-47}]{format_Dobbelsteen_symbolen.cpp}
+Geeft nu als uitvoer bijvoorbeeld het volgende:
+\begin{lstfragment}[escapeinside={<*}{*>}]
+  6
+  <*\epsdice{6}*>
+101
+"<*\epsdice{1}*>"
+\end{lstfragment}
+Je ziet dat je de format specifiers die ondersteund worden door de formatter voor |string|\footnote{%
+	Zie eventueel \url{https://en.cppreference.com/cpp/utility/format/spec}.
+}, kunt gebruiken als de formatspecifier begint met een |s| voor |Dobbelsteen| objecten.
+Als de format specifier niet begint met een |s|, dan kun je de format specifiers die ondersteund worden door de formatter voor |int| gebruiken.
+
+\iftoggle{WIP}{
+\subsectionCode{formatter<Breuk>}
+\boldred{TODO: nog toevoegen!}
+\subsectionCode{formatter<std::complex>}
 \boldred{TODO: nog toevoegen!}
 }{}
 
@@ -8824,7 +8987,6 @@ class Sint_bernard: public Hond { /* ... */ };
 
 Het omzetten van een |Hond&| naar een |Sint_bernard&| of van een |Hond*| naar een |Sint_bernard*| kan soms toch nodig zijn.
 We noemen dit een \emph{\USE{downcast}} omdat we afdalen in de class hiërarchie.
-\needspace{2\baselineskip}
 Voorbeeld (\proglink{casting4.cpp}):
 \cpplstinputfragment[linerange={4-30}]{casting4.cpp}
 \begin{cpplstfragment}[mathescape=true]
@@ -9312,7 +9474,6 @@ Je kunt kijken of deze optimalisatie wel of niet wordt toegepast door een class 
 Bijvoorbeeld, zie \proglink{RVO.cpp}:
 \cpplstinputfragment[linerange={5-31}]{RVO.cpp}
 Het enige doel van dit programma is om te kijken of de compiler de return value optimization toepast.
-\needspace{3\baselineskip}
 Als dit programma gecompileerd wordt met GCC 15.2\footnote{%
 	\code{g++ -std=c++23 -fmodules -Wall -Wextra -Wpedantic -g3 -O0 RVO.cpp}
 }, dan geeft dit programma de volgende uitvoer:

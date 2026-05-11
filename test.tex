@@ -49,5 +49,35 @@
 
 Hier komt de testcode!
 
+% \needspace start een nieuwe paragraaf
+Bla bla bla.
+\needspace{3\baselineskip}
+Wauwel, wauwel, wauwel.
+% Hoe is dat te voorkomen?
+
+% The parse() method must be constexpr and has to return an iterator to either ctx.end() or to the '\}' character.
+% * The format() method must be const and return the ctx.out() iterator.
+% * While some standard implementations allow you to specify a concrete type for ParseContext and FormatContext, it doesn't work with all. Cppreference uses those templates, and so do I.
+
+% When parsing the format expression, the ctx iterator given to you will point to the first letter after ':' (if there is any), or to '\}', or the iterator will equal to end().
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{cpplstShortInline}
 \end{document}
