@@ -24,7 +24,7 @@
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
 \ifWIP
-\newcommand{\huidigeversie}{1.94}
+\newcommand{\huidigeversie}{1.95}
 \else
 \newcommand{\huidigeversie}{2.0}
 \fi
@@ -125,7 +125,7 @@
 	\section[#1 \texttt{#2} #3]{#1 \texorpdfstring{\cppcode{#2}}{#2} #3}%
 }
 \newcommand{\sectionTextCodeTextNoSpaces}[3]{%
-	\section[#1 \texttt{#2} #3]{#1\texorpdfstring{\cppcode{#2}}{#2}#3}%
+	\section[#1\texttt{#2}#3]{#1\texorpdfstring{\cppcode{#2}}{#2}#3}%
 }
 \newcommand{\subsectionCode}[1]{%
 	\subsection[\texttt{#1}]{\texorpdfstring{\cppcode{#1}}{#1}}%
@@ -635,7 +635,7 @@ Als het bestand al bestaat, dan wordt de inhoud van dit bestand overschreven.
 %TODO: uitleggen hoe je dit kan voorkomen.
 %TODO: Verwijzen naar meer info over file IO?
 
-\section[Input en output met \texttt{>>} en \texttt{<<}]{Input en output met \texorpdfstring{\cppcode{>>}}{>>} en \texorpdfstring{\cppcode{<<}}{<<}}
+\section[Input en output met \texttt{>{}>} en \texttt{<{}<}]{Input en output met \texorpdfstring{\texttt{>{}>}}{>>} en \texorpdfstring{\texttt{<{}<}}{<<}}
 \label{sec:iostream}
 Vóór \Cpp{}23 werd de iostream \USE{library} gebruikt voor het inlezen en wegschrijven van data.
 Sinds \Cpp{}23 heeft het de voorkeur om voor output de functies |print| en |println| te gebruiken, zie \cref{sec:print}.
@@ -7435,7 +7435,7 @@ Zie \proglink{string_view.cpp}.
 
 Als je een stukje tekst aan een functie wilt meegeven, dan kun je dat doen door een |const string&| parameter te gebruiken. 
 Als je nu echter een string literal (bijvoorbeeld |"Hallo"|) als argument doorgeeft, dan creëert de compiler stilzwijgend een tijdelijk object van het type |string| dat misschien niet nodig is.
-Je zou een overloaded functie, zie \cref{sec:overloading}, kunnen schrijven die een |const char*| accepteert.
+Je zou een overloaded functie, zie \cref{sec:functionoverloading}, kunnen schrijven die een |const char*| accepteert.
 Er hoeft dan geen object van het type |string| gemaakt te worden.
 In dit geval kun je ook één functie schrijven die een |string_view| accepteert, omdat een |string_view| zowel een |const char*| als een |string| kan accepteren zonder dat er een tijdelijk object van het type |string| hoeft te worden gemaakt.
 
@@ -7775,9 +7775,9 @@ Om het mogelijk te maken om een |Breuk| af te drukken met de |print| functies, m
 
 \cpplstinputfragment[linerange={111-118}]{Breuk3.cpp}
 
-In dit geval is er voor gekozen om de |formatter<Breuk>| over te erven van \hcode[style=cppstyle]{formatter<str-ing>}.
+In dit geval is er voor gekozen om de |formatter<Breuk>| over te erven van \hcode[style=cppstyle]{formatter<str\\-ing>}.
 Dit zorgt ervoor dat de \USE{format specifiers} die bij een |string| gebruikt kunnen worden, nu ook bij een |Breuk| gebruikt kunnen worden.
-De implementatie van de |format| functie maakt gebruik van de al eerder gedefinieerde |operator<<| om een |Breuk| af te drukken naar de |ostringstream| |ss|die vervolgens omgezet kan worden naar een |string| door middel van |ss.str()|.
+De implementatie van de |format| functie maakt gebruik van de al eerder gedefinieerde |operator<<| om een |Breuk| af te drukken naar de |ostringstream| |ss| die vervolgens omgezet kan worden naar een |string| door middel van |ss.str()|.
 
 \needspace{3\baselineskip}
 De volgende code:
@@ -8365,7 +8365,7 @@ In dit geval is het misschien een beetje overdreven om een formatter te definië
 \needspace{3\baselineskip}
 Een eenvoudige formatter voor |Dobbelsteen|, die zeker nog voor verbetering vatbaar is, kan als volgt gedefinieerd worden:
 \cpplstinputfragment[linerange={17-29}]{format_Dobbelsteen_simple.cpp}
-De memberfunctietemplate |parse| is verantwoordelijk voor het interpreteren of ontleden (Engels: \USE{to parse}) van de format specifier, die zich tussen de |{| en |}| tekens bevindt in een formatstring.
+De memberfunctietemplate |parse| is verantwoordelijk voor het interpreteren of ontleden (Engels: \USE{to parse}) van de format specifier, die zich tussen de |{| en |}| tekens bevindt in een format string.
 De memberfunctietemplate |format| is verantwoordelijk voor het formatteren van een |Dobbelsteen| object volgens de format specifier die geïnterpreteerd is door de memberfunctietemplate |parse|.
 De memberfunctietemplate |parse| moet als |constexpr|, zie \cref{sec:constexpr}, gedefinieerd zijn zodat de compiler de format specifier al tijdens het compileren kan interpreteren.
 Het argument van de memberfunctietemplate |parse| is een instantie van de template |basic_format_parse_context|\footnote{%
@@ -8500,7 +8500,7 @@ Als de format specifier niet begint met een |s|, dan kun je de format specifiers
 \iftoggle{WIP}{
 \subsectionCode{formatter<Breuk>}
 \boldred{TODO: nog toevoegen!}
-\subsectionCode{formatter<std::complex>}
+\subsection[\texttt{formatter<std::complex>{}>}]{\texorpdfstring{\texttt{formatter<std::complex>{}>}}{formatter<std::complex>>}}
 \boldred{TODO: nog toevoegen!}
 }{}
 
@@ -9978,6 +9978,129 @@ Ook in dit geval vind ik het gebruik van een lambda\hyp{}functie eenvoudiger.
 \boldred{TODO: nog toevoegen!}
 }{}
 
+\section{Dynamische format specifiers}
+\label{sec:dynamic_format_specifier}
+\needspace{3\baselineskip}
+Sinds Cpp{}23 moet de format string in de |format|, |print| en |println| functies een compile time constant zijn.
+De code:
+\begin{cpplstfragment}[mathescape=true]
+    string s {"Hello World!"};
+    println(s); // $\color{hrred}\textbf{error:}$: call to consteval function 'std::basic_format_string<char>(s)' is not a constant expression
+\end{cpplstfragment}
+Geef dus een foutmelding omdat de format sting geen compile time constante is, maar een variabele.
+
+Op \cpageref{prog:lees_en_print_double} heb je het programma \proglink{lees_en_print_double.cpp} gezien waarbij de het aantal decimalen dat wordt afgedrukt van een floating point getal |d| afhankelijk is van de waarde van de variabele |aantal_decimalen|.
+\begin{cpplstfragment}
+	println("d = {:.{}f}", d, aantal_decimalen);
+\end{cpplstfragment}
+
+\needspace{3\baselineskip}
+Als je echter probeert om tijdens runtime te bepalen of een floating point getal in wetenschappelijke notatie\footnote{%
+	Zie eventueel \url{https://nl.wikipedia.org/wiki/Wetenschappelijke_notatie}.
+} moet worden afgedrukt of niet, dan kun je dat niet als volgt doen:
+\begin{cpplstfragment}
+    println("{:{}}", wetenschappelijke_notatie ? "e" : "f", 12345.67890);
+\end{cpplstfragment}
+	Deze code compileert wel, maar geef bij het uitvoeren een exception:
+\begin{coutput}
+terminate called after throwing an instance of 'std::format_error'
+ what():  format error: argument used for width or precision must be a non-negative integer
+Aborted
+\end{coutput}
+\needspace{3\baselineskip}
+Je kunt dit natuurlijk oplossen door twee aparte |println| aanroepen te maken, maar dat is niet erg elegant.
+\begin{cpplstfragment}
+    if (wetenschappelijke_notatie) {
+        println("{:e}", 12345.67890);
+    } else {
+        println("{:f}", 12345.67890);
+    }
+\end{cpplstfragment}
+
+Als je de format string tijdens runtime wilt samenstellen, dan moet je gebruik maken van de |vformat|, |vprint_unicode| of |vprint_nonunicode| functies.
+% C++26 heeft hier een mooiere oplossing voor |dynamic_format| zie: \url{https://en.cppreference.com/cpp/utility/format/dynamic_format}.
+\needspace{3\baselineskip}
+Op de volgende wijze kun je dan bepalen of een floating point getal in wetenschappelijke notatie moet worden afgedrukt of niet:
+\begin{cpplstfragment}
+	println("{}", vformat(wetenschappelijke_notatie ? "{:e}" : "{:f}", make_format_args(d)));
+\end{cpplstfragment}
+De |vformat| functie neemt een format string en een object van het type |format_args| als argumenten en retourneert een |string| die is opgemaakt volgens de format string en de meegegeven argumenten.
+De functie |make_format_args| neemt een willekeurig aantal argumenten en retourneert een object van het type |format_args| dat deze argumenten bevat.
+De functie |println| wordt gebruikt om de door |vformat| geretourneerde string af te drukken.
+
+\needspace{3\baselineskip}
+Als alternatief kun je ook de functie |vprint_unicode| of |vprint_nonunicode| gebruiken om de string direct af te drukken zonder dat er een tijdelijk object van het type |string| hoeft te worden gemaakt:
+\begin{cpplstfragment}
+	vprint_unicode(wetenschappelijke_notatie ? "{:e}\n" : "{:f}\n", make_format_args(d));
+\end{cpplstfragment}
+Omdat er geen |println|-versie van deze functies bestaat moet je zelf een newline karakter toevoegen aan de format string.
+Zie \proglink{vformat.cpp}.
+
+\needspace{3\baselineskip}
+In \Cpp{}26 zijn |vformat| en de |vprint|-varianten niet meer nodig en kan de bovenstaande code vervangen worden door:
+\begin{cpplstfragment}
+    println(dynamic_format(wetenschappelijke_notatie ? "{:e}" : "{:f}"), d);
+\end{cpplstfragment}
+
+\needspace{3\baselineskip}
+Als je een programma schrijft dat meerdere talen moet ondersteunen, dan komt het gebruik van |vformat| (of een van de |vprint|-varianten) vaak goed van pas.
+Bijvoorbeeld, zie \proglink{getal_number.cpp}:
+\label{getal_number.cpp}
+\cpplstinputfragment[linerange={1-9,23-30}]{getal_number.cpp}
+In dit voorbeeld zijn de Nederlandse en Engelse teksten opgenomen in een |array| maar in de praktijk zou je deze teksten waarschijnlijk in aparte bestanden opslaan en deze bestanden inlezen op het moment dat het programma wordt uitgevoerd.
+Ook dan is het noodzakelijk om |vformat| (of een van de |vprint|-varianten) te gebruiken omdat de format string tijdens runtime wordt bepaald.
+
+\needspace{3\baselineskip}
+In \Cpp{}26 kan de laatste regel van het bovenstaande programma vervangen worden door:
+\begin{cpplstfragment}
+    println(dynamic_format(antwoord[index]), getal);
+\end{cpplstfragment}
+
+\section{lokalisatie}
+\label{sec:localization}
+De manier waarop een datum weergegeven wordt varieert per regio.
+Hetzelfde geldt voor het weergeven van floating point getallen, in sommige regio's wordt een punt gebruikt als scheidingstekens en in andere regio's een komma.
+Het aanpassen van een programma aan een bepaalde regio wordt lokalisatie (Engels: \emph{localization}) genoemd, ook wel afgekort tot \emph{L10n}.
+
+Als in het programma |getal_number.cpp|, zie \cpageref{getal_number.cpp} een groot getal wordt ingetypt, dan zou het handig zijn om dit getal met scheidingstekens voor duizendtallen af te drukken, bijvoorbeeld (in het Nederlands) |1.000.000| in plaats van |1000000|.
+Het enige probleem hierbij is dat dit afhankelijk is van de gebruikte taal.
+In het Engels is het gebruikelijk om een komma als scheidingsteken voor duizendtallen te gebruiken, dus |1,000,000| in plaats van |1000000|.
+\Cpp{} biedt ondersteuning voor lokale conventies zoals datum en tijd-notaties, valuta, getalnotaties enzovoort, via de class |locale|.
+Bijvoorbeeld:
+\cpplstinputfragment[linerange={1-3,11-26}]{getal_number_locale.cpp}
+In dit voorbeeld wordt ervan uitgegaan dat de locales |nl_NL.utf8| en |en_US.utf8| beschikbaar zijn op het systeem waarop het programma wordt uitgevoerd\footnote{%
+	Op een Linux- of WSL-systeem kun je de beschikbare locales afdrukken met het commando \code{locale -a} in een terminal.
+	Als \code{en_US.utf8} en \code{nl_NL.utf8} niet in de lijst staan, kunt u ze inschakelen met het volgende comando in de terminal:\\
+	\code{sudo nano /etc/locale.gen}\\
+	Verwijder het commentaar bij de regels voor \code{en_US.UTF-8} en \code{nl_NL.UTF-8} en voer vervolgens het volgende commando uit om de landinstellingen te genereren: \code{sudo locale-gen}.
+}.
+Aan de functie |format| kun je als eerste argument een locale meegeven en als je dan in de format specifier |{:L}| gebruikt, dan zal de betreffende locale worden toegepast bij het formateren van de betreffende data.
+Helaas kan aan de functie |vformat| geen locale worden meegegeven, dus als je een format string tijdens runtime wilt samenstellen en daarbij gebruik wilt maken van een locale, dan moet je zelf de locale toepassen op de argumenten voordat je deze aan |vformat| meegeeft.
+
+In \Cpp{}26 kunnen de laatste zes regels van het bovenstaande programma vervangen worden door:
+\begin{cpplstfragment}
+    array antwoord {"Je hebt het getal {:L} ingevoerd.", "You have entered the number {:L}."};
+    print("{}", vraag[index]);
+    int getal;
+    cin >> getal;
+    println("{}", format(loc, dynamic_format(antwoord[index]), getal);
+\end{cpplstfragment}
+
+\needspace{3\baselineskip}
+De uitvoer van het programma \proglink{getal_nummer_locale.cpp} is bijvoorbeeld:
+\begin{coutput}
+Nederlands (N) / English (E): \cinput{N}
+Geef een groot getal: \cinput{1234567890}
+Je hebt het getal 1.234.567.890 ingevoerd.
+\end{coutput}
+
+\needspace{3\baselineskip}
+Een andere mogelijke uitvoer is:
+\begin{coutput}
+Nederlands (N) / English (E): \cinput{E}
+Enter a big number: \cinput{1234567890}
+You have entered the number 1,234,567,890.
+\end{coutput}
 
 \end{cpplstShortInline}
 
