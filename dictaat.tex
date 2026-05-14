@@ -8359,6 +8359,7 @@ De uitvoer is bijvoorbeeld als volgt:
 
 Je kunt een formatter voor |Dobbelsteen| definiëren zodat je een |Dobbelsteen| object meteen kunt afdrukken met de |print| functies of formatteren met de |format| functie.
 Dat maakt het mogelijk om de bovenstaande code te vervangen door de volgende code:
+\label{format_Dobbelsteen_simple.cpp}
 \cpplstinputfragment[linerange={32-36}]{format_Dobbelsteen_simple.cpp}
 In dit geval is het misschien een beetje overdreven om een formatter te definiëren, maar het is een eenvoudig voorbeeld om te laten zien hoe een formatter voor een UDT gedefinieerd kan worden.
 
@@ -8394,7 +8395,7 @@ Er wordt dus alleen gecontroleerd of de iterator |context.begin()| gelijk is aan
 Als dit niet het geval is, dan wordt een |format_error| exception gegooid\footnote{%
 	Zie eventueel \url{https://en.cppreference.com/cpp/utility/format/format_error}.
 }.
-Dit is een beetje vreemd omdat de memberfunctietemplate |parse| tijdens compile-time wordt uitgevoerd, maar een exception alleen tijdens run-time kan worden gegooid.
+Dit is een beetje vreemd omdat de memberfunctietemplate |parse| tijdens \USE{compile time} wordt uitgevoerd, maar een exception alleen tijdens run-time kan worden gegooid.
 Maar dit zorgt wel voor een duidelijke foutmelding als er een ongeldige format specifier gebruikt wordt, bijvoorbeeld als de dobbelsteen |d| als volgt geprint wordt:
 \begin{cpplstfragment}
 	println("{:>20}", d);
@@ -8497,12 +8498,139 @@ Je ziet dat je de format specifiers die ondersteund worden door de formatter voo
 }, kunt gebruiken als de formatspecifier begint met een |s| voor |Dobbelsteen| objecten.
 Als de format specifier niet begint met een |s|, dan kun je de format specifiers die ondersteund worden door de formatter voor |int| gebruiken.
 
-\iftoggle{WIP}{
 \subsectionCode{formatter<Breuk>}
-\boldred{TODO: nog toevoegen!}
+\needspace{3\baselineskip}
+Voor een UDT die geprint kan worden met een overloaded |operator<<| is er een simpele manier om een formatter te definiëren zodat de UDT ook geprint kan worden met de |print|-functies en geformateerd kan worden met de |format|-functies.
+
+In \cref{sec:overloadoutput} heb je al gezien hoe de formatter voor |Breuk| gedefinieerd is met behulp van de overloaded |operator<<| voor |Breuk|.
+Het is eenvoudig mogelijk om een formatter voor |Breuk| te definiëren die als friend van de class |Breuk| is gedefinieerd en dus rechtstreeks de private members van |Breuk| kan benaderen, zie \proglink{Breuk_format_inherit_from_string.cpp}.
+Doordat deze formatters overerven van |formatter<string>| kunnen alle format specifiers die bij een |string| gebruikt kunnen worden, nu ook bij een |Breuk| gebruikt worden.
+Je kunt een breuk dus bijvoorbeeld centraal uitlijnen op een veld van zestien tekens met een underscore als opvulteken, zie \proglink{format_Breuk.cpp}:
+\cpplstinputfragment[linerange={39-39,41-41}]{format_Breuk.cpp}
+
+\needspace{3\baselineskip}
+Geeft als output:
+\begin{coutput}
+Breuk b = _____15/47______
+\end{coutput}
+
+Het is echter niet mogelijk om een |Breuk| in het hexadecimale of binaire talstelsel te printen, omdat deze format specifiers niet gedefinieerd zijn voor een |string|.
+Om dit wel mogelijk te maken, kun je een formatter voor |Breuk| definiëren die overerft van |formatter<int>|, zie \proglink{format_Breuk_inherit_\\-from_\\-int.cpp}:
+\cpplstinputfragment[linerange={25-32}]{Breuk_format_inherit_from_int.cpp}
+
+\needspace{3\baselineskip}
+Je kunt een breuk nu dus afdrukken in verschillende talstelsels:
+\cpplstinputfragment[linerange={36-38}]{Breuk_format_inherit_from_int.cpp}
+
+\needspace{3\baselineskip}
+Geeft als output:
+\begin{coutput}
+Breuk b = 15/47
+Breuk b = 0XF/0X2F
+Breuk b = 0b1111/0b101111
+\end{coutput}
+
+\needspace{3\baselineskip}
+Maar als je nu probeert om een breuk centraal uit te lijnen op een veld van zestien tekens met een underscore als opvulteken, dan werkt dat niet zoals verwacht:
+\cpplstinputfragment[linerange={40-40}]{Breuk_format_inherit_from_int.cpp}
+
+\needspace{3\baselineskip}
+Geeft als output:
+\begin{coutput}
+Breuk b = _______15_______/_______47_______
+\end{coutput}
+
+\needspace{3\baselineskip}
+Maar de output zou moeten zijn:
+\begin{coutput}
+Breuk b = _____15/47______
+\end{coutput}
+
+Dus de teller en de noemer worden apart uitgelijnd op een veld van zestien tekens, terwijl de hele breuk als één geheel uitgelijnd zou moeten worden op een veld van zestien tekens.
+
+Om dit probleem op te lossen kun je een formatter definiëren die een format specifier gebruikt die is geïnspireerd op de format specifier voor ranges\footnote{%
+	Zie: \hurl{https://en.cppreference.com/cpp/utility/format/range_formatter\#Range_format_spe\\-ci\\-fi\\-ca\\-tion}.
+}.
+
+De format specifier bestaat dan uit twee delen, gescheiden door een dubbele punt, waarbij het eerste deel de format specifier is voor de gehele breuk en het tweede deel de format specifier is voor de teller en noemer.
+
+\needspace{3\baselineskip}
+De volgende code:
+\cpplstinputfragment[linerange={63-66,68-69}]{Breuk_format1.cpp}
+
+\needspace{3\baselineskip}
+Geeft dan als output:
+\begin{coutput}
+Breuk b = 15/47
+Breuk b = 0XF/0X2F
+Breuk b = 0b1111/0b101111
+Breuk b = _____15/47______
+Breuk b = ____0XF/0X2F____
+\end{coutput}
+
+Deze formatter heeft de volgende structuur:
+\begin{cpplstfragment}
+template<>
+struct std::formatter<Breuk> {
+    constexpr auto parse(format_parse_context& context) {
+	// ...
+	}
+	auto format(const Breuk& breuk, auto& context) const {
+	// ...
+	}
+private:
+    string string_format;
+    string int_format;
+};
+\end{cpplstfragment}
+
+De |struct| bevat twee private members, |string_format| en |int_format|, die de format specifiers bevatten voor respectievelijk de gehele breuk en de teller en noemer.
+In de memberfunctietemplate |parse| worden deze format specifiers uit de format string gehaald en in deze private members opgeslagen, zodat ze later in de memberfunctietemplate |format| gebruikt kunnen worden.
+
+\needspace{3\baselineskip}
+De memberfunctietemplate |parse| is als volgt geïmplementeerd, zie \proglink{Breuk_format1.cpp}:
+\cpplstinputfragment[linerange={27-47}]{Breuk_format1.cpp}
+
+Beide private variabelen worden leeg gemaakt aan het begin van de memberfunctietemplate |parse|, vervolgens wordt alles tot de eerste dubbele punt in de format specifier opgeslagen in |string_format| en alles na de eerste dubbele punt wordt opgeslagen in |int_format|.
+
+\needspace{3\baselineskip}
+De memberfunctietemplate |format| is als volgt geïmplementeerd, zie \proglink{Breuk_format1.cpp}:
+\cpplstinputfragment[linerange={48-56}]{Breuk_format1.cpp}
+
+In de memberfunctietemplate |format| wordt eerst de teller en noemer van de breuk geformatteerd en opgeslagen in de strings |teller_text| respectievelijk |noemer_text|, met behulp van de |int_frt| format specifier, die wordt opgebouwd met behulp van de opgeslagen string |int_format|.
+Omdat de format string \emph{geen} \USE{compile time} constante is, moet de functie |vformat| gebruikt worden, zie \cref{sec:dynamic_format_specifier}.
+
+Vervolgens worden de strings |teller_text| en |noemer_text| met een schuine streep ertussen samengevoegd tot een string |inner_text|.
+Deze |inner_text| wordt vervolgens geformatteerd en opgeslagen in de string |final_text|, met behulp van de |string_frt| format specifier, die wordt opgebouwd met behulp van de opgeslagen string |string_format|.
+Deze string wordt ten slotte naar |context.out()| geschreven.
+
+Bij het gebruik van deze formatter wilde ik bij het printen van een |Breuk| soms de teller anders formatteren dan de noemer.
+Om dit mogelijk te maken is een nieuwe versie van de formatter voor |Breuk| gedefinieerd.
+Waarbij de format specifier uit maximaal drie delen bestaat, gescheiden door dubbele punten.
+Het eerste deel is de format specifier voor de gehele breuk, het tweede deel is de format specifier voor de teller en het derde deel is de format specifier voor de noemer.
+Als een derde deel niet aanwezig is, dan wordt de tweede deel gebruikt als de format specifier voor zowel de teller als de noemer.
+
+\needspace{3\baselineskip}
+De volgende code:
+\cpplstinputfragment[linerange={74-77,79-83,95-96}]{Breuk_format2.cpp}
+
+\needspace{3\baselineskip}
+Geeft dan als output:
+\begin{coutput}
+Breuk b = 15/47
+Breuk b = 0XF/0X2F
+Breuk b = 0b1111/0b101111
+Breuk b = _____15/47______
+Breuk b = ____0XF/0X2F____
+Breuk b = __0b1111/0x2f___
+Breuk b1 =         30/71
+Breuk b2 =       1001/30011
+\end{coutput}
+
+Deze formatter is te vinden in \proglink{Breuk_format2.cpp}.
+
 \subsection[\texttt{formatter<std::complex>{}>}]{\texorpdfstring{\texttt{formatter<std::complex>{}>}}{formatter<std::complex>>}}
 \boldred{TODO: nog toevoegen!}
-}{}
 
 \section{Nog meer template details}
 Over \USE{templates} valt nog veel meer te vertellen, onder andere:
@@ -10002,11 +10130,11 @@ Als je echter probeert om tijdens runtime te bepalen of een floating point getal
     println("{:{}}", wetenschappelijke_notatie ? "e" : "f", 12345.67890);
 \end{cpplstfragment}
 	Deze code compileert wel, maar geef bij het uitvoeren een exception:
-\begin{coutput}
+\begin{lstfragment}
 terminate called after throwing an instance of 'std::format_error'
  what():  format error: argument used for width or precision must be a non-negative integer
 Aborted
-\end{coutput}
+\end{lstfragment}
 \needspace{3\baselineskip}
 Je kunt dit natuurlijk oplossen door twee aparte |println| aanroepen te maken, maar dat is niet erg elegant.
 \begin{cpplstfragment}

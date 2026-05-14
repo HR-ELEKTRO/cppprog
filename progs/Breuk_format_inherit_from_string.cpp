@@ -8,7 +8,7 @@ public:
 private:
     int boven;
     int onder;
-friend ostream& operator<<(ostream& out, const Breuk& b);
+    friend struct std::formatter<Breuk>;
 };
 
 Breuk::Breuk(int t, int n): boven{t}, onder{n} {
@@ -22,32 +22,16 @@ Breuk::Breuk(int t, int n): boven{t}, onder{n} {
     onder /= d;
 }
 
-ostream& operator<<(ostream& out, const Breuk& b) {
-    return out << b.boven << '/' << b.onder;
-}
-
 template<>
 struct std::formatter<Breuk>: public formatter<string> {
     auto format(const Breuk& breuk, auto& context) const {
-        ostringstream ss;
-        ss << breuk;
-        return formatter<string>::format(ss.str(), context);
+        return formatter<string>::format(to_string(breuk.boven)+"/"+to_string(breuk.onder), context);
     }
 };
 
 int main() {
-    Breuk b(30, 94);
+    Breuk b {30, 94};
     println("Breuk b = {}", b);
     println("Breuk b = {:_^16}", b);
     // println("Breuk breuk = {:0X}", breuk);
 }
-
-/* Output:
-b = 15/47
-     b =
-   15/47
-"b ="
-"15/47"
-______b =_______
-_____15/47______
-*/
