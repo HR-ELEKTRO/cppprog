@@ -76,6 +76,7 @@ void Breuk::normaliseer() {
 const Breuk operator+(Breuk links, Breuk rechts) {
     return links += rechts;
 }
+
 ostream& operator<<(ostream& out, Breuk b) {
     return out << b.boven << '/' << b.onder;
 }

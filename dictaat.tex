@@ -3630,10 +3630,10 @@ De functie |naar_string| moet in een van |Component| afgeleide class het type en
 Bijvoorbeeld: |"L(1E-3)"| voor een spoel van \SI{1}{\milli\henry}.
 
 Om componenten met behulp van de |print| en |println| af te kunnen drukken, is de template |std::formatter| gespecialiseerd voor |Component| (\proglink{netwerk0.cpp}), zie \csecref{sec:userdefinedformatter}:
-\cpplstinputfragment[linerange={43-48}]{netwerk0.cpp}
+\cpplstinputfragment[linerange={45-50}]{netwerk0.cpp}
 
 De classes |R|, |L| en |C| kunnen dan als volgt gebruikt worden:
-\cpplstinputfragment[linerange={92-99}]{netwerk0.cpp}
+\cpplstinputfragment[linerange={94-101}]{netwerk0.cpp}
 
 Merk op dat de functie |print_impedance_table| niet \squote{weet} welke |Component| gebruikt wordt.
 Dit betekent dat deze polymorfe functie voor alle huidige soorten componenten te gebruiken is.
@@ -3686,7 +3686,7 @@ Implementeer nu zelf de classes |R|, |C| en |L|.
 \needspace{2\baselineskip}
 \subsection*{Antwoord:}
 \vspace{-.4\baselineskip}
-\cpplstinputfragment[linerange={50-90}]{netwerk0.cpp}
+\cpplstinputfragment[linerange={52-92}]{netwerk0.cpp}
 
 \subsection{Serie- en parallelschakeling}
 Natuurlijk wil je het programma nu uitbreiden zodat je ook de impedantie van serieschakelingen kunt berekenen.
@@ -3709,7 +3709,7 @@ Met dit programma kun je dan van elk passief elektrisch netwerk de impedantie be
 \figuur{scale=1}{component2}{\cppcode{S} is afgeleid van \cppcode{Component} en \cppcode{S} heeft 2 \cppcode{Component}s.}
 
 De classes |S| en |P| kunnen dan als volgt gebruikt worden (\proglink{netwerk1.cpp}):
-\cpplstinputfragment[linerange={140-148}]{netwerk1.cpp}
+\cpplstinputfragment[linerange={142-150}]{netwerk1.cpp}
 
 Je ziet dat je de al bestaande polymorfe functie |print_impedance_table| ook voor objecten van de nieuwe classes |S| en |P| kunt gebruiken!
 
@@ -3734,7 +3734,7 @@ Implementeer nu zelf de classes |S| en |P|.
 
 \subsection*{Antwoord:}
 \vspace{-.4\baselineskip}
-\cpplstinputfragment[linerange={101-129}]{netwerk1.cpp}
+\cpplstinputfragment[linerange={103-131}]{netwerk1.cpp}
 
 %TODO: omzetten naar Qt
 %\subsection{Een grafische impedantie calculator}
@@ -4048,12 +4048,12 @@ Vaak wordt in een functie of memberfunctie gecontroleerd op uitzonderlijke situa
 De volgende functie berekent de impedantie van een condensator van |c| Farad bij een frequentie van |f|
 Hz. Zie \proglink{impedance_C1.cpp}:
 
-\cpplstinputfragment[linerange={16-18}]{impedance_C1.cpp}
+\cpplstinputfragment[linerange={18-20}]{impedance_C1.cpp}
 
 Deze functie kan als volgt aangeroepen worden om de impedantie van een condensator van 1 mF bij
 1 kHz op het scherm af te drukken:
 
-\cpplstinputfragment[linerange={21-21}]{impedance_C1.cpp}
+\cpplstinputfragment[linerange={23-23}]{impedance_C1.cpp}
 
 \newcommand{\ccoutput}{\texttt}
 
@@ -4078,7 +4078,7 @@ Omdat macro's niet vanuit modules geëxporteerd kunnen worden, moet de file |cas
 Je kunt zogenoemde \emph{\USE{assertions}} gebruiken om tijdens de ontwikkeling van het programma te controleren of aan een bepaalde voorwaarden (waarvan je \squote{zeker} weet dat ze geldig zijn) wordt voldaan.
 Je kunt de functie |impedance_C| voorzien van een \USE{assertion} (\proglink{impedance_C2.cpp}):
 
-\cpplstinputfragment[linerange={17-20}]{impedance_C2.cpp}
+\cpplstinputfragment[linerange={19-22}]{impedance_C2.cpp}
 
 Als je nu tijdens het debuggen deze functie aanroept om de impedantie van een condensator van 0 F uit te rekenen (of om de impedantie van een condensator bij 0 Hz uit te rekenen), beëindigt de |assert| functie het programma.
 De volgende foutmelding verschijnt:
@@ -4115,7 +4115,7 @@ We kunnen concluderen dat |assert| in dit geval niet geschikt is.
 In C (en ook in \Cpp{}) werd dit traditioneel opgelost door de functie een returnwaarde te geven die
 aangeeft of het uitvoeren van de functie gelukt is (\proglink{impedance_\\-C3.cpp}):
 
-\cpplstinputfragment[linerange={16-23}]{impedance_C3.cpp}
+\cpplstinputfragment[linerange={18-25}]{impedance_C3.cpp}
 
 Het programma wordt nu niet meer abrupt afgebroken.
 Het gebruik van een return waarde om aan te geven of een functie gelukt is heeft echter de volgende nadelen:
@@ -4142,7 +4142,7 @@ De class van de \USE{exception} die bedoeld is om te gooien als een parameter va
     Als je opgelet hebt bij de wiskunde lessen, komt deze naam je bekend voor.
 }. Zie \proglink{impedance_C4.cpp}
 
-\cpplstinputfragment[linerange={16-22}]{impedance_C4.cpp}
+\cpplstinputfragment[linerange={18-24}]{impedance_C4.cpp}
 
 Je kunt een \USE{exception} object gooien door het \Cpp{} \USE{keyword} |throw| te gebruiken.
 Bij het aanroepen van de \USE{constructor} van de class |domain_error| die gedefinieerd is in de \USE{include file} |<exception>| kun je een string meegeven die de oorzaak van de fout aangeeft.
@@ -4152,7 +4152,7 @@ Ook de functie waarin de functie |impedance_C| is aangeroepen wordt meteen afgeb
 Dit proces van afbreken wordt gestopt zodra de \USE{exception} wordt opgevangen.
 Als de \USE{exception} nergens wordt opgevangen, wordt het programma gestopt.
 
-\cpplstinputfragment[linerange={25-32}]{impedance_C4.cpp}
+\cpplstinputfragment[linerange={26-35}]{impedance_C4.cpp}
 
 \USE{Exceptions} kunnen worden opgevangen in een zogenaamd \emph{try\hyp{}blok}.
 Dit blok begint met het \USE{keyword} |try| en wordt afgesloten met het \USE{keyword} |catch|.
@@ -4192,18 +4192,18 @@ Pas de impedance calculator (zie \cref{impedance calculator}) aan zodat dit prog
 
 \subsection*{Antwoord:}
 De classes |C| en |P| moeten worden aangepast (\proglink{netwerk2.cpp}):
-\cpplstinputfragment[linerange={87-103,120-135}]{netwerk2.cpp}
+\cpplstinputfragment[linerange={89-105,122-137}]{netwerk2.cpp}
  
 In het hoofdprogramma kunnen \USE{exceptions} als volgt worden opgevangen:
-\cpplstinputfragment[linerange={147-157}]{netwerk2.cpp}
+\cpplstinputfragment[linerange={149-159}]{netwerk2.cpp}
 
 \section{Het gebruik van zelfgedefinieerde exceptions}
 In plaats van het gebruik van de standaard gedefinieerde \USE{exceptions} kun je ook zelf \USE{exception} classes definiëren. Zie \proglink{impedance_C5.cpp}:
 
-\cpplstinputfragment[linerange={16-25}]{impedance_C5.cpp}
+\cpplstinputfragment[linerange={18-27}]{impedance_C5.cpp}
 
 Voorbeeld van gebruik:
-\cpplstinputfragment[linerange={27-37}]{impedance_C5.cpp}
+\cpplstinputfragment[linerange={29-40}]{impedance_C5.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -4227,10 +4227,10 @@ Doordat \USE{exceptions} gewoon objecten zijn kun je ze ook data en gedrag geven
 Je kunt bijvoorbeeld een |virtual| memberfunctie definiëren die een bij de \USE{exception} passende foutmelding geeft.
 Als je deze memberfunctie in specifiekere \USE{exceptions} \USE{override}, kun je een generieke \USE{exception} vangen en toch door middel van \USE{dynamic binding} de juiste foutmelding krijgen! Zie \proglink{impedance_C6.cpp}:
 
-\cpplstinputfragment[linerange={16-46}]{impedance_C6.cpp}
+\cpplstinputfragment[linerange={18-48}]{impedance_C6.cpp}
 
 Voorbeeld van gebruik:
-\cpplstinputfragment[linerange={49-56}]{impedance_C6.cpp}
+\cpplstinputfragment[linerange={51-59}]{impedance_C6.cpp}
 
 \needspace{2\baselineskip}
 Uitvoer:
@@ -8630,7 +8630,58 @@ Breuk b2 =       1001/30011
 Deze formatter is te vinden in \proglink{Breuk_format2.cpp}.
 
 \subsection[\texttt{formatter<std::complex>{}>}]{\texorpdfstring{\texttt{formatter<std::complex>{}>}}{formatter<std::complex>>}}
-\boldred{TODO: nog toevoegen!}
+Er is in de \Cpp{}-standaard geen formatter voor |complex<T>| gedefinieerd\footnote{%
+	Er zijn wel verschillende voorstellen gedaan, maar die hebben het bljkbaar niet gehaald, zie \url{https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2930r0.html\#complex}
+}.
+Wat een beetje vreemd is omdat er wel een overloaded |operator<<|, zie \cref{sec:overloadoutput}, voor |complex<T>| is gedefinieerd.
+Je kunt een complex getal bijvoorbeeld als volgt afdrukken (de uitvoer staat in het commentaar):
+\cpplstinputfragment[linerange={92-93}]{format_complex.cpp}
+
+Het ligt voor de hand om een formatter voor |complex<T>| te definiëren die als standaard format dezelfde uitvoer geeft als de overloaded |operator<<|.
+Dus:
+\cpplstinputfragment[linerange={92-94}]{format_complex.cpp}
+
+In de wiskunde wordt een complex getal geschreven met een plus of min teken als scheiding tussen het reële en imaginaire deel in plaats van een komma en wordt het imaginaire deel aangeduid met een $i$.
+In de onderstaande formatter kan dit aangegeven worden door als eerste letter in de format specifier een |m| te gebruiken.
+Daarnaast worden de haakjes ook vaak weggelaten.
+In de onderstaande formatter kan dit aangegeven worden door als eerste letter in de format specifier een |i| te gebruiken.
+In de Elektrotechniek wordt vaak de letter $j$ gebruikt in plaats van $i$, omdat $i$ al gebruikt wordt voor stroom.
+In de onderstaande formatter kan dit aangegeven worden door als eerste letter in de format specifier een |j| te gebruiken.
+
+Bij het formatteren van een complex getal wil je het format van het gehele getal kunnen bepalen (zoals bijvoorbeeld de veldbreedte en uitlijning), maar ook het format van het reële en imaginaire deel apart kunnen bepalen (zoals bijvoorbeeld het aantal decimalen).
+Dit zou op dezelfde manier aangepakt kunnen worden als bij de formatter voor |Breuk|, zie \cref{sec:format_Breuk}, door een dubbele punt als scheiding tussen deze format specifiers te gebruiken.
+
+\needspace{3\baselineskip}
+Een complex getal kan met behulp van de formatter, gegeven in \proglink{format_complex.cpp}, als volgt worden afgedrukt (de uitvoer staat in het commentaar):
+\cpplstinputfragment[linerange={92-92,94-97,100-110}]{format_complex.cpp}
+
+\needspace{3\baselineskip}
+Een veel eenvoudigere formatter voor |complex<T>| kun je definiëren door over te erven van \hcode[style=cppstyle]{for\\-mat\\-ter<T>}. Zie \proglink{format_complex_simple.cpp}:
+\cpplstinputfragment[linerange={4-16}]{format_complex_simple.cpp}
+
+\needspace{3\baselineskip}
+Complexe getallen van het type |complex<T>| kunnen met behulp van deze eenvoudige formatter worden afgedrukt met behulp van de format specifiers van het betreffende type |T|\footnote{%
+	De format specifiers voor het type \cppcode{double} vind je hier: \url{https://en.cppreference.com/cpp/utility/format/spec}.
+} (de uitvoer staat in het commentaar):
+\cpplstinputfragment[linerange={19-33}]{format_complex_simple.cpp}
+Deze eenvoudige formatter is in alle programma's in dit dictaat waarbij gewerkt wordt met complexe getallen gebruikt, maar heeft vergeleken met de meer geavanceerde versie de volgende nadelen:
+\begin{itemize}
+	\item de veldbreedte en uitlijning zowel op het reële als op het imaginaire deel wordt toegepast en niet op het gehele complexe getal;
+	\item het complexe getal wordt altijd afgedrukt in het formaat dat in de Elektrotechniek gebruikelijk is, dus met een |j| en zonder haakjes.
+\end{itemize}
+
+\needspace{3\baselineskip}
+Het voordeel van deze eenvoudige formatter is dat je de percisie tijdens het uitvoeren van het programma kunt bepalen:
+\cpplstinputfragment[linerange={34-38}]{format_complex_simple.cpp}
+Geeft bijvoorbeeld de volgende uitvoer:
+\begin{coutput}
+Geef de gewenste precisie op: \cinput{6}
+z1 = 1.234500-2.987600j
+z2 = 31400.000000+0.000628j
+\end{coutput}
+
+In \cite{Collyer2024} wordt uitgelegd hoe je zelf een formatter kunt definiëren waarbij de veldbreedte tijdens het uitvoeren van het programma kan worden bepaald.
+Het toepassen van deze techiek op de hierboven beschreven geavanceerde formatter voor |complex<T>| is een mooie oefening voor de lezer 😉.
 
 \section{Nog meer template details}
 Over \USE{templates} valt nog veel meer te vertellen, onder andere:
@@ -10066,7 +10117,7 @@ Als je dit vergelijkt met het gebruik van een functie of lambda\hyp{}functie zoa
 
 De code die in \cref{sec:sort} gegeven is om een |vector| met integers van hoog naar laag te sorteren (zie \proglink{sort\_lambda.cpp}):
 \cpplstinputfragment[linerange={11-13}]{sort_lambda.cpp}
-kan sterk vereenvoudigd worden door het gebruik van een standaard functie\hyp{}object (zie \proglink{sort\_greater.cpp}):
+kan sterk vereenvoudigd worden door het gebruik van een standaard functie\hyp{}object (zie \proglink{sort\_\\-greater.cpp}):
 \cpplstinputfragment[linerange={11-11}]{sort_greater.cpp}
 
 Het gebruik van een standaard functie\hyp{}object om een voorwaarde door te geven aan één van de |_if| algoritmen is minder eenvoudig.
@@ -10083,8 +10134,8 @@ bind(greater_equal<int>(), _1, 0)
 \end{cpplstfragment}
 De |_1| is een zogenoemde \USE{placeholder}\footnote{%
 	De \USE{placeholders} zijn gedefinieerd in een aparte \code{namespace} genaamd \hcode{std::\\-place\\-holders}.
-} en geeft aan dat de eerste (en enige) parameter van het door |bind| teruggegeven functie\hyp{}object ingevuld moet worden als eerste argument van |greater_equal<int>()|.
-De |0| geeft aan dat de constante waarde $0$ ingevuld moet worden als tweede argument van |greater_equal<int>()|.
+} en geeft aan dat de eerste (en enige) parameter van het door |bind| teruggegeven functie\hyp{}object ingevuld moet worden als eerste argument van \hcode[style=cppstyle]{greater_\\-equal<int>()}.
+De |0| geeft aan dat de constante waarde $0$ ingevuld moet worden als tweede argument van \hcode[style=cppstyle]{greater_\\-equal<int>()}.
 Het door |bind| teruggegeven functie\hyp{}object kan  vervolgens aan het |find_if| algoritme worden doorgegeven om de eerste integer $\ge{}0$ in de |vector| |rij| te vinden, zie \proglink{find\_if\_bind.cpp}:
 
 \cpplstinputfragment[linerange={1-11}]{find_if_bind.cpp}
@@ -10184,7 +10235,7 @@ In \Cpp{}26 kan de laatste regel van het bovenstaande programma vervangen worden
     println(dynamic_format(antwoord[index]), getal);
 \end{cpplstfragment}
 
-\section{lokalisatie}
+\section{Lokalisatie}
 \label{sec:localization}
 De manier waarop een datum weergegeven wordt varieert per regio.
 Hetzelfde geldt voor het weergeven van floating point getallen, in sommige regio's wordt een punt gebruikt als scheidingstekens en in andere regio's een komma.

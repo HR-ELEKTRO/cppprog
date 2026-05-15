@@ -32,11 +32,13 @@ template<typename T>
 struct std::formatter<complex<T>>: public formatter<T> {
     auto format(const complex<T>& z, auto& context) const {
         context.advance_to(formatter<T>::format(z.real(), context));
-        if (z.imag() >= 0)
+        if (z.imag() >= 0) {
             context.advance_to(format_to(context.out(), "+"));
-        context.advance_to(formatter<T>::format(z.imag(), context));
-        context.advance_to(format_to(context.out(), "j"));
-        return context.out();
+        } else {
+            context.advance_to(format_to(context.out(), "-"));
+        }
+        context.advance_to(formatter<T>::format(abs(z.imag()), context));
+        return format_to(context.out(), "j");
     }
 };
 
@@ -140,5 +142,4 @@ Impedantie tabel voor: L(0.001)
   10000 | 0.000+62.832j
  100000 | 0.000+628.319j
 1000000 | 0.000+6283.185j
-
 */
