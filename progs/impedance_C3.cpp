@@ -15,7 +15,7 @@ struct std::formatter<complex<T>>: public formatter<T> {
     }
 };
 
-bool impedance_C(complex<double>& res, double c, double f) {
+[[nodiscard]] bool impedance_C(complex<double>& res, double c, double f) {
     if (c != 0.0 && f != 0.0) {
         res = complex<double> {0, -1 / (2 * numbers::pi * f * c)};
         return true;

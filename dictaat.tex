@@ -4049,15 +4049,10 @@ De volgende functie berekent de impedantie van een condensator van |c| Farad bij
 Hz. Zie \proglink{impedance_C1.cpp}:
 
 \cpplstinputfragment[linerange={18-20}]{impedance_C1.cpp}
-
 Deze functie kan als volgt aangeroepen worden om de impedantie van een condensator van 1 mF bij
 1 kHz op het scherm af te drukken:
 
 \cpplstinputfragment[linerange={23-23}]{impedance_C1.cpp}
-
-\newcommand{\ccoutput}{\texttt}
-
-\needspace{3\baselineskip}
 Als deze functie aangeroepen wordt om de impedantie van een condensator van 0 F uit te rekenen, verschijnt de volgende vreemde uitvoer:
 \begin{coutput}
 0.000-infj
@@ -4112,6 +4107,7 @@ Het gebruik van |assert| heeft de volgende nadelen:
 We kunnen concluderen dat |assert| in dit geval niet geschikt is.
 
 \sectionTextCodeText{Het gebruik van een}{bool}{returnwaarde}
+\label{sec:boolreturnwaarde}
 In C (en ook in \Cpp{}) werd dit traditioneel opgelost door de functie een returnwaarde te geven die
 aangeeft of het uitvoeren van de functie gelukt is (\proglink{impedance_\\-C3.cpp}):
 
@@ -4121,6 +4117,7 @@ Het programma wordt nu niet meer abrupt afgebroken.
 Het gebruik van een return waarde om aan te geven of een functie gelukt is heeft echter de volgende nadelen:
 \begin{itemize}
     \item Bij \emph{elke} aanroep moet de returnwaarde getest worden.
+    Het attribuut |[[nodiscard]]|, zie \cref{sec:attributen} zorgt ervoor dat de compiler een waarschuwing geeft als de returnwaarde niet wordt gebruikt.
     \item Op de plaats waar de fout ontdekt wordt kan hij meestal niet opgelost worden.
     \item Het echte resultaat van de functie moet nu via een call by \USE{reference} parameter worden teruggegeven.
     Dit betekent dat je om de functie aan te roepen altijd een variabele aan moet maken (om het resultaat in op te slaan) ook als je het resultaat alleen maar wilt doorgeven aan een andere functie of operator.
@@ -4290,8 +4287,8 @@ Over \USE{exceptions} valt nog veel meer te vertellen:
     \item \textbf{\USE{Re-throw}.}\\
     Gebruik van |throw| zonder argument in een catch blok om de zojuist opgevangen \USE{exception} weer door te gooien.
     \item \textbf{\USE{No exception} specification.}\\
-    Speciaal keyword |noexcept| om in het prototype van een functie aan te geven
-    dat deze functie geen \USE{exceptions} kan veroorzaken.
+    Speciaal keyword |noexcept| om in het prototype van een functie aan te geven dat deze functie geen \USE{exceptions} kan veroorzaken.
+	Als zo'n functie toch een exception gooit, dan wordt |std::terminate| aangeroepen om het programma meteen te beëindigen.
     \item \textbf{\USE{Exceptions} in de std \USE{library}.}\\
     Een overzicht van alle \USE{exceptions} die in de standaard \USE{library} gedefinieerd zijn, is te vinden op: \url{http://en.cppreference.com/w/cpp/error/exception}.
 \end{itemize}
@@ -7479,6 +7476,34 @@ string_view sv {"Hallo Wereld!"};
 string s {sv}; // expliciete conversie van string_view naar string
 \end{cpplstfragment}
 
+\section{Attributen}
+\label{sec:attributen}
+Attributen (Engels: \USE{\emph{attributes}}) zijn een gestandaardiseerde manier, sinds \Cpp{}11 en C23, om extra informatie of instructies mee te geven aan de C/Cpp{}-compiler.
+Een attribuut heeft de volgende syntax |[[naam]]|.
+Er zijn een aantal standaard attributen gedefinieerd.
+Zie \url{https://en.cppreference.com/w/cpp/language/attributes}.
+Hier volgen enkele voorbeelden:
+\begin{itemize}
+	\item 
+	De hoofdfunctie in veel embedded systemen bevat een |while(1)|-loop omdat deze functie \squote{altijd} moet blijven draaien.
+	Sommige compilers geven in dit geval een warning.   
+	Je kunt aangeven dat het juist de bedoeling is dat de functie nooit terugkeert door de functie te voorzien van het attribuut |[[noreturn]]|.
+	\item 
+	In |\switch|-statements gebruik je meestal aan het einde van elke |case| een |break|-statement.
+	Soms wil je echter dat het programma na uit uitvoeren van de |case| verdergaat met het uitvoeren van de volgende |case|.
+	In dit geval eindigt de |case| niet met een |break|.
+	Veel compilers geven in dit geval een warning.
+	Je kunt aangeven dat je bewust de |break| hebt weggelaten door het attribuut |[[fallthrough]]| te gebruiken.
+	Zie \proglink{attributes.cpp}.
+	\item
+	Als je een variabele definieert maar niet gebruikt in een programma, geven veel compilers een warning.
+	Deze warning kun je onderdrukken met het attribuut |[[maybe_unused]]|, zie \proglink{maybe_unused.cpp}.
+	\item
+	Als je de return waarde van een functie negeert, dan geven veel compilers \emph{geen} warning.
+	Wil je juist \emph{wel} een warning als de return waarde van een functie genegeert wordt dan kun je bij het definiëren van de functie het attribuut |[[nodiscard]]| gebruiken, zie \proglink{nodiscard.cpp}.
+	Dit is vooral nuttig als de functie een foutcode teruggeeft die niet genegeerd mag worden, zie \cref{sec:boolreturnwaarde}.
+\end{itemize}
+
 \chapter{Objects and classes (de details)}
 \label{sec:objectsandclassesdetails}
 In \cref{sec:objectandclasses} heb je geleerd wat een UDT is.
@@ -8687,7 +8712,9 @@ Het toepassen van deze techiek op de hierboven beschreven geavanceerde formatter
 Over \USE{templates} valt nog veel meer te vertellen, onder andere:
 \begin{itemize}
 	\item Template memberfuncties;\\
-	Een class (die zelf geen template hoeft te zijn) kan memberfuncties hebben die als template gedefinieerd zijn.
+	Een class (die zelf geen template hoeft te zijn) kan memberfuncties hebben die als templates gedefinieerd zijn.
+	Dit wordt dan een memberfunctietemplate genoemd.
+	Een |virtual| memberfunctie kan echter geen memberfunctietemplate zijn.
 	\item Default waarden voor template\hyp{}parameters.\\
 	Net zoals voor gewone functie parameters kun je voor template\hyp{}parameters ook default waarden (of types) specificeren.
 \end{itemize}
@@ -9903,13 +9930,12 @@ Volgens de \Cpp{}-standaard mag |delete[]| worden aangeroepen op de |nullptr|, z
 %TODO check link
 
 Als je zeker weet dat een lvalue die je als argument van een constructor of assignment operator gebruikt na afloop niet meer nodig is, dan kun je de standaard |move|-functie gebruiken om de lvalue om te zetten in een rvalue reference.
-Hierdoor wordt dan de move constructor of de move assignment operator aangeroepen.   
+Hierdoor wordt dan de move constructor of de move assignment operator aangeroepen.
 Bijvoorbeeld:
 \begin{cpplstfragment}
 	Dozijn d {move(a)};
 \end{cpplstfragment}
-De standaard functie \label{std::move}|move| is gedefinieerd in de de header file |<utility>|.
-De functie |move| verplaatst zelf niets\footnote{%
+De standaard functie \label{std::move}|move| verplaatst zelf niets\footnote{%
 	De functie levert een rvalue reference die refereert naar zijn argument. Het is dus eigenlijk een soort cast, zie \cref{sec:casting}.
 }, maar geeft een rvalue reference die refereert naar |a| terug, waardoor de move constructor aangeroepen wordt.
 Pas wel goed op. Na deze instructie kun je |a| niet meer uitlezen!\footnote{%
