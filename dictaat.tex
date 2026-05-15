@@ -2774,6 +2774,34 @@ Deze rekenkundige bewerkingen kunnen efficiënt geïmplementeerd worden.
 Zo kan de bewerking:
 |v3 = 2 * v1 + v2| door de compiler vertaald worden in één loop waarin voor elke element van |v1|, |v2| en |v3| de volgende code wordt uitgevoerd: |v3[i] = 2 * v1[i] + v2[i];|.
 
+\section{Template Argument Deduction}
+Zoals je hebt gezien moet bij het definiëren van een |array| of |vector| het type van de elementen tussen |<| en |>| worden opgegeven.
+Bij het definiëren van een |array| moet bovendien het aantal elementen worden opgegeven.
+Als de |array| of de |vector| geïnitialiseerd wordt, dan kan de compiler zelf dit type (en aantal) bepalen.
+Dit wordt \USE{\emph{Class Template Argument Deduction}} (CTAD) genoemd.
+Let wel op dat een string literal van het type |const char*| is.
+Je kunt het suffix |s| gebruiken om een string literal van het type |string| te maken, bijvoorbeeld |"Hello"s| is van het type |string|.
+
+\needspace{3\baselineskip}
+Dus de definitie:
+\begin{cppfragment}
+	array a {1, 2, 3, 4};
+	vector v1 {3.14, 6.28};
+	vector v2 {"Hallo", "Wereld"};
+	vector v3 {"Hallo"s, "Wereld"s};
+\end{cpplstfragment}
+
+\needspace{3\baselineskip}
+Is gelijk aan:
+\begin{cppfragment}
+	array<int, 4> a {1, 2, 3, 4};
+	vector<double> v1 {3.14, 6.28};
+	vector<const char*> v2 {"Hallo", "Wereld"};
+	vector<string> v3 {"Hallo"s, "Wereld"s};
+\end{cpplstfragment}
+
+Zie \proglink{CTAD.cpp}.
+
 \sectionTextCode{Alternatieve notatie met}{auto}
 \label{sec:template_auto}
 In deze en volgende paragraaf worden verschillende varianten besproken van de functietemplate |number_of_zero_bits| die het aantal nullen in de binaire representatie van een gegeven geheel getal berekent.
@@ -8473,7 +8501,7 @@ Zoals je ziet is het nu niet meer nodig om zelf een memberfunctietemplate |parse
 De memberfunctietemplate |format| van de formatter voor |Dobbelsteen| roept de memberfunctietemplate |format| van de formatter voor |int| aan, waarbij het resultaat van de aanroep |d.rol()| als argument wordt doorgegeven.
 
 Je kunt ook zelf een format specifier bedenken.
-Omdat je in \Cpp{}23 ook gebruik kunt maken van UTF-8 tekens kun je een dobbelsteen ook als tekstsymbool (\small{\epsdice{1} \epsdice{2} \epsdice{3} \epsdice{4} \epsdice{5} \epsdice{6}}) formatteren.
+Omdat je in \Cpp{}23 ook gebruik kunt maken van UTF-8 tekens kun je een dobbelsteen ook als tekstsymbool (\epsdice{1} \epsdice{2} \epsdice{3} \epsdice{4} \epsdice{5} \epsdice{6}) formatteren.
 
 \needspace{5\baselineskip}
 Het idee is dat als de format specifier begint met een |s|, symbolen gebruikt moeten worden in plaats van getallen.
@@ -9892,7 +9920,7 @@ De werking van dit programma is\footnote{%
 	\item 
 	De move assignment operator van |Dozijn| wordt nu aangeroepen.
 	Deze operator is als volgt gedefinieerd:
-	\cpplstinputfragment[linerange={47-51}]{Dozijn_move.cpp}
+	\cpplstinputfragment[linerange={46-50}]{Dozijn_move.cpp}
 	\item  
 	De rvalue reference parameter |r| refereert naar de variabele |res| het resultaat van de optelling.
 	\item 
