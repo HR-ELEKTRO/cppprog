@@ -12,9 +12,21 @@
 \include{style_nl_NL}
 
 \usepackage{needspace}
+%http://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/needspace/needspace.pdf
+
+\usepackage{hwemoji}
+%https://mirror.lyrahosting.com/CTAN/macros/latex/contrib/hwemoji/hwemoji.pdf
+
+\usepackage{epsdice}
+%https://mirror.koddos.net/CTAN/macros/latex/contrib/epsdice/epsdice.pdf
 
 \newcommand{\progs}{progs}
-\newcommand{\progsurl}{https://bitbucket.org/HR_ELEKTRO/cppprog/src/master/progs}
+\newcommand{\repourl}{https://github.com/HR-ELEKTRO/cppprog/}
+\newcommand{\progsurl}{\repourl/tree/master/progs}
+\newcommand{\issuesurl}{\repourl/issues}
+\newcommand{\wikiurl}{\repourl/wiki}
+\usepackage{xfrac}
+\newcommand{\myfrac}[2]{\raisebox{0.35ex}{\sfrac{#1}{#2}}}
 \include{styleCode}
 
 % Commando \cpplstinputfragment leest code uit (een deel van) een bestand en plaatst dit in een codefragment.
@@ -44,34 +56,50 @@
 \newcommand{\error}{\texttt}
 \usepackage{upgreek}
 
+\newcommand{\sectionCode}[1]{%
+	\section[\texttt{#1}]{\texorpdfstring{\cppcode{#1}}{#1}}%
+}
+\newcommand{\sectionTextCode}[2]{%
+	\section[#1 \texttt{#2}]{#1 \texorpdfstring{\cppcode{#2}}{#2}}%
+}
+\newcommand{\sectionCodeText}[2]{%
+	\section[\texttt{#1} #2]{\texorpdfstring{\cppcode{#1}}{#1} #2}%
+}
+\newcommand{\sectionTextCodeText}[3]{%
+	\section[#1 \texttt{#2} #3]{#1 \texorpdfstring{\cppcode{#2}}{#2} #3}%
+}
+\newcommand{\sectionTextCodeTextNoSpaces}[3]{%
+	\section[#1\texttt{#2}#3]{#1\texorpdfstring{\cppcode{#2}}{#2}#3}%
+}
+\newcommand{\subsectionCode}[1]{%
+	\subsection[\texttt{#1}]{\texorpdfstring{\cppcode{#1}}{#1}}%
+}
+\newcommand{\subsectionTextCode}[2]{%
+	\subsection[#1 \texttt{#2}]{#1 \texorpdfstring{\cppcode{#2}}{#2}}%
+}
+\newcommand{\subsectionTextCodeText}[3]{%
+	\subsection[#1 \texttt{#2} #3]{#1 \texorpdfstring{\cppcode{#2}}{#2} #3}%
+}
+
 \begin{document}
 \begin{cpplstShortInline}
 
 Hier komt de testcode!
 
 % \needspace start een nieuwe paragraaf
-Bla bla bla.
+Bla bla bla.%
 \needspace{3\baselineskip}
 Wauwel, wauwel, wauwel.
-% Hoe is dat te voorkomen?
+% Hoe is dat te voorkomen? Niet!
 
-% The parse() method must be constexpr and has to return an iterator to either ctx.end() or to the '\}' character.
-% * The format() method must be const and return the ctx.out() iterator.
-% * While some standard implementations allow you to specify a concrete type for ParseContext and FormatContext, it doesn't work with all. Cppreference uses those templates, and so do I.
+Bla
+\begin{samepage}%
+bla
+\end{samepage}%
+bla.
 
-% When parsing the format expression, the ctx iterator given to you will point to the first letter after ':' (if there is any), or to '\}', or the iterator will equal to end().
-
-
-
-
-
-
-
-
-
-
-
-
+Idee voor template memberfuctie:
+assignment operator bij Dozijn?
 
 
 

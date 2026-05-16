@@ -5,7 +5,7 @@
 \newcommand{\cursuscode}{\Cpp}
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Notities}
-\newcommand{\huidigeversie}{1.1a}
+\newcommand{\huidigeversie}{1.2}
 \newcommand{\auteurs}{
 	J.Z.M. Broeders
 }
@@ -60,51 +60,18 @@ De meeste aantekeningen zijn inmiddels verwerkt in het dictaat.
 Wat overblijft vind je hier.
 
 \subsection{The Basics}
-\begin{itemize}
-	\item
-	Gebruik |unsigned| alleen voor bit manipulaties.
-	%Niet relevant: gebruik Variant i.p.v. union
-\end{itemize}
 \subsection{User-Defined Types}
 \subsection{Modularity}
 \begin{itemize}
 	\item 
-	\Cpp{}20 heeft |module|s. Zie \url{https://en.cppreference.com/w/cpp/language/modules}.
-	\item 
-	Een function die geen exception mag gooien kun je met |noexcept| definiëren.
-\begin{cpplstfragment}
-void f() noexcept {
-	//...
-}	
-\end{cpplstfragment}
-	Als zo'n functie toch een exception gooit, dan wordt |std::terminate| aangeroepen om het programma meteen te beëindigen.
-	\item 
 	Er was een voorstel voor \Cpp{}20 voor een mechanisme om contracten vast te leggen (invarianten, pre- en postcondities).
 	Zie \url{http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2015/n4415.pdf}. Maar dit voorstel heeft het niet gehaald.
+	Wel in \Cpp{}26, zie \url{https://en.cppreference.com/cpp/language/contracts} en \url{https://en.cppreference.com/cpp/language/function#Function_contract_specifiers}.
 \end{itemize}
 \subsection{Classes}
-\begin{itemize}
-	\item 
-	Eenvoudige versie van |Breuk| maken die gebruik maakt van copy by value in plaats van references.
-	Zie |Breuk4.cpp|.
-	\item
-	Een \emph{abstracte} class is een class die zijn implementatie details verbergt voor de gebruiker.
-	Omdat ook de compiler niets weet van de implementatie van een abstracte class, ook de benodigde geheugenruimte niet, kan een object van een abstracte class alleen dynamisch worden aangemaakt met behulp van |new|, zie \csecref{sec:new}.
-	Je hebt dus altijd een pointer of een reference, zie \csecref{reference}, nodig om te verwijzen naar een object van een abstracte class.
-	Een abstracte class heeft minstens één virtuele functie, zie \csecref{virtual}.
-	De abstracte class vormt de interface tot de concrete class die deze interface implementeert.
-	Een abstracte class die de interface verzorgt voor een aantal verwante classes noemen we een \emph{\USE{polymorphic type}}.
-\end{itemize}
 \subsection{Essential Operations}
 \subsection{Templates}
 \begin{itemize}
-	\item 
-	\item 
-	%TODO spelling consequent maken
-	Een member-functie kan een functie-template zijn maar dat geldt niet voor een virtual functie.		
-	
-	\item 
-	Een functieobject wordt ook wel een \emph{policy object} genoemd.
 	\item 
 	Een lambda kan handig gebruikt worden om een groep statements te veranderen in een expressie.
 	%TODO: kan dit gebruikt worden om een Breuk in te lezen in operator<<?
@@ -121,23 +88,18 @@ void f() noexcept {
 		}
 	};
 \end{cpplstfragment}
+	Is daar een toepassing voor in het dictaat?
 \end{itemize}
 
 \subsection{Strings and Regular Expressions}
 \begin{itemize}
-	\item 
-	Sinds \Cpp{}17 is een |string_view| beschikbaar.
-	Een |string_view| is een pointer, lengte paar dat een deel van een sting aanwijst.
 	\item 
 	Bij het gebruik van regular expressions is het handig om een raw string literal te gebruiken |R("Hier heeft \ en " geen speciale betekenis")|.
 	\item 
 	Tip: gebruik |string| als returntype.
 	Vertrouw op move semantics.
 \end{itemize}
-
 \subsection{Input and Output}
-Sinds \Cpp{}17 include file <filesystem>
-
 \subsection{Containers}
 \begin{itemize}
 	\item 
@@ -152,10 +114,6 @@ Sinds \Cpp{}17 include file <filesystem>
 \end{itemize}
 \subsection{Algorithms}
 \begin{itemize}
-	\item 
-	Werken op een half-open sequence.
-	\item 
-	In \Cpp{}-20 kun je met behulp van Concepts zogenoemde Ranges definiëren waardoor het mogelijk wordt om een container-object aan een algoritme mee te geven. 
 	\item 
 	Sinds \Cpp{}-17 bestaan er ook parallelle versies van de standaard algoritmen.
 	%TODO kan ik niet compileren.
@@ -223,25 +181,6 @@ Kan eventueel nog aan dictaat worden toegevoegd.
 Zie ook oude informatie uit RTSYST, zie \url{bd.eduweb.hhs.nl/rtsyst/studiew.htm}.
 \subsection{History and Compatibility}
 \begin{itemize}
-	\item\label{attributes} 
-	Attributes zijn een gestandaardiseerde manier om taaluitbreidingen te implementeren in \Cpp{}.
-	Een attribute heeft de volgende syntax |[[naam]]|.
-	Er zijn ook een aantal standaard attributes gedefinieerd.
-	Zie \url{https://en.cppreference.com/w/cpp/language/attributes}.
-	Hier volgen enkele voorbeelden:
-	\begin{itemize}
-		\item 
-		De hoofdfunctie in veel embedded systemen bevat een |while(1)|-loop omdat deze functie \squote{altijd} moet blijven draaien.
-		Sommige compilers geven in dit geval een warning.   
-		Je kunt aangeven dat het juist de bedoeling is dat de functie nooit terugkeert door de functie te voorzien van het attribuut |[[noreturn]]|.
-		\item 
-		In |\switch|-statements gebruik je meestal aan het einde van elke |case| een |break|-statement.
-		Soms wil je echter dat het programma na uit uitvoeren van de |case| verdergaat met het uitvoeren van de volgende |case|.
-		In dit geval eindigt de |case| niet met een |break|.
-		Veel compilers geven in dit geval een warning.
-		Je kunt aangeven dat je bewust de |break| hebt weggelaten door het attribuut |[[fallthrough]]| te gebruiken.
-		Zie \proglink{attributes.cpp}.
-	\end{itemize}
 	\item 
 	De standaard library bevat ook de |ratio| voor \emph{compile-time rational arithmetic}.
 	De teller en de noemer zijn template parameters.
@@ -267,20 +206,7 @@ Aantekeningen die ik gemaakt heb bij het lezen van \emph{A Tour if C++, Third Ed
 	Gebruik |unsigned| uitsluitend voor bitmanipulatie; \href{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#es101-use-unsigned-types-for-bit-manipulation}{CG: ES.101}.
 \end{itemize}
 \subsection{Modularity}
-\begin{itemize}
-	\item
-	% Hmmm ik vind mijn uitleg met kijken hoeveel er gekopieerd moet worden duidelijker.
-	Als de snelheid van de code belangrijk is, geven we kleine waarden meestal bij waarde (by value) door en grotere bij verwijzing (by reference).
-	Met \dquote{klein} bedoelen we hier \dquote{iets dat heel goedkoop te kopiëren is}. 
-	Wat {klein} precies inhoudt, hangt af van de machinearchitectuur. 
-	Als je wilt weten wat in een specifiek geval sneller is, meet het dan.
-\end{itemize}
 \subsection{Classes}
-\begin{itemize}
-	\item
-	Het resultaat van |new| toewijzen aan een \squote{naakte} pointer is vragen om problemen.
-	Een eenvoudige oplossing voor dergelijke problemen is het gebruik van \squote{smart pointers}.
-\end{itemize}
 \subsection{Essential Operations}
 \begin{itemize}
 	\item
@@ -303,9 +229,6 @@ public:
 	Als je expliciet wilt aangeven dat er standaardimplementaties moeten worden gegenereerd kun je de syntax |=default| gebruiken.
 	Als je voor bepaalde speciale memberfuncties expliciet bent, worden andere speciale memberfuncties niet gegenereerd.
 	Als je expliciet wilt aangeven dat er geen standaardimplementatie gegenereerd mag worden, kun je de syntax |=delete| gebruiken.
-	\item
-	In dictaat staat nu: \dquote{De datavelden van een class mogen ook direct geïnitialiseerd worden}.
-	Dit heet in het Engels \dquote{\USE{default member initializers}}.
 \end{itemize}
 \subsection{Templates}
 \begin{itemize}
@@ -317,32 +240,12 @@ template<copyable T> class Array {
 	// ...
 };
 \end{cpplstfragment}
-	Zie \proglink{Array_template_concept.cpp}
-	\item
-	Template Argument Deduction (TAD) is een mechanisme waarmee de compiler automatisch de template argumenten kan afleiden op basis van de argumenten die aan een functie of constructor worden doorgegeven.
-	Let wel op dat een string literal van het type |const char*| is.
-	Je kunt het suffix |s| gebruiken om een string literal van het type |std::string| te maken, bijvoorbeeld |"Hello"s| is van het type |std::string|.
-	Zie \proglink{CTAD.cpp}.
-	\item
-	Een functie template kan een memberfunctie zijn, maar geen virtuele memberfunctie.
 \end{itemize}
 \subsection{Concepts and Generic Programming}
 \begin{itemize}
 	\item
-	Je kunt ook je eigen concepten definiëren, bijvoorbeeld om aan te geven dat een type een bepaalde operator moet ondersteunen.
-	Zie \proglink{require.cpp}.
-	\item
 	De concepten die voor een template zijn gespecificeerd, worden gebruikt om argumenten te controleren op het moment dat het template wordt gebruikt.
 	Ze worden niet gebruikt om het gebruik van de parameters in de definitie van het template te controleren.
-	\item
-	Met behulp van concepten kunnen we de vereisten voor de parameter aanscherpen door |auto| te laten voorafgaan door een concept.
-	Zie \proglink{swap_auto_concept.cpp} en \proglink{swap_template_concept.cpp}.
-	\item
-	Een template kan zo worden gedefinieerd dat deze een willekeurig aantal argumenten van willekeurige typen accepteert. 
-	Een dergelijk template wordt een \dquote{\USE{variadic template}} genoemd.
-	Zie: \proglink{variadic_template.cpp}.
-	Een parameter door |...| wordt gevolgd, wordt een parameterpack genoemd.
-	Vaak kan gebruik gemaakt worden van |constexpr if| om te voorkomen dat er overloaded functies gedefinieerd moeten worden.
 	\item
 	\dquote{\USE{Fold expressions}} zijn een handige manier om een parameter pack te verwerken.
 	Zie \proglink{fold_expression.cpp}.
@@ -354,26 +257,6 @@ unique_ptr<T> make_unique(Args&&... args) {
 	return unique_ptr<T>{new T(std::forward<Args>(args)...)};
 }
 \end{cpplstfragment}
-	\item
-	Bla
-	\item
-	Bla
-	\item
-	Bla
-	\item
-	Bla
-	\item
-	Bla
-	\item
-	Bla
-	\item
-	Bla
-	\item
-	Bla
-	\item
-	Bla
-	\item
-	Bla
 \end{itemize}
 
 \section{Notes from Effective Modern C++}
@@ -385,69 +268,21 @@ Programmacode: \url{https://github.com/Professional-CPP/edition-6}.
 \subsection{C++ Crash Course}
 \begin{itemize}
 	\item
-	Het gebruik van de nieuwe print library is echter eenvoudiger en efficiënter dan het gebruik van iostreams.
-	% Is het echt efficiënter?
-	De functies |print| en |println| maken gebruik van de nieuwe formatting library die in C++20 is geïntroduceerd.
-	\item
-	Print de inhoud van een container met behulp van |println| (C++23).
-	\item
 	|endl| flusht het output buffer |"\n"| niet.
-	\item
-	Dit programma schrijft de tekst |Hello, World!| naar een bestand met de naam |output.txt| in plaats van naar de console.
 	\item
 	In een header file moet je nooit een using directive gebruiken, omdat dit kan leiden tot naamconflicten in de code die deze header file include.
 	In een module interface file kun je wel een using directive gebruiken, zolang je die maar niet exporteert.
 	\item
 	Types |char8_t|, |char16_t| en |char32_t| zijn bedoeld voor het opslaan van respectievelijk UTF-8, UTF-16 en UTF-32 karakters.
+	NOTE: niet opgenomen omdat een duidelijk voorbeeld ontbreekt.
 	\item
-	
-	\item
-	|float16_t|, |float32_t|, |float64_t| en |float128_t| zijn types die respectievelijk 16, 32, 64 en 128 bits gebruiken voor het opslaan van een floating point getal volgens de IEEE 754 standaard\footnote{%
-		Zie eventueel \url{https://en.wikipedia.org/wiki/IEEE_754}.
-	}.
-	\item
-	|bfloat16_t| brain floating point is een type dat 16 bits gebruikt voor het opslaan van een floating point getal dat wordt gebruikt in bepaalde AI-processors (o.a. in NVIDIA-GPU's).\footnote{%
-		Zie eventueel \url{https://en.wikipedia.org/wiki/Bfloat16_floating-point_format}.
-	}.
-	\item
-	Attributes zie \cref{attributes}.
+	Attributes.
 	Eventueel nog uitbreiden met:
 	\begin{itemize}
-		\item |[[nodiscard]]|, zie \proglink{nodiscard.cpp}.
-		\item |[[maybe_unused]]|, zie \proglink{maybe_unused.cpp}.
 		\item |[[deprecated]]|.
 		\item |[[likely]]| and |[[unlikely]]|.
 		\item |[[assume]]|.
 	\end{itemize}
-	\item
-	Spaceship operator |<=>| zie \proglink{spaceship.cpp}.
-	De spaceship operator kan een |strong_ordering|, een |weak_ordering| of een |partial_ordering| teruggeven.
-	Een |strong_ordering| geeft aan dat de twee objecten die vergeleken worden volledig geordend zijn, dat wil zeggen dat ze ofwel gelijk |strong_ordering::equal| or |strong_ordening::equivalent| zijn, orwel dat het ene object kleiner |strong_ordering::less| or groter |strong_ordering::greater| is dan het andere.
-	Een |partial_ordering| heeft de volgende mogelijke waarden: |partial_ordering::less|, |partial_ordering::greater|, |partial_ordering::equivalent| of |partial_ordering::unordered|.
-	Twee objecten zijn |partial_orderingunordered| als ze niet geordend kunnen worden, bijvoorbeeld als een object van het type |double| de waarde NaN\footnote{%
-		Zie \url{https://en.wikipedia.org/wiki/NaN}.
-	} heeft.
-	Twee objecten |a| en |b| zijn |partial_ordering::equivalent| als ze niet |partial_ordering::unordered| zijn en als |a| niet kleiner en ook niet groter is dan |b|.
-	Een |weak_ordering| heeft de volgende mogelijke waarden: |partial_ordering::less|, |partial_ordering::greater| of |partial_ordering::equivalent|.
-	Twee objecten die |weak_ordering::equivalent| zijn, zijn niet noodzakelijkerwijs gelijk, maar worden wel als equivalent beschouwd voor de doeleinden van sorteren en vergelijken.
-	Als je bijvoorbeeld objecten van de class |string| case insensitive vergelijkt, dan kunnen twee strings die verschillen in hoofdletters en kleine letters als |weak_ordering::equivalent| worden beschouwd, ook al zijn ze niet exact gelijk.
-
-	De drie verschillende soorten ordeningen ondersteunen bepaalde impliciete conversies. Een |strong_ordering| kan impliciet worden geconverteerd naar een |partial_ordering| of een |weak_ordering|. Een |weak_ordering| kan impliciet worden geconverteerd naar een |partial_ordering|.
-
-	Door de spaceship operator te definiëren voor een UDT, worden automatisch de andere vergelijkingsoperatoren gedefinieerd.
-	Zie \proglink{Breuk_spaceship.cpp}.
-	\item
-	|operator!=| wordt automatisch gedefinieerd als je |operator==| definieert, en omgekeerd.
-	\item
-	|operator==| kan |=default| worden gedefinieerd.
-	Zie \proglink{Breuk_compare_default.cpp}.
-	\item
-	Bij de vergelijkingsoperatoren |==|, |!=|, |<|, |>| |<=| en |>=| wordt a.operator@(b) automatisch omgezet in b.operator@(a).
-	Dit betekent dat je operator@ als memberfunctie van de class kunt definiëren en nog steeds impliciete conversies krijgt voor beide argumenten.
-	Zie \proglink{Breuk_spaceship_default.cpp}.
-	De vergelijkingsoperatoren |--|, |!=|, |<|, |>| |<=| en |>=| worden automatisch gedefinieerd als je de spaceship operator |<=>| |=default| definieert.
-	Bron \url{https://andreasfertig.com/blog/2020/06/cpp20-inside-of-a-spaceship/}
-	Zie \proglink{Tijdsduur_spaceship_default.cpp}.
 	\item
 	De term \dquote{functiesignatuur} (Engels: function signature) wordt gebruikt om de combinatie van de functienaam en de parameterlijst aan te duiden, maar zonder het return type.
 	\item
@@ -541,210 +376,12 @@ $\param{T}$ sto$\param{X}$(const string& str, size_t *pos = nullptr, int base = 
 		Zie \url{https://en.cppreference.com/cpp/utility/to_chars}.
 	}) om numerieke gegevens te serialiseren naar en te deserialiseren vanuit formaten zoals JSON, XML, enzovoort..
 	\item
-	Operaties op variabelen van het type |string| zijn altijd veilig omdat de class |string| het geheugen beheert dat nodig is om de string op te slaan.
-	Bij het uitvoeren van operaties op een string, zoals het opvragen van een substring, wordt er een nieuw object van het type |string| gemaakt dat een kopie van de substring bevat.
-	
-	\cpplstinputfragment[linerange={6-11}]{string_view.cpp}
-
-	De format specifier |:?| zorgt ervoor dat de inhoud van de string met dubbele aanhalingstekens eromheen wordt afgedrukt.
-	
-	Een |string_view| is een lichtgewicht object dat een read-only pointer naar een tekenreeks en een lengte bevat.
-	Een |string_view| biedt een interface die bijna gelijk is aan de \emph{read-only} interface van |string|.
-	Hierdoor kun je bovenstaande code efficiënter schrijven door een |string_view| te gebruiken in plaats van een |string|, omdat er dan geen nieuw object van het type |string| hoeft te worden gemaakt.
-
-	\cpplstinputfragment[linerange={14-19}]{string_view.cpp}
-
-	Er worden nu helemaal geen objecten van het type |string| aangemaakt in het geheugen.
-	De objecten van het type |string_view| bevatten enkel een pointer naar de string literal en een lengte.
-	Maar omdat de |string_view| in tegenstelling tot een |string| de karakters niet zelf opslaat en beheert, moet je wel oppassen bij het gebruik ervan.
-	Als de tekst waarnaar de |string_view| verwijst, wordt gewijzigd of verwijderd, dan kan dit leiden tot onverwacht of zelfs ongedefinieerd gedrag als je daarna de |string_view| gebruikt.
-
-	\cpplstinputfragment[linerange={22-32}]{string_view.cpp}
-
-	In de bovenstaande code wordt de |string_view| |sv2| na het aanpassen van de |string| |s1| afgedrukt.
-
-	\cpplstinputfragment[linerange={28-28,32-32}]{string_view.cpp}
-
-	Dit geeft, misschien onverwacht, als output |"Hi, W"| omdat de |string_view| |sv2| nog steeds verwijst naar de eerste vijf karakters van de |string| |s1|.
-
-	Ook wordt de |string_view| |sv1| afgedrukt, dat heeft in principe ongedefinieerd gedrag tot gevolg omdat de |string_view| |sv1| nog steeds verwijst naar de eerst dertien karakters van de |string| |s1|.
-	Maar deze |string| bevat nog maar tien karakters. 
-	Het afdrukken van dertien karakters uit deze |string| leidt tot ongedefinieerd gedrag\footnote{%
-		Er kan dus van alles gebeuren, zoals het afdrukken van willekeurige tekens, een crash van het programma, enzovoort.
-	}.
-
-	|string_view| voegt de memberfuncties |remove_prefix(size_t)| en \hcode{re\\-move_\\-suf\\-fix(size_t)} toe, die een |string_view| inkorten.
-	Zie \proglink{string_view.cpp}.
-	\item
-	Als je een stukje tekst aan een functie wilt meegeven, dan kun je dat doen door een  een |const string&| te gebruiken. 
-	Als je nu echter een string literal (bijvoorbeeld |"Hallo"|) doorgeeft, dan creëert de compiler stilzwijgend een tijdelijk object van het type |string| dat misschien niet nodig is.
-	Je zou een overloaded functie, zie \cref{sec:overloading}, kunnen schrijven die een |const char*| accepteert.
-	Er hoeft dan geen object van het type |string| gemaakt te worden.
-	In dit geval kun je ook één functie schrijven die een |string_view| accepteert, omdat een |string_view| zowel een |const char*| als een |string| kan accepteren zonder dat er een tijdelijk object van het type |string| hoeft te worden gemaakt.
-
-	\cpplstinputfragment[linerange={4-22}]{string_view_parameter.cpp}
-
-	In het bovenstaande codefragment zijn vijf functies gedefinieerd waarmee een string afgedrukt kan worden.
-	\begin{itemize}
-		\item 
-		|f1(const char* s)| kan aangeroepen worden met een string literal:
-		\cpplstinputfragment[linerange={26-26}]{string_view_parameter.cpp}
-		|f1| kan niet aangeroepen worden met een |string|:
-\begin{cpplstfragment}[mathescape=true]
-	string hallo {"Hallo daar!"};
-	f1(hallo); // $\color{hrred}\textbf{error:}$: cannot convert 'std::string' to 'const char*'
-\end{cpplstfragment}
-		Je kunt de |string| wel omzetten naar een |const char*| door de |c_str()| memberfunctie van de |string| te gebruiken:
-		\cpplstinputfragment[linerange={26-26}]{string_view_parameter.cpp}
-		Maar dit is onhandig en in de functie |f1| kun je natuurlijk geen gebruik maken van de memberfuncties van de class |string|.
-		\item 
-		|f2(const string& s)| kan aangeroepen worden met een |string| en met een string literal:
-		\cpplstinputfragment[linerange={31-32}]{string_view_parameter.cpp}
-		Maar als je |f2| aanroept met een string literal, dan wordt er een tijdelijk object van het type |string| gemaakt en dat is niet efficiënt als je de memberfuncties van de class |string| niet nodig hebt.
-		\item
-		De twee functies |f3| zijn overloaded zodat deze zowel een |const char*| als een |const string&| kunnen accepteren:
-		\cpplstinputfragment[linerange={33-34}]{string_view_parameter.cpp}
-		Maar het is natuurlijk niet handig om steeds twee functies te definiëren om de code zo efficiënt mogelijk te maken.
-		\item |f4(string_view s)| kan ook aangeroepen worden met een |string| en met een string literal, maar er wordt geen tijdelijk object van het type |string| gemaakt als je een string literal doorgeeft.
-		Dit is dus de meest efficiënte manier om een string aan een functie door te geven als je de memberfuncties die een |string| aanpassen niet nodig hebt.
-		De |string_view| heeft dezelfde read-only interface als een |string|, waar je gebruik van kunt maken in de functie, ook als je een string literal doorgeeft.
-		Een |string_view| wordt meestal als call by value parameter gebruikt, omdat het efficiënt gekopieerd kan worden.
-	\end{itemize}
-	Zie \proglink{string_view_parameter.cpp}.
-	\item
-	Een |string_view| wordt niet impliciet geconverteerd naar een |string|.
-	Deze conversie moet expliciet worden gemaakt door een |string| te construeren met de |string_view| als argument:
-\begin{cpplstfragment}
-string_view sv {"Hallo Wereld!"};
-string s {sv}; // expliciete conversie van string_view naar string
-\end{cpplstfragment}
-	Als een functie een |string_view| als parameter heeft en in de functie moet de |string_view| worden geconverteerd naar een |string| dan is het beter om de functie een |const string&| parameter te geven omdat er uiteindelijk toch een kopietje gemaakt moet worden.
-	\item
 	Je kunt een string literal afsluiten met de |sv| literal om deze als |string_view| te interpreteren:
 \begin{cpplstfragment}
 	auto hallo = "Hallo Wereld!"sv; // hallo is van het type string_view
 \end{cpplstfragment}
 	\item
 	In de format string van een |format|, |print| of |println| functieaanroep wordt een |{{| geïnterpreteerd als |{| en een |}}| als |}|, zodat je deze tekens in de output kunt opnemen zonder dat ze worden geïnterpreteerd als format specifiers.
-	\item
-	Sinds Cpp{}23 moet de format string in de |format|, |print| en |println| functies een compile time constant zijn.
-	\needspace{2\baselineskip}
-	De code:
-\begin{cpplstfragment}[mathescape=true]
-    string s {"Hello World!"};
-    println(s); // $\color{hrred}\textbf{error:}$: call to consteval function 'std::basic_format_string<char>(s)' is not a constant expression
-\end{cpplstfragment}
-	Geef dus een foutmelding omdat de format sting geen compile time constante is, maar een variabele.
-
-	Op \cpageref{prog:lees_en_print_double} heb je het programma \proglink{lees_en_print_double.cpp} gezien waarbij de het aantal decimalen dat wordt afgedrukt van een floating point getal |d| afhankelijk is van de waarde van de variabele |aantal_decimalen|.
-\begin{cpplstfragment}
-	println("d = {:.{}f}", d, aantal_decimalen);
-\end{cpplstfragment}
-	\needspace{3\baselineskip}
-	Als je echter probeert om tijdens runtime te bepalen of een floating point getal in wetenschappelijke notatie\footnote{%
-		Zie eventueel \url{https://nl.wikipedia.org/wiki/Wetenschappelijke_notatie}.
-	} moet worden afgedrukt of niet, dan kun je dat niet als volgt doen:
-\begin{cpplstfragment}
-    println("{:{}}", wetenschappelijke_notatie ? "e" : "f", 12345.67890);
-\end{cpplstfragment}
-	Deze code compileert wel, maar geef bij het uitvoeren een exception:
-\begin{coutput}
-terminate called after throwing an instance of 'std::format_error'
- what():  format error: argument used for width or precision must be a non-negative integer
-Aborted
-\end{coutput}
-	\needspace{3\baselineskip}
-	Je kunt dit natuurlijk oplossen door twee aparte |println| aanroepen te maken, maar dat is niet erg elegant.
-\begin{cpplstfragment}
-    if (wetenschappelijke_notatie) {
-        println("{:e}", 12345.67890);
-    } else {
-        println("{:f}", 12345.67890);
-    }
-\end{cpplstfragment}
-
-	Als je de format string tijdens runtime wilt samenstellen, dan moet je gebruik maken van de |vformat|, |vprint_unicode| of |vprint_nonunicode| functies.
-	% C++26 heeft hier een mooiere oplossing voor |dynamic_format| zie: \url{https://en.cppreference.com/cpp/utility/format/dynamic_format}.
-	\needspace{3\baselineskip}
-	Op de volgende wijze kun je dan bepalen of een floating point getal in wetenschappelijke notatie moet worden afgedrukt of niet:
-\begin{cpplstfragment}
-	println("{}", vformat(wetenschappelijke_notatie ? "{:e}" : "{:f}", make_format_args(d)));
-\end{cpplstfragment}
-	De |vformat| functie neemt een format string en een object van het type |format_args| als argumenten en retourneert een |string| die is opgemaakt volgens de format string en de meegegeven argumenten.
-	De functie |make_format_args| neemt een willekeurig aantal argumenten en retourneert een object van het type |format_args| dat deze argumenten bevat.
-	De functie |println| wordt gebruikt om de door |vformat| geretourneerde string af te drukken.
-
-	\needspace{3\baselineskip}
-	Als alternatief kun je ook de functie |vprint_unicode| of |vprint_nonunicode| gebruiken om de string direct af te drukken zonder dat er een tijdelijk object van het type |string| hoeft te worden gemaakt:
-\begin{cpplstfragment}
-	vprint_unicode(wetenschappelijke_notatie ? "{:e}\n" : "{:f}\n", make_format_args(d));
-\end{cpplstfragment}
-	Omdat er geen |println|-versie van deze functies bestaat moet je zelf een newline karakter toevoegen aan de format string.
-	Zie \proglink{vformat.cpp}.
-
-		\needspace{3\baselineskip}
-	In \Cpp{}26 zijn |vformat| en de |vprint|-varianten niet meer nodig en kan de bovenstaande code vervangen worden door:
-\begin{cpplstfragment}
-    println(dynamic_format(wetenschappelijke_notatie ? "{:e}" : "{:f}"), d);
-\end{cpplstfragment}
-
-	Als je een programma schrijft dat meerdere talen moet ondersteunen, dan komt het gebruik van |vformat| (of een van de |vprint|-varianten) vaak goed van pas.
-	\needspace{3\baselineskip}
-	Bijvoorbeeld:
-	\cpplstinputfragment[linerange={1-9,23-30}]{getal_number.cpp}
-	In dit voorbeeld zijn de Nederlandse en Engelse teksten opgenomen in een |array| maar in de praktijk zou je deze teksten waarschijnlijk in aparte bestanden opslaan en deze bestanden inlezen op het moment dat het programma wordt uitgevoerd.
-	Ook dan is het noodzakelijk om |vformat| (of een van de |vprint|-varianten) te gebruiken omdat de format string tijdens runtime wordt bepaald.
-
-	\needspace{3\baselineskip}
-	In \Cpp{}26 kan de laatste regel van het bovenstaande programma vervangen worden door:
-\begin{cpplstfragment}
-    println(dynamic_format(antwoord[index]), getal);
-\end{cpplstfragment}
-	\item
-	(Niet uit boek.) Als in het programm |getal_number.cpp| een groot getal wordt ingetypt, dan zou het handig zij om dit getal met scheidingstekens voor duizendtallen af te drukken, bijvoorbeeld (in het Nederlands) |1.000.000| in plaats van |1000000|.
-	Het enige probleem hierbij is dat dit afhankelijk is van de gebruikte taal.
-	In het Engels is het gebruikelijk om een komma als scheidingsteken voor duizendtallen te gebruiken, dus |1,000,000| in plaats van |1000000|.
-	\Cpp{} biedt ondersteuning voor lokale conventies zoals datum en tijd-notaties, valuta, getalnotaties enzovoort, via de class |locale|.
-	\needspace{3\baselineskip}
-	Bijvoorbeeld:
-	\cpplstinputfragment[linerange={1-3,11-26}]{getal_number_locale.cpp}
-	In dit voorbeeld wordt ervan uitgegaan dat de locales |nl_NL.utf8| en |en_US.utf8| beschikbaar zijn op het systeem waarop het programma wordt uitgevoerd\footnote{%
-		Op een Linux- of WSL-systeem kun je de beschikbare locales afdrukken met het commando \code{locale -a} in een terminal.
-		Als \code{en_US.utf8} en \code{nl_NL.utf8} niet in de lijst staan, kunt u ze inschakelen met het volgende comando in de terminal:\\
-		\code{sudo nano /etc/locale.gen}\\
-		Verwijder het commentaar bij de regels voor \code{en_US.UTF-8} en \code{nl_NL.UTF-8} en voer vervolgens het volgende commando uit om de landinstellingen te genereren: \code{sudo locale-gen}.
-	}.
-	Aan de functie |format| kun je als eerste argument een locale meegeven en als je dan in de format specifier |{:L}| gebruikt, dan zal de betreffende locale worden toegepast bij het formateren van de betreffende data.
-	Helaas kan aan de functie |vformat| geen locale worden meegegeven, dus als je een format string tijdens runtime wilt samenstellen en daarbij gebruik wilt maken van een locale, dan moet je zelf de locale toepassen op de argumenten voordat je deze aan |vformat| meegeeft.
-
-	In \Cpp{}26 kunnen de laatste zes regels van het bovenstaande programma vervangen worden door:
-\begin{cpplstfragment}
-    array antwoord {"Je hebt het getal {:L} ingevoerd.", "You have entered the number {:L}."};
-    print("{}", vraag[index]);
-    int getal;
-    cin >> getal;
-    println("{}", format(loc, dynamic_format(antwoord[index]), getal);
-\end{cpplstfragment}
-
-\needspace{3\baselineskip}
-	De uitvoer van het programma \proglink{getal_nummer_locale.cpp} is bijvoorbeeld:
-\begin{coutput}
-Nederlands (N) / English (E): \cinput{N}
-Geef een groot getal: \cinput{1234567890}
-Je hebt het getal 1.234.567.890 ingevoerd.
-\end{coutput}
-
-	\needspace{3\baselineskip}
-	Een andere mogelijke uitvoer is:
-\begin{coutput}
-Nederlands (N) / English (E): \cinput{E}
-Enter a big number: \cinput{1234567890}
-You have entered the number 1,234,567,890.
-\end{coutput}
-
-
-
-
 	\item
 	Bla
 	\item

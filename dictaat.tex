@@ -8,8 +8,6 @@
 %TODO: index maken.
 %TODO: gebruik Engelse woorden nogeens overwegen.
 
-%TODO: Voorwaarde voor operator< !(a<b) && !(b<a) && !(a<c) && !(c <a) -> !(b<c) && !(c<b)
-
 % In de makefile kunnen argumenten worden meegegeven:
 % Keuze lettertypes
 % 	FONT = \chartertrue voor charter met berasans fonts
@@ -2784,7 +2782,7 @@ Je kunt het suffix |s| gebruiken om een string literal van het type |string| te 
 
 \needspace{3\baselineskip}
 Dus de definitie:
-\begin{cppfragment}
+\begin{cpplstfragment}
 	array a {1, 2, 3, 4};
 	vector v1 {3.14, 6.28};
 	vector v2 {"Hallo", "Wereld"};
@@ -2793,7 +2791,7 @@ Dus de definitie:
 
 \needspace{3\baselineskip}
 Is gelijk aan:
-\begin{cppfragment}
+\begin{cpplstfragment}
 	array<int, 4> a {1, 2, 3, 4};
 	vector<double> v1 {3.14, 6.28};
 	vector<const char*> v2 {"Hallo", "Wereld"};
@@ -6879,6 +6877,26 @@ Dit datatype komt vooral van pas als je met \squote{ruwe} data werkt, bijvoorbee
 In het verleden werd hier meestal het type |char| of |uint8_t| voor gebruikt maar dat is niet ideaal omdat deze types worden geïnterpreteerd als karakters respectievelijk getallen.
 Met behulp van de template functie |to_integer<T>| kan een |byte| worden omgezet naar een getal van het type |T|, bijvoorbeeld |int| of |uint8_t|.
 
+\section{Meer floating point types}
+De types |float| en |double| zijn types die implementatie afhankelijk zijn\footnote{%
+	Volgens de \Cpp{}-standaard moet een \cppcode{double} minstens dezelfde precisie hebben als een \cppcode{float}.
+	De meeste compilers definiëren \cppcode{float} als een 32-bits single-precision floating-point getal en \cppcode{double} als een 64-bits double-precision floating-point getal volgens de IEEE 754 standaard.
+	De compiler voor de Arduino Uno (die een 8-bit ATmega328P processor bevat) definieert \cppcode{float} en \cppcode{double} beide als 32-bits single-precision floating-point getallen, zie \url{https://docs.arduino.cc/language-reference/en/variables/data-types/double/}.
+}, net zoals |short|, |int| enzovoort\footnote{%
+	Volgens de \Cpp{}-standaard moet een \cppcode{int} minstens hetzelfde aantal bits hebben als een \cppcode{short}.
+	De meeste compilers definiëren \cppcode{short} als een 16-bits signed integer en \cppcode{int} als een 32-bits signed integer.
+	De compiler voor de Arduino Uno definieert \cppcode{short} en een \cppcode{int} beide als een 16-bits signed integer, zie \url{https://docs.arduino.cc/language-reference/en/variables/data-types/int/}.
+}.
+in \Cpp{}11 zijn de types |int8_t|, |int16_t|, |int32_t|, |int64_t| geïntroduceerd waarvan het aantal bits vast gedefinieerd is.
+Een |int32_t| gebruikt altijd 32 bits, onafhankelijk van de implementatie, voor het opslaan van een geheel getal.
+Sinds \Cpp{}23 kun je ook floating point getallen met een vast aantal bits gebruiken.
+|float16_t|, |float32_t|, |float64_t| en |float128_t| zijn types die respectievelijk 16, 32, 64 en 128 bits gebruiken voor het opslaan van een floating point getal volgens de IEEE 754 standaard\footnote{%
+	Zie eventueel \url{https://en.wikipedia.org/wiki/IEEE_754}.
+}.
+|bfloat16_t| brain floating point is een type dat 16 bits gebruikt voor het opslaan van een floating point getal dat wordt gebruikt in bepaalde AI-processors (o.a. in NVIDIA-GPU's).\footnote{%
+	Zie eventueel \url{https://en.wikipedia.org/wiki/Bfloat16_floating-point_format}.
+}.
+
 \section{Digit separators}
 \label{sec:digitseparators}
 Om lange getallen beter leesbaar te maken mag in \Cpp{} en C23 \cite{ISO2023C} een enkel aanhalingsteken (\code{'}) gebruikt worden om groepjes cijfers te onderscheiden.
@@ -7620,6 +7638,7 @@ Zie \proglink{operator+_member.cpp} voor een compleet voorbeeldprogramma.
 }
 
 \section{Operator overloading (deel 3)}
+\label{sec:globaloperator}
 Naast het definiëren van operatoren als memberfuncties van zelfgedefinieerde types kun je ook de globale operatoren \USE{overloaden}%
 \footnote{%
 	De operatoren \cppcode{=}, \cppcode{[]}, \cppcode{()} en \cppcode{->} kunnen echter alleen als memberfunctie \USE{overloaded} worden.
@@ -7739,6 +7758,9 @@ Meteen daarna ga ik, één voor één, op bovengenoemde punten in.
 Ik heb ervoor gekozen om de globale |operator==| te \USE{overloaden} in plaats van een memberfunctie |Breuk::operator==| te definiëren.
 Dit heeft als voordeel dat zowel het linker als het rechter argument indien nodig naar het type |Breuk| geconverteerd kan worden.
 Dus zowel de expressies| b == 3| als |3 == b| kunnen worden gebruikt als |b| van het type |Breuk| is.
+Sinds \Cpp20{} is dit niet meer nodig, zie \cref{sec:spaceship}.
+Maar ik ben er toch voor gekozen om de globale |operator==| te \USE{overloaden} omdat dit een goed voorbeeld is van het gebruik van een \USE{friend function}.
+
 De implementatie van deze globale |operator ==| is als volgt:
 \cpplstinputfragment[linerange={120-122}]{Breuk3.cpp}
 
@@ -7787,6 +7809,98 @@ Vanaf \Cpp{}20 zal de compiler automatisch een |operator!=| genereren voor een U
 	Het is dus niet nodig om deze \ccode{operator!=} als \USE{friend} functie van de class \ccode{Breuk} te definiëren.
 }.
 De gegenereerde |operator!=| zal de uitkomst van de |operator==| inverteren.
+
+\sectionTextCode{Default}{operator==}
+Sinds \Cpp{}20 kun je de compiler ook een default |operator==| voor een UDT laten genereren.
+Deze voert dan een |operator==| voor alle datamembers uit.
+De default |operator==| geeft alleen |true| terug als alle datamembers gelijk zijn.
+In het geval van de class |Breuk| is dat alleen correct als de breuken altijd genormaliseerd zijn.
+
+Omdat er in dit dictaat voor is gekozen om de breuken altijd genormaliseerd te houden, kan de default |operator==| worden gebruikt en is het dus niet nodig om zelf een operator== te definiëren zoals in \cref{sec:Breuk3} gedaan is.
+
+De |operator==| kan als volgt |=default| worden gedefinieerd, zie \proglink{Breuk_default_opera\\-tor==.cpp}.
+\cpplstinputfragment[linerange={5-14}]{Breuk_default_operator==.cpp}
+
+Je kunt nu zonder zelf een |operator==| en |operator!=| te definiëren, toch breuken vergelijken.
+Doordat een |int| automatisch kan worden omgezet in een |Breuk|, kun je ook een |Breuk| vergelijken met een |int| en vice versa.
+
+\sectionTextCode{Drieweg-vergelijkingsoperator}{<=>}
+\label{sec:spaceship}
+In C++20 is de drieweg-vergelijkingsoperator geïntroduceerd |<=>|, ook wel spaceship operator genoemd omdat het enigzins op een ruimteschip uit Star Wars lijkt\footnote{%
+	Zie eventueel \url{https://www.starwars.com/databank/darth-vader-s-tie-fighter}
+}.
+Met behulp van deze operator kan in één keer bepaald worden of een object kleiner, groter of gelijk is aan een ander object.
+Bijvoorbeeld, zie \proglink{spaceship.cpp}:
+\cpplstinputfragment[linerange={5-9}]{spaceship.cpp}
+
+Het nut van deze operator blijkt vooral bij operator overloading, omdat, als de |operator<=>| overloaded wordt, de compiler automatisch de vergelijkingsoperatoren |<|, |<=|, |>| en |>=| definieert.
+
+De spaceship operator kan een |strong_ordering|, een |weak_ordering| of een \hcode{partial_\\-order\\-ing} teruggeven:
+\begin{itemize}
+	\item
+	Een |strong_ordering| geeft aan dat de twee objecten die vergeleken worden volledig geordend zijn, dat wil zeggen dat ze ofwel gelijk (|strong_ordering::equal|) zijn, of dat het ene object kleiner (|strong_ordering::less|) or groter (\hcode{strong_order\\-ing::\\-greater}) is dan het andere.
+	\item
+	Een |partial_ordering| heeft de volgende mogelijke waarden: \hcode{partial_order\\-ing::\\-less}, |partial_ordering::greater|, |partial_ordering::equivalent| of \hcode{partial_\\-order\\-ing::un\\-order\\-ed}.
+	Twee objecten zijn |partial_ordering::unordered| als ze niet geordend kunnen worden, bijvoorbeeld als een object van het type |double| de waarde NaN (Not an Number)\footnote{%
+		Zie \url{https://en.wikipedia.org/wiki/NaN}.
+	} heeft.
+	Twee objecten |a| en |b| zijn \hcode{partial_ordering::equi\\-va\\-lent} als ze niet |partial_ordering::unordered| zijn en als |a| niet kleiner en ook niet groter is dan |b|.
+	\item
+	Een |weak_ordering| heeft de volgende mogelijke waarden: |partial_ordering::less|, |partial_ordering::greater| of |partial_ordering::equivalent|.
+	Twee objecten die |weak_ordering::equivalent| zijn, zijn niet noodzakelijkerwijs gelijk, maar worden wel als equivalent beschouwd voor de doeleinden van sorteren en vergelijken.
+	Als je bijvoorbeeld objecten van de class |string| case insensitive vergelijkt, dan kunnen twee strings die verschillen in hoofdletters en kleine letters als |weak_ordering::equivalent| worden beschouwd, ook al zijn ze niet exact gelijk.
+\end{itemize}
+
+De drie verschillende soorten ordeningen ondersteunen bepaalde impliciete conversies. Een |strong_ordering| kan impliciet worden geconverteerd naar een |partial_ordering| of een |weak_ordering|. Een |weak_ordering| kan impliciet worden geconverteerd naar een |partial_ordering|.
+
+Door de spaceship operator te definiëren voor een UDT, worden automatisch de operatoren |<|, |<=|, |>| en |>=| gedefinieerd.
+Door de operator |==| te definiëren voor een UDT, worden automatisch de operatoren |!=| gedefinieerd.
+Zie \proglink{Breuk_spaceship.cpp}:
+\cpplstinputfragment[linerange={9-22,75-88}]{Breuk_spaceship.cpp}
+
+Het is nu mogelijk de objecten |b1| en |b2| van het type |Breuk| te vergelijken met alle vergelijkingsoperatoren, bijvoorbeeld:
+\cpplstinputfragment[linerange={101-106}]{Breuk_spaceship.cpp}
+Omdat een |int| automatisch kan worden omgezet in een |Breuk|, via de constructor |Breuk(int)|, kunnen ook vergelijkingen tussen een |Breuk| |b1|en een |int| |i|worden gemaakt, bijvoorbeeld:
+\cpplstinputfragment[linerange={122-127}]{Breuk_spaceship.cpp}
+Ook kan een |int| |i| worden vergeleken met een |Breuk| |b2|, bijvoorbeeld:
+\cpplstinputfragment[linerange={140-145}]{Breuk_spaceship.cpp}
+
+Merk op dat het in dit geval \emph{niet} nodig is om de |operator==| en de |operator<=>| als globale friend functies te definiëren, zoals dat bij |operator+| wel nodig is, zie \cref{sec:globaloperator}.
+De compiler snapt, sinds \Cpp{}20, zelf dat |a>b| gelijk is aan |b<a|, dat |a==b| gelijk is aan |b==a|, en dat |a>=b| gelijk is aan |b<=a|, enzovoort.
+De overige binaire operatoren zoals |operator+|, |operator-| enzovoorts moeten echter nog steeds als globale friend functies worden gedefinieerd, |a-b| is immers niet gelijk aan |b-a|.
+
+In oudere versies van \Cpp{} (pre \Cpp{}20) moest je zelf alle vergelijkingsoperatoren |==|, |!=|, |<|, |<=|, |>| en |>=| apart definiëren.
+Daarbij moest je er zelf voor zorgen dat deze opeatoren onderling consistent waren, bijvoorbeeld dat |a>b| gelijk was aan |b<a| en dat |a!=b| waar was als |a>b| waar was, enzovoort.
+Tevens moesten deze operatoren als globale functies gedefinieerd worden om er voor te zorgen dat impliciete conversies zowel op het linker als het rechter argument toegepast werden. Zie \proglink{Breuk_compare_pre_C++20.cpp}.
+
+\sectionTextCode{Default}{operator<=>}
+\label{sec:spaceship_default}
+Sinds \Cpp{}20 kun je de compiler ook een default |operator<=>| voor een UDT laten genereren.
+Deze voert dan één voor één een |operator<=>| op de datamembers uit, in de volgorde waarin ze zijn gedeclareerd.
+Zodra de vergelijking van een datamember een ongelijk resultaat geeft, zal de default |operator<=>| dit ongelijk resultaat teruggeven.
+Als alle datamembers gelijk zijn, zal de default |operator<=>| |std::strong_ordering::equal| teruggeven.
+Als de |operator<=>| |=default| gedefinieerd is, dan zal de compiler ook automatisch de operatoren |==|, |!=|,|<|, |>|, |<=| en |>=| genereren.
+
+Voor de class |Breuk| geeft dit echter niet het gewenste resultaat, omdat als de teller van de ene breuk groter is dan de teller van de andere breuk, dan wil dat niet zeggen dat de ene breuk groter is dan de andere breuk, zie \proglink{Breuk_spaceship_default.cpp}:
+\cpplstinputfragment[linerange={7-16}]{Breuk_spaceship_default.cpp}
+
+De operatoren |==| en |!=| worden nu automatisch, \emph{correct} gegenereerd door de compiler.
+De operatoren |<|, |>|, |<=| en |>=| worden nu automatisch, maar \emph{incorrect} gegenereerd door de compiler.
+Als je kijkt of \myfrac{3}{8} kleiner is dan \myfrac{1}{2}, dan zal dit |false| opleveren, terwijl dit natuurlijk |true| moet zijn.
+
+\needspace{3\baselineskip}
+Het programmafragment:
+\cpplstinputfragment[linerange={34-37}]{Breuk_spaceship_default.cpp}
+
+\needspace{3\baselineskip}
+Geeft als output:
+\begin{coutput}
+assertion "b1 < b2" failed
+\end{coutput}
+
+Het is in dit geval dus noodzakelijk om zelf de |operator<=>| te definiëren voor |Breuk| zoals gegeven is in \cref{sec:spaceship}.
+
+Bij een UDT waarbij een tijdsduur wordt bijgehouden in uren en minuten en waarin de tijdsduur altijd genormaliseerd is, werkt de default |operator<=>| wel correct, zie \proglink{Tijdsduur_space\\-ship_\\-default.cpp}.
 
 \section{Operator overloading (deel 4)} 
 \label{sec:overloadoutput}
@@ -8112,7 +8226,6 @@ Sinds \Cpp{}20 zijn in de namespace |std::numbers| een aantal wiskundige constan
 De constanten |pi| en |e| zijn in diezelfde namespace gedefinieerd als respectievelijk |pi_v<double>| en |e_v<double>|.
 
 Je kunt deze constanten als volgt gebruiken:
-\begin{cpplstfragment}
 \begin{cpplstfragment}[mathescape=true]
 auto d1 {numbers::pi_v<double>}; // d1 is een double met de waarde $\color{lstturquoisegreen}\pi$
 auto d2 {numbers::pi}; // d2 is een double met de waarde $\color{lstturquoisegreen}\pi$
@@ -8133,8 +8246,8 @@ Dit zorgt ervoor dat de compiler een duidelijke foutmelding geeft als de templat
 Je kunt nu de constante |tau| als volgt gebruiken:
 \begin{cpplstfragment}[mathescape=true]
 auto f {tau<float>}; // f is een float met de waarde $\color{lstturquoisegreen}\tau$
-\end{cpplstfragment}
 auto d {tau<double>}; // d is een double met de waarde $\color{lstturquoisegreen}\tau$
+\end{cpplstfragment}
 Zie \proglink{tau.cpp}.
 
 \section{Template argument binding}
@@ -8170,7 +8283,7 @@ template<input_iterator Iter> Array(Iter, Iter) -> Array<iter_value_t<Iter>>;
 Dit zorgt ervoor dat type van onderstaand object |a2| door de compiler bepaald kan worden.
 \begin{cpplstfragment}
 	Array a1 {1, 2, 3, 4, 5}; // a1 is van het type Array<int> 
-	Array w (v.cbegin() + 1, v.cend() - 1); // a2 is van het type Array<int>
+	Array a2 (v.cbegin() + 1, v.cend() - 1); // a2 is van het type Array<int>
 \end{cpplstfragment}
 
 \sectionTextCodeTextNoSpaces{Zelf }{concept}{s definiëren}
@@ -8745,6 +8858,12 @@ Over \USE{templates} valt nog veel meer te vertellen, onder andere:
 	Een |virtual| memberfunctie kan echter geen memberfunctietemplate zijn.
 	\item Default waarden voor template\hyp{}parameters.\\
 	Net zoals voor gewone functie parameters kun je voor template\hyp{}parameters ook default waarden (of types) specificeren.
+	\item Templates met een variabel aantal argumenten.\\
+	Een template kan zo worden gedefinieerd dat deze een willekeurig aantal argumenten van willekeurige typen accepteert. 
+	Een dergelijk template wordt een \dquote{\USE{variadic template}} genoemd.
+	Zie: \proglink{variadic_template.cpp}.
+	Een parameter die door |...| wordt gevolgd, wordt een \USE{\emph{parameter pack}} genoemd.
+	\item 
 \end{itemize}
 Voor al deze details verwijs ik je naar \cite[hoofdstuk \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus21.html}{21}, \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus22.html}{22} en \href{http://www.icce.rug.nl/documents/cplusplus/cplusplus23.html}{23}]{Brokken2019},  \cite[hoofdstuk 23 t/m 29]{Stroustrup2013} en \cite{Vandevoorde2017}.
 
