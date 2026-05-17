@@ -22,7 +22,7 @@
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
 \ifWIP
-\newcommand{\huidigeversie}{1.95}
+\newcommand{\huidigeversie}{1.96}
 \else
 \newcommand{\huidigeversie}{2.0}
 \fi
@@ -64,6 +64,8 @@
 \input{styleCode.tex}
 
 \newcommand{\boldred}[1]{\textbf{\textcolor{hrred}{#1}}}
+% gebruikt voor in te vullen parameter in code
+\newcommand{\param}[1]{\text{\color{cyan}{\textbf{#1}}}}
 
 % Question Answer paar voor FAQ
 \newcommand{\qa}[2]{%
@@ -279,7 +281,7 @@ In dit dictaat gebruiken we de versie van de \Cpp{}\hyp{}standaad die \Cpp{}23 w
     Ook van de \Cpp{}26\hyp{}standaard is al een \USE{draft version} beschikbaar op \url{https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/n5032.pdf}.
 }.
 Daarbij volgen we zoveel mogelijk de \emph{\Cpp{} Core Guidelines}\footnote{
-	Zie: \url{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines}.
+	Zie \url{https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines}.
 }.
 
 \Cpp{} is een zeer uitgebreide taal en dit dictaat moet dan ook zeker niet gezien worden als een cursus \Cpp{}.
@@ -4632,15 +4634,15 @@ Postfix heeft de volgende voordelen ten opzichte van infix:
 \end{itemize}
 
 Om deze redenen gebruikte de eerste handheld wetenschappelijke rekenmachine die in 1972 op de markt kwam (de HP-35%
-\footnote{Zie: \url{http://en.wikipedia.org/wiki/HP-35}.
+\footnote{Zie \url{http://en.wikipedia.org/wiki/HP-35}.
 }%
 ) RPN (Reverse Polish Notation).
 Tot op de dag van vandaag bieden veel rekenmachines van HP nog steeds de mogelijkheid om formules in RPN in te voeren.
 
 \subsection{Een postfix calculator}
 Een postfix expressie kan met het algoritme dat gegeven is in \cref{fig:postfix} worden uitgerekend.
-Dit algoritme maakt gebruik van een \USE{stack} en is weergegeven in een Nassi–Shneiderman diagram (NSD)\footnote{%
-	Zie: \url{https://en.wikipedia.org/wiki/Nassi\%E2\%80\%93Shneiderman_diagram}.
+Dit algoritme maakt gebruik van een \USE{stack} en is weergegeven in een Nassi\hyp{}Shneiderman diagram (NSD)\footnote{%
+	Zie \url{https://en.wikipedia.org/wiki/Nassi\%E2\%80\%93Shneiderman_diagram}.
 }.
 
 \begin{myFigure}[htbp]
@@ -4692,7 +4694,7 @@ Een infix-calculator kan gemaakt worden door een infix naar postfix convertor te
 
 In \citeyear{Dijkstra1961} heeft de Nederlander \citeauthor{Dijkstra1961} het volgende algoritme, dat bekend staat als het rangeerstationalgoritme%
 \footnote{%
-	Zie: \url{http://en.wikipedia.org/wiki/Shunting-yard_algorithm}.
+	Zie \url{http://en.wikipedia.org/wiki/Shunting-yard_algorithm}.
 } 
 (\USE{shunting-yard algorithm}), gepubliceerd \cite{Dijkstra1961} om een infix expressie om te zetten naar een postfix expressie:
 \begin{itemize}
@@ -5286,9 +5288,9 @@ De set bevat: Daniël Elles Ron Roy
 
 De inhoud van een |set| kan eenvoudig afgedrukt worden met behulp van de standaard functie |println|.
 In de \USE{format specifier} |{:n:s}| zorgt de |:n| ervoor dat er geen accolades om de set heen geprint worden\footnote{%
-	Zie: \url{https://en.cppreference.com/w/cpp/utility/format/range_formatter.html}.
+	Zie \url{https://en.cppreference.com/w/cpp/utility/format/range_formatter.html}.
 } en de |:s| zorgt ervoor dat de elementen van de set als |string|s zonder aanhalingstekens eromheen worden afgedrukt\footnote{%
-	Zie: \url{https://en.cppreference.com/w/cpp/utility/format/spec.html}.
+	Zie \url{https://en.cppreference.com/w/cpp/utility/format/spec.html}.
 }.
 Als de standaard \USE{format specifier} |{}| wordt gebruikt, dan wordt de eerste regel van de output van het bovenstaande programma:
 \begin{coutput}
@@ -6909,6 +6911,26 @@ Om lange getallen beter leesbaar te maken mag in \Cpp{} en C23 \cite{ISO2023C} e
 \label{sec:zeroinitialisatie}
 Zero-initialisatie van een variabele kan worden gedaan met behulp van de syntax |T t {};|. Deze syntax werkt voor alle types. De variabele |t| krijgt de nul-waarde van het type |T|. Voor |int| is dit |0|, voor |double| is dit |0.0|, voor pointers is dit |nullptr|, zie \cref{nullptr}, enz. Voor user-defined types is dit de waarde die wordt verkregen door het aanroepen van de constructor zonder argumenten van het type |T| (de \USE{default constructor}), zie \cref{sec:constructor}.
 
+\section{Aangewezen initialisatie}
+\label{sec:designated_initializers}
+Met behulp van aangewezen initialisatie (Engels \USE{designated initializers}) kun je datamembers initialiseren met hun naam.
+Deze syntax is vooral handig bij het initialiseren van structuren met veel datamembers, omdat het de leesbaarheid van de code verbetert en het risico op fouten bij het initialiseren van datamembers vermindert.
+
+\needspace{3\baselineskip}
+Als de struct |Persoon| bijvoorbeeld de volgende datamembers heeft:
+\cpplstinputfragment[linerange={4-13}]{designated_initializers.cpp}
+
+\needspace{3\baselineskip}
+Dan kun je een object van het type |Persoon| als volgt initialiseren met behulp van aangewezen initialisatie, zie \proglink{designated_initializers.cpp}:
+\cpplstinputfragment[linerange={44-52}]{designated_initializers.cpp}
+
+\needspace{3\baselineskip}
+Dit is beter leesbaar en minder gevoeliger voor fouten dan de traditionele manier van initialiseren, waarbij je de waarden in de juiste volgorde moet plaatsen zonder de namen van de datamembers te vermelden:
+\cpplstinputfragment[linerange={54-54}]{designated_initializers.cpp} 
+
+De volgorde van de designated initializers moet overeenkomen met de volgorde van de datamembers in de struct.
+Een designated initializer kan overgeslagen worden als het datamember een defaultwaarde heeft.
+
 \section{Zelf gedefinieerde module}
 \label{sec:zelfgedefinieerdemodule}
 Je kunt ook zelf een module definiëren.
@@ -7120,7 +7142,7 @@ De GCC \Cpp{}\hyp{}compiler geeft de volgende foutmelding:
 $\color{hrred}\textbf{error:}$ cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'
 \end{lstfragment}
 In de standaard \Cpp{} library zijn een aantal functietemplates opgenomen die gebruikt kunnen worden om types te manipuleren\footnote{%
-	Zie: \url{https://en.cppreference.com/w/cpp/header/type_traits}.
+	Zie \url{https://en.cppreference.com/w/cpp/header/type_traits}.
 }.
 Je kunt de functietemplate \href{https://en.cppreference.com/w/cpp/types/remove_reference}{\cppcode{remove_reference_t}} gebruiken om van een reference type een gewoon type te maken.
 Dus je kunt de variabele |som| als volgt definiëren:
@@ -8715,7 +8737,7 @@ Breuk b = _____15/47______
 Dus de teller en de noemer worden apart uitgelijnd op een veld van zestien tekens, terwijl de hele breuk als één geheel uitgelijnd zou moeten worden op een veld van zestien tekens.
 
 Om dit probleem op te lossen kun je een formatter definiëren die een format specifier gebruikt die is geïnspireerd op de format specifier voor ranges\footnote{%
-	Zie: \hurl{https://en.cppreference.com/cpp/utility/format/range_formatter\#Range_format_spe\\-ci\\-fi\\-ca\\-tion}.
+	Zie \hurl{https://en.cppreference.com/cpp/utility/format/range_formatter\#Range_format_spe\\-ci\\-fi\\-ca\\-tion}.
 }.
 
 De format specifier bestaat dan uit twee delen, gescheiden door een dubbele punt, waarbij het eerste deel de format specifier is voor de gehele breuk en het tweede deel de format specifier is voor de teller en noemer.
@@ -8861,7 +8883,7 @@ Over \USE{templates} valt nog veel meer te vertellen, onder andere:
 	\item Templates met een variabel aantal argumenten.\\
 	Een template kan zo worden gedefinieerd dat deze een willekeurig aantal argumenten van willekeurige typen accepteert. 
 	Een dergelijk template wordt een \dquote{\USE{variadic template}} genoemd.
-	Zie: \proglink{variadic_template.cpp}.
+	Zie \proglink{variadic_template.cpp}.
 	Een parameter die door |...| wordt gevolgd, wordt een \USE{\emph{parameter pack}} genoemd.
 	\item 
 \end{itemize}
@@ -9838,7 +9860,7 @@ Int met waarde 42 wordt verwijderd.
 Blijkbaar is de GCC \Cpp{}\hyp{}compiler zo slim om alle benodigde kopieeracties weg te optimaliseren\footnote{%
 	Ondanks het feit dat we de optie \code{-O0} hebben meegegeven. Volgens de documentatie van GCC\footnotemark{} disabled de optie \code{-O0} de meeste optimalisaties (maar de RVO blijkbaar niet.) 
 }.
-\footnotetext{Zie: \url{ https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html}.}
+\footnotetext{Zie \url{ https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html}.}
 
 \needspace{3\baselineskip}
 Als we bovenstaand programma compileren\footnote{%
@@ -10182,7 +10204,91 @@ Kan de laatste regel efficiënter gecodeerd worden als:
 \begin{cpplstfragment}
 	v.emplace_back(1, 2);
 \end{cpplstfragment}
-Zie \proglink{vector_emplace.cpp}.	
+Zie \proglink{vector_emplace.cpp}.
+
+\sectionCode{optional<T>}
+\label{sec:optional}
+Een object van de standaard class |optional<T>| kan een waarde van het type |T| of \emph{niets} bevatten.
+In \cref{sec:boolreturnwaarde} heb je een functie gezien die de impedantie van een condensator berekent.
+Omdat de impedantie van een condensator niet berekend kan worden (oneindig groot is) als de capaciteit of de frequentie nul is, werd er een |bool| returnwaarde gebruikt om aan te geven of de berekening mogelijk is of niet.
+Dit was niet zo handig omdat de returnwaarde van de functie niet de berekende impedantie bevatte, maar via een output parameter werd teruggegeven.
+
+Door deze functie te herschrijven zodat deze een |optional| returnwaarde heeft, kan de returnwaarde van de functie de berekende impedantie bevatten of \emph{leeg} zijn
+als de berekening niet mogelijk is, zie \proglink{impedance_C3_optional.cpp}:
+\cpplstinputfragment[linerange={18-24}]{impedance_C3_optional.cpp}
+
+Je kunt controleren of een |optional| een waarde bevat met behulp van de |has_value()| functie of door de |optional| te gebruiken in een boolean context.
+De waarde van een |optional| kan worden opgevraagd met behulp van de |value()| functie of door de |optional| te gebruiken met behulp van de |*| operator.
+
+\needspace{3\baselineskip}
+Het programmadeel:
+\cpplstinputfragment[linerange={27-40}]{impedance_C3_optional.cpp}
+
+\needspace{3\baselineskip}
+Geeft als uitvoer:
+\begin{coutput}
+0.000-159.155j
+Kan impedantie niet berekenen.
+\end{coutput}
+
+Ook bij de |operator<<| die gebruikt kan worden om een |Breuk| in te lezen kan een |optional| returnwaarde handig zijn, zie \proglink{optional.cpp}.
+
+
+\section{Van numeriek naar string en van string naar numeriek}
+Om een numerieke waarde om te zetten in een |string|, kun je de |format| functie gebruiken.
+Daarbij kun je zelf bepalen hoe de numerieke waarde geformatteerd moet worden, bijvoorbeeld met een bepaald aantal decimalen, in wetenschappelijke notatie, enzovoort\footnote{%
+	Zie \url{https://en.cppreference.com/w/cpp/utility/format/spec.html}.
+}.
+
+\needspace{3\baselineskip}
+Bijvoorbeeld, als je een |double| waarde wilt omzetten in een |string| met twee decimalen, dan kun je de volgende code gebruiken:
+\begin{cpplstfragment}
+	string s {format("{:.2f}", numbers::pi)};
+\end{cpplstfragment}
+Na het uitvoeren van deze code bevat de string |s| de waarde |"3.14"|.
+
+Als het niet nodig is om de numerieke waarde op een specifieke manier te formatteren, dan kun je ook de |to_string| functie gebruiken.
+\begin{cpplstfragment}[mathescape=true]
+string to_string($\param{T}$ value);
+\end{cpplstfragment}
+Waarbij het type \code[mathescape=true]{$\param{T}$} (|unsigned|) |int|, (|unsigned|) |long|, (|unsigned|) |long long|, |float|, |double| of |long double| kan zijn.
+
+\needspace{3\baselineskip}
+Bijvoorbeeld:
+\begin{cpplstfragment}
+    string s {to_string(numbers::pi)};
+\end{cpplstfragment}
+Na het uitvoeren van deze code bevat de string |s| de waarde |"3.141593"|.
+Zie \proglink{to_string.cpp}.
+
+De volgende functies zijn beschikbaar om een |string| om te zetten in een numerieke waarde.
+\begin{cpplstfragment}[mathescape=true]
+$\param{T}$ sto$\param{X}$(const string& str, size_t *pos = nullptr, int base = 10);
+\end{cpplstfragment}
+Waarbij \code[mathescape=true]{$\param{X}$} |i|, |ui|, |l|, |ul|, |ll|, |ull|, |f|, |d| of |ld| kan zijn.
+\code[mathescape=true]{$\param{T}$} is dan respectievelijk |int|, |unsigned int|, |long|, |unsigned long|, |long long|, |unsigned long long|, |float|, |double| of |long double|.
+De functies die een floating point waarde teruggeven, hebben geen parameter |base|.
+|pos| is een output parameter. Na afloop bevat |*pos| de index van het eerste niet-omgezette teken. 
+|base| geeft het grondtal aan dat tijdens de omzetting moet worden gebruikt.
+Als |base| 0 is, wordt het grondtal automatisch bepaald op basis van de inhoud van de string:
+\begin{itemize}
+	\item als de string begint met |0|, wordt het grondtal 8;
+	\item als de string begint met |0x|, wordt het grondtal 16;
+	\item anders wordt het grondtal 10\footnote{%
+		Je zou misschien verwachten dat als de string begint met \code{0b}, het grondtal 2 zou worden, maar dat is (helaas) niet het geval in \Cpp{}23.
+		Zie \url{https://en.cppreference.com/w/cpp/string/basic_string/stol}.
+	}.
+\end{itemize}
+Deze functies slaan voorafgaande spaties over.
+Er wordt een genereren een |invalid_argument| exception gegooid als er geen conversie kan worden uitgevoerd.
+Er wordt een |out_of_range| exception gegooid als de geconverteerde waarde buiten het bereik van het return type valt.
+Zie \proglink{sto_numeriek.cpp}.
+
+Er zijn low level conversie functies beschikbaar (|from_chars|\footnote{%
+	Zie \url{https://en.cppreference.com/cpp/utility/from_chars}.
+} en |to_chars|\footnote{%
+	Zie \url{https://en.cppreference.com/cpp/utility/to_chars}.
+}) om numerieke gegevens te serialiseren naar en te deserialiseren vanuit formaten zoals JSON, XML, enzovoort.
 
 \section{Unordered container met UDT's}
 \label{sec:unorderedcontainermetUDT}
@@ -10370,7 +10476,7 @@ Je kunt dit natuurlijk oplossen door twee aparte |println| aanroepen te maken, m
 \end{cpplstfragment}
 
 Als je de format string tijdens runtime wilt samenstellen, dan moet je gebruik maken van de |vformat|, |vprint_unicode| of |vprint_nonunicode| functies.
-% C++26 heeft hier een mooiere oplossing voor |dynamic_format| zie: \url{https://en.cppreference.com/cpp/utility/format/dynamic_format}.
+% C++26 heeft hier een mooiere oplossing voor |dynamic_format| zie \url{https://en.cppreference.com/cpp/utility/format/dynamic_format}.
 \needspace{3\baselineskip}
 Op de volgende wijze kun je dan bepalen of een floating point getal in wetenschappelijke notatie moet worden afgedrukt of niet:
 \begin{cpplstfragment}

@@ -293,22 +293,7 @@ Programmacode: \url{https://github.com/Professional-CPP/edition-6}.
 	Met |std::size()| kun je het aantal elementen in een C-array opvragen.
 	Zie \proglink{size.cpp}.
 	\item
-	Met class template argument deduction (CTAD) wordt de template argument van een class template automatisch afgeleid uit de constructor argumenten.
-	Dat kan uiteraard alleen als de class template m.b.v. een constructor met een argument dat door de compiler kan worden bepaald wordt aangeroepen.
-	Zie \proglink{CTAD.cpp}.
-	\item
 	Hoewel je een functie zou kunnen schrijven die een |pair| retourneert, wordt aangeraden om een kleine |struct| te maken die de twee waarden bevat en die vanuit de functie te retourneren.
-	\item
-	|optional<T>| kan een waarde of niets bevatten. 
-	Je kunt controleren of een |optional| een waarde bevat met behulp van de |has_value()| functie of door de |optional| te gebruiken in een boolean context.
-	De waarde van een |optional| kan worden opgevraagd met behulp van de |value()| functie of door de |optional| te dereferencen met behulp van de |*| operator.
-	Zie \proglink{optional.cpp}.
-	\item
-	M.b.v. aangewezen initialisatie (Engels \USE{designated initializers}) kun je datamembers initialiseren m.b.v. hun naam.
-	Deze syntax is vooral handig bij het initialiseren van structuren met veel datamembers, omdat het de leesbaarheid van de code verbetert en het risico op fouten bij het initialiseren van de verkeerde datamember vermindert.
-	Zie \proglink{designated_initializers.cpp}.
-	De volgorde van de designated initializers moet overeenkomen met de volgorde van de datamembers in de struct.
-	Een designated initializer kan overgeslagen worden als het datamember een defaultwaarde heeft.
 	\item
 	De heap wordt ook wel de free store genoemd.
 	\item
@@ -340,41 +325,6 @@ Programmacode: \url{https://github.com/Professional-CPP/edition-6}.
 	Je moet oppassen wanneer je CTAD gebruikt voor een |vector| met strings.
 	Een string literal is namelijk niet van het type |string| maar van het type |const char*| of |const char[]|.
 	Zie \proglink{CTAD_vector_string.cpp}.
-	\item
-	De volgende functies zijn beschikbaar om numerieke waarden om te zetten in een |string|, waarbij het type \code[mathescape=true]{$\param{T}$} (|unsigned|) |int|, (|unsigned|) |long|, (|unsigned|) |long long|, |float|, |double| of |long double| kan zijn.
-\begin{cpplstfragment}[mathescape=true]
-string to_string($\param{T}$ value);
-\end{cpplstfragment}
-	Zie \proglink{to_string.cpp}.
-	\item
-	De volgende functies zijn beschikbaar om een |string| om te zetten in een numerieke waarde.
-\begin{cpplstfragment}[mathescape=true]
-$\param{T}$ sto$\param{X}$(const string& str, size_t *pos = nullptr, int base = 10);
-\end{cpplstfragment}
-	Waarbij \code[mathescape=true]{$\param{X}$} |i|, |ui|, |l|, |ul|, |ll|, |ull|, |f|, |d| of |ld| kan zijn.
-	\code[mathescape=true]{$\param{T}$} is dan respectievelijk |int|, |unsigned int|, |long|, |unsigned long|, |long long|, |unsigned long long|, |float|, |double| of |long double|.
-	De functies die een floating point waarde teruggeven, hebben geen parameter |base|.
-	|pos| is een output parameter. Na afloop bevat |*pos| de index van het eerste niet-omgezette teken. 
-	|base| geeft het grondtal aan dat tijdens de omzetting moet worden gebruikt.
-	Als |base| 0 is, wordt het grondtal automatisch bepaald op basis van de inhoud van de string:
-	\begin{itemize}
-		\item als de string begint met |0|, wordt het grondtal 8;
-		\item als de string begint met |0x|, wordt het grondtal 16;
-		\item anders wordt het grondtal 10\footnote{%
-			Je zou misschien verwachten dat als de string begint met \code{0b}, het grondtal 2 zou worden, maar dat is (helaas) niet het geval in \Cpp{}23.
-			Zie \url{https://en.cppreference.com/w/cpp/string/basic_string/stol}.
-		}.
-	\end{itemize}
-	Deze functies slaan voorafgaande spaties over.
-	Er wordt een genereren een |invalid_argument| exception gegooid als er geen conversie kan worden uitgevoerd.
-	Er wordt een |out_of_range| exception gegooid als de geconverteerde waarde buiten het bereik van het return type valt.
-	Zie \proglink{sto_numeriek.cpp}.
-	\item
-	Er zijn low level conversie functies beschikbaar (|from_chars|\footnote{%
-		Zie \url{https://en.cppreference.com/cpp/utility/from_chars}.
-	} en |to_chars|\footnote{%
-		Zie \url{https://en.cppreference.com/cpp/utility/to_chars}.
-	}) om numerieke gegevens te serialiseren naar en te deserialiseren vanuit formaten zoals JSON, XML, enzovoort..
 	\item
 	Je kunt een string literal afsluiten met de |sv| literal om deze als |string_view| te interpreteren:
 \begin{cpplstfragment}

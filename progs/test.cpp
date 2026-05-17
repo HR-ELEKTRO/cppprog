@@ -47,4 +47,19 @@ int main() {
     println("v1 = {}", v1);
 	vector v2 {v1}; // v2 is ook van het type vector<int>
     println("v2 = {}", v2);
+    double d {12345.67890};
+    bool wetenschappelijke_notatie {true};
+    // println("{:{}}", wetenschappelijke_notatie ? "e" : "f", 12345.67890);
+    // terminate called after throwing an instance of 'std::format_error'
+    //  what():  format error: argument used for width or precision must be a non-negative integer
+    // Aborted
+    if (wetenschappelijke_notatie) {
+        println("{:e}", d);
+    } else {
+        println("{:f}", d);
+    }
+    wetenschappelijke_notatie = false;
+    println("{}", vformat(wetenschappelijke_notatie ? "{:e}" : "{:f}", make_format_args(d)));
+    wetenschappelijke_notatie = true;
+    vprint_unicode(wetenschappelijke_notatie ? "{:e}\n" : "{:f}\n", make_format_args(d));
 }
