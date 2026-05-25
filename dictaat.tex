@@ -22,7 +22,7 @@
 \newcommand{\titel}{Objectgeoriënteerd Programmeren in \Cpp{}}
 \newcommand{\documenttype}{Dictaat}
 \ifWIP
-\newcommand{\huidigeversie}{1.96}
+\newcommand{\huidigeversie}{1.97}
 \else
 \newcommand{\huidigeversie}{2.0}
 \fi
@@ -3514,7 +3514,7 @@ Als een geschikte UDT te koop is, heeft kopen de voorkeur boven zelf maken om ee
     \item Als de leverancier van de AD178 kaart een hardware bug oplost waardoor ook de software aansturing gewijzigd moet worden, dan brengt de leverancier van de UDT (hopelijk) ook een nieuwe versie uit.
 \end{itemize}
 
-Het is waarschijnlijk dat de leverancier van de UDT alleen de |adccard.h| file en de \hcode{adc\\-card\\-.obj} file aan ons levert maar de broncode |adccard.cpp| file niet aan ons beschikbaar stelt%
+Het is waarschijnlijk dat de leverancier van de UDT alleen de module interface |ADCCard.cppm| en de library file \hcode{lib\\-ADC\\-Card\\-.a} aan ons levert maar de broncode |ADCCard.cpp| file niet aan ons beschikbaar stelt%
 \footnote{%
     Ook als de broncode wel beschikbaar is dan willen we deze code, om redenen van onderhoudbaarheid, liever niet wijzigen.
     Want als de leverancier dan met een nieuwe versie van de code komt, dan moeten we ook daarin al onze wijzigingen weer doorvoeren.
@@ -3589,20 +3589,24 @@ Deze functie kan ik dan als volgt gebruiken:
 Merk op dat de functie |do_measurement| de in de \USE{base class} |ADCCard| gedefinieerde memberfunctie |read| aanroept die op zijn beurt de in de \emph{derived} class gedefinieerde memberfunctie |sample| aanroept.
 
 \subsection{Een kaart toevoegen}
-Als het programma nu aangepast moet worden zodat een nieuwe kaart (typenaam BB647) ook gebruikt kan worden, dan kan dit heel eenvoudig door de volgende class te declareren (\proglink{Bb647.h}):
-\cpplstinputfragment[linerange={5-12}]{Bb647.cppm}
+Als het programma nu aangepast moet worden zodat een nieuwe kaart (typenaam BB647) ook gebruikt kan worden, dan kan dit heel eenvoudig door de volgende class te declareren (\proglink{kaart4/BB647.cppm}):
+\cpplstinputfragment[linerange={5-12}]{kaart4/BB647.cppm}
 
-Met de volgende implementatie (\proglink{Bb647_impl.cpp}):
-\cpplstinputfragment[linerange={5-6,8-11,13-16,18-20,22-22}]{Bb647_impl.cpp}
+Met de volgende implementatie (\proglink{kaart4/BB647.cpp}):
+\cpplstinputfragment[linerange={5-6,8-11,13-16,18-20,22-22}]{kaart4/BB647.cpp}
 
-Het programma |main| kan nu als volgt aangepast worden (\proglink{Kaart4.cpp}):
-\cpplstinputfragment[linerange={8-15}]{kaart4.cpp}
+Het programma |main| kan nu als volgt aangepast worden (\proglink{kaart4/kaart4.cpp}):
+\cpplstinputfragment[linerange={8-15}]{kaart4/kaart4.cpp}
 
 Als alle functie- en classdeclaraties in aparte module interfaces (.cppm) en alle functie- en classdefinities in aparte |.cpp| files opgenomen zijn, dan hoeft alleen de nieuwe class en de nieuwe |main| functie opnieuw vertaald te worden.
 De rest van het programma kan dan eenvoudig (zonder hercompilatie) meegelinkt worden.
 Dit voordeel komt voort uit het feit dat de functie |do_measurement| polymorf is.
 Aan de parameter die gedefinieerd is als een \hbox{\cppcode{ADCCard&}} kun je objecten van elke van deze class afgeleide classes (|AD178|, |NI323| of |BB647|) gebruiken.
 Je ziet dat de objectgeoriënteerde oplossing een zeer goed \emph{onderhoudbaar} en \emph{uitbreidbaar} programma oplevert.
+In het directory \proglink{kaart3} en \proglink{kaart4} vind je een volledige implementatie van deze objectgeoriënteerde oplossing, respectievelijk zonder en met de nieuw toegevoegde class BB647.
+In deze directories zijn ook |CMakelists.txt| bestanden opgenomen zodat de applicaties eenvoudig gebouwd kunnen worden met CMake\footnote{%
+	Zie \url{https://cmake.org/}.
+} 
 
 \section{Voorbeeld: impedantie calculator}
 \label{impedance calculator}
@@ -4545,7 +4549,7 @@ Een \USE{stack} is een datastructuur waarin data\hyp{}elementen kunnen worden op
 Als de elementen weer van de \USE{stack} worden gehaald, dan kan dit alleen in de omgekeerde volgorde dan de volgorde waarin ze op de \USE{stack} zijn geplaatst.
 Om deze reden wordt een \USE{stack} ook wel een LIFO (Last In First Out) buffer genoemd.
 Het gedrag van een \USE{stack} (de interface) kan worden gedefinieerd met behulp van een ABC (Abstract Base Class).
-Dit kan bijvoorbeeld als volgt, zie \proglink{stack.h}\footnote{In de ISO/ANSI \Cpp{} standaard \USE{library} is ook een type \USE{stack} gedefinieerd, zie \cref{sec:stdlib}.}:
+Dit kan bijvoorbeeld als volgt, zie \proglink{stack.cppm}\footnote{In de ISO/ANSI \Cpp{} standaard \USE{library} is ook een type \USE{stack} gedefinieerd, zie \cref{sec:stdlib}.}:
 
 \cpplstinputfragment[linerange={1-14}]{stack.cppm}
 
@@ -4565,7 +4569,7 @@ Omdat de class |Stack| als een base class gebruikt wordt is het belangrijk dat d
 \section{Haakjes balanceren}
 \label{sec:balance}
 Als voorbeeld bekijken we nu een \Cpp{} programma \proglink{balance.cpp} dat controleert of alle haakjes in een tekst gebalanceerd zijn.
-We maken daarbij gebruik van de class \hcode{Stack_\\-with_\\-list<T>}, zie \proglink{stacklist.h}, die is afgeleid van de hierboven gedefinieerde |Stack<T>|.
+We maken daarbij gebruik van de class \hcode{Stack_\\-with_\\-list<T>}, zie \proglink{stacklist.cppm}, die is afgeleid van de hierboven gedefinieerde |Stack<T>|.
 
 \cpplstinputfragment[linerange={1-38}]{balance.cpp}
 
@@ -5061,7 +5065,7 @@ Via de achterwaartse pointer kan het element voor de plaats waar ingevoegd moet 
 
 %TODO eventueel toevoegen: hoe is een vector geïmplenteerd? Hoe is een deque geïmplementeerd?
 \subsectionTextCode{Voorbeeldprogramma met}{std::vector}
-Dit voorbeeldprogramma \proglink{stdvector.cpp} laat zien:
+Dit voorbeeldprogramma \proglink{std_vector.cpp} laat zien:
 \begin{itemize}
 	\item hoe een standaard vector gevuld kan worden;
 	\item hoe door (een deel van) de vector heengelopen kan worden door middel van indexering%
@@ -6280,7 +6284,7 @@ De hoogst haalbare waarde kan bepaald worden door van onder naar boven door de b
 \end{itemize} 
 Omdat je dus afwisselend kiest voor de maximale (als de computer aan de beurt is) en de minimale (als de tegenstander aan de beurt is) waarde wordt dit algoritme het minimax algoritme genoemd.
 
-In het onderstaande programma \proglink{Minimax0.cpp} wordt de boom uit \cref{fig:gameTree1} gebruikt en wordt de hoogst haalbare waarde berekend met het minimax algoritme.
+In het onderstaande programma \proglink{minimax0.cpp} wordt de boom uit \cref{fig:gameTree1} gebruikt en wordt de hoogst haalbare waarde berekend met het minimax algoritme.
 Er wordt daarbij gebruik gemaakt van 2 functies die elkaar (recursief) aanroepen.
 
 \cpplstinputfragment[linerange={1-48}]{minimax0.cpp}
@@ -6799,7 +6803,7 @@ In het programma waarnaar in deze paragraaf wordt verwezen, wordt ervan uitgegaa
 Het is voor \USE{sparse graph}s verstandiger om in elke \USE{vertex} een lijst met uitgaande \USE{edges} (met hun gewicht) op te slaan in plaats van een matrix te gebruiken waarin voor elke combinatie van \USE{vertices} het gewicht van de bijbehorende \USE{edge} is opgeslagen.
 Als de \USE{edges} met hun gewicht opgeslagen worden in lijsten per \USE{vertex} dan is daar voor een sparce \USE{graph} minder geheugen voor nodig ($O(|E|)$) dan voor het opslaan van een matrix met de gewichten van alle mogelijke \USE{edges} ($O(|V|^2)$).
 
-In het programma \proglink{Paths.cpp} worden vier verschillende algoritmen geïmplementeerd om het kortste pad te vinden:
+In het programma \proglink{paths.cpp} worden vier verschillende algoritmen geïmplementeerd om het kortste pad te vinden:
 \begin{itemize}
 	\item \USE{Breadth-first search}; Dit algoritmen kan alleen gebruikt worden als de \USE{edges} van de \USE{graph} geen gewicht hebben (of allemaal hetzelfde gewicht hebben).
 	Het is geen probleem als de \USE{graph} \USE{cycles} bevat.
@@ -8412,7 +8416,7 @@ Precies wat we nodig hebben om het concept |Const<T>| te definiëren.
 
 \section{Class template specialisatie}
 \label{sec:template_specialisatie}
-In \cref{sec:template_auto} is de functietemplate |number_of_zero_bits| besproken, zie \proglink{number_\\-of_\\-zero_\\-bits.cpp}.
+In \cref{sec:template_auto} is de functietemplate |number_of_zero_bits| besproken, zie \proglink{number_\\-of_\\-zero_\\-bits1.cpp}.
 Stel dat je deze functie in een programma heel vaak moet aanroepen voor het type |uint8_t| en dat dit programma niet snel genoeg uitgevoerd wordt en dat uit een analyse blijkt dat deze functie de bottleneck is en dus versneld moet worden.
 
 Je zou dan op het idee kunnen komen dat een |uint8_t| maar 256 verschillende waarden kan hebben en dat je dus een \emph{\USE{lookup table}} kunt maken met 256 elementen, waarin voor elke mogelijke waarde van een |uint8_t| het aantal nullen in de binaire representatie van die waarde opgeslagen is\footnote{%
@@ -8703,7 +8707,7 @@ Breuk b = _____15/47______
 \end{coutput}
 
 Het is echter niet mogelijk om een |Breuk| in het hexadecimale of binaire talstelsel te printen, omdat deze format specifiers niet gedefinieerd zijn voor een |string|.
-Om dit wel mogelijk te maken, kun je een formatter voor |Breuk| definiëren die overerft van |formatter<int>|, zie \proglink{format_Breuk_inherit_\\-from_\\-int.cpp}:
+Om dit wel mogelijk te maken, kun je een formatter voor |Breuk| definiëren die overerft van |formatter<int>|, zie \proglink{Breuk_format_inherit_\\-from_\\-int.cpp}:
 \cpplstinputfragment[linerange={25-32}]{Breuk_format_inherit_from_int.cpp}
 
 \needspace{3\baselineskip}
@@ -9320,8 +9324,8 @@ In het voorgaande programma heb je gezien dat alleen pointers en \USE{references
 Als we dus polymorfe objecten willen opslaan, kan dit alleen door pointers of \USE{references} naar deze objecten op te slaan.
 Het opslaan van \USE{references} in een |vector| is echter niet mogelijk omdat een \USE{reference} altijd moet verwijzen naar een object dat al bestaat en bij het aanmaken van de |vector| weten we nog niet welke objecten in de |vector| moeten worden opgeslagen.
 De enige mogelijkheid is dus het opslaan van polymorfe pointers naar objecten.
-Hier volgt een voorbeeld van het gebruik van een |vector| en polymorfisme (\proglink{fruitmand.cpp}):
-\cpplstinputfragment[linerange={6-50}]{fruitmand.cpp}
+Hier volgt een voorbeeld van het gebruik van een |vector| en polymorfisme (\proglink{Fruitmand.cpp}):
+\cpplstinputfragment[linerange={6-50}]{Fruitmand.cpp}
 
 \needspace{3\baselineskip}
 De uitvoer van dit programma is als volgt:
@@ -9994,7 +9998,7 @@ Een \USE{rvalue reference} refereert naar een \emph{tijdelijke} variabele die aa
 
 De waarde waar zo'n rvalue reference naar refereert wordt na afloop van de move constructor of move assignment operator niet meer gebruikt.
 We kunnen de dynamische data van zo'n rvalue dus stelen oftewel verplaatsen zonder dat we deze data hoeven te kopiëren.
-%Zie \proglink{ArrayMove.cpp}.
+%Zie \proglink{Array_move.cpp}.
 %Zie ook \proglink{Dozijn_move.cpp}.
 In een aantal gevallen kan de compiler zelf bepalen dat een \USE{move constructor} in plaats van een \USE{copy constructor} gebruikt kan worden.
 Ook kan de compiler in een aantal gevallen zelf bepalen dat een \USE{move assignment operator} in plaats van een \USE{copy assignment operator} gebruikt kan worden.
@@ -10388,7 +10392,7 @@ Zie voor een compleet overzicht \url{http://en.cppreference.com/w/cpp/utility/fu
 
 Het gebruik van standaard functie\hyp{}objecten is vooral handig als de operatie die door het algoritme uitgevoerd moet worden uit één enkele operator bestaat.
 
-Zo kun je bijvoorbeeld de |vector| |w| bij de |vector| |v| optellen door middel van een |transfer| algoritme met een standaard functie\hyp{}object |plus|, zie \proglink{transfer\_plus}.
+Zo kun je bijvoorbeeld de |vector| |w| bij de |vector| |v| optellen door middel van een |transfer| algoritme met een standaard functie\hyp{}object |plus|, zie \proglink{transform\_plus}.
 
 \cpplstinputfragment[linerange={1-14}]{transform_plus.cpp}
 
