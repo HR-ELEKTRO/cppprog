@@ -1,4 +1,5 @@
-module hr.brojz.adc.do_measurement;
+module do_measurement;
+import ADCCard;
 import std;
 using namespace std;
 

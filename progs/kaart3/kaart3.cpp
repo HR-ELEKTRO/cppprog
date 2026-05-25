@@ -1,8 +1,8 @@
 // Een object georienteerde oplossing verdeeld over verschillende files
 
-import hr.brojz.adc.ad178;
-import hr.brojz.adc.ni323;
-import hr.brojz.adc.do_measurement;
+import AD178;
+import NI323;
+import do_measurement;
 
 int main() {
     AD178 card1;

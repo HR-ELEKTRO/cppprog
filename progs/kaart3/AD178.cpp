@@ -1,4 +1,4 @@
-module hr.brojz.adc.ad178;
+module  AD178;
 import std;
 using namespace std;
 

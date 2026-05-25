@@ -1,4 +1,4 @@
-module hr.brojz.adc;
+module ADCCard;
 import std;
 using namespace std;
 

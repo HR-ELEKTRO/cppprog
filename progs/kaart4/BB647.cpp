@@ -1,4 +1,4 @@
-module hr.brojz.adc.bb647;
+module BB647;
 import std;
 using namespace std;
 
