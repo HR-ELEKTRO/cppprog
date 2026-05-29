@@ -11,3 +11,6 @@
 !*.cmd
 !*.cpp
 !*.md
+!*.h
+!*.cppm
+!*.txt
